@@ -1,2 +1,8 @@
 # dotfiles
-Mac dotfiles
+
+This repo simply has the dotfiles I personally use.
+
+To install the brew packages:
+```
+brew bundle install --no-lockfile
+```

@@ -1,6 +1,6 @@
 # dotfiles
 
-This repo has the dotfiles I personally use.
+My dotfiles and brew package list.
 
 To install the brew packages:
 ```

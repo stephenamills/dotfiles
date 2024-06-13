@@ -8,3 +8,7 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # Load asdf version manager
 source /opt/homebrew/opt/asdf/libexec/asdf.sh
+
+# Load Google Cloud SDK
+source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"
+source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"

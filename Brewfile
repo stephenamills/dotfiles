@@ -1,6 +1,7 @@
 brew "asdf"
 brew "asroute"
 brew "aws-amplify"
+brew "corepack"
 brew "dnstracer"
 brew "firebase-cli"
 brew "gh"

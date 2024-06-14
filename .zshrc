@@ -1,23 +1,23 @@
-# This file depends on these three modules installed in the Brewfile:
+# This file depends on three modules installed from the Brewfile:
 # zsh-autosuggestions zsh-completions zsh-syntax-highlighting
 
 # Check if the `brew` command exists
 if type brew &>/dev/null; then
-  # Initialize the shell modules installed in the Brewfile
+  # Initialize shell modules installed in the Brewfile
 
-  # Initialize `Pure` terminal prompt module
+  # Initialize Pure terminal prompt module
   fpath+=$(brew --prefix)/share/zsh/site-functions # Fixes the module not finding anything (https://github.com/sindresorhus/pure/issues/584#issuecomment-989054653)
   autoload -U promptinit; promptinit
   prompt pure
 
-  # Initialize tab completion module (requires pressing the tab key)
+  # Initialize tab autocompletion module (requires pressing the tab key)
   zstyle ':completion:*' list-prompt '' # Disables annoying confirmation message that appears when doing a tab completion (https://unix.stackexchange.com/a/30092)
   fpath+=$(brew --prefix)/share/zsh-completions
   autoload -Uz compinit
   compinit
   compaudit | xargs chmod g-w # Fixes incorrect permissions on folders (https://github.com/zsh-users/zsh-completions/issues/680#issuecomment-612960481)
 
-  # Initialize Autocompletion module that doesn't require pressing the tab key
+  # Initialize tabless autocompletion module (does not require pressing the tab key)
   source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
   # Session syntax highlighting module

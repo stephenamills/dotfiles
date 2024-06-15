@@ -13,8 +13,7 @@ if type brew &>/dev/null; then
   # Initialize tab autocompletion module (requires pressing the tab key)
   zstyle ':completion:*' list-prompt '' # Disables annoying confirmation message that appears when doing a tab completion (https://unix.stackexchange.com/a/30092)
   fpath+=$(brew --prefix)/share/zsh-completions
-  autoload -Uz compinit
-  compinit
+  autoload -Uz compinit; compinit
   compaudit | xargs chmod g-w # Fixes incorrect permissions on folders (https://github.com/zsh-users/zsh-completions/issues/680#issuecomment-612960481)
 
   # Initialize tabless autocompletion module (does not require pressing the tab key)

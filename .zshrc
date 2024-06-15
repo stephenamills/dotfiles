@@ -1,5 +1,5 @@
 # This file depends on three modules installed from the Brewfile:
-# zsh-autosuggestions zsh-completions zsh-syntax-highlighting
+# pure zsh-autocomplete zsh-autosuggestions zsh-completions zsh-syntax-highlighting
 
 # Check if the `brew` command exists
 if type brew &>/dev/null; then
@@ -10,16 +10,17 @@ if type brew &>/dev/null; then
   autoload -U promptinit; promptinit
   prompt pure
 
-  # Zsh-completions tab autocompletion module (requires pressing the tab key)
-  zstyle ':completion:*' list-prompt '' # Disables annoying confirmation message that appears when doing a tab completion (https://unix.stackexchange.com/a/30092)
-  fpath+=$(brew --prefix)/share/zsh-completions
-  autoload -Uz compinit; compinit
-  compaudit | xargs chmod g-w # Fixes incorrect permissions on folders (https://github.com/zsh-users/zsh-completions/issues/680#issuecomment-612960481)
+  # zsh-autocomplete module (real-time interactive completions)
+  source $(brew --prefix)/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 
-  # Zsh-autosuggestions tabless autocompletion module (does not require pressing the tab key)
+  # zsh-autosuggestions module (suggests commands as you type based on history)
   source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
-  # Zsh-syntax-highlighting module
+  # zsh-completions module (adds additional completions for commands)
+  zstyle ':completion:*' list-prompt '' # Disables annoying confirmation message that appears when doing a tab completion (https://unix.stackexchange.com/a/30092)
+  fpath+=$(brew --prefix)/share/zsh-completions
+
+  # zsh-syntax-highlighting module
   source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
 

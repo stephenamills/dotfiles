@@ -19,7 +19,7 @@ if type brew &>/dev/null; then
   # Zsh-autosuggestions tabless autocompletion module (does not require pressing the tab key)
   source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
-  # Session syntax highlighting module
+  # Zsh-syntax-highlighting module
   source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
 

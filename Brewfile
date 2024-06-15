@@ -18,6 +18,7 @@ brew "tcpdump"
 brew "tree"
 brew "wireshark", link: false
 brew "zsh"
+brew "zsh-autocomplete"
 brew "zsh-autosuggestions"
 brew "zsh-completions"
 brew "zsh-syntax-highlighting"

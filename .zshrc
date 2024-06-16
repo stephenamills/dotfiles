@@ -1,5 +1,7 @@
+# Amazon Q pre block. Keep at the top of this file.
+[[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh"
 # This file depends on three modules installed from the Brewfile:
-# pure zsh-autocomplete zsh-autosuggestions zsh-completions zsh-syntax-highlighting
+# pure zsh-autosuggestions zsh-completions zsh-syntax-highlighting
 
 # Check if the `brew` command exists
 if type brew &>/dev/null; then
@@ -9,9 +11,6 @@ if type brew &>/dev/null; then
   fpath+=$(brew --prefix)/share/zsh/site-functions # Fixes the module not finding anything (https://github.com/sindresorhus/pure/issues/584#issuecomment-989054653)
   autoload -U promptinit; promptinit
   prompt pure
-
-  # zsh-autocomplete module (real-time interactive completions)
-  source $(brew --prefix)/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 
   # zsh-autosuggestions module (suggests commands as you type based on history)
   source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
@@ -40,3 +39,6 @@ function prep() {
   sudo xattr -r -d com.apple.quarantine "$1"
   sudo codesign --force --deep --sign - "$1"
 }
+
+# Amazon Q post block. Keep at the bottom of this file.
+[[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh"

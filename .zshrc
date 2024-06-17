@@ -6,14 +6,14 @@ if type brew &>/dev/null; then
   # Load dependencies installed by Homebrew
 
   # asdf version manager
-  source /usr/local/opt/asdf/libexec/asdf.sh
+  source $(brew --prefix)/opt/asdf/libexec/asdf.sh
 
   # Pure terminal prompt
   autoload -U promptinit; promptinit
   prompt pure
 
   # zsh-autocomplete (automatically displays completions for commands in real-time)
-  source /usr/local/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+  source $(brew --prefix)/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 
   # zsh-autosuggestions (suggests commands from history)
   source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh

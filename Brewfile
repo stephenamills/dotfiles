@@ -20,7 +20,7 @@ brew "railway"
 brew "tcpdump"
 brew "tree"
 brew "wireshark", link: false
-brew yq
+brew "yq"
 brew "zsh"
 brew "zsh-autocomplete"
 brew "zsh-autosuggestions"

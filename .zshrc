@@ -1,37 +1,41 @@
-# Amazon Q pre block. Keep at the top of this file.
-[[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh"
-# This file depends on three modules installed from the Brewfile:
-# pure zsh-autosuggestions zsh-completions zsh-syntax-highlighting
+# This file depends on four modules installed from the Brewfile:
+# pure zsh-autocomplete zsh-autosuggestions zsh-syntax-highlighting
 
-# Check if the `brew` command exists
+# If the `brew` command exists
 if type brew &>/dev/null; then
-  # Initialize shell modules installed in the Brewfile
+  # Initialize shell modules listed in the Brewfile
 
   # Pure terminal prompt module
-  fpath+=$(brew --prefix)/share/zsh/site-functions # Fixes the module not finding anything (https://github.com/sindresorhus/pure/issues/584#issuecomment-989054653)
   autoload -U promptinit; promptinit
   prompt pure
 
-  # zsh-autosuggestions module (suggests commands as you type based on history)
+  # zsh-autocomplete module (automatically displays completions for commands in real-time)
+  source /usr/local/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+
+  # zsh-autosuggestions module (suggests commands from history)
   source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
-  # zsh-completions module (adds additional completions for commands)
-  zstyle ':completion:*' list-prompt '' # Disables annoying confirmation message that appears when doing a tab completion (https://unix.stackexchange.com/a/30092)
-  fpath+=$(brew --prefix)/share/zsh-completions
-
-  # zsh-syntax-highlighting module
+  # zsh-syntax-highlighting module (highlighting for zsh syntax while typing)
   source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
 
+# This depends on the sigoden/argc-completions repo being cloned to $HOME/.argc-completions
+if [ -d "$HOME/.argc-completions" ]; then
+  # To add completions for only the specified command, modify next line e.g. argc_scripts=( cargo git )
+  argc_scripts=( $(ls -p -1 "$ARGC_COMPLETIONS_ROOT/completions" | sed -n 's/\.sh$//p') )
+  source <(argc --argc-completions zsh $argc_scripts)
+fi
 
 # Invoked as a command to install an app
 function bi() {
-  brew install --no-quarantine "$1"
+  brew install --no-quarantine "$@"
 }
 
 # Invoked as a command to install a .pkg file
 function ins() {
-  sudo installer -pkg "$1" -target /
+  for pkg in "$@"; do
+    sudo installer -pkg "$pkg" -target /
+  done
 }
 
 # Invoked as a command to sign a bundle
@@ -40,5 +44,20 @@ function prep() {
   sudo codesign --force --deep --sign - "$1"
 }
 
-# Amazon Q post block. Keep at the bottom of this file.
-[[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh"
+# Lazy loading for bloated Google Cloud SDK
+function gcloud() {
+    # Check if Google Cloud SDK is installed
+    if [ -d "$(brew --prefix)/share/google-cloud-sdk" ]; then
+        # Source the SDK components
+        source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"
+        source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
+        
+        # Remove the function definition after it's called once
+        unset -f gcloud
+        
+        # Proceed with the original gcloud command
+        command gcloud "$@"
+    else
+        echo "Google Cloud SDK is not installed."
+    fi
+}

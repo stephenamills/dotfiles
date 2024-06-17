@@ -1,5 +1,5 @@
 # This file depends on four modules installed from the Brewfile:
-# asdf pure zsh-autocomplete zsh-autosuggestions zsh-syntax-highlighting
+# argc asdf pure zsh-autocomplete zsh-autosuggestions zsh-syntax-highlighting
 
 # If the `brew` command exists
 if type brew &>/dev/null; then

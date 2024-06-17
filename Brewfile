@@ -1,4 +1,5 @@
 brew "ansible"
+brew "argc"
 brew "asdf"
 brew "asroute"
 brew "aws-amplify"

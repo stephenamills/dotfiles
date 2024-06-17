@@ -1,15 +1,17 @@
 export GO_PATH="$HOME/go/bin"
 export JETBRAINS_PATH="$HOME/Library/Application Support/JetBrains/Toolbox/scripts"
 export PNPM_HOME="$HOME/Library/pnpm"
-
-# argc-completions
 export ARGC_COMPLETIONS_ROOT="$HOME/.argc-completions"
 export ARGC_COMPLETIONS_PATH="$ARGC_COMPLETIONS_ROOT/completions"
 
-# Add Homebrew to PATH variable (for Apple Silicon and Intel Macs)
+export LESSHISTFILE=- # Disable history file for less
+
+# Add Homebrew to PATH variable
 if [[ $(uname -m) == "arm64" ]]; then
+  # If the machine is Apple Silicon, use Homebrew's different default path
   eval "$(/opt/homebrew/bin/brew shellenv)"
 else
+  # If the machine is Intel, use Homebrew's different default path
   eval "$(/usr/local/bin/brew shellenv)"
 fi
 

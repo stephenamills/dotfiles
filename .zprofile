@@ -1,8 +1,8 @@
+export ARGC_COMPLETIONS_ROOT="$HOME/.argc-completions"
+export ARGC_COMPLETIONS_PATH="$ARGC_COMPLETIONS_ROOT/completions"
 export GO_PATH="$HOME/go/bin"
 export JETBRAINS_PATH="$HOME/Library/Application Support/JetBrains/Toolbox/scripts"
 export PNPM_HOME="$HOME/Library/pnpm"
-export ARGC_COMPLETIONS_ROOT="$HOME/.argc-completions"
-export ARGC_COMPLETIONS_PATH="$ARGC_COMPLETIONS_ROOT/completions"
 
 export LESSHISTFILE=- # Disable history file for less
 

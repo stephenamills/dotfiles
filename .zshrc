@@ -1,21 +1,24 @@
 # This file depends on four modules installed from the Brewfile:
-# pure zsh-autocomplete zsh-autosuggestions zsh-syntax-highlighting
+# asdf pure zsh-autocomplete zsh-autosuggestions zsh-syntax-highlighting
 
 # If the `brew` command exists
 if type brew &>/dev/null; then
-  # Initialize shell modules listed in the Brewfile
+  # Load dependencies installed by Homebrew
 
-  # Pure terminal prompt module
+  # asdf version manager
+  source /usr/local/opt/asdf/libexec/asdf.sh
+
+  # Pure terminal prompt
   autoload -U promptinit; promptinit
   prompt pure
 
-  # zsh-autocomplete module (automatically displays completions for commands in real-time)
+  # zsh-autocomplete (automatically displays completions for commands in real-time)
   source /usr/local/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 
-  # zsh-autosuggestions module (suggests commands from history)
+  # zsh-autosuggestions (suggests commands from history)
   source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
-  # zsh-syntax-highlighting module (highlighting for zsh syntax while typing)
+  # zsh-syntax-highlighting (highlighting for zsh syntax while typing)
   source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
 

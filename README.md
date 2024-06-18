@@ -17,5 +17,5 @@ brew bundle install --no-lock
 Lastly, install the npm packages from the `Npmfile`:
 
 ```shell
-pnpm add -g $(tr '\n' ' ' < Npmfile)
+pnpm install -g $(tr '\n' ' ' < Npmfile)
 ```

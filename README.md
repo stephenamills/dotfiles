@@ -1,14 +1,14 @@
 # My dotfiles
 
-This collection contains my shell configuration files and installed Homebrew and npm packages.
+This collection contains my personal shell configuration files and installed Homebrew and npm packages.
 
 # Usage
 
 Homebrew is required to install packages that the shell configuration files depend on.
 
-Clone this repository and copy the `.zprofile` and `.zshrc` config files to your home directory.
+Clone this repository and copy `.zprofile` and `.zshrc` to your home directory.
 
-Install the Homebrew packages from the `Brewfile`:
+Then install the Homebrew packages from the `Brewfile`:
 
 ```
 brew bundle install --no-lock

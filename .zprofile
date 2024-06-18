@@ -15,4 +15,4 @@ else
   eval "$(/usr/local/bin/brew shellenv)"
 fi
 
-export PATH="$ARGC_COMPLETIONS_ROOT/bin:$GO_PATH:$JETBRAINS_PATH:$PNPM_HOME:$PATH"
+export PATH="$ARGC_COMPLETIONS_ROOT/bin:$GOPATH:$JETBRAINS_PATH:$PNPM_HOME:$PATH"

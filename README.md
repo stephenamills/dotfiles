@@ -14,7 +14,7 @@ Then install the Homebrew packages from the `Brewfile`:
 brew bundle install --no-lock
 ```
 
-Install the npm packages from the `Npmfile`:
+Lastly, install the npm packages from the `Npmfile`:
 
 ```shell
 pnpm add -g $(tr '\n' ' ' < Npmfile)

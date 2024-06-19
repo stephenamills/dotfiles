@@ -1,6 +1,6 @@
 # My dotfiles
 
-This collection contains my personal shell configuration files and installed Homebrew and npm packages.
+This collection contains my shell configuration files and installed Homebrew and npm packages.
 
 # Usage
 

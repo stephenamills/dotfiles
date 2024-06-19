@@ -9,7 +9,7 @@ if type brew &>/dev/null; then
   source $(brew --prefix)/opt/asdf/libexec/asdf.sh
 
   # Pure terminal prompt
-  autoload -U promptinit; promptinit
+  autoload promptinit; promptinit
   prompt pure
 
   # zsh-autocomplete (automatically displays completions for commands in real-time)
@@ -29,19 +29,24 @@ if [ -d "$HOME/.argc-completions" ]; then
   source <(argc --argc-completions zsh $argc_scripts)
 fi
 
-# Invoked as a command to install an app
+# Invoked at the command line to install an app
 function bi() {
   brew install --no-quarantine "$@"
 }
 
-# Invoked as a command to install a .pkg file
+# Invoked at the command line to search
+function bs() {
+  brew search --eval-all --desc "$@"
+}
+
+# Invoked at the command line to install a .pkg file
 function ins() {
   for pkg in "$@"; do
     sudo installer -pkg "$pkg" -target /
   done
 }
 
-# Invoked as a command to sign a bundle
+# Invoked at the command line to sign a bundle
 function prep() {
   sudo xattr -r -d com.apple.quarantine "$1"
   sudo codesign --force --deep --sign - "$1"

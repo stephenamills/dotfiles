@@ -3,6 +3,7 @@ export ARGC_COMPLETIONS_PATH="$ARGC_COMPLETIONS_ROOT/completions"
 export GOPATH="$HOME/go/bin"
 export JETBRAINS_PATH="$HOME/Library/Application Support/JetBrains/Toolbox/scripts"
 export PNPM_HOME="$HOME/Library/pnpm"
+export RUST_PATH="$HOME/.cargo/bin"
 
 export LESSHISTFILE=- # Disable history file for less
 
@@ -15,4 +16,4 @@ else
   eval "$(/usr/local/bin/brew shellenv)"
 fi
 
-export PATH="$ARGC_COMPLETIONS_ROOT/bin:$GOPATH:$JETBRAINS_PATH:$PNPM_HOME:$PATH"
+export PATH="$ARGC_COMPLETIONS_ROOT/bin:$GOPATH:$JETBRAINS_PATH:$PNPM_HOME:$RUST_PATH:$PATH"

@@ -141,10 +141,8 @@ cask "spotify"
 cask "surge-xt"
 cask "tailscale"
 cask "wireshark"
-mas "adguard", id: 1440147259
 mas "hiddenbar", id: 1452453066
 mas "telegram", id: 747648890
-mas "vimari", id: 1480933944
 vscode "astro-build.astro-vscode"
 vscode "equinusocio.vsc-material-theme-icons"
 vscode "esbenp.prettier-vscode"

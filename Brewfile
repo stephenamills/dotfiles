@@ -2,7 +2,6 @@ tap "hashicorp/tap"
 tap "heroku/brew"
 tap "supabase/tap"
 tap "xo/xo"
-
 brew "ansible"
 brew "argc"
 brew "asdf"

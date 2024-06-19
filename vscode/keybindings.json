@@ -62,9 +62,17 @@
     },
     {
         "key": "cmd+enter",
-        "command": "workbench.action.terminal.sendSequence",
+        "command": "extension.multiCommand.execute",
         "args": {
-            "text": "\u000Dprintf 'Enter commit message: ' && read msg && git add . && git commit -m \"$msg\" && git push\u000D"
+            "sequence": [
+                "workbench.action.terminal.focus",
+                {
+                    "command": "workbench.action.terminal.sendSequence",
+                    "args": {
+                        "text": "\u000Dprintf 'Enter commit message: ' && read msg && git add . && git commit -m \"$msg\" && git push\u000D"
+                    }
+                }
+            ]
         },
         "when": "editorTextFocus"
     }

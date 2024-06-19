@@ -4,7 +4,7 @@ This collection contains my shell configuration files and installed Homebrew and
 
 This is 150 packages.
 
-This is really for personal use but here in case someone finds it useful.
+It's really for personal use but here in case someone finds it useful.
 
 # Usage
 

@@ -2,13 +2,13 @@
 
 This collection contains my shell configuration files and installed Homebrew and npm packages.
 
+This is 150 packages, just so you know.
+
+This is really for personal use but here in case someone finds it useful.
+
 # Usage
 
-Homebrew is required to install packages that the two shell configuration files depend on.
-
-This is 150 commands, so don't install if you don't want that.
-
-This is all really for personal use but here in case someone finds it useful.
+Homebrew is required to install dependencies the two shell configuration files rely on.
 
 Clone this repository and copy `.zprofile` and `.zshrc` to your home directory.
 

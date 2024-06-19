@@ -12,7 +12,7 @@ Lastly, run the commands below to install:
 
 - The Homebrew packages listed in the `Brewfile`
 - The npm packages listed in the `Npmfile`
-- And the Rust packages listed in the `Rustfile`
+- The Rust packages listed in the `Rustfile`
 
 This is 150 commands, so don't install if you don't want that.
 

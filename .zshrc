@@ -8,21 +8,22 @@ if type brew &>/dev/null; then
   # asdf version manager
   source $(brew --prefix)/opt/asdf/libexec/asdf.sh
 
-  # Pure terminal prompt
-  autoload promptinit; promptinit
+  # Pure zsh extension (aesthetically pleasing terminal prompt)
+  autoload promptinit
+  promptinit
   prompt pure
 
-  # zsh-autocomplete (automatically displays completions for commands in real-time)
+  # zsh autocomplete extension (automatically displays completions for commands in real-time)
   source $(brew --prefix)/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 
-  # zsh-autosuggestions (suggests commands from history)
+  # zsh autosuggestions extension (suggests commands from history)
   source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
-  # zsh-syntax-highlighting (highlighting for zsh syntax while typing)
+  # zsh syntax highlighting extension (highlighting during typing)
   source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
 
-# This depends on the sigoden/argc-completions repo being cloned to $HOME/.argc-completions
+# This depends on the sigoden/argc-completions repo being located at $HOME/.argc-completions
 if [ -d "$HOME/.argc-completions" ]; then
   # To add completions for only the specified command, modify next line e.g. argc_scripts=( cargo git )
   argc_scripts=( $(ls -p -1 "$ARGC_COMPLETIONS_ROOT/completions" | sed -n 's/\.sh$//p') )

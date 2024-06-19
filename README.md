@@ -14,7 +14,9 @@ Lastly, run the following commands to install:
 - The npm packages listed in the `Npmfile`
 - And the Rust packages listed in the `Rustfile`
 
-This is 150 commands, so don't install if you don't want that. This is all really for personal use but here in case someone finds it useful.
+This is 150 commands, so don't install if you don't want that.
+
+This is all really for personal use but here in case someone finds it useful.
 
 ```shell
 brew bundle install --no-lock

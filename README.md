@@ -2,7 +2,7 @@
 
 This collection contains my shell configuration files and installed Homebrew and npm packages.
 
-This is 150 packages, just so you know.
+This is 150 packages.
 
 This is really for personal use but here in case someone finds it useful.
 

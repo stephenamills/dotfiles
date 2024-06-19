@@ -16,4 +16,5 @@ else
   eval "$(/usr/local/bin/brew shellenv)"
 fi
 
-export PATH="$ARGC_COMPLETIONS_ROOT/bin:$GOPATH:$JETBRAINS_PATH:$PNPM_HOME:$RUST_PATH:$PATH"
+export PYTHON_PATH="$(brew --prefix python)/libexec/bin" # This must be executed after the Homebrew shellenv command
+export PATH="$PYTHON_PATH:$ARGC_COMPLETIONS_ROOT/bin:$GOPATH:$JETBRAINS_PATH:$PNPM_HOME:$RUST_PATH:$PATH"

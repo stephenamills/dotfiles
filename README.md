@@ -4,18 +4,22 @@ This collection contains my personal shell configuration files and installed Hom
 
 # Usage
 
-Homebrew is required to install packages that the shell configuration files depend on.
+Homebrew is required to install packages that the two shell configuration files depend on.
 
 Clone this repository and copy `.zprofile` and `.zshrc` to your home directory.
 
-Then install the Homebrew packages from the `Brewfile`:
+Lastly, run the following commands to install:
 
-```
-brew bundle install --no-lock
-```
-
-Lastly, install the npm packages from the `Npmfile`:
+- The Homebrew packages listed in the `Brewfile`
+- The npm packages listed in the `Npmfile`
+- And the Rust packages listed in the `Rustfile`
 
 ```shell
+brew bundle install --no-lock
+
 pnpm install -g $(tr '\n' ' ' < Npmfile)
+
+cargo install $(tr '\n' ' ' < Rustfile)
 ```
+
+This is 150 commands, so don't install if you don't want that. This is all sreally for personal use but I've put it here in case someone finds it useful.

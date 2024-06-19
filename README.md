@@ -8,7 +8,7 @@ Homebrew is required to install packages that the two shell configuration files 
 
 Clone this repository and copy `.zprofile` and `.zshrc` to your home directory.
 
-Lastly, run the following commands to install:
+Lastly, run the commands below to install:
 
 - The Homebrew packages listed in the `Brewfile`
 - The npm packages listed in the `Npmfile`

@@ -8,7 +8,10 @@ if type brew &>/dev/null; then
   # asdf version manager
   source $(brew --prefix)/opt/asdf/libexec/asdf.sh
 
-  # Pure zsh extension (aesthetically pleasing terminal prompt)
+  # direnv (automatically loads/unloads environment variables)
+  eval "$(direnv hook zsh)"
+
+  # zsh Pure extension (aesthetically pleasing terminal prompt)
   autoload promptinit
   promptinit
   prompt pure
@@ -23,7 +26,7 @@ if type brew &>/dev/null; then
   source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
 
-# This depends on the sigoden/argc-completions repo being located at $HOME/.argc-completions
+# This depends on the sigoden/argc-completions repo being placed at $HOME/.argc-completions
 if [ -d "$HOME/.argc-completions" ]; then
   # To add completions for only the specified command, modify next line e.g. argc_scripts=( cargo git )
   argc_scripts=( $(ls -p -1 "$ARGC_COMPLETIONS_ROOT/completions" | sed -n 's/\.sh$//p') )

@@ -1,6 +1,6 @@
 # My dotfiles
 
-This collection contains my shell configuration files and installed Homebrew and npm packages.
+This collection contains my shell configuration files and lists of commands and apps.
 
 This is 150 packages.
 

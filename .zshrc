@@ -19,16 +19,13 @@ if type brew &>/dev/null; then
   # zsh-autocomplete extension (automatically displays completions for commands in real-time)
   source $(brew --prefix)/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
   
-  # The following obscure zstyle pattern globbing is for customizing the colors of the zsh autocompletion menu
-
-  # =(#b) means pattern matches will come next
-  # * matches everything (command names or command options) prior to the --
-  # (-- *) matches the -- and a space and everything (description of the command or command option) after that space
-  # in =color1 and =color2, color2 references and applies to the matched pattern in parentheses and color1 applies to anything else
-  # 35 is magenta and 90 is a lightish gray -- sometimes the contrast is too low but I can't find a limited ANSI terminal color that works better
-  # I have zero clue what :*:default does or whether the :default is necessary
-  # I fixed and adapted this from https://superuser.com/a/1200812 and https://github.com/ohmyzsh/ohmyzsh/issues/9728#issuecomment-1025890246
-  zstyle ':completion:*:default' list-colors '=(#b)*(-- *)=35=90'
+  # Customizing zsh autocompletion menu colors with zstyle pattern globbing:
+  # =(#b): Pattern matches follow.
+  # *: Matches command names/options before --.
+  # (-- *): Matches --, a space, and the description after the space.
+  # =color1=color2: color2 for matched pattern, color1 for others. 35=magenta, 90=light gray.
+  # Adapted from online examples. https://github.com/ohmyzsh/ohmyzsh/issues/9728#issuecomment-1025890246 and https://superuser.com/a/1200812
+  zstyle ':completion:*' list-colors '=(#b)*(-- *)=35=90'
 
   # zsh-autosuggestions extension (suggests commands from history)
   source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh

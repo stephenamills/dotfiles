@@ -8,8 +8,8 @@ export RUST_PATH="$HOME/.cargo/bin"
 export LESSHISTFILE=- # Disable history file for less
 
 # Add Homebrew to PATH variable
-if [[ $(uname -m) == "arm64" ]]; then
   # If the machine is Apple Silicon, use Homebrew's different default path
+if [[ $(uname -m) == "arm64" ]]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 else
   # If the machine is Intel, use Homebrew's different default path

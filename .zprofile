@@ -1,6 +1,6 @@
 export ARGC_COMPLETIONS_ROOT="$HOME/.argc-completions"
 export ARGC_COMPLETIONS_PATH="$ARGC_COMPLETIONS_ROOT/completions"
-export GOPATH="$HOME/go/bin"
+export GOPATH="$HOME/go"
 export JETBRAINS_PATH="$HOME/Library/Application Support/JetBrains/Toolbox/scripts"
 export PNPM_HOME="$HOME/Library/pnpm"
 export RUST_PATH="$HOME/.cargo/bin"

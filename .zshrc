@@ -18,14 +18,6 @@ if type brew &>/dev/null; then
 
   # zsh-autocomplete extension (automatically displays completions for commands in real-time)
   source $(brew --prefix)/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
-  
-  # Customizing zsh autocompletion menu colors with zstyle pattern globbing:
-  # =(#b): Pattern matches follow.
-  # *: Matches command names/options before --.
-  # (-- *): Matches --, a space, and the description after the space.
-  # =color1=color2: color2 for matched pattern, color1 for others. 35=magenta, 90=light gray.
-  # Adapted from online examples. https://github.com/ohmyzsh/ohmyzsh/issues/9728#issuecomment-1025890246 and https://superuser.com/a/1200812
-  zstyle ':completion:*' list-colors '=(#b)*(-- *)=35=90'
 
   # zsh-autosuggestions extension (suggests commands from history)
   source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
@@ -34,12 +26,20 @@ if type brew &>/dev/null; then
   source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
 
-# This depends on the sigoden/argc-completions repo being placed at $HOME/.argc-completions
+# The .argc-completions git submodule must be copied to $HOME/.argc-completions
 if [ -d "$HOME/.argc-completions" ]; then
-  # To add completions for only the specified command, modify next line e.g. argc_scripts=( cargo git )
+  # Store the name of each completion shell script in an array
   argc_scripts=( $(ls -p -1 "$ARGC_COMPLETIONS_ROOT/completions" | sed -n 's/\.sh$//p') )
   source <(argc --argc-completions zsh $argc_scripts)
 fi
+
+# Customizing zsh autocompletion menu colors with zstyle pattern globbing:
+# =(#b): Pattern matches follow.
+# *: Matches command names/options before --.
+# (-- *): Matches --, a space, and the description after the space.
+# =color1=color2: color2 for matched pattern, color1 for others. 35=magenta, 90=light gray.
+# Adapted from online examples. https://github.com/ohmyzsh/ohmyzsh/issues/9728#issuecomment-1025890246 and https://superuser.com/a/1200812
+zstyle ':completion:*' list-colors '=(#b)*(-- *)=35=90'
 
 # Invoked at the command line to install an app
 bi() {

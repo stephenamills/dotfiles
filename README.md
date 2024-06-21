@@ -15,7 +15,7 @@ Lastly, run the commands below to install:
 - The Homebrew packages listed in the `Brewfile`
 - The Go packages in the `Gofile`
 - The Rust packages in the `Rustfile`
-- The npm packages in the `Npmfile`
+- The JavaScript packages in the `Npmfile`
 
 ```shell
 brew bundle install --no-lock

@@ -1,1 +1,1 @@
-github.com/jackmordaunt/icns/cmd/preview@latest
+go install github.com/jackmordaunt/icns/cmd/icnsify@latest

@@ -16,13 +16,24 @@ if type brew &>/dev/null; then
   promptinit
   prompt pure
 
-  # zsh autocomplete extension (automatically displays completions for commands in real-time)
+  # zsh-autocomplete extension (automatically displays completions for commands in real-time)
   source $(brew --prefix)/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+  
+  # The following obscure zstyle pattern globbing is for customizing the colors of the zsh autocompletion menu
 
-  # zsh autosuggestions extension (suggests commands from history)
+  # =(#b) means pattern matches will come next
+  # * matches everything (command names or command options) prior to the --
+  # (-- *) matches the -- and a space and everything (description of the command or command option) after that space
+  # in =color1 and =color2, color2 references and applies to the matched pattern in parentheses and color1 applies to anything else
+  # 35 is magenta and 90 is a lightish gray -- sometimes the contrast is too low but I can't find a limited ANSI terminal color that works better
+  # I have zero clue what :*:default does or whether the :default is necessary
+  # I fixed and adapted this from https://superuser.com/a/1200812 and https://github.com/ohmyzsh/ohmyzsh/issues/9728#issuecomment-1025890246
+  zstyle ':completion:*:default' list-colors '=(#b)*(-- *)=35=90'
+
+  # zsh-autosuggestions extension (suggests commands from history)
   source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
-  # zsh syntax highlighting extension (highlighting during typing)
+  # zsh-syntax-highlighting extension (syntax highlighting in real-time while typing)
   source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
 
@@ -34,30 +45,30 @@ if [ -d "$HOME/.argc-completions" ]; then
 fi
 
 # Invoked at the command line to install an app
-function bi() {
+bi() {
   brew install --no-quarantine "$@"
 }
 
 # Invoked at the command line to search
-function bs() {
+bs() {
   brew search --eval-all --desc "$@"
 }
 
 # Invoked at the command line to install a .pkg file
-function ins() {
+ins() {
   for pkg in "$@"; do
     sudo installer -pkg "$pkg" -target /
   done
 }
 
 # Invoked at the command line to sign a bundle
-function prep() {
+prep() {
   sudo xattr -r -d com.apple.quarantine "$1"
   sudo codesign --force --deep --sign - "$1"
 }
 
 # Lazy loading for bloated Google Cloud SDK
-function gcloud() {
+gcloud() {
     # Check if Google Cloud SDK is installed
     if [ -d "$(brew --prefix)/share/google-cloud-sdk" ]; then
         # Source the SDK components

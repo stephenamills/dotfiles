@@ -121,7 +121,6 @@ brew "vultr"
 brew "websocat"
 brew "wp-cli"
 brew "wpscan"
-brew "wireshark", link: false
 brew "yq"
 brew "zsh"
 brew "zsh-autocomplete"

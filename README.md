@@ -13,12 +13,13 @@ Clone this repository and copy `.zprofile` and `.zshrc` to your home directory.
 Lastly, run the commands below to install:
 
 - The Homebrew packages listed in the `Brewfile`
-- The npm packages listed in the `Npmfile`
-- The Rust packages listed in the `Rustfile`
+- The Go packages in the `Gofile`
+- The Rust packages in the `Rustfile`
+- The npm packages in the `Npmfile`
 
 ```shell
 brew bundle install --no-lock
-cargo install $(tr '\n' ' ' < Rustfile)
 go install $(tr '\n' ' ' < Gofile)
+cargo install $(tr '\n' ' ' < Rustfile)
 pnpm install -g $(tr '\n' ' ' < Npmfile)
 ```

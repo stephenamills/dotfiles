@@ -18,8 +18,7 @@ Lastly, run the commands below to install:
 
 ```shell
 brew bundle install --no-lock
-
-pnpm install -g $(tr '\n' ' ' < Npmfile)
-
 cargo install $(tr '\n' ' ' < Rustfile)
+go install $(tr '\n' ' ' < Gofile)
+pnpm install -g $(tr '\n' ' ' < Npmfile)
 ```

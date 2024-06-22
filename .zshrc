@@ -41,24 +41,25 @@ fi
 # Adapted from online examples. https://github.com/ohmyzsh/ohmyzsh/issues/9728#issuecomment-1025890246 and https://superuser.com/a/1200812
 zstyle ':completion:*' list-colors '=(#b)*(-- *)=35=90'
 
-# Invoked at the command line to install an app
+# Command to install an app
 bi() {
   brew install --no-quarantine "$@"
 }
 
-# Invoked at the command line to search
-bs() {
-  brew search --eval-all --desc "$@"
+# Command to commit changes to a git repository
+gitc() {
+  printf 'Enter commit message: ' && read msg && git add . && git commit -m \"$msg\" && git push
 }
 
-# Invoked at the command line to install a .pkg file
+
+# Command to install a .pkg file
 ins() {
   for pkg in "$@"; do
     sudo installer -pkg "$pkg" -target /
   done
 }
 
-# Invoked at the command line to sign a bundle
+# Command to sign a bundle
 prep() {
   sudo xattr -r -d com.apple.quarantine "$1"
   sudo codesign --force --deep --sign - "$1"

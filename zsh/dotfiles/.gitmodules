@@ -1,0 +1,3 @@
+[submodule ".argc-completions"]
+	path = .argc-completions
+	url = https://github.com/sigoden/argc-completions.git

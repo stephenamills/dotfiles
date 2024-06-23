@@ -16,10 +16,12 @@ Lastly, run the commands below to install:
 - The Go packages in the `Gofile`
 - The Rust packages in the `Rustfile`
 - The JavaScript packages in the `Npmfile`
+- The Python packages in the `Pythonfile`
 
 ```shell
 brew bundle install --no-lock
-cargo install $(tr '\n' ' ' < Rustfile)
 go install $(tr '\n' ' ' < Gofile)
+cargo install $(tr '\n' ' ' < Rustfile)
 pnpm install -g $(tr '\n' ' ' < Npmfile)
+pipx install $(tr '\n' ' ' < Pythonfile)
 ```

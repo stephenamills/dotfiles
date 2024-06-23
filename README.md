@@ -23,5 +23,5 @@ brew bundle install --no-lock
 go install $(tr '\n' ' ' < Gofile)
 cargo install $(tr '\n' ' ' < Rustfile)
 pnpm install -g $(tr '\n' ' ' < Npmfile)
-xargs -n 1 pipx install --force < Pythonfile
+xargs -n 1 pipx install < Pythonfile
 ```

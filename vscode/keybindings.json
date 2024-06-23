@@ -61,7 +61,7 @@
         "command": "workbench.action.focusThirdEditorGroup"
     },
     {
-        "key": "cmd+enter",
+        "key": "ctrl+enter",
         "command": "extension.multiCommand.execute",
         "args": {
             "sequence": [

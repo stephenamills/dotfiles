@@ -51,11 +51,6 @@ gitc() {
   printf 'Enter commit message: ' && read msg && git add . && git commit -m $msg && git push
 }
 
-# Same command to commit changes to a git repository
-gc() {
-  printf 'Enter commit message: ' && read msg && git add . && git commit -m $msg && git push
-}
-
 # Command to install a .pkg file
 ins() {
   for pkg in "$@"; do

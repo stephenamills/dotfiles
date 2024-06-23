@@ -2,6 +2,7 @@ export ARGC_COMPLETIONS_ROOT="$HOME/.argc-completions"
 export ARGC_COMPLETIONS_PATH="$ARGC_COMPLETIONS_ROOT/completions"
 export GOPATH="$HOME/go"
 export JETBRAINS_PATH="$HOME/Library/Application Support/JetBrains/Toolbox/scripts"
+export PIPX_PATH="$HOME/.local/bin"
 export PNPM_HOME="$HOME/Library/pnpm"
 export RUST_PATH="$HOME/.cargo/bin"
 
@@ -17,4 +18,4 @@ else
 fi
 
 export PYTHON_PATH="$(brew --prefix python)/libexec/bin" # This must be executed after the Homebrew shellenv command
-export PATH="$PYTHON_PATH:$ARGC_COMPLETIONS_ROOT/bin:$GOPATH/bin:$JETBRAINS_PATH:$PNPM_HOME:$RUST_PATH:$PATH"
+export PATH="$PYTHON_PATH:$ARGC_COMPLETIONS_ROOT/bin:$GOPATH/bin:$JETBRAINS_PATH:$PIPX_PATH:$PNPM_HOME:$RUST_PATH:$PATH"

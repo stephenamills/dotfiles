@@ -1,4 +1,4 @@
-# This file depends on four modules installed from the Brewfile:
+# This file depends on five modules installed from the Brewfile:
 # asdf pure zsh-autocomplete zsh-autosuggestions zsh-syntax-highlighting
 
 # If the `brew` command exists
@@ -38,7 +38,7 @@ fi
 # *: Matches command names/options before --.
 # (-- *): Matches --, a space, and the description after the space.
 # =color1=color2: color2 for matched pattern, color1 for others. 35=magenta, 90=light gray.
-# Adapted from online examples. https://github.com/ohmyzsh/ohmyzsh/issues/9728#issuecomment-1025890246 and https://superuser.com/a/1200812
+# Adapted from online examples. See https://github.com/ohmyzsh/ohmyzsh/issues/9728#issuecomment-1025890246 and https://superuser.com/a/1200812
 zstyle ':completion:*' list-colors '=(#b)*(-- *)=35=90'
 
 # Command to install an app

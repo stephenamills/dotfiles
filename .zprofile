@@ -1,4 +1,4 @@
-# Adds Homebrew to the path variable – Homebrew on Apple Silicon Macs changed to using the first path for whatever reason
+# Adds Homebrew to the path variable – Homebrew changed to using the first path on Apple Silicon Macs for whatever reason
 [[ $(uname -m) == "arm64" ]] && eval "$(/opt/homebrew/bin/brew shellenv)" || eval "$(/usr/local/bin/brew shellenv)"
 
 export ARGC_COMPLETIONS_ROOT="$HOME/.argc-completions"

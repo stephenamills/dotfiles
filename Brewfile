@@ -30,7 +30,7 @@ brew "argo"
 brew "argocd"
 brew "argocd-autopilot"
 brew "argocd-vault-plugin"
-# brew "argus" # potentially interesting to use later
+# brew "argus" potentially interesting to use later
 # brew "argus-clients" 
 brew "arjun"
 brew "arkade"
@@ -47,7 +47,7 @@ brew "ast-grep"
 brew "athenacli"
 brew "atlantis" # looks useful
 brew "atlas" # looks useful
-brew "atmos" # terraform tool but marketing is absolutely horrible
+brew "atmos" # Terraform tool but marketing is absolutely horrible
 brew "autorest"
 brew "aws-amplify"
 brew "aws-auth"
@@ -64,6 +64,7 @@ brew "aws-vault"
 brew "awscli"
 brew "awscli-local"
 brew "awscurl"
+brew "awsdac" # aws labs diagram tool
 brew "awslogs"
 brew "awsume"
 brew "awsweeper"
@@ -75,6 +76,32 @@ brew "b2-tools"
 brew "badkeys"
 brew "bat"
 brew "bbot"
+brew "berglas" # Google Cloud
+# brew "bfs" # the GitHub page has a nice neutral tone terminal background
+# brew "bgpdump" # don't need this right now, but probably later
+brew "bgpq4"
+brew "bgpstream"
+brew "bigquery-emulator"
+brew "bitwarden-cli"
+brew "blackbox"
+brew "bore-cli" # only 400 lines of code
+brew "boringtun"
+# brew "bpftop" # for Linux only but useful
+# brew "brev" # cringe marketing but saving it here anyway
+brew "buf" # protocol buffers
+brew "buildpulse-test-reporter"
+# brew "butane" for Linux only
+brew "c2rust"
+brew "c7n" # very interesting or useful ci pipeline cloud analysis tool thing
+# brew "caddy" # check this out for simpler server use cases than traefik
+# brew "cadence-workflow" # Uber's workflow engine
+brew "caire" # super useful content-aware image resizer
+# brew "capnp" # apparently Cloudflare workers use this
+# brew "cariddi" # really does not look useful but I just like go command line tools 😂
+# brew "carthage" # for iOS development
+# brew "cascadia" HTML selector tool
+brew "ccheck" # certificate expiration
+# brew "ccm" # cassandra
 brew "checkov"
 brew "choose-rust"
 brew "circleci"
@@ -82,6 +109,7 @@ brew "cloudflared"
 brew "cloudflare-wrangler2"
 brew "corepack"
 brew "cosign"
+brew "cyctl" # really cool Kubernetes ui tool
 brew "deno"
 brew "difftastic"
 brew "direnv"
@@ -99,6 +127,7 @@ brew "fd"
 brew "feroxbuster"
 brew "firebase-cli"
 brew "flarectl"
+brew "flyctl"
 brew "gdu"
 brew "gh"
 brew "ghz"
@@ -189,14 +218,18 @@ brew "trivy"
 brew "xo/xo/usql"
 brew "vercel-cli"
 brew "vultr"
+brew "watch"
 brew "websocat"
 brew "wp-cli"
 brew "wpscan"
 brew "yq"
+brew "zlint" # certificate checker, also see zcertificate and zschema
 brew "zsh"
 brew "zsh-autocomplete"
+brew "zsh-autopair"
 brew "zsh-autosuggestions"
 brew "zsh-syntax-highlighting"
+# brew "zx"
 cask "blackhole-2ch"
 cask "devkinsta"
 cask "dropbox"

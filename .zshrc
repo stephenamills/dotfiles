@@ -1,5 +1,5 @@
-# This file depends on five modules installed from the Brewfile:
-# asdf pure zsh-autocomplete zsh-autosuggestions zsh-syntax-highlighting
+# This file depends on six modules installed from the Brewfile:
+# asdf pure zsh-autocomplete zsh-autopair zsh-autosuggestions zsh-syntax-highlighting
 
 # If the `brew` command exists
 if type brew &>/dev/null; then
@@ -19,7 +19,10 @@ if type brew &>/dev/null; then
   # zsh-autocomplete extension (automatically displays completions for commands in real-time)
   source $(brew --prefix)/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 
-  # zsh-autosuggestions extension (suggests commands from history)
+  # zsh-autopair extension (automatically inserts matching brackets, quotes, etc.)
+  source $(brew --prefix)/share/zsh-autopair/autopair.zsh
+
+  # zsh-autosuggestions extension (suggests previously typed command lines from history)
   source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
   # zsh-syntax-highlighting extension (syntax highlighting in real-time while typing)
@@ -33,11 +36,11 @@ if [ -d "$HOME/.argc-completions" ]; then
   source <(argc --argc-completions zsh $argc_scripts)
 fi
 
-# Customizing zsh autocompletion menu colors with zstyle pattern globbing:
+# The following obscure line customizes colors of the text in the zsh autocompletion menu using zstyle's pattern matching syntax:
 # =(#b): Pattern matches follow.
-# *: Matches command names/options before --.
-# (-- *): Matches --, a space, and the description after the space.
-# =color1=color2: color2 for matched pattern, color1 for others. 35=magenta, 90=light gray.
+# *: Matches command names or options before --.
+# (-- *): Matches --, a space, and the description text after the space.
+# =color1=color2: color2 is applied to the matched pattern, color1 to everything else. 35=magenta, 90=light gray.
 # Adapted from online examples. See https://github.com/ohmyzsh/ohmyzsh/issues/9728#issuecomment-1025890246 and https://superuser.com/a/1200812
 zstyle ':completion:*' list-colors '=(#b)*(-- *)=35=90'
 

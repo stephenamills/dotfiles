@@ -12,57 +12,57 @@
 
 # {{ brew install
 # @cmd Install formula.
-# @flag -d --debug                        If brewing fails, open an interactive debugging session with access to IRB or a shell inside the temporary build directory.
-# @flag -f --force                        Install formulae without checking for previously installed keg-only or non-migrated versions.
-# @flag -v --verbose                      Print the verification and post-install steps.
-# @flag -n --dry-run                      Show what would be installed, but do not actually install anything.
-# @flag --formula                         Treat all named arguments as formulae.
-# @flag --formulae                        Treat all named arguments as formulae.
-# @flag --ignore-dependencies             An unsupported Homebrew development option to skip installing any dependencies of any kind.
-# @flag --only-dependencies               Install the dependencies with specified options but do not install the formula itself.
-# @flag --cc                              Attempt to compile using the specified compiler, which should be the name of the compiler's executable, e.g. gcc-7 for GCC 7.
-# @flag -s --build-from-source            Compile formula from source even if a bottle is provided.
-# @flag --force-bottle                    Install from a bottle if it exists for the current or newest version of macOS, even if it would not normally be used for installation.
-# @flag --include-test                    Install testing dependencies required to run brew test formula.
-# @flag --HEAD                            If formula defines it, install the HEAD version, aka.
-# @flag --fetch-HEAD                      Fetch the upstream repository to detect if the HEAD installation of the formula is outdated.
-# @flag --keep-tmp                        Retain the temporary files created during installation.
-# @flag --debug-symbols                   Generate debug symbols on build.
-# @flag --build-bottle                    Prepare the formula for eventual bottling during installation, skipping any post-install steps.
-# @flag --skip-post-install               Install but skip any post-install steps.
-# @flag --bottle-arch                     Optimise bottles for the specified architecture rather than the oldest architecture supported by the version of macOS the bottles are built on.
-# @flag --display-times                   Print install times for each package at the end of the run.
-# @flag -i --interactive                  Download and patch formula, then open a shell.
-# @flag -g --git                          Create a Git repository, useful for creating patches to the software.
-# @flag --overwrite                       Delete files that already exist in the prefix while linking.
-# @flag --cask                            Treat all named arguments as casks.
-# @flag --casks                           Treat all named arguments as casks.
-# @flag --binaries                        Disable/enable linking of helper executables (default: enabled).
-# @flag --no-binaries                     Disable/enable linking of helper executables (default: enabled).
-# @flag --require-sha                     Require all casks to have a checksum.
-# @flag --quarantine                      Disable/enable quarantining of downloads (default: enabled).
-# @flag --no-quarantine                   Disable/enable quarantining of downloads (default: enabled).
-# @flag --adopt                           Adopt existing artifacts in the destination that are identical to those being installed.
-# @flag --skip-cask-deps                  Skip installing cask dependencies.
-# @flag --zap                             For use with brew reinstall --cask.
-# @option --appdir <dir>                  Target location for Applications (default: /Applications).
-# @option --keyboard-layoutdir <dir>      Target location for Keyboard Layouts (default: /Library/Keyboard Layouts).
-# @option --colorpickerdir <dir>          Target location for Color Pickers (default: ~/Library/ColorPickers).
-# @option --prefpanedir <dir>             Target location for Preference Panes (default: ~/Library/PreferencePanes).
-# @option --qlplugindir <dir>             Target location for QuickLook Plugins (default: ~/Library/QuickLook).
-# @option --mdimporterdir <dir>           Target location for Spotlight Plugins (default: ~/Library/Spotlight).
-# @option --dictionarydir <dir>           Target location for Dictionaries (default: ~/Library/Dictionaries).
-# @option --fontdir <dir>                 Target location for Fonts (default: ~/Library/Fonts).
-# @option --servicedir <dir>              Target location for Services (default: ~/Library/Services).
-# @option --input-methoddir <dir>         Target location for Input Methods (default: ~/Library/Input Methods).
-# @option --internet-plugindir <dir>      Target location for Internet Plugins (default: ~/Library/Internet Plug-Ins).
-# @option --audio-unit-plugindir <dir>    Target location for Audio Unit Plugins (default: ~/Library/Audio/Plug-Ins/Components).
-# @option --vst-plugindir <dir>           Target location for VST Plugins (default: ~/Library/Audio/Plug-Ins/VST).
-# @option --vst3-plugindir <dir>          Target location for VST3 Plugins (default: ~/Library/Audio/Plug-Ins/VST3).
-# @option --screen-saverdir <dir>         Target location for Screen Savers (default: ~/Library/Screen Savers).
-# @option --language <value>              Comma-separated list of language codes to prefer for cask installation.
-# @flag -q --quiet                        Make some output more quiet.
-# @flag -h --help                         Show this message.
+# @flag -d --debug                If brewing fails, open an interactive debugging session with access to IRB or a shell inside the temporary build directory.
+# @flag --display-times           Print install times for each package at the end of the run.
+# @flag -f --force                Install formulae without checking for previously installed keg-only or non-migrated versions.
+# @flag -v --verbose              Print the verification and post-install steps.
+# @flag -n --dry-run              Show what would be installed, but do not actually install anything.
+# @flag --formula                 Treat all named arguments as formulae.
+# @flag --formulae                Treat all named arguments as formulae.
+# @flag --ignore-dependencies     An unsupported Homebrew development option to skip installing any dependencies of any kind.
+# @flag --only-dependencies       Install the dependencies with specified options but do not install the formula itself.
+# @flag --cc                      Attempt to compile using the specified compiler, which should be the name of the compiler's executable, e.g. gcc-7 for GCC 7.
+# @flag -s --build-from-source    Compile formula from source even if a bottle is provided.
+# @flag --force-bottle            Install from a bottle if it exists for the current or newest version of macOS, even if it would not normally be used for installation.
+# @flag --include-test            Install testing dependencies required to run brew test formula.
+# @flag --HEAD                    If formula defines it, install the HEAD version, aka.
+# @flag --fetch-HEAD              Fetch the upstream repository to detect if the HEAD installation of the formula is outdated.
+# @flag --keep-tmp                Retain the temporary files created during installation.
+# @flag --debug-symbols           Generate debug symbols on build.
+# @flag --build-bottle            Prepare the formula for eventual bottling during installation, skipping any post-install steps.
+# @flag --skip-post-install       Install but skip any post-install steps.
+# @flag --bottle-arch             Optimise bottles for the specified architecture rather than the oldest architecture supported by the version of macOS the bottles are built on.
+# @flag -i --interactive          Download and patch formula, then open a shell.
+# @flag -g --git                  Create a Git repository, useful for creating patches to the software.
+# @flag --overwrite               Delete files that already exist in the prefix while linking.
+# @flag --cask                    Treat all named arguments as casks.
+# @flag --casks                   Treat all named arguments as casks.
+# @flag --binaries                Disable/enable linking of helper executables (default: enabled).
+# @flag --no-binaries             Disable/enable linking of helper executables (default: enabled).
+# @flag --require-sha             Require all casks to have a checksum.
+# @flag --quarantine              Disable/enable quarantining of downloads (default: enabled).
+# @flag --no-quarantine           Disable/enable quarantining of downloads (default: enabled).
+# @flag --adopt                   Adopt existing artifacts in the destination that are identical to those being installed.
+# @flag --skip-cask-deps          Skip installing cask dependencies.
+# @flag --zap                     For use with brew reinstall --cask.
+# @flag --appdir                  Target location for Applications (default: /Applications).
+# @flag --keyboard-layoutdir      Target location for Keyboard Layouts (default: /Library/Keyboard Layouts).
+# @flag --colorpickerdir          Target location for Color Pickers (default: ~/Library/ColorPickers).
+# @flag --prefpanedir             Target location for Preference Panes (default: ~/Library/PreferencePanes).
+# @flag --qlplugindir             Target location for Quick Look Plugins (default: ~/Library/QuickLook).
+# @flag --mdimporterdir           Target location for Spotlight Plugins (default: ~/Library/Spotlight).
+# @flag --dictionarydir           Target location for Dictionaries (default: ~/Library/Dictionaries).
+# @flag --fontdir                 Target location for Fonts (default: ~/Library/Fonts).
+# @flag --servicedir              Target location for Services (default: ~/Library/Services).
+# @flag --input-methoddir         Target location for Input Methods (default: ~/Library/Input Methods).
+# @flag --internet-plugindir      Target location for Internet Plugins (default: ~/Library/Internet Plug-Ins).
+# @flag --audio-unit-plugindir    Target location for Audio Unit Plugins (default: ~/Library/Audio/Plug-Ins/Components).
+# @flag --vst-plugindir           Target location for VST Plugins (default: ~/Library/Audio/Plug-Ins/VST).
+# @flag --vst3-plugindir          Target location for VST3 Plugins (default: ~/Library/Audio/Plug-Ins/VST3).
+# @flag --screen-saverdir         Target location for Screen Savers (default: ~/Library/Screen Savers).
+# @option --language <value>      Comma-separated list of language codes to prefer for cask installation.
+# @flag -q --quiet                Make some output more quiet.
+# @flag -h --help                 Show this message.
 # @arg formula-cask[`_choice_suggest_formula_cask`] <formula|cask>
 install() {
     :;
@@ -83,6 +83,9 @@ install() {
 # @flag -q --quiet               Make some output more quiet.
 # @flag -v --verbose             Make some output more verbose.
 # @flag -h --help                Show this message.
+# @arg uninstall
+# @arg remove
+# @arg rm
 # @arg installed_formula-installed_cask[`_choice_installed_formula_cask`] <installed_formula|installed_cask>
 uninstall() {
     :;
@@ -92,22 +95,26 @@ uninstall() {
 # {{ brew list
 # @cmd List all installed formulae.
 # @alias ls
-# @flag --formula       List only formulae, or treat all named arguments as formulae.
-# @flag --formulae      List only formulae, or treat all named arguments as formulae.
-# @flag --cask          List only casks, or treat all named arguments as casks.
-# @flag --casks         List only casks, or treat all named arguments as casks.
-# @flag --full-name     Print formulae with fully-qualified names.
-# @flag --versions      Show the version number for installed formulae, or only the specified formulae if formula are provided.
-# @flag --multiple      Only show formulae with multiple versions installed.
-# @flag --pinned        List only pinned formulae, or only the specified (pinned) formulae if formula are provided.
-# @flag -1              Force output to be one entry per line.
-# @flag -l              List formulae and/or casks in long format.
-# @flag -r              Reverse the order of the formulae and/or casks sort to list the oldest entries first.
-# @flag -t              Sort formulae and/or casks by time modified, listing most recently modified first.
-# @flag -d --debug      Display any debugging information.
-# @flag -q --quiet      Make some output more quiet.
-# @flag -v --verbose    Make some output more verbose.
-# @flag -h --help       Show this message.
+# @flag --formula                    List only formulae, or treat all named arguments as formulae.
+# @flag --formulae                   List only formulae, or treat all named arguments as formulae.
+# @flag --cask                       List only casks, or treat all named arguments as casks.
+# @flag --casks                      List only casks, or treat all named arguments as casks.
+# @flag --full-name                  Print formulae with fully-qualified names.
+# @flag --versions                   Show the version number for installed formulae, or only the specified formulae if formula are provided.
+# @flag --multiple                   Only show formulae with multiple versions installed.
+# @flag --pinned                     List only pinned formulae, or only the specified (pinned) formulae if formula are provided.
+# @flag --installed-on-request       List the formulae installed on request.
+# @flag --installed-as-dependency    List the formulae installed as dependencies.
+# @flag -1                           Force output to be one entry per line.
+# @flag -l                           List formulae and/or casks in long format.
+# @flag -r                           Reverse the order of the formulae and/or casks sort to list the oldest entries first.
+# @flag -t                           Sort formulae and/or casks by time modified, listing most recently modified first.
+# @flag -d --debug                   Display any debugging information.
+# @flag -q --quiet                   Make some output more quiet.
+# @flag -v --verbose                 Make some output more verbose.
+# @flag -h --help                    Show this message.
+# @arg list
+# @arg ls
 # @arg installed_formula-installed_cask*[`_choice_installed_formula_cask`] <installed_formula|installed_cask>
 list() {
     :;
@@ -137,6 +144,7 @@ list() {
 # @flag -q --quiet        Make some output more quiet.
 # @flag -v --verbose      Make some output more verbose.
 # @flag -h --help         Show this message.
+# @arg search
 # @arg text-regex <text|/regex/>
 search() {
     :;
@@ -144,7 +152,7 @@ search() {
 # }} brew search
 
 # {{ brew analytics
-# @cmd Control Homebrew´s anonymous aggregate user behaviour analytics.
+# @cmd Control Homebrew’s anonymous aggregate user behaviour analytics.
 # @flag -d --debug      Display any debugging information.
 # @flag -q --quiet      Make some output more quiet.
 # @flag -v --verbose    Make some output more verbose.
@@ -178,7 +186,7 @@ casks() {
 # @cmd Remove stale lock files and outdated downloads for all formulae and casks, and remove old versions of installed formulae.
 # @flag --prune           Remove all cache files older than specified days.
 # @flag -n --dry-run      Show what would be removed, but do not actually remove anything.
-# @flag -s                Scrub the cache, including downloads for even the latest versions.
+# @flag -s --scrub        Scrub the cache, including downloads for even the latest versions.
 # @flag --prune-prefix    Only prune the symlinks and directories from the prefix and remove no other files.
 # @flag -d --debug        Display any debugging information.
 # @flag -q --quiet        Make some output more quiet.
@@ -220,6 +228,7 @@ completions() {
 # @flag -q --quiet      Make some output more quiet.
 # @flag -v --verbose    Make some output more verbose.
 # @flag -h --help       Show this message.
+# @arg config
 config() {
     :;
 }
@@ -248,6 +257,8 @@ config() {
 # @flag --eval-all                Evaluate all available formulae and casks, whether installed or not, to list their dependencies.
 # @flag --for-each                Switch into the mode used by the --eval-all option, but only list dependencies for each provided formula, one formula per line.
 # @flag --HEAD                    Show dependencies for HEAD version instead of stable version.
+# @option --os <value>            Show dependencies for the given operating system.
+# @option --arch <value>          Show dependencies for the given CPU architecture.
 # @flag --formula                 Treat all named arguments as formulae.
 # @flag --formulae                Treat all named arguments as formulae.
 # @flag --cask                    Treat all named arguments as casks.
@@ -263,7 +274,7 @@ deps() {
 # }} brew deps
 
 # {{ brew desc
-# @cmd Display formula´s name and one-line description.
+# @cmd Display formula’s name and one-line description.
 # @flag -s --search         Search both names and descriptions for text.
 # @flag -n --name           Search just names for text.
 # @flag -d --description    Search just descriptions for text.
@@ -283,7 +294,7 @@ desc() {
 # }} brew desc
 
 # {{ brew developer
-# @cmd Control Homebrew´s developer mode.
+# @cmd Control Homebrew’s developer mode.
 # @flag -d --debug      Display any debugging information.
 # @flag -q --quiet      Make some output more quiet.
 # @flag -v --verbose    Make some output more verbose.
@@ -295,7 +306,7 @@ developer() {
 # }} brew developer
 
 # {{ brew docs
-# @cmd Open Homebrew´s online documentation at https://docs.brew.sh in a browser.
+# @cmd Open Homebrew’s online documentation at <https://docs.brew.sh> in a browser.
 # @flag -d --debug      Display any debugging information.
 # @flag -q --quiet      Make some output more quiet.
 # @flag -v --verbose    Make some output more verbose.
@@ -314,6 +325,8 @@ docs() {
 # @flag -q --quiet          Make some output more quiet.
 # @flag -v --verbose        Make some output more verbose.
 # @flag -h --help           Show this message.
+# @arg doctor
+# @arg dr
 # @arg diagnostic_check*[`_choice_suggest_diagnostic_check`]
 doctor() {
     :;
@@ -371,7 +384,7 @@ gist-logs() {
 # }} brew gist-logs
 
 # {{ brew home
-# @cmd Open a formula or cask´s homepage in a browser, or open Homebrew´s own homepage if no argument is provided.
+# @cmd Open a formula or cask’s homepage in a browser, or open Homebrew’s own homepage if no argument is provided.
 # @alias homepage
 # @flag --formula       Treat all named arguments as formulae.
 # @flag --formulae      Treat all named arguments as formulae.
@@ -381,6 +394,8 @@ gist-logs() {
 # @flag -q --quiet      Make some output more quiet.
 # @flag -v --verbose    Make some output more verbose.
 # @flag -h --help       Show this message.
+# @arg home
+# @arg homepage
 # @arg formula-cask*[`_choice_suggest_formula_cask`] <formula|cask>
 home() {
     :;
@@ -406,6 +421,8 @@ home() {
 # @flag -d --debug      Display any debugging information.
 # @flag -q --quiet      Make some output more quiet.
 # @flag -h --help       Show this message.
+# @arg info
+# @arg abv
 # @arg formula-cask*[`_choice_suggest_formula_cask`] <formula|cask>
 info() {
     :;
@@ -426,7 +443,7 @@ leaves() {
 # }} brew leaves
 
 # {{ brew link
-# @cmd Symlink all of formula´s installed files into Homebrew´s prefix.
+# @cmd Symlink all of formula’s installed files into Homebrew’s prefix.
 # @flag --overwrite     Delete files that already exist in the prefix while linking.
 # @flag -n --dry-run    List files which would be linked or deleted by brew link --overwrite without actually linking or deleting any files.
 # @flag -f --force      Allow keg-only formulae to be linked.
@@ -435,6 +452,8 @@ leaves() {
 # @flag -q --quiet      Make some output more quiet.
 # @flag -v --verbose    Make some output more verbose.
 # @flag -h --help       Show this message.
+# @arg link
+# @arg ln
 # @arg installed_formula[`_choice_installed_formula`]
 link() {
     :;
@@ -496,7 +515,7 @@ missing() {
 # }} brew missing
 
 # {{ brew nodenv-sync
-# @cmd Create symlinks for Homebrew´s installed NodeJS versions in ~/.nodenv/versions.
+# @cmd Create symlinks for Homebrew’s installed NodeJS versions in ~/.nodenv/versions.
 # @flag -d --debug      Display any debugging information.
 # @flag -q --quiet      Make some output more quiet.
 # @flag -v --verbose    Make some output more verbose.
@@ -561,13 +580,16 @@ pin() {
 # @flag -q --quiet      Make some output more quiet.
 # @flag -v --verbose    Make some output more verbose.
 # @flag -h --help       Show this message.
+# @arg postinstall
+# @arg post_install
+# @arg installed_formula[`_choice_installed_formula`]
 postinstall() {
     :;
 }
 # }} brew postinstall
 
 # {{ brew pyenv-sync
-# @cmd Create symlinks for Homebrew´s installed Python versions in ~/.pyenv/versions.
+# @cmd Create symlinks for Homebrew’s installed Python versions in ~/.pyenv/versions.
 # @flag -d --debug      Display any debugging information.
 # @flag -q --quiet      Make some output more quiet.
 # @flag -v --verbose    Make some output more verbose.
@@ -578,7 +600,7 @@ pyenv-sync() {
 # }} brew pyenv-sync
 
 # {{ brew rbenv-sync
-# @cmd Create symlinks for Homebrew´s installed Ruby versions in ~/.rbenv/versions.
+# @cmd Create symlinks for Homebrew’s installed Ruby versions in ~/.rbenv/versions.
 # @flag -d --debug      Display any debugging information.
 # @flag -q --quiet      Make some output more quiet.
 # @flag -v --verbose    Make some output more verbose.
@@ -608,46 +630,46 @@ readall() {
 
 # {{ brew reinstall
 # @cmd Uninstall and then reinstall a formula or cask using the same options it was originally installed with, plus any appended options specific to a formula.
-# @flag -d --debug                        If brewing fails, open an interactive debugging session with access to IRB or a shell inside the temporary build directory.
-# @flag -f --force                        Install without checking for previously installed keg-only or non-migrated versions.
-# @flag -v --verbose                      Print the verification and post-install steps.
-# @flag --formula                         Treat all named arguments as formulae.
-# @flag --formulae                        Treat all named arguments as formulae.
-# @flag -s --build-from-source            Compile formula from source even if a bottle is available.
-# @flag -i --interactive                  Download and patch formula, then open a shell.
-# @flag --force-bottle                    Install from a bottle if it exists for the current or newest version of macOS, even if it would not normally be used for installation.
-# @flag --keep-tmp                        Retain the temporary files created during installation.
-# @flag --debug-symbols                   Generate debug symbols on build.
-# @flag --display-times                   Print install times for each formula at the end of the run.
-# @flag -g --git                          Create a Git repository, useful for creating patches to the software.
-# @flag --cask                            Treat all named arguments as casks.
-# @flag --casks                           Treat all named arguments as casks.
-# @flag --binaries                        Disable/enable linking of helper executables (default: enabled).
-# @flag --no-binaries                     Disable/enable linking of helper executables (default: enabled).
-# @flag --require-sha                     Require all casks to have a checksum.
-# @flag --quarantine                      Disable/enable quarantining of downloads (default: enabled).
-# @flag --no-quarantine                   Disable/enable quarantining of downloads (default: enabled).
-# @flag --adopt                           Adopt existing artifacts in the destination that are identical to those being installed.
-# @flag --skip-cask-deps                  Skip installing cask dependencies.
-# @flag --zap                             For use with brew reinstall --cask.
-# @option --appdir <dir>                  Target location for Applications (default: /Applications).
-# @option --keyboard-layoutdir <dir>      Target location for Keyboard Layouts (default: /Library/Keyboard Layouts).
-# @option --colorpickerdir <dir>          Target location for Color Pickers (default: ~/Library/ColorPickers).
-# @option --prefpanedir <dir>             Target location for Preference Panes (default: ~/Library/PreferencePanes).
-# @option --qlplugindir <dir>             Target location for QuickLook Plugins (default: ~/Library/QuickLook).
-# @option --mdimporterdir <dir>           Target location for Spotlight Plugins (default: ~/Library/Spotlight).
-# @option --dictionarydir <dir>           Target location for Dictionaries (default: ~/Library/Dictionaries).
-# @option --fontdir <dir>                 Target location for Fonts (default: ~/Library/Fonts).
-# @option --servicedir <dir>              Target location for Services (default: ~/Library/Services).
-# @option --input-methoddir <dir>         Target location for Input Methods (default: ~/Library/Input Methods).
-# @option --internet-plugindir <dir>      Target location for Internet Plugins (default: ~/Library/Internet Plug-Ins).
-# @option --audio-unit-plugindir <dir>    Target location for Audio Unit Plugins (default: ~/Library/Audio/Plug-Ins/Components).
-# @option --vst-plugindir <dir>           Target location for VST Plugins (default: ~/Library/Audio/Plug-Ins/VST).
-# @option --vst3-plugindir <dir>          Target location for VST3 Plugins (default: ~/Library/Audio/Plug-Ins/VST3).
-# @option --screen-saverdir <dir>         Target location for Screen Savers (default: ~/Library/Screen Savers).
-# @option --language <value>              Comma-separated list of language codes to prefer for cask installation.
-# @flag -q --quiet                        Make some output more quiet.
-# @flag -h --help                         Show this message.
+# @flag -d --debug                If brewing fails, open an interactive debugging session with access to IRB or a shell inside the temporary build directory.
+# @flag --display-times           Print install times for each package at the end of the run.
+# @flag -f --force                Install without checking for previously installed keg-only or non-migrated versions.
+# @flag -v --verbose              Print the verification and post-install steps.
+# @flag --formula                 Treat all named arguments as formulae.
+# @flag --formulae                Treat all named arguments as formulae.
+# @flag -s --build-from-source    Compile formula from source even if a bottle is available.
+# @flag -i --interactive          Download and patch formula, then open a shell.
+# @flag --force-bottle            Install from a bottle if it exists for the current or newest version of macOS, even if it would not normally be used for installation.
+# @flag --keep-tmp                Retain the temporary files created during installation.
+# @flag --debug-symbols           Generate debug symbols on build.
+# @flag -g --git                  Create a Git repository, useful for creating patches to the software.
+# @flag --cask                    Treat all named arguments as casks.
+# @flag --casks                   Treat all named arguments as casks.
+# @flag --binaries                Disable/enable linking of helper executables (default: enabled).
+# @flag --no-binaries             Disable/enable linking of helper executables (default: enabled).
+# @flag --require-sha             Require all casks to have a checksum.
+# @flag --quarantine              Disable/enable quarantining of downloads (default: enabled).
+# @flag --no-quarantine           Disable/enable quarantining of downloads (default: enabled).
+# @flag --adopt                   Adopt existing artifacts in the destination that are identical to those being installed.
+# @flag --skip-cask-deps          Skip installing cask dependencies.
+# @flag --zap                     For use with brew reinstall --cask.
+# @flag --appdir                  Target location for Applications (default: /Applications).
+# @flag --keyboard-layoutdir      Target location for Keyboard Layouts (default: /Library/Keyboard Layouts).
+# @flag --colorpickerdir          Target location for Color Pickers (default: ~/Library/ColorPickers).
+# @flag --prefpanedir             Target location for Preference Panes (default: ~/Library/PreferencePanes).
+# @flag --qlplugindir             Target location for Quick Look Plugins (default: ~/Library/QuickLook).
+# @flag --mdimporterdir           Target location for Spotlight Plugins (default: ~/Library/Spotlight).
+# @flag --dictionarydir           Target location for Dictionaries (default: ~/Library/Dictionaries).
+# @flag --fontdir                 Target location for Fonts (default: ~/Library/Fonts).
+# @flag --servicedir              Target location for Services (default: ~/Library/Services).
+# @flag --input-methoddir         Target location for Input Methods (default: ~/Library/Input Methods).
+# @flag --internet-plugindir      Target location for Internet Plugins (default: ~/Library/Internet Plug-Ins).
+# @flag --audio-unit-plugindir    Target location for Audio Unit Plugins (default: ~/Library/Audio/Plug-Ins/Components).
+# @flag --vst-plugindir           Target location for VST Plugins (default: ~/Library/Audio/Plug-Ins/VST).
+# @flag --vst3-plugindir          Target location for VST3 Plugins (default: ~/Library/Audio/Plug-Ins/VST3).
+# @flag --screen-saverdir         Target location for Screen Savers (default: ~/Library/Screen Savers).
+# @option --language <value>      Comma-separated list of language codes to prefer for cask installation.
+# @flag -q --quiet                Make some output more quiet.
+# @flag -h --help                 Show this message.
 # @arg formula-cask[`_choice_suggest_formula_cask`] <formula|cask>
 reinstall() {
     :;
@@ -655,13 +677,7 @@ reinstall() {
 # }} brew reinstall
 
 # {{ brew setup-ruby
-# @cmd Installs and configures Homebrew´s Ruby.
-# @flag --groups        Installs the specified comma-separated list of gem groups (default: last used).
-# @flag --add-groups    Installs the specified comma-separated list of gem groups, in addition to those already installed.
-# @flag -d --debug      Display any debugging information.
-# @flag -q --quiet      Make some output more quiet.
-# @flag -v --verbose    Make some output more verbose.
-# @flag -h --help       Show this message.
+# @cmd Installs and configures Homebrew’s Ruby.
 setup-ruby() {
     :;
 }
@@ -674,20 +690,32 @@ shellenv() {
 }
 # }} brew shellenv
 
+# {{ brew tab
+# @cmd Edit tab information for installed formulae.
+# @flag --installed-on-request       Mark formula as installed on request.
+# @flag --no-installed-on-request    Mark formula as not installed on request.
+# @flag -d --debug                   Display any debugging information.
+# @flag -q --quiet                   Make some output more quiet.
+# @flag -v --verbose                 Make some output more verbose.
+# @flag -h --help                    Show this message.
+# @arg formula[`_choice_suggest_formula`]
+tab() {
+    :;
+}
+# }} brew tab
+
 # {{ brew tap
 # @cmd Tap a formula repository.
-# @flag --full                    Convert a shallow clone to a full clone without untapping.
-# @flag --shallow                 Fetch tap as a shallow clone rather than a full clone.
-# @flag --force-auto-update       Auto-update tap even if it is not hosted on GitHub.
-# @flag --no-force-auto-update    Auto-update tap even if it is not hosted on GitHub.
-# @flag --custom-remote           Install or change a tap with a custom remote.
-# @flag --repair                  Migrate tapped formulae from symlink-based to directory-based structure.
-# @flag --eval-all                Evaluate all the formulae, casks and aliases in the new tap to check validity.
-# @flag --force                   Force install core taps even under API mode.
-# @flag -d --debug                Display any debugging information.
-# @flag -q --quiet                Make some output more quiet.
-# @flag -v --verbose              Make some output more verbose.
-# @flag -h --help                 Show this message.
+# @flag --full             Convert a shallow clone to a full clone without untapping.
+# @flag --shallow          Fetch tap as a shallow clone rather than a full clone.
+# @flag --custom-remote    Install or change a tap with a custom remote.
+# @flag --repair           Migrate tapped formulae from symlink-based to directory-based structure.
+# @flag --eval-all         Evaluate all the formulae, casks and aliases in the new tap to check validity.
+# @flag --force            Force install core taps even under API mode.
+# @flag -d --debug         Display any debugging information.
+# @flag -q --quiet         Make some output more quiet.
+# @flag -v --verbose       Make some output more verbose.
+# @flag -h --help          Show this message.
 # @arg user-repo <user/repo>
 # @arg url
 tap() {
@@ -710,7 +738,7 @@ tap-info() {
 # }} brew tap-info
 
 # {{ brew unlink
-# @cmd Remove symlinks for formula from Homebrew´s prefix.
+# @cmd Remove symlinks for formula from Homebrew’s prefix.
 # @flag -n --dry-run    List files which would be unlinked without actually unlinking or deleting any files.
 # @flag -d --debug      Display any debugging information.
 # @flag -q --quiet      Make some output more quiet.
@@ -771,50 +799,50 @@ update-reset() {
 
 # {{ brew upgrade
 # @cmd Upgrade outdated casks and outdated, unpinned formulae using the same options they were originally installed with, plus any appended brew formula options.
-# @flag -d --debug                        If brewing fails, open an interactive debugging session with access to IRB or a shell inside the temporary build directory.
-# @flag -f --force                        Install formulae without checking for previously installed keg-only or non-migrated versions.
-# @flag -v --verbose                      Print the verification and post-install steps.
-# @flag -n --dry-run                      Show what would be upgraded, but do not actually upgrade anything.
-# @flag --formula                         Treat all named arguments as formulae.
-# @flag --formulae                        Treat all named arguments as formulae.
-# @flag -s --build-from-source            Compile formula from source even if a bottle is available.
-# @flag -i --interactive                  Download and patch formula, then open a shell.
-# @flag --force-bottle                    Install from a bottle if it exists for the current or newest version of macOS, even if it would not normally be used for installation.
-# @flag --fetch-HEAD                      Fetch the upstream repository to detect if the HEAD installation of the formula is outdated.
-# @flag --ignore-pinned                   Set a successful exit status even if pinned formulae are not upgraded.
-# @flag --keep-tmp                        Retain the temporary files created during installation.
-# @flag --debug-symbols                   Generate debug symbols on build.
-# @flag --display-times                   Print install times for each package at the end of the run.
-# @flag --cask                            Treat all named arguments as casks.
-# @flag --casks                           Treat all named arguments as casks.
-# @flag --skip-cask-deps                  Skip installing cask dependencies.
-# @flag -g --greedy                       Also include casks with auto_updates true or version :latest.
-# @flag --greedy-latest                   Also include casks with version :latest.
-# @flag --greedy-auto-updates             Also include casks with auto_updates true.
-# @flag --binaries                        Disable/enable linking of helper executables (default: enabled).
-# @flag --no-binaries                     Disable/enable linking of helper executables (default: enabled).
-# @flag --require-sha                     Require all casks to have a checksum.
-# @flag --quarantine                      Disable/enable quarantining of downloads (default: enabled).
-# @flag --no-quarantine                   Disable/enable quarantining of downloads (default: enabled).
-# @option --appdir <dir>                  Target location for Applications (default: /Applications).
-# @option --keyboard-layoutdir <dir>      Target location for Keyboard Layouts (default: /Library/Keyboard Layouts).
-# @option --colorpickerdir <dir>          Target location for Color Pickers (default: ~/Library/ColorPickers).
-# @option --prefpanedir <dir>             Target location for Preference Panes (default: ~/Library/PreferencePanes).
-# @option --qlplugindir <dir>             Target location for QuickLook Plugins (default: ~/Library/QuickLook).
-# @option --mdimporterdir <dir>           Target location for Spotlight Plugins (default: ~/Library/Spotlight).
-# @option --dictionarydir <dir>           Target location for Dictionaries (default: ~/Library/Dictionaries).
-# @option --fontdir <dir>                 Target location for Fonts (default: ~/Library/Fonts).
-# @option --servicedir <dir>              Target location for Services (default: ~/Library/Services).
-# @option --input-methoddir <dir>         Target location for Input Methods (default: ~/Library/Input Methods).
-# @option --internet-plugindir <dir>      Target location for Internet Plugins (default: ~/Library/Internet Plug-Ins).
-# @option --audio-unit-plugindir <dir>    Target location for Audio Unit Plugins (default: ~/Library/Audio/Plug-Ins/Components).
-# @option --vst-plugindir <dir>           Target location for VST Plugins (default: ~/Library/Audio/Plug-Ins/VST).
-# @option --vst3-plugindir <dir>          Target location for VST3 Plugins (default: ~/Library/Audio/Plug-Ins/VST3).
-# @option --screen-saverdir <dir>         Target location for Screen Savers (default: ~/Library/Screen Savers).
-# @option --language <value>              Comma-separated list of language codes to prefer for cask installation.
-# @flag -q --quiet                        Make some output more quiet.
-# @flag -h --help                         Show this message.
-# @arg outdated_formula-outdated_cask*[`_choice_outdated_formula_cask`] <outdated_formula|outdated_cask>
+# @flag -d --debug                If brewing fails, open an interactive debugging session with access to IRB or a shell inside the temporary build directory.
+# @flag --display-times           Print install times for each package at the end of the run.
+# @flag -f --force                Install formulae without checking for previously installed keg-only or non-migrated versions.
+# @flag -v --verbose              Print the verification and post-install steps.
+# @flag -n --dry-run              Show what would be upgraded, but do not actually upgrade anything.
+# @flag --formula                 Treat all named arguments as formulae.
+# @flag --formulae                Treat all named arguments as formulae.
+# @flag -s --build-from-source    Compile formula from source even if a bottle is available.
+# @flag -i --interactive          Download and patch formula, then open a shell.
+# @flag --force-bottle            Install from a bottle if it exists for the current or newest version of macOS, even if it would not normally be used for installation.
+# @flag --fetch-HEAD              Fetch the upstream repository to detect if the HEAD installation of the formula is outdated.
+# @flag --keep-tmp                Retain the temporary files created during installation.
+# @flag --debug-symbols           Generate debug symbols on build.
+# @flag --overwrite               Delete files that already exist in the prefix while linking.
+# @flag --cask                    Treat all named arguments as casks.
+# @flag --casks                   Treat all named arguments as casks.
+# @flag --skip-cask-deps          Skip installing cask dependencies.
+# @flag -g --greedy               Also include casks with auto_updates true or version :latest.
+# @flag --greedy-latest           Also include casks with version :latest.
+# @flag --greedy-auto-updates     Also include casks with auto_updates true.
+# @flag --binaries                Disable/enable linking of helper executables (default: enabled).
+# @flag --no-binaries             Disable/enable linking of helper executables (default: enabled).
+# @flag --require-sha             Require all casks to have a checksum.
+# @flag --quarantine              Disable/enable quarantining of downloads (default: enabled).
+# @flag --no-quarantine           Disable/enable quarantining of downloads (default: enabled).
+# @flag --appdir                  Target location for Applications (default: /Applications).
+# @flag --keyboard-layoutdir      Target location for Keyboard Layouts (default: /Library/Keyboard Layouts).
+# @flag --colorpickerdir          Target location for Color Pickers (default: ~/Library/ColorPickers).
+# @flag --prefpanedir             Target location for Preference Panes (default: ~/Library/PreferencePanes).
+# @flag --qlplugindir             Target location for Quick Look Plugins (default: ~/Library/QuickLook).
+# @flag --mdimporterdir           Target location for Spotlight Plugins (default: ~/Library/Spotlight).
+# @flag --dictionarydir           Target location for Dictionaries (default: ~/Library/Dictionaries).
+# @flag --fontdir                 Target location for Fonts (default: ~/Library/Fonts).
+# @flag --servicedir              Target location for Services (default: ~/Library/Services).
+# @flag --input-methoddir         Target location for Input Methods (default: ~/Library/Input Methods).
+# @flag --internet-plugindir      Target location for Internet Plugins (default: ~/Library/Internet Plug-Ins).
+# @flag --audio-unit-plugindir    Target location for Audio Unit Plugins (default: ~/Library/Audio/Plug-Ins/Components).
+# @flag --vst-plugindir           Target location for VST Plugins (default: ~/Library/Audio/Plug-Ins/VST).
+# @flag --vst3-plugindir          Target location for VST3 Plugins (default: ~/Library/Audio/Plug-Ins/VST3).
+# @flag --screen-saverdir         Target location for Screen Savers (default: ~/Library/Screen Savers).
+# @option --language <value>      Comma-separated list of language codes to prefer for cask installation.
+# @flag -q --quiet                Make some output more quiet.
+# @flag -h --help                 Show this message.
+# @arg installed_formula-installed_cask*[`_choice_installed_formula_cask`] <installed_formula|installed_cask>
 upgrade() {
     :;
 }
@@ -854,8 +882,6 @@ uses() {
 # @flag --installed           Only check formulae and casks that are currently installed.
 # @flag --eval-all            Evaluate all available formulae and casks, whether installed or not, to audit them.
 # @flag --new                 Run various additional style checks to determine if a new formula or cask is eligible for Homebrew.
-# @flag --new-formula         Run various additional style checks to determine if a new formula or cask is eligible for Homebrew.
-# @flag --new-cask            Run various additional style checks to determine if a new formula or cask is eligible for Homebrew.
 # @flag --signing             Audit for signed apps, which are required on ARM
 # @flag --no-signing          Audit for signed apps, which are required on ARM
 # @flag --token-conflicts     Audit for token conflicts.
@@ -915,7 +941,9 @@ bottle() {
 # @flag --formulae            Check only formulae.
 # @flag --cask                Check only casks.
 # @flag --casks               Check only casks.
+# @flag --tap                 Check formulae and casks within the given tap, specified as user/repo.
 # @flag --installed           Check formulae and casks that are currently installed.
+# @flag --no-fork             Don't try to fork the repository.
 # @flag --open-pr             Open a pull request for the new version if none have been opened yet.
 # @flag --limit               Limit number of package results returned.
 # @flag --start-with          Letter or word that the list of package results should alphabetically follow.
@@ -945,7 +973,6 @@ bump() {
 # @option --url <value>              Specify the URL for the new download.
 # @option --sha256 <value>           Specify the SHA-256 checksum of the new download.
 # @option --fork-org <value>         Use the specified GitHub organization for forking.
-# @flag -f --force                   Ignore duplicate open PRs.
 # @flag -d --debug                   Display any debugging information.
 # @flag -q --quiet                   Make some output more quiet.
 # @flag -v --verbose                 Make some output more verbose.
@@ -974,7 +1001,8 @@ bump-cask-pr() {
 # @option --sha256 <value>                      Specify the SHA-256 checksum of the new download.
 # @option --tag <value>                         Specify the new git commit tag for the formula.
 # @option --revision <value>                    Specify the new commit revision corresponding to the specified git tag or specified version.
-# @flag -f --force                              Ignore duplicate open PRs.
+# @flag -f --force                              Remove all mirrors if --mirror was not specified.
+# @flag --install-dependencies                  Install missing dependencies required to update resources.
 # @option --python-package-name <value>         Use the specified package-name when finding Python resources for formula.
 # @option --python-extra-packages* <value>      Include these additional Python packages when finding resources.
 # @option --python-exclude-packages* <value>    Exclude these Python packages when finding resources.
@@ -1006,13 +1034,13 @@ bump-revision() {
 
 # {{ brew bump-unversioned-casks
 # @cmd Check all casks with unversioned URLs in a given tap for updates.
-# @flag -n --dry-run             Do everything except caching state and opening pull requests.
-# @option --limit <value>        Maximum runtime in minutes.
-# @option --state-file <file>    File for caching state.
-# @flag -d --debug               Display any debugging information.
-# @flag -q --quiet               Make some output more quiet.
-# @flag -v --verbose             Make some output more verbose.
-# @flag -h --help                Show this message.
+# @flag -n --dry-run         Do everything except caching state and opening pull requests.
+# @option --limit <value>    Maximum runtime in minutes.
+# @flag --state-file         File for caching state.
+# @flag -d --debug           Display any debugging information.
+# @flag -q --quiet           Make some output more quiet.
+# @flag -v --verbose         Make some output more verbose.
+# @flag -h --help            Show this message.
 # @arg cask-tap[`_choice_cask_tap`] <cask|tap>
 bump-unversioned-casks() {
     :;
@@ -1147,7 +1175,7 @@ formula() {
 # }} brew formula
 
 # {{ brew generate-cask-api
-# @cmd Generate homebrew/cask API data files for https://formulae.brew.sh.
+# @cmd Generate homebrew/cask API data files for <https://formulae.brew.sh>.
 # @flag -n --dry-run    Generate API data without writing it to files.
 # @flag -d --debug      Display any debugging information.
 # @flag -q --quiet      Make some output more quiet.
@@ -1159,7 +1187,7 @@ generate-cask-api() {
 # }} brew generate-cask-api
 
 # {{ brew generate-formula-api
-# @cmd Generate homebrew/core API data files for https://formulae.brew.sh.
+# @cmd Generate homebrew/core API data files for <https://formulae.brew.sh>.
 # @flag -n --dry-run    Generate API data without writing it to files.
 # @flag -d --debug      Display any debugging information.
 # @flag -q --quiet      Make some output more quiet.
@@ -1171,7 +1199,7 @@ generate-formula-api() {
 # }} brew generate-formula-api
 
 # {{ brew generate-man-completions
-# @cmd Generate Homebrew´s manpages and shell completions.
+# @cmd Generate Homebrew’s manpages and shell completions.
 # @flag -d --debug      Display any debugging information.
 # @flag -q --quiet      Make some output more quiet.
 # @flag -v --verbose    Make some output more verbose.
@@ -1182,7 +1210,7 @@ generate-man-completions() {
 # }} brew generate-man-completions
 
 # {{ brew install-bundler-gems
-# @cmd Install Homebrew´s Bundler gems.
+# @cmd Install Homebrew’s Bundler gems.
 # @option --groups <value>        Installs the specified comma-separated list of gem groups (default: last used).
 # @option --add-groups <value>    Installs the specified comma-separated list of gem groups, in addition to those already installed.
 # @flag -d --debug                Display any debugging information.
@@ -1226,21 +1254,24 @@ linkage() {
 # {{ brew livecheck
 # @cmd Check for newer versions of formulae and/or casks from upstream.
 # @alias lc
-# @flag --full-name       Print formulae and casks with fully-qualified names.
-# @flag --tap             Check formulae and casks within the given tap, specified as user/repo.
-# @flag --eval-all        Evaluate all available formulae and casks, whether installed or not, to check them.
-# @flag --installed       Check formulae and casks that are currently installed.
-# @flag --newer-only      Show the latest version only if it's newer than the formula/cask.
-# @flag --json            Output information in JSON format.
-# @flag -r --resources    Also check resources for formulae.
-# @flag -q --quiet        Suppress warnings, don't print a progress bar for JSON output.
-# @flag --formula         Only check formulae.
-# @flag --formulae        Only check formulae.
-# @flag --cask            Only check casks.
-# @flag --casks           Only check casks.
-# @flag -d --debug        Display any debugging information.
-# @flag -v --verbose      Make some output more verbose.
-# @flag -h --help         Show this message.
+# @flag --full-name        Print formulae and casks with fully-qualified names.
+# @flag --tap              Check formulae and casks within the given tap, specified as user/repo.
+# @flag --eval-all         Evaluate all available formulae and casks, whether installed or not, to check them.
+# @flag --installed        Check formulae and casks that are currently installed.
+# @flag --newer-only       Show the latest version only if it's newer than the formula/cask.
+# @flag --json             Output information in JSON format.
+# @flag -r --resources     Also check resources for formulae.
+# @flag -q --quiet         Suppress warnings, don't print a progress bar for JSON output.
+# @flag --formula          Only check formulae.
+# @flag --formulae         Only check formulae.
+# @flag --cask             Only check casks.
+# @flag --casks            Only check casks.
+# @flag --extract-plist    Enable checking multiple casks with ExtractPlist strategy.
+# @flag -d --debug         Display any debugging information.
+# @flag -v --verbose       Make some output more verbose.
+# @flag -h --help          Show this message.
+# @arg livecheck
+# @arg lc
 # @arg formula-cask*[`_choice_suggest_formula_cask`] <formula|cask>
 livecheck() {
     :;
@@ -1256,7 +1287,6 @@ livecheck() {
 # @flag --without-approval            Pull requests do not require approval to be merged.
 # @flag --publish                     Run brew pr-publish on matching pull requests.
 # @flag --autosquash                  Instruct brew pr-publish to automatically reformat and reword commits in the pull request to the preferred format.
-# @flag --no-autosquash               Instruct brew pr-publish to skip automatically reformatting and rewording commits in the pull request to the preferred format.
 # @flag --ignore-failures             Include pull requests that have failing status checks.
 # @flag -d --debug                    Display any debugging information.
 # @flag -q --quiet                    Make some output more quiet.
@@ -1270,10 +1300,9 @@ pr-automerge() {
 # {{ brew pr-publish
 # @cmd Publish bottles for a pull request with GitHub Actions.
 # @flag --autosquash            If supported on the target tap, automatically reformat and reword commits to our preferred format.
-# @flag --no-autosquash         Skip automatically reformatting and rewording commits in the pull request to the preferred format, even if supported on the target tap.
 # @flag --large-runner          Run the upload job on a large runner.
 # @option --branch <value>      Branch to use the workflow from (default: master).
-# @option --message <value>     Message to include when autosquashing revision bumps, deletions, and rebuilds.
+# @option --message <value>     Message to include when autosquashing revision bumps, deletions and rebuilds.
 # @option --tap <value>         Target tap repository (default: homebrew/core).
 # @option --workflow <value>    Target workflow filename (default: publish-commit-bottles.yml).
 # @flag -d --debug              Display any debugging information.
@@ -1287,7 +1316,7 @@ pr-publish() {
 # }} brew pr-publish
 
 # {{ brew pr-pull
-# @cmd Download and publish bottles, and apply the bottle commit from a pull request with artifacts generated by GitHub Actions.
+# @cmd Download and publish bottles and apply the bottle commit from a pull request with artifacts generated by GitHub Actions.
 # @flag --no-upload                             Download the bottles but don't upload them.
 # @flag --no-commit                             Do not generate a new commit before uploading.
 # @flag --no-cherry-pick                        Do not cherry-pick commits from the pull request branch.
@@ -1295,13 +1324,14 @@ pr-publish() {
 # @flag --clean                                 Do not amend the commits from pull requests.
 # @flag --keep-old                              If the formula specifies a rebuild version, attempt to preserve its value in the generated DSL.
 # @flag --autosquash                            Automatically reformat and reword commits in the pull request to our preferred format.
-# @flag --no-autosquash                         Skip automatically reformatting and rewording commits in the pull request to our preferred format.
 # @flag --branch-okay                           Do not warn if pulling to a branch besides the repository default (useful for testing).
 # @flag --resolve                               When a patch fails to apply, leave in progress and allow user to resolve, instead of aborting.
 # @flag --warn-on-upload-failure                Warn instead of raising an error if the bottle upload fails.
+# @flag --retain-bottle-dir                     Does not clean up the tmp directory for the bottle so it can be used later.
 # @option --committer <value>                   Specify a committer name and email in git's standard author format.
-# @option --message <value>                     Message to include when autosquashing revision bumps, deletions, and rebuilds.
-# @option --artifact <value>                    Download artifacts with the specified name (default: bottles).
+# @option --message <value>                     Message to include when autosquashing revision bumps, deletions and rebuilds.
+# @option --artifact-pattern <value>            Download artifacts with the specified pattern (default: bottles{,_*}).
+# @option --artifact <value>                    Download artifacts with the specified pattern (default: bottles{,_*}).
 # @option --tap <value>                         Target tap repository (default: homebrew/core).
 # @option --root-url <value>                    Use the specified URL as the root of the bottle's URL instead of Homebrew's default.
 # @option --root-url-using <value>              Use the specified download strategy class for downloading the bottle's URL instead of Homebrew's default.
@@ -1339,6 +1369,7 @@ pr-upload() {
 # {{ brew prof
 # @cmd Run Homebrew with a Ruby profiler.
 # @flag --stackprof     Use stackprof instead of ruby-prof (the default).
+# @flag --vernier       Use vernier instead of ruby-prof (the default).
 # @flag -d --debug      Display any debugging information.
 # @flag -q --quiet      Make some output more quiet.
 # @flag -v --verbose    Make some output more verbose.
@@ -1363,14 +1394,14 @@ release() {
 # }} brew release
 
 # {{ brew rubocop
-# @cmd Installs, configures and runs Homebrew´s rubocop.
+# @cmd Installs, configures and runs Homebrew’s rubocop.
 rubocop() {
     :;
 }
 # }} brew rubocop
 
 # {{ brew ruby
-# @cmd Run a Ruby instance with Homebrew´s libraries loaded.
+# @cmd Run a Ruby instance with Homebrew’s libraries loaded.
 # @flag -r              Load a library using require.
 # @flag -e              Execute the given text string as a script.
 # @flag -d --debug      Display any debugging information.
@@ -1382,8 +1413,21 @@ ruby() {
 }
 # }} brew ruby
 
+# {{ brew rubydoc
+# @cmd Generate Homebrew’s RubyDoc documentation.
+# @flag --only-public    Only generate public API documentation.
+# @flag --open           Open generated documentation in a browser.
+# @flag -d --debug       Display any debugging information.
+# @flag -q --quiet       Make some output more quiet.
+# @flag -v --verbose     Make some output more verbose.
+# @flag -h --help        Show this message.
+rubydoc() {
+    :;
+}
+# }} brew rubydoc
+
 # {{ brew sh
-# @cmd Enter an interactive shell for Homebrew´s build environment.
+# @cmd Enter an interactive shell for Homebrew’s build environment.
 # @flag --env           Use the standard PATH instead of superenv's when std is passed.
 # @flag -c --cmd        Execute commands in a non-interactive shell.
 # @flag -d --debug      Display any debugging information.
@@ -1449,16 +1493,17 @@ test() {
 # }} brew test
 
 # {{ brew tests
-# @cmd Run Homebrew´s unit and integration tests.
+# @cmd Run Homebrew’s unit and integration tests.
 # @flag --coverage      Generate code coverage reports.
 # @flag --generic       Run only OS-agnostic tests.
 # @flag --online        Include tests that use the GitHub API and tests that use any of the taps for official external commands.
-# @flag --byebug        Enable debugging using byebug.
+# @flag --debug         Enable debugging using ruby/debug, or surface the standard odebug output.
 # @flag --changed       Only runs tests on files that were changed from the master branch.
 # @flag --fail-fast     Exit early on the first failing test.
 # @flag --only          Run only test_script_spec.rb.
+# @flag --profile       Run the test suite serially to find the n slowest tests.
 # @flag --seed          Randomise tests with the specified value instead of a random seed.
-# @flag -d --debug      Display any debugging information.
+# @flag -d              Display any debugging information.
 # @flag -q --quiet      Make some output more quiet.
 # @flag -v --verbose    Make some output more verbose.
 # @flag -h --help       Show this message.
@@ -1475,12 +1520,14 @@ tests() {
 # @flag --update           Update RBI files.
 # @flag --update-all       Update all RBI files rather than just updated gems.
 # @flag --suggest-typed    Try upgrading typed sigils.
-# @option --dir <dir>      Typecheck all files in a specific directory.
-# @option --file <file>    Typecheck a single file.
+# @flag --dir              Typecheck all files in a specific directory.
+# @flag --file             Typecheck a single file.
 # @flag --ignore           Ignores input files that contain the given string in their paths (relative to the input path passed to Sorbet).
 # @flag -d --debug         Display any debugging information.
 # @flag -v --verbose       Make some output more verbose.
 # @flag -h --help          Show this message.
+# @arg typecheck
+# @arg tc
 typecheck() {
     :;
 }
@@ -1505,14 +1552,14 @@ unbottled() {
 
 # {{ brew unpack
 # @cmd Unpack the source files for formula into subdirectories of the current working directory.
-# @option --destdir <dir>    Create subdirectories in the directory named by path instead.
-# @flag --patch              Patches for formula will be applied to the unpacked source.
-# @flag -g --git             Initialise a Git repository in the unpacked source.
-# @flag -f --force           Overwrite the destination directory if it already exists.
-# @flag -d --debug           Display any debugging information.
-# @flag -q --quiet           Make some output more quiet.
-# @flag -v --verbose         Make some output more verbose.
-# @flag -h --help            Show this message.
+# @flag --destdir       Create subdirectories in the directory named by path instead.
+# @flag --patch         Patches for formula will be applied to the unpacked source.
+# @flag -g --git        Initialise a Git repository in the unpacked source.
+# @flag -f --force      Overwrite the destination directory if it already exists.
+# @flag -d --debug      Display any debugging information.
+# @flag -q --quiet      Make some output more quiet.
+# @flag -v --verbose    Make some output more verbose.
+# @flag -h --help       Show this message.
 # @arg formula[`_choice_suggest_formula`]
 unpack() {
     :;
@@ -1546,6 +1593,7 @@ update-maintainers() {
 # @flag -p --print-only                 Print the updated resource blocks instead of changing formula.
 # @flag -s --silent                     Suppress any output.
 # @flag --ignore-non-pypi-packages      Don't fail if formula is not a PyPI package.
+# @flag --install-dependencies          Install missing dependencies required to update resources.
 # @option --version <value>             Use the specified version when finding resources for formula.
 # @option --package-name <value>        Use the specified package-name when finding resources for formula.
 # @option --extra-packages <value>      Include these additional packages when finding resources.
@@ -1587,7 +1635,7 @@ update-test() {
 # }} brew update-test
 
 # {{ brew vendor-gems
-# @cmd Install and commit Homebrew´s vendored gems.
+# @cmd Install and commit Homebrew’s vendored gems.
 # @flag --update        Update the specified list of vendored gems to the latest version.
 # @flag --no-commit     Do not generate a new commit upon completion.
 # @flag -d --debug      Display any debugging information.
@@ -1612,77 +1660,31 @@ alias() {
 }
 # }} brew alias
 
-# {{ brew autoupdate
-# @cmd An easy, convenient way to automatically update Homebrew.
-# @flag --upgrade                Automatically upgrade your installed formulae.
-# @flag --greedy                 Upgrade casks with --greedy (include auto-updating casks).
-# @flag --cleanup                Automatically clean brew's cache and logs.
-# @flag --enable-notification    Send a notification when the autoupdate process has finished successfully, if terminal-notifier is installed and found.
-# @flag --immediate              Starts the autoupdate command immediately and on system boot, instead of waiting for one interval (24 hours by default) to pass first.
-# @flag --sudo                   If a Cask requires sudo, autoupdate will open a GUI to ask for the password.
-# @flag -d --debug               Display any debugging information.
-# @flag -q --quiet               Make some output more quiet.
-# @flag -v --verbose             Make some output more verbose.
-# @flag -h --help                Show this message.
-# @arg interval
-autoupdate() {
-    :;
-}
-
-# {{{ brew autoupdate stop
-# @cmd Stop autoupdating, but retain plist and logs.
-autoupdate::stop() {
-    :;
-}
-# }}} brew autoupdate stop
-
-# {{{ brew autoupdate delete
-# @cmd Cancel the autoupdate, delete the plist and logs.
-autoupdate::delete() {
-    :;
-}
-# }}} brew autoupdate delete
-
-# {{{ brew autoupdate status
-# @cmd Prints the current status of this tool.
-autoupdate::status() {
-    :;
-}
-# }}} brew autoupdate status
-
-# {{{ brew autoupdate version
-# @cmd Output this tool's current version, and a short changelog.
-autoupdate::version() {
-    :;
-}
-# }}} brew autoupdate version
-# }} brew autoupdate
-
 # {{ brew bundle
-# @cmd Bundler for non-Ruby dependencies from Homebrew, Homebrew Cask, Mac App Store and Whalebrew.
-# @option --file <file>    Read the Brewfile from this location.
-# @flag --global           Read the Brewfile from ~/.Brewfile or the HOMEBREW_BUNDLE_FILE_GLOBAL environment variable, if set.
-# @flag -v --verbose       install prints output from commands as they are run.
-# @flag --no-upgrade       install won't run brew upgrade on outdated dependencies.
-# @flag -f --force         install runs with --force/--overwrite.
-# @flag --cleanup          install performs cleanup operation, same as running cleanup --force.
-# @flag --no-lock          install won't output a Brewfile.lock.json.
-# @flag --all              list all dependencies.
-# @flag --formula          list Homebrew dependencies.
-# @flag --brews            list Homebrew dependencies.
-# @flag --cask             list Homebrew Cask dependencies.
-# @flag --casks            list Homebrew Cask dependencies.
-# @flag --tap              list tap dependencies.
-# @flag --taps             list tap dependencies.
-# @flag --mas              list Mac App Store dependencies.
-# @flag --whalebrew        list Whalebrew dependencies.
-# @flag --vscode           list VSCode extensions.
-# @flag --describe         dump adds a description comment above each line, unless the dependency does not have a description.
-# @flag --no-restart       dump does not add restart_service to formula lines.
-# @flag --zap              cleanup casks using the zap command instead of uninstall.
-# @flag -d --debug         Display any debugging information.
-# @flag -q --quiet         Make some output more quiet.
-# @flag -h --help          Show this message.
+# @cmd Bundler for non-Ruby dependencies from Homebrew, Homebrew Cask, Mac App Store, Whalebrew and Visual Studio Code.
+# @flag --file          Read the Brewfile from this location.
+# @flag --global        Read the Brewfile from ~/.Brewfile or the HOMEBREW_BUNDLE_FILE_GLOBAL environment variable, if set.
+# @flag -v --verbose    install prints output from commands as they are run.
+# @flag --no-upgrade    install does not run brew upgrade on outdated dependencies.
+# @flag -f --force      install runs with --force/--overwrite.
+# @flag --cleanup       install performs cleanup operation, same as running cleanup --force.
+# @flag --no-lock       install does not output a Brewfile.lock.json.
+# @flag --all           list all dependencies.
+# @flag --formula       list Homebrew formula dependencies.
+# @flag --brews         list Homebrew formula dependencies.
+# @flag --cask          list Homebrew cask dependencies.
+# @flag --casks         list Homebrew cask dependencies.
+# @flag --tap           list Homebrew tap dependencies.
+# @flag --taps          list Homebrew tap dependencies.
+# @flag --mas           list Mac App Store dependencies.
+# @flag --whalebrew     list Whalebrew dependencies.
+# @flag --vscode        list VSCode extensions.
+# @flag --describe      dump adds a description comment above each line, unless the dependency does not have a description.
+# @flag --no-restart    dump does not add restart_service to formula lines.
+# @flag --zap           cleanup casks using the zap command instead of uninstall.
+# @flag -d --debug      Display any debugging information.
+# @flag -q --quiet      Make some output more quiet.
+# @flag -h --help       Show this message.
 bundle() {
     :;
 }
@@ -1724,8 +1726,8 @@ bundle::exec() {
 # }} brew bundle
 
 # {{ brew services
-# @cmd Manage background services with macOS´ launchctl(1) daemon manager or Linux´s systemctl(1) service manager.
-# @option --file <file>        Use the service file from this location to start the service.
+# @cmd Manage background services with macOS’ launchctl(1) daemon manager or Linux’s systemctl(1) service manager.
+# @flag --file                 Use the service file from this location to start the service.
 # @flag --sudo-service-user    When run as root on macOS, run the service(s) as this user.
 # @flag --all                  Run subcommand on all services.
 # @flag --json                 Output as JSON.
@@ -1832,12 +1834,18 @@ services::cleanup() {
 # @option --git-email <value>             Set the Git author/committer email to the given email.
 # @flag --publish                         Publish the uploaded bottles.
 # @flag --skip-online-checks              Don't pass --online to brew audit and skip brew livecheck.
+# @flag --skip-new                        Don't pass --new to brew audit for new formulae.
+# @flag --skip-new-strict                 Don't pass --strict to brew audit for new formulae.
 # @flag --skip-dependents                 Don't test any dependents.
 # @flag --skip-livecheck                  Don't test livecheck.
 # @flag --skip-recursive-dependents       Only test the direct dependents.
+# @flag --skip-checksum-only-audit        Don't audit checksum-only changes.
+# @flag --skip-stable-version-audit       Don't audit the stable version.
+# @flag --skip-revision-audit             Don't audit the revision.
 # @flag --only-cleanup-before             Only run the pre-cleanup step.
 # @flag --only-setup                      Only run the local system setup check step.
 # @flag --only-tap-syntax                 Only run the tap syntax check step.
+# @flag --stable                          Only run the tap syntax checks needed on stable brew.
 # @flag --only-formulae                   Only run the formulae steps.
 # @flag --only-formulae-detect            Only run the formulae detection steps.
 # @flag --only-formulae-dependents        Only run the formulae dependents steps.
@@ -1869,8 +1877,8 @@ unalias() {
 # }} brew unalias
 
 # {{ brew which-formula
-# @cmd Prints the formula(e) which provides the given command.
-# @flag --explain       Output explanation of how to get 'cmd' by installing one of the providing formulae.
+# @cmd Show which formula(e) provides the given command.
+# @flag --explain       Output explanation of how to get command by installing one of the providing formulae.
 # @flag -d --debug      Display any debugging information.
 # @flag -q --quiet      Make some output more quiet.
 # @flag -v --verbose    Make some output more verbose.
@@ -1882,7 +1890,7 @@ which-formula() {
 # }} brew which-formula
 
 # {{ brew which-update
-# @cmd Database update for brew which-formula
+# @cmd Database update for brew which-formula.
 # @flag --stats              Print statistics about the database contents (number of commands and formulae, list of missing formulae).
 # @flag --commit             Commit the changes using git.
 # @flag --update-existing    Update database entries with outdated formula versions.
@@ -1900,89 +1908,6 @@ which-update() {
 # }} brew which-update
 
 . "$ARGC_COMPLETIONS_ROOT/utils/_argc_utils.sh"
-
-_choice_suggest_formula_cask() {
-    if [[ -z "$argc_cask" ]] && [[ -z "$argc_casks" ]]; then
-        _choice_suggest_formula
-    elif [[ -z "$argc_formula" ]] && [[ -z "$argc_formulae" ]]; then
-        _choice_suggest_cask
-    fi
-}
-
-_choice_suggest_formula() {
-    brew formulae
-}
-
-_choice_installed_formula_cask() {
-    if [[ -z "$argc_cask" ]] && [[ -z "$argc_casks" ]]; then
-        _choice_installed_formula
-    elif [[ -z "$argc_formula" ]] && [[ -z "$argc_formulae" ]]; then
-        _choice_installed_cask
-    fi
-}
-
-_choice_suggest_diagnostic_check() {
-    brew doctor --list-checks
-}
-
-_choice_installed_formula() {
-    brew list --formula | sed 's/\s\+/\n/'
-}
-
-_choice_outdated_formula_cask() {
-    if [[ -z "$argc_cask" ]] && [[ -z "$argc_casks" ]]; then
-        _choice_outdated_formula
-    elif [[ -z "$argc_formula" ]] && [[ -z "$argc_formulae" ]]; then
-        _choice_outdated_cask
-    fi
-}
-
-_choice_tap() {
-    brew tap
-}
-
-_choice_installed_formula_file() {
-    _argc_util_comp_path
-    _choice_installed_formula
-}
-
-_choice_suggest_cask() {
-    brew casks
-}
-
-_choice_cask_tap() {
-    _choice_suggest_cask
-    _choice_tap
-}
-
-_choice_prof_command() {
-    _argc_util_comp_subcommand 0 brew
-}
-
-_choice_file_tap_formula_cask() {
-    _argc_util_comp_path
-    _argc_util_parallel _choice_suggest_cask ::: _choice_suggest_formula ::: _choice_tap
-}
-
-_choice_alias() {
-    brew alias | sed "s/^brew alias \([^=]\+\)='\(.*\)'$/\1\t\2/"   
-}
-
-_choice_suggest_service() {
-    brew services list | gawk '{if (NR > 1) {print $1}}'
-}
-
-_choice_installed_cask() {
-    brew list --cask | sed 's/\s\+/\n/'
-}
-
-_choice_outdated_cask() {
-    brew outdated --cask | sed 's/\s/\t/'
-}
-
-_choice_outdated_formula() {
-    brew outdated --formula | sed 's/\s/\t/'
-}
 
 _module_os_command() {
     if _argc_util_has_path_prefix; then

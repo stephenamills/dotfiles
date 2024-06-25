@@ -11,7 +11,7 @@ if type brew &>/dev/null; then
   # direnv (automatically loads/unloads environment variables)
   eval "$(direnv hook zsh)"
 
-  # zsh Pure extension (aesthetically pleasing terminal prompt)
+  # zsh pure extension (aesthetically pleasing terminal prompt)
   autoload promptinit
   promptinit
   prompt pure
@@ -41,33 +41,20 @@ fi
 # *: Matches command names or options before --.
 # (-- *): Matches --, a space, and the description text after the space.
 # =color1=color2: color2 is applied to the matched pattern, color1 to everything else. 35=magenta, 90=light gray.
-# Adapted from online examples. See https://github.com/ohmyzsh/ohmyzsh/issues/9728#issuecomment-1025890246 and https://superuser.com/a/1200812
+# Adapted from online examples. See https://github.com/ohmyzsh/ohmyzsh/issues/9728#issuecomment-1025890246 and https://superuser.com/a/1200812.
 zstyle ':completion:*' list-colors '=(#b)*(-- *)=35=90'
+
+
+# Command to commit changes to a git repository
+alias gitc='printf 'Enter commit message: ' && read msg && git add . && git commit -m $msg && git push'
+
 
 # Command to install an app
 bi() {
   brew install --no-quarantine "$@"
 }
 
-# Command to commit changes to a git repository
-gitc() {
-  printf 'Enter commit message: ' && read msg && git add . && git commit -m $msg && git push
-}
-
-# Command to install a .pkg file
-ins() {
-  for pkg in "$@"; do
-    sudo installer -pkg "$pkg" -target /
-  done
-}
-
-# Command to sign a bundle
-prep() {
-  sudo xattr -r -d com.apple.quarantine "$1"
-  sudo codesign --force --deep --sign - "$1"
-}
-
-# Lazy loading for bloated Google Cloud SDK
+# Command to load the bloated Google Cloud SDK only on demand
 gcloud() {
     # Check if Google Cloud SDK is installed
     if [ -d "$(brew --prefix)/share/google-cloud-sdk" ]; then
@@ -83,4 +70,17 @@ gcloud() {
     else
         echo "Google Cloud SDK is not installed."
     fi
+}
+
+# Command to install a .pkg file
+ins() {
+  for pkg in "$@"; do
+    sudo installer -pkg "$pkg" -target /
+  done
+}
+
+# Command to sign a bundle
+prep() {
+  sudo xattr -r -d com.apple.quarantine "$1"
+  sudo codesign --force --deep --sign - "$1"
 }

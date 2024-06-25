@@ -45,16 +45,12 @@ fi
 zstyle ':completion:*' list-colors '=(#b)*(-- *)=35=90'
 
 
-# Command to commit changes to a git repository
-alias gitc='printf 'Enter commit message: ' && read msg && git add . && git commit -m $msg && git push'
-
-
 # Command to install an app
 bi() {
   brew install --no-quarantine "$@"
 }
 
-# Command to load the bloated Google Cloud SDK only on demand
+# Command to load bloated Google Cloud SDK only on demand
 gcloud() {
     # Check if Google Cloud SDK is installed
     if [ -d "$(brew --prefix)/share/google-cloud-sdk" ]; then
@@ -70,6 +66,11 @@ gcloud() {
     else
         echo "Google Cloud SDK is not installed."
     fi
+}
+
+# Command to commit changes to a git repository
+gitc() {
+  printf 'Enter commit message: ' && read msg && git add . && git commit -m $msg && git push
 }
 
 # Command to install a .pkg file

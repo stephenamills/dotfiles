@@ -3,52 +3,90 @@ tap "heroku/brew"
 tap "supabase/tap"
 tap "replicate/tap"
 tap "xo/xo"
+
+
+# GitHub
 brew "act"
 brew "action-validator"
 brew "actionlint"
-brew "aerleon"
-brew "agg"
-brew "airshare"
-brew "align"
-brew "amass"
-brew "amazon-ecs-cli"
-brew "angle-grinder"
+brew "gh"
+brew "git"
+brew "git-open"
+
+
+# Docker
+brew "dive"
+
+
+# Terraform etc.
+brew "atmos" # Terraform tool – marketing is horrible
+brew "aztfexport"
+brew "cdktf" # cloud development kit for terraform
+brew "hashicorp/tap/packer"
+brew "hashicorp/tap/terraform"
+brew "pulumi"
+brew "terragrunt"
+brew "terramate"
+brew "tfsec"
+
+
+# Ansible
 brew "ansible"
 brew "ansible-cmdb"
 brew "ansible-creator"
 brew "ansible-lint"
-brew "anycable-go"
-brew "apachetop"
-brew "apib"
-brew "apibuilder-cli"
-brew "apify-cli"
-brew "apko"
-brew "apprise"
-brew "appwrite"
-brew "argc"
+brew "molecule"
+
+# Kubernetes or Nomad
 brew "argo"
 brew "argocd"
 brew "argocd-autopilot"
 brew "argocd-vault-plugin"
-# brew "argus" potentially interesting to use later
-# brew "argus-clients" 
-brew "arjun"
-brew "arkade"
-brew "arp-scan"
-brew "arping"
-brew "artillery"
-brew "as-tree"
-brew "asciinema"
-brew "asdf"
-brew "asn"
-brew "asnmap"
-brew "asroute"
-brew "ast-grep"
+brew "cdk8s" # cloud development kit for kubernetes
+brew "cyctl" # really cool ui tool
+# brew "calicoctl"
+brew "helm"
+brew "helmfile"
+# brew "istioctl"
+brew "kompose"
+brew "kops"
+brew "kubectl"
+brew "kubescape"
+brew "kustomize"
+brew "k9s"
+brew "minikube"
+
+brew "hashicorp/tap/nomad"
+
+
+# Data Formats - JSON & YAML
+brew "jq"
+brew "jql"
+brew "yamale" # schema validator
+brew "yamllint" # checker
+brew "yh" # highlighter
+brew "yj" # YAML to JSON or TOML or HCL converter
+brew "yq" # jq for YAML, JSON, XML, CSV, and TOML
+
+# Data Formats - CSV
+brew "xsv" # looks very useful for csv files though kinda abandoned
+
+# Data Formats - Protocol Buffers
+brew "buf" # protocol buffers
+brew "grpcurl"
+
+
+# Google Cloud
+brew "apib"    # API tool
+brew "berglas" # secrets manager
+brew "bigquery-emulator"
+brew "firebase-cli"
+brew "yatas" # AWS/GCP audit tool
+
+
+# AWS
+brew "amazon-ecs-cli"
 brew "athenacli"
-brew "atlantis" # looks useful
-brew "atlas" # looks useful
-brew "atmos" # Terraform tool but marketing is absolutely horrible
-brew "autorest"
 brew "aws-amplify"
 brew "aws-auth"
 brew "aws-cdk"
@@ -64,31 +102,122 @@ brew "aws-vault"
 brew "awscli"
 brew "awscli-local"
 brew "awscurl"
-brew "awsdac" # aws labs diagram tool
+brew "awsdac" # diagram tool from aws labs
 brew "awslogs"
+
+
+# Cloudflare
+brew "cloudflared"
+brew "cloudflare-wrangler2"
+brew "flarectl"
+
+
+# Backblaze
+brew "b2-tools"
+
+
+# Networking - Application
+# DNS
+brew "airshare"
+brew "bind" # dig
+brew "dnsgen"
+brew "dnstracer"
+brew "massdns"
+# HTTP
+brew "newman"
+# WebSocket
+brew "websocat"
+# VPN
+brew "bore-cli" # only 400 lines of code
+brew "boringtun"
+cask "ngrok"
+cask "tailscale"
+# Captures
+brew "tcpdump"
+brew "yaf" # really useful networking data pipeline architecture and flow record display tool
+cask "wireshark"
+
+# Networking - Transport
+brew "aerleon" # Generates firewall configurations
+brew "nmap"
+
+
+# Networking - Routing
+brew "asn"
+brew "asnmap"
+brew "asroute"
+brew "bgpq4"
+brew "bgpstream"
+brew "ipinfo-cli"
+brew "lft"
+brew "mtr"
+
+# Networking - Data Link
+brew "arp-scan"
+brew "arping"
+brew "cdpr" # cisco discovery protocol reporter
+
+
+# Certificates
+brew "amass"
+brew "ccheck" # certificate expiration checker
+brew "certbot" # certificate automation
+brew "zlint" # certificate checker, see also zcertificate and zschema
+
+
+# zsh
+brew "pure"
+brew "zsh"
+brew "zsh-autocomplete"
+brew "zsh-autopair"
+brew "zsh-autosuggestions"
+brew "zsh-syntax-highlighting"
+
+# brew "argus" potentially interesting to use later
+# brew "argus-clients" 
+
+
+
+brew "align"
+brew "agg"  
+brew "angle-grinder"
+brew "anycable-go"
+brew "apachetop"
+brew "apibuilder-cli"
+brew "apify-cli"
+brew "apko"
+brew "apprise"
+brew "appwrite"
+brew "argc"
+brew "arjun"
+brew "arkade"
+
+brew "artillery"
+brew "as-tree"
+brew "asciinema"
+brew "asdf"
+
+brew "ast-grep"
+brew "atlantis" # looks useful
+brew "atlas" # looks useful
+brew "autorest"
+
+
 brew "awsume"
 brew "awsweeper"
 brew "authz0"
 brew "autorest"
-brew "aztfexport"
 brew "azure-cli"
-brew "b2-tools"
 brew "badkeys"
 brew "bat"
 brew "bbot"
-brew "berglas" # Google Cloud
+
 # brew "bfs" # the GitHub page has a nice neutral tone terminal background
-# brew "bgpdump" # don't need this right now, but probably later
-brew "bgpq4"
-brew "bgpstream"
-brew "bigquery-emulator"
+
 brew "bitwarden-cli"
 brew "blackbox"
-brew "bore-cli" # only 400 lines of code
-brew "boringtun"
 # brew "bpftop" # for Linux only but useful
 # brew "brev" # cringe marketing but saving it here anyway
-brew "buf" # protocol buffers
 brew "buildpulse-test-reporter"
 # brew "butane" for Linux only
 brew "c2rust"
@@ -100,26 +229,15 @@ brew "caire" # super useful content-aware image resizer
 # brew "cariddi" # really does not look useful but I just like go command line tools 😂
 # brew "carthage" # for iOS development
 # brew "cascadia" HTML selector tool
-brew "ccheck" # certificate expiration
 # brew "ccm" # cassandra
-brew "cdk8s" # Cloud Development Kit for Kubernetes
-brew "cdktf" # Cloud Development Kit for Terraform
-brew "cdpr" # cisco discovery protocol reporter
-brew "certbot" # certificate automation
 brew "checkov"
 brew "choose-rust"
 brew "circleci"
-brew "cloudflared"
-brew "cloudflare-wrangler2"
 brew "corepack"
 brew "cosign"
-brew "cyctl" # really cool Kubernetes ui tool
 brew "deno"
 brew "difftastic"
 brew "direnv"
-brew "dive"
-brew "dnsgen"
-brew "dnstracer"
 brew "doctl"
 brew "doggo"
 brew "doppler"
@@ -129,15 +247,10 @@ brew "fastlane"
 brew "fclones"
 brew "fd"
 brew "feroxbuster"
-brew "firebase-cli"
-brew "flarectl"
 brew "flyctl"
 brew "gdu"
-brew "gh"
 brew "ghz"
 brew "gibo"
-brew "git"
-brew "git-open"
 brew "gitleaks"
 brew "glab"
 brew "go"
@@ -147,57 +260,35 @@ brew "gping"
 brew "graphviz"
 brew "grex"
 brew "gron"
-brew "grpcurl"
 brew "grype"
-brew "hashicorp/tap/packer"
-brew "hashicorp/tap/terraform"
 brew "hasura-cli"
-brew "helm"
-brew "helmfile"
 brew "heroku/brew/heroku"
 brew "httpie"
 brew "hurl"
 brew "hyperfine"
 brew "imagemagick"
-brew "ipinfo-cli"
-brew "istioctl"
-brew "jq"
-brew "jql"
-brew "k9s"
-brew "kompose"
-brew "kops"
-brew "kubectl"
-brew "kubescape"
-brew "kustomize"
 brew "lefthook"
-brew "lft"
 brew "linode-cli"
 brew "manim"
 brew "mas"
-brew "massdns"
 brew "md5deep"
-brew "minikube"
-brew "molecule"
 brew "monolith"
 brew "muffet"
 brew "naabu"
 brew "netcat"
 brew "netlify-cli"
-brew "newman"
 brew "nexttrace"
 brew "nixpacks"
-brew "nmap"
+
 brew "node"
 brew "oci-cli"
 brew "okteto"
 brew "opa"
+brew "openssh"
 brew "openssl"
-brew "packer"
 brew "pipx"
 brew "pocketbase"
 brew "prettier"
-brew "pulumi"
-brew "pure"
 brew "railway"
 brew "rename"
 brew "replicate"
@@ -210,11 +301,7 @@ brew "sops"
 brew "stripe-cli"
 brew "supabase"
 brew "tailspin"
-brew "tcpdump" # I loveee it
 brew "tektoncd-cli"
-brew "terragrunt"
-brew "terramate"
-brew "tfsec"
 brew "tldr"
 brew "tree"
 brew "trippy"
@@ -237,32 +324,18 @@ brew "xo/xo/usql"
 # brew "xpdf" # PDF tool but not on GitHub
 brew "xpipe" # the use case is very interesting - splits input and feeds it to another command
 brew "xq"
-brew "xsv" # looks very useful for csv files though kinda abandoned
 brew "xurls" # extracts urls from text - could be very useful
 brew "xxh" # tool to ssh and bring your shell - useful, assuming it works
 brew "vercel-cli"
 brew "vultr"
 brew "watch"
-brew "websocat"
 brew "wp-cli"
 brew "wpscan"
-brew "yaf" # yet another flowmeter - really useful network data pipeline architecture and flow record display tool
-brew "yamale" # YAML schema validator
-brew "yamllint" #YAML checker
 # brew "yapf" # Google's Python formatter
-brew "yatas" # AWS/GCP audit tool
-brew "yh" # YAML highlighter
-brew "yj" # YAML to JSON or TOML or HCL converter
+
 brew "yorkie" # interesting, uses conflict-free replicated data types instead of raft
 # brew "youplot"
-brew "yq" # YAML, JSON, XML, CSV, and TOML jq 
 brew "yt-dlp"
-brew "zlint" # certificate checker, also see zcertificate and zschema
-brew "zsh"
-brew "zsh-autocomplete"
-brew "zsh-autopair"
-brew "zsh-autosuggestions"
-brew "zsh-syntax-highlighting"
 # brew "zx"
 cask "blackhole-2ch"
 cask "devkinsta"
@@ -274,15 +347,12 @@ cask "ilok-license-manager"
 cask "inkscape"
 cask "loopback"
 cask "microsoft-auto-update"
-cask "ngrok"
 cask "postman"
 cask "rancher"
 cask "reaper"
 cask "replay"
 cask "surge-xt"
-cask "tailscale"
 cask "visual-studio-code"
-cask "wireshark"
 mas "hiddenbar", id: 1452453066
 mas "telegram", id: 747648890
 mas "vimari", id: 1480933944

@@ -6,12 +6,9 @@ tap "xo/xo"
 
 
 # GitHub
-brew "act"
-brew "action-validator"
-brew "actionlint"
 brew "gh"
 brew "git-open"
-
+brew "glab" # gitlab
 
 # Git
 brew "blackbox" # encrypts and stores secrets in git
@@ -19,10 +16,21 @@ brew "gibo" # .gitignore generator
 brew "git"
 brew "gitleaks" # secrets audit
 brew "lefthook" # hook manager
+# brew "changie" # changelog tool 
+# brew "cycode-cli" # another boring scanner
+
+# Continuous Integration
+brew "act"
+brew "action-validator"
+brew "actionlint"
+brew "bitwarden-cli"
+brew "circleci" # reproduces the CircleCI environment locally
+brew "woodpecker-cli"
 
 
 # Docker
 brew "apko" # creates a docker image from an alpine apk, without a dockerfile
+brew "clair" # container static analysis audit
 brew "cosign"
 brew "dive" # docker image explorer
 brew "nixpacks" # creates docker images without a dockerfile
@@ -51,6 +59,9 @@ brew "molecule"
 # Kubernetes
 brew "arkade" # kubernetes-packaged apps
 brew "cdk8s" # cloud development kit for kubernetes
+brew "chaoskube" # periodically takes down random pods
+brew "chart-testing" # helm chart testing
+brew "click" # by Databricks - Kubernetes interactive controller
 brew "cyctl" # really cool ui tool
 brew "helm"
 brew "helmfile"
@@ -71,16 +82,17 @@ brew "argo"
 brew "argocd"
 brew "argocd-autopilot"
 brew "argocd-vault-plugin"
-brew "bitwarden-cli"
 brew "doppler" # secrets manager, looks popular I guess
 brew "hashicorp/tap/vault"
 brew "tektoncd-cli"
+brwe "werf" # it has 4000 stars, why are there so many Kubernetes toools
 
 # Nomad
 brew "hashicorp/tap/nomad"
 
 
 # Data Formats - JSON & YAML
+brew "check-jsonschema"
 brew "gron" # JSON to greppable output
 brew "jq"
 brew "jql"
@@ -98,12 +110,17 @@ brew "buf" # tool and schema registry
 brew "grpcurl"
 brew "ghz" # benchmarking tool
 
+# Observability
+brew "chronograf" # monitoring and visualization UI for the Telegraf, InfluxDB, Chronograf, Kapacitor (TICK) stack
 
 # Google Cloud
 brew "apib"    # api tool
 brew "berglas" # secrets manager
 brew "bigquery-emulator"
 brew "c7n" # very useful gcp/aws audit tool
+brew "checkov" # gcp/aws/terraform etc. audit tool
+brew "cliam" # cloud agnostic IAM permissions enumerator
+brew "cloud-sql-proxy"
 brew "firebase-cli"
 brew "yatas" # gcp/aws audit tool
 cask "google-cloud-sdk"
@@ -129,12 +146,22 @@ brew "awscurl"
 brew "awslogs"
 brew "awsume"
 brew "awsweeper"
+brew "cf2tf" # converts CloudFormation templates to Terraform HCL
+brew "cfn-flip" # converts CloudFormation templates to JSON or YAML
+brew "cfn-format"
+brew "cfn-lint"
+brew "cfripper" # CloudFormation audit tool
+brew "chamber" # manages secrets in AWS SSM Parameter Store
+brew "cli53"
+brew "cloud-nuke" # deletes all cloud resources aws or gcp etc.
+brew "cloud-watch"
 brew "s3cmd"
 
 # Cloudflare
 brew "cloudflared"
 brew "cloudflare-wrangler2"
 brew "flarectl"
+brew "wgcf" # generates WireGuard profile from Cloudflare Warp account
 
 # Backblaze
 brew "b2-tools"
@@ -145,12 +172,18 @@ brew "sail" # deploys to digitalocean
 brew "wp-cli"
 brew "wpscan"
 
+
 # Image Processing 
+brew "caire" # super useful content-aware image resizer
+brew "imagemagick"
+
 
 # Diagrams
 brew "awsdac" # diagram tool from aws labs
-brew "d2"
+brew "d2" # terrastruct diagram tool
 brew "manim"
+# also, diagrams on pypi
+# also, mermaid on npm
 
 
 # Networking - Application
@@ -158,37 +191,46 @@ brew "manim"
 brew "airshare"
 brew "bbot"
 brew "bind" # dig
+brew "checkdmarc"
 brew "dnsgen"
 brew "dnstracer"
 brew "doggo"
 brew "massdns"
 # HTTP
-brew "apprise" # very useful for sending notifications and triggering webhooks to popular notification services
 brew "arjun" # hidden parameter discovery
 brew "authz0"
-brew "autorest" # azure's openapi spec -> client library generator
+brew "autorest" # by Azure - generates client library code from an OpenAPI specification
 brew "curl"
+brew "curlie" # curl alternative, httpie-like
 brew "httpie"
 brew "hurl"
 brew "newman"
-brew "muffet" # link checker
+brew "muffet" # broken link checker
+brew "webify" # incredibly useful - turns a shell command into a web service
+brew "wiremock-standalone"
 cask "postman"
-# WebSocket
-brew "websocat"
+# HTTP - Webhooks
+brew "apprise" # very useful for sending notifications and triggering webhooks to popular notification services
+brew "webhook" # lightweight incoming webhook server
+# HTTP - WebSocket
+brew "websocat" # command-line client for WebSockets
+brew "websocketd" # turns any command-line program into a websocket server
 # VPN
 brew "bore-cli" # only 400 lines of code
 brew "boringtun"
 cask "ngrok"
 cask "tailscale"
+# brew "wireguard-go"
+# brew "wireguard-tools"
 # Captures
-# brew "argus" # tcpdump alternative that has shows TCP state for each line such as CON FIN RST, or flow records whatever
-# brew "argus-clients" 
 brew "tcpdump"
 brew "yaf" # really useful networking data pipeline architecture and flow record display tool
 cask "wireshark"
+# brew "argus" # tcpdump alternative that has shows TCP state for each line such as CON FIN RST, or flow records whatever
+# brew "argus-clients" 
 
 # Networking - Transport
-brew "aerleon" # Generates firewall configurations
+brew "aerleon" # generates firewall configurations
 brew "naabu"
 brew "netcat"
 brew "nmap"
@@ -199,12 +241,16 @@ brew "asnmap"
 brew "asroute"
 brew "bgpq4"
 brew "bgpstream"
+brew "cidr" # a lifesaver
+brew "cidr2range"
+brew "cidrmerge"
 brew "gping"
 brew "ipinfo-cli"
 brew "lft"
 brew "mtr"
 brew "nexttrace" # visual route tracking
 brew "trippy"
+brew "whatmask"
 
 # Networking - Data Link
 brew "arp-scan"
@@ -218,10 +264,10 @@ brew "badkeys" # finds common vulnerabilities in a public key
 brew "ccheck" # certificate expiration checker
 brew "certbot" # certificate automation
 brew "certgraph" # crawls the graph of certificate Alternate Names and their website also links to huge crt.sh database
-brew "certigo" # by square - examines and validates certificates
-brew "certstrap" # by square - tools to bootstrap CAs, certificate requests, and signed certificates
+brew "certigo" # by Square - examines and validates certificates
+brew "certstrap" # by Square - tools to bootstrap CAs, certificate requests, and signed certificates
 brew "certsync"
-brew "cfssl" # by cloudflare - PKI/TLS toolkit
+brew "cfssl" # by Cloudflare - PKI/TLS toolkit
 brew "openssl"
 brew "xpipe" # splits input and feeds it to another command - has use cases for certificates and more
 brew "zlint" # certificate checker, see also zcertificate and zschema
@@ -230,28 +276,48 @@ brew "zlint" # certificate checker, see also zcertificate and zschema
 # zsh
 brew "argc"
 brew "asdf"
-brew "difftastic" # super high-quality diff tool
 brew "direnv"
-brew "fd"
-brew "hyperfine" # useful benchmarking tool
-brew "openssh"
 brew "pure"
-brew "rename"
-brew "sd" # sed replacement
-brew "tldr"
-brew "tree"
-brew "watch"
-brew "xe" # xargs replacement
 brew "zsh"
 brew "zsh-autocomplete"
 brew "zsh-autopair"
 brew "zsh-autosuggestions"
 brew "zsh-syntax-highlighting"
+# brew "clitest"
 # brew "xonsh"
 # brew "zx"
 
-# Everything else
+# Utilities
 brew "align"
+brew "as-tree"
+brew "bat"
+brew "chalk-cli" # colorizes teminal text
+brew "choose-rust" # alternative to cut and awk
+brew "difftastic" # super high-quality diff tool
+brew "fd"
+brew "hyperfine" # useful benchmarking tool
+brew "openssh"
+brew "rename"
+brew "sd" # sed replacement
+brew "tldr"
+brew "tree"
+brew "watch"
+brew "watchexec" # watches files and triggers actions
+brew "xe" # xargs replacement
+# brew "watchman" by Facebook - watches files and triggers actions
+
+
+# Language Runtimes & Packagers
+brew "corepack"
+brew "node@20"
+
+brew "go"
+brew "rust"
+
+brew "pipx"
+brew "python"
+
+# Everything else
 brew "agg"  # converts Asciicast to GIF
 brew "angle-grinder" # log analysis tool
 brew "anycable-go"
@@ -259,19 +325,12 @@ brew "apibuilder-cli"
 brew "apify-cli" # something about web scraping
 brew "appwrite"
 brew "artillery"
-brew "as-tree"
 brew "asciinema"
 brew "ast-grep"
 brew "atlas" # looks useful, database tool
 brew "azure-cli"
-brew "bat"
 brew "buildpulse-test-reporter"
 brew "c2rust"
-brew "caire" # super useful content-aware image resizer
-brew "checkov"
-brew "choose-rust"
-brew "circleci"
-brew "corepack"
 brew "deno"
 brew "doctl"
 brew "erdtree"
@@ -279,10 +338,9 @@ brew "fabric"
 brew "fastlane" # iOS development
 brew "fclones"
 brew "feroxbuster"
+brew "ffmpeg"
 brew "flyctl"
 brew "gdu"
-brew "glab"
-brew "go"
 brew "goreleaser"
 brew "goose" # database migration
 brew "graphviz"
@@ -290,24 +348,21 @@ brew "grex" # regex generator
 brew "grype"
 brew "hasura-cli"
 brew "heroku/brew/heroku"
-brew "imagemagick"
 brew "linode-cli"
 brew "mas"
 brew "md5deep"
 brew "monolith"
 brew "netlify-cli"
-brew "node"
 brew "oci-cli"
-brew "pipx"
 brew "pocketbase"
 brew "railway"
 brew "replicate/tap/replicate" # runs machine learning models in their cloud
 brew "robot-framework" # automation testing
-brew "rust"
 brew "sops"
 brew "stripe-cli"
 brew "supabase"
-brew "tailspin" # log file highlighter
+brew "tailspin" # colorizes log files
+brew "webpod" # deploys JavaScript apps to DigitalOcean, Linode, Vultr, GCP, AWS, or Azure
 brew "xidel" # super useful for reading web pages I think
 brew "xo/xo/usql"
 brew "xq"
@@ -331,7 +386,17 @@ brew "yt-dlp"
 # brew "carthage" # for iOS development
 # brew "cascadia" HTML selector tool
 # brew "ccm" # cassandra
+# brew "chatblade" # I just like the ffmpeg example
+# brew "checkmake"
+# brew "chezmoi"
+# brew "chisel" # by Facebook - collection of LLDB commands for iOS development
+# brew "chisel-tunnel" not useful but it's in go
+# brew "chrome-cli"
+# brew "cilium-cli"
 # brew "istioctl"
+# brew "weasyprint" # HTML to PDF
+# brew "whisperkit-cli" # runs OpenAI Whisper speech recongition models on macOS and iOS
+# brew "wtfis"
 # brew xeol # container scanner but not popular
 # brew "xh" # yet another httpie alternative
 # brew "xpdf" # PDF tool but not on GitHub

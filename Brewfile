@@ -37,14 +37,14 @@ brew "ansible-creator"
 brew "ansible-lint"
 brew "molecule"
 
-# Kubernetes or Nomad
+# Kubernetes
 brew "argo"
 brew "argocd"
 brew "argocd-autopilot"
 brew "argocd-vault-plugin"
+# brew "calicoctl"
 brew "cdk8s" # cloud development kit for kubernetes
 brew "cyctl" # really cool ui tool
-# brew "calicoctl"
 brew "helm"
 brew "helmfile"
 # brew "istioctl"
@@ -56,6 +56,10 @@ brew "kustomize"
 brew "k9s"
 brew "minikube"
 
+cask "rancher"
+
+
+# Nomad
 brew "hashicorp/tap/nomad"
 
 
@@ -83,6 +87,7 @@ brew "bigquery-emulator"
 brew "firebase-cli"
 brew "yatas" # AWS/GCP audit tool
 
+cask "google-cloud-sdk"
 
 # AWS
 brew "amazon-ecs-cli"
@@ -124,7 +129,10 @@ brew "dnsgen"
 brew "dnstracer"
 brew "massdns"
 # HTTP
+brew "curl"
+brew "httpie"
 brew "newman"
+cask "postman"
 # WebSocket
 brew "websocat"
 # VPN
@@ -139,6 +147,7 @@ cask "wireshark"
 
 # Networking - Transport
 brew "aerleon" # Generates firewall configurations
+brew "netcat"
 brew "nmap"
 
 
@@ -162,6 +171,11 @@ brew "cdpr" # cisco discovery protocol reporter
 brew "amass"
 brew "ccheck" # certificate expiration checker
 brew "certbot" # certificate automation
+brew "certgraph" # crawls the graph of certificate Alternate Names and their website also links to huge crt.sh database
+brew "certigo" # by square - examines and validates certificates
+brew "certstrap" # by square - tools to bootstrap CAs, certificate requests, and signed certificates
+
+brew "openssl"
 brew "zlint" # certificate checker, see also zcertificate and zschema
 
 
@@ -191,18 +205,14 @@ brew "appwrite"
 brew "argc"
 brew "arjun"
 brew "arkade"
-
 brew "artillery"
 brew "as-tree"
 brew "asciinema"
 brew "asdf"
-
 brew "ast-grep"
 brew "atlantis" # looks useful
 brew "atlas" # looks useful
 brew "autorest"
-
-
 brew "awsume"
 brew "awsweeper"
 brew "authz0"
@@ -211,9 +221,7 @@ brew "azure-cli"
 brew "badkeys"
 brew "bat"
 brew "bbot"
-
 # brew "bfs" # the GitHub page has a nice neutral tone terminal background
-
 brew "bitwarden-cli"
 brew "blackbox"
 # brew "bpftop" # for Linux only but useful
@@ -263,7 +271,6 @@ brew "gron"
 brew "grype"
 brew "hasura-cli"
 brew "heroku/brew/heroku"
-brew "httpie"
 brew "hurl"
 brew "hyperfine"
 brew "imagemagick"
@@ -275,17 +282,14 @@ brew "md5deep"
 brew "monolith"
 brew "muffet"
 brew "naabu"
-brew "netcat"
 brew "netlify-cli"
 brew "nexttrace"
 brew "nixpacks"
-
 brew "node"
 brew "oci-cli"
 brew "okteto"
 brew "opa"
 brew "openssh"
-brew "openssl"
 brew "pipx"
 brew "pocketbase"
 brew "prettier"
@@ -322,7 +326,7 @@ brew "xidel" # super useful for reading web pages I think
 # brew "xonsh"
 brew "xo/xo/usql"
 # brew "xpdf" # PDF tool but not on GitHub
-brew "xpipe" # the use case is very interesting - splits input and feeds it to another command
+brew "xpipe" # the use case is interesting - splits input and feeds it to another command
 brew "xq"
 brew "xurls" # extracts urls from text - could be very useful
 brew "xxh" # tool to ssh and bring your shell - useful, assuming it works
@@ -332,30 +336,29 @@ brew "watch"
 brew "wp-cli"
 brew "wpscan"
 # brew "yapf" # Google's Python formatter
-
 brew "yorkie" # interesting, uses conflict-free replicated data types instead of raft
 # brew "youplot"
 brew "yt-dlp"
 # brew "zx"
+
 cask "blackhole-2ch"
 cask "devkinsta"
 cask "dropbox"
 cask "fl-studio"
 cask "framer"
-cask "google-cloud-sdk"
 cask "ilok-license-manager"
 cask "inkscape"
 cask "loopback"
 cask "microsoft-auto-update"
-cask "postman"
-cask "rancher"
 cask "reaper"
 cask "replay"
 cask "surge-xt"
 cask "visual-studio-code"
+
 mas "hiddenbar", id: 1452453066
 mas "telegram", id: 747648890
 mas "vimari", id: 1480933944
+
 vscode "astro-build.astro-vscode"
 vscode "equinusocio.vsc-material-theme-icons"
 vscode "esbenp.prettier-vscode"

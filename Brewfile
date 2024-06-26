@@ -206,7 +206,7 @@ brew "sops"
 brew "stripe-cli"
 brew "supabase"
 brew "tailspin"
-brew "tcpdump"
+brew "tcpdump" # I loveee it
 brew "tektoncd-cli"
 brew "terragrunt"
 brew "terramate"
@@ -222,6 +222,13 @@ brew "watch"
 brew "websocat"
 brew "wp-cli"
 brew "wpscan"
+brew "yaf" # yet another flowmeter - really useful network data pipeline architecture and flow record display tool
+brew "yamale" # YAML schema validator
+brew "yamllint" #YAML checker
+# brew "yapf" # Google's Python formatter
+brew "yatas" # AWS/GCP audit tool
+brew "yh" # YAML highlighter
+brew "yj" # YAML to JSON or TOML or HCL converter
 brew "yq"
 brew "zlint" # certificate checker, also see zcertificate and zschema
 brew "zsh"

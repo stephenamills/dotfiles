@@ -20,7 +20,7 @@ Lastly, run the commands below to install:
 
 ```shell
 brew bundle install --no-lock
-go install $(tr '\n' ' ' < Gofile)
+xargs -n 1 go install < Gofile
 cargo install $(tr '\n' ' ' < Rustfile)
 pnpm install -g $(tr '\n' ' ' < Npmfile)
 xargs -n 1 pipx install < Pythonfile

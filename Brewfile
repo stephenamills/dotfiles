@@ -303,7 +303,7 @@ brew "tree"
 brew "watch"
 brew "watchexec" # watches files and triggers actions
 brew "xe" # xargs replacement
-# brew "watchman" by Facebook - watches files and triggers actions
+# brew "watchman" # by Facebook - watches files and triggers actions
 
 
 # Language Runtimes & Packagers

@@ -154,7 +154,6 @@ brew "cfripper" # CloudFormation audit tool
 brew "chamber" # manages secrets in AWS SSM Parameter Store
 brew "cli53"
 brew "cloud-nuke" # deletes all cloud resources aws or gcp etc.
-brew "cloud-watch"
 brew "s3cmd"
 
 # Cloudflare

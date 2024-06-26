@@ -102,6 +102,10 @@ brew "caire" # super useful content-aware image resizer
 # brew "cascadia" HTML selector tool
 brew "ccheck" # certificate expiration
 # brew "ccm" # cassandra
+brew "cdk8s" # Cloud Development Kit for Kubernetes
+brew "cdktf" # Cloud Development Kit for Terraform
+brew "cdpr" # cisco discovery protocol reporter
+brew "certbot" # certificate automation
 brew "checkov"
 brew "choose-rust"
 brew "circleci"
@@ -215,7 +219,27 @@ brew "tldr"
 brew "tree"
 brew "trippy"
 brew "trivy"
+# brew "x264"
+# brew "x265"
+# brew "xcbeautify" # iOS development
+# brew "xcdiff" # iOS development
+# brew "xcinfo" # iOS development
+# brew "xclogparser" # iOS development
+# brew "xcodegen" # iOS development
+# brew "xcodes" # iOS development
+# brew "xcprojectlint" # iOS development
+brew "xe"
+# brew xeol # container scanner but not popular
+# brew "xh" # yet another httpie alternative
+brew "xidel" # super useful for reading web pages I think
+# brew "xonsh"
 brew "xo/xo/usql"
+# brew "xpdf" # PDF tool but not on GitHub
+brew "xpipe" # the use case is very interesting - splits input and feeds it to another command
+brew "xq"
+brew "xsv" # looks very useful for csv files though kinda abandoned
+brew "xurls" # extracts urls from text - could be very useful
+brew "xxh" # tool to ssh and bring your shell - useful, assuming it works
 brew "vercel-cli"
 brew "vultr"
 brew "watch"
@@ -229,7 +253,10 @@ brew "yamllint" #YAML checker
 brew "yatas" # AWS/GCP audit tool
 brew "yh" # YAML highlighter
 brew "yj" # YAML to JSON or TOML or HCL converter
-brew "yq"
+brew "yorkie" # interesting, uses conflict-free replicated data types instead of raft
+# brew "youplot"
+brew "yq" # YAML, JSON, XML, CSV, and TOML jq 
+brew "yt-dlp"
 brew "zlint" # certificate checker, also see zcertificate and zschema
 brew "zsh"
 brew "zsh-autocomplete"

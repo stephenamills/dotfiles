@@ -85,7 +85,7 @@ brew "argocd-vault-plugin"
 brew "doppler" # secrets manager, looks popular I guess
 brew "hashicorp/tap/vault"
 brew "tektoncd-cli"
-brwe "werf" # it has 4000 stars, why are there so many Kubernetes toools
+brew "werf" # it has 4000 stars, why are there so many Kubernetes toools
 
 # Nomad
 brew "hashicorp/tap/nomad"

@@ -1,5 +1,6 @@
 avif
 carbon-now-cli
+@mermaid-js/mermaid-cli
 @northflank/cli
 plugma
 wscat

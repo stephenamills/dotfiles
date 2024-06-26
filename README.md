@@ -2,7 +2,7 @@
 
 This collection contains my shell configuration files and lists of commands and apps.
 
-This is 150 packages. It's really for personal use but here in case someone finds it useful.
+This is 300 packages. It's really for personal use but here in case someone finds it useful.
 
 # Usage
 

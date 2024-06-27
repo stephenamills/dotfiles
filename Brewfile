@@ -12,11 +12,13 @@ brew "glab" # gitlab
 
 # Git
 brew "blackbox" # encrypts and stores secrets in git
+brew "commitzen"
 brew "gibo" # .gitignore generator
 brew "git"
 brew "gitleaks" # secrets audit
 brew "lefthook" # hook manager
 # brew "changie" # changelog tool 
+# brew "commitlint" # probably intended to be installed locally per-project
 # brew "cycode-cli" # another boring scanner
 
 # Continuous Integration
@@ -62,7 +64,9 @@ brew "cdk8s" # cloud development kit for kubernetes
 brew "chaoskube" # periodically takes down random pods
 brew "chart-testing" # helm chart testing
 brew "click" # by Databricks - Kubernetes interactive controller
+brew "confd" # manages application configuration files using templates and data from etcd or consul
 brew "cyctl" # really cool ui tool
+brew "hashicorp/tap/consul"
 brew "helm"
 brew "helmfile"
 brew "kompose"
@@ -121,6 +125,8 @@ brew "c7n" # very useful gcp/aws audit tool
 brew "checkov" # gcp/aws/terraform etc. audit tool
 brew "cliam" # cloud agnostic IAM permissions enumerator
 brew "cloud-sql-proxy"
+brew "cloudlist"
+brew "cloudprober" # sends monitoring probes and integrates with Prometheus or Grafana
 brew "firebase-cli"
 brew "yatas" # gcp/aws audit tool
 cask "google-cloud-sdk"
@@ -154,6 +160,10 @@ brew "cfripper" # CloudFormation audit tool
 brew "chamber" # manages secrets in AWS SSM Parameter Store
 brew "cli53"
 brew "cloud-nuke" # deletes all cloud resources aws or gcp etc.
+brew "cloudiscovery" # abandoned but may still work
+brew "cloudformation-cli" # by Amazon - creates and manages CloudFormation extensions
+brew "cloudformation-guard" # by Amazon - audits CloudFormation templates, Kubernetes configurations, and Terraform plans
+brew "cloudfox" # penetration testing tool
 brew "s3cmd"
 
 # Cloudflare
@@ -176,6 +186,9 @@ brew "wpscan"
 brew "caire" # super useful content-aware image resizer
 brew "imagemagick"
 
+
+# Contentful
+brew "contentful-cli"
 
 # Diagrams
 brew "awsdac" # diagram tool from aws labs
@@ -292,6 +305,7 @@ brew "as-tree"
 brew "bat"
 brew "chalk-cli" # colorizes teminal text
 brew "choose-rust" # alternative to cut and awk
+brew "comby" # sed alternative, text rewrite tool that matches with syntax instead of regexes
 brew "difftastic" # super high-quality diff tool
 brew "fd"
 brew "hyperfine" # useful benchmarking tool
@@ -308,6 +322,7 @@ brew "xe" # xargs replacement
 
 # Language Runtimes & Packagers
 brew "corepack"
+brew "deno"
 brew "node@20"
 
 brew "go"
@@ -330,6 +345,7 @@ brew "atlas" # looks useful, database tool
 brew "azure-cli"
 brew "buildpulse-test-reporter"
 brew "c2rust"
+brew "dark-mode" # toggles dark mode
 brew "deno"
 brew "doctl"
 brew "erdtree"
@@ -420,6 +436,12 @@ vscode "styled-components.vscode-styled-components"
 # brew "chisel-tunnel" not useful but it's in go
 # brew "chrome-cli"
 # brew "cilium-cli"
+# brew "cookiecutter" # scaffolds some Python projects
+# brew "conduit" # Kafka Connect replacement, no JVM required
+# brew "concurrencykit" # this is a C library, not a tool, but the data structures are interesting
+# brew "cppinsights" # C++ web compiler
+# brew "crock" # send files to a friend
+# brew "denominator" # old abandoned Java code by Netflix but shows how to run a Java command without -jar
 # brew "istioctl"
 # brew "weasyprint" # HTML to PDF
 # brew "whisperkit-cli" # runs OpenAI Whisper speech recongition models on macOS and iOS

@@ -12,7 +12,7 @@ brew "glab" # gitlab
 
 # Git
 brew "blackbox" # encrypts and stores secrets in git
-brew "commitzen"
+brew "commitizen"
 brew "gibo" # .gitignore generator
 brew "git"
 brew "gitleaks" # secrets audit
@@ -27,6 +27,7 @@ brew "action-validator"
 brew "actionlint"
 brew "bitwarden-cli"
 brew "circleci" # reproduces the CircleCI environment locally
+brew "vaulted"
 brew "woodpecker-cli"
 
 
@@ -80,6 +81,8 @@ brew "okteto" # Detects local file edits and automatically synchronizes the code
 brew "opa"
 brew "trivy"
 cask "rancher"
+# brew "citus" # replicated PostgreSQL
+# brew "vitess" # replicated MySQL
 
 # Kubernetes - Continuous Integration
 brew "argo"
@@ -387,7 +390,6 @@ brew "vercel-cli"
 brew "vultr"
 brew "yorkie" # some app or whatever that uses conflict-free replicated data types instead of raft
 brew "yt-dlp"
-
 cask "blackhole-2ch"
 cask "devkinsta"
 cask "dropbox"
@@ -401,11 +403,9 @@ cask "reaper"
 cask "replay"
 cask "surge-xt"
 cask "visual-studio-code"
-
 mas "hiddenbar", id: 1452453066
 mas "telegram", id: 747648890
 mas "vimari", id: 1480933944
-
 vscode "astro-build.astro-vscode"
 vscode "equinusocio.vsc-material-theme-icons"
 vscode "esbenp.prettier-vscode"
@@ -415,7 +415,6 @@ vscode "graphql.vscode-graphql"
 vscode "graphql.vscode-graphql-syntax"
 vscode "ryuta46.multi-command"
 vscode "styled-components.vscode-styled-components"
-
 # brew "apachetop"
 # brew "bfs" # the GitHub page has a nice neutral tone terminal background
 # brew "bpftop" # for Linux only but useful

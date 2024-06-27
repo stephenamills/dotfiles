@@ -4,11 +4,10 @@ tap "replicate/tap"
 tap "supabase/tap"
 tap "xo/xo"
 
-
-# GitHub
+# GitHub & GitLab
 brew "gh"
-brew "git-open"
-brew "glab" # gitlab
+brew "git-open" # opens a GitHub page
+brew "glab"
 
 # Git
 brew "blackbox" # encrypts and stores secrets in git
@@ -17,35 +16,44 @@ brew "gibo" # .gitignore generator
 brew "git"
 brew "gitleaks" # secrets audit
 brew "lefthook" # hook manager
+brew "ugit" # tries to undo a git command
 # brew "changie" # changelog tool 
 # brew "commitlint" # probably intended to be installed locally per-project
 # brew "cycode-cli" # another boring scanner
+# brew "vcsh" # config manager based on git that manages subrepos
 
-# Continuous Integration
+
+# Continuous Deployment
 brew "act"
 brew "action-validator"
 brew "actionlint"
-brew "bitwarden-cli"
-brew "circleci" # reproduces the CircleCI environment locally
-brew "vaulted"
+brew "circleci" # reproduces CircleCI environment locally
+
+
 brew "woodpecker-cli"
 
+# Secrets
+brew "bitwarden-cli"
+brew "doppler" # very good and popular secrets manager
+brew "hashicorp/tap/vault"
+brew "vsh" # community-created shell for Vault
 
 # Docker
-brew "apko" # creates a docker image from an alpine apk, without a dockerfile
+brew "apko" # creates a Docker image from an Alpine APK, without a Dockerfile
 brew "clair" # container static analysis audit
 brew "cosign"
-brew "dive" # docker image explorer
-brew "nixpacks" # creates docker images without a dockerfile
+brew "dive" # Docker image explorer
+brew "nixpacks" # creates Docker images without a Dockerfile
 
-# Terraform etc.
-brew "atlantis" # terraform pull request automation – looks incredibly useful
-brew "atmos" # terraform tool – marketing is horrible
+
+# Terraform
+brew "atlantis" # Terraform pull request automation – looks incredibly useful
+brew "atmos" # Terraform tool – marketing is horrible
 brew "aztfexport"
-brew "cdktf" # cloud development kit for terraform
+brew "cdktf" # cloud development kit for Terraform
 brew "hashicorp/tap/packer"
 brew "hashicorp/tap/terraform"
-brew "pulumi"
+brew "pulumi" # not Terraform, but similar enough
 brew "terragrunt"
 brew "terramate"
 brew "tfsec"
@@ -60,7 +68,7 @@ brew "molecule"
 
 
 # Kubernetes
-brew "arkade" # kubernetes-packaged apps
+brew "arkade" # Kubernetes-packaged apps
 brew "cdk8s" # cloud development kit for kubernetes
 brew "chaoskube" # periodically takes down random pods
 brew "chart-testing" # helm chart testing
@@ -77,20 +85,23 @@ brew "kubescape"
 brew "kustomize"
 brew "k9s"
 brew "minikube"
-brew "okteto" # Detects local file edits and automatically synchronizes the code changes to your Kubernetes remote development container
+brew "okteto" # detects local file edits and automatically synchronizes changes to your Kubernetes remote development container
 brew "opa"
 brew "trivy"
+brew "uffizzi" # Rails app - apparently used by Spotify with or for Backstage
+brew "vespa-cli" # by Yahoo - deploy Vespa machine learning to Kubernetes
+
 cask "rancher"
-# brew "citus" # replicated PostgreSQL
+# brew "kubevirt"
+# brew "vcluster" # creates fully functional virtual Kubernetes cluster inside the host Kubernetes cluster's namespace (whatever that even means)
+# brew "velero" # backup and restore Kubernetes resources and persistent volumes
 # brew "vitess" # replicated MySQL
 
-# Kubernetes - Continuous Integration
+# Kubernetes - Continuous Deployment
 brew "argo"
 brew "argocd"
 brew "argocd-autopilot"
 brew "argocd-vault-plugin"
-brew "doppler" # secrets manager, looks popular I guess
-brew "hashicorp/tap/vault"
 brew "tektoncd-cli"
 brew "werf" # it has 4000 stars, why are there so many Kubernetes toools
 
@@ -178,6 +189,8 @@ brew "wgcf" # generates WireGuard profile from Cloudflare Warp account
 # Backblaze
 brew "b2-tools"
 
+# Contentful
+brew "contentful-cli"
 
 # Wordpress
 brew "sail" # deploys to digitalocean
@@ -185,13 +198,14 @@ brew "wp-cli"
 brew "wpscan"
 
 
-# Image Processing 
+# Images 
+brew "agg"  # converts Asciicast to GIF
+brew "asciinema" # creates Asciicast file
 brew "caire" # super useful content-aware image resizer
+brew "ffmpeg" # extracts an image from a video
 brew "imagemagick"
+brew "viu" # view high-resolution images in the terminal
 
-
-# Contentful
-brew "contentful-cli"
 
 # Diagrams
 brew "awsdac" # diagram tool from aws labs
@@ -233,6 +247,7 @@ brew "websocketd" # turns any command-line program into a websocket server
 # VPN
 brew "bore-cli" # only 400 lines of code
 brew "boringtun"
+brew "vpn-slice"
 cask "ngrok"
 cask "tailscale"
 # brew "wireguard-go"
@@ -265,6 +280,7 @@ brew "lft"
 brew "mtr"
 brew "nexttrace" # visual route tracking
 brew "trippy"
+brew "twoping" # bi-directional ping to determine which direction has packet loss
 brew "whatmask"
 
 # Networking - Data Link
@@ -315,8 +331,12 @@ brew "hyperfine" # useful benchmarking tool
 brew "openssh"
 brew "rename"
 brew "sd" # sed replacement
+brew "tailspin" # colorizes log files
+brew "tal"
 brew "tldr"
 brew "tree"
+brew "uni" # search unicode and emoji database
+brew "viddy" # better watch command
 brew "watch"
 brew "watchexec" # watches files and triggers actions
 brew "xe" # xargs replacement
@@ -335,14 +355,12 @@ brew "pipx"
 brew "python"
 
 # Everything else
-brew "agg"  # converts Asciicast to GIF
 brew "angle-grinder" # log analysis tool
 brew "anycable-go"
 brew "apibuilder-cli"
 brew "apify-cli" # something about web scraping
 brew "appwrite"
 brew "artillery"
-brew "asciinema"
 brew "ast-grep"
 brew "atlas" # looks useful, database tool
 brew "azure-cli"
@@ -356,7 +374,6 @@ brew "fabric"
 brew "fastlane" # iOS development
 brew "fclones"
 brew "feroxbuster"
-brew "ffmpeg"
 brew "flyctl"
 brew "gdu"
 brew "goreleaser"
@@ -379,7 +396,6 @@ brew "robot-framework" # automation testing
 brew "sops"
 brew "stripe-cli"
 brew "supabase"
-brew "tailspin" # colorizes log files
 brew "webpod" # deploys JavaScript apps to DigitalOcean, Linode, Vultr, GCP, AWS, or Azure
 brew "xidel" # super useful for reading web pages I think
 brew "xo/xo/usql"
@@ -387,7 +403,7 @@ brew "xq"
 brew "xurls" # extracts urls from text - could be very useful
 brew "xxh" # tool to ssh and bring your shell - useful, assuming it works
 brew "vercel-cli"
-brew "vultr"
+brew "vultr" # deploys to Vultr
 brew "yorkie" # some app or whatever that uses conflict-free replicated data types instead of raft
 brew "yt-dlp"
 cask "blackhole-2ch"
@@ -442,6 +458,16 @@ vscode "styled-components.vscode-styled-components"
 # brew "crock" # send files to a friend
 # brew "denominator" # old abandoned Java code by Netflix but shows how to run a Java command without -jar
 # brew "istioctl"
+# brew "ruff" fast Python formatter
+# brew "telnet" # needed for eve-ng or gns3
+# brew "tz" # time zone tool
+# brew "uncover" # show exposed hosts on the internet using search engines
+# brew "uv" # fast Python package installer
+# brew "virtualhost.sh" # old but maybe useful to learn from
+# brew "vivid" # has interesting filetypes database in YAML
+# brew "voldemort" # by LinkedIn - database with decent documentation
+# brew "vulsio-gost" # vulnerability tracker
+# brew "vunnel" # collects vulnerability data
 # brew "weasyprint" # HTML to PDF
 # brew "whisperkit-cli" # runs OpenAI Whisper speech recongition models on macOS and iOS
 # brew "wtfis"
@@ -457,5 +483,6 @@ vscode "styled-components.vscode-styled-components"
 # brew "xcodegen" # iOS development
 # brew "xcodes" # iOS development
 # brew "xcprojectlint" # iOS development
+# brew "vsce" # tool for packaging and publishing a Visual Studio Code extension
 # brew "yapf" # Google's Python formatter
 # brew "youplot"

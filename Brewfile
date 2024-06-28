@@ -31,6 +31,7 @@ brew "act"
 brew "action-validator"
 brew "actionlint"
 brew "circleci" # reproduces CircleCI environment locally
+brew "dagger" # runs your pipeline in containers locally or remote, and with reusable functions and modules
 brew "woodpecker-cli"
 
 
@@ -311,6 +312,7 @@ cask "postman"
 brew "arjun" # hidden parameter discovery
 brew "authz0" # tests authorization
 brew "cotp" # generates two-step verification codes
+brew "dalfox" # XSS scanner
 
 # HTTP - Webhooks
 brew "apprise" # very useful for sending notifications and triggering webhooks to popular notification services
@@ -402,6 +404,7 @@ brew "bat"
 brew "chalk-cli" # colorizes teminal text
 brew "choose-rust" # cut and awk alternative
 brew "comby" # sed replacement, matches with syntax instead of regexes
+brew "dasht" # searches offline documentation aggregated by Dash
 brew "difftastic" # super high-quality diff tool
 brew "direnv" # sets environment variables
 brew "fd"
@@ -419,6 +422,7 @@ brew "viddy" # better watch command
 brew "watch"
 brew "watchexec" # watches files and triggers actions
 brew "xe" # xargs replacement
+cask "raycast" # can search DevDocs using an extension
 # brew "watchman" # by Facebook - watches files and triggers actions
 
 
@@ -435,6 +439,8 @@ brew "rust"
 brew "pipx"
 brew "python"
 
+# Lightweight Formal Methods
+# brew "dafny"
 
 # Everything else
 brew "angle-grinder" # log analysis tool
@@ -495,6 +501,7 @@ cask "visual-studio-code"
 mas "hiddenbar", id: 1452453066
 mas "telegram", id: 747648890
 mas "vimari", id: 1480933944
+vscode "Anan.devdocstab"
 vscode "astro-build.astro-vscode"
 vscode "equinusocio.vsc-material-theme-icons"
 vscode "esbenp.prettier-vscode"
@@ -536,6 +543,7 @@ vscode "styled-components.vscode-styled-components"
 # brew "cromwell" # bioinformatics data engineering and workflows
 # brew "crowdin" # tool to manage translation/localization projects on Crowdin
 # brew "cubejs-cli" # some data pipeline thing, dunno, it has 17k stars
+# brew "dashing" # generates Dash documentation from HTML files
 # brew "denominator" # old abandoned Java code by Netflix but shows how to run a Java command without -jar
 # brew "istioctl"
 # brew "ruff" fast Python formatter

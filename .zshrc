@@ -11,11 +11,6 @@ if type brew &>/dev/null; then
   # direnv (automatically loads/unloads environment variables)
   eval "$(direnv hook zsh)"
 
-  # zsh pure extension (aesthetically pleasing terminal prompt)
-  autoload promptinit
-  promptinit
-  prompt pure
-
   # zsh-autocomplete extension (automatically displays completions for commands in real-time)
   source $(brew --prefix)/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 
@@ -25,6 +20,11 @@ if type brew &>/dev/null; then
   # zsh-autosuggestions extension (suggests previously typed command lines from history)
   source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
+  # zsh pure extension (aesthetically pleasing terminal prompt)
+  autoload promptinit
+  promptinit
+  prompt pure
+  
   # zsh-syntax-highlighting extension (syntax highlighting in real-time while typing)
   source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi

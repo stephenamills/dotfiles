@@ -1,5 +1,13 @@
-# This file depends on six modules installed from the Brewfile:
-# asdf pure zsh-autocomplete zsh-autopair zsh-autosuggestions zsh-syntax-highlighting
+# This file depends on seven modules installed from the Brewfile:
+# argc asdf pure zsh-autocomplete zsh-autopair zsh-autosuggestions zsh-syntax-highlighting
+
+# The .argc-completions git submodule must be copied to $HOME/.argc-completions
+if [ -d "$HOME/.argc-completions" ]; then
+  # Store the name of each completion shell script in an array
+  argc_scripts=( $(ls -p -1 "$ARGC_COMPLETIONS_ROOT/completions" | sed -n 's/\.sh$//p') )
+  source <(argc --argc-completions zsh $argc_scripts)
+fi
+
 
 # If the `brew` command exists
 if type brew &>/dev/null; then
@@ -29,12 +37,6 @@ if type brew &>/dev/null; then
   source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
 
-# The .argc-completions git submodule must be copied to $HOME/.argc-completions
-if [ -d "$HOME/.argc-completions" ]; then
-  # Store the name of each completion shell script in an array
-  argc_scripts=( $(ls -p -1 "$ARGC_COMPLETIONS_ROOT/completions" | sed -n 's/\.sh$//p') )
-  source <(argc --argc-completions zsh $argc_scripts)
-fi
 
 # The following obscure line customizes colors of the text in the zsh autocompletion menu using zstyle's pattern matching syntax:
 # =(#b): Pattern matches follow.
@@ -45,12 +47,9 @@ fi
 zstyle ':completion:*' list-colors '=(#b)*(-- *)=35=90'
 
 
-# Command to install an app
-bi() {
-  brew install --no-quarantine "$@"
-}
+# The following are utility functions I use at the command line:
 
-# Command to load bloated Google Cloud SDK only on demand
+# Loads the Google Cloud SDK – it's too bloated to load when the shell starts
 gcloud() {
     # Check if Google Cloud SDK is installed
     if [ -d "$(brew --prefix)/share/google-cloud-sdk" ]; then
@@ -68,19 +67,19 @@ gcloud() {
     fi
 }
 
-# Command to commit changes to a git repository
+# Commits changes to a git repository
 gitc() {
   printf 'Enter commit message: ' && read msg && git add . && git commit -m $msg && git push
 }
 
-# Command to install a .pkg file
+# Installs multiple .pkg files
 ins() {
   for pkg in "$@"; do
     sudo installer -pkg "$pkg" -target /
   done
 }
 
-# Command to sign a bundle
+# Signs a macOS app bundle
 prep() {
   sudo xattr -r -d com.apple.quarantine "$1"
   sudo codesign --force --deep --sign - "$1"

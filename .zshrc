@@ -46,7 +46,6 @@ zstyle ':completion:*' list-colors '=(#b)*(-- *)=35=90'
 
 
 # The following are utility functions I use at the command line:
-
 # Loads the Google Cloud SDK – it's too bloated to load when the shell starts
 gcloud() {
     # Check if Google Cloud SDK is installed
@@ -65,7 +64,7 @@ gcloud() {
     fi
 }
 
-# Commits changes to a git repository
+# Commits changes to a Git repository
 gitc() {
   printf 'Enter commit message: ' && read msg && git add . && git commit -m $msg && git push
 }

@@ -3,7 +3,7 @@
 
 # If the `brew` command exists
 if type brew &>/dev/null; then
-  # Load dependencies installed by Homebrew
+  # Read in the files installed by Homebrew
 
   # asdf version manager
   source $(brew --prefix)/opt/asdf/libexec/asdf.sh
@@ -24,7 +24,7 @@ if type brew &>/dev/null; then
   autoload promptinit
   promptinit
   prompt pure
-  
+
   # zsh-syntax-highlighting extension (syntax highlighting in real-time while typing)
   source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi

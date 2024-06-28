@@ -84,6 +84,7 @@ brew "molecule"
 
 # Kubernetes - Basic
 brew "colima" # container runtimes on macOS with minimal setup
+brew "ctlptl" # sets up a cluster using only a YAML file, inspired by kubectl and clusterctl
 brew "kubectl"
 brew "minikube"
 cask "rancher"
@@ -125,6 +126,7 @@ brew "kustomize"
 brew "k9s"
 brew "okteto" # detects local file edits and automatically synchronizes changes to your Kubernetes remote development container
 brew "opa"
+brew "tilt" # run tilt up to create a Kubernetes development environment - 7.4k stars
 brew "trivy"
 brew "uffizzi" # Rails app apparently used by Spotify with or for Backstage
 brew "vespa-cli" # by Yahoo - has a guide to deploy machine learning to Kubernetes
@@ -528,6 +530,7 @@ vscode "styled-components.vscode-styled-components"
 # brew "conduit" # Kafka Connect replacement, no JVM required
 # brew "concurrencykit" # this is a C library, not a tool, but the data structures are interesting
 # brew "cppinsights" # C++ web compiler
+# brew "crane" # by Google - container registry tool with awful marketing that makes it look useless
 # brew "create-dmg"
 # brew "crock" # send files to a friend
 # brew "cromwell" # bioinformatics data engineering and workflows

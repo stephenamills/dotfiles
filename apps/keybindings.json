@@ -1,4 +1,4 @@
-// Place your key bindings in this file to override the defaults
+// Visual Studio Code keyboard shortcuts which override a limited set of defaults.
 [
   {
     "key": "ctrl+tab",

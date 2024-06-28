@@ -1,14 +1,6 @@
 # This file depends on seven modules installed from the Brewfile:
 # argc asdf pure zsh-autocomplete zsh-autopair zsh-autosuggestions zsh-syntax-highlighting
 
-# The .argc-completions git submodule must be copied to $HOME/.argc-completions
-if [ -d "$HOME/.argc-completions" ]; then
-  # Store the name of each completion shell script in an array
-  argc_scripts=( $(ls -p -1 "$ARGC_COMPLETIONS_ROOT/completions" | sed -n 's/\.sh$//p') )
-  source <(argc --argc-completions zsh $argc_scripts)
-fi
-
-
 # If the `brew` command exists
 if type brew &>/dev/null; then
   # Read in the files installed by Homebrew
@@ -37,6 +29,12 @@ if type brew &>/dev/null; then
   source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
 
+# The .argc-completions folder must be linked to $HOME/.argc-completions
+if [ -d "$HOME/.argc-completions" ]; then
+  # Store the name of each completion shell script in an array
+  argc_scripts=( $(ls -p -1 "$ARGC_COMPLETIONS_ROOT/completions" | sed -n 's/\.sh$//p') )
+  source <(argc --argc-completions zsh $argc_scripts)
+fi
 
 # The following obscure line customizes colors of the text in the zsh autocompletion menu using zstyle's pattern matching syntax:
 # =(#b): Pattern matches follow.

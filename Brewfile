@@ -39,48 +39,189 @@ brew "woodpecker-cli"
 brew "bitwarden-cli"
 brew "doppler" # very good and popular secrets manager
 brew "hashicorp/tap/vault"
+brew "sops"
 brew "vsh" # community-created shell for Vault
+# brew "trufflehog" # great tool - scans for secrets in CI logs, code comments, Git history, and more
 
 # Docker Containers
-brew "apko" # creates a Docker image from an Alpine APK, without a Dockerfile
-brew "clair" # container static analysis audit
+brew "apko" # creates an image from an Alpine APK, without a Dockerfile
 brew "cog" # by Replicate - creates containers for machine learning without a Dockerfile
 brew "container-structure-test" # by Google - tests the structure of your container image
 brew "copa" # patches a container image using reports from vulnerability scanners like trivy
 brew "cosign"
-brew "dive" # Docker image explorer
+brew "dive" # image explorer
+brew "grype" # 
 brew "nixpacks" # creates Docker images without a Dockerfile
+brew "sysdig"
+# brew "clair" # audits container using static analysis
 # brew "ctop" # container top
 # brew "cosign" # signs containers
 # brew "diffoci" # compares two Docker images
-
+# brew "trivy" scans container images, Kubernetes, Git repos, and AWS etc. (very popular tool)
 
 # Provisioning - Terraform
 brew "atlantis" # Terraform pull request automation – looks incredibly useful
-brew "atmos" # Terraform tool – marketing is horrible
+brew "atmos" 
 brew "aztfexport"
 brew "cdktf" # cloud development kit for Terraform
 brew "coder" # creates self-hosted development environments with Terraform and connects to it with Wireguard
 brew "hashicorp/tap/terraform"
+brew "k2tf" # converts Kubernetes YAML to Terraform HCL
+brew "iam-policy-json-to-terraform" # converts a JSON IAM Policy to Terraform
+brew "infracost" # cost estimates
 brew "pulumi" # not Terraform, but similar enough
 brew "terragrunt"
 brew "terramate"
 brew "tfsec"
 
+
+
+
+
+# kubergrunt
+# Collection of commands to fill in the gaps between Terraform, Helm, and Kubectl
+# https://github.com/gruntwork-io/kubergrunt
+
+# opentofu
+# Drop-in replacement for Terraform. Infrastructure as Code Tool
+# https://opentofu.org/
+
+# tf-profile
+# CLI tool to profile Terraform runs
+# https://github.com/datarootsio/tf-profile
+
+# tfautomv
+# Generate Terraform moved blocks automatically for painless refactoring
+# https://tfautomv.dev/
+
+# tfenv
+# Terraform version manager inspired by rbenv
+# https://github.com/tfutils/tfenv
+
+# tfk8s
+# Kubernetes YAML manifests to Terraform HCL converter
+# https://github.com/jrhouston/tfk8s
+
+# tflint
+# Linter for Terraform files
+# https://github.com/terraform-linters/tflint
+
+# tfmigrate
+# Terraform/OpenTofu state migration tool for GitOps
+# https://github.com/minamijoyo/tfmigrate
+
+# tfproviderlint
+# Terraform Provider Lint Tool
+# https://github.com/bflad/tfproviderlint
+
+# tfschema
+# Schema inspector for Terraform/OpenTofu providers
+# https://github.com/minamijoyo/tfschema
+
+# tfsec
+# Static analysis security scanner for your terraform code
+# https://aquasecurity.github.io/tfsec/latest/
+
+# tfupdate
+# Update version constraints in your Terraform configurations
+# https://github.com/minamijoyo/tfupdate
+
+# tgenv
+# Terragrunt version manager inspired by tfenv
+# https://github.com/cunymatthieu/tgenv
+
+# terracognita
+# Reads from existing Cloud Providers and generates Terraform code
+# https://github.com/cycloidio/terracognita
+
+# terraform-docs
+# Tool to generate documentation from Terraform modules
+# https://github.com/terraform-docs/terraform-docs
+
+# terraform-graph-beautifier
+# CLI to beautify `terraform graph` output
+# https://github.com/pcasteran/terraform-graph-beautifier
+
+# terraform-inventory
+# Go app which generates a dynamic Ansible inventory from a Terraform state file
+# https://github.com/adammck/terraform-inventory
+
+# terraform-local
+# CLI wrapper to deploy your Terraform applications directly to LocalStack
+# https://localstack.cloud/
+
+# terraform-ls
+# Terraform Language Server
+# https://github.com/hashicorp/terraform-ls
+
+# terraform-lsp
+# Language Server Protocol for Terraform
+# https://github.com/juliosueiras/terraform-lsp
+
+# terraform-provider-libvirt
+# Terraform provisioning with Linux KVM using libvirt
+# https://github.com/dmacvicar/terraform-provider-libvirt
+
+# terraform-rover
+# Terraform Visualizer
+# https://github.com/im2nguyen/rover
+
+# terraform_landscape
+# Improve Terraform's plan output
+# https://github.com/coinbase/terraform-landscape
+
+# terraformer
+# CLI tool to generate terraform files from existing infrastructure
+# https://github.com/GoogleCloudPlatform/terraformer
+
+# terraforming
+# Export existing AWS resources to Terraform style (tf, tfstate)
+# https://terraforming.dtan4.net/
+
+# terragrunt
+# Thin wrapper for Terraform e.g. for locking state
+# https://terragrunt.gruntwork.io/
+
+# terragrunt-atlantis-config
+# Generate Atlantis config for Terragrunt projects
+# https://github.com/transcend-io/terragrunt-atlantis-config
+
+# terrahelp
+# Tool providing extra functionality for Terraform
+# https://github.com/opencredo/terrahelp
+
+# terrahub
+# Terraform automation and orchestration tool
+# https://docs.terrahub.io
+
+# terramate
+# Managing Terraform stacks with change detections and code generations
+# https://terramate.io/docs/cli/
+
+# terrapin-scanner
+# Vulnerability scanner for the Terrapin attack
+# https://terrapin-attack.com/
+
+# terrascan
+# Detect compliance and security violations across Infrastructure as Code
+# https://github.com/tenable/terrascan
+
+# Provisioning - Butane
+brew "butane" # by Red Hat - converts a Butane YAML desired system configuration into a Ignition JSON configuration, both schema-validated
+# brew "coreos-ct" # conflicts with chart-testing - converts Flatcar Container Linux config to Ignition config
+
 # Provisioning - Packer
 brew "hashicorp/tap/packer"
 
-# Provisioning - Ignition
-brew "butane" # by Red Hat - creates Ignition configs
-brew "coreos-ct" # converts Flatcar Container Linux config to Ignition config
 
-
-# Ansible
+# Configuration - Ansible
 brew "ansible"
 brew "ansible-cmdb"
 brew "ansible-creator"
 brew "ansible-lint"
 brew "molecule"
+
+brew "djhtml" # indents Jinja templates
 
 
 # Kubernetes - Basic
@@ -127,6 +268,7 @@ brew "kustomize"
 brew "k9s"
 brew "okteto" # detects local file edits and automatically synchronizes changes to your Kubernetes remote development container
 brew "opa"
+brew "talhelper" # GitOps version controls your Talos configuration files and secrets using sops
 brew "tilt" # run tilt up to create a Kubernetes development environment - 7.4k stars
 brew "trivy"
 brew "uffizzi" # Rails app apparently used by Spotify with or for Backstage
@@ -177,8 +319,13 @@ brew "buf" # tool and schema registry
 brew "grpcurl"
 brew "ghz" # benchmarking tool
 
+# Data Engineering - Databases
+brew "atlas" # 
+brew "goose" # database migration
+# brew "tile38" # their landing page animation is very good - geolocation data store, spatial index, and realtime geofence
 
-# Observability
+
+# Data Engineering - Observability
 brew "chronograf" # monitoring and visualization UI for the Telegraf, InfluxDB, Chronograf, Kapacitor (TICK) stack
 # brew "cortex" # long-term storage for Prometheus
 
@@ -278,7 +425,8 @@ brew "caire" # super useful content-aware image resizer
 brew "ffmpeg" # extracts an image from a video
 brew "imagemagick"
 brew "viu" # view high-resolution images in the terminal
-
+# brew "timg" # terminal image viewer
+# brew "triangle" # converts an image to computer-generated art using Delaunay triangulation
 
 # Networking - Application
 
@@ -288,15 +436,19 @@ brew "bbot"
 brew "bind" # dig
 brew "checkdmarc"
 brew "csprecon" # discovers target domains using content security policy
-brew "dnsgen"
+brew "dnsgen" # generates names from an existing one
+brew "dnsrobocert" # sends a DNS challenge and generates a Let's Encrypt TLS certificate
 brew "dnstracer"
 brew "doggo"
 brew "massdns"
+# brew "dnscontrol" # by Stack Exchange - Synchronize DNS records to multiple providers using a DSL
+# brew "dnsperf" # performance testing
 
 # HTTP - API Server
-brew "autorest" # by Microsoft - generates client code from an OpenAPI specification
+brew "autorest" # by Microsoft - converts an OpenAPI specification to client code
+brew "tygo" # converts a Go JSON API to TypeScript types for use in the frontend
 brew "wiremock-standalone"
-# brew "create-api" # generates Swift client code from an OpenAPI specification
+# brew "create-api" # converts an OpenAPI specification to Swift client code
 
 # HTTP - API Client
 brew "curl"
@@ -333,6 +485,7 @@ brew "certstrap" # by Square - tools to bootstrap CAs, certificate requests, and
 brew "certsync"
 brew "cfssl" # by Cloudflare - PKI/TLS toolkit
 brew "openssl"
+brew "tlsx" # scans for TLS vulnerabilities
 brew "xpipe" # splits input and feeds it to another command - has use cases for certificates and more
 brew "zlint" # certificate checker, see also zcertificate and zschema
 
@@ -350,6 +503,7 @@ brew "aerleon" # generates firewall configurations
 brew "naabu"
 brew "netcat"
 brew "nmap"
+brew "tcping"
 
 # Networking - Routing
 brew "asn"
@@ -366,9 +520,10 @@ brew "lft"
 brew "mtr"
 brew "netaddr"
 brew "nexttrace" # visual route tracking
-brew "trippy"
+brew "tracebox" # tries to detect intermediary in the path
 brew "twoping" # bi-directional ping to determine which direction has packet loss
 brew "whatmask"
+# brew "trippy" # like mtr
 
 # Networking - Data Link
 brew "arp-scan"
@@ -406,7 +561,8 @@ brew "choose-rust" # cut and awk alternative
 brew "comby" # sed replacement, matches with syntax instead of regexes
 brew "dasht" # searches offline documentation aggregated by Dash
 brew "difftastic" # super high-quality diff tool
-brew "direnv" # sets environment variables
+brew "direnv" # sets and unsets environment variables per directory
+brew "diskus" # directory size
 brew "fd"
 brew "grex" # regex generator
 brew "hyperfine" # useful benchmarking tool
@@ -415,14 +571,18 @@ brew "rename"
 brew "sd" # sed replacement
 brew "tailspin" # colorizes log files
 brew "tal"
+brew "thefuck" # Corrects mistyped console commands
 brew "tldr"
 brew "tree"
+brew "trurl" # by curl team - tr for URLs
 brew "uni" # search unicode and emoji database
 brew "viddy" # better watch command
 brew "watch"
 brew "watchexec" # watches files and triggers actions
 brew "xe" # xargs replacement
 cask "raycast" # can search DevDocs using an extension
+# brew "titlecase" # capitalizes titles
+# brew "tuc" # cut replacement
 # brew "watchman" # by Facebook - watches files and triggers actions
 
 
@@ -438,9 +598,25 @@ brew "rust"
 
 brew "pipx"
 brew "python"
+# brew "twine" # publishes Python package to PyPI
 
 # Lightweight Formal Methods
 # brew "dafny"
+
+
+# macOS & iOS Development
+# brew "chisel" # by Facebook - collection of LLDB commands
+# brew "carthage" # 
+# brew "cocoapods" # 
+# brew "fastlane"
+# brew "switchaudio-osx" # Change macOS audio source from the command-line
+# brew "xcbeautify"
+# brew "xcdiff"
+# brew "xcinfo"
+# brew "xclogparser"
+# brew "xcodegen"
+# brew "xcodes"
+# brew "xcprojectlint"
 
 # Everything else
 brew "angle-grinder" # log analysis tool
@@ -450,20 +626,16 @@ brew "apify-cli" # something about web scraping
 brew "appwrite"
 brew "artillery"
 brew "ast-grep"
-brew "atlas" # looks useful, database tool
 brew "azure-cli"
 brew "buildpulse-test-reporter"
 brew "dark-mode" # toggles dark mode
 brew "erdtree"
 brew "fabric"
-brew "fastlane" # iOS development
 brew "fclones"
 brew "feroxbuster"
 brew "flyctl"
 brew "gdu"
-brew "goose" # database migration
 brew "graphviz"
-brew "grype"
 brew "hasura-cli"
 brew "linode-cli"
 brew "mas"
@@ -522,22 +694,19 @@ vscode "styled-components.vscode-styled-components"
 # brew "calicoctl"
 # brew "capnp" # apparently Cloudflare workers use this
 # brew "cariddi" # does not look useful I just like go command line tools
-# brew "carthage" # for iOS development
 # brew "cascadia" HTML selector tool
 # brew "ccm" # cassandra
 # brew "chatblade" # I just like the ffmpeg example
 # brew "checkmake"
 # brew "chezmoi"
-# brew "chisel" # by Facebook - collection of LLDB commands for iOS development
 # brew "chisel-tunnel" not useful but it's in go
 # brew "chrome-cli"
 # brew "cilium-cli"
-# brew "cocoapods" # for iOS development
 # brew "cookiecutter" # scaffolds some Python projects
 # brew "conduit" # Kafka Connect replacement, no JVM required
 # brew "concurrencykit" # this is a C library, not a tool, but the data structures are interesting
 # brew "cppinsights" # C++ web compiler
-# brew "crane" # by Google - container registry tool with awful marketing that makes it look useless
+# brew "crane" # by Google - container registry tool with bad marketing
 # brew "create-dmg"
 # brew "crock" # send files to a friend
 # brew "cromwell" # bioinformatics data engineering and workflows
@@ -545,9 +714,17 @@ vscode "styled-components.vscode-styled-components"
 # brew "cubejs-cli" # some data pipeline thing, dunno, it has 17k stars
 # brew "dashing" # generates Dash documentation from HTML files
 # brew "denominator" # old abandoned Java code by Netflix but shows how to run a Java command without -jar
+# brew "djl-serving" # Java is terrible but maybe this is educational for serving an ML model
 # brew "istioctl"
+# brew "tunnel" # ngrok alternative
 # brew "ruff" fast Python formatter
 # brew "telnet" # needed for eve-ng or gns3
+# brew "tippecanoe" # creates pretty map vector tileset visualizations from GeoJSON, FlatGeobuf, or CSV
+# brew "tinysearch" # sort of a website search backend but doesn't have any autocomplete functionality, so kind of useless
+# brew "tty-share" # share your terminal with no tools needed on the remote side
+# brew "typedb" # database focused on its type system - it mostly just has good marketing and documentation
+# brew "typical" # data serialization and interchange with Rust algebraic data types
+# brew "typst" # Markup-based typesetting system for math and science
 # brew "tz" # time zone tool
 # brew "uncover" # show exposed hosts on the internet using search engines
 # brew "uv" # fast Python package installer
@@ -564,13 +741,6 @@ vscode "styled-components.vscode-styled-components"
 # brew "xpdf" # PDF tool but not on GitHub
 # brew "x264"
 # brew "x265"
-# brew "xcbeautify" # iOS development
-# brew "xcdiff" # iOS development
-# brew "xcinfo" # iOS development
-# brew "xclogparser" # iOS development
-# brew "xcodegen" # iOS development
-# brew "xcodes" # iOS development
-# brew "xcprojectlint" # iOS development
 # brew "vsce" # tool for packaging and publishing a Visual Studio Code extension
 # brew "yapf" # Google's Python formatter
 # brew "youplot"

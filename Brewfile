@@ -931,6 +931,7 @@ brew "imagemagick"
 brew "vhs" # creates a GIF from your terminal session
 brew "viu" # view high-resolution images in the terminal
 # brew "gifski" # creates highest-quality gifs (maybe at too large of a file size though)
+# brew "iconsur" creates a macOS app icon from an image
 # brew "imageoptim" # can convert a gif to video
 # brew "imgdiet" # optimizes an image using libvips
 # brew "imgdiff" # compares images
@@ -980,8 +981,10 @@ cask "postman"
 cask "rapidapi" # can generate client code
 
 # HTTP - Auth
+
 # Duo
 brew "duo_unix" # by Duo - two-factor authentication for SSH
+
 # Okta
 brew "okta-aws-cli" # Okta authentication for awscli, don't know why there are two of these
 brew "okta-awscli" # Okta authentication for awscli
@@ -1141,12 +1144,11 @@ brew "watchexec" # watches files and triggers actions
 brew "xe" # xargs replacement
 brew "xidel" # super useful for reading web pages I think
 cask "raycast" # can search DevDocs using an extension
-# brew "fileicon" # sets macOS file or folder icons
+# brew "fileicon" # sets a macOS folder or file icon
 # brew "flamegraph" # by Brendan Gregg - stack trace visualizer
 # brew "gat" # cat alternative in Go
 # brew "hck" # cut alternative that supports regex delimiters
 # brew "hq" # jq for HTML
-# brew "iconsur" creates a macOS app icon
 # brew "invoice" # generates pretty, professional invoices
 # brew "just" # runs project-specific commands, like Make
 # brew "titlecase" # capitalizes titles
@@ -1159,7 +1161,8 @@ brew "corepack"
 brew "deno"
 brew "node@20"
 # brew "eslint"
-# brew "flamebearer" # creates flame graphs for a JavaScript app from a terminal or drag-and-drop interface
+# brew "flamebearer" # creates a flamegraph for a JavaScript app from a terminal, has web version
+# brew "prettier"
 
 brew "go"
 brew "goreleaser"

@@ -29,7 +29,7 @@ brew "glab"
 brew "hub"
 
 # Hugging Face
-brew "huggingface-cli
+brew "huggingface-cli"
 
 # gist
 # Command-line utility for uploading Gists

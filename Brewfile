@@ -727,7 +727,7 @@ brew "hashicorp/tap/nomad"
 # brew "clickhouse" # column-oriented database
 # brew "citus" # replicated PostgreSQL
 # brew "dynein" # DynamoDB command line
-# brew "etcd" # replicated key-value store (based on Raft and bbolt)
+# brew "etcd" # key/value store (replicated BoltDB, uses Raft)
 # brew "mysql"
 # brew "redis" # in-memory key-value store
 # brew "tile38" # their landing page animation is very good - geolocation data store, spatial index, and realtime geofence
@@ -1037,12 +1037,12 @@ cask "tailscale"
 
 # Networking - Transport
 brew "aerleon" # generates firewall configurations
-brew "hping" # sends TCP, UDP, and ICMP messages
 brew "naabu"
 brew "netcat"
 brew "nmap"
 brew "tcping"
 # brew "flowgrind" 
+# brew "hping" # deprecated: sends TCP, UDP, and ICMP messages 
 
 # Networking - Routing
 brew "asn"

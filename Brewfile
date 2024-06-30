@@ -287,10 +287,6 @@ brew "hashicorp/tap/nomad"
 
 
 # Data Engineering - Databases
-brew "atlas" # 
-brew "goose" # database migration
-# brew "flyway" # database version control to control migrations
-
 # brew "cassandra" # column-oriented database
 # brew "clickhouse" # column-oriented database
 # brew "citus" # replicated PostgreSQL
@@ -303,6 +299,16 @@ brew "goose" # database migration
 # also, see Porcupine checker on pkg.go.dev and MIT 6.5840
 # also, see SchemaHero on pkg.go.dev
 # also, see Spanner
+
+# brew "atlas" # 
+# brew "goose" # database migration
+# brew "flyway" # database version control to control migrations
+# brew "geni" # database migration
+# brew "golang-migrate" # database migration
+# brew "pillar" # manages Cassandra migrations
+# brew "reshape" # Postgres migrations
+# brew "schema-evolution-manager" # Postgres migrations
+# brew "sql-migrate" # SQL schema migrations
 
 # GraphQL
 # brew "graphql-cli"
@@ -322,6 +328,8 @@ brew "goose" # database migration
 
 # Data Formats - JSON & YAML
 brew "check-jsonschema"
+brew "fastgron" # JSON to greppable output, but faster by using SIMD instructions
+brew "generate-json-schema" # converts a JSON file into a JSON Schema
 brew "gron" # JSON to greppable output
 brew "jc" # structures the output of any command into JSON
 brew "jq"
@@ -331,6 +339,7 @@ brew "yamllint" # checker
 brew "yh" # highlighter
 brew "yj" # YAML to JSON or TOML or HCL converter
 brew "yq" # jq for YAML, JSON, XML, CSV, and TOML
+
 
 # Data Formats - CSV
 brew "csvkit" # tools
@@ -370,6 +379,9 @@ brew "cloud-sql-proxy"
 brew "cloudlist"
 brew "cloudprober" # sends monitoring probes and integrates with Prometheus and Grafana
 brew "firebase-cli"
+brew "fuego-firestore" # client for Firestore database
+# brew "gcsfuse" # mounts Google Cloud Storage as a file system
+
 brew "yatas" # audits gcp/aws audit
 cask "google-cloud-sdk"
 
@@ -441,9 +453,10 @@ brew "wpscan"
 
 
 # Diagrams
-brew "awsdac" # diagram tool from aws labs
-brew "d2" # terrastruct diagram tool
+brew "awsdac" # by Amazon
+brew "d2" # by Terrastruct 
 brew "manim"
+# also, cloud mapper by Duo
 # also, diagrams on pypi
 # also, mermaid on npm
 
@@ -504,10 +517,23 @@ brew "arjun" # hidden parameter discovery
 brew "authz0" # tests authorization
 brew "cotp" # generates two-step verification codes
 brew "dalfox" # XSS scanner
-brew "duo_unix" # two-factor authentication for SSH
+brew "duo_unix" # by Duo - two-factor authentication for SSH
 brew "flawz" # browses security vulnerabilities (CVEs)
+brew "gimme-aws-creds" # retrieves AWS credentials from Okta
 # brew "ffuf" # fast web fuzzer
 # brew "findomain" # fastest complete solution for finding domains
+
+okta-aws-cli
+Okta federated identity for AWS CLI
+https://github.com/okta/okta-aws-cli
+
+okta-awscli
+Okta authentication for awscli
+https://github.com/okta-awscli/okta-awscli
+
+parliament
+AWS IAM linting library
+https://github.com/duo-labs/parliament
 
 # HTTP - Webhooks
 brew "apprise" # very useful for sending notifications and triggering webhooks to popular notification services
@@ -647,6 +673,7 @@ brew "xe" # xargs replacement
 cask "raycast" # can search DevDocs using an extension
 # brew "fileicon" # sets macOS file or folder icons
 # brew "flamegraph" # by Brendan Gregg - stack trace visualizer
+# brew "gat" # cat alternative in Go
 # brew "titlecase" # capitalizes titles
 # brew "tuc" # cut replacement
 # brew "watchman" # by Facebook - watches files and triggers actions

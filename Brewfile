@@ -2,12 +2,6 @@ tap "hashicorp/tap"
 tap "heroku/brew"
 tap "replicate/tap"
 tap "supabase/tap"
-tap "xo/xo"
-
-# GitHub & GitLab
-brew "gh"
-brew "git-open" # opens a GitHub page
-brew "glab"
 
 # Git
 brew "blackbox" # encrypts and stores secrets in Git
@@ -17,6 +11,7 @@ brew "gibo" # .gitignore generator
 brew "git"
 brew "gitleaks" # secrets audit
 brew "lefthook" # hook manager
+brew "jj" # Git-compatible version control system
 brew "ugit" # tries to undo a git command
 # brew "changie" # changelog tool 
 # brew "cocogitto" # commit message
@@ -27,6 +22,418 @@ brew "ugit" # tries to undo a git command
 # brew "thefuck" # Corrects commands
 # brew "vcsh" # config manager based on git that manages subrepos
 
+# GitHub & GitLab
+brew "gh"
+brew "git-open" # opens a GitHub page
+brew "glab"
+brew "hub"
+
+# Hugging Face
+brew "huggingface-cli
+
+# gist
+# Command-line utility for uploading Gists
+# https://github.com/defunkt/gist
+
+# gistit
+# Command-line utility for creating Gists
+# https://github.com/jrbasso/gistit
+
+# git
+# Distributed revision control system
+# https://git-scm.com
+
+# git-absorb
+# Automatic git commit --fixup
+# https://github.com/tummychow/git-absorb
+
+# git-annex
+# Manage files with git without checking in file contents
+# https://git-annex.branchable.com/
+
+# git-annex-remote-rclone
+# Use rclone supported cloud storage with git-annex
+# https://github.com/DanielDent/git-annex-remote-rclone
+
+# git-appraise
+# Distributed code review system for Git repos
+# https://github.com/google/git-appraise
+
+# git-archive-all
+# Archive a project and its submodules
+# https://github.com/Kentzo/git-archive-all
+
+# git-big-picture
+# Visualization tool for Git repositories
+# https://github.com/git-big-picture/git-big-picture
+
+# git-branchless
+# High-velocity, monorepo-scale workflow for Git
+# https://github.com/arxanas/git-branchless
+
+# git-bug
+# Distributed, offline-first bug tracker embedded in git, with bridges
+# https://github.com/MichaelMure/git-bug
+
+# git-cal
+# GitHub-like contributions calendar but on the command-line
+# https://github.com/k4rthik/git-cal
+
+# git-cinnabar
+# Git remote helper to interact with mercurial repositories
+# https://github.com/glandium/git-cinnabar
+
+# git-cliff
+# Highly customizable changelog generator
+# https://github.com/orhun/git-cliff
+
+# git-codereview
+# Tool for working with Gerrit code reviews
+# https://pkg.go.dev/golang.org/x/review/git-codereview
+
+# git-cola
+# Highly caffeinated git GUI
+# https://git-cola.github.io/
+
+# git-credential-libsecret
+# Git helper for accessing credentials via libsecret
+# https://git-scm.com
+
+# git-credential-oauth
+# Git credential helper that authenticates in browser using OAuth
+# https://github.com/hickford/git-credential-oauth
+
+# git-crypt
+# Enable transparent encryption/decryption of files in a git repo
+# https://www.agwa.name/projects/git-crypt/
+
+# git-delete-merged-branches
+# Command-line tool to delete merged Git branches
+# https://github.com/hartwork/git-delete-merged-branches
+
+# git-delta
+# Syntax-highlighting pager for git and diff output
+# https://github.com/dandavison/delta
+
+# git-extras
+# Small git utilities
+# https://github.com/tj/git-extras
+
+# git-filter-repo
+# Quickly rewrite git repository history
+# https://github.com/newren/git-filter-repo
+
+# git-fixup
+# Alias for git commit --fixup <ref>
+# https://github.com/keis/git-fixup
+
+# git-flow
+# Extensions to follow Vincent Driessen's branching model
+# https://github.com/nvie/gitflow
+
+# git-flow-avh
+# AVH edition of git-flow
+# https://github.com/petervanderdoes/gitflow-avh
+
+# git-fresh
+# Utility to keep git repos fresh
+# https://github.com/imsky/git-fresh
+
+# git-ftp
+# Git-powered FTP client
+# https://git-ftp.github.io/
+
+# git-game
+# Game for git to guess who made which commit
+# https://github.com/jsomers/git-game
+
+# git-gerrit
+# Gerrit code review helper scripts
+# https://github.com/fbzhong/git-gerrit
+
+# git-grab
+# Clone a git repository into a standard location organised by domain and path
+# https://github.com/wezm/git-grab
+
+# git-gui
+# Tcl/Tk UI for the git revision control system
+# https://git-scm.com
+
+# git-hooks-go
+# Git hooks manager
+# https://git-hooks.github.io/git-hooks
+
+# git-hound
+# Git plugin that prevents sensitive data from being committed
+# https://github.com/ezekg/git-hound
+
+# git-if
+# Glulx interpreter that is optimized for speed
+# https://ifarchive.org/indexes/if-archiveXprogrammingXglulxXinterpretersXgit.html
+
+# git-imerge
+# Incremental merge for git
+# https://github.com/mhagger/git-imerge
+
+# git-integration
+# Manage git integration branches
+# https://johnkeeping.github.io/git-integration/
+
+# git-interactive-rebase-tool
+# Native sequence editor for Git interactive rebase
+# https://gitrebasetool.mitmaro.ca/
+
+# git-lfs
+# Git extension for versioning large files
+# https://git-lfs.github.com/
+
+# git-machete
+# Git repository organizer & rebase workflow automation tool
+# https://github.com/VirtusLab/git-machete
+
+# git-mediate
+# Utility to help resolve merge conflicts
+# https://github.com/Peaker/git-mediate
+
+# git-multipush
+# Push a branch to multiple remotes in one command
+# https://github.com/gavinbeatty/git-multipush
+
+# git-now
+# Light, temporary commits for git
+# https://github.com/iwata/git-now
+
+# git-number
+# Use numbers for dealing with files in git
+# https://github.com/holygeek/git-number
+
+# git-octopus
+# Continuous merge workflow
+# https://github.com/lesfurets/git-octopus
+
+# git-open
+# Open GitHub webpages from a terminal
+# https://github.com/jeffreyiacono/git-open
+
+# git-plus
+# Git utilities: git multi, git relation, git old-branches, git recent
+# https://github.com/tkrajina/git-plus
+
+# git-quick-stats
+# Simple and efficient way to access statistics in git
+# https://github.com/arzzen/git-quick-stats
+
+# git-recent
+# See your latest local git branches, formatted real fancy
+# https://github.com/paulirish/git-recent
+
+# git-remote-codecommit
+# Git Remote Helper to interact with AWS CodeCommit
+# https://github.com/aws/git-remote-codecommit
+
+# git-remote-gcrypt
+# GPG-encrypted git remotes
+# https://spwhitton.name/tech/code/git-remote-gcrypt/
+
+# git-remote-hg
+# Transparent bidirectional bridge between Git and Mercurial
+# https://github.com/felipec/git-remote-hg
+
+# git-review
+# Submit git branches to gerrit for review
+# https://opendev.org/opendev/git-review
+
+# git-revise
+# Rebase alternative for easy & efficient in-memory rebases and fixups
+# https://github.com/mystor/git-revise
+
+# git-secret
+# Bash-tool to store the private data inside a git repo
+# https://sobolevn.me/git-secret
+
+# git-secrets
+# Prevents you from committing sensitive information to a git repo
+# https://github.com/awslabs/git-secrets
+
+# git-series
+# Track changes to a patch series over time
+# https://github.com/git-series/git-series
+
+# git-sizer
+# Compute various size metrics for a Git repository
+# https://github.com/github/git-sizer
+
+# git-split-diffs
+# Syntax highlighted side-by-side diffs in your terminal
+# https://github.com/banga/git-split-diffs
+
+# git-ssh
+# Proxy for serving git repositories over SSH
+# https://github.com/lemarsu/git-ssh
+
+# git-standup
+# Git extension to generate reports for standup meetings
+# https://github.com/kamranahmedse/git-standup
+
+# git-subrepo
+# Git Submodule Alternative
+# https://github.com/ingydotnet/git-subrepo
+
+# git-sync
+# Clones a git repository and keeps it synchronized with the upstream
+# https://github.com/kubernetes/git-sync
+
+# git-test
+# Run tests on each distinct tree in a revision list
+# https://github.com/spotify/git-test
+
+# git-tools
+# Assorted git-related scripts and tools
+# https://github.com/MestreLion/git-tools
+
+# git-town
+# High-level command-line interface for Git
+# https://www.git-town.com/
+
+# git-tracker
+# Integrate Pivotal Tracker into your Git workflow
+# https://github.com/stevenharman/git_tracker
+
+# git-trim
+# Trim your git remote tracking branches that are merged or gone
+# https://github.com/foriequal0/git-trim
+
+# git-url-sub
+# Recursively substitute remote URLs for multiple repos
+# https://gosuri.github.io/git-url-sub
+
+# git-vendor
+# Command for managing git vendored dependencies
+# https://brettlangdon.github.io/git-vendor
+
+# git-when-merged
+# Find where a commit was merged in git
+# https://github.com/mhagger/git-when-merged
+
+# git-workspace
+# Sync personal and work git repositories from multiple providers
+# https://github.com/orf/git-workspace
+
+# git-xargs
+# CLI for making updates across multiple Github repositories with a single command
+# https://github.com/gruntwork-io/git-xargs
+
+# gitbackup
+# Tool to backup your Bitbucket, GitHub and GitLab repositories
+# https://github.com/amitsaha/gitbackup
+
+# gitbatch
+# Manage your git repositories in one place
+# https://github.com/isacikgoz/gitbatch
+
+# gitbucket
+# Git platform powered by Scala offering
+# https://github.com/gitbucket/gitbucket
+
+# gitea
+# Painless self-hosted all-in-one software development service
+# https://about.gitea.com/
+
+# gitfs
+# Version controlled file system
+# https://www.presslabs.com/gitfs
+
+# gitg
+# GNOME GUI client to view git repositories
+# https://wiki.gnome.org/Apps/Gitg
+
+# github-keygen
+# Bootstrap GitHub SSH configuration
+# https://github.com/dolmen/github-keygen
+
+# github-markdown-toc
+# Easy TOC creation for GitHub README.md (in go)
+# https://github.com/ekalinin/github-markdown-toc.go
+
+# github-release
+# Create and edit releases on Github (and upload artifacts)
+# https://github.com/github-release/github-release
+
+# gitlab-ci-local
+# Run gitlab pipelines locally as shell executor or docker executor
+# https://github.com/firecow/gitlab-ci-local
+
+# gitlab-gem
+# Ruby client and CLI for GitLab API
+# https://narkoz.github.io/gitlab/
+
+# gitlab-runner
+# Official GitLab CI runner
+# https://gitlab.com/gitlab-org/gitlab-runner
+
+# gitleaks
+# Audit git repos for secrets
+# https://github.com/zricethezav/gitleaks
+
+# gitless
+# Simplified version control system on top of git
+# https://gitless.com/
+
+# gitlint
+# Linting for your git commit messages
+# https://jorisroovers.com/gitlint/
+
+# gitmoji
+# Interactive command-line tool for using emoji in commit messages
+# https://gitmoji.dev
+
+# gitoxide
+# Idiomatic, lean, fast & safe pure Rust implementation of Git
+# https://github.com/Byron/gitoxide
+
+# gitql
+# Git query language
+# https://github.com/filhodanuvem/gitql
+
+# gitsign
+# Keyless Git signing using Sigstore
+# https://github.com/sigstore/gitsign
+
+# gitter-cli
+# Extremely simple Gitter client for terminals
+# https://github.com/RodrigoEspinosa/gitter-cli
+
+# gittuf
+# Security layer for Git repositories
+# https://gittuf.dev/
+
+# gitu
+# TUI Git client inspired by Magit
+# https://github.com/altsem/gitu
+
+# gitui
+# Blazing fast terminal-ui for git written in rust
+# https://github.com/extrawurst/gitui
+
+# gitup
+# Update multiple git repositories at once
+# https://github.com/earwig/git-repo-updater
+
+# gitversion
+# Easy semantic versioning for projects using Git
+# https://gitversion.net
+
+# gitwatch
+# Watch a file or folder and automatically commit changes to a git repo easily
+# https://github.com/gitwatch/gitwatch
+
+# grip
+# GitHub Markdown previewer
+# https://github.com/joeyespo/grip
+
+# grokmirror
+# Framework to smartly mirror git repositories
+# https://github.com/mricon/grokmirror
 
 # Continuous Deployment
 brew "act"
@@ -35,14 +442,18 @@ brew "actionlint"
 brew "circleci" # reproduces CircleCI environment locally
 brew "dagger" # runs your pipeline in containers locally or remote, and with reusable functions and modules
 brew "woodpecker-cli"
+# brew "hermit" # by Cash App - installs tools in isolated sets for CI environments etc.
 
 
 # Secrets
 brew "bitwarden-cli"
 brew "doppler" # very good and popular secrets manager
+brew "gopass" # encrypts credentials and stores them in Git, made for teams
 brew "hashicorp/tap/vault"
 brew "sops"
 brew "vsh" # community-created shell for Vault
+# brew "gokey" # by Cloudflare
+# brew "gopass-jsonapi" # Gopass browser bindings
 # brew "trufflehog" # great tool - scans for secrets in CI logs, code comments, Git history, and more
 
 # Docker Containers
@@ -52,6 +463,7 @@ brew "container-structure-test" # by Google - tests the structure of your contai
 brew "copa" # patches a container image using reports from vulnerability scanners like trivy
 brew "cosign"
 brew "dive" # image explorer
+brew "hadolint" # checks Dockerfile
 brew "grype" # 
 brew "nixpacks" # creates Docker images without a Dockerfile
 brew "sysdig"
@@ -77,12 +489,13 @@ brew "terramate"
 brew "tfsec"
 
 
-
-
-
 # kubergrunt
 # Collection of commands to fill in the gaps between Terraform, Helm, and Kubectl
 # https://github.com/gruntwork-io/kubergrunt
+
+# hcl2json
+# Convert HCL2 to JSON
+# https://github.com/tmccombs/hcl2json
 
 # opentofu
 # Drop-in replacement for Terraform. Infrastructure as Code Tool
@@ -224,6 +637,7 @@ brew "ansible-lint"
 brew "molecule"
 
 brew "djhtml" # indents Jinja templates
+brew "jinja2-cli"
 
 
 # Kubernetes - Basic
@@ -248,6 +662,7 @@ brew "clusterctl" # tool to provision, operate, and upgrade Kubernetes servers u
 
 # Kubernetes - Security
 brew "cmctl" # manages TLS certificates in Kubernetes via cert-manager
+# brew hubble # network, service & security observability using eBPF
 
 
 # Kubernetes - Everything Else
@@ -278,9 +693,30 @@ brew "vespa-cli" # by Yahoo - has a guide to deploy machine learning to Kubernet
 # brew "consul-backinator" # backup and restore Consul's key-value store
 # brew "fleet-cli" # by Rancher - cluster manager
 # brew "fluxctl # accesses the Weave Flux GitOps operator
+# brew "glasskube" # next-generation package manager for Kubernetes
 # brew "kubevirt"
 # brew "vcluster" # creates fully functional virtual Kubernetes cluster inside the host Kubernetes cluster's namespace (whatever that even means)
 # brew "velero" # backup and restore Kubernetes resources and persistent volumes
+
+# helm-docs
+# Tool for automatically generating markdown documentation for helm charts
+# https://github.com/norwoodj/helm-docs
+
+# helmfile
+# Deploy Kubernetes Helm Charts
+# https://github.com/helmfile/helmfile
+
+# helmify
+# Create Helm chart from Kubernetes yaml
+# https://github.com/arttor/helmify
+
+# helmsman
+# Helm Charts as Code tool
+# https://github.com/Praqma/helmsman
+
+# ingress2gateway
+# Convert Kubernetes Ingress resources to Kubernetes Gateway API resources
+# https://github.com/kubernetes-sigs/ingress2gateway
 
 # Nomad
 brew "hashicorp/tap/nomad"
@@ -327,19 +763,39 @@ brew "hashicorp/tap/nomad"
 
 
 # Data Formats - JSON & YAML
-brew "check-jsonschema"
-brew "fastgron" # JSON to greppable output, but faster by using SIMD instructions
+# Schema
+brew "check-jsonschema" # checks a JSON Schema using popular Python jsonschema library
 brew "generate-json-schema" # converts a JSON file into a JSON Schema
-brew "gron" # JSON to greppable output
-brew "jc" # structures the output of any command into JSON
-brew "jq"
-brew "jql"
+brew "json2ts" # converts JSON Schema to TypeScript type declarations
 brew "yamale" # schema validator
+# brew "jsonschema2pojo" # converts a JSON or YAML Schema to Java classes, has a web version
+
+# Template 
+brew "jrsonnet" # Jsonnet template language
+brew "jsonnet" # domain-specific configuration language for defining JSON data
+brew "jsonnet-bundler" # package manager for Jsonnet
+
+# Data
+brew "fastgron" # JSON to greppable output, but faster by using SIMD instructions
+brew "go-jsonnet" # configuration language for defining JSON data
+brew "gron" # JSON to greppable output
+brew "ijq" # interactive jq
+brew "jc" # structures the output of any command into JSON
+brew "jid" # interactive jq, popular tool
+brew "jq" # the legend
+brew "jql"
+brew "json5" # very popular extension to JSON
 brew "yamllint" # checker
 brew "yh" # highlighter
 brew "yj" # YAML to JSON or TOML or HCL converter
 brew "yq" # jq for YAML, JSON, XML, CSV, and TOML
-
+# brew "jaq" # jq clone
+# brew "jd" # compares JSON files
+# brew "jello" # jq again but with Python syntax
+# brew "jnv" # popular interactive jq
+# brew "jo" # create JSON from shell script
+# brew "jsawk" # awk for JSON
+# brew "jsonlint" # checker
 
 # Data Formats - CSV
 brew "csvkit" # tools
@@ -359,11 +815,13 @@ brew "xsv" # looks very useful for csv files though kinda abandoned
 # Data Formats - TSV
 brew "miller" # sed, awk, cut, join & sort for name-indexed data like TSV, CSV, JSON, and JSON Lines
 brew "json2tsv"
+# brew "json-table" # converts JSON to TSV or CSV
 
 # Data Formats - Protocol Buffer
 brew "buf" # tool and schema registry
-brew "grpcurl"
+brew "grpcurl" # curl for gRPC
 brew "ghz" # benchmarking tool
+brew "grpcui" # like Postman for gRPC
 # brew "capnp" # alternative to protocol buffers
 # brew "flatcc" # alternative to protocol buffers
 
@@ -417,11 +875,12 @@ brew "cloudiscovery" # abandoned but may still work
 brew "cloudformation-cli" # by Amazon - creates and manages CloudFormation extensions
 brew "cloudformation-guard" # by Amazon - audits CloudFormation templates, Kubernetes configurations, and Terraform plans
 brew "cloudfox" # penetration testing tool
-brew "cloudsplaining" # audits IAM policies and generates a web report/worksheet
+brew "cloudsplaining" # audits access policies (IAM) and generates a web report/worksheet
 brew "copilot" # by Amazon - tool for Container Service and Fargate
 brew "s3cmd"
 # brew "credstash" # manages credentials in KMS
-
+# brew "iamy" # imports and exports access policies (IAM)
+# brew "parliament" # by Duo - checks access policies (IAM)
 
 # Modern App Hosting Platforms
 brew "convox" # by former Heroku engineers - no nixpacks or even buildpacks but can deploy apps like Rails to Kubernetes
@@ -456,6 +915,7 @@ brew "wpscan"
 brew "awsdac" # by Amazon
 brew "d2" # by Terrastruct 
 brew "manim"
+# brew "inframap" # reads tfstate or HCL, diagram is ugly
 # also, cloud mapper by Duo
 # also, diagrams on pypi
 # also, mermaid on npm
@@ -468,9 +928,13 @@ brew "caire" # resizes an image in an advanced content-aware way
 brew "ffmpeg" # extracts an image from a video
 brew "gifify" # converts a screen recording to a GIF (shell script)
 brew "imagemagick"
+brew "vhs" # creates a GIF from your terminal session
 brew "viu" # view high-resolution images in the terminal
 # brew "gifski" # creates highest-quality gifs (maybe at too large of a file size though)
 # brew "imageoptim" # can convert a gif to video
+# brew "imgdiet" # optimizes an image using libvips
+# brew "imgdiff" # compares images
+# brew "imgproxy" # resizes and converts images on the fly
 # brew "timg" # terminal image viewer
 # brew "triangle" # converts an image to computer-generated art using Delaunay triangulation
 
@@ -498,42 +962,41 @@ brew "doggo"
 # HTTP - API Server
 brew "autorest" # by Microsoft - converts an OpenAPI specification to client code
 brew "fern-api" # converts a Fern or OpenAPI specification to client code
-brew "tygo" # converts a Go JSON API to TypeScript types for use in the frontend
+brew "tygo" # converts a Go JSON API to TypeScript type declarations for use in the frontend
 brew "wiremock-standalone"
 # brew "create-api" # converts an OpenAPI specification to Swift client code
 
 # HTTP - API Client
 brew "curl"
 brew "curlie" # curl alternative, httpie-like
+brew "h2c" # converts an HTTP request to curl, also has a web version
 brew "httpie"
+brew "httping"
 brew "hurl" # tests requests with plain text and curl
 brew "newman" # runs Postman collections
 brew "muffet" # checks for broken links
 brew "webify" # turns a shell command into a web service
 cask "postman"
+cask "rapidapi" # can generate client code
 
 # HTTP - Auth
+# Duo
+brew "duo_unix" # by Duo - two-factor authentication for SSH
+# Okta
+brew "okta-aws-cli" # Okta authentication for awscli, don't know why there are two of these
+brew "okta-awscli" # Okta authentication for awscli
+
+# Other
 brew "arjun" # hidden parameter discovery
 brew "authz0" # tests authorization
 brew "cotp" # generates two-step verification codes
 brew "dalfox" # XSS scanner
-brew "duo_unix" # by Duo - two-factor authentication for SSH
 brew "flawz" # browses security vulnerabilities (CVEs)
 brew "gimme-aws-creds" # retrieves AWS credentials from Okta
 # brew "ffuf" # fast web fuzzer
 # brew "findomain" # fastest complete solution for finding domains
-
-okta-aws-cli
-Okta federated identity for AWS CLI
-https://github.com/okta/okta-aws-cli
-
-okta-awscli
-Okta authentication for awscli
-https://github.com/okta-awscli/okta-awscli
-
-parliament
-AWS IAM linting library
-https://github.com/duo-labs/parliament
+# brew "google-authenticator-libpam" by Google - PAM module for two-factor authentication
+# brew "httpx" # by Project Discovery - HTTP scan tool
 
 # HTTP - Webhooks
 brew "apprise" # very useful for sending notifications and triggering webhooks to popular notification services
@@ -555,11 +1018,13 @@ brew "certsync"
 brew "cfssl" # by Cloudflare - PKI/TLS toolkit
 brew "easy-rsa" # builds and manages a PKI CA
 brew "fetch-crl" # downloads a certificate revocation list from a remote server
+brew "gimmecert" # quickly issues server and client certificates using a locally-generated CA
+brew "gnutls"
 brew "openssl"
 brew "tlsx" # scans for TLS vulnerabilities
 brew "xpipe" # splits input and feeds it to another command - has use cases for certificates and more
 brew "zlint" # certificate checker, see also zcertificate and zschema
-
+# brew "jsign" # signs a Windows executable, installer, or script, using a key from cloud services or other sources
 
 # VPN
 brew "bore-cli" # only 400 lines of code
@@ -572,6 +1037,7 @@ cask "tailscale"
 
 # Networking - Transport
 brew "aerleon" # generates firewall configurations
+brew "hping" # sends TCP, UDP, and ICMP messages
 brew "naabu"
 brew "netcat"
 brew "nmap"
@@ -608,6 +1074,7 @@ brew "whatmask"
 # brew "grepcidr" # unsure why this exists
 # brew "ipinfo" # has ipmatch command which might be useful
 # brew "irrtoolset" # deprecated
+# brew "juise" # by Juniper - scripting environment that works outside of Junos
 # brew "mmdbinspect" # looks up IPs or networks in a MaxMind database file
 # brew "prips" # shows IP addresses in a given range
 # brew "scamper" # advanced traceroute
@@ -637,6 +1104,8 @@ brew "zsh-autopair"
 brew "zsh-autosuggestions"
 brew "zsh-syntax-highlighting"
 # brew "clitest"
+# brew "gum" tool for glamorous shell scripts
+# brew "shellcheck" 
 # brew "xonsh"
 # brew "xxh" # tool to ssh and bring your shell - useful, assuming it works
 # brew "zx"
@@ -670,10 +1139,16 @@ brew "viddy" # better watch command
 brew "watch"
 brew "watchexec" # watches files and triggers actions
 brew "xe" # xargs replacement
+brew "xidel" # super useful for reading web pages I think
 cask "raycast" # can search DevDocs using an extension
 # brew "fileicon" # sets macOS file or folder icons
 # brew "flamegraph" # by Brendan Gregg - stack trace visualizer
 # brew "gat" # cat alternative in Go
+# brew "hck" # cut alternative that supports regex delimiters
+# brew "hq" # jq for HTML
+# brew "iconsur" creates a macOS app icon
+# brew "invoice" # generates pretty, professional invoices
+# brew "just" # runs project-specific commands, like Make
 # brew "titlecase" # capitalizes titles
 # brew "tuc" # cut replacement
 # brew "watchman" # by Facebook - watches files and triggers actions
@@ -696,6 +1171,9 @@ brew "python"
 # brew "black" # why is it named this..
 # brew "flake8" # Python checker
 # brew "flit" # by PyPA - publishes Python package to PyPI
+# brew "hatch" # by PyPA - yes, yet another tool lmao
+# brew "ipython"
+# brew "isort" # sorts Python imports
 # brew "ruff" fast Python formatter
 # brew "twine" # by PyPA - publishes Python package to PyPI
 # brew "yapf" # by Google - Python formatter
@@ -721,6 +1199,14 @@ brew "python"
 # brew "xcodes"
 # brew "xcprojectlint"
 
+# Audio
+cask "blackhole-2ch"
+cask "fl-studio"
+cask "loopback"
+cask "reaper"
+cask "surge-xt"
+# brew "jack"
+
 # Everything else
 brew "angle-grinder" # log analysis tool
 brew "anycable-go"
@@ -741,6 +1227,7 @@ brew "flyscrape" # command-line web scraper
 brew "gdu"
 brew "graphviz"
 brew "hasura-cli"
+brew "hcloud" # Hetzner Cloud
 brew "linode-cli"
 brew "mas"
 brew "md5deep"
@@ -754,25 +1241,18 @@ brew "sops"
 brew "stripe-cli"
 brew "supabase"
 brew "webpod" # deploys JavaScript apps to DigitalOcean, Linode, Vultr, GCP, AWS, or Azure
-brew "xidel" # super useful for reading web pages I think
-brew "xo/xo/usql"
 brew "xq"
 brew "xurls" # extracts urls from text - could be very useful
 brew "vercel-cli"
 brew "vultr"
 brew "yorkie" # some app or whatever that uses conflict-free replicated data types instead of raft
 brew "yt-dlp"
-cask "blackhole-2ch"
 cask "dropbox"
-cask "fl-studio"
 cask "framer"
 cask "ilok-license-manager"
 cask "inkscape"
-cask "loopback"
 cask "microsoft-auto-update"
-cask "reaper"
 cask "replay"
-cask "surge-xt"
 cask "visual-studio-code"
 mas "hiddenbar", id: 1452453066
 mas "telegram", id: 747648890
@@ -787,6 +1267,7 @@ vscode "graphql.vscode-graphql"
 vscode "graphql.vscode-graphql-syntax"
 vscode "ryuta46.multi-command"
 vscode "styled-components.vscode-styled-components"
+# tap "xo/xo"
 # brew "apachetop"
 # brew "bfs" # the GitHub page has a nice neutral tone terminal background
 # brew "bpftop" # for Linux only but useful
@@ -822,6 +1303,8 @@ vscode "styled-components.vscode-styled-components"
 # brew "eatmemory" # stress test
 # brew "ffind" # friendlier find
 # brew "forcecli" # command-line interface to Force.com
+# brew "historian" # manages bash history in a SQLite database
+# brew "hr" # horizontal rule
 # brew "istioctl"
 # brew "tunnel" # ngrok alternative
 # brew "telnet" # needed for eve-ng or gns3
@@ -847,5 +1330,6 @@ vscode "styled-components.vscode-styled-components"
 # brew "xpdf" # PDF tool but not on GitHub
 # brew "x264"
 # brew "x265"
+# brew "xo/xo/usql"
 # brew "vsce" # tool for packaging and publishing a Visual Studio Code extension
 # brew "youplot"

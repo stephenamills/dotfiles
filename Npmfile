@@ -2,5 +2,7 @@ avif
 carbon-now-cli
 @mermaid-js/mermaid-cli
 @northflank/cli
+odiff-bin
 plugma
+pixelmatch
 wscat

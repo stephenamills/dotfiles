@@ -10,7 +10,7 @@ brew "git-open" # opens a GitHub page
 brew "glab"
 
 # Git
-brew "blackbox" # encrypts and stores secrets in git
+brew "blackbox" # encrypts and stores secrets in Git
 brew "commitizen"
 brew "convco"
 brew "gibo" # .gitignore generator
@@ -23,6 +23,8 @@ brew "ugit" # tries to undo a git command
 # brew "codecov" # code coverage
 # brew "commitlint" # probably intended to be installed locally per-project
 # brew "cycode-cli" # another boring scanner
+# brew "forgit" # interactive git commands in the terminal
+# brew "thefuck" # Corrects commands
 # brew "vcsh" # config manager based on git that manages subrepos
 
 
@@ -274,13 +276,48 @@ brew "trivy"
 brew "uffizzi" # Rails app apparently used by Spotify with or for Backstage
 brew "vespa-cli" # by Yahoo - has a guide to deploy machine learning to Kubernetes
 # brew "consul-backinator" # backup and restore Consul's key-value store
+# brew "fleet-cli" # by Rancher - cluster manager
+# brew "fluxctl # accesses the Weave Flux GitOps operator
 # brew "kubevirt"
 # brew "vcluster" # creates fully functional virtual Kubernetes cluster inside the host Kubernetes cluster's namespace (whatever that even means)
 # brew "velero" # backup and restore Kubernetes resources and persistent volumes
-# brew "vitess" # replicated MySQL
 
 # Nomad
 brew "hashicorp/tap/nomad"
+
+
+# Data Engineering - Databases
+brew "atlas" # 
+brew "goose" # database migration
+# brew "flyway" # database version control to control migrations
+
+# brew "cassandra" # column-oriented database
+# brew "clickhouse" # column-oriented database
+# brew "citus" # replicated PostgreSQL
+# brew "dynein" # DynamoDB command line
+# brew "etcd" # replicated key-value store (based on Raft and bbolt)
+# brew "mysql"
+# brew "redis" # in-memory key-value store
+# brew "tile38" # their landing page animation is very good - geolocation data store, spatial index, and realtime geofence
+# brew "vitess" # replicated MySQL
+# also, see Porcupine checker on pkg.go.dev and MIT 6.5840
+# also, see SchemaHero on pkg.go.dev
+# also, see Spanner
+
+# GraphQL
+# brew "graphql-cli"
+# brew "graphqlviz" # visualizes a server-side schema
+# brew "hasura-cli"
+# brew "graphqurl" # by Hasura - curl for GraphQL with autocomplete, subscriptions and GraphiQL
+# brew "graphqxl" # language for creating server-side schemas
+# Data Engineering - Spark or Whatever
+# brew "flintrock" # launches a Spark cluster
+
+
+
+# Data Engineering - Observability
+# brew "chronograf" # monitoring and visualization UI for the Telegraf, InfluxDB, Chronograf, Kapacitor (TICK) stack
+# brew "cortex" # long-term storage for Prometheus
 
 
 # Data Formats - JSON & YAML
@@ -318,16 +355,8 @@ brew "json2tsv"
 brew "buf" # tool and schema registry
 brew "grpcurl"
 brew "ghz" # benchmarking tool
-
-# Data Engineering - Databases
-brew "atlas" # 
-brew "goose" # database migration
-# brew "tile38" # their landing page animation is very good - geolocation data store, spatial index, and realtime geofence
-
-
-# Data Engineering - Observability
-brew "chronograf" # monitoring and visualization UI for the Telegraf, InfluxDB, Chronograf, Kapacitor (TICK) stack
-# brew "cortex" # long-term storage for Prometheus
+# brew "capnp" # alternative to protocol buffers
+# brew "flatcc" # alternative to protocol buffers
 
 # Google Cloud
 brew "apib"    # api tool
@@ -405,7 +434,8 @@ brew "b2-tools"
 brew "contentful-cli"
 
 # Wordpress
-brew "sail" # deploys to digitalocean
+brew "easyengine" # command-line control panel to manage Wordpress sites
+brew "sail" # provisions and deploys to DigitalOcean
 brew "wp-cli"
 brew "wpscan"
 
@@ -421,10 +451,13 @@ brew "manim"
 # Images 
 brew "agg"  # converts Asciicast to GIF
 brew "asciinema" # creates Asciicast file
-brew "caire" # super useful content-aware image resizer
+brew "caire" # resizes an image in an advanced content-aware way
 brew "ffmpeg" # extracts an image from a video
+brew "gifify" # converts a screen recording to a GIF (shell script)
 brew "imagemagick"
 brew "viu" # view high-resolution images in the terminal
+# brew "gifski" # creates highest-quality gifs (maybe at too large of a file size though)
+# brew "imageoptim" # can convert a gif to video
 # brew "timg" # terminal image viewer
 # brew "triangle" # converts an image to computer-generated art using Delaunay triangulation
 
@@ -440,12 +473,18 @@ brew "dnsgen" # generates names from an existing one
 brew "dnsrobocert" # sends a DNS challenge and generates a Let's Encrypt TLS certificate
 brew "dnstracer"
 brew "doggo"
-brew "massdns"
 # brew "dnscontrol" # by Stack Exchange - Synchronize DNS records to multiple providers using a DSL
 # brew "dnsperf" # performance testing
+# brew "hostdb" # generates DNS zones and a DHCP configuration from hostlist.txt
+# brew "lexicon" # manipulates records on various DNS providers in a standardized way
+# brew "massdns" # by Project Discovery
+# brew "nuclei" # by Project Discovery - DNS scanner configurable via YAML templates
+# brew "scilla" # subdomain finder
+# brew "shuffledns" # by Project Discovery - subdomain finder
 
 # HTTP - API Server
 brew "autorest" # by Microsoft - converts an OpenAPI specification to client code
+brew "fern-api" # converts a Fern or OpenAPI specification to client code
 brew "tygo" # converts a Go JSON API to TypeScript types for use in the frontend
 brew "wiremock-standalone"
 # brew "create-api" # converts an OpenAPI specification to Swift client code
@@ -465,6 +504,10 @@ brew "arjun" # hidden parameter discovery
 brew "authz0" # tests authorization
 brew "cotp" # generates two-step verification codes
 brew "dalfox" # XSS scanner
+brew "duo_unix" # two-factor authentication for SSH
+brew "flawz" # browses security vulnerabilities (CVEs)
+# brew "ffuf" # fast web fuzzer
+# brew "findomain" # fastest complete solution for finding domains
 
 # HTTP - Webhooks
 brew "apprise" # very useful for sending notifications and triggering webhooks to popular notification services
@@ -484,10 +527,13 @@ brew "certigo" # by Square - examines and validates certificates
 brew "certstrap" # by Square - tools to bootstrap CAs, certificate requests, and signed certificates
 brew "certsync"
 brew "cfssl" # by Cloudflare - PKI/TLS toolkit
+brew "easy-rsa" # builds and manages a PKI CA
+brew "fetch-crl" # downloads a certificate revocation list from a remote server
 brew "openssl"
 brew "tlsx" # scans for TLS vulnerabilities
 brew "xpipe" # splits input and feeds it to another command - has use cases for certificates and more
 brew "zlint" # certificate checker, see also zcertificate and zschema
+
 
 # VPN
 brew "bore-cli" # only 400 lines of code
@@ -504,25 +550,41 @@ brew "naabu"
 brew "netcat"
 brew "nmap"
 brew "tcping"
+# brew "flowgrind" 
 
 # Networking - Routing
 brew "asn"
 brew "asnmap"
 brew "asroute"
-brew "bgpq4"
+brew "bgpq4" # generates router prefix lists and queries routing databases (IRRs)
 brew "bgpstream"
 brew "cidr" # a lifesaver
 brew "cidr2range"
 brew "cidrmerge"
 brew "gping"
-brew "ipinfo-cli"
-brew "lft"
+brew "grepip" # by IPinfo - filters IPv4 & IPv6 addresses
+brew "ipinfo-cli" # by IPinfo - gets IP geolocation and other types of IP data
+brew "iproute2mac" # Linux ip and bridge command for macOS
+brew "ipcalc" # good calculator and has a web version
+brew "ipv6calc"
+brew "ipv6toolkit"
+brew "lft" # advanced traceroute
+brew "mapcidr" # by Project Discovery - tool for subnet ranges
 brew "mtr"
 brew "netaddr"
 brew "nexttrace" # visual route tracking
+brew "range2cidr" # by IPinfo 
+brew "sipcalc" # advanced subnet calculator - looks really useful
+brew "subnetcalc"
 brew "tracebox" # tries to detect intermediary in the path
 brew "twoping" # bi-directional ping to determine which direction has packet loss
 brew "whatmask"
+# brew "grepcidr" # unsure why this exists
+# brew "ipinfo" # has ipmatch command which might be useful
+# brew "irrtoolset" # deprecated
+# brew "mmdbinspect" # looks up IPs or networks in a MaxMind database file
+# brew "prips" # shows IP addresses in a given range
+# brew "scamper" # advanced traceroute
 # brew "trippy" # like mtr
 
 # Networking - Data Link
@@ -536,6 +598,7 @@ brew "yaf" # really useful networking data pipeline architecture and flow record
 cask "wireshark"
 # brew "argus" # tcpdump alternative that has shows TCP state for each line such as CON FIN RST, or flow records whatever
 # brew "argus-clients" 
+# brew "pywhat" # can identify some things in a pcap file
 
 
 # zsh
@@ -563,7 +626,9 @@ brew "dasht" # searches offline documentation aggregated by Dash
 brew "difftastic" # super high-quality diff tool
 brew "direnv" # sets and unsets environment variables per directory
 brew "diskus" # directory size
+brew "f2" # renames files
 brew "fd"
+brew "fex" # cut and awk alternative that tries to be more concise and readable
 brew "grex" # regex generator
 brew "hyperfine" # useful benchmarking tool
 brew "openssh"
@@ -571,7 +636,6 @@ brew "rename"
 brew "sd" # sed replacement
 brew "tailspin" # colorizes log files
 brew "tal"
-brew "thefuck" # Corrects mistyped console commands
 brew "tldr"
 brew "tree"
 brew "trurl" # by curl team - tr for URLs
@@ -581,6 +645,8 @@ brew "watch"
 brew "watchexec" # watches files and triggers actions
 brew "xe" # xargs replacement
 cask "raycast" # can search DevDocs using an extension
+# brew "fileicon" # sets macOS file or folder icons
+# brew "flamegraph" # by Brendan Gregg - stack trace visualizer
 # brew "titlecase" # capitalizes titles
 # brew "tuc" # cut replacement
 # brew "watchman" # by Facebook - watches files and triggers actions
@@ -590,6 +656,8 @@ cask "raycast" # can search DevDocs using an extension
 brew "corepack"
 brew "deno"
 brew "node@20"
+# brew "eslint"
+# brew "flamebearer" # creates flame graphs for a JavaScript app from a terminal or drag-and-drop interface
 
 brew "go"
 brew "goreleaser"
@@ -598,7 +666,13 @@ brew "rust"
 
 brew "pipx"
 brew "python"
-# brew "twine" # publishes Python package to PyPI
+# brew "black" # why is it named this..
+# brew "flake8" # Python checker
+# brew "flit" # by PyPA - publishes Python package to PyPI
+# brew "ruff" fast Python formatter
+# brew "twine" # by PyPA - publishes Python package to PyPI
+# brew "yapf" # by Google - Python formatter
+
 
 # Lightweight Formal Methods
 # brew "dafny"
@@ -609,6 +683,8 @@ brew "python"
 # brew "carthage" # 
 # brew "cocoapods" # 
 # brew "fastlane"
+# brew "flank" # Massively parallel test runner for Firebase Test Lab
+# brew "folderify # generates pixel-perfect custom macOS folder icons
 # brew "switchaudio-osx" # Change macOS audio source from the command-line
 # brew "xcbeautify"
 # brew "xcdiff"
@@ -634,6 +710,7 @@ brew "fabric"
 brew "fclones"
 brew "feroxbuster"
 brew "flyctl"
+brew "flyscrape" # command-line web scraper
 brew "gdu"
 brew "graphviz"
 brew "hasura-cli"
@@ -715,9 +792,11 @@ vscode "styled-components.vscode-styled-components"
 # brew "dashing" # generates Dash documentation from HTML files
 # brew "denominator" # old abandoned Java code by Netflix but shows how to run a Java command without -jar
 # brew "djl-serving" # Java is terrible but maybe this is educational for serving an ML model
+# brew "eatmemory" # stress test
+# brew "ffind" # friendlier find
+# brew "forcecli" # command-line interface to Force.com
 # brew "istioctl"
 # brew "tunnel" # ngrok alternative
-# brew "ruff" fast Python formatter
 # brew "telnet" # needed for eve-ng or gns3
 # brew "tippecanoe" # creates pretty map vector tileset visualizations from GeoJSON, FlatGeobuf, or CSV
 # brew "tinysearch" # sort of a website search backend but doesn't have any autocomplete functionality, so kind of useless
@@ -742,5 +821,4 @@ vscode "styled-components.vscode-styled-components"
 # brew "x264"
 # brew "x265"
 # brew "vsce" # tool for packaging and publishing a Visual Studio Code extension
-# brew "yapf" # Google's Python formatter
 # brew "youplot"

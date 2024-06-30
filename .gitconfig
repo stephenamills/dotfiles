@@ -1,6 +1,9 @@
 [credential "https://github.com"]
 	helper = !gh auth git-credential
 
+[credential "https://gitlab.com"]
+	helper = glab auth git-credential
+
 [github]
 	user = stephenamills
 

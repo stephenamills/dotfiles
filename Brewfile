@@ -12,6 +12,8 @@ brew "git"
 brew "gitleaks" # secrets audit
 brew "lefthook" # hook manager
 brew "jj" # Git-compatible version control system
+brew "sapling" # by Facebook - better interface for Git
+brew "sugarjar" # like sapling - helper utility for a better Git/GitHub experience
 brew "ugit" # tries to undo a git command
 # brew "changie" # changelog tool 
 # brew "cocogitto" # commit message
@@ -440,6 +442,8 @@ brew "huggingface-cli"
 # Framework to smartly mirror git repositories
 # https://github.com/mricon/grokmirror
 
+
+
 # Continuous Deployment
 brew "act"
 brew "action-validator"
@@ -448,10 +452,23 @@ brew "circleci" # reproduces CircleCI environment locally
 brew "dagger" # runs your pipeline in containers locally or remote, and with reusable functions and modules
 brew "woodpecker-cli"
 # brew "hermit" # by Cash App - installs tools in isolated sets for CI environments etc.
-
+# brew "source-to-image" # by Red Hat - something about reproducible builds
 # osv-scanner
 # Vulnerability scanner which uses the OSV database
 # https://github.com/google/osv-scanner
+
+# release-it
+# Generic CLI tool to automate versioning and package publishing related tasks
+# https://github.com/release-it/release-it
+
+# renovate
+# Automated dependency updates. Flexible so you don't need to be
+# https://github.com/renovatebot/renovate
+
+# runme
+# Execute commands inside your runbooks, docs, and READMEs
+# https://runme.dev/
+
 
 # Secrets
 brew "bitwarden-cli"
@@ -462,7 +479,10 @@ brew "sops"
 brew "vsh" # community-created shell for Vault
 # brew "gokey" # by Cloudflare
 # brew "gopass-jsonapi" # Gopass browser bindings
+# brew "signmykey" # automated SSH Certificate Authority - signs SSH keys using Hashicorp Vault server and an LDAP server
 # brew "trufflehog" # great tool - scans for secrets in CI logs, code comments, Git history, and more
+
+
 
 # pass
 # Password manager
@@ -479,6 +499,22 @@ brew "vsh" # community-created shell for Vault
 # pass-otp
 # Pass extension for managing one-time-password tokens
 # https://github.com/tadfisher/pass-otp
+
+# shush
+# Encrypt and decrypt secrets using the AWS Key Management Service
+# https://github.com/realestate-com-au/shush
+
+# teleport
+# Modern SSH server for teams managing distributed infrastructure
+# https://goteleport.com/
+
+# talisman
+# Tool to detect and prevent secrets from getting checked in
+# https://thoughtworks.github.io/talisman/
+
+# teller
+# Secrets management tool for developers
+# https://github.com/tellerops/teller
 
 
 
@@ -510,6 +546,7 @@ brew "k2tf" # converts Kubernetes YAML to Terraform HCL
 brew "iam-policy-json-to-terraform" # converts a JSON IAM Policy to Terraform
 brew "infracost" # cost estimates
 brew "pulumi" # not Terraform, but similar enough
+brew "scoutsuite" # really good scanner that uses their sadcloud Terraform project to create and teardown an insecure cloud environment
 brew "terragrunt"
 brew "terramate"
 brew "tfsec"
@@ -526,6 +563,10 @@ brew "tfsec"
 # opentofu
 # Drop-in replacement for Terraform. Infrastructure as Code Tool
 # https://opentofu.org/
+
+# regula
+# Checks infrastructure as code templates using Open Policy Agent/Rego
+# https://regula.dev/
 
 # tf-profile
 # CLI tool to profile Terraform runs
@@ -721,6 +762,7 @@ brew "vespa-cli" # by Yahoo - has a guide to deploy machine learning to Kubernet
 # brew "fluxctl # accesses the Weave Flux GitOps operator
 # brew "glasskube" # next-generation package manager for Kubernetes
 # brew "kubevirt"
+# brew "skaffold" # continuous development workflow where you iterate on Kubernetes code locally and then deploy to a local or remote cluster
 # brew "vcluster" # creates fully functional virtual Kubernetes cluster inside the host Kubernetes cluster's namespace (whatever that even means)
 # brew "velero" # backup and restore Kubernetes resources and persistent volumes
 
@@ -1535,337 +1577,635 @@ brew "vespa-cli" # by Yahoo - has a guide to deploy machine learning to Kubernet
 # SQL-like frontend to PCAP files
 # https://www.dns-oarc.net/tools/packetq
 
-pawk
-Python line processor (like AWK)
-https://github.com/alecthomas/pawk
+# pawk
+# Python line processor (like AWK)
+# https://github.com/alecthomas/pawk
 
-percol
-Interactive grep tool
-https://github.com/mooz/percol
+# percol
+# Interactive grep tool
+# https://github.com/mooz/percol
 
 
 
-percona-toolkit
-Command-line tools for MySQL, MariaDB and system tasks
-https://www.percona.com/software/percona-toolkit/
+# percona-toolkit
+# Command-line tools for MySQL, MariaDB and system tasks
+# https://www.percona.com/software/percona-toolkit/
 
-percona-xtrabackup
-Open source hot backup tool for InnoDB and XtraDB databases
-https://www.percona.com/software/mysql-database/percona-xtrabackup
+# percona-xtrabackup
+# Open source hot backup tool for InnoDB and XtraDB databases
+# https://www.percona.com/software/mysql-database/percona-xtrabackup
 
-phrase-cli
-Tool to interact with the Phrase API
-https://phrase.com/
+# phrase-cli
+# Tool to interact with the Phrase API
+# https://phrase.com/
 
-pip-audit
-Audits Python environments and dependency trees for known vulnerabilities
-https://pypi.org/project/pip-audit/
+# pip-audit
+# Audits Python environments and dependency trees for known vulnerabilities
+# https://pypi.org/project/pip-audit/
 
-pip-tools
-Locking and sync for Pip requirements files
-https://pip-tools.readthedocs.io
+# pip-tools
+# Locking and sync for Pip requirements files
+# https://pip-tools.readthedocs.io
 
-pipdeptree
-CLI to display dependency tree of the installed Python packages
-https://github.com/tox-dev/pipdeptree
+# pipdeptree
+# CLI to display dependency tree of the installed Python packages
+# https://github.com/tox-dev/pipdeptree
 
-pivit
-Sign and verify data using hardware (Yubikey) backed x509 certificates (PIV)
-https://github.com/cashapp/pivit
+# pivit
+# Sign and verify data using hardware (Yubikey) backed x509 certificates (PIV)
+# https://github.com/cashapp/pivit
 
-pixie
-Observability tool for Kubernetes applications
-https://px.dev/
+# pixie
+# Observability tool for Kubernetes applications
+# https://px.dev/
 
-pkg-config-wrapper
-Easier way to include C code in your Go program
-https://github.com/influxdata/pkg-config
+# pkg-config-wrapper
+# Easier way to include C code in your Go program
+# https://github.com/influxdata/pkg-config
 
-platypus
-Create macOS applications from {Perl,Ruby,sh,Python} scripts
-https://sveinbjorn.org/platypus
+# platypus
+# Create macOS applications from {Perl,Ruby,sh,Python} scripts
+# https://sveinbjorn.org/platypus
 
-pluto
-CLI tool to help discover deprecated apiVersions in Kubernetes
-https://fairwinds.com
+# pluto
+# CLI tool to help discover deprecated apiVersions in Kubernetes
+# https://fairwinds.com
 
-pocketbase
-Open source backend for your next project in 1 file
-https://pocketbase.io/
+# pocketbase
+# Open source backend for your next project in 1 file
+# https://pocketbase.io/
 
-policy_sentry
-Generate locked-down AWS IAM Policies
-https://policy-sentry.readthedocs.io/en/latest/
+# policy_sentry
+# Generate locked-down AWS IAM Policies
+# https://policy-sentry.readthedocs.io/en/latest/
 
-ponysay
-Cowsay but with ponies
-https://github.com/erkin/ponysay/
+# ponysay
+# Cowsay but with ponies
+# https://github.com/erkin/ponysay/
 
-popeye
-Kubernetes cluster resource sanitizer
-https://popeyecli.io
+# popeye
+# Kubernetes cluster resource sanitizer
+# https://popeyecli.io
 
-postgraphile
-GraphQL schema created by reflection over a PostgreSQL schema
-https://www.graphile.org/postgraphile/
+# postgraphile
+# GraphQL schema created by reflection over a PostgreSQL schema
+# https://www.graphile.org/postgraphile/
 
-pre-commit
-Framework for managing multi-language Git pre-commit hooks
-https://pre-commit.com/
+# pre-commit
+# Framework for managing multi-language Git pre-commit hooks
+# https://pre-commit.com/
 
-principalmapper
-Quickly evaluate IAM permissions in AWS
-https://github.com/nccgroup/PMapper
+# principalmapper
+# Quickly evaluate IAM permissions in AWS
+# https://github.com/nccgroup/PMapper
 
-promptfoo
-Test your LLM app locally
-https://promptfoo.dev/
+# promptfoo
+# Test your LLM app locally
+# https://promptfoo.dev/
 
-promtail
-Log agent for Loki
-https://grafana.com/loki
+# promtail
+# Log agent for Loki
+# https://grafana.com/loki
 
-protoc-gen-go
-Go support for Google's protocol buffers
-https://github.com/protocolbuffers/protobuf-go
+# protoc-gen-go
+# Go support for Google's protocol buffers
+# https://github.com/protocolbuffers/protobuf-go
 
-protoc-gen-go-grpc
-Protoc plugin that generates code for gRPC-Go clients
-https://github.com/grpc/grpc-go
+# protoc-gen-go-grpc
+# Protoc plugin that generates code for gRPC-Go clients
+# https://github.com/grpc/grpc-go
 
-protoc-gen-gogo
-Protocol Buffers for Go with Gadgets
-https://github.com/gogo/protobuf
+# protoc-gen-gogo
+# Protocol Buffers for Go with Gadgets
+# https://github.com/gogo/protobuf
 
-protoc-gen-gogofaster
-Protocol Buffers for Go with Gadgets
-https://github.com/gogo/protobuf
+# protoc-gen-gogofaster
+# Protocol Buffers for Go with Gadgets
+# https://github.com/gogo/protobuf
 
-protoc-gen-grpc-web
-Protoc plugin that generates code for gRPC-Web clients
-https://github.com/grpc/grpc-web
+# protoc-gen-grpc-web
+# Protoc plugin that generates code for gRPC-Web clients
+# https://github.com/grpc/grpc-web
 
-protoc-gen-js
-Protocol buffers JavaScript generator plugin
-https://github.com/protocolbuffers/protobuf-javascript
+# protoc-gen-js
+# Protocol buffers JavaScript generator plugin
+# https://github.com/protocolbuffers/protobuf-javascript
 
-protolint
-Pluggable linter and fixer to enforce Protocol Buffer style and conventions
-https://github.com/yoheimuta/protolint
+# protolint
+# Pluggable linter and fixer to enforce Protocol Buffer style and conventions
+# https://github.com/yoheimuta/protolint
 
-prototool
-Your Swiss Army Knife for Protocol Buffers
-https://github.com/uber/prototool
+# prototool
+# Your Swiss Army Knife for Protocol Buffers
+# https://github.com/uber/prototool
 
-prowler
-Tool for cloud security assessments, audits, incident response, and more
-https://prowler.com/
+# prowler
+# Tool for cloud security assessments, audits, incident response, and more
+# https://prowler.com/
 
-psgrep
-Shortcut for the 'ps aux | grep' idiom
-https://github.com/jvz/psgrep
+# psgrep
+# Shortcut for the 'ps aux | grep' idiom
+# https://github.com/jvz/psgrep
 
-pstree
-Show ps output as a tree
-https://github.com/FredHucht/pstree
+# pstree
+# Show ps output as a tree
+# https://github.com/FredHucht/pstree
 
-ptpython
-Advanced Python REPL
-https://github.com/prompt-toolkit/ptpython
+# ptpython
+# Advanced Python REPL
+# https://github.com/prompt-toolkit/ptpython
 
-pulsarctl
-CLI for Apache Pulsar written in Go
-https://streamnative.io/
+# pulsarctl
+# CLI for Apache Pulsar written in Go
+# https://streamnative.io/
 
-pumba
-Chaos testing tool for Docker
-https://github.com/alexei-led/pumba
+# pumba
+# Chaos testing tool for Docker
+# https://github.com/alexei-led/pumba
 
-pup
-Parse HTML at the command-line
-https://github.com/EricChiang/pup
+# pup
+# Parse HTML at the command-line
+# https://github.com/EricChiang/pup
 
-pwncat
-Netcat with FW/IDS/IPS evasion, self-inject-, bind- and reverse shell
-https://pwncat.org
+# pwncat
+# Netcat with FW/IDS/IPS evasion, self-inject-, bind- and reverse shell
+# https://pwncat.org
 
 
+# rack
+# CLI for Rackspace
+# https://github.com/rackspace/rack
 
+# rain
+# Command-line tool for working with AWS CloudFormation
+# https://github.com/aws-cloudformation/rain
 
 
+# rancher-cli
+# Unified tool to manage your Rancher server
+# https://github.com/rancher/cli
 
+# rancid
+# Really Awesome New Cisco confIg Differ
+# https://www.shrubbery.net/rancid/
 
+# rargs
+# Util like xargs + awk with pattern matching support
+# https://github.com/lotabout/rargs
 
+# ratchet
+# Tool for securing CI/CD workflows with version pinning
+# https://github.com/sethvargo/ratchet
 
+# rbtools
+# CLI and API for working with code and document reviews on Review Board
+# https://www.reviewboard.org/downloads/rbtools/
 
+# rbw
+# Unofficial Bitwarden CLI client
+# https://github.com/doy/rbw
 
+# rds-command-line-tools
+# Amazon RDS command-line toolkit
+# https://aws.amazon.com/developertools/2928
 
+# react-native-cli
+# Tools for creating native apps for Android and iOS
+# https://facebook.github.io/react-native/
 
+# recon-ng
+# Web Reconnaissance Framework
+# https://github.com/lanmaster53/recon-ng
 
+# reg
+# Docker registry v2 command-line client
+# https://r.j3ss.co
 
+# regclient
+# Docker and OCI Registry Client in Go and tooling using those libraries
+# https://github.com/regclient/regclient
 
+# rem
+# Command-line tool to access OSX Reminders.app database
+# https://github.com/kykim/rem
 
+# remarshal
+# Convert between TOML, YAML and JSON
+# https://github.com/dbohdan/remarshal
 
+# reorder-python-imports
+# Rewrites source to reorder python imports
+# https://github.com/asottile/reorder_python_imports
 
+# revive
+# Fast, configurable, extensible, flexible, and beautiful linter for Go
+# https://revive.run
 
-talisman
-Tool to detect and prevent secrets from getting checked in
-https://thoughtworks.github.io/talisman/
+# rhit
+# Nginx log explorer
+# https://dystroy.org/rhit/
 
-tanka
-Flexible, reusable and concise configuration for Kubernetes using Jsonnet
-https://tanka.dev
+# risor
+# Fast and flexible scripting for Go developers and DevOps
+# https://risor.io/
 
+# river
+# Reverse proxy application, based on the pingora library from Cloudflare (HTTP or WebSocket)
+# https://github.com/memorysafety/river
 
-taplo
-TOML toolkit written in Rust
-https://taplo.tamasfe.dev
+# rke
+# Rancher Kubernetes Engine, a Kubernetes installer that works everywhere
+# https://rke.docs.rancher.com/
 
-tbls
-CI-Friendly tool for document a database
-https://github.com/k1LoW/tbls
+# rocksdb
+# Embeddable, persistent key-value store for fast storage
+# https://rocksdb.org/
 
-tea
-Command-line tool to interact with Gitea servers
-https://gitea.com/gitea/tea
+# rojo
+# Professional grade Roblox development tools
+# https://rojo.space/
 
-teleport
-Modern SSH server for teams managing distributed infrastructure
-https://goteleport.com/
+# rome
+# Carthage cache for S3, Minio, Ceph, Google Storage, Artifactory and many others
+# https://github.com/tmspzz/Rome
 
-teller
-Secrets management tool for developers
-https://github.com/tellerops/teller
+# rosa-cli
+# RedHat OpenShift Service on AWS (ROSA) command-line interface
+# https://www.openshift.com/products/amazon-openshift
 
-temporal
-Command-line interface for running and interacting with Temporal Server and UI
-https://temporal.io/
+# rpm
+# Standard unix software packaging tool
+# https://rpm.org/
 
+# rpm2cpio
+# Tool to convert RPM package to CPIO archive
+# https://svnweb.freebsd.org/ports/head/archivers/rpm2cpio/
 
-testkube
-Kubernetes-native framework for test definition and execution
-https://testkube.io
+# rpmspectool
+# Utility for handling RPM spec files
+# https://github.com/nphilipp/rpmspectool
 
-testssl
-Tool which checks for the support of TLS/SSL ciphers and flaws
-https://testssl.sh/
+# rslint
+# Extremely fast JavaScript and TypeScript linter
+# https://rslint.org/ 
 
-tetra
-Tetragon CLI to observe, manage and troubleshoot Tetragon instances
-https://github.com/cilium/tetragon
+# rubyfmt
+# Ruby autoformatter
+# https://github.com/fables-tales/rubyfmt
 
-textql
-Executes SQL across TSV and CSV files
-https://github.com/dinedal/textql
+# ruler
+# Tool to abuse Exchange services (#email)
+# https://github.com/sensepost/ruler
 
-textract
-Extract text from various different types of files
-https://textract.readthedocs.io/
+# run
+# Easily manage and invoke small scripts and wrappers
+# https://github.com/TekWizely/run
 
-thanos
-Highly available Prometheus setup with long term storage capabilities
-https://thanos.io
+# rust-analyzer
+# Experimental Rust compiler front-end for IDEs
+# https://rust-analyzer.github.io/
 
-theharvester
-Gather materials from public sources (for pen testers)
-https://www.edge-security.com/theharvester.php
+# rustfmt
+# Format Rust code
+# https://rust-lang.github.io/rustfmt/
 
-tm
-TriggerMesh CLI to work with knative objects
-https://triggermesh.com
+# salt-lint
+# Check for best practices in SaltStack
+# https://github.com/warpnet/salt-lint
 
-tmt
-Test Management Tool
-https://tmt.readthedocs.io
+# saml2aws
+# Login and retrieve AWS temporary credentials using a SAML IDP
+# https://github.com/Versent/saml2aws
 
-toast
-Tool for running tasks in containers
-https://github.com/stepchowfun/toast
+# sbom-tool
+# Scalable and enterprise ready tool to create SBOMs for any variety of artifacts
+# https://github.com/microsoft/sbom-tool
 
-toml-test
-Language agnostic test suite for TOML parsers
-https://github.com/burntsushi/toml-test
+# scalingo
+# CLI for working with Scalingo's PaaS
+# https://doc.scalingo.com/cli
 
+# sceptre
+# Build better AWS infrastructure doing whatever with Cloudformation templates
+# https://docs.sceptre-project.org/
 
+# scorecard
+# Security health metrics for Open Source
+# https://github.com/ossf/scorecard
 
-touca
-Open source tool for regression testing complex software workflows
-https://github.com/trytouca/trytouca/tree/main/sdk/python
+# scw
+# Command-line Interface for Scaleway
+# https://github.com/scaleway/scaleway-cli
 
-toxiproxy
-TCP proxy to simulate network & system conditions for chaos & resiliency testing
-https://github.com/shopify/toxiproxy
+# seam
+# This utility lets you control Seam IoT resources
+# https://github.com/seamapi/seam-cli
 
-traildb
-Blazingly-fast database for log-structured data
-https://traildb.io/
+# selenium-server
+# Browser automation for testing purposes
+# https://www.selenium.dev/
 
-trailscraper
-Tool to get valuable information out of AWS CloudTrail
-https://github.com/flosell/trailscraper
+# semgrep
+# Easily detect and prevent bugs and anti-patterns in your codebase
+# https://semgrep.dev
 
-transcrypt
-Configure transparent encryption of files in a Git repo
-https://github.com/elasticdog/transcrypt
+# semtag
+# Semantic tagging script for git
+# https://github.com/nico2sh/semtag
 
-travis
-Command-line client for Travis CI
-https://github.com/travis-ci/travis.rb/
+# serverless
+# Build applications with serverless architectures
+# https://www.serverless.com/
 
-tremor-runtime
-Early-stage event processing system for unstructured data
-https://www.tremor.rs/
+# service-weaver
+# Programming framework for writing and deploying cloud applications #gke #google cloud
+# https://serviceweaver.dev/
 
-trino
-Distributed SQL query engine for big data
-https://trino.io
 
+# sgr
+# Command-line client for Splitgraph, a version control system for data
+# https://www.splitgraph.com/docs/sgr-advanced/getting-started/introduction
 
+# sh4d0wup
+# Signing-key abuse and update exploitation framework
+# https://github.com/kpcyrd/sh4d0wup
 
+# shub
+# Scrapinghub command-line client
+# https://shub.readthedocs.io/en/latest/
 
 
 
+# silicon
+# Create beautiful image of your source code
+# https://github.com/Aloxaf/silicon/
 
+# singularity
+# Application container and unprivileged sandbox platform for Linux
+# https://apptainer.org/
 
+# skopeo
+# Work with remote images registries
+# https://github.com/containers/skopeo
 
+# smap
+# Drop-in replacement for Nmap powered by shodan.io
+# https://github.com/s0md3v/Smap
 
+# sn0int
+# Semi-automatic OSINT framework and package manager
+# https://github.com/kpcyrd/sn0int
 
+# snyk-cli
+# Scans and monitors projects for security vulnerabilities
+# https://snyk.io
 
+# solarus
+# Action-RPG game engine
+# https://www.solarus-games.org/
 
+# sonar-scanner
+# Launcher to analyze a project with SonarQube
+# https://docs.sonarqube.org/latest/analysis/scan/sonarscanner/
 
+# sonarqube
+# Manage code quality
+# https://www.sonarsource.com/products/sonarqube/
 
+# sonobuoy
+# Kubernetes component that generates reports on cluster conformance
+# https://github.com/vmware-tanzu/sonobuoy
 
+# spoof-mac
+# Spoof your MAC address in macOS
+# https://github.com/feross/SpoofMAC
 
+# spr
+# Submit pull requests for individual, amendable, rebaseable commits to GitHub
+# https://github.com/getcord/spr
 
+# sql-lint
+# SQL linter to do sanity checks on your queries and bring errors back from the DB
+# https://github.com/joereynolds/sql-lint
 
+# sql-translator
+# Manipulate structured data definitions (SQL and more)
+# https://github.com/dbsrgits/sql-translator/
 
+# sqlancer
+# Detecting Logic Bugs in DBMS
+# https://github.com/sqlancer/sqlancer
 
+# sqlbench
+# Measures and compares the execution time of one or more SQL queries
+# https://github.com/felixge/sqlbench
 
+# sqlboiler
+# Generate a Go ORM tailored to your database schema
+# https://github.com/volatiletech/sqlboiler
 
+# sqlc
+# Generate type safe Go from SQL
+# https://sqlc.dev/
 
+# sqlcipher
+# SQLite extension providing 256-bit AES encryption
+# https://www.zetetic.net/sqlcipher/
 
+# sqlcmd
+# Microsoft SQL Server command-line interface
+# https://github.com/microsoft/go-sqlcmd
 
+# sqldiff
+# Displays the differences between SQLite databases
+# https://www.sqlite.org/sqldiff.html
 
+# sqlfluff
+# SQL linter and auto-formatter for Humans
+# https://docs.sqlfluff.com/
 
+# sqlfmt
+# SQL formatter with width-aware output
+# https://sqlfum.pt/
 
+# sqlite
+# Command-line interface for SQLite
+# https://sqlite.org/index.html
 
+# sqlite-analyzer
+# Analyze how space is allocated inside an SQLite file
+# https://www.sqlite.org/
 
+# sqlite-utils
+# CLI utility for manipulating SQLite databases
+# https://sqlite-utils.datasette.io/
 
+# sqliteodbc
+# ODBC driver for SQLite
+# https://ch-werner.homepage.t-online.de/sqliteodbc/
 
+# sqlmap
+# Penetration testing for SQL injection and database servers
+# https://sqlmap.org
 
+# sqlpage
+# Web application framework, for creation of websites with simple database queries
+# https://sql.ophir.dev/
 
+# sqlparse
+# Non-validating SQL parser
+# https://github.com/andialbrecht/sqlparse
 
+# sqlsmith
+# Random SQL query generator
+# https://github.com/anse1/sqlsmith
 
+# sqlx-cli
+# Command-line utility for SQLx, the Rust SQL toolkit
+# https://github.com/launchbadge/sqlx
 
+# sqsmover
+# AWS SQS Message mover
+# https://github.com/mercury2269/sqsmover
 
+# ssh-audit
+# SSH server & client auditing
+# https://github.com/jtesta/ssh-audit
 
+# ssh-permit-a38
+# Central management and deployment for SSH keys
+# https://github.com/ierror/ssh-permit-a38
 
+# ssh-vault
+# Encrypt/decrypt using SSH keys
+# https://ssh-vault.com/
 
+# ssh3
+# Faster and richer secure shell using HTTP/3
+# https://github.com/francoismichel/ssh3
 
+# staticcheck
+# State of the art linter for the Go programming language
+# https://staticcheck.io/
 
+# stern
+# Tail multiple Kubernetes pods & their containers
+# https://github.com/stern/stern
 
+# stgit
+# Manage Git commits as a stack of patches
+# https://stacked-git.github.io
 
+# suricata
+# Network IDS, IPS, and security monitoring engine
+# https://suricata.io
 
+
+
+
+
+
+# tanka
+# Flexible, reusable and concise configuration for Kubernetes using Jsonnet
+# https://tanka.dev
+
+
+# taplo
+# TOML toolkit written in Rust
+# https://taplo.tamasfe.dev
+
+# tbls
+# CI-Friendly tool for document a database
+# https://github.com/k1LoW/tbls
+
+# tea
+# Command-line tool to interact with Gitea servers
+# https://gitea.com/gitea/tea
+
+
+
+# temporal
+# Command-line interface for running and interacting with Temporal Server and UI
+# https://temporal.io/
+
+
+# testkube
+# Kubernetes-native framework for test definition and execution
+# https://testkube.io
+
+# testssl
+# Tool which checks for the support of TLS/SSL ciphers and flaws
+# https://testssl.sh/
+
+# tetra
+# Tetragon CLI to observe, manage and troubleshoot Tetragon instances
+# https://github.com/cilium/tetragon
+
+# textql
+# Executes SQL across TSV and CSV files
+# https://github.com/dinedal/textql
+
+# textract
+# Extract text from various different types of files
+# https://textract.readthedocs.io/
+
+# thanos
+# Highly available Prometheus setup with long term storage capabilities
+# https://thanos.io
+
+# theharvester
+# Gather materials from public sources (for pen testers)
+# https://www.edge-security.com/theharvester.php
+
+# tm
+# TriggerMesh CLI to work with knative objects
+# https://triggermesh.com
+
+# tmt
+# Test Management Tool
+# https://tmt.readthedocs.io
+
+# toast
+# Tool for running tasks in containers
+# https://github.com/stepchowfun/toast
+
+# toml-test
+# Language agnostic test suite for TOML parsers
+# https://github.com/burntsushi/toml-test
+
+
+
+# touca
+# Open source tool for regression testing complex software workflows
+# https://github.com/trytouca/trytouca/tree/main/sdk/python
+
+# toxiproxy
+# TCP proxy to simulate network & system conditions for chaos & resiliency testing
+# https://github.com/shopify/toxiproxy
+
+# traildb
+# Blazingly-fast database for log-structured data
+# https://traildb.io/
+
+# trailscraper
+# Tool to get valuable information out of AWS CloudTrail
+# https://github.com/flosell/trailscraper
+
+# transcrypt
+# Configure transparent encryption of files in a Git repo
+# https://github.com/elasticdog/transcrypt
+
+# travis
+# Command-line client for Travis CI
+# https://github.com/travis-ci/travis.rb/
+
+# tremor-runtime
+# Early-stage event processing system for unstructured data
+# https://www.tremor.rs/
+
+# trino
+# Distributed SQL query engine for big data
+# https://trino.io
 
 
 # Nomad
@@ -1879,17 +2219,15 @@ brew "hashicorp/tap/nomad"
 # Databases
 # brew "cassandra" # column-oriented database
 # brew "clickhouse" # column-oriented database
-# brew "citus" # replicated PostgreSQL
 # brew "dynein" # DynamoDB client
 # brew "etcd" # replicated BoltDB (persistent key/value store)
-# brew "leveldb" # by Google - simple memtable and sstable implementation (400 commits, small code)
 # brew "mysql"
 # brew "redis" # in-memory key/value store
-# brew "tile38" # their landing page animation is very good - geolocation data store, spatial index, and realtime geofence
+# brew "rqlite" # replicated SQLite (good documentation, in Go)
+# brew "sqlite" 
 # brew "vitess" # replicated MySQL
-# also, see Porcupine checker on pkg.go.dev and MIT 6.5840
-# also, see SchemaHero on pkg.go.dev
-# also, see Spanner
+# Also, see Porcupine checker on pkg.go.dev and MIT 6.5840
+# Also, see Spanner
 
 # brew "atlas" # 
 # brew "goose" # database migration
@@ -1899,7 +2237,14 @@ brew "hashicorp/tap/nomad"
 # brew "pillar" # manages Cassandra migrations
 # brew "reshape" # Postgres migrations
 # brew "schema-evolution-manager" # Postgres migrations
+# brew "skeema" # declarative pure-SQL schema management for MySQL
 # brew "sql-migrate" # SQL schema migrations
+# Also, see SchemaHero on pkg.go.dev
+
+# brew "citus" # replicated PostgreSQL
+# brew "postgresql" # possibly relevant for geo features or something
+# brew "tile38" #  geolocation data store, spatial index, and realtime geofence - their landing page animation is very good
+
 
 # GraphQL
 # brew "graphql-cli"
@@ -1912,12 +2257,21 @@ brew "hashicorp/tap/nomad"
 
 # Search
 # brew "meilisearch" # looks like a winner - ultra relevant, instant and typo-tolerant full-text search API
+# brew "sonic" # lightweight & schema-less
 
 # Observability
 # brew "chronograf" # monitoring and visualization UI for the Telegraf, InfluxDB, Chronograf, Kapacitor (TICK) stack
 # brew "cortex" # long-term storage for Prometheus
 # brew "netdata" # super popular, 68k stars - useful tables and dashboards and diagnoses infrastructure problems with metrics, visualizations & alarms
 # brew "pint" # by Cloudflare - Prometheus rule linter/validator
+
+# sigma-cli
+# CLI based on pySigma - SIgma rules for relevant log events
+# https://github.com/SigmaHQ/sigma-cli
+
+# sloth
+# Prometheus SLO generator
+# https://sloth.dev/
 
 # Data Formats - JSON & YAML
 # Schema
@@ -2038,7 +2392,7 @@ brew "cloudformation-guard" # by Amazon - audits CloudFormation templates, Kuber
 brew "cloudfox" # penetration testing tool
 brew "cloudsplaining" # audits access policies (IAM) and generates a web report/worksheet
 brew "copilot" # by Amazon - tool for Container Service and Fargate
-brew "s3cmd"
+brew "s3cmd" # client
 # brew "credstash" # manages credentials in KMS
 # brew "iamy" # imports and exports access policies (IAM)
 # brew "parliament" # by Duo - checks access policies (IAM)
@@ -2049,6 +2403,30 @@ brew "s3cmd"
 # moto
 # Mock AWS services
 # http://getmoto.org/
+
+# s3-backer
+# FUSE-based single file backing store via Amazon S3
+# https://github.com/archiecobbs/s3backer
+
+# s3cmd
+# Command-line tool for the Amazon S3 service
+# https://s3tools.org/s3cmd
+
+# s3fs
+# FUSE-based file system backed by Amazon S3
+# https://github.com/s3fs-fuse/s3fs-fuse/wiki
+
+# s3ql
+# POSIX-compliant FUSE filesystem using object store as block storage
+# https://github.com/s3ql/s3ql
+
+# s3scanner
+# Scan for misconfigured S3 buckets across S3-compatible APIs!
+# https://github.com/sa7mon/S3Scanner
+
+# s4cmd
+# Super S3 command-line tool
+# https://github.com/bloomreach/s4cmd
 
 # Modern App Hosting Platforms
 brew "convox" # by former Heroku engineers - no nixpacks or even buildpacks but can deploy apps like Rails to Kubernetes
@@ -2089,6 +2467,10 @@ brew "manim"
 # also, diagrams on pypi
 # also, mermaid on npm
 
+# structurizr-cli
+# Command-line utility for Structurizr
+# https://structurizr.com
+
 # Image Processing
 brew "agg"  # converts an Asciicast screen recording video to GIF
 brew "asciinema" # creates an Asciicast file
@@ -2098,6 +2480,7 @@ brew "gifify" # converts a screen recording to a GIF (shell script)
 brew "gifski" # converts a video to a very high quality GIF (large file size, but good for Dribble)
 brew "iconsur" # creates a macOS app icon from an image
 brew "imagemagick" # image conversion
+brew "swiftdraw" # converts SVG into PNG, SF Symbol, automatically sizing and aligning the content to template guides
 brew "vhs" # creates a terminal session GIF
 brew "viu" # view high-resolution images in the terminal
 # brew "imageoptim" # can convert a gif to video
@@ -2129,6 +2512,10 @@ brew "doggo"
 # brew "scilla" # subdomain finder
 # brew "shuffledns" # by Project Discovery - subdomain finder
 
+# subfinder
+# Subdomain discovery tool
+# https://github.com/projectdiscovery/subfinder
+
 # HTTP - API Server
 brew "autorest" # by Microsoft - converts an OpenAPI specification to client code
 brew "fern-api" # converts a Fern or OpenAPI specification to client code
@@ -2140,6 +2527,18 @@ brew "wiremock-standalone"
 # Generate clients, server & docs from an OpenAPI spec (v2, v3)
 # https://openapi-generator.tech/
 
+# spectral-cli
+# JSON/YAML linter and support OpenAPI v3.1/v3.0/v2.0, and AsyncAPI v2.x
+# https://stoplight.io/open-source/spectral
+
+# stripe-mock
+# Mock HTTP server that responds like the real Stripe API
+# https://github.com/stripe/stripe-mock
+
+# swagger-codegen
+# Generate clients, server stubs, and docs from an OpenAPI spec
+# https://swagger.io/tools/swagger-codegen/
+
 # HTTP - API Client
 brew "curl"
 brew "curlie" # curl alternative, httpie-like
@@ -2149,12 +2548,18 @@ brew "httping"
 brew "hurl" # tests requests with plain text and curl
 brew "newman" # runs Postman collections
 brew "muffet" # checks for broken links
+brew "resty" # concise shell interface for curl
 brew "webify" # turns a shell command into a web service
 cask "postman"
 cask "rapidapi" # can generate client code
 # brew "k6" # by Grafana - popular load testing tool
 
+# stepci
+# API Testing and Monitoring made simple
+# https://stepci.com
+
 # HTTP - Auth
+brew "rsc_2fa" # by Russ Cox - Two-factor authentication on the command-line
 
 # Duo
 brew "duo_unix" # by Duo - two-factor authentication for SSH
@@ -2163,7 +2568,7 @@ brew "duo_unix" # by Duo - two-factor authentication for SSH
 brew "okta-aws-cli" # Okta authentication for awscli, don't know why there are two of these
 brew "okta-awscli" # Okta authentication for awscli
 
-# Other
+# More
 brew "arjun" # hidden parameter discovery
 brew "authz0" # tests authorization
 brew "cotp" # generates two-step verification codes
@@ -2176,7 +2581,6 @@ brew "gimme-aws-creds" # retrieves AWS credentials from Okta
 # brew "google-authenticator-libpam" by Google - PAM module for two-factor authentication
 # brew "httpx" # by Project Discovery - HTTP scan tool
 # brew "openfga" # nice open-source website - flexible authorization/permission engine 
-
 
 
 # oath-toolkit
@@ -2247,6 +2651,26 @@ brew "zlint" # certificate checker, see also zcertificate and zschema
 # Simple tool to make locally trusted development certificates
 # https://github.com/FiloSottile/mkcert
 
+# ssllabs-scan
+# This tool is a command-line client for the SSL Labs APIs
+# https://github.com/ssllabs/ssllabs-scan/
+
+# sslmate
+# Buy SSL certs from the command-line
+# https://sslmate.com
+
+# sslscan
+# Test SSL/TLS enabled services to discover supported cipher suites
+# https://github.com/rbsec/sslscan
+
+# sslyze
+# SSL scanner
+# https://github.com/nabla-c0d3/sslyze
+
+# step
+# Crypto and x509 Swiss-Army-Knife
+# https://smallstep.com
+
 # VPN
 brew "bore-cli" # only 400 lines of code
 brew "boringtun"
@@ -2263,6 +2687,7 @@ brew "aerleon" # generates firewall configurations
 brew "naabu"
 brew "netcat"
 brew "nmap"
+brew "rustscan" # scans all 65k ports in 3 seconds
 brew "tcping"
 # brew "flowgrind" 
 # brew "hping" # deprecated: sends TCP, UDP, and ICMP messages 
@@ -2301,8 +2726,10 @@ brew "whatmask"
 # brew "juise" # by Juniper - scripting environment that works outside of Junos
 # brew "mmdbinspect" # looks up IPs or networks in a MaxMind database file
 # brew "prips" # shows IP addresses in a given range
+# brew "rpki-client" # by OpenBSD team
 # brew "scamper" # advanced traceroute
 # brew "trippy" # like mtr
+
 
 # Networking - Data Link
 brew "arp-scan"
@@ -2339,6 +2766,30 @@ brew "zsh-syntax-highlighting"
 # brew "zx" # new shell
 # Also, ora on npm by Sindre Sorhus - elegant terminal progress spinner
 
+# shell2http
+# Executing shell commands via HTTP server
+# https://github.com/msoap/shell2http
+
+# shellcheck
+# Static analysis and lint tool, for (ba)sh scripts
+# https://www.shellcheck.net/
+
+# shellinabox
+# Export command-line tools to web based terminal emulator
+# https://github.com/shellinabox/shellinabox
+
+# shellspec
+# BDD unit testing framework for dash, bash, ksh, zsh and all POSIX shells
+# https://shellspec.info/
+
+# shelltestrunner
+# Portable command-line tool for testing command-line programs
+# https://github.com/simonmichael/shelltestrunner
+
+# shfmt
+# Autoformat shell script source code
+# https://github.com/mvdan/sh
+
 # Utilities
 brew "align"
 brew "as-tree"
@@ -2357,6 +2808,7 @@ brew "hyperfine" # useful benchmarking tool
 brew "openssh"
 brew "rename"
 brew "sd" # sed replacement
+brew "s-search" # searches the web, also has a web interface
 brew "tailspin" # colorizes log files
 brew "tal"
 brew "tldr"
@@ -2383,6 +2835,14 @@ cask "raycast" # can search DevDocs using an extension
 # nq
 # Unix command-line queue utility
 # https://github.com/leahneukirchen/nq
+
+# sampler
+# Tool for shell commands execution, visualization and alerting
+# https://sampler.dev
+
+# steampipe
+# Use SQL to instantly query your cloud services
+# https://steampipe.io/
 
 # Programming
 brew "corepack"
@@ -2434,6 +2894,35 @@ brew "python"
 # brew "xcodes"
 # brew "xcprojectlint"
 # Also, see https://github.com/sindresorhus/quick-look-plugins
+
+# swift-format
+# Formatting technology for Swift source code
+# https://github.com/apple/swift-format
+
+# swift-outdated
+# Check for outdated Swift package manager dependencies
+# https://github.com/kiliankoe/swift-outdated
+
+# swift-protobuf
+# Plugin and runtime library for using protobuf with Swift
+# https://github.com/apple/swift-protobuf
+
+# swift-sh
+# Scripting with easy zero-conf dependency imports
+# https://github.com/mxcl/swift-sh
+
+# swiftformat
+# Formatting tool for reformatting Swift code
+# https://github.com/nicklockwood/SwiftFormat
+
+# swiftgen
+# Swift code generator for assets, storyboards, Localizable.strings, etc.
+# https://github.com/SwiftGen/SwiftGen
+
+# swiftlint
+# Tool to enforce Swift style and conventions
+# https://github.com/realm/SwiftLint
+
 
 
 # Audio

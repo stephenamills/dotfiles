@@ -2,7 +2,7 @@
 	helper = !gh auth git-credential
 
 [credential "https://gitlab.com"]
-	helper = glab auth git-credential
+	helper = !glab auth git-credential
 
 [github]
 	user = stephenamills

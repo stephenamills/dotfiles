@@ -27,6 +27,11 @@ brew "gh"
 brew "git-open" # opens a GitHub page
 brew "glab"
 brew "hub"
+# Also, for GitHub Readme marketing see:
+# https://github.com/sindresorhus/css-in-readme-like-wat
+# https://github.com/sindresorhus/github-markdown-css
+# https://github.com/sindresorhus/ora # use of typography
+
 
 # Hugging Face
 brew "huggingface-cli"
@@ -444,6 +449,9 @@ brew "dagger" # runs your pipeline in containers locally or remote, and with reu
 brew "woodpecker-cli"
 # brew "hermit" # by Cash App - installs tools in isolated sets for CI environments etc.
 
+# osv-scanner
+# Vulnerability scanner which uses the OSV database
+# https://github.com/google/osv-scanner
 
 # Secrets
 brew "bitwarden-cli"
@@ -698,6 +706,7 @@ brew "vespa-cli" # by Yahoo - has a guide to deploy machine learning to Kubernet
 # brew "vcluster" # creates fully functional virtual Kubernetes cluster inside the host Kubernetes cluster's namespace (whatever that even means)
 # brew "velero" # backup and restore Kubernetes resources and persistent volumes
 
+
 # helm-docs
 # Tool for automatically generating markdown documentation for helm charts
 # https://github.com/norwoodj/helm-docs
@@ -718,18 +727,882 @@ brew "vespa-cli" # by Yahoo - has a guide to deploy machine learning to Kubernet
 # Convert Kubernetes Ingress resources to Kubernetes Gateway API resources
 # https://github.com/kubernetes-sigs/ingress2gateway
 
+# k3d
+# Little helper to run CNCF's k3s in Docker
+# https://k3d.io
+
+# k3sup
+# Utility to create k3s clusters on any local or remote VM
+# https://k3sup.dev
+
+# k8sgpt
+# Scanning your k8s clusters, diagnosing, and triaging issues in simple English
+# https://k8sgpt.ai/
+
+# k9s
+# Kubernetes CLI To Manage Your Clusters In Style!
+# https://k9scli.io/
+
+# karmadactl
+# CLI for Karmada control plane
+# https://karmada.io/
+
+# karn
+# Manage multiple Git identities
+# https://github.com/prydonius/karn
+
+# katana
+# Crawling and spidering framework
+# https://github.com/projectdiscovery/katana
+
+
+# kcat
+# Generic command-line non-JVM Apache Kafka producer and consumer
+# https://github.com/edenhill/kcat
+
+# kconf
+# CLI for managing multiple kubeconfigs
+# https://github.com/particledecay/kconf
+
+# keploy
+# Testing Toolkit creates test-cases and data mocks from API calls, DB queries
+# https://keploy.io
+
+# keptn
+# CLI for keptn.sh, a message-driven control-plane for application delivery
+# https://keptn.sh
+
+
+# keydb
+# Multithreaded fork of Redis
+# https://keydb.dev
+
+# kin
+# Sane PBXProj files
+# https://github.com/Serchinastico/Kin
+
+# kind
+# Run local Kubernetes cluster in Docker
+# https://kind.sigs.k8s.io/
+
+# kiota
+# OpenAPI based HTTP Client code generator
+# https://aka.ms/kiota/docs
+
+# kitchen-sync
+# Fast efficiently sync database without dumping & reloading
+# https://github.com/willbryant/kitchen_sync
+
+# kitex
+# Golang RPC framework for microservices
+# https://github.com/cloudwego/kitex
+
+
+# kn
+# Command-line interface for managing Knative Serving and Eventing resources
+# https://github.com/knative/client
+
+
+
+# ko
+# Build and deploy Go applications on Kubernetes
+# https://ko.build
+
+# kompose
+# Tool to move from `docker-compose` to Kubernetes
+# https://kompose.io/
+
+
+# kops
+# Production Grade K8s Installation, Upgrades, and Management
+# https://kops.sigs.k8s.io/
+
+# kor
+# CLI tool to discover unused Kubernetes resources
+# https://github.com/yonahd/kor
+
+# krew
+# Package manager for kubectl plugins
+# https://sigs.k8s.io/krew/
+
+# ksops
+# Flexible Kustomize Plugin for SOPS Encrypted Resources
+# https://github.com/viaduct-ai/kustomize-sops
+
+# ksync
+# Sync files between your local system and a kubernetes cluster
+# https://ksync.github.io/ksync/
+
+# ktmpl
+# Parameterized templates for Kubernetes manifests
+# https://github.com/jimmycuadra/ktmpl
+
+# kube-linter
+# Static analysis tool for Kubernetes YAML files and Helm charts
+# https://github.com/stackrox/kube-linter
+
+# kube-ps1
+# Kubernetes prompt info for bash and zsh
+# https://github.com/jonmosco/kube-ps1
+
+# kube-score
+# Kubernetes object analysis recommendations for improved reliability and security
+# https://kube-score.com
+
+# kubeaudit
+# Helps audit your Kubernetes clusters against common security controls
+# https://github.com/Shopify/kubeaudit
+
+# kubebuilder
+# SDK for building Kubernetes APIs using CRDs
+# https://github.com/kubernetes-sigs/kubebuilder
+
+# kubecfg
+# Manage complex enterprise Kubernetes environments as code
+# https://github.com/kubecfg/kubecfg
+
+# kubecm
+# KubeConfig Manager
+# https://kubecm.cloud
+
+# kubecolor
+# Colorize your kubectl output
+# https://kubecolor.github.io/
+
+# kubeconform
+# FAST Kubernetes manifests validator, with support for Custom Resources!
+# https://github.com/yannh/kubeconform
+
+# kubectl-cnpg
+# CloudNativePG plugin for kubectl
+# https://cloudnative-pg.io/
+
+# kubectl-rook-ceph
+# Rook plugin for Ceph management
+# https://rook.io/
+
+# kubectx
+# Tool that can switch between kubectl contexts easily and create aliases
+# https://github.com/ahmetb/kubectx
+
+# kubefirst
+# GitOps Infrastructure & Application Delivery Platform for kubernetes
+# https://kubefirst.io/
+
+# kubekey
+# Installer for Kubernetes and / or KubeSphere, and related cloud-native add-ons
+# https://kubesphere.io
+
+# kubelogin
+# OpenID Connect authentication plugin for kubectl
+# https://github.com/int128/kubelogin
+
+# kubent
+# Easily check your clusters for use of deprecated APIs
+# https://github.com/doitintl/kube-no-trouble
+
+
+
+# kubernetes-cli
+# Kubernetes command-line interface
+# https://kubernetes.io/docs/reference/kubectl/
+
+# kubescape
+# Kubernetes testing according to Hardening Guidance by NSA and CISA
+# https://kubescape.io
+
+# kubeseal
+# Kubernetes controller and tool for one-way encrypted Secrets
+# https://github.com/bitnami-labs/sealed-secrets
+
+# kubesess
+# Manage multiple kubernetes cluster at the same time
+# https://rentarami.se/posts/2022-08-05-kube-context-2/
+
+# kubeshark
+# API Traffic Analyzer providing real-time visibility into Kubernetes network
+# https://www.kubeshark.co/
+
+# kubespy
+# Tools for observing Kubernetes resources in realtime
+# https://github.com/pulumi/kubespy
+
+# kubetui
+# TUI tool for monitoring and exploration of Kubernetes resources
+# https://github.com/sarub0b0/kubetui
+
+# kubeval
+# Validate Kubernetes configuration files, supports multiple Kubernetes versions
+# https://www.kubeval.com/
+
+# kubevela
+# Application Platform based on Kubernetes and Open Application Model
+# https://kubevela.io
+
+# kubevious
+# Detects and prevents Kubernetes misconfigurations and violations
+# https://github.com/kubevious/cli
+
+# kubie
+# Much more powerful alternative to kubectx and kubens
+# https://blog.sbstp.ca/introducing-kubie/
+
+# kumactl
+# Kuma control plane command-line utility
+# https://kuma.io/
+
+# kustomize
+# Template-free customization of Kubernetes YAML manifests
+# https://github.com/kubernetes-sigs/kustomize
+
+# kustomizer
+# Package manager for distributing Kubernetes configuration as OCI artifacts
+# https://github.com/stefanprodan/kustomizer
+
+# kuttl
+# KUbernetes Test TooL
+# https://kuttl.dev
+
+# kwctl
+# CLI tool for the Kubewarden policy engine for Kubernetes
+# https://www.kubewarden.io/
+
+# kwok
+# Kubernetes WithOut Kubelet - Simulates thousands of Nodes and Clusters
+# https://kwok.sigs.k8s.io
+
+# kyma-cli
+# Kyma Kubernetes & SAP command-line interface
+# https://kyma-project.io
+
+# kyverno
+# Kubernetes Native Policy Management
+# https://kyverno.io/
+
+# lazydocker
+# Lazier way to manage everything docker
+# https://github.com/jesseduffield/lazydocker
+
+# lazygit
+# Simple terminal UI for git commands
+# https://github.com/jesseduffield/lazygit/
+
+# ld-find-code-refs
+# Build tool for sending feature flag code references to LaunchDarkly
+# https://github.com/launchdarkly/ld-find-code-refs
+
+# ldapvi
+# Update LDAP entries with a text editor
+# http://www.lichteblau.com/ldapvi/
+
+# ldeep
+# LDAP enumeration utility
+# https://github.com/franc-pentest/ldeep
+
+# leaps
+# Collaborative web-based text editing service written in Golang
+# https://github.com/jeffail/leaps
+
+# leetup
+# Command-line tool to solve Leetcode problems
+# https://github.com/dragfire/leetup
+
+# legit
+# Command-line interface for Git, optimized for workflow simplicity
+# https://frostming.github.io/legit/
+
+# lerna
+# Tool for managing JavaScript projects with multiple packages
+# https://lerna.js.org
+
+# linkerd
+# Command-line utility to interact with linkerd
+# https://linkerd.io
+
+# liqoctl
+# Is a CLI tool to install and manage Liqo-enabled clusters
+# https://liqo.io
+
+# liquibase
+# Library for database change tracking
+# https://www.liquibase.org/
+
+# litani
+# Metabuild system
+# https://awslabs.github.io/aws-build-accumulator/
+
+# litecli
+# CLI for SQLite Databases with auto-completion and syntax highlighting
+# https://github.com/dbcli/litecli
+
+# literate-git
+# Render hierarchical git repositories into HTML
+# https://github.com/bennorth/literate-git
+
+# livekit
+# Scalable, high-performance WebRTC server
+# https://livekit.io
+
+# livekit-cli
+# Command-line interface to LiveKit
+# https://livekit.io
+
+# lldpd
+# Implementation of IEEE 802.1ab (LLDP)
+# https://lldpd.github.io/
+
+# llm
+# Access large language models from the command-line
+# https://llm.datasette.io/
+
+# llnode
+# LLDB plugin for live/post-mortem debugging of node.js apps
+# https://github.com/nodejs/llnode
+
+
+
+# localtunnel
+# Exposes your localhost to the world for easy testing and sharing
+# https://theboroer.github.io/localtunnel-www/
+
+# lockrun
+# Run cron jobs with overrun protection
+# http://unixwiz.net/tools/lockrun.html
+
+# logcli
+# Run LogQL queries against a Loki server
+# https://grafana.com/loki
+
+# logcheck
+# Mail anomalies in the system logfiles to the administrator
+# https://packages.debian.org/sid/logcheck
+
+
+
+# logdy
+# Web based real-time log viewer
+# https://logdy.dev
+
+# logrotate
+# Rotates, compresses, and mails system logs
+# https://github.com/logrotate/logrotate
+
+# logstash
+# Tool for managing events and logs
+# https://www.elastic.co/products/logstash
+
+# loki
+# Horizontally-scalable, highly-available log aggregation system
+# https://grafana.com/loki
+
+# lolcat
+# Rainbows and unicorns in your console!
+# https://github.com/busyloop/lolcat
+
+# lrzsz
+# Tools for zmodem/xmodem/ymodem file transfer
+# https://www.ohse.de/uwe/software/lrzsz.html
+
+# ls-lint
+# Extremely fast file and directory name linter
+# https://ls-lint.org/
+
+# lucky-commit
+# Customize your git commit hashes!
+# https://github.com/not-an-aardvark/lucky-commit
+
+# lux
+# Fast and simple video downloader
+# https://github.com/iawia002/lux
+
+# maclaunch
+# Manage your macOS startup items
+# https://github.com/hazcod/maclaunch
+
+# macosvpn
+# Create Mac OS VPNs programmatically
+# https://github.com/halo/macosvpn
+
+# mailcatcher
+# Catches mail and serves it through a dream
+# https://mailcatcher.me
+
+# mailpit
+# Web and API based SMTP testing
+# https://mailpit.axllent.org/
+
+# mailhog
+# Web and API based SMTP testing tool
+# https://github.com/mailhog/MailHog
+
+# mailsy
+# Quickly generate a temporary email address
+# https://github.com/BalliAsghar/Mailsy
+
+# manifest-tool
+# Command-line tool to create and query container image manifest list/indexes
+# https://github.com/estesp/manifest-tool/
+
+# manticoresearch
+# Open source text search engine
+# https://www.manticoresearch.com
+
+# mantra
+# Tool to hunt down API key leaks in JS files and pages
+# https://amoloht.github.io
+
+# masscan
+# TCP port scanner, scans entire Internet in under 5 minutes
+# https://github.com/robertdavidgraham/masscan/
+
+# massren
+# Easily rename multiple files using your text editor
+# https://github.com/laurent22/massren
+
+# maturin
+# Build and publish Rust crates as Python packages
+# https://github.com/PyO3/maturin
+
+# maxwell
+# Reads MySQL binlogs and writes row updates as JSON to Kafka
+# https://maxwells-daemon.io/
+
+# megacmd
+# Command-line client for mega.co.nz storage service
+# https://github.com/t3rm1n4l/megacmd
+
+# megatools
+# Command-line client for Mega.co.nz
+# https://megatools.megous.com/
+
+# microplane
+# CLI tool to make git changes across many repos
+# https://github.com/Clever/microplane
+
+# mimalloc
+# Compact general purpose allocator
+# https://github.com/microsoft/mimalloc
+
+# mimirtool
+# CLI for interacting with Grafana Mimir
+# https://grafana.com/docs/mimir/latest/operators-guide/tools/mimirtool/
+
+# minder
+# CLI for interacting with Stacklok's Minder platform
+# https://minder-docs.stacklok.dev
+
+
+# minio
+# High Performance, Kubernetes Native Object Storage
+# https://min.io
+
+# minio-mc
+# Replacement for ls, cp and other commands for object storage
+# https://github.com/minio/mc
+
+# minisign
+# Sign files & verify signatures. Works with signify in OpenBSD
+# https://jedisct1.github.io/minisign/
+
+# mint
+# Dependency manager that installs and runs Swift command-line tool packages
+# https://github.com/yonaskolb/Mint
+
+# miruo
+# Pretty-print TCP session monitor/analyzer
+# https://github.com/KLab/miruo/
+
+# mist-cli
+# Mac command-line tool that automatically downloads macOS Firmwares / Installers
+# https://github.com/ninxsoft/mist-cli
+
+# mjml
+# JavaScript framework that makes responsive-email easy
+# https://mjml.io
+
+
+
+# mkp224o
+# Vanity address generator for tor onion v3 (ed25519) hidden services
+# https://github.com/cathugger/mkp224o
+
+# mlogger
+# Log to syslog from the command-line
+# https://github.com/nbrownus/mlogger
+
+# mlx
+# Array framework for Apple silicon
+# https://github.com/ml-explore/mlx
+
+# mmctl
+# Remote CLI tool for Mattermost server
+# https://github.com/mattermost/mmctl
+
+# mockery
+# Mock code autogenerator for Golang
+# https://github.com/vektra/mockery
+
+# mockolo
+# Efficient Mock Generator for Swift
+# https://github.com/uber/mockolo
+
+# mockserver
+# Mock HTTP server and proxy
+# https://www.mock-server.com/
+
+# modgit
+# Tool for git repo deploy with filters. Used for magento development
+# https://github.com/jreinke/modgit
+
+# modman
+# Module deployment script geared towards Magento development
+# https://github.com/colinmollenhour/modman
+
+# mogenerator
+# Generate Objective-C & Swift classes from your Core Data model
+# https://rentzsch.github.io/mogenerator/
+
+# monolith
+# CLI tool for saving complete web pages as a single HTML file
+# https://github.com/Y2Z/monolith
+
+# moon
+# Task runner and repo management tool for the web ecosystem, written in Rust
+# https://moonrepo.dev/moon
+
+# moz-git-tools
+# Tools for working with Git at Mozilla
+# https://github.com/mozilla/moz-git-tools
+
+# mqttui
+# Subscribe to a MQTT Topic or publish something quickly from the terminal
+# https://github.com/EdJoPaTo/mqttui
+
+# mr
+# Multiple Repository management tool
+# https://myrepos.branchable.com/
+
+# msktutil
+# Active Directory keytab management
+# https://github.com/msktutil/msktutil
+
+# mu-repo
+# Tool to work with multiple git repositories
+# https://github.com/fabioz/mu-repo
+
+# multi-git-status
+# Show uncommitted, untracked and unpushed changes for multiple Git repos
+# https://github.com/fboender/multi-git-status
+
+# mycli
+# CLI for MySQL with auto-completion and syntax highlighting
+# https://www.mycli.net/
+
+# mydumper
+# How MySQL DBA & support engineer would imagine 'mysqldump' ;-)
+# https://launchpad.net/mydumper
+
+# mysql-client
+# Open source relational database management system
+# https://dev.mysql.com/doc/refman/8.3/en/
+
+# mysql-search-replace
+# Database search and replace script in PHP
+# https://interconnectit.com/products/search-and-replace-for-wordpress-databases/
+
+# mysqltuner
+# Increase performance and stability of a MySQL installation
+# https://raw.github.com/major/MySQLTuner-perl/master/mysqltuner.pl
+
+# mytop
+# Top-like query monitor for MySQL
+# https://www.mysqlfanboy.com/mytop-3/
+
+# naga-cli
+# Shader translation command-line tool
+# https://github.com/gfx-rs/naga
+
+# naml
+# Convert Kubernetes YAML to Golang
+# https://github.com/kris-nova/naml
+
+# nebula
+# Scalable overlay networking tool for connecting computers anywhere
+# https://github.com/slackhq/nebula
+
+# needle
+# Compile-time safe Swift dependency injection framework with real code
+# https://github.com/uber/needle
+
+# nef
+# Steroids for Xcode Playgrounds
+# https://nef.bow-swift.io
+
+# neonctl
+# Neon CLI tool
+# https://neon.tech/docs/reference/neon-cli
+
+# neosync
+# CLI for interfacing with Neosync
+# https://www.neosync.dev/
+
+# nerdctl
+# ContaiNERD CTL - Docker-compatible CLI for containerd
+# https://github.com/containerd/nerdctl
+
+# net-snmp
+# Implements SNMP v1, v2c, and v3, using IPv4 and IPv6
+# http://www.net-snmp.org/
+
+# netlify-cli
+# Netlify command-line tool
+# https://www.netlify.com/docs/cli
+
+# netmask
+# IP address netmask generation utility
+# https://github.com/tlby/netmask/blob/master/README
+
+# nfdump
+# Tools to collect and process netflow data on the command-line
+# https://github.com/phaag/nfdump
+
+# nfpm
+# Simple deb and rpm packager
+# https://nfpm.goreleaser.com/
+
+# ngrep
+# Network grep
+# https://github.com/jpr5/ngrep
+
+# nikto
+# Web server scanner
+# https://cirt.net/nikto2
+
+# node_exporter
+# Prometheus exporter for machine metrics
+# https://prometheus.io/
+
+# noir
+# Attack surface detector that identifies endpoints by static analysis
+# https://github.com/owasp-noir/noir
+
+# nomino
+# Batch rename utility
+# https://github.com/yaa110/nomino
+
+# noti
+# Trigger macOS notifications when a process completes
+# https://github.com/variadico/noti
+
+# notifiers
+# Easy way to send notifications
+# https://pypi.org/project/notifiers/
+
+# notify
+# Stream the output of any CLI and publish it to a variety of supported platforms
+# https://github.com/projectdiscovery/notify
+
+# npm-check-updates
+# Find newer versions of dependencies than what your package.json allows
+# https://github.com/raineorshine/npm-check-updates
+
+# nsq
+# Realtime distributed messaging platform
+# https://nsq.io/
+
+# ntfy
+# Send push notifications to your phone or desktop via PUT/POST
+# https://ntfy.sh/
+
+# ntopng
+# Next generation version of the original ntop
+# https://www.ntop.org/products/traffic-analysis/ntop/
+
+# nuget
+# Package manager for Microsoft development platform including .NET
+# https://www.nuget.org/
+
+# nut
+# Network UPS Tools: Support for various power devices
+# https://networkupstools.org/
+
+# nyancat
+# Renders an animated, color, ANSI-text loop of the Poptart Cat
+# https://github.com/klange/nyancat
+
+
+
+# objc-codegenutils
+# Three small tools to help work with XCode
+# https://github.com/puls/objc-codegenutils
+
+# ocm
+# CLI for the Red Hat OpenShift Cluster Manager
+# https://www.openshift.com/
+
+# octant
+# Kubernetes introspection tool for developers
+# https://octant.dev
+
+# octobuild
+# Compiler cache for Unreal Engine
+# https://github.com/octobuild/octobuild
+
+# odo-dev
+# Developer-focused CLI for Kubernetes and OpenShift
+# https://odo.dev
+
+# ohdear-cli
+# Tool to manage your Oh Dear sites
+# https://github.com/ohdearapp/ohdear-cli
+
+# oj
+# JSON parser and visualization tool
+# https://github.com/ohler55/ojg
+
+# ollama
+# Create, run, and share large language models (LLMs)
+# https://ollama.com/
+
+# onefetch
+# Command-line Git information tool
+# https://onefetch.dev/
+
+# opa
+# Open source, general-purpose policy engine
+# https://www.openpolicyagent.org
+
+# openshift-cli
+# OpenShift command-line interface tools
+# https://www.openshift.com/
+
+# operator-sdk
+# SDK for building Kubernetes applications
+# https://sdk.operatorframework.io/
+
+
+# oras
+# OCI Registry As Storage
+# https://github.com/oras-project/oras
+
+# osc
+# Command-line interface to work with an Open Build Service
+# https://openbuildservice.org
+
+# osc-cli
+# Official Outscale CLI providing connectors to Outscale API
+# https://github.com/outscale/osc-cli
+
+# osctrl-cli
+# Fast and efficient osquery management
+# https://osctrl.net
+
+# oslo
+# CLI tool for the OpenSLO spec
+# https://openslo.com/
+
+# osslsigncode
+# OpenSSL based Authenticode signing for PE/MSI/Java CAB files
+# https://github.com/mtrojnar/osslsigncode
+
+# ots
+# Share end-to-end encrypted secrets with others via a one-time URL
+# https://ots.sniptt.com
+
+# packetbeat
+# Lightweight Shipper for Network Data
+# https://www.elastic.co/products/beats/packetbeat
+
+# packetq
+# SQL-like frontend to PCAP files
+# https://www.dns-oarc.net/tools/packetq
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Nomad
 brew "hashicorp/tap/nomad"
+# levant
+# Templating and deployment tool for HashiCorp Nomad jobs
+# https://github.com/hashicorp/levant
 
+# Data Engineering
 
-# Data Engineering - Databases
+# Databases
 # brew "cassandra" # column-oriented database
 # brew "clickhouse" # column-oriented database
 # brew "citus" # replicated PostgreSQL
-# brew "dynein" # DynamoDB command line
-# brew "etcd" # key/value store (replicated BoltDB, uses Raft)
+# brew "dynein" # DynamoDB client
+# brew "etcd" # replicated BoltDB (persistent key/value store)
+# brew "leveldb" # by Google - simple memtable and sstable implementation (400 commits, small code)
 # brew "mysql"
-# brew "redis" # in-memory key-value store
+# brew "redis" # in-memory key/value store
 # brew "tile38" # their landing page animation is very good - geolocation data store, spatial index, and realtime geofence
 # brew "vitess" # replicated MySQL
 # also, see Porcupine checker on pkg.go.dev and MIT 6.5840
@@ -755,12 +1628,13 @@ brew "hashicorp/tap/nomad"
 # Data Engineering - Spark or Whatever
 # brew "flintrock" # launches a Spark cluster
 
+# Search
+# brew "meilisearch" # looks like a winner - ultra relevant, instant and typo-tolerant full-text search API
 
-
-# Data Engineering - Observability
+# Observability
 # brew "chronograf" # monitoring and visualization UI for the Telegraf, InfluxDB, Chronograf, Kapacitor (TICK) stack
 # brew "cortex" # long-term storage for Prometheus
-
+# brew "netdata" # super popular, 68k stars - useful tables and dashboards and diagnoses infrastructure problems with metrics, visualizations & alarms
 
 # Data Formats - JSON & YAML
 # Schema
@@ -826,7 +1700,7 @@ brew "grpcui" # like Postman for gRPC
 # brew "flatcc" # alternative to protocol buffers
 
 # Google Cloud
-brew "apib"    # api tool
+brew "apib" # api tool
 brew "berglas" # secrets manager
 brew "bigquery-emulator"
 brew "c7n" # very useful gcp/aws audit tool
@@ -838,6 +1712,7 @@ brew "cloudlist"
 brew "cloudprober" # sends monitoring probes and integrates with Prometheus and Grafana
 brew "firebase-cli"
 brew "fuego-firestore" # client for Firestore database
+brew "lexido" # uses Gemini's free API 
 # brew "gcsfuse" # mounts Google Cloud Storage as a file system
 
 brew "yatas" # audits gcp/aws audit
@@ -881,6 +1756,13 @@ brew "s3cmd"
 # brew "credstash" # manages credentials in KMS
 # brew "iamy" # imports and exports access policies (IAM)
 # brew "parliament" # by Duo - checks access policies (IAM)
+# localstack
+# Fully functional local AWS cloud stack
+# https://localstack.cloud/
+
+# moto
+# Mock AWS services
+# http://getmoto.org/
 
 # Modern App Hosting Platforms
 brew "convox" # by former Heroku engineers - no nixpacks or even buildpacks but can deploy apps like Rails to Kubernetes
@@ -916,28 +1798,29 @@ brew "awsdac" # by Amazon
 brew "d2" # by Terrastruct 
 brew "manim"
 # brew "inframap" # reads tfstate or HCL, diagram is ugly
+# brew "netlistsvg" # it's only for electronics
 # also, cloud mapper by Duo
 # also, diagrams on pypi
 # also, mermaid on npm
 
-
-# Images 
-brew "agg"  # converts Asciicast to GIF
-brew "asciinema" # creates Asciicast file
+# Image Processing
+brew "agg"  # converts an Asciicast screen recording video to GIF
+brew "asciinema" # creates an Asciicast file
 brew "caire" # resizes an image in an advanced content-aware way
 brew "ffmpeg" # extracts an image from a video
 brew "gifify" # converts a screen recording to a GIF (shell script)
-brew "imagemagick"
-brew "vhs" # creates a GIF from your terminal session
+brew "gifski" # converts a video to a very high quality GIF (large file size, but good for Dribble)
+brew "iconsur" # creates a macOS app icon from an image
+brew "imagemagick" # image conversion
+brew "vhs" # creates a terminal session GIF
 brew "viu" # view high-resolution images in the terminal
-# brew "gifski" # creates highest-quality gifs (maybe at too large of a file size though)
-# brew "iconsur" creates a macOS app icon from an image
 # brew "imageoptim" # can convert a gif to video
 # brew "imgdiet" # optimizes an image using libvips
 # brew "imgdiff" # compares images
 # brew "imgproxy" # resizes and converts images on the fly
 # brew "timg" # terminal image viewer
 # brew "triangle" # converts an image to computer-generated art using Delaunay triangulation
+
 
 # Networking - Application
 
@@ -967,6 +1850,10 @@ brew "tygo" # converts a Go JSON API to TypeScript type declarations for use in 
 brew "wiremock-standalone"
 # brew "create-api" # converts an OpenAPI specification to Swift client code
 
+# openapi-generator
+# Generate clients, server & docs from an OpenAPI spec (v2, v3)
+# https://openapi-generator.tech/
+
 # HTTP - API Client
 brew "curl"
 brew "curlie" # curl alternative, httpie-like
@@ -979,6 +1866,7 @@ brew "muffet" # checks for broken links
 brew "webify" # turns a shell command into a web service
 cask "postman"
 cask "rapidapi" # can generate client code
+# brew "k6" # by Grafana - popular load testing tool
 
 # HTTP - Auth
 
@@ -996,10 +1884,30 @@ brew "cotp" # generates two-step verification codes
 brew "dalfox" # XSS scanner
 brew "flawz" # browses security vulnerabilities (CVEs)
 brew "gimme-aws-creds" # retrieves AWS credentials from Okta
+# brew "auth0" # must tap auth0/auth0-cli
 # brew "ffuf" # fast web fuzzer
 # brew "findomain" # fastest complete solution for finding domains
 # brew "google-authenticator-libpam" by Google - PAM module for two-factor authentication
 # brew "httpx" # by Project Discovery - HTTP scan tool
+# brew "openfga" # nice open-source website - flexible authorization/permission engine 
+
+
+
+# oath-toolkit
+# Tools for one-time password authentication systems
+# https://www.nongnu.org/oath-toolkit/
+
+# oauth2_proxy
+# Reverse proxy for authenticating users via OAuth 2 providers
+# https://oauth2-proxy.github.io/oauth2-proxy/
+
+# oauth2c
+# User-friendly CLI for OAuth2
+# https://github.com/cloudentity/oauth2c
+
+# oauth2l
+# Simple CLI for interacting with Google oauth tokens
+# https://github.com/google/oauth2l
 
 # HTTP - Webhooks
 brew "apprise" # very useful for sending notifications and triggering webhooks to popular notification services
@@ -1023,18 +1931,28 @@ brew "easy-rsa" # builds and manages a PKI CA
 brew "fetch-crl" # downloads a certificate revocation list from a remote server
 brew "gimmecert" # quickly issues server and client certificates using a locally-generated CA
 brew "gnutls"
+brew "minica" # simple certificate authority
 brew "openssl"
 brew "tlsx" # scans for TLS vulnerabilities
 brew "xpipe" # splits input and feeds it to another command - has use cases for certificates and more
 brew "zlint" # certificate checker, see also zcertificate and zschema
 # brew "jsign" # signs a Windows executable, installer, or script, using a key from cloud services or other sources
+# lego
+# Let's Encrypt client and ACME library
+# https://go-acme.github.io/lego/
+
+# mkcert
+# Simple tool to make locally trusted development certificates
+# https://github.com/FiloSottile/mkcert
 
 # VPN
 brew "bore-cli" # only 400 lines of code
 brew "boringtun"
+brew "openconnect" # client for Palo Alto, Cisco, Juniper, and Fortinet VPNs
 brew "vpn-slice"
 cask "ngrok"
 cask "tailscale"
+
 # brew "wireguard-go"
 # brew "wireguard-tools"
 
@@ -1067,6 +1985,7 @@ brew "lft" # advanced traceroute
 brew "mapcidr" # by Project Discovery - tool for subnet ranges
 brew "mtr"
 brew "netaddr"
+brew "netmask"
 brew "nexttrace" # visual route tracking
 brew "range2cidr" # by IPinfo 
 brew "sipcalc" # advanced subnet calculator - looks really useful
@@ -1100,7 +2019,8 @@ cask "wireshark"
 # zsh
 brew "argc"
 brew "asdf"
-brew "pure"
+brew "chalk-cli" # by Sindre Sorhus - colorizes teminal text
+brew "pure" # by Sindre Sorhus 
 brew "zsh"
 brew "zsh-autocomplete"
 brew "zsh-autopair"
@@ -1108,16 +2028,19 @@ brew "zsh-autosuggestions"
 brew "zsh-syntax-highlighting"
 # brew "clitest"
 # brew "gum" tool for glamorous shell scripts
+# brew "m-cli" # macOS shell scripts
+# brew "nushell" # very advanced shell
+# brew "powershell" # advanced but bloated
 # brew "shellcheck" 
-# brew "xonsh"
+# brew "xonsh" # advanced shell
 # brew "xxh" # tool to ssh and bring your shell - useful, assuming it works
-# brew "zx"
+# brew "zx" # new shell
+# Also, ora on npm by Sindre Sorhus - elegant terminal progress spinner
 
 # Utilities
 brew "align"
 brew "as-tree"
 brew "bat"
-brew "chalk-cli" # colorizes teminal text
 brew "choose-rust" # cut and awk alternative
 brew "comby" # sed replacement, matches with syntax instead of regexes
 brew "dasht" # searches offline documentation aggregated by Dash
@@ -1155,6 +2078,9 @@ cask "raycast" # can search DevDocs using an extension
 # brew "tuc" # cut replacement
 # brew "watchman" # by Facebook - watches files and triggers actions
 
+# nq
+# Unix command-line queue utility
+# https://github.com/leahneukirchen/nq
 
 # Programming
 brew "corepack"
@@ -1163,6 +2089,9 @@ brew "node@20"
 # brew "eslint"
 # brew "flamebearer" # creates a flamegraph for a JavaScript app from a terminal, has web version
 # brew "prettier"
+# brew "stylelint"
+# Also, np on npm by Sindre Sorhus - a better npm publish
+# xo on npm by Sindre Sorhus - pre-configured ESLint
 
 brew "go"
 brew "goreleaser"
@@ -1190,6 +2119,7 @@ brew "python"
 # brew "chisel" # by Facebook - collection of LLDB commands
 # brew "carthage" # 
 # brew "cocoapods" # 
+# brew "create-dmg" # by Sindre Sorhus
 # brew "fastlane"
 # brew "flank" # Massively parallel test runner for Firebase Test Lab
 # brew "folderify # generates pixel-perfect custom macOS folder icons
@@ -1201,6 +2131,8 @@ brew "python"
 # brew "xcodegen"
 # brew "xcodes"
 # brew "xcprojectlint"
+# Also, see https://github.com/sindresorhus/quick-look-plugins
+
 
 # Audio
 cask "blackhole-2ch"
@@ -1306,9 +2238,12 @@ vscode "styled-components.vscode-styled-components"
 # brew "eatmemory" # stress test
 # brew "ffind" # friendlier find
 # brew "forcecli" # command-line interface to Force.com
+# brew "go-task" # alternative to make
 # brew "historian" # manages bash history in a SQLite database
 # brew "hr" # horizontal rule
 # brew "istioctl"
+# brew "mage" # alternative to make that works on all platforms because it relies on Go functions instead of shell scripts
+# brew "metabase" # business intelligence report server
 # brew "tunnel" # ngrok alternative
 # brew "telnet" # needed for eve-ng or gns3
 # brew "tippecanoe" # creates pretty map vector tileset visualizations from GeoJSON, FlatGeobuf, or CSV

@@ -1,3 +1,6 @@
+[core]
+	excludesfile = /Users/steph/.gitignore
+
 [credential "https://github.com"]
 	helper = !gh auth git-credential
 

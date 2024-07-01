@@ -464,6 +464,24 @@ brew "vsh" # community-created shell for Vault
 # brew "gopass-jsonapi" # Gopass browser bindings
 # brew "trufflehog" # great tool - scans for secrets in CI logs, code comments, Git history, and more
 
+# pass
+# Password manager
+# https://www.passwordstore.org/
+
+# pass-git-helper
+# Git credential helper interfacing with pass
+# https://github.com/languitar/pass-git-helper
+
+# pass-import
+# Pass extension for importing data from most existing password managers
+# https://github.com/roddhjav/pass-import
+
+# pass-otp
+# Pass extension for managing one-time-password tokens
+# https://github.com/tadfisher/pass-otp
+
+
+
 # Docker Containers
 brew "apko" # creates an image from an Alpine APK, without a Dockerfile
 brew "cog" # by Replicate - creates containers for machine learning without a Dockerfile
@@ -1517,6 +1535,159 @@ brew "vespa-cli" # by Yahoo - has a guide to deploy machine learning to Kubernet
 # SQL-like frontend to PCAP files
 # https://www.dns-oarc.net/tools/packetq
 
+pawk
+Python line processor (like AWK)
+https://github.com/alecthomas/pawk
+
+percol
+Interactive grep tool
+https://github.com/mooz/percol
+
+
+
+percona-toolkit
+Command-line tools for MySQL, MariaDB and system tasks
+https://www.percona.com/software/percona-toolkit/
+
+percona-xtrabackup
+Open source hot backup tool for InnoDB and XtraDB databases
+https://www.percona.com/software/mysql-database/percona-xtrabackup
+
+phrase-cli
+Tool to interact with the Phrase API
+https://phrase.com/
+
+pip-audit
+Audits Python environments and dependency trees for known vulnerabilities
+https://pypi.org/project/pip-audit/
+
+pip-tools
+Locking and sync for Pip requirements files
+https://pip-tools.readthedocs.io
+
+pipdeptree
+CLI to display dependency tree of the installed Python packages
+https://github.com/tox-dev/pipdeptree
+
+pivit
+Sign and verify data using hardware (Yubikey) backed x509 certificates (PIV)
+https://github.com/cashapp/pivit
+
+pixie
+Observability tool for Kubernetes applications
+https://px.dev/
+
+pkg-config-wrapper
+Easier way to include C code in your Go program
+https://github.com/influxdata/pkg-config
+
+platypus
+Create macOS applications from {Perl,Ruby,sh,Python} scripts
+https://sveinbjorn.org/platypus
+
+pluto
+CLI tool to help discover deprecated apiVersions in Kubernetes
+https://fairwinds.com
+
+pocketbase
+Open source backend for your next project in 1 file
+https://pocketbase.io/
+
+policy_sentry
+Generate locked-down AWS IAM Policies
+https://policy-sentry.readthedocs.io/en/latest/
+
+ponysay
+Cowsay but with ponies
+https://github.com/erkin/ponysay/
+
+popeye
+Kubernetes cluster resource sanitizer
+https://popeyecli.io
+
+postgraphile
+GraphQL schema created by reflection over a PostgreSQL schema
+https://www.graphile.org/postgraphile/
+
+pre-commit
+Framework for managing multi-language Git pre-commit hooks
+https://pre-commit.com/
+
+principalmapper
+Quickly evaluate IAM permissions in AWS
+https://github.com/nccgroup/PMapper
+
+promptfoo
+Test your LLM app locally
+https://promptfoo.dev/
+
+promtail
+Log agent for Loki
+https://grafana.com/loki
+
+protoc-gen-go
+Go support for Google's protocol buffers
+https://github.com/protocolbuffers/protobuf-go
+
+protoc-gen-go-grpc
+Protoc plugin that generates code for gRPC-Go clients
+https://github.com/grpc/grpc-go
+
+protoc-gen-gogo
+Protocol Buffers for Go with Gadgets
+https://github.com/gogo/protobuf
+
+protoc-gen-gogofaster
+Protocol Buffers for Go with Gadgets
+https://github.com/gogo/protobuf
+
+protoc-gen-grpc-web
+Protoc plugin that generates code for gRPC-Web clients
+https://github.com/grpc/grpc-web
+
+protoc-gen-js
+Protocol buffers JavaScript generator plugin
+https://github.com/protocolbuffers/protobuf-javascript
+
+protolint
+Pluggable linter and fixer to enforce Protocol Buffer style and conventions
+https://github.com/yoheimuta/protolint
+
+prototool
+Your Swiss Army Knife for Protocol Buffers
+https://github.com/uber/prototool
+
+prowler
+Tool for cloud security assessments, audits, incident response, and more
+https://prowler.com/
+
+psgrep
+Shortcut for the 'ps aux | grep' idiom
+https://github.com/jvz/psgrep
+
+pstree
+Show ps output as a tree
+https://github.com/FredHucht/pstree
+
+ptpython
+Advanced Python REPL
+https://github.com/prompt-toolkit/ptpython
+
+pulsarctl
+CLI for Apache Pulsar written in Go
+https://streamnative.io/
+
+pumba
+Chaos testing tool for Docker
+https://github.com/alexei-led/pumba
+
+pup
+Parse HTML at the command-line
+https://github.com/EricChiang/pup
+
+pwncat
+Netcat with FW/IDS/IPS evasion, self-inject-, bind- and reverse shell
+https://pwncat.org
 
 
 
@@ -1537,6 +1708,117 @@ brew "vespa-cli" # by Yahoo - has a guide to deploy machine learning to Kubernet
 
 
 
+talisman
+Tool to detect and prevent secrets from getting checked in
+https://thoughtworks.github.io/talisman/
+
+tanka
+Flexible, reusable and concise configuration for Kubernetes using Jsonnet
+https://tanka.dev
+
+
+taplo
+TOML toolkit written in Rust
+https://taplo.tamasfe.dev
+
+tbls
+CI-Friendly tool for document a database
+https://github.com/k1LoW/tbls
+
+tea
+Command-line tool to interact with Gitea servers
+https://gitea.com/gitea/tea
+
+teleport
+Modern SSH server for teams managing distributed infrastructure
+https://goteleport.com/
+
+teller
+Secrets management tool for developers
+https://github.com/tellerops/teller
+
+temporal
+Command-line interface for running and interacting with Temporal Server and UI
+https://temporal.io/
+
+
+testkube
+Kubernetes-native framework for test definition and execution
+https://testkube.io
+
+testssl
+Tool which checks for the support of TLS/SSL ciphers and flaws
+https://testssl.sh/
+
+tetra
+Tetragon CLI to observe, manage and troubleshoot Tetragon instances
+https://github.com/cilium/tetragon
+
+textql
+Executes SQL across TSV and CSV files
+https://github.com/dinedal/textql
+
+textract
+Extract text from various different types of files
+https://textract.readthedocs.io/
+
+thanos
+Highly available Prometheus setup with long term storage capabilities
+https://thanos.io
+
+theharvester
+Gather materials from public sources (for pen testers)
+https://www.edge-security.com/theharvester.php
+
+tm
+TriggerMesh CLI to work with knative objects
+https://triggermesh.com
+
+tmt
+Test Management Tool
+https://tmt.readthedocs.io
+
+toast
+Tool for running tasks in containers
+https://github.com/stepchowfun/toast
+
+toml-test
+Language agnostic test suite for TOML parsers
+https://github.com/burntsushi/toml-test
+
+
+
+touca
+Open source tool for regression testing complex software workflows
+https://github.com/trytouca/trytouca/tree/main/sdk/python
+
+toxiproxy
+TCP proxy to simulate network & system conditions for chaos & resiliency testing
+https://github.com/shopify/toxiproxy
+
+traildb
+Blazingly-fast database for log-structured data
+https://traildb.io/
+
+trailscraper
+Tool to get valuable information out of AWS CloudTrail
+https://github.com/flosell/trailscraper
+
+transcrypt
+Configure transparent encryption of files in a Git repo
+https://github.com/elasticdog/transcrypt
+
+travis
+Command-line client for Travis CI
+https://github.com/travis-ci/travis.rb/
+
+tremor-runtime
+Early-stage event processing system for unstructured data
+https://www.tremor.rs/
+
+trino
+Distributed SQL query engine for big data
+https://trino.io
 
 
 
@@ -1635,6 +1917,7 @@ brew "hashicorp/tap/nomad"
 # brew "chronograf" # monitoring and visualization UI for the Telegraf, InfluxDB, Chronograf, Kapacitor (TICK) stack
 # brew "cortex" # long-term storage for Prometheus
 # brew "netdata" # super popular, 68k stars - useful tables and dashboards and diagnoses infrastructure problems with metrics, visualizations & alarms
+# brew "pint" # by Cloudflare - Prometheus rule linter/validator
 
 # Data Formats - JSON & YAML
 # Schema
@@ -1643,6 +1926,9 @@ brew "generate-json-schema" # converts a JSON file into a JSON Schema
 brew "json2ts" # converts JSON Schema to TypeScript type declarations
 brew "yamale" # schema validator
 # brew "jsonschema2pojo" # converts a JSON or YAML Schema to Java classes, has a web version
+# brew "plank" # by Pinterest - generates model objects from JSON schemas
+# brew "quicktype" # generates types and converters from JSON, JSON Schema, and GraphQL
+
 
 # Template 
 brew "jrsonnet" # Jsonnet template language
@@ -1891,17 +2177,7 @@ brew "gimme-aws-creds" # retrieves AWS credentials from Okta
 # brew "httpx" # by Project Discovery - HTTP scan tool
 # brew "openfga" # nice open-source website - flexible authorization/permission engine 
 
-# pam-reattach
-# PAM module for reattaching to the user's GUI (Aqua) session
-# https://github.com/fabianishere/pam_reattach
 
-# pam-u2f
-# Provides an easy way to use U2F-compliant authenticators with PAM
-# https://developers.yubico.com/pam-u2f/
-
-# pam_yubico
-# Yubico pluggable authentication module
-# https://developers.yubico.com/yubico-pam/
 
 # oath-toolkit
 # Tools for one-time password authentication systems
@@ -1918,6 +2194,22 @@ brew "gimme-aws-creds" # retrieves AWS credentials from Okta
 # oauth2l
 # Simple CLI for interacting with Google oauth tokens
 # https://github.com/google/oauth2l
+
+# pam-reattach
+# PAM module for reattaching to the user's GUI (Aqua) session
+# https://github.com/fabianishere/pam_reattach
+
+# pam-u2f
+# Provides an easy way to use U2F-compliant authenticators with PAM
+# https://developers.yubico.com/pam-u2f/
+
+# pam_yubico
+# Yubico pluggable authentication module
+# https://developers.yubico.com/yubico-pam/
+
+# totp-cli
+# Authy/Google Authenticator like TOTP CLI tool written in Go
+# https://yitsushi.github.io/totp-cli/
 
 # HTTP - Webhooks
 brew "apprise" # very useful for sending notifications and triggering webhooks to popular notification services

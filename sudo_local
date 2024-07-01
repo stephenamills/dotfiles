@@ -1,2 +1,0 @@
-# The following line enables Touch ID for sudo
-auth sufficient pam_tid.so

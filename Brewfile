@@ -1891,7 +1891,17 @@ brew "gimme-aws-creds" # retrieves AWS credentials from Okta
 # brew "httpx" # by Project Discovery - HTTP scan tool
 # brew "openfga" # nice open-source website - flexible authorization/permission engine 
 
+# pam-reattach
+# PAM module for reattaching to the user's GUI (Aqua) session
+# https://github.com/fabianishere/pam_reattach
 
+# pam-u2f
+# Provides an easy way to use U2F-compliant authenticators with PAM
+# https://developers.yubico.com/pam-u2f/
+
+# pam_yubico
+# Yubico pluggable authentication module
+# https://developers.yubico.com/yubico-pam/
 
 # oath-toolkit
 # Tools for one-time password authentication systems

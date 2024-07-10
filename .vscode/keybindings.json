@@ -1,67 +1,56 @@
 // Place your key bindings in this file to override the defaults
 [
-    {
-        "key": "ctrl+tab",
-        "command": "workbench.action.nextEditor"
-    },
-    {
-        "key": "ctrl+shift+tab",
-        "command": "workbench.action.previousEditor"
-    },
-    {
-        "key": "cmd+1",
-        "command": "workbench.action.openEditorAtIndex1"
-    },
-    {
-        "key": "cmd+2",
-        "command": "workbench.action.openEditorAtIndex2"
-    },
-    {
-        "key": "cmd+3",
-        "command": "workbench.action.openEditorAtIndex3"
-    },
-    {
-        "key": "cmd+4",
-        "command": "workbench.action.openEditorAtIndex4"
-    },
-    {
-        "key": "cmd+5",
-        "command": "workbench.action.openEditorAtIndex5"
-    },
-    {
-        "key": "cmd+6",
-        "command": "workbench.action.openEditorAtIndex6"
-    },
-    {
-        "key": "cmd+7",
-        "command": "workbench.action.openEditorAtIndex7"
-    },
-    {
-        "key": "cmd+8",
-        "command": "workbench.action.openEditorAtIndex8"
-    },
-    {
-        "key": "cmd+9",
-        "command": "workbench.action.openEditorAtIndex9"
-    },
-    {
-        "key": "cmd+j",
-        "command": "workbench.action.terminal.toggleTerminal"
-    },
-    {
-        "key": "ctrl+enter",
-        "command": "extension.multiCommand.execute",
-        "args": {
-            "sequence": [
-                "workbench.action.terminal.focus",
-                {
-                    "command": "workbench.action.terminal.sendSequence",
-                    "args": {
-                        "text": "\u000Dgitc\u000D"
-                    }
-                }
-            ]
-        },
-        "when": "editorTextFocus"
-    }
+  {
+    "key": "ctrl+tab",
+    "command": "workbench.action.nextEditor"
+  },
+  {
+    "key": "ctrl+shift+tab",
+    "command": "workbench.action.previousEditor"
+  },
+  {
+    "key": "cmd+1",
+    "command": "workbench.action.openEditorAtIndex1"
+  },
+  {
+    "key": "cmd+2",
+    "command": "workbench.action.openEditorAtIndex2"
+  },
+  {
+    "key": "cmd+3",
+    "command": "workbench.action.openEditorAtIndex3"
+  },
+  {
+    "key": "cmd+4",
+    "command": "workbench.action.openEditorAtIndex4"
+  },
+  {
+    "key": "cmd+5",
+    "command": "workbench.action.openEditorAtIndex5"
+  },
+  {
+    "key": "cmd+6",
+    "command": "workbench.action.openEditorAtIndex6"
+  },
+  {
+    "key": "cmd+7",
+    "command": "workbench.action.openEditorAtIndex7"
+  },
+  {
+    "key": "cmd+8",
+    "command": "workbench.action.openEditorAtIndex8"
+  },
+  {
+    "key": "cmd+9",
+    "command": "workbench.action.openEditorAtIndex9"
+  },
+  {
+    "key": "cmd+j",
+    "command": "workbench.action.terminal.toggleTerminal"
+  },
+  {
+    "key": "ctrl+enter",
+    "command": "extension.multiCommand.execute",
+    "when": "editorTextFocus"
+  }
 ]

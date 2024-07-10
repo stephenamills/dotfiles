@@ -256,7 +256,7 @@
   "window.autoDetectColorScheme": true,
   "window.commandCenter": false,
   "window.title": "${rootName}",
-  "window.titleBarStyle": "custom",
+  "window.titleBarStyle": "native",
   "workbench.colorTheme": "Visual Studio Light",
   "workbench.editor.closeOnFileDelete": true,
   "workbench.editor.highlightModifiedTabs": true,

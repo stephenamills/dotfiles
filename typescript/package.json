@@ -1,0 +1,13 @@
+{
+  "name": "typescript",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "prettier": "@epic-web/config/prettier",
+  "dependencies": {
+    "@epic-web/config": "^1.11.2"
+  }
+}

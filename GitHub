@@ -418,6 +418,7 @@ https://github.com/alexandrtovmach/react-figma-plugin-ds
 https://github.com/Underhive/visual-react-editor
 
 ESlint
+https://github.com/wesbos/eslint-config-wesbos
 https://github.com/connorrose/dilettantes-guide-to-linting/
 https://github.com/cobiwave/my-settings/
 https://github.com/antfu/eslint-config
@@ -714,12 +715,14 @@ https://github.com/microsoft/vscode-generator-code
 https://github.com/redhat-developer/vscode-extension-tester # tests an extension using Selenium WebDriver
 https://github.com/microsoft/vscode-docs-authoring # edits Markdown for docs.microsoft.com
 https://github.com/antfu/starter-vscode
+https://github.com/palashmon/awesome-vscode-settings
 https://github.com/microsoft/vscode-extension-telemetry
 https://github.com/microsoft/vscode-test-cli/
 https://github.com/mjbvz/vscode-markdown-mermaid
 https://github.com/githru/githru-vscode-ext # detailed Git visualization
 https://github.com/microsoft/vscode-edge-devtools # uses Edge browser devtools from within the editor
 https://github.com/microsoft/vscode-python-tools-extension-template
+https://github.com/siddharthkp/vscode-settings/ # good config
 https://github.com/antfu/vscode-settings
-https://github.com/wesbos/dotfiles/
+https://github.com/wesbos/dotfiles/ # nice hard links technique
 https://github.com/AlbertoBasalo/dotfiles/

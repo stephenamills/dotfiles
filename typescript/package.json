@@ -1,13 +1,29 @@
 {
-  "name": "typescript",
-  "version": "1.0.0",
-  "main": "index.js",
+  "name": "eslint-demo",
+  "private": true,
+  "description": "I have no idea of what I'm setting up.",
   "scripts": {
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "prettier": "prettier --check \"**/*.{js,jsx,ts,tsx}\"",
+    "prettier:fix": "prettier --write \"**/*.{js,jsx,ts,tsx}\"",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
-  "prettier": "@epic-web/config/prettier",
-  "dependencies": {
-    "@epic-web/config": "^1.11.2"
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.12.0",
+    "@typescript-eslint/parser": "^6.12.0",
+    "eslint": "8.54.0",
+    "eslint-config-next": "14.0.3",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-config-react-app": "^7.0.1",
+    "eslint-plugin-import": "^2.29.0",
+    "eslint-plugin-react": "7.33.2",
+    "eslint-plugin-storybook": "^0.6.15",
+    "eslint-plugin-tailwindcss": "^3.13.0",
+    "prettier": "3.0.3",
+    "prettier-plugin-tailwindcss": "^0.5.7",
+    "tailwindcss": "^3.3.5",
+    "tsc": "^2.0.4",
+    "typescript": "5.4.5"
   }
 }

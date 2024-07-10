@@ -1,7 +1,7 @@
 {
-  "name": "my-typescript-eslint-and-prettier-configuration",
+  "name": "stephen-project-template",
   "private": true,
-  "description": "My typescript eslint and prettier configuration",
+  "description": "Stephen's project template",
   "scripts": {
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "lint:fix": "eslint . --fix",

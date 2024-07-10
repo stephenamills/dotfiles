@@ -4,14 +4,11 @@
   "description": "Stephen's project template",
   "scripts": {
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "lint:fix": "eslint . --fix",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore",
     "prettier:fix": "prettier --write \"**/*.{js,jsx,ts,tsx}\"",
     "prettier": "prettier --check \"**/*.{js,jsx,ts,tsx}\"",
-    "setup-eslint": "npm install -D eslint eslint-config-prettier eslint-plugin-tailwindcss @eslint/js @types/eslint__js typescript typescript-eslint",
     "setup-prettier": "npm install -D prettier prettier-plugin-tailwindcss",
     "setup-tailwind": "npm install -D tailwindcss",
-    "setup-all": "npm run setup-eslint && npm run setup-prettier && npm run setup-tailwind"
+    "setup-all": "setup-prettier && npm run setup-tailwind"
   },
   "devDependencies": {}
 }

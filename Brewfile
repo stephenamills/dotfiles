@@ -2763,16 +2763,17 @@ cask "raycast" # can search DevDocs using an extension
 brew "corepack"
 brew "deno"
 brew "node@20"
+# eslint
+# eslint-config-prettier
+
 # angular-eslint
 # antfu-eslint-config
 # biome
-# eslint
 # eslint-config-airbnb
 # eslint-config-eslint
 # eslint-config-fbjs
 # eslint-config-google
 # eslint-config-hardcore
-# eslint-config-prettier
 # eslint-config-react-app
 # eslint-config-standard
 # eslint-config-wesbos
@@ -2784,9 +2785,10 @@ brew "node@20"
 # eslint-plugin-graphql
 # eslint-plugin-import
 # eslint-plugin-jest
+# eslint-plugin-jsx-a11y
 # eslint-plugin-mdx
 # eslint-plugin-perfectionist
-# eslint-plugin-prettier
+
 # eslint-plugin-react
 # eslint-plugin-react-hooks
 # eslint-plugin-react-native
@@ -2952,6 +2954,7 @@ vscode "rikurouvila.typehole"
 vscode "ryuta46.multi-command"
 vscode "styled-components.vscode-styled-components"
 vscode "stylelint.vscode-stylelint"
+vscode "unifiedjs.vscode-mdx"
 vscode "YoavBls.pretty-ts-errors"
 # tap "xo/xo"
 # brew "apachetop"

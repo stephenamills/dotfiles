@@ -713,6 +713,7 @@ Ansible
 Salesforce
 
 Visual Studio Code
+https://github.com/ryuta46/vscode-multi-command # most useful extension
 https://github.com/hediet/vscode-debug-visualizer # visualizes data during debugging
 https://github.com/microsoft/vscode-extension-samples # by Microsoft - extension samples
 https://github.com/mattpocock/ts-error-translator # turns TypeScripts errors into plain English
@@ -720,7 +721,6 @@ https://github.com/microsoft/vscode-generator-code
 https://github.com/redhat-developer/vscode-extension-tester # tests an extension using Selenium WebDriver
 https://github.com/microsoft/vscode-docs-authoring # edits Markdown for docs.microsoft.com
 https://github.com/antfu/starter-vscode
-https://github.com/palashmon/awesome-vscode-settings
 https://github.com/microsoft/vscode-extension-telemetry
 https://github.com/microsoft/vscode-test-cli/
 https://github.com/mjbvz/vscode-markdown-mermaid
@@ -731,3 +731,4 @@ https://github.com/siddharthkp/vscode-settings/ # good config
 https://github.com/antfu/vscode-settings
 https://github.com/wesbos/dotfiles/ # nice hard links technique
 https://github.com/AlbertoBasalo/dotfiles/
+https://github.com/palashmon/awesome-vscode-settings

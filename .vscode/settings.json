@@ -2,33 +2,12 @@
   "[astro]": {
     "editor.defaultFormatter": "astro-build.astro-vscode"
   },
-  "[css]": {
-    "editor.defaultFormatter": "stylelint.vscode-stylelint"
-  },
-  "[html]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[javascriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[json]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[jsonc]": {
-    "editor.defaultFormatter": "vscode.json-language-features"
-  },
-  "[markdown]": {
+  "[css][graphql][html][javascript][javascriptreact][json][jsonc][jsonl][markdown][mdx][properties][source.css.styled][tailwindcss][toml][typescript][typescriptreact][vue][vue-html][yaml]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[shellscript]": {
     "editor.defaultFormatter": "mkhl.shfmt",
     "editor.formatOnSave": false
-  },
-  "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "breadcrumbs.enabled": false,
   "editor.bracketPairColorization.independentColorPoolPerBracketType": false,
@@ -163,9 +142,6 @@
   "javascript.inlayHints.variableTypes.enabled": true,
   "javascript.updateImportsOnFileMove.enabled": "always",
   "prettier.enable": true,
-  "prettier.printWidth": 120,
-  "prettier.semi": false,
-  "prettier.singleQuote": true,
   "search.exclude": {
     "**/*.snap": true,
     "**/*.svg": true,

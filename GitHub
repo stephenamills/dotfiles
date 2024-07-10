@@ -166,6 +166,7 @@ https://github.com/weijunext/landing-page-boilerplate
 https://github.com/manulthanura/Positivus
 https://github.com/kisbalazspatrik/nextjs-saas-landing
 https://github.com/ricichien/nextjs-petshop # cute pet shop with some personality
+https://github.com/T-Jarwan/nextjs-metaversus # nice
 https://github.com/revoltchat/revolt.chat # product
 https://github.com/firecamp-dev/website
 https://github.com/saas-js/saas-ui-nextjs-landing-page
@@ -318,6 +319,7 @@ https://github.com/adrianhajdin/nike_landing_page # pretty badges
 https://badgen.net # creates badges
 
 Portfolios
+https://github.com/rafaelconde/rafaelconde # unique
 https://github.com/destefanis/gatsby-portfolio # great
 https://github.com/warronbebster/bwebsite
 https://github.com/feimosi/baguetteBox.js
@@ -386,6 +388,7 @@ https://github.com/smit3949/codeconnect-frontend/ # seems simple
 https://github.com/untitled-team-101/whiteboard # seems simple (I guess)
 https://github.com/cracker0dks/whiteboard/ # seems simple
 https://github.com/QuiiBz/ogstudio # only 76 commits so maybe simple
+https://github.com/geekreflex/xoord # not simple but kinda cool
 https://github.com/gns3/gns3-web-ui
 https://github.com/pnetlab/pnetlab_main
 https://github.com/dainok/unetlab
@@ -585,7 +588,54 @@ https://github.com/jackiecorn/figma-plugin-drag-and-drop
 https://github.com/phamfoo/Solid
 https://github.com/react-figma/figma-ui-components
 
+Framer
+https://github.com/LeMill-Vycta/Factory3d
+https://github.com/franciscoamado/OpenPeeps.framerfx
+https://github.com/triozer/framer-toolbox # plugin toolbox
+https://github.com/sonnylazuardi/framer-sites-figma-plugin # Figma plugin functionality but in a Framer site
+https://github.com/stefanciprian/framer-kit
+https://github.com/junhoyeo/framer-scripts
+https://github.com/alexjedi/magnetic-wrapper
+https://github.com/Singh-Shivani/3D-Animation-UI
+https://github.com/atharvapatil/fake-faces
+https://github.com/anythingcodes/canvas-framer
+https://github.com/clearlysid/framer-rss
+https://github.com/Patrick-web/Portfolio/tree/main
+https://github.com/SanjayTamang/3D-DanceSwap
+https://github.com/Silmaril1on/Moria-clone # decent game
+https://github.com/podo/awesome-framer
+https://github.com/perrysmotors/copy-framer-code
+https://github.com/mamad-1999/Css-Generator-React
+https://github.com/tushgup/team-sol
+https://github.com/alexssh/react-hooks
+https://github.com/arshad-syed18/PixelThreads-3DProductStore # beautiful t-shirt
+https://github.com/borakilicoglu/react-motion-scene # could be useful for landing page images
+https://github.com/bromso/jonasbroms-www # decent landing page animations
+https://github.com/ChrisAbdo/Portfolio # carousel
+https://github.com/manju1807/Swiss-X # okay landing page animations
+https://github.com/Phenoo/Talentplus-interview # decent repeating animation
+https://github.com/Kinfe123/chacha # typography is horrible, otherwise it's okay
+https://github.com/ChrisAbdo/MotionVariants
+https://github.com/olivercederborg/olivercederborg.com
+https://github.com/bitttttten/mechanical-counter # counter made with framer motion
+https://github.com/indreklasn/react-framer-motion-examples # float animation
+https://github.com/X1-Il/Framer-cards # Tinder cards
+https://github.com/TomasSestak/framer-motion-scroll-to-hook # scrolls to top (useless but maybe basic)
+https://github.com/christianmurata/christianmurata-website # nice short resume page
+https://github.com/Alwaz/my-portfolio # the blog post grid layout is kind of nice
+https://github.com/ValentinDft/valentindft.fr # okay animations for a portfolio
+https://github.com/shivah12/Shinzo
+https://github.com/HarryHighPants/SpeedCardGame
+https://github.com/sami12344/Investa/
+https://github.com/PrathameshDhande22/Film-Fiesta-Web-App
+https://github.com/MiladSadeghi/notion-kanban-board # Trello
+https://github.com/chiragyadav2003/Portfolio-App # bad performance - might be a good idea to learn why
+https://github.com/ebenezerdon/react-contact-cards # bad design but nice fast filtering
+https://github.com/unllamas/nextjs-page-transitions-with-framer-motion # ecommerce (not good)
+
 Wordpress
+
+Terraform
 
 Ignition
 
@@ -646,9 +696,9 @@ https://github.com/rancher/elemental-toolkit
 https://github.com/iddocohen/vce_cloudinit
 https://github.com/exoscale/openbsd-cloud-init
 
-Terraform
-
 Ansible
+
+Salesforce
 
 Visual Studio Code
 https://github.com/hediet/vscode-debug-visualizer # visualizes data during debugging

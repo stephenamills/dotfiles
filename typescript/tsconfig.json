@@ -1,42 +1,33 @@
 {
-  "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
-    "allowJs": true,
-    "baseUrl": ".",
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "incremental": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
     "lib": [
       "dom",
-      "dom.iterable",
-      "esnext"
+      "es2015"
     ],
-    "module": "esnext",
-    "moduleResolution": "node",
-    "noEmit": true,
-    "noUncheckedIndexedAccess": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
-    "resolveJsonModule": true,
-    "skipLibCheck": true,
-    "strict": true,
+    "outDir": "./lib/cjs/",
+    "rootDir": "./src/",
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+    "noImplicitAny": true,
+    "module": "commonjs",
     "target": "es5",
-    "types": [
-      "node",
-    ]
+    "jsx": "react",
+    "allowJs": true,
+    "moduleResolution": "node"
   },
-  "display": "Next.js",
-  "exclude": [
-    "node_modules"
-  ],
   "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    "**/*.mjs",
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/types/**/*.d.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "lib"
+  ],
+  "typeRoots": [
+    "./node_modules/@types",
+    "./src"
   ]
 }

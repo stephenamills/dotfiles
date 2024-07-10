@@ -1,22 +1,42 @@
 {
-  "extends": [
-    "@epic-web/config/typescript"
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "allowJs": true,
+    "baseUrl": ".",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "incremental": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "module": "esnext",
+    "moduleResolution": "node",
+    "noEmit": true,
+    "noUncheckedIndexedAccess": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "es5",
+    "types": [
+      "node",
+    ]
+  },
+  "display": "Next.js",
+  "exclude": [
+    "node_modules"
   ],
   "include": [
-    "@epic-web/config/reset.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "**/*.js",
-    "**/*.jsx"
-  ],
-  "compilerOptions": {
-    "paths": {
-      "#app/*": [
-        "./app/*"
-      ],
-      "#tests/*": [
-        "./tests/*"
-      ]
-    }
-  }
+    "**/*.mjs",
+  ]
 }

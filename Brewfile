@@ -2764,7 +2764,21 @@ brew "corepack"
 brew "deno"
 brew "node@20"
 # eslint
+# typescript-eslint
+
+# eslint-config-next
 # eslint-config-prettier
+# eslint-config-react-app
+
+# eslint-plugin-import
+# eslint-plugin-storybook
+# eslint-plugin-tailwindcss
+
+# prettier
+# prettier-plugin-tailwindcss
+
+
+
 
 # angular-eslint
 # antfu-eslint-config
@@ -2774,7 +2788,6 @@ brew "node@20"
 # eslint-config-fbjs
 # eslint-config-google
 # eslint-config-hardcore
-# eslint-config-react-app
 # eslint-config-standard
 # eslint-config-wesbos
 # eslint-config-wikimedia
@@ -2783,12 +2796,11 @@ brew "node@20"
 # eslint-plugin-astro
 # eslint-plugin-github
 # eslint-plugin-graphql
-# eslint-plugin-import
+# eslint-plugin-html
 # eslint-plugin-jest
 # eslint-plugin-jsx-a11y
 # eslint-plugin-mdx
 # eslint-plugin-perfectionist
-
 # eslint-plugin-react
 # eslint-plugin-react-hooks
 # eslint-plugin-react-native
@@ -2798,25 +2810,21 @@ brew "node@20"
 # eslint-plugin-sonarjs
 # eslint-plugin-styled-components-a11y
 # eslint-plugin-svelte
-# eslint-plugin-tailwindcss
 # eslint-plugin-unicorn
 # eslint-plugin-vue
 # eslint-plugin-vue-scoped-css
 # eslint-stylistic
 # graphql-eslint
 # html-eslint
-# prettier-eslint
-# prettier-plugin-tailwindcss
 # shopify-eslint-plugin
 # standard
+# stylelint
 # typescript-eslint
 # vercel-style-guide
 
 # brew "flamebearer" # creates a flamegraph for a JavaScript app from a terminal, has web version
 # np on npm by Sindre Sorhus - a better npm publish
 
-# eslint-plugin-html
-# stylelint
 
 brew "go"
 brew "goreleaser" # publishes on Homebrew

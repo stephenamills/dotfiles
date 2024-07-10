@@ -417,6 +417,11 @@ https://github.com/nbw/figmex
 https://github.com/alexandrtovmach/react-figma-plugin-ds
 https://github.com/Underhive/visual-react-editor
 
+ESlint
+https://github.com/connorrose/Dilettantes-Guide-to-Linting/
+https://github.com/cobiwave/my-settings/
+https://github.com/antfu/eslint-config
+
 Figma
 https://github.com/brianlovin/figma-dominant-color-toolkit # generates a color palette from an image and beautifully colors your design
 https://github.com/mattdesl/figma-plugin-palette # generates a color palette from an image
@@ -715,3 +720,5 @@ https://github.com/githru/githru-vscode-ext # detailed Git visualization
 https://github.com/microsoft/vscode-edge-devtools # uses Edge browser devtools from within the editor
 https://github.com/microsoft/vscode-python-tools-extension-template
 https://github.com/antfu/vscode-settings
+https://github.com/wesbos/dotfiles/
+https://github.com/AlbertoBasalo/dotfiles/

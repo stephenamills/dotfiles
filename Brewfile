@@ -2763,21 +2763,12 @@ cask "raycast" # can search DevDocs using an extension
 brew "corepack"
 brew "deno"
 brew "node@20"
-# eslint
-# typescript-eslint
-
-# eslint-config-next
 # eslint-config-prettier
-# eslint-config-react-app
-
-# eslint-plugin-import
-# eslint-plugin-storybook
 # eslint-plugin-tailwindcss
+# typescript-eslint
 
 # prettier
 # prettier-plugin-tailwindcss
-
-
 
 
 # angular-eslint
@@ -2788,6 +2779,8 @@ brew "node@20"
 # eslint-config-fbjs
 # eslint-config-google
 # eslint-config-hardcore
+# eslint-config-next
+# eslint-config-react-app
 # eslint-config-standard
 # eslint-config-wesbos
 # eslint-config-wikimedia
@@ -2797,6 +2790,7 @@ brew "node@20"
 # eslint-plugin-github
 # eslint-plugin-graphql
 # eslint-plugin-html
+# eslint-plugin-import
 # eslint-plugin-jest
 # eslint-plugin-jsx-a11y
 # eslint-plugin-mdx
@@ -2808,18 +2802,17 @@ brew "node@20"
 # eslint-plugin-simple--import-sort
 # eslint-plugin-solid
 # eslint-plugin-sonarjs
+# eslint-plugin-storybook
 # eslint-plugin-styled-components-a11y
 # eslint-plugin-svelte
 # eslint-plugin-unicorn
 # eslint-plugin-vue
 # eslint-plugin-vue-scoped-css
-# eslint-stylistic
 # graphql-eslint
 # html-eslint
 # shopify-eslint-plugin
 # standard
 # stylelint
-# typescript-eslint
 # vercel-style-guide
 
 # brew "flamebearer" # creates a flamegraph for a JavaScript app from a terminal, has web version

@@ -116,6 +116,11 @@ ins() {
   done
 }
 
+# Lists dependencies of an npm package
+npmd() {
+  npm view $1 dependencies
+}
+
 # Signs a macOS app bundle
 prep() {
   sudo xattr -r -d com.apple.quarantine "$1"

@@ -33,12 +33,12 @@ brew "git-when-merged" # finds where a commit was merged
 # brew "commitlint" # probably intended to be installed locally per-project
 # brew "cycode-cli" # another boring scanner
 # brew "forgit" # interactive git commands in the terminal
-# brew "thefuck" # Corrects commands
-# brew "vcsh" # config manager based on git that manages subrepos
 # brew "git-flow" # extensions to follow Vincent Driessen's branching model
 # brew "git-flow-avh" # Peter Does's edition of git-flow
 # brew "git-sync" # clones a git repository and keeps it synchronized with the upstream
 # brew "gitup" # updates multiple git repositories at once
+# brew "thefuck" # Corrects commands
+# brew "vcsh" # config manager based on git that manages subrepos
 
 # GitHub 
 brew "gh"

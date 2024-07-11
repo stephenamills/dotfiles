@@ -60,6 +60,8 @@ brew "glab"
 
 # Hugging Face
 brew "huggingface-cli"
+# brew "cortexso" # ollama-like, drop-in local alternative to the OpenAI stack
+# brew "ollama" # downloads and runs a language model
 
 # gist
 # Command-line utility for uploading Gists
@@ -1439,9 +1441,7 @@ brew "vespa-cli" # by Yahoo - has a guide to deploy machine learning to Kubernet
 # JSON parser and visualization tool
 # https://github.com/ohler55/ojg
 
-# ollama
-# Create, run, and share large language models (LLMs)
-# https://ollama.com/
+
 
 # onefetch
 # Command-line Git information tool

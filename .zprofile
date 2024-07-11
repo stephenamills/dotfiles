@@ -1,7 +1,7 @@
 # Adjusts path for Homebrew based on architecture.
 [[ $(uname -m) == "arm64" ]] && eval "$(/opt/homebrew/bin/brew shellenv)" || eval "$(/usr/local/bin/brew shellenv)"
 
-export ARGC_COMPLETIONS_ROOT="$HOME/.argc-completions"
+export ARGC_COMPLETIONS_ROOT="$HOME/.argc"
 export ARGC_COMPLETIONS_PATH="$ARGC_COMPLETIONS_ROOT/completions"
 export JETBRAINS_PATH="$HOME/Library/Application Support/JetBrains/Toolbox/scripts"
 export LESSHISTFILE=- # Disables unsolicited creation of a history file by less in the home directory.

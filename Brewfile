@@ -680,6 +680,7 @@ brew "kops"
 brew "kubescape"
 brew "kustomize"
 brew "k9s"
+brew "litmusctl" # chaos engineering
 brew "okteto" # detects local file edits and automatically synchronizes changes to your Kubernetes remote development container
 brew "opa"
 brew "talhelper" # GitOps version controls your Talos configuration files and secrets using sops
@@ -2733,6 +2734,7 @@ brew "uni" # search unicode and emoji database
 brew "viddy" # better watch command
 brew "watch"
 brew "watchexec" # watches files and triggers actions
+brew "wcurl"
 brew "xe" # xargs replacement
 brew "xidel" # super useful for reading web pages I think
 cask "raycast" # can search DevDocs using an extension

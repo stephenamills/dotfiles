@@ -71,7 +71,7 @@ gcloud() {
 }
 
 # Commits changes to a Git repository with an optional extended message, accepts 'long' or 'l' as an argument for an extended commit message
-gitc() {
+gitp() {
   # Prompt for the commit message
   printf 'Enter commit message: '
   read msg

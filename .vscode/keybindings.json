@@ -50,7 +50,7 @@
   },
   {
     "key": "ctrl+enter",
-    "command": "extension.multiCommand.execute",
+    "command": "git.commitAll",
     "when": "editorTextFocus"
   }
 ]

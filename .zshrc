@@ -29,8 +29,8 @@ if type brew &>/dev/null; then
   source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
 
-# The .argc-completions folder must be linked to $HOME/.argc-completions
-if [ -d "$HOME/.argc-completions" ]; then
+# The .argc folder must be linked to $HOME/.argc
+if [ -d "$HOME/.argc" ]; then
   # Store the name of each completion shell script in an array
   argc_scripts=($(ls -p -1 "$ARGC_COMPLETIONS_ROOT/completions" | sed -n 's/\.sh$//p'))
   source <(argc --argc-completions zsh $argc_scripts)

@@ -3,8 +3,11 @@ This file is for links to relevant GitHub repos
 Astro - Landing Pages
 https://github.com/tailus-ui/atom-astro
 https://github.com/mickasmt/astro-nomy # features section has professional icons and text in an actually tasteful bento layout
+https://github.com/fleek-platform/website # professional cloud startup page with more products
+https://github.com/osvauld/landing # professional startup page but fewer products
+https://github.com/doseofted/prim-rpc/ # unique use of placement and empty space
+https://github.com/PanXProject/Xposure.github.io # great rainbow text underline and colorful dark mode button gradients
 https://github.com/cssninjastudio/krypton # crypto landing page with some good ideas
-https://github.com/osvauld/landing # nice beta request page
 https://github.com/mhyfritz/astro-landing-page # nice calm animating background
 https://github.com/unfolding-io/starfunnel # has the best video element and a nice gradient color scheme and a cute hilarious hamster theme
 https://github.com/t3-oss/create-t3-app # nice clean purple color scheme
@@ -13,6 +16,8 @@ https://github.com/tailgrids/play-astro # colors the top bar nicely
 https://github.com/cssninjastudio/fresh
 https://github.com/treefarmstudio/odyssey-theme/ # nice buttons in the hero section
 https://github.com/eliancodes/brutal # brutalism, just to see something different
+https://github.com/overlayeddev/overlayed
+https://github.com/fulldotdev/ui
 https://github.com/nixos/nixos-homepage
 https://github.com/surjithctly/astroship
 https://github.com/zeon-studio/astroplate
@@ -23,9 +28,14 @@ https://github.com/midudev/landing-tesla # more for physical product marketing
 Astro - Portfolio
 https://github.com/markhorn-dev/astro-sphere # great transition animation, almost as good as Orbstack's Jul 2024 landing page
 https://github.com/candidosales/landing-page-book-astro-svelte-tailwind # personable
+https://github.com/osnaider19/portafolio
+https://github.com/Armando284/portfolio-2023
+https://github.com/thevrus/vrus.vercel.app # background animation is interesting
 https://github.com/midudev/porfolio.dev
-https://github.com/sofidevO/portfolio-sofidev-garrux
+https://github.com/sofidevo/portfolio-sofidev-garrux
+https://github.com/shippy/shippy.github.io
 https://github.com/manuelernestog/astrofy
+https://github.com/fluentmoheshwar/portfolio-website/
 
 Astro - Blog
 https://github.com/danielcgilibert/blog-template # very nice table of contents highlighting on the left, and very readable design
@@ -37,7 +47,15 @@ https://github.com/flexdinesh/blogster
 https://github.com/markhorn-dev/astro-nano
 https://github.com/one-aalam/astro-ink
 https://github.com/satnaing/astro-paper
+https://github.com/microwebstacks/astro-big-doc
 https://github.com/chrismwilliams/astro-theme-cactus
+https://github.com/danielecammarata/astro-gaia
+https://github.com/sean-93/astro-basic-starter
+https://github.com/romanhauksson/academic-project-astro-template
+https://github.com/99points/astrojs-event-template
+
+Astro - Course Marketing
+https://github.com/numonu/ilovejs
 
 Astro - Applications & Dashboards
 https://github.com/paulrberg/prb-proxy-frontend # good design that quickly surfaces technical information
@@ -49,6 +67,7 @@ https://github.com/huggingface/chat-ui
 https://github.com/igorm84/spotify-astro-transitions
 https://github.com/cssninjastudio/dokto # has nice search filters, and they are centered
 https://github.com/syed-muhammad-ali-raza/netflix-landing-page-tailwind-react
+https://github.com/nodsoft/moltenobsidian
 
 Tailwind
 https://github.com/cardoso-topdev/react-tailwind-template # best hero typography size and placement
@@ -389,6 +408,7 @@ https://github.com/untitled-team-101/whiteboard # seems simple (I guess)
 https://github.com/cracker0dks/whiteboard/ # seems simple
 https://github.com/QuiiBz/ogstudio # only 76 commits so maybe simple
 https://github.com/geekreflex/xoord # not simple but kinda cool
+https://github.com/floyare/stickly # this is a great whiteboard design, nice proportions, button color, etc.
 https://github.com/gns3/gns3-web-ui
 https://github.com/pnetlab/pnetlab_main
 https://github.com/dainok/unetlab

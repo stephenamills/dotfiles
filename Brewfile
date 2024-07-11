@@ -7,7 +7,7 @@ tap "supabase/tap"
 brew "gitless" # better interface
 brew "git-branchless" # better interface
 brew "git-town" # better interface
-brew "jj" # better interface (by a Google employee)
+brew "jj" # by Google - better interface (employee side project)
 brew "sapling" # by Facebook - better interface
 brew "sugarjar" # better interface (like sapling)
 

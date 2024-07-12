@@ -2878,7 +2878,7 @@ cask "dotnet-sdk"
 
 # Lightweight Formal Methods
 brew "dafny"
-# cask "tla-plus-toolbox"
+cask "tla-plus-toolbox"
 
 # Audio
 cask "fl-studio"

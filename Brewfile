@@ -2468,11 +2468,12 @@ brew "httping"
 brew "hurl" # tests requests with plain text and curl
 brew "newman" # runs Postman collections
 brew "muffet" # checks for broken links
-brew "resty" # concise shell interface for curl
 brew "webify" # turns a shell command into a web service
 cask "postman"
 cask "rapidapi" # can generate client code
 # brew "k6" # by Grafana - popular load testing tool
+# brew "resty" # abandoned 7 years ago and conflicts with nss - shell script wrapper for curl
+# brew "wcurl"
 
 # stepci
 # API Testing and Monitoring made simple

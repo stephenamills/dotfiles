@@ -1,5 +1,5 @@
 # This file depends on seven modules installed from the Brewfile:
-# argc asdf pure zsh-autocomplete zsh-autopair zsh-autosuggestions zsh-syntax-highlighting
+# argc asdf direnv pure zsh-autocomplete zsh-autopair zsh-autosuggestions zsh-syntax-highlighting
 
 # If the `brew` command exists
 if type brew &>/dev/null; then
@@ -70,30 +70,21 @@ gcloud() {
   fi
 }
 
-# Commits changes to a Git repository with an optional extended message, accepts 'long' or 'l' as an argument for an extended commit message
+# Commits changes to a Git repository
 gitp() {
   # Prompt for the commit message
   printf 'Enter commit message: '
   read msg
 
-  # Check if the argument 'l' or 'long' was passed
-  if [ "$1" = "l" ] || [ "$1" = "long" ]; then
-    # Prompt for the additional note
-    printf 'Enter commit note: '
-    read msg2
-    # Execute git commands with an additional note
-    git add .
-    git commit -m "$msg" -m "$msg2"
-  else
-    # Execute git commands without an additional note
-    git add .
-    git commit -m "$msg"
-  fi
+  # Execute git commands without an additional note
+  git add .
+  git commit -m "$msg"
 
   git push
 }
 
-gitcl() {
+# Commits changes to a Git repository with an optional extended message, accepts 'l' or 'long' as an argument for an extended commit message
+gitpl() {
   # Prompt for the commit message
   printf 'Enter commit message: '
   read msg

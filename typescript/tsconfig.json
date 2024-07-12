@@ -1,15 +1,4 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
-	"include": ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx"],
-	"compilerOptions": {
-		"allowImportingTsExtensions": true,
-		"isolatedModules": true,
-		"jsx": "react",
-		"module": "preserve",
-		"noEmit": true,
-		"noUncheckedIndexedAccess": true,
-		"skipLibCheck": true,
-		"strict": true,
-		"target": "ES2022"
-	}
+	"extends": "",
 }

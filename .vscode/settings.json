@@ -2,8 +2,11 @@
   "[astro]": {
     "editor.defaultFormatter": "astro-build.astro-vscode"
   },
-  "[css][graphql][html][javascript][json][jsonc][jsonl][markdown][mdx][properties][svelte][tailwindcss][typescript][typescriptreact][vue][vue-html][yaml]": {
+  "[css][graphql][html][javascript][jsonl][markdown][mdx][properties][svelte][tailwindcss][typescript][typescriptreact][vue][vue-html][yaml]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json][jsonc]": {
+    "editor.defaultFormatter": "denoland.vscode-deno"
   },
   "[shellscript]": {
     "editor.defaultFormatter": "mkhl.shfmt",
@@ -207,5 +210,5 @@
   "workbench.preferredDarkColorTheme": "Visual Studio Dark",
   "workbench.preferredLightColorTheme": "Visual Studio Light",
   "workbench.startupEditor": "none",
-  "workbench.tree.indent": 10
+  "workbench.tree.indent": 10,
 }

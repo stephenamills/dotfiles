@@ -2872,6 +2872,7 @@ cask "qlvideo"
 cask "suspicious-package"
 
 brew "php"
+# brew "composer"
 
 brew "openjdk"
 

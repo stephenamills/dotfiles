@@ -10,6 +10,7 @@ brew "git-town" # better interface
 brew "jj" # by Google - better interface (employee side project)
 brew "sapling" # by Facebook - better interface
 brew "sugarjar" # better interface (like sapling)
+# cask "gitbutler" # by Scott Chacon - better interface
 
 brew "blackbox" # encrypts and stores secrets in Git
 brew "commitizen"

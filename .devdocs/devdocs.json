@@ -1,8 +1,9 @@
 {
+  "docs": "angular/ansible/apache_http_server/astro/babel~7/bash/c/cpp/chef~18/css/dart~2/deno/docker/eslint/express/git/go/haproxy~2.9/homebrew/html/http/javascript/jinja~3.1/jq/jsdoc/kotlin~1.9/kubectl/kubernetes/mariadb/markdown/mongoose/nextjs/nginx/nix/node/npm/nushell/openjdk~21/perl~5.38/php/postgresql~16/prettier/python~3.12/pytorch~2/react/react_native/react_router/redis/redux/ruby~3.3/rails~7.0/rust/saltstack/sqlite/svelte/svg/tailwindcss/tensorflow~2.9/terraform/typescript/vagrant/varnish/vite/vitest/vue~3/vue_router~4/vuex~4/vulkan/dom/wordpress/yarn~berry",
+  "hideDisabled": "1",
   "layout": "_max-width%252520_native-scrollbars%20_max-width",
   "analyticsConsent": "1",
   "arrowScroll": "1",
-  "docs": "angular/ansible/astro/bash/css/deno/docker/eslint/express/git/go/haproxy~2.9/homebrew/html/http/javascript/jinja~3.1/jq/kubectl/kubernetes/mariadb/markdown/nextjs/nginx/nix/node/npm/nushell/openjdk~21/prettier/react/react_native/react_router/redis/redux/ruby~3.3/rails~7.0/sqlite/svelte/tailwindcss/terraform/typescript/vagrant/varnish/vite/vitest/vue~3/vue_router~4/vuex~4/dom/wordpress/yarn~berry",
   "hideIntro": "1",
   "tips": "KeyNav"
 }

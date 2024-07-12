@@ -1,6 +1,4 @@
-{
-  "plugins": [
-    "prettier-plugin-tailwindcss" // must come last
-  ],
-  "semi": false
-}
+plugins:
+  - prettier-plugin-tailwindcss # must come last
+semi: false
+tailwindConfig: "./tailwind.config.ts"

@@ -1,7 +1,6 @@
 {
-  "name": "stephen-project-template",
-  "description": "Stephen's project template",
-  "version": "0.01",
+  "name": "stephens-template",
+  "version": "0.0.0",
   "private": true,
   "scripts": {
     "prettier:fix": "prettier --write \"**/*.{js,jsx,ts,tsx}\"",

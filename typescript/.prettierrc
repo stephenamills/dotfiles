@@ -1,4 +1,0 @@
-plugins:
-  - prettier-plugin-tailwindcss # must come last https://github.com/tailwindlabs/prettier-plugin-tailwindcss#compatibility-with-other-prettier-plugins
-semi: false
-tailwindConfig: "./tailwind.config.ts"

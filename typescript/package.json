@@ -1,14 +1,15 @@
 {
   "name": "stephen-project-template",
-  "version": "0.01",
   "description": "Stephen's project template",
+  "version": "0.01",
   "private": true,
   "scripts": {
     "prettier:fix": "prettier --write \"**/*.{js,jsx,ts,tsx}\"",
     "prettier:format": "prettier --check \"**/*.{js,jsx,md,ts,tsx}\"",
-    "setup-prettier": "npm install -D prettier prettier-plugin-tailwindcss",
-    "setup-tailwind": "npm install -D tailwindcss",
-    "setup-all": "setup-prettier && npm run setup-tailwind"
+    "setup-prettier": "npm i -D prettier prettier-plugin-tailwindcss",
+    "setup-tailwind": "npm i -D tailwindcss",
+    "setup-typescript": "npm i -D @types/node typescript ",
+    "setup-all": "setup-prettier && npm run setup-tailwind && npm run setup-typescript"
   },
   "devDependencies": {}
 }

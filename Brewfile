@@ -2208,9 +2208,8 @@ brew "jsonlint" # checker
 # brew "jsawk" # awk for JSON
 
 # JSON Template
-brew "go-jsonnet" # configuration language for defining JSON data
+brew "go-jsonnet" # by Google - configuration language for defining JSON data
 brew "jrsonnet" # Jsonnet template language
-brew "jsonnet" # domain-specific configuration language for defining JSON data
 brew "jsonnet-bundler" # package manager for Jsonnet
 
 # JSON Schema

@@ -38,10 +38,11 @@ https://github.com/manuelernestog/astrofy
 https://github.com/fluentmoheshwar/portfolio-website/
 
 Astro - Blog
-https://github.com/danielcgilibert/blog-template # very nice table of contents highlighting on the left, and very readable design
-https://github.com/mickasmt/astro-nomy # dangerously good, but missing the table of contents
-https://github.com/godruoyi/gblog # has comments section and decent visual design but terrible scroll hijacking
-https://github.com/saicaca/fuwari # renders remote GitHub content in cards, should probably combine with comments section one above
+https://github.com/danielcgilibert/blog-template # best - wonderful table of contents highlighting on the left, and a very readable design
+https://github.com/mickasmt/astro-nomy # dangerously good, nice overview grid layout but the articles themselves have no table of contents
+https://github.com/godruoyi/gblog # has comments section and decent tech blog marketing-like visual design but terrible scroll hijacking
+https://github.com/roadmapsh/deprecated-version # complicated, but decent and with pretty fast rendering of the diagram navigation
+https://github.com/saicaca/fuwari # cluttered design, but great rendering of remote GitHub content as a cards, should probably combine with the comments section feature above
 https://github.com/css-tricks/serverless
 https://github.com/flexdinesh/blogster
 https://github.com/markhorn-dev/astro-nano

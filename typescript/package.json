@@ -16,7 +16,6 @@
   "prettier": {
     "printWidth": 100,
     "semi": false,
-    "plugins": ["prettier-plugin-tailwindcss"],
-    "tailwindConfig": "./tailwind.config.ts"
+    "plugins": ["prettier-plugin-tailwindcss"]
   }
 }

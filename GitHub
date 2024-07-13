@@ -667,6 +667,8 @@ https://github.com/unllamas/nextjs-page-transitions-with-framer-motion # ecommer
 
 Wordpress
 
+Buildpacks & Nixpacks
+
 Terraform
 
 Ignition
@@ -727,6 +729,10 @@ https://github.com/kalenarndt/packer-vsphere-cloud-init
 https://github.com/rancher/elemental-toolkit
 https://github.com/iddocohen/vce_cloudinit
 https://github.com/exoscale/openbsd-cloud-init
+
+Docker
+
+Kubernetes
 
 Ansible
 

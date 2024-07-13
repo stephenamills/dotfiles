@@ -10,5 +10,13 @@
     "setup-typescript": "npm i -D typescript @types/node",
     "setup-all": "npm run setup-prettier && npm run setup-tailwind && npm run setup-typescript"
   },
-  "devDependencies": {}
+
+  "devDependencies": {},
+
+  "prettier": {
+    "printWidth": 100,
+    "semi": false,
+    "plugins": ["prettier-plugin-tailwindcss"],
+    "tailwindConfig": "./tailwind.config.ts"
+  }
 }

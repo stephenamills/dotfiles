@@ -7,7 +7,7 @@
     "prettier:format": "prettier --check \"**/*.{js,jsx,md,ts,tsx}\"",
     "setup-prettier": "npm i -D prettier prettier-plugin-tailwindcss",
     "setup-tailwind": "npm i -D tailwindcss",
-    "setup-typescript": "npm i -D typescript @types/node",
+    "setup-typescript": "npm i -D @types/node @tsconfig/node20 typescript",
     "setup-all": "npm run setup-prettier && npm run setup-tailwind && npm run setup-typescript"
   },
 

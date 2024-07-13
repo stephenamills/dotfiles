@@ -2383,13 +2383,10 @@ brew "d2" # by Terrastruct
 brew "manim"
 # brew "inframap" # reads tfstate or HCL, diagram is ugly
 # brew "netlistsvg" # it's only for electronics
+# brew "structurizr-cli" # has the interesting ability to theme an ugly diagram
 # also, cloud mapper by Duo
 # also, diagrams on pypi
 # also, mermaid on npm
-
-# structurizr-cli
-# Command-line utility for Structurizr
-# https://structurizr.com
 
 # Image Processing
 brew "agg"  # converts an Asciicast screen recording video to GIF
@@ -2403,9 +2400,9 @@ brew "imagemagick" # image conversion
 brew "swiftdraw" # converts SVG into PNG, SF Symbol, automatically sizing and aligning the content to template guides
 brew "vhs" # creates a terminal session GIF
 brew "viu" # view high-resolution images in the terminal
-# brew "imageoptim" # can convert a gif to video
 # brew "imgdiet" # optimizes an image using libvips
 # brew "imgdiff" # compares images
+# brew "imageoptim" # converts a gif to a video
 # brew "imgproxy" # resizes and converts images on the fly
 # brew "timg" # terminal image viewer
 # brew "triangle" # converts an image to computer-generated art using Delaunay triangulation

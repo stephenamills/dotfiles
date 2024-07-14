@@ -2392,6 +2392,7 @@ brew "manim"
 brew "agg"  # converts an Asciicast screen recording video to GIF
 brew "asciinema" # creates an Asciicast file
 brew "caire" # resizes an image in an advanced content-aware way
+brew "fileicon" # sets a macOS folder or file icon
 brew "ffmpeg" # extracts an image from a video
 brew "gifify" # converts a screen recording to a GIF (shell script)
 brew "gifski" # converts a video to a very high quality GIF (large file size, but good for Dribble)
@@ -2736,7 +2737,6 @@ brew "wcurl"
 brew "xe" # xargs replacement
 brew "xidel" # super useful for reading web pages I think
 cask "raycast" # can search DevDocs using an extension
-# brew "fileicon" # sets a macOS folder or file icon
 # brew "flamegraph" # by Brendan Gregg - stack trace visualizer
 # brew "gat" # cat alternative in Go
 # brew "hck" # cut alternative that supports regex delimiters

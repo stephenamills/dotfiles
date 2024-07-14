@@ -1,5 +1,4 @@
 tap "hashicorp/tap"
-tap "heroku/brew"
 tap "replicate/tap"
 tap "supabase/tap"
 
@@ -372,15 +371,14 @@ brew "huggingface-cli"
 # Framework to smartly mirror git repositories
 # https://github.com/mricon/grokmirror
 
-
-
-# Continuous Deployment
+# Continuous Integration
 brew "act"
 brew "action-validator"
 brew "actionlint"
 brew "circleci" # reproduces CircleCI environment locally
 brew "dagger" # runs your pipeline in containers locally or remote, and with reusable functions and modules
 brew "woodpecker-cli"
+# brew "frizbee" # creates a checksum of a GitHub Actions workflow file or Docker image
 # brew "hermit" # by Cash App - installs tools in isolated sets for CI environments etc.
 # brew "source-to-image" # by Red Hat - something about reproducible builds
 # osv-scanner
@@ -2351,10 +2349,10 @@ brew "s3cmd" # client
 # Modern App Hosting Platforms
 brew "convox" # by former Heroku engineers - no nixpacks or even buildpacks but can deploy apps like Rails to Kubernetes
 brew "doctl" # buildpacks (old)
-brew "heroku/brew/heroku" # buildpacks (old)
 brew "nixpacks" # app source + Nix packages + Docker = image
 brew "railway" # nixpacks
 cask "devkinsta" # nixpacks but does not have a cli
+# also, Heroku on npm, has buildpacks - it's in the Npmfile to avoid using a third-party tap
 # also, Northflank on npm, has nixpacks
 
 
@@ -2770,7 +2768,6 @@ brew "node@20"
 # prettier
 # prettier-plugin-tailwindcss
 
-
 # angular-eslint
 # antfu-eslint-config
 # biome
@@ -2818,11 +2815,11 @@ brew "node@20"
 # brew "flamebearer" # creates a flamegraph for a JavaScript app from a terminal, has web version
 # np on npm by Sindre Sorhus - a better npm publish
 
-
 brew "go"
 brew "goreleaser" # publishes on Homebrew
 brew "nfpm" # creates a Debian or Red Hat package
 
+brew "cargo-binstall" # installs pre-compiled Rust packages instead of compiling
 brew "rust"
 
 brew "pipx"

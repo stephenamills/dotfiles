@@ -1,8 +1,8 @@
 # My dotfiles
 
-This collection contains my shell configuration files and lists of commands and apps.
+This collection contains my shell configuration files and command and app lists.
 
-This is 300 packages. It's really for personal use but here in case someone finds it useful.
+This repo is really for personal use but here in case someone finds these useful.
 
 # Usage
 

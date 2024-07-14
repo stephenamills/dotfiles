@@ -23,5 +23,5 @@ brew bundle install --no-lock
 xargs -n 1 go install < Gofile
 pnpm install -g $(tr '\n' ' ' < Npmfile)
 xargs -n 1 pipx install < Pythonfile
-cargo-binstall $(tr '\n' ' ' < Rustfile)
+cargo-binstall -y $(tr '\n' ' ' < Rustfile)
 ```

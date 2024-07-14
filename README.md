@@ -14,14 +14,14 @@ Lastly, run the commands below to install:
 
 - The Homebrew packages listed in the `Brewfile`
 - The Go packages in the `Gofile`
-- The Rust packages in the `Rustfile`
 - The JavaScript packages in the `Npmfile`
 - The Python packages in the `Pythonfile`
+- The Rust packages in the `Rustfile`
 
 ```shell
 brew bundle install --no-lock
 xargs -n 1 go install < Gofile
-cargo-binstall $(tr '\n' ' ' < Rustfile)
 pnpm install -g $(tr '\n' ' ' < Npmfile)
 xargs -n 1 pipx install < Pythonfile
+cargo-binstall $(tr '\n' ' ' < Rustfile)
 ```

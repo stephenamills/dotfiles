@@ -1,5 +1,6 @@
 [core]
 	excludesfile = /Users/steph/.gitignore
+	pager = delta
 
 [credential "https://github.com"]
 	helper = !gh auth git-credential
@@ -7,11 +8,24 @@
 [credential "https://gitlab.com"]
 	helper = !glab auth git-credential
 
+[delta]
+	hyperlinks = true
+	navigate = true
+
+[diff]
+	colorMoved = default
+
 [github]
 	user = stephenamills
 
 [init]
 	defaultBranch = main
+
+[interactive]
+	diffFilter = delta --color-only
+
+[merge]
+	conflictstyle = diff3
 
 [user]
 	name = stephenamills

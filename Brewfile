@@ -4,7 +4,7 @@ tap "supabase/tap"
 
 # Git
 brew "gitless" # better interface
-brew "git-branchless" # better interface
+brew "git-branchless" # better interface 
 brew "git-town" # better interface
 brew "jj" # by Google - better interface (employee side project)
 brew "sapling" # by Facebook - better interface
@@ -22,11 +22,16 @@ brew "ugit" # tries to undo a git command
 # brew "git-credential-libsecret" # Git helper for accessing credentials via libsecret
 # brew "git-credential-oauth" # Git credential helper that authenticates in browser using OAuth
 
+brew "git-absorb" # incorporates uncommitted changes into relevant past commits, using automatic decision making, simplifying history management without manual rebasing
+brew "git-appraise" # by Google - code review system
 brew "git-delete-merged-branches" # deletes a merged branch
+brew "git-delta" # superb upgrade to git blame and also for diff etc.
 brew "git-filter-repo" # rewrites repository history
 brew "git-subrepo" # submodule alternative
 brew "git-vendor" # creates a vendored dependency (as the Go community does)
 brew "git-when-merged" # finds where a commit was merged
+# brew "git-annex" # manages files with git without checking in file contents
+# brew "git-annex-remote-rclone" # rclone-supported cloud storage for Git Annex
 # brew "changie" # changelog tool 
 # brew "cocogitto" # commit message
 # brew "codecov" # code coverage
@@ -35,129 +40,15 @@ brew "git-when-merged" # finds where a commit was merged
 # brew "forgit" # interactive git commands in the terminal
 # brew "git-flow" # extensions to follow Vincent Driessen's branching model
 # brew "git-flow-avh" # Peter Does's edition of git-flow
+# brew "gitea" # self-hosted Git service but based in China
 # brew "git-sync" # clones a git repository and keeps it synchronized with the upstream
 # brew "gitup" # updates multiple git repositories at once
 # brew "thefuck" # Corrects commands
 # brew "vcsh" # config manager based on git that manages subrepos
 
-# GitHub 
-brew "gh"
-brew "git-open" # opens a GitHub page
-brew "hub"
-# brew "git-xargs" # updates multiple Github repositories
-# brew "github-keygen" # bootstraps GitHub SSH configuration
-# brew "github-markdown-toc" # creates table of contents for a Readme markdown file
-# brew "github-release" # creates a release or uploads artifacts
-
-brew "glow" # displays Markdown
-brew "mdcat" # displays Markdown
-# brew "grip" # previews GitHub Markdown in a browser using the GitHub Markdown API
-# brew "markdownlint" # checks Markdown
-# brew "markdownlint-cli2" # checks Markdown
-
-# GitLab
-brew "glab"
-
-# Hugging Face
-brew "huggingface-cli"
-# brew "cortexso" # ollama-like, drop-in local alternative to the OpenAI stack
-# brew "ollama" # downloads and runs a language model
-
-# gist
-# Command-line utility for uploading Gists
-# https://github.com/defunkt/gist
-
-# gistit
-# Command-line utility for creating Gists
-# https://github.com/jrbasso/gistit
-
-# git-absorb
-# Automatic git commit --fixup
-# https://github.com/tummychow/git-absorb
-
-# git-annex
-# Manage files with git without checking in file contents
-# https://git-annex.branchable.com/
-
-# git-annex-remote-rclone
-# Use rclone supported cloud storage with git-annex
-# https://github.com/DanielDent/git-annex-remote-rclone
-
-# git-appraise
-# Distributed code review system for Git repos
-# https://github.com/google/git-appraise
-
-# git-archive-all
-# Archive a project and its submodules
-# https://github.com/Kentzo/git-archive-all
-
-# git-big-picture
-# Visualization tool for Git repositories
-# https://github.com/git-big-picture/git-big-picture
-
-# git-bug
-# Distributed, offline-first bug tracker embedded in git, with bridges
-# https://github.com/MichaelMure/git-bug
-
-# git-cal
-# GitHub-like contributions calendar but on the command-line
-# https://github.com/k4rthik/git-cal
-
-# git-cinnabar
-# Git remote helper to interact with mercurial repositories
-# https://github.com/glandium/git-cinnabar
-
-# git-cliff
-# Highly customizable changelog generator
-# https://github.com/orhun/git-cliff
-
-# git-codereview
-# Tool for working with Gerrit code reviews
-# https://pkg.go.dev/golang.org/x/review/git-codereview
-
-# git-crypt
-# Enable transparent encryption/decryption of files in a git repo
-# https://www.agwa.name/projects/git-crypt/
-
-# git-delta
-# Syntax-highlighting pager for git and diff output
-# https://github.com/dandavison/delta
-
-# git-extras
-# Small git utilities
-# https://github.com/tj/git-extras
-
-# git-fixup
-# Alias for git commit --fixup <ref>
-# https://github.com/keis/git-fixup
-
-# git-fresh
-# Utility to keep git repos fresh
-# https://github.com/imsky/git-fresh
-
-# git-game
-# Game for git to guess who made which commit
-# https://github.com/jsomers/git-game
-
-# git-gerrit
-# Gerrit code review helper scripts
-# https://github.com/fbzhong/git-gerrit
-
 # git-grab
 # Clone a git repository into a standard location organised by domain and path
 # https://github.com/wezm/git-grab
-
-# git-hooks-go
-# Git hooks manager
-# https://git-hooks.github.io/git-hooks
-
-# git-hound
-# Git plugin that prevents sensitive data from being committed
-# https://github.com/ezekg/git-hound
-
-# git-if
-# Glulx interpreter that is optimized for speed
-# https://ifarchive.org/indexes/if-archiveXprogrammingXglulxXinterpretersXgit.html
 
 # git-imerge
 # Incremental merge for git
@@ -187,14 +78,6 @@ brew "huggingface-cli"
 # Push a branch to multiple remotes in one command
 # https://github.com/gavinbeatty/git-multipush
 
-# git-now
-# Light, temporary commits for git
-# https://github.com/iwata/git-now
-
-# git-number
-# Use numbers for dealing with files in git
-# https://github.com/holygeek/git-number
-
 # git-delete-merged-branches
 # Command-line tool to delete merged Git branches
 # https://github.com/hartwork/git-delete-merged-branches
@@ -219,6 +102,90 @@ brew "huggingface-cli"
 # Continuous merge workflow
 # https://github.com/lesfurets/git-octopus
 
+# git-recent
+# See your latest local git branches, formatted real fancy
+# https://github.com/paulirish/git-recent
+
+# git-standup
+# Git extension to generate reports for standup meetings
+# https://github.com/kamranahmedse/git-standup
+
+# git-trim
+# Trim your git remote tracking branches that are merged or gone
+# https://github.com/foriequal0/git-trim
+
+# git-archive-all
+# Archive a project and its submodules
+# https://github.com/Kentzo/git-archive-all
+
+# git-fixup
+# Alias for git commit --fixup <ref>
+# https://github.com/keis/git-fixup
+
+# git-big-picture
+# Visualization tool for Git repositories
+# https://github.com/git-big-picture/git-big-picture
+
+# git-bug
+# Distributed, offline-first bug tracker embedded in git, with bridges
+# https://github.com/MichaelMure/git-bug
+
+# git-cal
+# GitHub-like contributions calendar but on the command-line
+# https://github.com/k4rthik/git-cal
+
+# git-cinnabar
+# Git remote helper to interact with mercurial repositories
+# https://github.com/glandium/git-cinnabar
+
+# git-cliff
+# Highly customizable changelog generator
+# https://github.com/orhun/git-cliff
+
+# git-codereview
+# Tool for working with Gerrit code reviews
+# https://pkg.go.dev/golang.org/x/review/git-codereview
+
+# git-crypt
+# Enable transparent encryption/decryption of files in a git repo
+# https://www.agwa.name/projects/git-crypt/
+
+# git-extras
+# Small git utilities
+# https://github.com/tj/git-extras
+
+# git-fresh
+# Utility to keep git repos fresh
+# https://github.com/imsky/git-fresh
+
+# git-game
+# Game for git to guess who made which commit
+# https://github.com/jsomers/git-game
+
+# git-gerrit
+# Gerrit code review helper scripts
+# https://github.com/fbzhong/git-gerrit
+
+# git-hooks-go
+# Git hooks manager
+# https://git-hooks.github.io/git-hooks
+
+# git-hound
+# Git plugin that prevents sensitive data from being committed
+# https://github.com/ezekg/git-hound
+
+# git-if
+# Glulx interpreter that is optimized for speed
+# https://ifarchive.org/indexes/if-archiveXprogrammingXglulxXinterpretersXgit.html
+
+# git-now
+# Light, temporary commits for git
+# https://github.com/iwata/git-now
+
+# git-number
+# Use numbers for dealing with files in git
+# https://github.com/holygeek/git-number
+
 # git-plus
 # Git utilities: git multi, git relation, git old-branches, git recent
 # https://github.com/tkrajina/git-plus
@@ -226,10 +193,6 @@ brew "huggingface-cli"
 # git-quick-stats
 # Simple and efficient way to access statistics in git
 # https://github.com/arzzen/git-quick-stats
-
-# git-recent
-# See your latest local git branches, formatted real fancy
-# https://github.com/paulirish/git-recent
 
 # git-remote-gcrypt
 # GPG-encrypted git remotes
@@ -271,10 +234,6 @@ brew "huggingface-cli"
 # Proxy for serving git repositories over SSH
 # https://github.com/lemarsu/git-ssh
 
-# git-standup
-# Git extension to generate reports for standup meetings
-# https://github.com/kamranahmedse/git-standup
-
 # git-test
 # Run tests on each distinct tree in a revision list
 # https://github.com/spotify/git-test
@@ -287,9 +246,7 @@ brew "huggingface-cli"
 # Integrate Pivotal Tracker into your Git workflow
 # https://github.com/stevenharman/git_tracker
 
-# git-trim
-# Trim your git remote tracking branches that are merged or gone
-# https://github.com/foriequal0/git-trim
+
 
 # git-url-sub
 # Recursively substitute remote URLs for multiple repos
@@ -307,17 +264,9 @@ brew "huggingface-cli"
 # Manage your git repositories in one place
 # https://github.com/isacikgoz/gitbatch
 
-# gitea
-# Painless self-hosted all-in-one software development service
-# https://about.gitea.com/
-
 # gitfs
 # Version controlled file system
 # https://www.presslabs.com/gitfs
-
-# gitg
-# GNOME GUI client to view git repositories
-# https://wiki.gnome.org/Apps/Gitg
 
 # gitleaks
 # Audit git repos for secrets
@@ -363,13 +312,36 @@ brew "huggingface-cli"
 # Watch a file or folder and automatically commit changes to a git repo easily
 # https://github.com/gitwatch/gitwatch
 
-# grip
-# GitHub Markdown previewer
-# https://github.com/joeyespo/grip
-
 # grokmirror
 # Framework to smartly mirror git repositories
 # https://github.com/mricon/grokmirror
+
+# GitHub 
+brew "gh"
+brew "git-open" # opens a GitHub page
+brew "hub"
+# brew "gist" # creates a gist
+# brew "gistit" # creates a gist
+# brew "git-xargs" # updates multiple Github repositories
+# brew "github-keygen" # bootstraps GitHub SSH configuration
+# brew "github-markdown-toc" # creates table of contents for a Readme markdown file
+# brew "github-release" # creates a release or uploads artifacts
+
+brew "glow" # displays Markdown
+brew "mdcat" # displays Markdown
+# brew "grip" # previews GitHub Markdown in a browser using the GitHub Markdown API
+# brew "markdownlint" # checks Markdown
+# brew "markdownlint-cli2" # checks Markdown
+
+# GitLab
+brew "glab"
+
+# Hugging Face
+brew "huggingface-cli"
+# brew "cortexso" # ollama-like, drop-in local alternative to the OpenAI stack
+# brew "ollama" # downloads and runs a language model
+
+
 
 # Continuous Integration
 brew "act"

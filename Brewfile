@@ -2333,6 +2333,7 @@ brew "cloudflared" # tunnel for web servers or who even knows
 brew "flarectl"
 brew "wgcf" # generates WireGuard profile from Cloudflare Warp account
 # brew "cloudflare-wrangler2" # V8 isolate workers or web assembly as a service
+# also, flarectl on pkg.go.dev
 
 # Backblaze
 brew "b2-tools"

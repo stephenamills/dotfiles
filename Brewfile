@@ -24,9 +24,19 @@ brew "ugit" # tries to undo a git command
 
 brew "git-absorb" # incorporates uncommitted changes into relevant past commits, using automatic decision making, simplifying history management without manual rebasing
 brew "git-appraise" # by Google - code review system
-brew "git-delete-merged-branches" # deletes a merged branch
+brew "git-delete-merged-branches" # deletes a merged branch, keeping the repo clean
 brew "git-delta" # superb upgrade to git blame and also for diff etc.
+brew "git-delete-merged-branches" # deletes a merged branch
 brew "git-filter-repo" # rewrites repository history
+brew "git-flow" # branching model popularized in a blog post
+brew "git-flow-avh" # another git-flow 
+brew "git-fixup" # alias for git commit --fixup <ref>
+brew "git-imerge" # incremental merge of two branches
+brew "git-integration" # integration branches, whatever
+brew "git-machete" # simplifies merges/rebases/push/pulls in the presence of multiple branches
+brew "git-mediate" # resolves merge conflicts
+brew "git-octopus" # continuous merge workflow for CI pipelines
+brew "git-remote-codecommit" # simple method to push to and pull from AWS CodeCommit
 brew "git-subrepo" # submodule alternative
 brew "git-vendor" # creates a vendored dependency (as the Go community does)
 brew "git-when-merged" # finds where a commit was merged
@@ -38,69 +48,21 @@ brew "git-when-merged" # finds where a commit was merged
 # brew "commitlint" # probably intended to be installed locally per-project
 # brew "cycode-cli" # another boring scanner
 # brew "forgit" # interactive git commands in the terminal
-# brew "git-flow" # extensions to follow Vincent Driessen's branching model
-# brew "git-flow-avh" # Peter Does's edition of git-flow
-# brew "gitea" # self-hosted Git service but based in China
+# brew "git-grab" # does basically nothing
+# brew "git-interactive-rebase-tool" # not useful
 # brew "git-sync" # clones a git repository and keeps it synchronized with the upstream
+# brew "gitea" # self-hosted Git service but based in China
 # brew "gitup" # updates multiple git repositories at once
 # brew "thefuck" # Corrects commands
 # brew "vcsh" # config manager based on git that manages subrepos
-
-# git-grab
-# Clone a git repository into a standard location organised by domain and path
-# https://github.com/wezm/git-grab
-
-# git-imerge
-# Incremental merge for git
-# https://github.com/mhagger/git-imerge
-
-# git-integration
-# Manage git integration branches
-# https://johnkeeping.github.io/git-integration/
-
-# git-interactive-rebase-tool
-# Native sequence editor for Git interactive rebase
-# https://gitrebasetool.mitmaro.ca/
 
 # git-lfs
 # Git extension for versioning large files
 # https://git-lfs.github.com/
 
-# git-machete
-# Git repository organizer & rebase workflow automation tool
-# https://github.com/VirtusLab/git-machete
-
-# git-mediate
-# Utility to help resolve merge conflicts
-# https://github.com/Peaker/git-mediate
-
 # git-multipush
 # Push a branch to multiple remotes in one command
 # https://github.com/gavinbeatty/git-multipush
-
-# git-delete-merged-branches
-# Command-line tool to delete merged Git branches
-# https://github.com/hartwork/git-delete-merged-branches
-
-# git-filter-repo
-# Quickly rewrite git repository history
-# https://github.com/newren/git-filter-repo
-
-# git-flow
-# Extensions to follow Vincent Driessen's branching model
-# https://github.com/nvie/gitflow
-
-# git-flow-avh
-# AVH edition of git-flow
-# https://github.com/petervanderdoes/gitflow-avh
-
-# git-remote-codecommit
-# Git Remote Helper to interact with AWS CodeCommit
-# https://github.com/aws/git-remote-codecommit
-
-# git-octopus
-# Continuous merge workflow
-# https://github.com/lesfurets/git-octopus
 
 # git-recent
 # See your latest local git branches, formatted real fancy
@@ -117,10 +79,6 @@ brew "git-when-merged" # finds where a commit was merged
 # git-archive-all
 # Archive a project and its submodules
 # https://github.com/Kentzo/git-archive-all
-
-# git-fixup
-# Alias for git commit --fixup <ref>
-# https://github.com/keis/git-fixup
 
 # git-big-picture
 # Visualization tool for Git repositories

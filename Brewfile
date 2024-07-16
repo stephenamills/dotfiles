@@ -2868,6 +2868,7 @@ mas "telegram", id: 747648890
 mas "vimari", id: 1480933944
 vscode "astro-build.astro-vscode"
 vscode "bierner.markdown-mermaid"
+vscode "biomejs.biome"
 vscode "bradlc.vscode-tailwindcss"
 vscode "dbaeumer.vscode-eslint"
 vscode "equinusocio.vsc-material-theme-icons"

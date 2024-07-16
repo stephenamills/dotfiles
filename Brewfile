@@ -387,6 +387,7 @@ brew "sysdig"
 # brew "clair" # audits container using static analysis
 # brew "ctop" # container top
 # brew "cosign" # signs containers
+# brew "ddev/ddev/ddev" # installs PHP or other dev environments
 # brew "diffoci" # compares two Docker images
 # brew "trivy" scans container images, Kubernetes, Git repos, and AWS etc. (very popular tool)
 
@@ -2888,6 +2889,8 @@ vscode "stylelint.vscode-stylelint"
 vscode "timonwong.shellcheck"
 vscode "unifiedjs.vscode-mdx"
 vscode "YoavBls.pretty-ts-errors"
+# tap "ddev/ddev"
+# tap "encoredev/tap"
 # tap "xo/xo"
 # brew "apachetop"
 # brew "bfs" # the GitHub page has a nice neutral tone terminal background
@@ -2922,6 +2925,7 @@ vscode "YoavBls.pretty-ts-errors"
 # brew "denominator" # old abandoned Java code by Netflix but shows how to run a Java command without -jar
 # brew "djl-serving" # Java is terrible but maybe this is educational for serving an ML model
 # brew "eatmemory" # stress test
+# brew "encoredev/tap/encore" # some kind of backend hosting platform
 # brew "ffind" # friendlier find
 # brew "forcecli" # command-line interface to Force.com
 # brew "go-task" # alternative to make

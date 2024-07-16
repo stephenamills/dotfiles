@@ -1,11 +1,12 @@
 This file is for links to relevant GitHub repos
 
 Figma Diagrams
-https://github.com/figma/architecture-diagram-components #
+https://github.com/bernaferrari # by far the best - backend services high-level design
+https://github.com/figma/architecture-diagram-components # backend services
 https://www.figma.com/community/file/1170803096873778028 # pretty boxes
 https://www.figma.com/community/file/989576823914996434 # Azure, characteristic thin stroke widths and readable dark-gray white colors, great typeface in the title
 https://www.figma.com/community/file/989580565034038997 # Google Cloud
-https://www.figma.com/community/file/1332727463398521641 # Google Cloud with a light purple color scheme
+https://www.figma.com/community/file/1332727463398521641 # Google Cloud but a light purple color scheme
 https://www.figma.com/community/file/989585391556898521 # Amazon Web Services
 https://www.figma.com/community/file/1270646590275827451 # Amazon Web Services again
 https://www.figma.com/community/file/1015543187940120536 # isometric, backend services

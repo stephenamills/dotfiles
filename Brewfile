@@ -5,7 +5,7 @@ tap "supabase/tap"
 # Git
 brew "gitless" # better interface
 brew "git-branchless" # better interface 
-brew "git-town" # better interface
+brew "git-town" # better interface supporting multiple branch strategies
 brew "jj" # by Google - better interface (employee side project)
 brew "sapling" # by Facebook - better interface
 brew "sugarjar" # better interface (like sapling)
@@ -2073,6 +2073,7 @@ brew "levant" # templating and deployment tool for jobs
 # brew "vitess" # replicated MySQL
 # Also, see Porcupine checker on pkg.go.dev and MIT 6.5840
 # Also, see Spanner and LevelDB
+# Also, see ScyllaDB
 
 # brew "atlas" # 
 # brew "goose" # database migration

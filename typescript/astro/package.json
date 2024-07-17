@@ -1,7 +1,7 @@
 {
   "name": "stephens-template",
+  "description": "Template for Astro projects",
   "version": "0.0.0",
-  "private": true,
 
   "scripts": {
     "prettier:check": "prettier --check \"**/*.{js,jsx,md,ts,tsx}\"",

@@ -1,8 +1,8 @@
 {
-  "docs": "angular/ansible/apache_http_server/astro/babel~7/bash/chef~18/css/dart~2/deno/docker/eslint/express/flow/git/go/haproxy~2.9/homebrew/html/http/javascript/jinja~3.1/jq/jsdoc/kotlin~1.9/kubectl/kubernetes/mariadb/markdown/mongoose/nextjs/nginx/nix/node/npm/nushell/openjdk~21/perl~5.38/php/postgresql~16/prettier/python~3.12/pytorch~2/react/react_native/react_router/redis/redux/ruby~3.3/rails~7.0/rust/saltstack/sqlite/svelte/svg/tailwindcss/tensorflow~2.9/terraform/typescript~5.1/vagrant/varnish/vite/vitest/vue~3/vue_router~4/vuex~4/vulkan/dom/wordpress/yarn~berry",
   "analyticsConsent": "0",
-  "layout": "_max-width%252520_native-scrollbars%20_max-width",
   "arrowScroll": "1",
   "hideIntro": "1",
-  "tips": "KeyNav"
+  "tips": "KeyNav",
+  "layout": "_max-width%25252520_native-scrollbars%2520_max-width%20_max-width%20_native-scrollbars",
+  "docs": "angular/ansible/apache_http_server/astro/axios/babel~7/bash/chef~18/css/d3~7/dart~2/deno/docker/electron/esbuild/eslint/express/fastapi/flow/git/go/haproxy~2.9/homebrew/html/http/javascript/jinja~3.1/joi/jq/jsdoc/kotlin~1.9/kubectl/kubernetes/liquid/mariadb/markdown/mongoose/nextjs/nginx/nix/node/npm/nushell/openjdk~21/padrino/perl~5.38/phaser/php/postgresql~16/prettier/puppeteer/python~3.12/pytorch~2/r/react/react_native/react_router/redis/redux/relay~10/ruby~3.3/rails~7.0/rust/rxjs/saltstack/spring_boot/sqlite/svelte/svg/tailwindcss/tensorflow~2.9/terraform/typescript~5.1/vagrant/varnish/vite/vitest/vue~3/vue_router~4/vuex~4/vulkan/dom/wordpress/yarn~berry"
 }

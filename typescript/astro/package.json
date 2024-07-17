@@ -13,12 +13,6 @@
     "setup-all": "npm run setup-prettier && npm run setup-tailwind && npm run setup-typescript"
   },
 
-  "prettier": {
-    "printWidth": 100,
-    "semi": false,
-    "plugins": ["prettier-plugin-tailwindcss"]
-  },
-
   "dependencies": {},
   "devDependencies": {}
 }

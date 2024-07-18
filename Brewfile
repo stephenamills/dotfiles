@@ -2778,9 +2778,12 @@ brew "ruby"
 # brew "fastlane"
 # brew "flank" # Massively parallel test runner for Firebase Test Lab
 # brew "folderify # generates pixel-perfect custom macOS folder icons
+# brew "mint" # package manager for Swift
+# brew "swift"
 # brew "swift-format" # by Apple
 # brew "swift-protobuf"
 # brew "swift-sh" # scripting with easy zero-conf dependency imports
+# brew "swiftbrew/tap/swiftbrew"
 # brew "swiftformat"
 # brew "swiftgen"
 # brew "swiftlint"
@@ -2801,9 +2804,11 @@ cask "suspicious-package"
 brew "php"
 # brew "composer"
 
+brew "maven"
 brew "openjdk"
 
 cask "dotnet-sdk"
+# brew "nuget"
 
 # Lightweight Formal Methods
 brew "dafny"
@@ -2892,6 +2897,7 @@ vscode "unifiedjs.vscode-mdx"
 vscode "YoavBls.pretty-ts-errors"
 # tap "ddev/ddev"
 # tap "encoredev/tap"
+# tap "swiftbrew/tap"
 # tap "xo/xo"
 # brew "apachetop"
 # brew "bfs" # the GitHub page has a nice neutral tone terminal background

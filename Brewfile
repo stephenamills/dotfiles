@@ -2325,13 +2325,13 @@ brew "gifify" # converts a screen recording to a GIF (shell script)
 brew "gifski" # converts a video to a very high quality GIF (large file size, but good for Dribble)
 brew "iconsur" # creates a macOS app icon from an image
 brew "imagemagick" # image conversion
-brew "swiftdraw" # converts SVG into PNG, SF Symbol, automatically sizing and aligning the content to template guides
 brew "vhs" # creates a terminal session GIF
 brew "viu" # view high-resolution images in the terminal
 # brew "imgdiet" # optimizes an image using libvips
 # brew "imgdiff" # compares images
 # brew "imageoptim" # converts a gif to a video
 # brew "imgproxy" # resizes and converts images on the fly
+# brew "swiftdraw" # converts an SVG file into a PNG or SF Symbol, automatically sizing and aligning the content to template guides
 # brew "timg" # terminal image viewer
 # brew "triangle" # converts an image to computer-generated art using Delaunay triangulation
 
@@ -2768,6 +2768,7 @@ brew "ruby"
 # rubocop
 # rufo
 
+brew "mint" # package manager for Swift
 # brew "chisel" # by Facebook - collection of LLDB commands
 # brew "carthage" # 
 # brew "cocoapods" # 
@@ -2775,7 +2776,6 @@ brew "ruby"
 # brew "fastlane"
 # brew "flank" # Massively parallel test runner for Firebase Test Lab
 # brew "folderify # generates pixel-perfect custom macOS folder icons
-# brew "mint" # package manager for Swift
 # brew "swift"
 # brew "swift-format" # by Apple
 # brew "swift-protobuf"
@@ -2793,10 +2793,10 @@ brew "ruby"
 # brew "xcodes"
 # brew "xcprojectlint"
 # Also, see https://github.com/sindresorhus/quick-look-plugins
-cask "apparency"
-cask "qlimagesize"
-cask "qlvideo"
-cask "suspicious-package"
+# cask "apparency"
+# cask "qlimagesize"
+# cask "qlvideo"
+# cask "suspicious-package"
 
 brew "composer"
 brew "php"

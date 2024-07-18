@@ -2611,6 +2611,7 @@ brew "shfmt" # formats a shell script
 # brew "nushell" # very advanced shell
 # brew "powershell" # advanced but bloated
 # brew "shellcheck" 
+# brew "starship" # prompt that works on Windows
 # brew "xonsh" # advanced shell
 # brew "xxh" # tool to ssh and bring your shell - useful, assuming it works
 # brew "zx" # new shell

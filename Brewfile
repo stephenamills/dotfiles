@@ -2793,10 +2793,6 @@ brew "mint" # package manager for Swift
 # brew "xcodes"
 # brew "xcprojectlint"
 # Also, see https://github.com/sindresorhus/quick-look-plugins
-# cask "apparency"
-# cask "qlimagesize"
-# cask "qlvideo"
-# cask "suspicious-package"
 
 brew "composer"
 brew "php"

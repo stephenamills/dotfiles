@@ -8,6 +8,7 @@ export LESSHISTFILE=- # Disables unsolicited creation of a history file by less 
 
 export DOTNET_PATH="$HOME/.dotnet/tools"
 export GOPATH="$HOME/go"
+export MINT_PATH="$HOME/.mint/bin"
 export JAVA_HOME="$(brew --prefix openjdk)/bin"
 export NODE_PATH="$(brew --prefix node@20)/bin" # Sets LTS Node.js version in $PATH, overriding unstable versions.
 export PIPX_PATH="$HOME/.local/bin"
@@ -18,4 +19,4 @@ export RUBYGEMS_PATH_MAJOR_MINOR_ZERO_VERSION=$($HOMEBREW_PREFIX/opt/ruby/bin/ru
 export RUBYGEMS_PATH="$HOMEBREW_PREFIX/lib/ruby/gems/$RUBYGEMS_PATH_MAJOR_MINOR_ZERO_VERSION/bin"
 export RUST_PATH="$HOME/.cargo/bin"
 
-export PATH="$ARGC_COMPLETIONS_PATH:$DOTNET_PATH:$GOPATH/bin:$JAVA_HOME:$JETBRAINS_PATH:$NODE_PATH:$PIPX_PATH:$PNPM_HOME:$PYTHON_PATH:$RUBY_PATH:$RUBYGEMS_PATH:$RUST_PATH:$PATH"
+export PATH="$ARGC_COMPLETIONS_PATH:$DOTNET_PATH:$GOPATH/bin:$JAVA_HOME:$JETBRAINS_PATH:$MINT_PATH:$NODE_PATH:$PIPX_PATH:$PNPM_HOME:$PYTHON_PATH:$RUBY_PATH:$RUBYGEMS_PATH:$RUST_PATH:$PATH"

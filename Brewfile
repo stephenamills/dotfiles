@@ -2825,7 +2825,6 @@ cask "dotnet-sdk" # runtime and compiler
 # 
 # Estimate of applicability to diffcult backend problems:
 # TLA+ > Dafny > Alloy
-# 
 brew "dafny"
 cask "alloy" # considered by some to be the most approachable, also strong for data relationships but weaker for time and concurrent systems
 cask "tla-plus-toolbox" # the best overall but with somewhat more of a learning curve

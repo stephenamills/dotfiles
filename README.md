@@ -17,6 +17,7 @@ Lastly, run the commands below to install:
 - The JavaScript packages in the `Npmfile`
 - The Python packages in the `Pythonfile`
 - The Rust packages in the `Rustfile`
+- The Dotnet packages in the `Dotnetfile`
 
 ```shell
 brew bundle install --no-lock
@@ -24,4 +25,5 @@ xargs -n 1 go install < Gofile
 pnpm install -g $(tr '\n' ' ' < Npmfile)
 xargs -n 1 pipx install < Pythonfile
 cargo-binstall -y $(tr '\n' ' ' < Rustfile)
+xargs -n 1 dotnet tool install -g < Dotnetfile
 ```

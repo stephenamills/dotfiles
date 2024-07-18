@@ -1329,10 +1329,6 @@ brew "vespa-cli" # by Yahoo - has a guide to deploy machine learning to Kubernet
 # Next generation version of the original ntop
 # https://www.ntop.org/products/traffic-analysis/ntop/
 
-# nuget
-# Package manager for Microsoft development platform including .NET
-# https://www.nuget.org/
-
 # nut
 # Network UPS Tools: Support for various power devices
 # https://networkupstools.org/
@@ -2757,7 +2753,7 @@ brew "rust"
 
 brew "pipx"
 brew "python"
-# brew "black" # why is it named this..
+# brew "black" # formatter
 # brew "flake8" # Python checker
 # brew "flit" # by PyPA - publishes Python package to PyPI
 # brew "hatch" # by PyPA - yes, yet another tool lmao
@@ -2801,18 +2797,38 @@ cask "qlimagesize"
 cask "qlvideo"
 cask "suspicious-package"
 
+brew "composer"
 brew "php"
-# brew "composer"
 
 brew "maven"
 brew "openjdk"
 
-cask "dotnet-sdk"
-# brew "nuget"
+brew "nuget" # package installer
+cask "dotnet-sdk" # runtime and compiler
+# brew "cake" # package installer
+# brew "paket" # package installer
 
 # Lightweight Formal Methods
+# 
+# Alloy: particularly strong for modeling data relationships, weaker for time and concurrent systems. Uses relational logic concepts.
+# Dafny: particularly strong for modeling and verifying sequential programs, weaker for time and concurrent systems. Uses Hoare logic concepts.
+# TLA+: particularly strong for modeling and verifying concurrent and distributed systems, weaker for data relationships. Uses temporal logic and set theory concepts.
+# 
+# The tool to use depends on the specific problem you are trying to solve. 
+# 
+# If you are modeling and verifying a data-intensive system, Alloy might be the best choice. 
+# If you are modeling and verifying a sequential program, Dafny might be the best choice. 
+# If you are modeling and verifying a concurrent or distributed system, TLA+ might be the best choice.
+# 
+# Estimate of ease of use (from easiest to most difficult):
+# Alloy > Dafny > TLA+
+# 
+# Estimate of applicability to diffcult backend problems:
+# TLA+ > Dafny > Alloy
+# 
 brew "dafny"
-cask "tla-plus-toolbox"
+cask "alloy" # considered by some to be the most approachable, also strong for data relationships but weaker for time and concurrent systems
+cask "tla-plus-toolbox" # the best overall but with somewhat more of a learning curve
 
 # Audio
 cask "fl-studio"

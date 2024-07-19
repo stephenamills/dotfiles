@@ -890,3 +890,10 @@ https://github.com/arranstewart-dev/dafny-gitpod
 https://github.com/whonore/dafny-pretty-progress # better command line output
 https://github.com/kumom/dafny-fatnode/
 https://github.com/hassaanmalik/algorithm-tutorials-in-dafny/
+
+TLA+
+https://github.com/lorin/lsm-tree-tla # log-structured merge tree
+https://github.com/langmartin/nomad-tla
+https://github.com/onosproject/tlaplus-monitor # live Kubernetes checking with TLA+
+https://github.com/JohnStrunk/tla-kubernetes # Kube API
+https://github.com/onosproject/onos-tlaplus

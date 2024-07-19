@@ -2701,6 +2701,7 @@ brew "node@20"
 # angular-eslint
 # antfu-eslint-config
 # biome
+# dart
 # eslint-config-airbnb
 # eslint-config-eslint
 # eslint-config-fbjs
@@ -2797,13 +2798,22 @@ brew "mint" # package manager for Swift
 brew "composer"
 brew "php"
 
+# brew "julia"
+# brew "perl"
+# brew "r"
+
+brew "kotlin"
 brew "maven"
 brew "openjdk"
+# brew "gradle"
 
 brew "nuget" # package installer
 cask "dotnet-sdk" # runtime and compiler
 # brew "cake" # package installer
 # brew "paket" # package installer
+
+# brew "erlang"
+# brew "elixir"
 
 # Lightweight Formal Methods
 # 

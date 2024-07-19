@@ -2769,6 +2769,8 @@ brew "ruby"
 # rubocop
 # rufo
 
+# brew "perl"
+
 brew "mint" # package manager for Swift
 # brew "chisel" # by Facebook - collection of LLDB commands
 # brew "carthage" # 
@@ -2799,7 +2801,6 @@ brew "composer"
 brew "php"
 
 # brew "julia"
-# brew "perl"
 # brew "r"
 
 brew "kotlin"

@@ -536,6 +536,8 @@ brew "tfsec"
 # Generate Atlantis config for Terragrunt projects
 # https://github.com/transcend-io/terragrunt-atlantis-config
 
+# terrahash 
+
 # terrahelp
 # Tool providing extra functionality for Terraform
 # https://github.com/opencredo/terrahelp
@@ -2311,6 +2313,7 @@ brew "manim"
 # brew "inframap" # reads tfstate or HCL, diagram is ugly
 # brew "netlistsvg" # it's only for electronics
 # brew "structurizr-cli" # has the interesting ability to theme an ugly diagram
+# brew "terramaid" # converts a Terraform configuration into a Mermaid diagram
 # also, cloud mapper by Duo
 # also, diagrams on pypi
 # also, mermaid on npm

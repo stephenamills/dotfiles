@@ -2654,7 +2654,6 @@ brew "fex" # cut and awk alternative that tries to be more concise and readable
 brew "grex" # regex generator
 brew "hyperfine" # useful benchmarking tool
 brew "openssh"
-brew "rename"
 brew "sd" # sed replacement
 brew "s-search" # searches the web, also has a web interface
 brew "tailspin" # colorizes log files
@@ -2676,6 +2675,7 @@ cask "raycast" # can search DevDocs using an extension
 # brew "hq" # jq for HTML
 # brew "invoice" # generates pretty, professional invoices
 # brew "just" # runs project-specific commands, like Make
+# brew "rename" # renames files
 # brew "titlecase" # capitalizes titles
 # brew "tuc" # cut replacement
 # brew "watchman" # by Facebook - watches files and triggers actions

@@ -2826,18 +2826,14 @@ cask "dotnet-sdk" # runtime and compiler
 # 
 # Alloy: particularly strong for modeling data relationships, weaker for time and concurrent systems. Uses relational logic concepts.
 # Dafny: particularly strong for modeling and verifying sequential programs, weaker for time and concurrent systems. Uses Hoare logic concepts.
-# TLA+: particularly strong for modeling and verifying concurrent and distributed systems, weaker for data relationships. Uses temporal logic and set theory concepts.
-# Why3: like Dafny
-# 
+# Pluscal: not sure
 # If you are modeling and verifying a data-intensive system, Alloy might be the best choice. 
 # If you are modeling and verifying a sequential program, Dafny might be the best choice. 
-# If you are modeling and verifying a concurrent or backend system, TLA+ might be the best choice.
 # 
 # 
 # Estimate of applicability to diffcult backend problems:
 # TLA+ > Dafny > Alloy
 brew "dafny"
-brew "why3"
 cask "alloy" 
 cask "tla-plus-toolbox"
 

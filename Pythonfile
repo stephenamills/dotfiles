@@ -4,6 +4,7 @@ evenger
 git-sim
 jmespath
 okta-cli
+nornir_cli
 py-altdns
 scapy
 tacacs_plus

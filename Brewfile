@@ -569,6 +569,8 @@ brew "molecule"
 
 brew "djhtml" # indents Jinja templates
 brew "jinja2-cli" # jinja2
+# Also, Chef, Puppet, and SaltStack
+# Also, Nornir on PyPI
 
 
 # Kubernetes - Basic

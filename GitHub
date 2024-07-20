@@ -540,6 +540,8 @@ https://github.com/digitalinnovationone/trilha-css-desafio-01 # good landing pag
 https://github.com/codeyourfuture/html-css-module-project # I like the landing page image
 https://github.com/AllThingsSmitty/must-watch-css # has talk about Chrome DevTools
 
+Chrome Extensions
+
 Figma Plugins
 https://github.com/planetscale/figma-diagram-generator # truly superb video demonstration by Benjamin Dicken, Developer Educator at Planetscale - generates a FigJam diagram of your MySQL database using the Figma API and Planetscale API
 https://github.com/TwistoPayments/figma-export-diagrams-action # exports a diagram from Figma, from a GitHub Actions workflow
@@ -763,17 +765,24 @@ https://github.com/chiragyadav2003/Portfolio-App # bad performance - might be a 
 https://github.com/ebenezerdon/react-contact-cards # bad design but nice fast filtering
 https://github.com/unllamas/nextjs-page-transitions-with-framer-motion # ecommerce (not good)
 
-Wordpress
+Git & GitHub & GitOps
+https://github.com/tiimgreen/github-cheat-sheet
+
+Firebase
+
+OpenAPI
+
+Cloud Run
 
 Buildpacks & Nixpacks
 
+Docker
+
+Packer
+
 Terraform
 
-Ignition
-
--
-
-Cloud-init
+Ignition & Cloud-init
 https://github.com/hashicorp/learn-terraform-provisioning
 https://github.com/tomkins/cloud-init-vagrant
 https://github.com/craighurley/vagrant-cloud-init
@@ -828,13 +837,55 @@ https://github.com/rancher/elemental-toolkit
 https://github.com/iddocohen/vce_cloudinit
 https://github.com/exoscale/openbsd-cloud-init
 
-Docker
+Ansible
+
+Nomad
+
+Swarm
 
 Kubernetes
 
-Ansible
+Wordpress
+
+Rails
+
+Cloudinary
+
+MySQL & Vitess
+
+Backblaze
+
+Redis
+
+Kafka
+
+Clickhouse
+
+Elasticsearch
+
+Hasura
+
+GraphQL
+
+Spark
+
+Bug Bounty
+
+CodeQL
 
 Salesforce
+
+Upwork
+
+Zapier
+
+Unity
+
+Unreal
+
+Godot
+
+SceneKit
 
 Visual Studio Code
 https://github.com/ryuta46/vscode-multi-command # most useful extension

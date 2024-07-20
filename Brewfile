@@ -2774,7 +2774,8 @@ brew "ruby"
 # rubocop
 # rufo
 
-# brew "perl"
+brew "perl"
+# File::Rename
 
 brew "mint" # package manager for Swift
 # brew "chisel" # by Facebook - collection of LLDB commands
@@ -2826,21 +2827,19 @@ cask "dotnet-sdk" # runtime and compiler
 # Alloy: particularly strong for modeling data relationships, weaker for time and concurrent systems. Uses relational logic concepts.
 # Dafny: particularly strong for modeling and verifying sequential programs, weaker for time and concurrent systems. Uses Hoare logic concepts.
 # TLA+: particularly strong for modeling and verifying concurrent and distributed systems, weaker for data relationships. Uses temporal logic and set theory concepts.
-# 
-# The tool to use depends on the specific problem you are trying to solve. 
+# Why3: like Dafny
 # 
 # If you are modeling and verifying a data-intensive system, Alloy might be the best choice. 
 # If you are modeling and verifying a sequential program, Dafny might be the best choice. 
-# If you are modeling and verifying a concurrent or distributed system, TLA+ might be the best choice.
+# If you are modeling and verifying a concurrent or backend system, TLA+ might be the best choice.
 # 
-# Estimate of ease of use (from easiest to most difficult):
-# Alloy > Dafny > TLA+
 # 
 # Estimate of applicability to diffcult backend problems:
 # TLA+ > Dafny > Alloy
 brew "dafny"
-cask "alloy" # considered by some to be the most approachable, also strong for data relationships but weaker for time and concurrent systems
-cask "tla-plus-toolbox" # the best overall but with somewhat more of a learning curve
+brew "why3"
+cask "alloy" 
+cask "tla-plus-toolbox"
 
 # Audio
 cask "fl-studio"

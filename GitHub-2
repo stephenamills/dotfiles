@@ -999,6 +999,12 @@ https://github.com/whonore/dafny-pretty-progress # better command line output
 https://github.com/kumom/dafny-fatnode/
 https://github.com/hassaanmalik/algorithm-tutorials-in-dafny/
 
+WhyML
+https://github.com/backtracking/program-proofs-with-why3 # Program Proofs book
+https://github.com/haslab/why3do/ # leader selection, Paxos, networks and locks etc.
+https://github.com/creusot-rs/creusot # Rust
+https://github.com/xldenis/why3-tools
+
 TLA+
 https://github.com/lorin/lsm-tree-tla # log-structured merge tree
 https://github.com/langmartin/nomad-tla

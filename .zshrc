@@ -47,7 +47,6 @@ zstyle ':completion:*' list-colors '=(#b)*(-- *)=35=90'
 # Adds Perl's local::lib to the shell environment
 eval "$(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib=$HOME/perl5)"
 
-# The following are utility functions I use at the command line:
 
 # Deletes a line from the zsh history file
 del() {
@@ -55,7 +54,7 @@ del() {
   sed -i '' $1d ~/.zsh_history
 }
 
-# Loads the Google Cloud SDK – it's too bloated to load when the shell starts
+# Loads the Google Cloud SDK – it's too bloated to load everytime the shell starts
 gcloud() {
   # Check if Google Cloud SDK is installed
   if [ -d "$(brew --prefix)/share/google-cloud-sdk" ]; then
@@ -84,7 +83,7 @@ gitp() {
   git commit -m "$msg"
 
   git push
-}
+} alias gitc=gitp
 
 # Commits changes to a Git repository with an optional extended message, accepts 'l' or 'long' as an argument for an extended commit message
 gitpl() {
@@ -101,6 +100,16 @@ gitpl() {
   git commit -m "$msg" -m "$msg2"
 
   git push
+}
+
+# Updates my local Git repos
+gitu() {
+  for repo in ~/projects/*; do
+  if [ -d "$repo/.git" ]; then
+    cd $repo
+    git pull
+  fi
+done
 }
 
 # Installs multiple .pkg files

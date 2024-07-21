@@ -2528,8 +2528,8 @@ brew "boringtun"
 brew "openconnect" # client for Palo Alto, Cisco, Juniper, and Fortinet VPNs
 brew "vpn-slice"
 cask "ngrok"
-cask "tailscale"
 
+# Also, see Tailscale below (Mac App Store) 
 # brew "wireguard-go"
 # brew "wireguard-tools"
 
@@ -2899,6 +2899,7 @@ cask "microsoft-auto-update"
 cask "replay"
 cask "visual-studio-code"
 mas "hiddenbar", id: 1452453066
+mas "tailscale", id: 1475387142
 mas "telegram", id: 747648890
 mas "vimari", id: 1480933944
 vscode "alygin.vscode-tlaplus"

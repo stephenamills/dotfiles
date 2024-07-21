@@ -2901,6 +2901,8 @@ cask "visual-studio-code"
 mas "hiddenbar", id: 1452453066
 mas "telegram", id: 747648890
 mas "vimari", id: 1480933944
+vscode "alygin.vscode-tlaplus"
+vscode "ArashSahebolamri.alloy"
 vscode "astro-build.astro-vscode"
 vscode "bierner.markdown-mermaid"
 vscode "biomejs.biome"

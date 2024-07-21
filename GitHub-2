@@ -775,11 +775,15 @@ Cloud Run
 
 Buildpacks & Nixpacks
 
+Continuous Integration
+
 Docker
 
 Packer
 
 Terraform
+
+Pulumi
 
 Ignition & Cloud-init
 https://github.com/hashicorp/learn-terraform-provisioning
@@ -836,13 +840,29 @@ https://github.com/rancher/elemental-toolkit
 https://github.com/iddocohen/vce_cloudinit
 https://github.com/exoscale/openbsd-cloud-init
 
+Wireguard
+
 Ansible
+
+Nornir
+
+Saltstack
+
+Chef
 
 Nomad
 
+Kubernetes
+
 Swarm
 
-Kubernetes
+Kamal
+
+Traefik
+
+DNS & Certificates
+
+Vault
 
 Wordpress
 
@@ -850,9 +870,17 @@ Rails
 
 Cloudinary
 
+Backblaze
+
+Schema
+
+GraphQL
+
+Hasura
+
 MySQL & Vitess
 
-Backblaze
+Postgres & Citus
 
 Redis
 
@@ -862,9 +890,7 @@ Clickhouse
 
 Elasticsearch
 
-Hasura
-
-GraphQL
+Colab
 
 Spark
 
@@ -885,6 +911,10 @@ Unreal
 Godot
 
 SceneKit
+
+Jetbrains
+
+Xcode
 
 Visual Studio Code
 https://github.com/ryuta46/vscode-multi-command # most useful extension

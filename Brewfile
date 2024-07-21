@@ -2822,6 +2822,11 @@ cask "dotnet-sdk" # runtime and compiler
 # brew "erlang"
 # brew "elixir"
 
+# brew "cmake"
+# brew "conan"
+# brew "llvm"
+
+
 # Lightweight Formal Methods
 # 
 # Alloy: particularly strong for modeling data relationships, weaker for time and concurrent systems. Uses relational logic concepts.

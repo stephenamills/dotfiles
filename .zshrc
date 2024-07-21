@@ -83,7 +83,8 @@ gitp() {
   git commit -m "$msg"
 
   git push
-} alias gitc=gitp
+} 
+alias gitc=gitp
 
 # Commits changes to a Git repository with an optional extended message, accepts 'l' or 'long' as an argument for an extended commit message
 gitpl() {

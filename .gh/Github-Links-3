@@ -919,8 +919,8 @@ Jetbrains
 Xcode
 
 Visual Studio Code
-https://github.com/LukvonStrom/copilot-verification # Chat extension - verifies Python code using preconditions and postconditions
-https://github.com/phoevos/vscode-extension-verifier #
+https://github.com/lukvonstrom/copilot-verification # Chat extension - verifies Python code or creates tests using preconditions and postconditions
+https://github.com/phoevos/vscode-extension-verifier # verifies Python code or creates tests using preconditions and postconditions
 https://github.com/ScottHolden/CopilotChatExtensions # three examples
 https://github.com/jonlester/vscode-copilot-dev
 https://github.com/flaviodelgrosso/wikipedia-participant # Wikipedia

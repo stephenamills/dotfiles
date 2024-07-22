@@ -3,6 +3,7 @@ tap "replicate/tap"
 tap "supabase/tap"
 
 # Git
+brew "bit-git" # better interface
 brew "gitless" # better interface
 brew "git-branchless" # better interface 
 brew "git-town" # better interface supporting multiple branch strategies

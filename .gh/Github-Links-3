@@ -919,10 +919,18 @@ Jetbrains
 Xcode
 
 Visual Studio Code
-https://github.com/flaviodelgrosso/wikipedia-participant
+https://github.com/LukvonStrom/copilot-verification # Chat extension - verifies Python code using preconditions and postconditions
+https://github.com/phoevos/vscode-extension-verifier #
+https://github.com/ScottHolden/CopilotChatExtensions # three examples
+https://github.com/jonlester/vscode-copilot-dev
+https://github.com/flaviodelgrosso/wikipedia-participant # Wikipedia
+https://github.com/harrybin/vscode-copilot-extension # GitHub issue
+https://github.com/microsoft/vscode-extension-samples/ # official example
+https://github.com/nksleiman/vscode-extension
 
 https://github.com/microsoft/mastering-github-copilot-for-paired-programming
 https://github.com/skills/copilot-codespaces-vscode
+https://github.com/xNul/codestral-mamba-for-vscode # Mistral Codestral
 https://github.com/continuedev/continue
 https://github.com/xNul/code-llama-for-vscode
 https://github.com/hieunc229/copilot-clone
@@ -1323,3 +1331,5 @@ https://github.com/paulpatault/convex-hull
 https://github.com/creusot-rs/creusot # Rust
 https://github.com/zhang-xiyue/evm-why3
 https://github.com/xldenis/why3-tools
+
+Property & Concolic Testing

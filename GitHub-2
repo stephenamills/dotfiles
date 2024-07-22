@@ -1024,6 +1024,91 @@ https://github.com/microsoft/python-sample-vscode-flask-tutorial # Tutorials - F
 https://github.com/mike-works/vscode-fundamentals # workshop
 
 Alloy
+https://github.com/kaiyuanw/mualloy # n queens, binary tree, linked list, farmer crossing river, halmos handshake
+https://github.com/mk12/zeldalloy # Zelda puzzles
+https://github.com/rytisgit/alloytest/ # five people ChatGPT riddle
+https://github.com/lorin/alloy-fish # who own the fish problem
+https://github.com/badboy/puzzles # puzzles
+https://github.com/rezaazimi1/sudoku-model-in-alloy # sudoku
+https://github.com/hosseink77/alloyproject2/ # sudoku
+
+https://github.com/leonidsh119/scheduller-model/ # scheduler
+https://github.com/sanchitmonga22/Software-Modeling/ # scheduler
+https://github.com/CISC422/alloy-sample-models # binary tree, lists, stacks, topological sort
+https://github.com/YoinkBird/alloy_learn/ # red black tree
+https://github.com/gracejiang16/bellmanford-adhoc # shortest path
+https://github.com/avanhatt/minimum-spanning-trees-alloy # minimum spanning tree of a graph
+https://github.com/PaulWarnick21/Prims-Algorithm-Alloy # minimum spanning tree of a graph
+https://github.com/AlloyTools/models # filesystem tree
+https://github.com/jthemphill/permission-model # filesystem tree
+https://github.com/IagoAbal/darcs-alloy/ # version control
+https://github.com/vitorhugo13/feup-mfes/ # graph, stack
+
+https://github.com/devd/websecmodel # web security model
+
+https://github.com/coreflexive/algebra # lattice
+https://github.com/asvarga/alloy-algebra/ # groups, graphs
+https://github.com/Fellenex/PhraseStructure # linguistics x bar theory
+https://github.com/rossgore/alloy-tutorial # pacman
+https://github.com/lorin/alloy-consistency # eventual consistency
+https://github.com/lorin/alloy-consistency-models # consistency models of transactional databases
+https://github.com/orm011/tablespec/ # database table
+https://github.com/bradford-smith94/alloy-raft # Raft (pretty simple)
+https://github.com/lorin/paxos-poec # Paxos
+https://github.com/soaresCecilia/PaxosAlgorithms # Paxos
+https://github.com/thalesmg/2pc-alloy # commit
+https://github.com/bolt12/alloy-pastry-dht # DHT Pastry protocol
+https://github.com/pron/amazon-snapshot-spec # database isolation
+https://github.com/lorin/dns-alloy # DNS
+https://github.com/fredzqm/Tcp-verification/ # TCP
+https://github.com/pastorsj/RDTProtocol/ # reliable data transfer protocol
+https://github.com/hazzargm/373-Formal-Methods-Project # reliable data transfer protocol
+https://github.com/J-Savela/tilpelabra/ # network something
+https://github.com/redacted-moose/CSSE373-Project/
+https://github.com/Geosef/CSSE373-Project
+
+https://github.com/mcharle/citElevators # elevators
+https://github.com/sydneyhnguyen/cs340project/ # malloc in C
+https://github.com/vinahradau/finma/ # bank data regulation
+https://github.com/qducasse/wtp_alloy/ # water tank
+https://github.com/nadeshr/weak_atomics # circular buffer
+https://github.com/Eggy115/Alloy/ # mark sweep garbage collection
+https://github.com/kmcallister/gc-models # garbage collector
+https://github.com/sambacha/tlp-plus-alloy # dining philosophers
+https://github.com/leonidsh119/audacity-alloy-model/ # Audacity
+https://github.com/leonidsh119/audacity-layered-model # Audacity again
+https://github.com/kyessenov/poirot/
+https://github.com/vishucmu/models_structuralmodelling
+https://github.com/goens/pop-alloy/ # memory model
+https://github.com/iotauth/security_analysis/ # security analysis of Swarm Toolkit
+https://github.com/team-counterpoint/tcmc-path # transitive closure
+https://github.com/lucagrammer/LeoniLocarnoMinotti/ # online store
+https://github.com/nicoatuni/smart-contract-vuln # smart contact exploit
+https://github.com/Mohannadcse/IoTCOM # exploits
+https://github.com/SaberMirzaei/Alloy-Model-of-MCA # consensus-based auction protocols
+https://github.com/hkhojasteh/CANBus # serial bus
+https://github.com/wmeyer/smart-contract-validation # smart contract
+
+https://github.com/johnwickerson/memalloy
+https://github.com/NVlabs/litmustestgen
+https://github.com/dgpv/miniscript-alloy-spec
+https://github.com/kepae/alloy-coin
+https://github.com/mattdf/protocol-models/
+https://github.com/guilhermeolivsilva/alloy-mini-project # mailbox
+https://github.com/ctrippel/checkmate # chip microarchitecture exploits
+https://github.com/daniellustig/riscv-memory-model # RISC-V memory model
+https://github.com/StefanosChaliasos/zk-rollup-security # blockchain zero knowledge rollups
+https://github.com/vasil-sd/engineering-sw-hw-model-checking-letures/ # garbage collection
+https://github.com/5Quintessential/FMAlloyAnalysis # no idea
+https://github.com/fala-cidadao/formal-specification/ # doesn't make sense but nice headings
+
+https://github.com/fstakem/alloy_book # Software Abstractions book
+https://github.com/huanhulan/alloy-exercises # Software Abstractions book
+https://github.com/msramalho/feup-mfes-summary # exercises
+https://github.com/xbreu/formal-methods # course exercises
+https://github.com/kencoba/alloy-introduction/ # brief introduction
+https://github.com/AndreaPrati98/alloy-exe/ # meh exercises
+https://github.com/parlarjb/finding_bugs_no_code # Strange Loop talk
 
 Dafny
 https://github.com/hath995/dafny/ # about 20 leetcode problems
@@ -1037,6 +1122,7 @@ https://github.com/kluxa/dafny-algorithms # arrays and sorting
 https://github.com/gaberch/various-algorithms-verified-with-dafny # short code
 https://github.com/uw-ece653/dafny # has bubble sort and a few other examples
 https://github.com/vladstejeroiu/Dafny-programs/ # has AVL tree, transitive reduciton of a graph, and multiple basic data structures
+https://github.com/vitorhugo13/feup-mfes/ # binary search, insertion sort, queue
 https://github.com/rposchinger/dafny-avl-tree/ # AVL tree
 https://github.com/89oinotna/dafny-exercises #
 https://github.com/PaulaPastorPerez/TFM # greedy algorithms

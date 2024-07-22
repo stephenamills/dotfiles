@@ -13,8 +13,11 @@
     "editor.defaultFormatter": "mkhl.shfmt",
     "editor.formatOnSave": false
   },
+
   "breadcrumbs.enabled": false,
+
   "debug.javascript.codelens.npmScripts": "never",
+
   "editor.codeActionsOnSave": {
     "source.addMissingImports": "explicit",
     "source.fixAll": "explicit",
@@ -27,8 +30,7 @@
   "editor.fontSize": 13,
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
-  // Removes the space used mainly for debugging indicators.
-  "editor.glyphMargin": false,
+  "editor.glyphMargin": false, // Removes the space used mainly for debugging indicators.
   "editor.hover.sticky": true,
   "editor.inlayHints.enabled": "offUnlessPressed",
   "editor.inlineSuggest.enabled": true,
@@ -48,9 +50,12 @@
   "editor.tabSize": 2,
   "editor.wordBasedSuggestions": "off",
   "editor.wordSeparators": "`~!@#%^&*()=+[{]}\\|;:'\",.<>/?",
+
   "eslint.lintTask.enable": true,
+
   "explorer.confirmDelete": false,
   "explorer.confirmDragAndDrop": false,
+
   "files.associations": {
     "*.json": "jsonc"
   },
@@ -59,10 +64,12 @@
   "files.autoSaveWhenNoErrors": true,
   "files.defaultLanguage": "{activeEditorLanguage}",
   "files.simpleDialog.enable": true,
+
   "git.allowForcePush": true,
   "git.autofetch": true,
   "git.enableSmartCommit": true,
   "git.postCommitCommand": "push",
+
   "javascript.inlayHints.enumMemberValues.enabled": true,
   "javascript.inlayHints.functionLikeReturnTypes.enabled": true,
   "javascript.inlayHints.parameterNames.enabled": "literals",
@@ -70,6 +77,7 @@
   "javascript.inlayHints.propertyDeclarationTypes.enabled": true,
   "javascript.inlayHints.variableTypes.enabled": true,
   "javascript.updateImportsOnFileMove.enabled": "always",
+
   "search.exclude": {
     "**/*.snap": true,
     "**/*.svg": true,
@@ -94,14 +102,19 @@
     "**/temp": true,
     "**/yarn.lock": true
   },
+
   "security.workspace.trust.enabled": false,
+
   "shellcheck.run": "manual",
+
   "terminal.integrated.cursorBlinking": true,
   "terminal.integrated.cursorStyle": "underline",
   "terminal.integrated.cwd": "/Users/steph/projects",
   "terminal.integrated.persistentSessionReviveProcess": "never",
+
   "totalTypeScript.hideAllTips": false,
   "totalTypeScript.hideBasicTips": false,
+
   "typescript.inlayHints.enumMemberValues.enabled": true,
   "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
   "typescript.inlayHints.parameterNames.enabled": "all",
@@ -109,21 +122,21 @@
   "typescript.inlayHints.propertyDeclarationTypes.enabled": true,
   "typescript.inlayHints.variableTypes.enabled": true,
   "typescript.updateImportsOnFileMove.enabled": "always",
+
   "update.mode": "manual",
   "update.showReleaseNotes": false,
+
   "window.autoDetectColorScheme": true,
   "window.commandCenter": false,
   "window.confirmSaveUntitledWorkspace": false,
   "window.title": "${rootName}",
   "window.titleBarStyle": "custom",
+
   "workbench.colorTheme": "Visual Studio Light",
   "workbench.editor.closeOnFileDelete": true,
   "workbench.editor.highlightModifiedTabs": true,
   "workbench.editor.limit.enabled": true,
-  "workbench.editor.limit.value": 5,
-  "workbench.editorAssociations": {
-    "*.md": "vscode.markdown.preview.editor"
-  },
+  "workbench.editor.limit.value": 4,
   "workbench.fontAliasing": "antialiased",
   "workbench.iconTheme": "eq-material-theme-icons",
   "workbench.preferredDarkColorTheme": "Visual Studio Dark",

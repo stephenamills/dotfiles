@@ -17,10 +17,6 @@ Docker
 
 Packer
 
-Terraform
-
-Pulumi
-
 Ignition & Cloud-init
 https://github.com/hashicorp/learn-terraform-provisioning
 https://github.com/tomkins/cloud-init-vagrant
@@ -75,6 +71,10 @@ https://github.com/kalenarndt/packer-vsphere-cloud-init
 https://github.com/rancher/elemental-toolkit
 https://github.com/iddocohen/vce_cloudinit
 https://github.com/exoscale/openbsd-cloud-init
+
+Terraform
+
+Pulumi
 
 Wireguard
 

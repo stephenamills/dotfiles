@@ -65,8 +65,8 @@
   "files.defaultLanguage": "{activeEditorLanguage}",
   "files.simpleDialog.enable": true,
 
-  "git.allowForcePush": true,
   "git.autofetch": true,
+  "git.defaultCloneDirectory": "~/projects",
   "git.enableSmartCommit": true,
   "git.postCommitCommand": "push",
 

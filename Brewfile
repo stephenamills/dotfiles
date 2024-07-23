@@ -2065,16 +2065,20 @@ brew "levant" # templating and deployment tool for jobs
 # Databases
 # brew "cassandra" # column-oriented database
 # brew "clickhouse" # column-oriented database
-# brew "dynein" # DynamoDB client
-# brew "etcd" # replicated BoltDB
+# brew "citus" # replicated Postgres
 # brew "mysql"
-# brew "redis" # in-memory key/value store
+# brew "postgresql"
 # brew "rqlite" # replicated SQLite (good documentation, in Go)
 # brew "sqlite" 
 # brew "vitess" # replicated MySQL
-# Also, see Porcupine checker on pkg.go.dev and MIT 6.5840
-# Also, see Spanner and LevelDB
-# Also, see ScyllaDB
+
+# brew "redis" # in-memory key/value store
+
+# brew "dynein" # DynamoDB client
+# brew "etcd" # replicated BoltDB
+# Also, Porcupine checker on pkg.go.dev, and MIT 6.5840
+# Also, Spanner and LevelDB
+# Also, ScyllaDB
 
 # brew "atlas" # 
 # brew "goose" # database migration
@@ -2088,8 +2092,6 @@ brew "levant" # templating and deployment tool for jobs
 # brew "sql-migrate" # SQL schema migrations
 # Also, see SchemaHero on pkg.go.dev
 
-# brew "citus" # replicated PostgreSQL
-# brew "postgresql" # possibly relevant for geo features or something
 # brew "tile38" #  geolocation data store, spatial index, and realtime geofence - their landing page animation is very good
 
 # Search
@@ -2884,7 +2886,7 @@ brew "replicate/tap/replicate" # runs machine learning models in their cloud
 brew "robot-framework" # automation testing
 brew "sops"
 brew "stripe-cli"
-brew "supabase"
+brew "supabase/tap/supabase"
 brew "webpod" # deploys JavaScript apps to DigitalOcean, Linode, Vultr, GCP, AWS, or Azure
 brew "xq"
 brew "xurls" # extracts urls from text - could be very useful

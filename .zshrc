@@ -72,6 +72,11 @@ gcloud() {
   fi
 }
 
+# Searches GitHub repositories
+ghs() {
+  gh search repos $@
+}
+
 # Commits changes to a Git repository
 gitp() {
   # Prompt for the commit message
@@ -101,11 +106,6 @@ gitpl() {
   git commit -m "$msg" -m "$msg2"
 
   git push
-}
-
-# Searches GitHub repositories
-ghs() {
-  gh search repos $@
 }
 
 # Updates my local Git repos

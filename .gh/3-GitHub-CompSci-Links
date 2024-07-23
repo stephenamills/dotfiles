@@ -1,6 +1,7 @@
 Links to useful GitHub repos
 
 Alloy
+https://github.com/alloytools/models # several technologies, eight puzzles, and much more
 https://github.com/kaiyuanw/mualloy # n queens, binary tree, linked list, farmer crossing river, halmos handshake
 https://github.com/mk12/zeldalloy # Zelda puzzles
 https://github.com/rytisgit/alloytest/ # five people ChatGPT riddle
@@ -15,19 +16,18 @@ https://github.com/CISC422/alloy-sample-models # binary tree, lists, stacks, top
 https://github.com/YoinkBird/alloy_learn/ # red black tree
 https://github.com/gracejiang16/bellmanford-adhoc # shortest path
 https://github.com/avanhatt/minimum-spanning-trees-alloy # minimum spanning tree of a graph
-https://github.com/PaulWarnick21/Prims-Algorithm-Alloy # minimum spanning tree of a graph
-https://github.com/AlloyTools/models # filesystem tree
+https://github.com/paulwarnick21/prims-algorithm-alloy # minimum spanning tree of a graph
 https://github.com/jthemphill/permission-model # filesystem tree
 https://github.com/IagoAbal/darcs-alloy/ # version control
 https://github.com/vitorhugo13/feup-mfes/ # graph, stack
 
 https://github.com/devd/websecmodel # web security model
 https://github.com/iotauth/security_analysis/ # security analysis of Swarm Toolkit
-https://github.com/Mohannadcse/IoTCOM # exploits
+https://github.com/mohannadcse/iotcom # exploits
 https://github.com/ctrippel/checkmate # chip microarchitecture exploits
 
 https://github.com/asvarga/alloy-algebra/ # groups, graphs
-https://github.com/Fellenex/PhraseStructure # linguistics x bar theory
+https://github.com/fellenex/phrasestructure # linguistics x bar theory
 https://github.com/rossgore/alloy-tutorial # pacman
 https://github.com/lorin/alloy-consistency # eventual consistency
 https://github.com/lorin/alloy-consistency-models # consistency models of transactional databases
@@ -39,19 +39,19 @@ https://github.com/thalesmg/2pc-alloy # commit
 https://github.com/bolt12/alloy-pastry-dht # DHT Pastry protocol
 https://github.com/pron/amazon-snapshot-spec # database isolation
 https://github.com/lorin/dns-alloy # DNS
-https://github.com/fredzqm/Tcp-verification/ # TCP
-https://github.com/pastorsj/RDTProtocol/ # reliable data transfer protocol
-https://github.com/hazzargm/373-Formal-Methods-Project # reliable data transfer protocol
+https://github.com/fredzqm/tcp-verification/ # TCP
+https://github.com/pastorsj/rdtprotocol/ # reliable data transfer protocol
+https://github.com/hazzargm/373-formal-methods-project # reliable data transfer protocol
 https://github.com/J-Savela/tilpelabra/ # network something
 https://github.com/redacted-moose/csse373-project/
 https://github.com/geosef/csse373-project
 
-https://github.com/mcharle/citElevators # elevators
+https://github.com/mcharle/citelevators # elevators
 https://github.com/sydneyhnguyen/cs340project/ # malloc in C
 https://github.com/vinahradau/finma/ # bank data regulation
 https://github.com/qducasse/wtp_alloy/ # water tank
 https://github.com/nadeshr/weak_atomics # circular buffer
-https://github.com/Eggy115/Alloy/ # mark sweep garbage collection
+https://github.com/eggy115/alloy/ # mark sweep garbage collection
 https://github.com/kmcallister/gc-models # garbage collector
 https://github.com/sambacha/tlp-plus-alloy # dining philosophers
 https://github.com/leonidsh119/audacity-alloy-model/ # Audacity
@@ -60,22 +60,22 @@ https://github.com/kyessenov/poirot/
 https://github.com/vishucmu/models_structuralmodelling
 https://github.com/goens/pop-alloy/ # memory model
 https://github.com/team-counterpoint/tcmc-path # transitive closure
-https://github.com/lucagrammer/LeoniLocarnoMinotti/ # online store
+https://github.com/lucagrammer/leonilocarnominotti/ # online store
 https://github.com/nicoatuni/smart-contract-vuln # smart contact exploit
-https://github.com/SaberMirzaei/Alloy-Model-of-MCA # consensus-based auction protocols
-https://github.com/hkhojasteh/CANBus # serial bus
+https://github.com/sabermirzaei/alloy-model-of-mca # consensus-based auction protocols
+https://github.com/hkhojasteh/canbus # serial bus
 https://github.com/wmeyer/smart-contract-validation # smart contract
 
 https://github.com/johnwickerson/memalloy
-https://github.com/NVlabs/litmustestgen
+https://github.com/nvlabs/litmustestgen
 https://github.com/dgpv/miniscript-alloy-spec
 https://github.com/kepae/alloy-coin
 https://github.com/mattdf/protocol-models/
 https://github.com/guilhermeolivsilva/alloy-mini-project # mailbox
 https://github.com/daniellustig/riscv-memory-model # RISC-V memory model
-https://github.com/StefanosChaliasos/zk-rollup-security # blockchain zero knowledge rollups
+https://github.com/stefanoschaliasos/zk-rollup-security # blockchain zero knowledge rollups
 https://github.com/vasil-sd/engineering-sw-hw-model-checking-letures/ # garbage collection
-https://github.com/5Quintessential/FMAlloyAnalysis # no idea
+https://github.com/5quintessential/fmalloyanalysis # no idea
 https://github.com/fala-cidadao/formal-specification/ # doesn't make sense but nice headings
 
 https://github.com/fstakem/alloy_book # Software Abstractions book

@@ -1,0 +1,351 @@
+This file is for more links to useful GitHub repos
+
+Figma Diagrams
+https://www.figma.com/community/file/898328004567525828/figma-denver-figma-to-code-a-2-month-journey # by Bernardo Ferrari - by far the best, backend services high-level design
+https://github.com/figma/architecture-diagram-components # backend services
+https://www.figma.com/community/file/1170803096873778028 # pretty boxes
+https://www.figma.com/community/file/989576823914996434 # Azure, characteristic thin stroke widths and readable dark-gray white colors, great typeface in the title
+https://www.figma.com/community/file/989580565034038997 # Google Cloud
+https://www.figma.com/community/file/1332727463398521641 # Google Cloud but a light purple color scheme
+https://www.figma.com/community/file/989585391556898521 # Amazon Web Services
+https://www.figma.com/community/file/1270646590275827451 # Amazon Web Services again
+https://www.figma.com/community/file/1015543187940120536 # isometric, backend services
+https://www.figma.com/community/file/1100594710452335478 # backend network components
+https://www.figma.com/community/file/1181669867394898197 # Next.js, reasonable design but cluttered organization
+https://www.figma.com/community/file/1210597707576958150 # frontend software components
+https://www.figma.com/community/file/1360427005422508305 # decent boxes - worth a look
+https://www.figma.com/community/file/1100595369945365367 # decent boxes
+https://www.figma.com/community/file/1185232488113502917 # dry but okay
+https://www.figma.com/community/file/820081222141219396 # world map with servers on it
+https://www.figma.com/community/file/942962960153833125 # very bare skeleton template
+https://www.figma.com/community/file/1289282634966901135 # backend services
+https://www.figma.com/community/file/1070898072758580221 # sequence diagram but less precise or detailed (a flow chart)
+https://www.figma.com/community/file/1098826965587543878 # sequence diagram
+https://www.figma.com/community/file/1332787058464624480 # flow chart with an odd color scheme
+https://github.com/paulmsmith/govuk-designsystem-flow-diagram-figma # flow diagram
+https://www.figma.com/community/file/1130941125659035137 # it's okay, just horizontal boxes
+https://github.com/planetscale/figma-diagram-generator # creates a diagram of your MySQL database using the FigJam API and Planetscale API
+https://github.com/logeast/figma-uml-widget # creates a UML table diagram
+https://www.figma.com/community/file/1077327065994144868 # database table
+https://www.figma.com/community/file/1201120438270691192/db-diagram-sql-server-mongodb # database table
+https://www.figma.com/community/file/1118686866512029331 # not good but the icon of the post is
+https://www.figma.com/community/file/1155981953755812052 # Bitmoji
+
+Figma Plugins
+https://github.com/planetscale/figma-diagram-generator # truly superb video demonstration by Benjamin Dicken, Developer Educator at Planetscale - generates a FigJam diagram of your MySQL database using the Figma API and Planetscale API
+https://github.com/TwistoPayments/figma-export-diagrams-action # exports a diagram from Figma, from a GitHub Actions workflow
+https://github.com/marcomontalbano/figma-export # exports any Figma component for use in your website or anywhere
+https://github.com/logeast/figma-uml-widget # creates a UML table diagram
+https://github.com/arthur-fontaine/figtable # also creates a UML table diagram
+https://github.com/brianlovin/figma-dominant-color-toolkit # generates a color palette from an image and beautifully colors your design
+https://github.com/mattdesl/figma-plugin-palette # generates a color palette from an image
+https://github.com/alexwidua/figma-easing-gradients # edits a color gradient using animation curves
+https://github.com/aaroniker/figma-easometric # tool to make an isometric object
+https://github.com/feathericons/figma-feather # quick access to Feather icons
+https://github.com/realvjy/3dicons-figma # 3dicons
+https://github.com/aaroniker/figma-remove-bg # removes the background of an image
+https://github.com/six7/figma-batch-styler # by Jan Six - batch edits text styles
+https://github.com/evilmartians/figma-polychrom # by Evil Martians - displays contrast level and font size recommendation
+https://github.com/danhollick/zebra # lightweight APCA color contrast plugin
+https://github.com/hugo-dz/figma_autoname_client_app # creates names for layers
+https://github.com/andreincu/styler # creates styles for layers
+https://github.com/dokozero/okcolor # color picker
+https://github.com/kawamurakazushi/figma-walker # searches frames and components and jumps to the selected one
+https://github.com/glmrvn/Appearance-figma-plugin # generates a light/dark mode theme
+https://github.com/yenargy/figma-pattern-hero # arranges items into a grid
+https://github.com/codelastnight/to-path-figma # places objects on a path
+https://github.com/brianlovin/figma-responsify # quickly test designs across multiple screen sizes
+https://github.com/ahkohd/FigmaThird # imports a 3D model
+https://github.com/Convertiv/handoff-app # design tokens
+https://github.com/tokens-studio/figma-plugin # by Jan Six - Tokens Studio
+https://github.com/tokens-studio/plugin-examples # by Jan Six - starter templates for Figma Tokens GitHub sync
+https://github.com/tokens-bruecke/figma-plugin # design tokens
+https://github.com/alexwidua/figma-beautiful-shadows # creates smooth shadows by placing a light source
+https://github.com/ph1p/figma-measure # Shows measurement lines
+https://github.com/yenargy/figma-better-font-picker # better font picker
+https://github.com/adispezio/figma-plugin-example-prototype-write # links together objects in a prototype
+https://github.com/the-dataface/figma2html # converts a frame to HTML
+https://github.com/DWilliames/google-sheets-sync-figma # Google Sheets
+https://github.com/jordansinger/figma-slack-updates # posts daily file changes to Slack
+https://github.com/destefanis/figma-table-of-contents # creates a table of contents for your project
+https://github.com/brianlovin/figma-export-zip # exports assets to a zip file
+https://github.com/ParthJadhav/Tkinter-Designer # uses the Figma API to analyze a design file and run code in a UI
+https://github.com/streamlit/figma-to-streamlit # by Streamlit - converts a Figma component into a Streamlit code snippet
+https://github.com/tushar7d/Project-Scaffold-Figma-Plugin # scaffolds a project
+https://github.com/thomas-lowry/status-annotations # annotates a design with its progress/status
+https://github.com/petekp/diagrammaton-figma-plugin # diagram
+https://github.com/diagram/diagram-figma-plugin-template # diagram or something
+https://github.com/axorax/tkforge
+https://github.com/pavellaptev/json-to-figma
+https://github.com/figma/code-snippet-editor-plugin
+https://github.com/figma/plugin-samples # official sample plugins
+https://github.com/figma/variables-github-action-example # by Figma - GitHub Actions workflows for syncing tokens or variables from a codebase to Figma
+https://github.com/daangn/icona # exports SVG files to GitHub
+https://github.com/bernaferrari/figmatocode
+https://github.com/builderio/figma-html
+https://github.com/builderio/micro-agent
+https://github.com/builderio/vscode
+https://github.com/bricks-cloud/bricks
+https://github.com/ddanielbee/figma-fsm # Figma to Xstate state machine
+https://github.com/ayush013/fig-gen # markets itself as the best HTML converter
+https://github.com/sergcen/html-to-figma
+https://github.com/react-figma/react-figma
+https://github.com/kazuyaseki/figma-to-react
+https://github.com/jake-figma/component-inspector # inspects a component
+https://github.com/microsoft/figma-variables-import # by Microsoft - imports variables
+https://github.com/figma/code-connect
+https://github.com/eBay/figma-include-accessibility-annotations # by eBay
+https://github.com/bryanberger/figma-discord-presence # Discord presence
+https://github.com/placemark/figma-plugin # creates an Open Street Map
+https://github.com/kawamurakazushi/figma-map-maker # creates a map like Google Maps or Mapbox
+https://github.com/yagudaev/figma-to-json # read and write Figma files without opening it
+https://github.com/gridaco/assistant
+https://github.com/whoisryosuke/styled-theme-generator
+https://github.com/destefanis/design-lint # checks a design
+https://github.com/d01000100/figma-token-engine
+https://github.com/lukasoppermann/design-tokens # exports design tokens to JSON
+https://github.com/lukasoppermann/design-token-transformer
+https://github.com/divriots/style-dictionary-to-figma
+https://github.com/leadream/heron-handoff
+https://github.com/TalmSnir/FigmaOP-open-source-Figma-plugins # FigmaOp project and plugin collection
+https://github.com/figma/plugin-resources # collection of plugins
+https://github.com/yuanqing/figma-plugins # collection of plugins
+https://github.com/react-figma/awesome-figma # plugins and resources
+https://github.com/rsms/figplug # by Rasmus - figma plugin starter
+https://github.com/rsms/scripter # By Rasmus
+https://github.com/JB1905/react-figma-ui
+https://github.com/thomas-lowry/figma-plugin-boilerplate # no-framework starter kit
+https://github.com/yuanqing/create-figma-plugin # starter kit
+https://github.com/nirsky/figma-plugin-react-template # React starter kit
+https://github.com/CoconutGoodie/figma-plugin-react-vite # React starter kit
+https://github.com/react-figma/react-figma-boilerplate # React project template
+https://github.com/dittowords/figma-plugin-react-template
+https://github.com/thomas-lowry/figsvelte # Svelte starter kit
+https://github.com/aarongarciah/figma-plugin-typescript-boilerplate
+https://github.com/Lona/figma-jsonrpc
+https://github.com/mattdesl/fika # plugin generator
+https://github.com/figma-plugin-helper-functions/figma-plugin-helpers # helper functions
+https://github.com/figma/rest-api-spec # Figma OpenAPI specification and TypeScript types
+https://github.com/figma/plugin-typings # Figma API typings
+https://github.com/react-figma/figma-api-stub # Figma API stub implementation
+https://github.com/pocka/figspec # Figma spec viewer
+https://github.com/slawomirkolodziej/figma-api-exporter # export assets from Figma API
+https://github.com/Wattenberger/Datavizer
+https://github.com/colebemis/figma-hosted-export
+https://github.com/leadream/figma-icon-automation
+https://github.com/destefanis/auto-theme # themes a design
+https://github.com/jan-dh/figma-tailwindcss # Tailwind
+https://github.com/figma/sds # does something with Figma Code Connect and React
+https://github.com/SaraVieira/svg-to-jsx # copies SVG as a React component
+https://github.com/marcomontalbano/figma-export # export Figma components and use them directly on a website
+https://github.com/thomas-lowry/figma-plugin-ds # design system for use in Figma plugins
+https://github.com/dicebear/exporter-plugin-for-figma
+https://github.com/KlausSchaefers/figma-low-code
+https://github.com/gridaco/code
+https://github.com/CodelyTV/figma-plugin-skeleton
+https://github.com/tsimenis/figma-export-icons
+https://github.com/irustm/figma-to-angular
+https://github.com/kat-tax/figma-to-react-native
+https://github.com/bannzai/Sigma
+https://github.com/Tgemayel/variable-fonts-figma
+https://github.com/alyssaxuu/figma-to-google-slides
+https://github.com/HcySunYang/vue3-figma-plugin-starter
+https://github.com/CaelumF/FigmaToCompose
+https://github.com/tiltshift/figmint
+https://github.com/alyssaxuu/figma-platformer-engine
+https://github.com/jordansinger/build-it-figma-ai
+https://github.com/realvjy/Cool-Loaders-SwiftUI
+https://github.com/buildo/bento-design-system
+https://github.com/SoYoung210/figleton
+https://github.com/colebemis/figjam-live-code-block
+https://github.com/liaobinbin/fig-to-json
+https://github.com/c5inco/shape-composer-figma
+https://github.com/rsms/TypoFig
+https://github.com/kaleidocode-app/kaleidocode
+https://github.com/ixtgorilla/figma-code-highlighter
+https://github.com/px2code/Figma-to-HTML
+https://github.com/basiclines/figma-content-buddy
+https://github.com/jordansinger/livedraw-figma
+
+https://github.com/davestewart/outliner
+https://github.com/robertohuertasm/figma-asset-downloader
+https://github.com/figma-tools/figma-transformer # tiny utility library that makes the Figma API more human friendly
+https://github.com/six7/figma-assets-generator # by Jan Six
+https://github.com/hhru/FigmaGen
+https://github.com/gavinmcfarland/figma-node-decoder
+https://github.com/jacobtyq/export-figma-svg
+https://github.com/zouhangwithsweet/fubukicss-tool # Figma browser extension to export CSS
+https://github.com/Moonvy/figmaEX
+https://github.com/okotoki/mixpanel-figma # Mixpanel
+https://github.com/leadream/figma-viewer-chrome-plugin
+https://github.com/figma-tools/figma-tools
+https://github.com/b3nnyl/figgo # command to sync design tokens
+https://github.com/artemnovichkov/figma-preview # Xcode
+https://github.com/RedMadRobot/figma-export # Xcode
+https://github.com/Phil-L-101/Figma2Unreal # Unreal
+https://github.com/Volorf/figma-ui-image # Unity
+https://github.com/TrackMan/Unity.Package.FigmaToUnity # Unity
+https://github.com/simonoliver/UnityFigmaBridge # Unity
+https://github.com/ManakhovN/FigmaToUnityImporter # Unity
+https://github.com/cdmvision/unity-figma-importer # Unity
+https://github.com/Prism-Client/Aether-UI # Minecraft
+https://github.com/almazrafi/Fugen
+https://github.com/mrustaa/FigmaConvertXib
+https://github.com/jsuarezruiz/figma-to-maui-graphics # .NET
+https://github.com/mmertama/FigmaQML # Qt
+https://github.com/storybookjs/addon-designs
+https://github.com/anas-araid/vscode-infinite-workspace # lol
+https://github.com/microsoft/vscode-icons
+https://github.com/microsoft/vscode-figma-toolkit
+https://github.com/headwindz/figx # utilities library
+https://github.com/idered/vscode-extension-figma
+https://github.com/ideo/Figproxy
+https://github.com/figma-linux/figma-linux-font-helper
+https://github.com/tryvin/figma-linux-font-helper
+https://github.com/sameersyd/Wiggles-iOS
+https://github.com/figma/strict-null-check-migration-tools
+https://github.com/ashung/android-resources-export-figma
+https://github.com/jackiecorn/figma-plugin-drag-and-drop
+https://github.com/phamfoo/solid
+https://github.com/react-figma/figma-ui-components
+
+Visual Studio Code
+https://github.com/microsoft/mastering-github-copilot-for-paired-programming
+https://github.com/skills/copilot-codespaces-vscode
+https://github.com/xNul/codestral-mamba-for-vscode # Mistral Codestral
+https://github.com/continuedev/continue
+https://github.com/xNul/code-llama-for-vscode
+https://github.com/hieunc229/copilot-clone
+https://github.com/rubberduck-ai/rubberduck-vscode
+
+https://github.com/microsoft/dstoolkit-devcontainers # data science toolkit
+https://github.com/microsoft/vscode-remote-try-go # Go
+https://github.com/microsoft/vscode-remote-try-rust # Rust
+https://github.com/microsoft/vscode-remote-try-java # Java
+https://github.com/microsoft/vscode-remote-try-dotnet # Dotnet
+https://github.com/microsoft/vscode-remote-try-python # Python
+https://github.com/microsoft/vscode-remote-try-node # Node.js
+https://github.com/microsoft/vscode-remote-try-php # PHP
+https://github.com/microsoft/vscode-remote-try-cpp # C++
+https://github.com/devcontainers/template-starter # dev containers - template starter
+https://github.com/devcontainers/cli # creates a dev container
+https://github.com/qdm12/devtainr # sets up a development container in your repository
+https://github.com/devcontainers/images/ # pre-built dev container images
+
+https://github.com/qdm12/reactdevcontainer # React
+https://github.com/luizkowalski/devcontainer-rails # Rails
+https://github.com/AliOsm/ruby-on-rails-devcontainer # Rails, Postgres, Redis, MeiliSearch
+https://github.com/valenvb/vscode-devcontainer-wordpress # Wordpress
+https://github.com/jungleboogie-pl/vscode-wordpress # Wordpress
+https://github.com/backendclub/example-django-devcontainers # Django
+https://github.com/alitari/vscode-remote-quarkus # Quarkus
+https://github.com/jplane/pyspark-devcontainer # PySpark
+https://github.com/allaboutapps/go-starter # Go JSON API with OpenAPI and SQL
+https://github.com/edhaase/vscode-devcontainer-php7-apache # PHP and Apache
+https://github.com/iterativo-git/dockerdoo # Odoo
+
+https://github.com/devcontainers/feature-starter # Features
+https://github.com/guiyomh/features
+
+https://github.com/xtruder/nix-devcontainer # Nix
+https://github.com/zimbatm/vscode-devcontainer-nix # Nix
+https://github.com/0916dhkim/vscode-devcontainer-tutorial # Several databases and more
+https://github.com/Pwd9000-ML/devcontainer-templates # GitHub Actions, Azure Pipelines and more
+https://github.com/wtfzambo/glue-devcontainer-template # AWS Glue
+https://github.com/vincentclaes/glue-devcontainer # AWS Glue
+https://github.com/awslabs/aws-terraform-dev-container # by Amazon - Terraform
+https://github.com/jarnawer/ansible-devcontainer-vscode # Ansible
+https://github.com/loft-sh/devpod # DevPod
+https://github.com/qdm12/godevcontainer # Go
+https://github.com/yiwiy9/atcoder-rust-devcontainer # Rust
+https://github.com/SergioGasquez/esp-rs-devcontainer # Rust
+https://github.com/MathiasGruber/vscode-devcontainer # Node.js and Terraform
+https://github.com/amatzk/docker-template-for-vscode # multiple language environments
+https://github.com/mamba-org/micromamba-devcontainer # Python
+https://github.com/b-data/data-science-devcontainers # R, Python, Julia
+https://github.com/ilanco/vscode-devcontainer-php # PHP (Codespaces also)
+https://github.com/EspressoCake/BOF_Development_Docker # C
+https://github.com/avsm/ocaml-devcontainers # OCaml
+https://github.com/hiroyaonoe/ocaml-devcontainer # OCaml
+https://github.com/jomazu/elixir-devcontainer # Elixir
+https://github.com/devrt/ros-devcontainer-vscode # robotics (interesting features shown)
+https://github.com/clearbluejar/ghidra-python-vscode-devcontainer-skeleton # Ghidra
+https://github.com/theomessin/laravel-devcontainer
+https://github.com/madebygps/multiple-dev-container-vscode # usage of multiple decontainer.json files
+https://github.com/ContainerCraft/Konductor # various ops tools
+https://github.com/opsec-infosec/42-Devcontainer
+https://github.com/h4l/dev-container-docker-compose-volume-or-bind # template for Docker Compose bind mounts and container volumes
+https://github.com/stuartleeks/devcontainer-cli # commands to work with dev containers
+https://github.com/webksde/ddev-vscode-devcontainer-drupal-template
+https://github.com/prenone/platformio-vscode-devcontainer
+https://github.com/qdm12/basedevcontainer # base development Docker image used by other development Docker images
+
+https://github.com/hediet/vscode-debug-visualizer # visualizes data during debugging
+https://github.com/ide-stories/vscode-stories-api # stories (walkthroughs)
+https://github.com/github/vscode-codeql-starter # CodeQL
+https://github.com/deerawan/vscode-dash # Dash documentation
+https://github.com/gitkraken/vscode-gitlens # GitLens
+https://github.com/glideapps/quicktype # creates types from JSON, Schema, and GraphQL
+https://github.com/infracost/vscode-infracost # Terraform cost estimates
+https://github.com/denoland/vscode_deno # Deno
+https://github.com/microsoft/vscode-js-debug # Chrome debugger
+https://github.com/excalidraw/excalidraw-vscode # Excalidraw
+https://github.com/xojs/vscode-linter-xo # XO TypeScript linter
+https://github.com/ryuta46/vscode-multi-command # runs multiple commands
+https://github.com/microsoft/vscode-extension-samples # by Microsoft - extension samples
+https://github.com/mattpocock/ts-error-translator # turns TypeScripts errors into plain English
+https://github.com/microsoft/vscode-generator-code
+https://github.com/AustinLeeGordon/vscode-schema-dot-org # Google Structured Data schema JSON-LD objects
+https://github.com/redhat-developer/vscode-extension-tester # tests an extension using Selenium WebDriver
+https://github.com/microsoft/vscode-docs-authoring # edits Markdown for docs.microsoft.com
+https://github.com/philnash/ngrok-for-vscode # ngrok
+https://github.com/antfu/starter-vscode
+https://github.com/microsoft/vscode-extension-telemetry
+https://github.com/microsoft/vscode-test-cli/
+https://github.com/mjbvz/vscode-markdown-mermaid # Mermaid in Markdown
+https://github.com/mhutchie/vscode-git-graph # Git graph
+https://github.com/r5n-dev/vscode-react-javascript-snippets # React snippets
+https://github.com/githru/githru-vscode-ext # detailed Git visualization
+https://github.com/microsoft/vscode-python-tools-extension-template
+https://github.com/siddharthkp/vscode-settings/ # GitHub employee
+https://github.com/palashmon/awesome-vscode-settings
+https://github.com/github/vscode-github-actions # GitHub Actions
+https://github.com/microsoft/vscode-livepreview # live preview
+https://github.com/CoenraadS/Bracket-Pair-Colorizer-2 # bracket pair colorizer
+https://github.com/codota/tabnine-vscode # Tabnine machine learning
+https://github.com/huggingface/llm-vscode
+https://github.com/antfu/vscode-settings
+https://github.com/stkb/Rewrap # wrap lines
+https://github.com/wesbos/dotfiles/ # nice hard links technique
+https://github.com/albertobasalo/dotfiles/
+https://github.com/microsoft/vscode-vsce # extension publisher
+https://github.com/primer/github-vscode-theme # GitHub VS Code themes
+
+https://github.com/microsoft/python-sample-vscode-flask-tutorial # Tutorials - Flask
+https://github.com/mike-works/vscode-fundamentals # workshop
+
+Chrome Extensions
+
+Jetbrains
+
+Xcode
+
+Bug Bounty
+
+CodeQL
+
+Salesforce
+
+Upwork
+
+Zapier
+
+Unity
+
+Unreal
+
+Godot
+
+SceneKit
+
+Property & Concolic Testing

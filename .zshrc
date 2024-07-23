@@ -103,6 +103,11 @@ gitpl() {
   git push
 }
 
+# Searches GitHub repositories
+ghs() {
+  gh search repos $@
+}
+
 # Updates my local Git repos
 gitu() {
   for repo in ~/projects/*; do

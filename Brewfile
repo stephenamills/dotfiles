@@ -2077,8 +2077,9 @@ brew "levant" # templating and deployment tool for jobs
 # brew "dynein" # DynamoDB client
 # brew "etcd" # replicated BoltDB
 # Also, Porcupine checker on pkg.go.dev, and MIT 6.5840
-# Also, Spanner and LevelDB
+# Also, Spanner and CockroachDB and LevelDB
 # Also, ScyllaDB
+# Also, YugabyteDB
 
 # brew "atlas" # 
 # brew "goose" # database migration
@@ -2095,11 +2096,19 @@ brew "levant" # templating and deployment tool for jobs
 # brew "tile38" #  geolocation data store, spatial index, and realtime geofence - their landing page animation is very good
 
 # Search
+# brew "meilisearch" # the winner - ultra relevant, instant and typo-tolerant, and has sample projects and 45k stars
+
+# also, elasticsearch
+# brew "solr" # best search indexer, schema-based by default, has rich query language, etc., but in Java
+# brew "sonic" # second-best Rust option
+# also, swirl # supports retrieval (RAG), currently from Microsoft 365 or Postgres
+# also, tantivy
+# also, toshi
+# also, typesense
+
+
 # brew "manticoresearch" 
-# brew "meilisearch" # looks like a winner - ultra relevant, instant and typo-tolerant full-text search API
-# brew "sonic" # lightweight & schema-less
 # brew "zinclabs/tap/zincsearch" # must tap zinclabs/tap first
-# also, typesense https://github.com/typesense/typesense
 
 # Spark
 # brew "flintrock" # launches a Spark cluster

@@ -44,7 +44,7 @@ fi
 # Adapted from online examples. See https://github.com/ohmyzsh/ohmyzsh/issues/9728#issuecomment-1025890246 and https://superuser.com/a/1200812.
 zstyle ':completion:*' list-colors '=(#b)*(-- *)=35=90'
 
-# Adds Perl's local::lib to the shell environment
+# Add paths for Perl
 eval "$(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib=$HOME/perl5)"
 
 # Deletes a line from the zsh history file

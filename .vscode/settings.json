@@ -70,6 +70,12 @@
   "git.enableSmartCommit": true,
   "git.postCommitCommand": "push",
 
+  "gitdoc.autoPull": "afterDelay",
+  "gitdoc.autoPush": "off",
+  "gitdoc.commitOnClose": false,
+  "gitdoc.pushMode": "push",
+  "gitdoc.autoCommitDelay": 3000000,
+
   "javascript.inlayHints.enumMemberValues.enabled": true,
   "javascript.inlayHints.functionLikeReturnTypes.enabled": true,
   "javascript.inlayHints.parameterNames.enabled": "literals",

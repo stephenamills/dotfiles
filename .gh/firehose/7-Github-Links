@@ -253,8 +253,8 @@ https://github.com/hediet/vscode-debug-visualizer # visualizes data during debug
 https://github.com/ide-stories/vscode-stories-api # stories (walkthroughs)
 https://github.com/github/vscode-codeql-starter # CodeQL
 https://github.com/deerawan/vscode-dash # Dash documentation
-https://github.com/lostintangent/gitdoc # 
-https://github.com/gitkraken/vscode-gitlens # GitLens - 
+https://github.com/lostintangent/gitdoc # Git autopull but it has a bunch of other stuff that is hard to disable
+https://github.com/gitkraken/vscode-gitlens # GitLens - nice blame visualizations or something
 https://github.com/glideapps/quicktype # creates types from JSON, Schema, and GraphQL
 https://github.com/infracost/vscode-infracost # Terraform cost estimates
 https://github.com/denoland/vscode_deno # Deno

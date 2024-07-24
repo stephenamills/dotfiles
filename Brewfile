@@ -1,3 +1,4 @@
+tap "GitJournal/tap"
 tap "hashicorp/tap"
 tap "replicate/tap"
 tap "supabase/tap"
@@ -12,6 +13,7 @@ brew "sapling" # by Facebook - better interface
 brew "sugarjar" # better interface (like sapling)
 # cask "gitbutler" # by Scott Chacon - better interface
 
+brew "GitJournal/tap/git-auto-sync" # daemon that automatically syncs a repo
 brew "gitup" # manually syncs multiple repos
 brew "git-sync" # automatically syncs a repo
 brew "git-workspace" # manually syncs multiple repos

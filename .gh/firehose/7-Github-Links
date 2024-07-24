@@ -253,14 +253,15 @@ https://github.com/hediet/vscode-debug-visualizer # visualizes data during debug
 https://github.com/ide-stories/vscode-stories-api # stories (walkthroughs)
 https://github.com/github/vscode-codeql-starter # CodeQL
 https://github.com/deerawan/vscode-dash # Dash documentation
-https://github.com/gitkraken/vscode-gitlens # GitLens
+https://github.com/lostintangent/gitdoc # 
+https://github.com/gitkraken/vscode-gitlens # GitLens - 
 https://github.com/glideapps/quicktype # creates types from JSON, Schema, and GraphQL
 https://github.com/infracost/vscode-infracost # Terraform cost estimates
 https://github.com/denoland/vscode_deno # Deno
 https://github.com/microsoft/vscode-js-debug # Chrome debugger
+https://github.com/ryuta46/vscode-multi-command # runs multiple commands
 https://github.com/excalidraw/excalidraw-vscode # Excalidraw
 https://github.com/xojs/vscode-linter-xo # XO TypeScript linter
-https://github.com/ryuta46/vscode-multi-command # runs multiple commands
 https://github.com/microsoft/vscode-extension-samples # by Microsoft - extension samples
 https://github.com/mattpocock/ts-error-translator # turns TypeScripts errors into plain English
 https://github.com/microsoft/vscode-generator-code

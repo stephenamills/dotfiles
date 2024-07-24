@@ -119,7 +119,7 @@ done
 }
 
 # Opens a GitHub repository in the browser
-hubb() {
+h() {
   hub browse $1
 }
 

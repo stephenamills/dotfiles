@@ -72,7 +72,7 @@ gcloud() {
   fi
 }
 
-# Searches GitHub repositories
+# Searches for GitHub repositories
 ghs() {
   gh search repos $@
 }
@@ -116,6 +116,11 @@ gitu() {
     git pull
   fi
 done
+}
+
+# Opens a GitHub repository in the browser
+hubb() {
+  hub browse $1
 }
 
 # Installs multiple .pkg files

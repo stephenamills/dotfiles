@@ -12,6 +12,12 @@ brew "sapling" # by Facebook - better interface
 brew "sugarjar" # better interface (like sapling)
 # cask "gitbutler" # by Scott Chacon - better interface
 
+brew "gitup" # manually syncs multiple repos
+brew "git-sync" # automatically syncs a repo
+brew "git-workspace" # manually syncs multiple repos
+brew "git-xargs" # manually commits changes or pull requests to multiple repos
+brew "gitwatch" # watches a file or folder and commits changes
+
 brew "blackbox" # encrypts and stores secrets in Git
 brew "commitizen"
 brew "convco"
@@ -23,6 +29,7 @@ brew "ugit" # tries to undo a git command
 # brew "git-credential-libsecret" # Git helper for accessing credentials via libsecret
 # brew "git-credential-oauth" # Git credential helper that authenticates in browser using OAuth
 
+brew "g2" # interface to aid learning
 brew "git-absorb" # incorporates uncommitted changes into relevant past commits, using automatic decision making, simplifying history management without manual rebasing
 brew "git-appraise" # by Google - code review system
 brew "git-delete-merged-branches" # deletes a merged branch, keeping the repo clean
@@ -47,13 +54,10 @@ brew "git-when-merged" # finds where a commit was merged
 # brew "cocogitto" # commit message
 # brew "codecov" # code coverage
 # brew "commitlint" # probably intended to be installed locally per-project
-# brew "cycode-cli" # another boring scanner
+# brew "cycode-cli" # boring scanner
 # brew "forgit" # interactive git commands in the terminal
 # brew "git-grab" # does basically nothing
 # brew "git-interactive-rebase-tool" # not useful
-# brew "git-sync" # clones a git repository and keeps it synchronized with the upstream
-# brew "gitea" # self-hosted Git service but based in China
-# brew "gitup" # updates multiple git repositories at once
 # brew "thefuck" # Corrects commands
 # brew "vcsh" # config manager based on git that manages subrepos
 

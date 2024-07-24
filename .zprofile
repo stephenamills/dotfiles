@@ -5,7 +5,6 @@ export ARGC_COMPLETIONS_ROOT="$HOME/.argc"
 export ARGC_COMPLETIONS_PATH="$ARGC_COMPLETIONS_ROOT/completions"
 export JETBRAINS_PATH="$HOME/Library/Application Support/JetBrains/Toolbox/scripts"
 export LESSHISTFILE=- # Disables unsolicited creation of a history file by less in the home directory.
-export RANCHER_DESKTOP_PATH="~/.rd/bin"
 
 export DOTNET_PATH="$HOME/.dotnet/tools"
 export GOPATH="$HOME/go"

@@ -579,7 +579,7 @@ brew "colima" # container runtimes on macOS with minimal setup
 brew "ctlptl" # sets up a cluster using only a YAML file, inspired by kubectl and clusterctl
 brew "kubectl"
 brew "minikube"
-cask "rancher"
+# cask "rancher"
 
 # Kubernetes - Continuous Deployment
 brew "argo"

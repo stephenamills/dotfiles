@@ -118,7 +118,7 @@ gitu() {
 }
 
 # Opens a GitHub repository in the browser
-h() {
+hb() {
   hub browse $1
 }
 

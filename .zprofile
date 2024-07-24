@@ -1,4 +1,4 @@
-# Adjust path for Homebrew based on architecture.
+# Add paths for Homebrew based on architecture.
 [[ $(uname -m) == "arm64" ]] && eval "$(/opt/homebrew/bin/brew shellenv)" || eval "$(/usr/local/bin/brew shellenv)"
 
 export ARGC_COMPLETIONS_ROOT="$HOME/.argc"
@@ -13,7 +13,7 @@ export JAVA_HOME="$(brew --prefix openjdk)/bin"
 export NODE_PATH="$(brew --prefix node@20)/bin" # Sets LTS Node.js version in $PATH, overriding unstable versions.
 export PIPX_PATH="$HOME/.local/bin"
 export PNPM_HOME="$HOME/Library/pnpm"
-export PYTHON_PATH="$(brew --prefix python)/libexec/bin" # Dynamically expands to the path of whatever the latest version of Python is
+export PYTHON_PATH="$(brew --prefix python)/libexec/bin" # Dynamically expands to the path of whatever the latest version of Python is.
 export RUBY_PATH="$(brew --prefix ruby)/bin"
 export RUBYGEMS_PATH="$(gem env gemdir)/bin"
 export RUST_PATH="$HOME/.cargo/bin"

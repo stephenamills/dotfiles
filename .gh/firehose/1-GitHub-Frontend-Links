@@ -409,51 +409,7 @@ https://github.com/banthagroup/fslightbox
 https://github.com/yifaneye/react-gallery-carousel
 https://github.com/nzbin/photoviewer
 
-Whiteboards
-https://github.com/tldraw/tldraw # perfect use in their docs of embedding on a website
-https://github.com/excalidraw/excalidraw
-https://github.com/jmjuanes/folio
-https://github.com/xyflow/xyflow # React Flow - has every professional figma feature maybe
-https://github.com/jackyzha0/cursor-chat # nice cursor chat feature like Figma
-https://github.com/gkuzin13/drawflux/
-https://github.com/adrianhajdin/figma_clone/ # by Adrian Hajdin - Figma
-https://github.com/kaifcoder/eraser_clone # Eraser
-https://github.com/DaviLacerda/figma-jam-clone/ # the actual simplest, maybe even elegant almost
-https://github.com/alexeyboiko/dgrmjs # seems simple
-https://github.com/dsnehasish74/white_board # the simplest
-https://github.com/smit3949/codeconnect-frontend/ # seems simple
-https://github.com/untitled-team-101/whiteboard # seems simple (I guess)
-https://github.com/cracker0dks/whiteboard/ # seems simple
-https://github.com/QuiiBz/ogstudio # only 76 commits so maybe simple
-https://github.com/geekreflex/xoord # not simple but kinda cool
-https://github.com/floyare/stickly # this is a great whiteboard design, nice proportions, button color, etc.
-https://github.com/gns3/gns3-web-ui
-https://github.com/pnetlab/pnetlab_main
-https://github.com/dainok/unetlab
-https://github.com/juniper/wistar
-https://github.com/3rd/tsdiagram
-https://github.com/markboard-io/markboard
-https://github.com/miroapp/app-examples
-https://github.com/rolandkrueger/git-whiteboard-app
-https://github.com/buchholztim/whitebird
-https://github.com/nextcloud/integration_whiteboard # pdf export
-https://github.com/spacedeck/spacedeck-open
-https://github.com/mostafazke/ng-whiteboard
-https://github.com/odiak/draw
-https://github.com/cjquines/qboard
-https://github.com/thesephist/draw
-https://github.com/uthsobcb/ongkon
-https://github.com/pkrasicki/syncpaint
-https://github.com/maxscharwath/describble
-https://github.com/dragonman225/jade
-https://github.com/yachen168/fabricjs-whiteboard
-https://github.com/wggb/whiteboard
-https://github.com/sindrel/excalidraw-converter
-https://github.com/swimmingkiim/react-image-editor
-https://github.com/jordansinger/figma-macos-swiftui-sample
-https://github.com/nbw/figmex
-https://github.com/alexandrtovmach/react-figma-plugin-ds
-https://github.com/Underhive/visual-react-editor
+Cloudinary
 
 ESlint
 https://github.com/raulmelo-articles/eslint-flat-config/
@@ -522,4 +478,48 @@ https://github.com/digitalinnovationone/trilha-css-desafio-01 # good landing pag
 https://github.com/codeyourfuture/html-css-module-project # I like the landing page image
 https://github.com/AllThingsSmitty/must-watch-css # has talk about Chrome DevTools
 
-Cloudinary
+Whiteboards
+https://github.com/tldraw/tldraw # perfect use in their docs of embedding on a website
+https://github.com/excalidraw/excalidraw
+https://github.com/jmjuanes/folio
+https://github.com/xyflow/xyflow # React Flow - has every professional figma feature maybe
+https://github.com/jackyzha0/cursor-chat # nice cursor chat feature like Figma
+https://github.com/gkuzin13/drawflux/
+https://github.com/adrianhajdin/figma_clone/ # by Adrian Hajdin - Figma
+https://github.com/kaifcoder/eraser_clone # Eraser
+https://github.com/DaviLacerda/figma-jam-clone/ # the actual simplest, maybe even elegant almost
+https://github.com/alexeyboiko/dgrmjs # seems simple
+https://github.com/dsnehasish74/white_board # the simplest
+https://github.com/smit3949/codeconnect-frontend/ # seems simple
+https://github.com/untitled-team-101/whiteboard # seems simple (I guess)
+https://github.com/cracker0dks/whiteboard/ # seems simple
+https://github.com/QuiiBz/ogstudio # only 76 commits so maybe simple
+https://github.com/geekreflex/xoord # not simple but kinda cool
+https://github.com/floyare/stickly # this is a great whiteboard design, nice proportions, button color, etc.
+https://github.com/gns3/gns3-web-ui
+https://github.com/pnetlab/pnetlab_main
+https://github.com/dainok/unetlab
+https://github.com/juniper/wistar
+https://github.com/3rd/tsdiagram
+https://github.com/markboard-io/markboard
+https://github.com/miroapp/app-examples
+https://github.com/rolandkrueger/git-whiteboard-app
+https://github.com/buchholztim/whitebird
+https://github.com/nextcloud/integration_whiteboard # pdf export
+https://github.com/spacedeck/spacedeck-open
+https://github.com/mostafazke/ng-whiteboard
+https://github.com/odiak/draw
+https://github.com/cjquines/qboard
+https://github.com/thesephist/draw
+https://github.com/uthsobcb/ongkon
+https://github.com/pkrasicki/syncpaint
+https://github.com/maxscharwath/describble
+https://github.com/dragonman225/jade
+https://github.com/yachen168/fabricjs-whiteboard
+https://github.com/wggb/whiteboard
+https://github.com/sindrel/excalidraw-converter
+https://github.com/swimmingkiim/react-image-editor
+https://github.com/jordansinger/figma-macos-swiftui-sample
+https://github.com/nbw/figmex
+https://github.com/alexandrtovmach/react-figma-plugin-ds
+https://github.com/Underhive/visual-react-editor

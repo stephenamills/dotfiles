@@ -119,7 +119,7 @@ gitu() {
 
 # Opens a GitHub repository in the browser
 hb() {
-  hub browse $1
+  xargs -n 1 -P 8 hub browse <<< $@
 }
 
 # Installs multiple .pkg files

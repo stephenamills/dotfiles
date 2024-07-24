@@ -2106,7 +2106,6 @@ brew "levant" # templating and deployment tool for jobs
 # also, toshi
 # also, typesense
 
-
 # brew "manticoresearch" 
 # brew "zinclabs/tap/zincsearch" # must tap zinclabs/tap first
 

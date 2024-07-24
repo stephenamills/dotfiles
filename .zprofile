@@ -15,7 +15,6 @@ export PIPX_PATH="$HOME/.local/bin"
 export PNPM_HOME="$HOME/Library/pnpm"
 export PYTHON_PATH="$(brew --prefix python)/libexec/bin" # Dynamically expands to the path of whatever the latest version of Python is.
 export RUBY_PATH="$(brew --prefix ruby)/bin"
-export RUBYGEMS_PATH="$(gem env gemdir)/bin"
 export RUST_PATH="$HOME/.cargo/bin"
 
 export PATH=\
@@ -30,6 +29,5 @@ export PATH=\
 "$PNPM_HOME:"\
 "$PYTHON_PATH:"\
 "$RUBY_PATH:"\
-"$RUBYGEMS_PATH:"\
 "$RUST_PATH:"\
 "$PATH"

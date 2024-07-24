@@ -577,6 +577,7 @@ brew "jinja2-cli" # jinja2
 # Kubernetes - Basic
 brew "colima" # container runtimes on macOS with minimal setup
 brew "ctlptl" # sets up a cluster using only a YAML file, inspired by kubectl and clusterctl
+brew "docker"
 brew "kubectl"
 brew "minikube"
 # cask "rancher"

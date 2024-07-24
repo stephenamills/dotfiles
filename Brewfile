@@ -2066,20 +2066,21 @@ brew "levant" # templating and deployment tool for jobs
 # brew "cassandra" # column-oriented database
 # brew "clickhouse" # column-oriented database
 # brew "citus" # replicated Postgres
+# brew "dynomite" # by Netflix - Dynamo implementation
 # brew "mysql"
 # brew "postgresql"
 # brew "rqlite" # replicated SQLite (good documentation, in Go)
 # brew "sqlite" 
 # brew "vitess" # replicated MySQL
+# also, Porcupine checker on pkg.go.dev, and MIT 6.5840
 
+# brew "etcd" # replicated BoltDB
 # brew "redis" # in-memory key/value store
 
 # brew "dynein" # DynamoDB client
-# brew "etcd" # replicated BoltDB
-# Also, Porcupine checker on pkg.go.dev, and MIT 6.5840
-# Also, Spanner and CockroachDB and LevelDB
-# Also, ScyllaDB
-# Also, YugabyteDB
+# also, Spanner and CockroachDB and LevelDB
+# also, ScyllaDB
+# also, YugabyteDB
 
 # brew "atlas" # 
 # brew "goose" # database migration

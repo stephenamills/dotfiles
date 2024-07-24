@@ -47,7 +47,6 @@ zstyle ':completion:*' list-colors '=(#b)*(-- *)=35=90'
 # Adds Perl's local::lib to the shell environment
 eval "$(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib=$HOME/perl5)"
 
-
 # Deletes a line from the zsh history file
 del() {
   # Delete the line by its line number
@@ -88,7 +87,7 @@ gitp() {
   git commit -m "$msg"
 
   git push
-} 
+}
 alias gitc=gitp
 
 # Commits changes to a Git repository with an optional extended message, accepts 'l' or 'long' as an argument for an extended commit message
@@ -111,10 +110,10 @@ gitpl() {
 # Updates my local Git repos
 gitu() {
   for repo in ~/projects/*; do
-  if [ -d "$repo/.git" ]; then
-    cd $repo
-    git pull
-  fi
+    if [ -d "$repo/.git" ]; then
+      cd $repo
+      git pull
+    fi
   done
 }
 

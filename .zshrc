@@ -115,7 +115,7 @@ gitu() {
     cd $repo
     git pull
   fi
-done
+  done
 }
 
 # Opens a GitHub repository in the browser

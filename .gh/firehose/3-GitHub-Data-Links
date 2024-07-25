@@ -1,7 +1,5 @@
 Links to useful GitHub repos
 
-Colab
-
 VS Code Copilot
 https://github.com/lukvonstrom/copilot-verification # Chat extension - verifies Python code or creates tests using preconditions and postconditions
 https://github.com/phoevos/vscode-extension-verifier # verifies Python code or creates tests using preconditions and postconditions
@@ -19,3 +17,37 @@ Sharepoint
 SerpAPI
 
 Bing API
+
+Colab
+
+---
+
+Schema
+
+MySQL & Vitess
+
+Postgres & Citus
+
+DynamoDB
+
+Redis
+
+Kafka
+
+Elasticsearch
+
+Clickhouse
+
+Spark
+
+Hadoop
+
+Data Build Tool
+
+BigQuery
+
+Snowflake
+
+Redshift
+
+Firebase

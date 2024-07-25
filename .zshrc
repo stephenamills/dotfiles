@@ -109,7 +109,7 @@ gitpl() {
 
 # Updates my local Git repos
 gitu() {
-  gitup .
+  gitup -c -t 2 .
 }
 
 # Opens a GitHub repository in the browser

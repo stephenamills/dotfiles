@@ -109,12 +109,7 @@ gitpl() {
 
 # Updates my local Git repos
 gitu() {
-  for repo in ~/projects/*; do
-    if [ -d "$repo/.git" ]; then
-      cd $repo
-      git pull
-    fi
-  done
+  gitup .
 }
 
 # Opens a GitHub repository in the browser

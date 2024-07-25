@@ -263,6 +263,7 @@ https://github.com/microsoft/vscode-js-debug # Chrome debugger
 https://github.com/ryuta46/vscode-multi-command # runs multiple commands
 https://github.com/excalidraw/excalidraw-vscode # Excalidraw
 https://github.com/xojs/vscode-linter-xo # XO TypeScript linter
+https://github.com/moalamri/vscode-inline-fold # folds Tailwind CSS utility classes, etc.
 https://github.com/microsoft/vscode-extension-samples # by Microsoft - extension samples
 https://github.com/mattpocock/ts-error-translator # turns TypeScripts errors into plain English
 https://github.com/microsoft/vscode-generator-code

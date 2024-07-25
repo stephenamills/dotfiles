@@ -79,17 +79,14 @@
   "javascript.updateImportsOnFileMove.enabled": "always",
 
   "search.exclude": {
-    "**/*.snap": true,
-    "**/*.svg": true,
     "**/.git": true,
     "**/.github": false,
     "**/.nuxt": true,
     "**/.output": true,
     "**/.pnpm": true,
-    "**/.vscode": true,
     "**/.yarn": true,
+    "**/*.svg": true,
     "**/assets": true,
-    "**/bower_components": true,
     "**/CHANGELOG*": true,
     "**/dist/**": true,
     "**/LICENSE*": true,

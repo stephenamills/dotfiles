@@ -1,7 +1,7 @@
 Links to useful GitHub repos
 https://mad.firstmark.com
 
-VS Code Copilot
+VS Code GitHub Copilot
 https://github.com/lukvonstrom/copilot-verification # Chat extension - verifies Python code or creates tests using preconditions and postconditions
 https://github.com/phoevos/vscode-extension-verifier # verifies Python code or creates tests using preconditions and postconditions
 https://github.com/scottholden/copilotchatextensions # three examples
@@ -11,15 +11,15 @@ https://github.com/harrybin/vscode-copilot-extension # GitHub issue
 https://github.com/microsoft/vscode-extension-samples/ # official example
 https://github.com/nksleiman/vscode-extension
 
-Confluence
-
-Sharepoint
-
 SerpAPI
 
 Bing API
 
 Colab
+
+Confluence
+
+Sharepoint
 
 ---
 
@@ -32,6 +32,8 @@ Postgres & Citus
 DynamoDB
 
 Redis
+
+Conflict-free replicated data types
 
 Kafka
 
@@ -52,4 +54,3 @@ Snowflake
 Redshift
 
 Firebase
-

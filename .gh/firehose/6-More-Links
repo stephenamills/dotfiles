@@ -323,6 +323,17 @@ SceneKit
 SRE
 https://github.com/linkedin/school-of-sre
 
+Packet Capture
+https://github.com/sbabicz/tcpdump-bpf-cheatsheet # Ethernet & Dot1q, IPv4 & IPv6 & ICMP, TCP & UDP, GRE, DNS
+https://github.com/marciopocebon/TCPDUMP-1 # POP & SMTP, FTP
+https://github.com/SergK/cheatsheat-tcpdump # IP & ICMP, TCP, SMTP, HTTP, SSH
+https://github.com/jescholl/packetman # creates a tcpdump filter
+https://github.com/benjojo/tcpdump-to-bpf.benjojo.co.uk # converts a tcpdump filter to an iptables rule
+https://github.com/evanfoster/remotecap # remote dump
+https://github.com/jhunt/tcptrace # color
+https://github.com/nlitsme/xpcapperl # Perl hex
+https://github.com/spikebike/tcpdumplog # Perl sort
+
 Property & Concolic Testing
 
 Writing

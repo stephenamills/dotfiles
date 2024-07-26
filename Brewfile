@@ -2687,7 +2687,7 @@ brew "watchexec" # watches files and triggers actions
 brew "wcurl"
 brew "xe" # xargs replacement
 brew "xidel" # super useful for reading web pages I think
-cask "raycast" # can search DevDocs using an extension
+# cask "raycast" # searches DevDocs - commented out because you must install manually since the app manages its own updates like Google Chrome 
 # brew "flamegraph" # by Brendan Gregg - stack trace visualizer
 # brew "gat" # cat alternative in Go
 # brew "hck" # cut alternative that supports regex delimiters

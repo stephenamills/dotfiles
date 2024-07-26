@@ -58,6 +58,11 @@ del() {
   sed -i '' $1d ~/.zsh_history
 }
 
+# Opens a GitHub repository in the browser
+gb() {
+  xargs -n 1 -P 8 hub browse <<< $@
+}
+
 # Loads the Google Cloud SDK – it's too bloated to load everytime the shell starts
 gcloud() {
   # Check if Google Cloud SDK is installed

@@ -1,5 +1,6 @@
 github.com/ciena/gns3ctl@latest
 github.com/cloudflare/cloudflare-go/cmd/flarectl@latest
+github.com/deepfence/PacketStreamer@latest
 github.com/facebookincubator/tacquito/tree/main/cmds/client@latest
 github.com/jackmordaunt/icns/cmd/icnsify@latest
 github.com/sachaos/tcpterm@latest

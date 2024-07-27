@@ -2340,15 +2340,19 @@ brew "manim"
 # also, diagrams on pypi
 # also, mermaid on npm
 
+
 # Image Processing
+brew "fileicon" # sets a macOS folder or file icon
+brew "folderify" # creates a pixel-perfect custom macOS folder icon
+brew "iconsur" # creates a macOS app icon from an image
+# brew "swiftdraw" # converts an SVG file into a PNG or SF Symbol, automatically sizing and aligning the content to template guides
+
 brew "agg"  # converts an Asciicast screen recording video to GIF
 brew "asciinema" # creates an Asciicast file
 brew "caire" # resizes an image in an advanced content-aware way
-brew "fileicon" # sets a macOS folder or file icon
 brew "ffmpeg" # extracts an image from a video
 brew "gifify" # converts a screen recording to a GIF (shell script)
 brew "gifski" # converts a video to a very high quality GIF (large file size, but good for Dribble)
-brew "iconsur" # creates a macOS app icon from an image
 brew "imagemagick" # image conversion
 brew "vhs" # creates a terminal session GIF
 brew "viu" # view high-resolution images in the terminal
@@ -2356,7 +2360,7 @@ brew "viu" # view high-resolution images in the terminal
 # brew "imgdiff" # compares images
 # brew "imageoptim" # converts a gif to a video
 # brew "imgproxy" # resizes and converts images on the fly
-# brew "swiftdraw" # converts an SVG file into a PNG or SF Symbol, automatically sizing and aligning the content to template guides
+# brew "setweblocthumb" # creates website screenshot icon
 # brew "timg" # terminal image viewer
 # brew "triangle" # converts an image to computer-generated art using Delaunay triangulation
 
@@ -2804,7 +2808,6 @@ brew "mint" # package manager for Swift
 # brew "create-dmg" # by Sindre Sorhus
 # brew "fastlane"
 # brew "flank" # Massively parallel test runner for Firebase Test Lab
-# brew "folderify # generates pixel-perfect custom macOS folder icons
 # brew "swift"
 # brew "swift-format" # by Apple
 # brew "swift-protobuf"

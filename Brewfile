@@ -2346,6 +2346,7 @@ brew "fileicon" # sets a macOS folder or file icon
 brew "folderify" # creates a pixel-perfect custom macOS folder icon
 brew "iconsur" # creates a macOS app icon from an image
 # brew "swiftdraw" # converts an SVG file into a PNG or SF Symbol, automatically sizing and aligning the content to template guides
+# also, icnsify on pkg.go.dev # converts a PNG to an ICNS file
 
 brew "agg"  # converts an Asciicast screen recording video to GIF
 brew "asciinema" # creates an Asciicast file

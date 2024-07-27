@@ -4,14 +4,15 @@ tap "replicate/tap"
 tap "supabase/tap"
 
 # Git
-brew "bit-git" # better interface
 brew "gitless" # by Daniel Jackson squad at MIT - better interface
+brew "jj" # Google employee side-project
+brew "sapling" # by Facebook
+brew "sugarjar" # like sapling
+cask "gitbutler" # by Scott Chacon
+
+brew "bit-git" # better interface
 brew "git-branchless" # better interface 
 brew "git-town" # better interface supporting multiple branch strategies
-brew "jj" # by Google - better interface (employee side project)
-brew "sapling" # by Facebook - better interface
-brew "sugarjar" # better interface (like sapling)
-cask "gitbutler" # by Scott Chacon - better interface
 
 brew "GitJournal/tap/git-auto-sync" # daemon that automatically syncs a repo
 brew "gitup" # manually syncs multiple repos

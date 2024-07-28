@@ -1,6 +1,6 @@
 Links to useful GitHub repos or Figma files
 
-Figma Diagrams
+Figma
 https://www.figma.com/community/file/898328004567525828/figma-denver-figma-to-code-a-2-month-journey # by Bernardo Ferrari - by far the best, backend services high-level design
 https://github.com/figma/architecture-diagram-components # backend services
 https://www.figma.com/community/file/1170803096873778028 # pretty boxes
@@ -31,7 +31,11 @@ https://www.figma.com/community/file/1201120438270691192/db-diagram-sql-server-m
 https://www.figma.com/community/file/1118686866512029331 # not good but the icon of the post is
 https://www.figma.com/community/file/1155981953755812052 # Bitmoji
 
-Diagrams
+Visio
+
+PlantUML
+
+Misc
 https://github.com/bernaferrari/figmatocode # backend services high-level design
 https://github.com/esnet/react-network-diagrams # rack diagrams and more in React, simple and customizable
 https://github.com/figma/architecture-diagram-components # backend software high-level design

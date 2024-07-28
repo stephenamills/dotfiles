@@ -47,6 +47,11 @@ zstyle ':completion:*' list-colors '=(#b)*(-- *)=35=90'
 # Add paths for Perl
 eval "$(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib=$HOME/perl5)"
 
+# Opens the hompage of a Homebrew package
+bh() {
+  brew home $@
+}
+
 # Deletes a line from the zsh history file
 del() {
   # Delete the line by its line number
@@ -54,13 +59,8 @@ del() {
 }
 
 # Opens a GitHub repository in the browser
-gb() {
-  xargs -n 1 -P 8 hub browse <<< $@
-}
-
-# Opens the hompage of a Homebrew package
 hb() {
-  brew home $@
+  xargs -n 1 -P 8 hub browse <<< $@
 }
 
 # Loads the Google Cloud SDK – it's too bloated to load everytime the shell starts

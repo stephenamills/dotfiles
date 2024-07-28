@@ -1,6 +1,6 @@
 Links to useful GitHub repos
 
-Figma Plugins
+Figma
 https://github.com/planetscale/figma-diagram-generator # truly superb video demonstration by Benjamin Dicken, Developer Educator at Planetscale - generates a FigJam diagram of your MySQL database using the Figma API and Planetscale API
 https://github.com/TwistoPayments/figma-export-diagrams-action # exports a diagram from Figma, from a GitHub Actions workflow
 https://github.com/marcomontalbano/figma-export # exports any Figma component for use in your website or anywhere
@@ -178,6 +178,8 @@ https://github.com/jackiecorn/figma-plugin-drag-and-drop
 https://github.com/phamfoo/solid
 https://github.com/react-figma/figma-ui-components
 
+Chrome
+
 Visual Studio Code
 https://github.com/microsoft/mastering-github-copilot-for-paired-programming
 https://github.com/skills/copilot-codespaces-vscode
@@ -296,60 +298,12 @@ https://github.com/primer/github-vscode-theme # GitHub VS Code themes
 https://github.com/microsoft/python-sample-vscode-flask-tutorial # Tutorials - Flask
 https://github.com/mike-works/vscode-fundamentals # workshop
 
-VS Code keyboard shortcut ideas
-https://developer.chrome.com/docs/devtools/shortcuts # Chrome
+https://developer.chrome.com/docs/devtools/shortcuts # keyboard shortcut ideas - Chrome
 https://shortcuts.design # GitHub
 https://www.jetbrains.com/help/idea/ # Jetbrains
 https://webkit.org/web-inspector/ # Safari
 https://developer.apple.com/documentation/xcode # Xcode
 
-Chrome Extensions
-
 Jetbrains
 
 Xcode
-
-Bug Bounty
-
-CodeQL
-
-Salesforce
-
-Upwork
-
-Zapier
-
-Unity
-
-Unreal
-
-Godot
-
-SceneKit
-
-SRE
-https://github.com/linkedin/school-of-sre
-
-Packet Capture
-https://github.com/sbabicz/tcpdump-bpf-cheatsheet # Ethernet & Dot1q, IPv4 & IPv6 & ICMP, TCP & UDP, GRE, DNS
-https://github.com/marciopocebon/TCPDUMP-1 # POP & SMTP, FTP
-https://github.com/SergK/cheatsheat-tcpdump # IP & ICMP, TCP, SMTP, HTTP, SSH
-https://github.com/jescholl/packetman # creates a tcpdump filter
-https://github.com/benjojo/tcpdump-to-bpf.benjojo.co.uk # converts a tcpdump filter to an iptables rule
-https://github.com/evanfoster/remotecap # remote dump
-https://github.com/jhunt/tcptrace # color
-https://github.com/nlitsme/xpcapperl # Perl hex
-https://github.com/spikebike/tcpdumplog # Perl sort
-
-Property & Concolic Testing
-
-Writing
-https://www.acm.org
-https://arstechnica.com
-https://frontendmasters.com
-https://www.hashicorp.com
-https://www.infoq.com
-https://www.jetbrains.com
-https://www.oracle.com
-https://www.redhat.com/
-https://www.wwt.com

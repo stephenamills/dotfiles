@@ -2333,12 +2333,21 @@ brew "awsdac" # by Amazon
 brew "d2" # by Terrastruct 
 brew "manim"
 # brew "inframap" # reads tfstate or HCL, diagram is ugly
-# brew "netlistsvg" # it's only for electronics
-# brew "structurizr-cli" # has the interesting ability to theme an ugly diagram
+# brew "plantuml"
+# brew "svgbob" # converts ASCII diagram to a high-quality SVG diagram
 # brew "terramaid" # converts a Terraform configuration into a Mermaid diagram
 # also, cloud mapper by Duo
 # also, diagrams on pypi
 # also, mermaid on npm
+
+# brew "ditaa" # converts ASCII diagram to a diagram
+# brew "eralchemy" # converts a database schema to an ER diagram
+# brew "netlistsvg" # it's only for electronics
+# brew "sdedit" # creates a sequence diagram
+# brew "structurizr-cli" # has the interesting ability to theme an ugly diagram
+# brew "swiftplantuml" # creates a diagram of a Swift file
+# brew "umlet"
+
 
 
 # Image Processing

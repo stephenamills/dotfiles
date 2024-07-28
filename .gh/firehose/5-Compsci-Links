@@ -100,8 +100,10 @@ https://github.com/vasil-sd/engineering-sw-hw-model-checking-letures/ # garbage 
 https://github.com/5quintessential/fmalloyanalysis # no idea
 https://github.com/fala-cidadao/formal-specification/ # doesn't make sense but nice headings
 
+https://cs.wellesley.edu/~cs340/schedule/ # Wellesley course, has good Python analogies
 https://alloytools.org/tutorials/online/ # official tutorial
-http://www.din.uem.br/~ampolido/MetodosFormais/Notacao%20Z/Alloy/exec/alloy/docs/alloy-guide.html # clear tutorial but from 2001 and some important syntax is now invalid
+http://www.din.uem.br/~ampolido/MetodosFormais/Notacao%20Z/Alloy/exec/alloy/docs/alloy-guide.html # clear terse tutorial from 2001, syntax is now invalid
+
 https://github.com/fstakem/alloy_book # Software Abstractions book
 https://github.com/msramalho/feup-mfes-summary # exercises about students and courses
 https://github.com/adautofbn/tut-o-ralloy/ # students and tutors
@@ -154,9 +156,10 @@ https://github.com/dafny-lang/dafny/tree/master/source/dafnystandardlibraries # 
 https://github.com/Consensys/dafny-training # training by Consensys
 https://github.com/GLaDOS-Michigan/verification-class # University of Michigan course (2022)
 https://github.com/89oinotna/Dafny-Exercises # related to Michigan course, I think
-https://github.com/tchajed/protocol-verification-fa2023/ # University of Wisconsin course, shared material
+https://github.com/tchajed/protocol-verification-fa2023/ # University of Wisconsin course, similar
 https://github.com/jonhnet/vmware-verification-2023/ # protocol verification course
 https://github.com/byu-cs329/hw5-formal-verification # course by Chalmers
+
 https://github.com/benjaminfjones/stunning-palm-tree # program proofs book exercises
 https://github.com/tchajed/dafny-syntax-tutorial # short tutorial (2023)
 https://github.com/bor0/dafny-tutorial # tutorial exercises
@@ -210,7 +213,7 @@ https://github.com/whonore/dafny-pretty-progress # better command line output
 https://github.com/kumom/dafny-fatnode/
 https://github.com/hassaanmalik/algorithm-tutorials-in-dafny/
 
-PlusCal & TLA+
+PlusCal
 https://github.com/tlaplus/examples # official examples
 https://github.com/johnstrunk/tla-kcp-storage # Kubernetes storage clusters
 https://github.com/YuichiTanikane/HelloPlusCal/ # bank payments
@@ -277,26 +280,26 @@ https://github.com/rix0rrr/pluscal-debugger # web-based visualizer for PlusCal
 
 https://github.com/josehu07/learn-tla # study material - all runnable in VS Code
 https://github.com/salmans/pluscal-workshop/ # workshop - conflict-free replicated data types, maze
-https://github.com/Apress/practical-tla-plus/ # Hillel Wayne book
+https://github.com/apress/practical-tla-plus/ # Hillel Wayne book
 
 https://github.com/lorin/lsm-tree-tla # TLA+ - log-structured merge tree
-https://github.com/langmartin/nomad-tla
+https://github.com/langmartin/nomad-tla # Nomad
 https://github.com/onosproject/tlaplus-monitor # live Kubernetes checking with TLA+
-https://github.com/JohnStrunk/tla-kubernetes # Kube API
-https://github.com/tlaplus/DrTLAPlus # Raft, Paxos, Cosmos DB consistency guarantees, TiDB transactions, global snapshots, termination detection
+https://github.com/johnstrunk/tla-kubernetes # Kube API
+https://github.com/tlaplus/drtlaplus # Raft, Paxos, Cosmos DB consistency guarantees, TiDB transactions, global snapshots, termination detection
 https://github.com/bbengfort/formal-models # Raft modified
-https://github.com/VadimPlh/Arrival # Clickhouse
+https://github.com/vadimplh/arrival # Clickhouse
 https://github.com/BoeVonLipwig/Go-Back-N-TLA- # Go-Back-N data transfer
 https://github.com/onosproject/onos-tlaplus
 https://github.com/sanjosh/tlaplus
-https://github.com/kmsalem/Carousel-TLA
-https://github.com/mbellotti/pyTLA
-https://github.com/raydog99/PlusCal # a ton of consensus approaches
+https://github.com/kmsalem/carousel-tla
+https://github.com/mbellotti/pytla
+https://github.com/raydog99/pluscal # a ton of consensus approaches
 https://github.com/fernandezpablo85/practical-tla # Hillel Wayne book but in pure TLA+
 https://github.com/kpy3/tla-samples/ # wolf goat cabbage
-https://github.com/kf6009/CarPark # parking lot
+https://github.com/kf6009/carpark # parking lot
 https://github.com/hengxin/tlaplus-pluscal-utils
-https://github.com/tlaplus/CommunityModules
+https://github.com/tlaplus/communitymodules
 https://github.com/toastedcornflakes/tla-git-support # commits a TLA+ file without including the PlusCal translation
 
 WhyML

@@ -47,9 +47,14 @@ zstyle ':completion:*' list-colors '=(#b)*(-- *)=35=90'
 # Add paths for Perl
 eval "$(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib=$HOME/perl5)"
 
-# Opens the hompage of a Homebrew package
+# Opens a Homebrew package in a browser
 bh() {
   brew home $@
+}
+
+# Opens a Rust package in a browser
+cb() {
+  open "https://crates.io/crates/${1}"
 }
 
 # Deletes a line from the zsh history file
@@ -144,3 +149,5 @@ prep() {
   sudo xattr -r -d com.apple.quarantine "$1"
   sudo codesign --force --deep --sign - "$1"
 }
+
+

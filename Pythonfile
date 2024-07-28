@@ -7,5 +7,6 @@ jmespath
 okta-cli
 nornir_cli
 py-altdns
+pypisearch
 scapy
 tacacs_plus

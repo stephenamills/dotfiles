@@ -39,7 +39,7 @@ Postgres & Citus
 
 DynamoDB
 
-Redisa
+Redis
 
 Conflict-free replicated data types
 
@@ -48,6 +48,10 @@ Kafka
 Elasticsearch
 
 Clickhouse
+
+GraphQL
+
+Hasura
 
 Spark
 

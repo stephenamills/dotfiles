@@ -18,6 +18,7 @@ https://github.com/YoinkBird/alloy_learn/ # red black tree
 https://github.com/gracejiang16/bellmanford-adhoc # shortest path
 https://github.com/avanhatt/minimum-spanning-trees-alloy # minimum spanning tree of a graph
 https://github.com/paulwarnick21/prims-algorithm-alloy # minimum spanning tree of a graph
+http://www.doc.ic.ac.uk/project/examples/2007/271j/suprema_on_alloy/report.pdf # hashmap, seven bridges of konisberg
 https://github.com/jthemphill/permission-model # filesystem tree
 https://github.com/IagoAbal/darcs-alloy/ # version control
 https://github.com/vitorhugo13/feup-mfes/ # graph, stack
@@ -100,10 +101,6 @@ https://github.com/vasil-sd/engineering-sw-hw-model-checking-letures/ # garbage 
 https://github.com/5quintessential/fmalloyanalysis # no idea
 https://github.com/fala-cidadao/formal-specification/ # doesn't make sense but nice headings
 
-https://cs.wellesley.edu/~cs340/schedule/ # Wellesley course, has good Python analogies
-https://alloytools.org/tutorials/online/ # official tutorial
-http://www.din.uem.br/~ampolido/MetodosFormais/Notacao%20Z/Alloy/exec/alloy/docs/alloy-guide.html # clear terse tutorial from 2001, syntax is now invalid
-
 https://github.com/fstakem/alloy_book # Software Abstractions book
 https://github.com/msramalho/feup-mfes-summary # exercises about students and courses
 https://github.com/adautofbn/tut-o-ralloy/ # students and tutors
@@ -117,6 +114,11 @@ https://github.com/coreflexive/relmath # math relations book
 https://github.com/coreflexive/order # order theory
 https://github.com/coreflexive/algebra # lattice, algebra stuff
 https://github.com/bakaq/category_theory_alloy/ # category
+
+https://cs.wellesley.edu/~cs340/schedule/ # Wellesley course, has good Python analogies
+https://alloytools.org/tutorials/online/ # official tutorial
+http://www.din.uem.br/~ampolido/MetodosFormais/Notacao%20Z/Alloy/exec/alloy/docs/alloy-guide.html # clear terse tutorial from 2001, syntax is now invalid
+https://esb-dev.github.io/mat/alloy-cheatsheet.pdf # cheatsheet
 
 PlusCal
 https://github.com/tlaplus/examples # official examples

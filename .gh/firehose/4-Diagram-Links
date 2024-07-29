@@ -35,11 +35,11 @@ Eraser
 
 D2
 
+Visio
+
 Mingrammer
 
 Manim
-
-Visio
 
 Draw.io
 
@@ -47,7 +47,7 @@ Mermaid
 
 PlantUML
 
-Misc
+Other
 https://github.com/esnet/react-network-diagrams # rack diagrams and more in React, simple and customizable
 https://github.com/figma/architecture-diagram-components # backend software high-level design
 https://github.com/initialcommit-com/git-sim/ # creates a pretty Git diagram using manim

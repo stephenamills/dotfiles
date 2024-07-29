@@ -2332,12 +2332,12 @@ brew "wpscan"
 brew "awsdac" # by Amazon
 brew "d2" # by Terrastruct 
 brew "manim"
+brew "plantuml" # creates super ugly diagrams but has been maintained for a while
 # brew "inframap" # reads tfstate or HCL, diagram is ugly
-# brew "plantuml"
 # brew "svgbob" # converts ASCII diagram to a high-quality SVG diagram
 # brew "terramaid" # converts a Terraform configuration into a Mermaid diagram
-# also, cloud mapper by Duo
-# also, diagrams on pypi
+# also, cloud mapper by Duo - creates a network diagram
+# also, diagrams on PyPI
 # also, mermaid on npm
 
 # brew "ditaa" # converts ASCII diagram to a diagram
@@ -2347,7 +2347,6 @@ brew "manim"
 # brew "structurizr-cli" # has the interesting ability to theme an ugly diagram
 # brew "swiftplantuml" # creates a diagram of a Swift file
 # brew "umlet"
-
 
 
 # Image Processing

@@ -1,10 +1,6 @@
 Links to useful GitHub repos
 https://mad.firstmark.com
 
-Serp API
-
-Bing API
-
 Cohere
 https://github.com/cohere-ai/examples # sample apps using the API
 https://github.com/cohere-ai/notebooks # API cookbook in Python notebooks
@@ -23,13 +19,7 @@ https://github.com/cohere-ai/binaryvectordb
 https://github.com/cohere-ai/cohere-terrarium # unsure why this exists
 https://github.com/berriai/litellm
 
-Colab
-
-Confluence
-
-Sharepoint
-
-Visual Studio Code Chatbot
+Visual Studio Code Chat
 https://github.com/lukvonstrom/copilot-verification # Chat extension - verifies Python code or creates tests using preconditions and postconditions
 https://github.com/phoevos/vscode-extension-verifier # verifies Python code or creates tests using preconditions and postconditions
 https://github.com/scottholden/copilotchatextensions # three examples
@@ -46,6 +36,16 @@ https://github.com/continuedev/continue
 https://github.com/xnul/code-llama-for-vscode
 https://github.com/hieunc229/copilot-clone
 https://github.com/rubberduck-ai/rubberduck-vscode
+
+Confluence
+
+Sharepoint
+
+Serp API
+
+Bing API
+
+Colab
 
 ---
 

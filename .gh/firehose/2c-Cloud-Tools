@@ -1,11 +1,5 @@
 Links to useful GitHub repos
 
-Firebase
-
-Cloud Run
-
-OpenAPI & Mock APIs
-
 Packer
 
 Ignition & Cloud-init
@@ -33,6 +27,7 @@ https://github.com/nathancatania/publisher-cloud-init
 https://github.com/bricecamus/proxmox-k8s-cluster
 https://github.com/flatcar/coreos-cloudinit
 https://github.com/mamadiam/whatsapp-proxy
+
 https://github.com/sammck/cloud-init-gen # Python library for Amazon EC2
 https://github.com/dermotbradley/create-alpine-disk-image
 https://github.com/bjwschaap/alpine-lift
@@ -63,22 +58,20 @@ https://github.com/rancher/elemental-toolkit
 https://github.com/iddocohen/vce_cloudinit
 https://github.com/exoscale/openbsd-cloud-init
 
+--
 Terraform
 
 Pulumi
 
-Sst
+SST
 
 GCP Deployment Manager
 
 AWS Cloud Formation
 
-Azure Resource Manager
+Azure Bicep
 
-Wireguard
-
-Webauthn
-
+--
 Ansible
 
 Nornir
@@ -87,22 +80,14 @@ Saltstack
 
 Chef
 
-Nomad
-
-Kubernetes
-
-Swarm
-
-Kamal
-
-Traefik
-
-DNS & Certificates
-
-Vault
-
-Wordpress
-
-Rails
-
-Backblaze
+--
+Packet Capture
+https://github.com/sbabicz/tcpdump-bpf-cheatsheet # Ethernet & Dot1q, IPv4 & IPv6 & ICMP, TCP & UDP, GRE, DNS
+https://github.com/marciopocebon/TCPDUMP-1 # POP & SMTP, FTP
+https://github.com/SergK/cheatsheat-tcpdump # IP & ICMP, TCP, SMTP, HTTP, SSH
+https://github.com/jescholl/packetman # creates a tcpdump filter
+https://github.com/benjojo/tcpdump-to-bpf.benjojo.co.uk # converts a tcpdump filter to an iptables rule
+https://github.com/evanfoster/remotecap # remote dump
+https://github.com/jhunt/tcptrace # color
+https://github.com/nlitsme/xpcapperl # Perl hex
+https://github.com/spikebike/tcpdumplog # Perl sort

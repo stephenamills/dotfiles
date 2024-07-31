@@ -28,7 +28,7 @@ layout python
 #     unset __conda_setup
 # }
 
-# layout_conda .conda_env
+# layout_conda FIXME:YOUR_ENV_NAME_HERE
 
 # Easily run project-local Ruby commands directly without bundle exec
 # layout ruby

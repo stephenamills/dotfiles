@@ -1,9 +1,6 @@
 # Add paths for Homebrew based on architecture.
 [[ $(uname -m) == "arm64" ]] && eval "$(/opt/homebrew/bin/brew shellenv)" || eval "$(/usr/local/bin/brew shellenv)"
 
-# Add paths for Python Conda
-eval "$(conda "shell.$(basename "${SHELL}")" hook)"
-
 export ARGC_COMPLETIONS_ROOT="$HOME/.argc"
 export ARGC_COMPLETIONS_PATH="$ARGC_COMPLETIONS_ROOT/completions"
 export JETBRAINS_PATH="$HOME/Library/Application Support/JetBrains/Toolbox/scripts"

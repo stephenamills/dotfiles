@@ -149,5 +149,3 @@ prep() {
   sudo xattr -r -d com.apple.quarantine "$1"
   sudo codesign --force --deep --sign - "$1"
 }
-
-

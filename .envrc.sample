@@ -1,2 +1,34 @@
+# Easily run project-local JavaScript commands in node_modules/.bin without npx
+# layout node
+
+# This is just here for completeness honestly
+# layout perl
+
+# Easily run project-local PHP commands in vendor/bin without composer run-script
+# layout php
+
+# Use this for a basic Python project
 export VIRTUAL_ENV=.venv
 layout python
+
+# # Use this for a more complex Python project with non-Python dependencies like C++ or Fortran
+# layout_conda() {
+#     CONDA_PATH="$HOMEBREW_PREFIX/Caskroom/miniconda/base"
+
+#     __conda_setup="$("$CONDA_PATH/bin/conda" 'shell.bash' 'hook' 2> /dev/null)"
+#     if [ $? -eq 0 ]; then
+#         eval "$__conda_setup"
+#     else
+#         if [ -f "$CONDA_PATH/etc/profile.d/conda.sh" ]; then
+#             . "$CONDA_PATH/etc/profile.d/conda.sh"
+#         else
+#             export PATH="$CONDA_PATH/bin:$PATH"
+#         fi
+#     fi
+#     unset __conda_setup
+# }
+
+# layout_conda .conda_env
+
+# Easily run project-local Ruby commands directly without bundle exec
+# layout ruby

@@ -341,7 +341,7 @@ brew "bitwarden-cli"
 brew "doppler" # very good and popular secrets manager
 brew "gopass" # encrypts credentials and stores them in Git, made for teams
 brew "hashicorp/tap/vault"
-brew "sops"
+brew "sops" # popular and works well with direnv
 brew "vsh" # community-created shell for Vault
 # brew "gokey" # by Cloudflare
 # brew "gopass-jsonapi" # Gopass browser bindings
@@ -2914,7 +2914,6 @@ brew "oci-cli"
 brew "pocketbase"
 brew "replicate/tap/replicate" # runs machine learning models in their cloud
 brew "robot-framework" # automation testing
-brew "sops"
 brew "stripe-cli"
 brew "supabase/tap/supabase"
 brew "webpod" # deploys JavaScript apps to DigitalOcean, Linode, Vultr, GCP, AWS, or Azure

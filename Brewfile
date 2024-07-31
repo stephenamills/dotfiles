@@ -2793,7 +2793,7 @@ brew "rust"
 
 brew "pipx"
 brew "python"
-cask "anaconda"
+cask "miniconda"
 # brew "black" # formatter
 # brew "flake8" # Python checker
 # brew "flit" # by PyPA - publishes Python package to PyPI

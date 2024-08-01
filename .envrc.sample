@@ -1,34 +1,41 @@
-# Easily run project-local JavaScript commands in node_modules/.bin without npx
-# layout node
+# # Basic Python project setup
+# export VIRTUAL_ENV=.venv
+# layout python
 
-# This is just here for completeness honestly
-# layout perl
-
-# Easily run project-local PHP commands in vendor/bin without composer run-script
-# layout php
-
-# Use this for a basic Python project
-export VIRTUAL_ENV=.venv
-layout python
-
-# # Use this for a more complex Python project with non-Python dependencies like C++ or Fortran
+# Usage: layout conda <env_name>
+#
+# Sets up environment for a Python project using conda. Conda
+# is needed for projects with C++/Fortran dependencies.
+#
+# Adapted version for miniconda installed via Homebrew
 # layout_conda() {
-#     CONDA_PATH="$HOMEBREW_PREFIX/Caskroom/miniconda/base"
+#   # Define the path to the activate script based on Homebrew's installation location
+#   local ACTIVATE="$HOMEBREW_PREFIX/Caskroom/miniconda/base/bin/activate"
 
-#     __conda_setup="$("$CONDA_PATH/bin/conda" 'shell.bash' 'hook' 2> /dev/null)"
-#     if [ $? -eq 0 ]; then
-#         eval "$__conda_setup"
-#     else
-#         if [ -f "$CONDA_PATH/etc/profile.d/conda.sh" ]; then
-#             . "$CONDA_PATH/etc/profile.d/conda.sh"
-#         else
-#             export PATH="$CONDA_PATH/bin:$PATH"
-#         fi
-#     fi
-#     unset __conda_setup
+#   if [ -n "$1" ]; then
+#     local env_name="$1"
+#     source $ACTIVATE $env_name
+#   elif (grep -q name: environment.yml); then
+#     # Detect environment name from `environment.yml` file in `.envrc` directory
+#     local env_name=$(grep name: environment.yml | sed -e 's/name: //' | cut -d "'" -f 2 | cut -d '"' -f 2)
+#     source $ACTIVATE $env_name
+#   else
+#     (>&2 echo "No conda environment passed to 'layout conda' in your .envrc file. Usage: layout conda <env_name>")
+#     exit 1
+#   fi
 # }
 
-# layout_conda FIXME:YOUR_ENV_NAME_HERE
+# layout conda base
 
-# Easily run project-local Ruby commands directly without bundle exec
+# Easily run project-local Go commands in bin (https://github.com/direnv/direnv/wiki/golang)
+# layout golang
+
+# Note: JavaScript is not here because direnv docs recommend using npx instead of relying on modifying the PATH variable
+
+# Easily run project-local Perl commands in .direnv/perl5/bin (https://github.com/direnv/direnv/wiki/Perl)
+# layout perl
+
+# Note: I excluded PHP because the direnv docs don't use it like this. Use composer run-script instead.
+
+# Easily run project-local Ruby commands in .direnv/bin without bundle exec (https://github.com/direnv/direnv/wiki/Ruby)
 # layout ruby

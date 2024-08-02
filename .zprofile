@@ -15,7 +15,7 @@ export PIPX_PATH="$HOME/.local/bin"
 export PNPM_HOME="$HOME/Library/pnpm"
 export PYTHON_PATH="$(brew --prefix python)/libexec/bin" # Dynamically expands to the path of whatever the latest version of Python is.
 export RUBY_PATH="$(brew --prefix ruby)/bin"
-export RUBYGEMS_PATH="$($HOMEBREW_PREFIX/opt/ruby/bin/gem env gemdir)/bin"
+export RUBYGEMS_PATH="$(brew --prefix ruby)/bin/gem env gemdir)/bin" # Use the gem command installed by Homebrew, overriding the old that comes with macOS.
 export RUST_PATH="$HOME/.cargo/bin"
 
 export PATH=\

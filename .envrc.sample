@@ -1,22 +1,28 @@
-# Easily run project-local Go commands in .direnv/go/bin (https://github.com/direnv/direnv/blob/68978efd9e0051bf9c4db10ac0e50afe0b3e7823/stdlib.sh#L788-L798)
+# Adds "$PWD/.direnv/go" to the GOPATH environment variable. And also adds "$PWD/bin" to the PATH environment variable. (https://github.com/direnv/direnv/blob/68978efd9e0051bf9c4db10ac0e50afe0b3e7823/stdlib.sh#L788-L798).
 # layout go
 
-# Sets the JULIA_PROJECT environment variable (https://github.com/direnv/direnv/blob/68978efd9e0051bf9c4db10ac0e50afe0b3e7823/stdlib.sh#L1096-L1101)
+# Sets the JULIA_PROJECT environment variable to the current directory. (https://github.com/direnv/direnv/blob/68978efd9e0051bf9c4db10ac0e50afe0b3e7823/stdlib.sh#L1096-L1101).
 # layout julia
 
-# Easily run project-local Perl commands in .direnv/perl5/bin (https://github.com/direnv/direnv/blob/68978efd9e0051bf9c4db10ac0e50afe0b3e7823/stdlib.sh#L815-L829)
+# Adds "$PWD/node_modules/.bin" to the PATH environment variable. (https://github.com/direnv/direnv/blob/68978efd9e0051bf9c4db10ac0e50afe0b3e7823/stdlib.sh#L800-L805).
+# layout node
+
+# Adds "$PWD/.direnv/perl5" and "$PWD/.direnv/perl5/bin" to the PATH environment variable. Also sets environment variables required by Perl's local::lib. (https://github.com/direnv/direnv/blob/68978efd9e0051bf9c4db10ac0e50afe0b3e7823/stdlib.sh#L815-L829).
 # layout perl
 
-# Easily run project-local PHP commands in vendor/bin (https://github.com/direnv/direnv/blob/68978efd9e0051bf9c4db10ac0e50afe0b3e7823/stdlib.sh#L831-L836)
+# Adds "$PWD/vendor/bin" to the PATH environment variable. (https://github.com/direnv/direnv/blob/68978efd9e0051bf9c4db10ac0e50afe0b3e7823/stdlib.sh#L831-L836).
 # layout php
 
-# Basic Python project setup using venv (https://github.com/direnv/direnv/blob/68978efd9e0051bf9c4db10ac0e50afe0b3e7823/stdlib.sh#L838-L892)
+# Creates and loads a virtualenv environment under "$PWD/.venv" (https://github.com/direnv/direnv/blob/68978efd9e0051bf9c4db10ac0e50afe0b3e7823/stdlib.sh#L838-L892)
 # export VIRTUAL_ENV=.venv
 # layout python
 
-# Complex Python project setup with Conda. (https://github.com/direnv/direnv/blob/68978efd9e0051bf9c4db10ac0e50afe0b3e7823/stdlib.sh#L910-L1007)
-# Conda is needed to install mixed language dependencies like C++ and Fortran.
+# Similar to layout python but uses Pipenv to create a virtualenv environment using the Pipfile in the current directory. (https://github.com/direnv/direnv/blob/68978efd9e0051bf9c4db10ac0e50afe0b3e7823/stdlib.sh#L1009-L1034).
+# export PIPENV_PIPFILE=.venv
+# layout pipenv
+
+# Similar to layout python but uses Conda to create a Conda virtual environment named "base" under "/opt/homebrew/Caskroom/miniconda". (https://github.com/direnv/direnv/blob/68978efd9e0051bf9c4db10ac0e50afe0b3e7823/stdlib.sh#L910-L1007).
 # layout anaconda base
 
-# Easily run project-local Ruby commands in .direnv/bin without bundle exec (https://github.com/direnv/direnv/blob/68978efd9e0051bf9c4db10ac0e50afe0b3e7823/stdlib.sh#L1071-L1094)
+# Sets the GEM_HOME environment variable to "$PWD/.direnv/ruby/RUBY_VERSION". (https://github.com/direnv/direnv/blob/68978efd9e0051bf9c4db10ac0e50afe0b3e7823/stdlib.sh#L1071-L1094).
 # layout ruby

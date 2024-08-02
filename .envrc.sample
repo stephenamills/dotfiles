@@ -7,7 +7,7 @@
 layout anaconda base
 
 # Easily run project-local Go commands in bin (https://github.com/direnv/direnv/wiki/golang)
-# layout golang
+# layout go
 
 # Note: JavaScript is not here because direnv docs recommend using npx instead of relying on modifying the PATH variable
 

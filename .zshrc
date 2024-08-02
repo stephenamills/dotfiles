@@ -47,11 +47,6 @@ zstyle ':completion:*' list-colors '=(#b)*(-- *)=35=90'
 # Add paths for Perl
 eval "$(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib=$HOME/perl5)"
 
-# Opens a Homebrew package in a browser
-bh() {
-  brew home $@
-}
-
 # Opens a Rust package in a browser
 cb() {
   open "https://crates.io/crates/${1}"
@@ -64,8 +59,13 @@ del() {
 }
 
 # Opens a GitHub repository in the browser
-hb() {
+gb() {
   xargs -n 1 -P 8 hub browse <<< $@
+}
+
+# Opens a Homebrew package in a browser
+hb() {
+  brew home $@
 }
 
 # Loads the Google Cloud SDK – it's too bloated to load everytime the shell starts
@@ -125,11 +125,6 @@ gitpl() {
 # Updates my local Git repos
 gitu() {
   gitup -c -t 2 .
-}
-
-# Opens a GitHub repository in the browser
-hb() {
-  xargs -n 1 -P 8 hub browse <<< $@
 }
 
 # Installs multiple .pkg files

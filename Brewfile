@@ -11,7 +11,7 @@ brew "sugarjar" # like sapling
 cask "gitbutler" # by Scott Chacon
 
 brew "bit-git" # better interface
-brew "git-branchless" # better interface 
+brew "git-branchless" # better interface
 brew "git-town" # better interface supporting multiple branch strategies
 
 brew "GitJournal/tap/git-auto-sync" # daemon that automatically syncs a repo
@@ -40,7 +40,7 @@ brew "git-delta" # superb upgrade to git blame and also for diff etc.
 brew "git-delete-merged-branches" # deletes a merged branch
 brew "git-filter-repo" # rewrites repository history
 brew "git-flow" # branching model popularized in a blog post
-brew "git-flow-avh" # another git-flow 
+brew "git-flow-avh" # another git-flow
 brew "git-fixup" # alias for git commit --fixup <ref>
 brew "git-imerge" # incremental merge of two branches
 brew "git-integration" # integration branches, whatever
@@ -53,7 +53,7 @@ brew "git-vendor" # creates a vendored dependency (as the Go community does)
 brew "git-when-merged" # finds where a commit was merged
 # brew "git-annex" # manages files with git without checking in file contents
 # brew "git-annex-remote-rclone" # rclone-supported cloud storage for Git Annex
-# brew "changie" # changelog tool 
+# brew "changie" # changelog tool
 # brew "cocogitto" # commit message
 # brew "codecov" # code coverage
 # brew "commitlint" # probably intended to be installed locally per-project
@@ -212,8 +212,6 @@ brew "git-when-merged" # finds where a commit was merged
 # Integrate Pivotal Tracker into your Git workflow
 # https://github.com/stevenharman/git_tracker
 
-
-
 # git-url-sub
 # Recursively substitute remote URLs for multiple repos
 # https://gosuri.github.io/git-url-sub
@@ -282,7 +280,7 @@ brew "git-when-merged" # finds where a commit was merged
 # Framework to smartly mirror git repositories
 # https://github.com/mricon/grokmirror
 
-# GitHub 
+# GitHub
 brew "gh"
 brew "git-open" # opens a GitHub page
 brew "hub"
@@ -306,8 +304,6 @@ brew "glab"
 brew "huggingface-cli"
 # brew "cortexso" # ollama-like, drop-in local alternative to the OpenAI stack
 # brew "ollama" # downloads and runs a language model
-
-
 
 # Continuous Integration
 brew "act"
@@ -334,7 +330,6 @@ brew "woodpecker-cli"
 # runme
 # Execute commands inside your runbooks, docs, and READMEs
 # https://runme.dev/
-
 
 # Secrets
 brew "bitwarden-cli"
@@ -380,7 +375,6 @@ brew "vsh" # community-created shell for Vault
 # Secrets management tool for developers
 # https://github.com/tellerops/teller
 
-
 # Docker Containers
 brew "apko" # creates an image from an Alpine APK, without a Dockerfile
 brew "cog" # by Replicate - creates containers for machine learning without a Dockerfile
@@ -389,7 +383,7 @@ brew "copa" # patches a container image using reports from vulnerability scanner
 brew "cosign"
 brew "dive" # image explorer
 brew "hadolint" # checks Dockerfile
-brew "grype" # 
+brew "grype" #
 brew "nixpacks" # creates Docker images without a Dockerfile
 brew "sysdig"
 # brew "clair" # audits container using static analysis
@@ -407,13 +401,12 @@ brew "butane" # by Red Hat - converts a Butane YAML desired system configuration
 
 brew "xorriso" # creates or edits an ISO filesystem image, useful with cloud-init which is an Ignition alternative
 
-
 # Packer
 brew "hashicorp/tap/packer"
 
 # Terraform
 brew "atlantis" # Terraform pull request automation – looks incredibly useful
-brew "atmos" 
+brew "atmos"
 brew "aztfexport"
 brew "cdktf" # cloud development kit for Terraform
 brew "coder" # creates self-hosted development environments with Terraform and connects to it with Wireguard
@@ -426,7 +419,6 @@ brew "scoutsuite" # really good scanner that uses their sadcloud Terraform proje
 brew "terragrunt"
 brew "terramate"
 brew "tfsec"
-
 
 # kubergrunt
 # Collection of commands to fill in the gaps between Terraform, Helm, and Kubectl
@@ -544,7 +536,7 @@ brew "tfsec"
 # Generate Atlantis config for Terragrunt projects
 # https://github.com/transcend-io/terragrunt-atlantis-config
 
-# terrahash 
+# terrahash
 
 # terrahelp
 # Tool providing extra functionality for Terraform
@@ -580,7 +572,6 @@ brew "jinja2-cli" # jinja2
 # Also, Chef, Puppet, and SaltStack
 # Also, Nornir on PyPI
 
-
 # Kubernetes - Basic
 brew "colima" # container runtimes on macOS with minimal setup
 brew "ctlptl" # sets up a cluster using only a YAML file, inspired by kubectl and clusterctl
@@ -606,7 +597,6 @@ brew "clusterctl" # tool to provision, operate, and upgrade Kubernetes servers u
 brew "cmctl" # manages TLS certificates in Kubernetes via cert-manager
 # brew hubble # network, service & security observability using eBPF
 
-
 # Kubernetes - Everything Else
 brew "arkade" # Kubernetes-packaged apps
 brew "cdk8s" # cloud development kit for Kubernetes
@@ -616,7 +606,7 @@ brew "click" # by Databricks - Kubernetes interactive controller
 brew "confd" # manages application configuration files using templates and data from etcd or Consul
 brew "cri-tools" # create, remove, list, inspect, start, and stop containers using the Kubelet Container Runtime Interface (CRI) Protobuf APIs
 brew "cyctl" # really cool ui tool
-brew "hashicorp/tap/consul" 
+brew "hashicorp/tap/consul"
 brew "hashicorp/tap/consul-template" # generates files from Consul data
 brew "helm"
 brew "helmfile"
@@ -690,7 +680,6 @@ brew "vespa-cli" # by Yahoo - has a guide to deploy machine learning to Kubernet
 # Crawling and spidering framework
 # https://github.com/projectdiscovery/katana
 
-
 # kcat
 # Generic command-line non-JVM Apache Kafka producer and consumer
 # https://github.com/edenhill/kcat
@@ -706,7 +695,6 @@ brew "vespa-cli" # by Yahoo - has a guide to deploy machine learning to Kubernet
 # keptn
 # CLI for keptn.sh, a message-driven control-plane for application delivery
 # https://keptn.sh
-
 
 # keydb
 # Multithreaded fork of Redis
@@ -831,8 +819,6 @@ brew "vespa-cli" # by Yahoo - has a guide to deploy machine learning to Kubernet
 # kubent
 # Easily check your clusters for use of deprecated APIs
 # https://github.com/doitintl/kube-no-trouble
-
-
 
 # kubernetes-cli
 # Kubernetes command-line interface
@@ -990,8 +976,6 @@ brew "vespa-cli" # by Yahoo - has a guide to deploy machine learning to Kubernet
 # LLDB plugin for live/post-mortem debugging of node.js apps
 # https://github.com/nodejs/llnode
 
-
-
 # localtunnel
 # Exposes your localhost to the world for easy testing and sharing
 # https://theboroer.github.io/localtunnel-www/
@@ -1007,8 +991,6 @@ brew "vespa-cli" # by Yahoo - has a guide to deploy machine learning to Kubernet
 # logcheck
 # Mail anomalies in the system logfiles to the administrator
 # https://packages.debian.org/sid/logcheck
-
-
 
 # logdy
 # Web based real-time log viewer
@@ -1074,7 +1056,6 @@ brew "vespa-cli" # by Yahoo - has a guide to deploy machine learning to Kubernet
 # Command-line tool to create and query container image manifest list/indexes
 # https://github.com/estesp/manifest-tool/
 
-
 # mantra
 # Tool to hunt down API key leaks in JS files and pages
 # https://amoloht.github.io
@@ -1119,7 +1100,6 @@ brew "vespa-cli" # by Yahoo - has a guide to deploy machine learning to Kubernet
 # CLI for interacting with Stacklok's Minder platform
 # https://minder-docs.stacklok.dev
 
-
 # minio
 # High Performance, Kubernetes Native Object Storage
 # https://min.io
@@ -1147,8 +1127,6 @@ brew "vespa-cli" # by Yahoo - has a guide to deploy machine learning to Kubernet
 # mjml
 # JavaScript framework that makes responsive-email easy
 # https://mjml.io
-
-
 
 # mkp224o
 # Vanity address generator for tor onion v3 (ed25519) hidden services
@@ -1350,8 +1328,6 @@ brew "vespa-cli" # by Yahoo - has a guide to deploy machine learning to Kubernet
 # Renders an animated, color, ANSI-text loop of the Poptart Cat
 # https://github.com/klange/nyancat
 
-
-
 # objc-codegenutils
 # Three small tools to help work with XCode
 # https://github.com/puls/objc-codegenutils
@@ -1380,8 +1356,6 @@ brew "vespa-cli" # by Yahoo - has a guide to deploy machine learning to Kubernet
 # JSON parser and visualization tool
 # https://github.com/ohler55/ojg
 
-
-
 # onefetch
 # Command-line Git information tool
 # https://onefetch.dev/
@@ -1397,7 +1371,6 @@ brew "vespa-cli" # by Yahoo - has a guide to deploy machine learning to Kubernet
 # operator-sdk
 # SDK for building Kubernetes applications
 # https://sdk.operatorframework.io/
-
 
 # oras
 # OCI Registry As Storage
@@ -1442,8 +1415,6 @@ brew "vespa-cli" # by Yahoo - has a guide to deploy machine learning to Kubernet
 # percol
 # Interactive grep tool
 # https://github.com/mooz/percol
-
-
 
 # percona-toolkit
 # Command-line tools for MySQL, MariaDB and system tasks
@@ -1504,10 +1475,6 @@ brew "vespa-cli" # by Yahoo - has a guide to deploy machine learning to Kubernet
 # popeye
 # Kubernetes cluster resource sanitizer
 # https://popeyecli.io
-
-# postgraphile
-# GraphQL schema created by reflection over a PostgreSQL schema
-# https://www.graphile.org/postgraphile/
 
 # pre-commit
 # Framework for managing multi-language Git pre-commit hooks
@@ -1581,14 +1548,9 @@ brew "vespa-cli" # by Yahoo - has a guide to deploy machine learning to Kubernet
 # Chaos testing tool for Docker
 # https://github.com/alexei-led/pumba
 
-# pup
-# Parse HTML at the command-line
-# https://github.com/EricChiang/pup
-
 # pwncat
 # Netcat with FW/IDS/IPS evasion, self-inject-, bind- and reverse shell
 # https://pwncat.org
-
 
 # rack
 # CLI for Rackspace
@@ -1597,7 +1559,6 @@ brew "vespa-cli" # by Yahoo - has a guide to deploy machine learning to Kubernet
 # rain
 # Command-line tool for working with AWS CloudFormation
 # https://github.com/aws-cloudformation/rain
-
 
 # rancher-cli
 # Unified tool to manage your Rancher server
@@ -1705,7 +1666,7 @@ brew "vespa-cli" # by Yahoo - has a guide to deploy machine learning to Kubernet
 
 # rslint
 # Extremely fast JavaScript and TypeScript linter
-# https://rslint.org/ 
+# https://rslint.org/
 
 # rubyfmt
 # Ruby autoformatter
@@ -1779,7 +1740,6 @@ brew "vespa-cli" # by Yahoo - has a guide to deploy machine learning to Kubernet
 # Programming framework for writing and deploying cloud applications #gke #google cloud
 # https://serviceweaver.dev/
 
-
 # sgr
 # Command-line client for Splitgraph, a version control system for data
 # https://www.splitgraph.com/docs/sgr-advanced/getting-started/introduction
@@ -1791,8 +1751,6 @@ brew "vespa-cli" # by Yahoo - has a guide to deploy machine learning to Kubernet
 # shub
 # Scrapinghub command-line client
 # https://shub.readthedocs.io/en/latest/
-
-
 
 # silicon
 # Create beautiful image of your source code
@@ -1958,15 +1916,9 @@ brew "vespa-cli" # by Yahoo - has a guide to deploy machine learning to Kubernet
 # Network IDS, IPS, and security monitoring engine
 # https://suricata.io
 
-
-
-
-
-
 # tanka
 # Flexible, reusable and concise configuration for Kubernetes using Jsonnet
 # https://tanka.dev
-
 
 # taplo
 # TOML toolkit written in Rust
@@ -1980,12 +1932,9 @@ brew "vespa-cli" # by Yahoo - has a guide to deploy machine learning to Kubernet
 # Command-line tool to interact with Gitea servers
 # https://gitea.com/gitea/tea
 
-
-
 # temporal
 # Command-line interface for running and interacting with Temporal Server and UI
 # https://temporal.io/
-
 
 # testkube
 # Kubernetes-native framework for test definition and execution
@@ -2063,7 +2012,6 @@ brew "vespa-cli" # by Yahoo - has a guide to deploy machine learning to Kubernet
 # Distributed SQL query engine for big data
 # https://trino.io
 
-
 # Nomad
 brew "hashicorp/tap/nomad"
 brew "levant" # templating and deployment tool for jobs
@@ -2078,7 +2026,7 @@ brew "levant" # templating and deployment tool for jobs
 # brew "mysql"
 # brew "postgresql"
 # brew "rqlite" # replicated SQLite (good documentation, in Go)
-# brew "sqlite" 
+# brew "sqlite"
 # brew "vitess" # replicated MySQL
 # also, Porcupine checker on pkg.go.dev, and MIT 6.5840
 
@@ -2090,7 +2038,7 @@ brew "levant" # templating and deployment tool for jobs
 # also, ScyllaDB
 # also, YugabyteDB
 
-# brew "atlas" # 
+# brew "atlas" #
 # brew "goose" # database migration
 # brew "flyway" # database version control to control migrations
 # brew "geni" # database migration
@@ -2115,7 +2063,7 @@ brew "levant" # templating and deployment tool for jobs
 # also, toshi
 # also, typesense
 
-# brew "manticoresearch" 
+# brew "manticoresearch"
 # brew "zinclabs/tap/zincsearch" # must tap zinclabs/tap first
 
 # Spark
@@ -2129,16 +2077,34 @@ brew "levant" # templating and deployment tool for jobs
 # brew "sigma-cli" # based on pySigma - Sigma rules for relevant log events
 # brew "sloth" # creates Prometheus SLOs
 
-# GraphQL
-# brew "graphql-cli"
-# brew "graphqurl" # by Hasura - curl for GraphQL with autocomplete, subscriptions and GraphiQL
-# brew "hasura-cli"
-
 # GraphQL Schema
-# brew "graphqlviz" # visualizes a server-side schema
+# brew "graphqlviz" # visualizes a GraphQL Server schema
 # brew "graphqxl" # language for creating a server-side schema
+# brew "postgraphile" # creates a GraphQL schema by doing reflection over a PostgreSQL schema (whatever that means)
+# quicktype: Generate types and converters from GraphQL (see JSON Schema section)
+
+# GraphQL
+brew "httpyac" # sends a REST, SOAP, GraphQL, or gRPC request
+# brew "graphql-cli" # tool for common development workflows
+# brew "graphqurl" # by Hasura - curl for GraphQL with autocomplete, subscriptions and GraphiQL
+# brew "hasura-cli" # command-line interface for Hasura GraphQL Engine
+# graphqurl: Curl for GraphQL with autocomplete, subscriptions and GraphiQL (see HTTP section)
 
 # Data Formats - JSON & YAML
+
+# JSON Schema
+brew "check-jsonschema" # checks a JSON Schema using popular Python jsonschema library
+brew "generate-json-schema" # converts a JSON file into a JSON Schema
+brew "json2ts" # converts JSON Schema to TypeScript type declarations
+brew "plank" # by Pinterest - generates model objects from JSON schemas
+brew "quicktype" # converts JSON into a JSON Schema or a JSON or GraphQL schema into code
+brew "yamale" # schema validator
+# brew "jsonschema2pojo" # converts a JSON or YAML Schema to a Java class, has a web version
+
+# JSON Template
+brew "go-jsonnet" # by Google - configuration language for defining JSON data
+brew "jrsonnet" # Jsonnet template language
+brew "jsonnet-bundler" # package manager for Jsonnet
 
 # JSON
 brew "fastgron" # JSON to greppable output, but faster by using SIMD instructions
@@ -2158,53 +2124,140 @@ brew "jsonlint" # checker
 # brew "jo" # creates JSON from a shell script
 # brew "jsawk" # awk for JSON
 
-# JSON Template
-brew "go-jsonnet" # by Google - configuration language for defining JSON data
-brew "jrsonnet" # Jsonnet template language
-brew "jsonnet-bundler" # package manager for Jsonnet
-
-# JSON Schema
-brew "check-jsonschema" # checks a JSON Schema using popular Python jsonschema library
-brew "generate-json-schema" # converts a JSON file into a JSON Schema
-brew "json2ts" # converts JSON Schema to TypeScript type declarations
-brew "plank" # by Pinterest - generates model objects from JSON schemas
-brew "quicktype" # converts JSON into a JSON Schema or a JSON or GraphQL schema into code
-brew "yamale" # schema validator
-# brew "jsonschema2pojo" # converts a JSON or YAML Schema to a Java class, has a web version
-
 # YAML
+brew "shyaml" # retrieves values
 brew "yamllint" # checker
 brew "yh" # highlighter
 brew "yj" # converts to JSON or TOML or HCL
-brew "yq" # jq for YAML, JSON, XML, CSV, and TOML
+brew "yq" # jq for YAML
 
-# Data Formats - CSV
-brew "csvkit" # tools
+# dasel: YAML query and modification tool
+# python-yq: jq for YAML
+# remarshal: Convert between TOML, YAML and JSON
+# yamale: Schema and validator for YAML
+
+# action-validator: Tool to validate GitHub Action and Workflow YAML files
+# ahoy: Creates self documenting CLI programs from commands in YAML files
+# cfn-flip: Convert AWS CloudFormation templates between JSON and YAML formats
+# datree: CLI tool to run policies against Kubernetes manifests YAML files or Helm charts
+# dhall-json: Dhall to JSON compiler and a Dhall to YAML compiler
+# dhall-yaml: Convert between Dhall and YAML
+# helmify: Create Helm chart from Kubernetes yaml
+# jenkins-job-builder: Configure Jenkins jobs with YAML files stored in Git
+# k2tf: Kubernetes YAML to Terraform HCL converter
+# kube-linter: Static analysis tool for Kubernetes YAML files and Helm charts
+# kustomize: Template-free customization of Kubernetes YAML manifests
+# naml: Convert Kubernetes YAML to Golang
+# nuclei: HTTP/DNS scanner configurable via YAML templates
+# spectral-cli: JSON/YAML linter with support for OpenAPI v3.1/v3.0/v2.0, and AsyncAPI v2.x
+# tfk8s: Kubernetes YAML manifests to Terraform HCL converter
+# thors-serializer: Declarative serialization library (JSON/YAML) for C++
+# yaml-cpp: C++ YAML parser and emitter for YAML 1.2 spec
+# yamllint: Linter for YAML files
+
+# Data Formats - CSV & TSV
 brew "csvlens" # viewer
-brew "csvtk" # csvkit alternative
+brew "tidy-viewer" # great viewer
+# brew "csvprintf" # formats CSVs from a table to separate lines
+# csview: High performance csv viewer for cli
+
+brew "csvkit" # toolkit
+brew "csvtk" # toolkit
 brew "dasel" # jq for CSV, TOML, HTML, and JSON/YAML
 brew "jtbl" # converts JSON to CSV or HTML or Markdown tables
 brew "qsv" # one of the best - xsv replacement with a lot of features and documentation
-brew "tidy-viewer" # viewer
 brew "xsv" # looks very useful for csv files though kinda abandoned
-# brew "csvq" # SQL queries for CSV
+
+brew "csvq" # runs an SQL query against CSV
+brew "dsq" # runs an SQL query against CSV or Parquet
 # brew "cqlkit" # exports Cassandra query as CSV or JSON
-# brew "csvprintf" # formats CSVs from a table to separate lines
-# brew "dsq" # another SQL query tool for CSV
 # brew "psql2csv" # runs a query in PSQL and outputs the result as CSV
 
-# Data Formats - TSV
-brew "miller" # sed, awk, cut, join & sort for name-indexed data like TSV, CSV, JSON, and JSON Lines
-brew "json2tsv"
+# miller: Like sed, awk, cut, join & sort for CSV
+# yq: jq for CSV
+
+# csvprintf: Command-line utility for parsing CSV files
+# csvtomd: CSV to Markdown table converter
+# dsq: CLI tool for running SQL queries against JSON, CSV, Excel, Parquet, and more
+# midicsv: Converts a MIDI audio file to human-readable CSV format
+
+brew "miller" # TSV - sed, awk, cut, join & sort for name-indexed data like TSV, JSON, and JSON Lines
+brew "json2tsv" # converts JSON to TSV
+# brew "csvtk" # TSV toolkit - listed above
 # brew "json-table" # converts JSON to TSV or CSV
 
+# Data Formats - Parquet
+
+# Data Formats - HTML & XML
+brew "cascadia" # HTML selector
+brew "htmlq" # HTML selector
+brew "pup" # HTML selector
+
+brew "basex" # XPath
+brew "xidel" # XPath
+brew "xqilla" # XPath
+brew "xmlstarlet" # XPath
+
+brew "hq" # jq for HTML
+brew "python-yq" # jq for XML (see YAML section)
+brew "yq" # jq for XML (see YAML section)
+brew "xq" # jq for XML
+# dasel: XML query and modification tool
+# html-xml-utils: Tools for manipulating HTML and XML files
+
+# brew "xmlsectool" # for SAML - Check schema and signature of an XML document
+
+# dashing: Generate Dash documentation from HTML files
+# markdown: converts Markdown to HTML
+
+# castxml: C-family Abstract Syntax Tree XML Output
+# htmldoc: Converts HTML to PDF
+# htmltest: HTML validator written in Go
+# literate-git: Render hierarchical Git repositories into HTML
+# man2html: Convert nroff man pages to HTML
+# marp-cli: Easily convert Marp Markdown files into static HTML/CSS, PDF, PPT and images
+# mhonarc: Mail-to-HTML converter
+# monolith: CLI tool for saving complete web pages as a single HTML file
+# pdf2json: converts PDF to XML
+# pdftohtml: converts a PDF file to HTML
+# sgrep: Search SGML, XML, and HTML
+# tidy-html5: Granddaddy of HTML tools, with support for modern standards
+# tree: Display directories as trees (with optional color/HTML output)
+# weasyprint: Convert HTML to PDF
+# weasyprint: Converts HTML to PDF
+# xctesthtmlreport: Xcode-like HTML report for Unit and UI Tests
+# xml2: Makes XML and HTML more amenable to classic UNIX text tools
+# xmlto: Converts XML to another format (based on XSL or other tools)
+# xmltoman: XML to manpage converter
+
+# Data Formats - TOML
+# dasel # TOML query and modification tool
+# dhall-toml: Convert between Dhall and Toml
+# remarshal: Convert between TOML, YAML and JSON
+# taplo: TOML toolkit written in Rust
+# yj: CLI to convert between YAML, TOML, JSON and HCL
+
 # Data Formats - Protocol Buffer
-brew "buf" # tool and schema registry
 brew "grpcurl" # curl for gRPC
-brew "ghz" # benchmarking tool
-brew "grpcui" # like Postman for gRPC
+brew "grpcui" # Postman for gRPC
+# httpyac: sends a gRPC request (see GraphQL section)
+
+brew "buf" # tool and schema registry
+# brew "grpc-swift" # Swift implementation of gRPC
+# brew "protobuf" # compiler
+# brew "protoc-gen-go" # creates Go code
+# brew "protoc-gen-js" # creates JavaScript code
+# brew "protoc-gen-go-grpc" # protoc plugin that generates code for gRPC-Go clients
+# brew "protoc-gen-grpc-web" # protoc plugin that generates code for gRPC-Web clients
+# brew "swift-protobuf" # plugin and runtime library for using protobuf with Swift
+
+brew "ghz" # gRPC benchmarking tool
+# fortio: HTTP and gRPC load testing and visualization tool and server
+# brew "protolint" # linter
+
 # brew "capnp" # alternative to protocol buffers
 # brew "flatcc" # alternative to protocol buffers
+# brew "osm-pbf" # OpenStreetMap file format
 
 # Google Cloud
 brew "apib" # api tool
@@ -2219,7 +2272,7 @@ brew "cloudlist"
 brew "cloudprober" # sends monitoring probes and integrates with Prometheus and Grafana
 brew "firebase-cli"
 brew "fuego-firestore" # client for Firestore database
-brew "lexido" # uses Gemini's free API 
+brew "lexido" # uses Gemini's free API
 # brew "gcsfuse" # mounts Google Cloud Storage as a file system
 
 brew "yatas" # audits gcp/aws audit
@@ -2307,7 +2360,6 @@ cask "devkinsta" # nixpacks but does not have a cli
 # also, Heroku on npm, has buildpacks - it's in the Npmfile to avoid using a third-party tap
 # also, Northflank on npm, has nixpacks
 
-
 # Cloudflare
 brew "cloudflared" # tunnel for web servers or who even knows
 brew "flarectl"
@@ -2327,10 +2379,9 @@ brew "sail" # provisions and deploys to DigitalOcean
 brew "wp-cli"
 brew "wpscan"
 
-
 # Diagrams
 brew "awsdac" # by Amazon
-brew "d2" # by Terrastruct 
+brew "d2" # by Terrastruct
 brew "manim"
 brew "plantuml" # creates super ugly diagrams but has been maintained for a while
 # brew "inframap" # reads tfstate or HCL, diagram is ugly
@@ -2347,7 +2398,6 @@ brew "plantuml" # creates super ugly diagrams but has been maintained for a whil
 # brew "structurizr-cli" # has the interesting ability to theme an ugly diagram
 # brew "swiftplantuml" # creates a diagram of a Swift file
 # brew "umlet"
-
 
 # Image Processing
 brew "fileicon" # sets a macOS folder or file icon
@@ -2372,7 +2422,6 @@ brew "viu" # view high-resolution images in the terminal
 # brew "setweblocthumb" # creates website screenshot icon
 # brew "timg" # terminal image viewer
 # brew "triangle" # converts an image to computer-generated art using Delaunay triangulation
-
 
 # Networking - Application
 
@@ -2464,8 +2513,7 @@ brew "gimme-aws-creds" # retrieves AWS credentials from Okta
 # brew "findomain" # fastest complete solution for finding domains
 # brew "google-authenticator-libpam" by Google - PAM module for two-factor authentication
 # brew "httpx" # by Project Discovery - HTTP scan tool
-# brew "openfga" # nice open-source website - flexible authorization/permission engine 
-
+# brew "openfga" # nice open-source website - flexible authorization/permission engine
 
 # oath-toolkit
 # Tools for one-time password authentication systems
@@ -2562,7 +2610,7 @@ brew "openconnect" # client for Palo Alto, Cisco, Juniper, and Fortinet VPNs
 brew "vpn-slice"
 cask "ngrok"
 
-# Also, see Tailscale below (Mac App Store) 
+# Also, see Tailscale below (Mac App Store)
 # brew "wireguard-go"
 # brew "wireguard-tools"
 
@@ -2573,8 +2621,8 @@ brew "netcat"
 brew "nmap"
 brew "rustscan" # scans all 65k ports in 3 seconds
 brew "tcping"
-# brew "flowgrind" 
-# brew "hping" # deprecated: sends TCP, UDP, and ICMP messages 
+# brew "flowgrind"
+# brew "hping" # deprecated: sends TCP, UDP, and ICMP messages
 
 # Networking - Routing
 brew "asn"
@@ -2598,7 +2646,7 @@ brew "mtr"
 brew "netaddr"
 brew "netmask"
 brew "nexttrace" # visual route tracking
-brew "range2cidr" # by IPinfo 
+brew "range2cidr" # by IPinfo
 brew "sipcalc" # advanced subnet calculator - looks really useful
 brew "subnetcalc"
 brew "tracebox" # tries to detect intermediary in the path
@@ -2614,7 +2662,6 @@ brew "whatmask"
 # brew "scamper" # advanced traceroute
 # brew "trippy" # like mtr
 
-
 # Networking - Data Link
 brew "arp-scan"
 brew "arping"
@@ -2625,14 +2672,13 @@ brew "tcpdump"
 brew "yaf" # really useful networking data pipeline architecture and flow record display tool
 cask "wireshark"
 # brew "argus" # tcpdump alternative that has shows TCP state for each line such as CON FIN RST, or flow records whatever
-# brew "argus-clients" 
+# brew "argus-clients"
 # brew "pywhat" # can identify some things in a pcap file
-
 
 # zsh
 brew "argc"
 brew "asdf"
-brew "pure" # by Sindre Sorhus 
+brew "pure" # by Sindre Sorhus
 brew "zsh"
 brew "zsh-autocomplete"
 brew "zsh-autopair"
@@ -2648,7 +2694,7 @@ brew "shfmt" # formats a shell script
 # brew "m-cli" # macOS shell scripts
 # brew "nushell" # very advanced shell
 # brew "powershell" # advanced but bloated
-# brew "shellcheck" 
+# brew "shellcheck"
 # brew "starship" # prompt that works on Windows
 # brew "xonsh" # advanced shell
 # brew "xxh" # tool to ssh and bring your shell - useful, assuming it works
@@ -2701,11 +2747,10 @@ brew "watchexec" # watches files and triggers actions
 brew "wcurl"
 brew "xe" # xargs replacement
 brew "xidel" # super useful for reading web pages I think
-# cask "raycast" # searches DevDocs - commented out because you must install manually since the app manages its own updates like Google Chrome 
+# cask "raycast" # searches DevDocs - commented out because you must install manually since the app manages its own updates like Google Chrome
 # brew "flamegraph" # by Brendan Gregg - stack trace visualizer
 # brew "gat" # cat alternative in Go
 # brew "hck" # cut alternative that supports regex delimiters
-# brew "hq" # jq for HTML
 # brew "invoice" # generates pretty, professional invoices
 # brew "just" # runs project-specific commands, like Make
 # brew "rename" # renames files
@@ -2813,8 +2858,8 @@ brew "perl"
 
 brew "mint" # package manager for Swift
 # brew "chisel" # by Facebook - collection of LLDB commands
-# brew "carthage" # 
-# brew "cocoapods" # 
+# brew "carthage" #
+# brew "cocoapods" #
 # brew "create-dmg" # by Sindre Sorhus
 # brew "fastlane"
 # brew "flank" # Massively parallel test runner for Firebase Test Lab
@@ -2859,20 +2904,19 @@ cask "dotnet-sdk" # runtime and compiler
 # brew "conan"
 # brew "llvm"
 
-
 # Lightweight Formal Methods
-# 
+#
 # Alloy: particularly strong for modeling data relationships, weaker for time and concurrent systems. Uses relational logic concepts.
 # Dafny: particularly strong for modeling and verifying sequential programs, weaker for time and concurrent systems. Uses Hoare logic concepts.
 # Pluscal: not sure
-# If you are modeling and verifying a data-intensive system, Alloy might be the best choice. 
-# If you are modeling and verifying a sequential program, Dafny might be the best choice. 
-# 
-# 
+# If you are modeling and verifying a data-intensive system, Alloy might be the best choice.
+# If you are modeling and verifying a sequential program, Dafny might be the best choice.
+#
+#
 # Estimate of applicability to diffcult backend problems:
 # TLA+ > Dafny > Alloy
 brew "dafny"
-cask "alloy" 
+cask "alloy"
 cask "tla-plus-toolbox"
 
 # Audio
@@ -2917,7 +2961,6 @@ brew "robot-framework" # automation testing
 brew "stripe-cli"
 brew "supabase/tap/supabase"
 brew "webpod" # deploys JavaScript apps to DigitalOcean, Linode, Vultr, GCP, AWS, or Azure
-brew "xq"
 brew "xurls" # extracts urls from text - could be very useful
 brew "vercel-cli"
 brew "vultr"
@@ -2950,6 +2993,7 @@ vscode "graphql.vscode-graphql"
 vscode "graphql.vscode-graphql-syntax"
 vscode "hediet.debug-visualizer"
 vscode "isudox.vscode-jetbrains-keybindings"
+vscode "jnbt.vscode-rufo"
 vscode "mattpocock.ts-error-translator"
 vscode "mkhl.shfmt"
 vscode "moalamri.inline-fold"
@@ -2963,6 +3007,7 @@ vscode "timonwong.shellcheck"
 vscode "unifiedjs.vscode-mdx"
 vscode "VisualStudioExptTeam.vscodeintellicode"
 vscode "YoavBls.pretty-ts-errors"
+
 # tap "ddev/ddev"
 # tap "encoredev/tap"
 # tap "swiftbrew/tap"
@@ -2978,7 +3023,6 @@ vscode "YoavBls.pretty-ts-errors"
 # brew "calicoctl"
 # brew "capnp" # apparently Cloudflare workers use this
 # brew "cariddi" # does not look useful I just like go command line tools
-# brew "cascadia" HTML selector tool
 # brew "ccm" # cassandra
 # brew "chatblade" # I just like the ffmpeg example
 # brew "checkmake"

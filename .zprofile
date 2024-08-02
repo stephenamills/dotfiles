@@ -31,3 +31,6 @@ export PATH=\
 "$RUBY_PATH:"\
 "$RUST_PATH:"\
 "$PATH"
+
+export RUBYGEMS_PATH="$(gem env gemdir)/bin" # relies on Ruby or something and must be done after Ruby is added to the PATH above.
+export PATH="$RUBYGEMS_PATH:$PATH"

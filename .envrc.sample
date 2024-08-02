@@ -1,18 +1,32 @@
-# Basic Python project setup
-# export VIRTUAL_ENV=.venv
-# layout python
-
-# Complex Python project setup with Conda. Conda is needed for projects with C++/Fortran dependencies.
-# The only documentation is this code comment: (https://github.com/direnv/direnv/blob/68978efd9e0051bf9c4db10ac0e50afe0b3e7823/stdlib.sh#L910C1-L924C2)
-layout anaconda base
-
 # Easily run project-local Go commands in bin (https://github.com/direnv/direnv/wiki/golang)
 # layout go
 
 # Note: JavaScript is not here because direnv docs recommend using npx instead of relying on modifying the PATH variable
 
+# Sets the JULIA_PROJECT environment variable
+# layout julia
+
 # Easily run project-local Perl commands in .direnv/perl5/bin (https://github.com/direnv/direnv/wiki/Perl)
 # layout perl
+
+# Basic Python project setup using venv
+# export VIRTUAL_ENV=.venv
+# layout python
+
+# Complex Python project setup with Conda.
+# Conda is needed to install mixed language dependencies like C++ and Fortran.
+# 
+# Usage: layout anaconda <env_spec>
+# The <env_spec> can be one of the following:
+#   1. Name of an environment
+#   2. Prefix path of an environment
+#   3. Path to a YAML file specifying the environment
+#
+# Environment creation uses an environment.yml file, if
+# found, when a name or prefix is provided. Otherwise,
+# an empty environment is created.
+# 
+# layout anaconda base
 
 # Easily run project-local Ruby commands in .direnv/bin without bundle exec (https://github.com/direnv/direnv/wiki/Ruby)
 # layout ruby

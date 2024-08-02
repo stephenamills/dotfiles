@@ -1,0 +1,25 @@
+Network Discovery
+https://github.com/nskelsey/aaalm # creates a pretty decent network diagram using packet captures
+
+Packet Capturing
+https://github.com/sbabicz/tcpdump-bpf-cheatsheet # Tcpdump - Ethernet Dot1q | IPv4 & IPv6 & ICMP | TCP & UDP | DNS & GRE
+https://github.com/marciopocebon/TCPDUMP-1 # POP & SMTP, FTP
+https://github.com/SergK/cheatsheat-tcpdump # IP & ICMP, TCP, SMTP, HTTP, SSH
+https://github.com/jescholl/packetman # creates a tcpdump filter
+https://github.com/benjojo/tcpdump-to-bpf.benjojo.co.uk # converts a tcpdump filter to an iptables rule
+https://github.com/evanfoster/remotecap # remote dump
+https://github.com/jhunt/tcptrace # color
+https://github.com/nlitsme/xpcapperl # Perl hex
+https://github.com/spikebike/tcpdumplog # Perl sort
+
+https://github.com/kaorimatz/pcaps # VXLAN - also ARP, GRE, IPsec AH/ESP
+https://github.com/thelantamer/packet-captures # Ethernet Dot1q & MSTP & IGMP | BGP & RIP & OSPF & EIGRP & ISIS & PIM & MSDP & IPv6 | IPsec VPN & DMVPN & MPLS VPN & L2VPN & IPv6 Tunneling | DHCP & SNMP & NTP & HSRP & VRRP & GLBP & BFD
+https://github.com/chrissanders/packets # ARP | IPv4 & IPv6 & ICMP | TCP & UDP | DNS & HTTP & POP & DHCP
+https://github.com/princeton-cabernet/zoom-analysis # Zoom latency
+https://github.com/utilsec/packet_captures # ARP, DHCP
+
+https://github.com/mttaggart/jupyter-pcap # Jupyter
+
+BGP
+
+VXLAN

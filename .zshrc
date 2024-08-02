@@ -29,7 +29,7 @@ if type brew &>/dev/null; then
   source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
 
-# The .argc folder must be linked to $HOME/.argc
+# You must manually create a link from the .argc folder in this repo to $HOME/.argc or this will fail
 if [ -d "$HOME/.argc" ]; then
   # Store the name of each completion shell script in an array
   argc_scripts=($(ls -p -1 "$ARGC_COMPLETIONS_ROOT/completions" | sed -n 's/\.sh$//p'))
@@ -46,6 +46,8 @@ zstyle ':completion:*' list-colors '=(#b)*(-- *)=35=90'
 
 # Add paths for Perl
 eval "$(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib=$HOME/perl5)"
+
+# The following are useful functions for command-line use
 
 # Opens a Rust package in a browser
 cb() {

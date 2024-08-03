@@ -3,7 +3,20 @@ Links to useful GitHub repos
 Git & GitOps
 https://github.com/tiimgreen/github-cheat-sheet
 
-Buildpacks & Nixpacks
+Buildpacks
+
+Nixpacks
+https://github.com/railwayapp/nixpacks # App source + Nix packages + Docker = Image
+
+https://github.com/nixos/nix # Nix package manager
+https://github.com/nix-community/poetry2nix # automatically converts a Python Poetry project to Nix
+https://github.com/nix-community/nur
+https://github.com/nixos/flake-registry
+https://github.com/DeterminateSystems/fh # FlakeHub
+
+https://github.com/nixos/nix.dev # Much better documentation
+
+https://github.com/nix-community/awesome-nix
 
 Docker
 

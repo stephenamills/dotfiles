@@ -26,3 +26,9 @@
 
 # Sets the GEM_HOME environment variable to "$PWD/.direnv/ruby/RUBY_VERSION". (https://github.com/direnv/direnv/blob/68978efd9e0051bf9c4db10ac0e50afe0b3e7823/stdlib.sh#L1071-L1094).
 # layout ruby
+
+# Loads environment variables from nix-shell and installs cowsay using the Nix package manager. (https://github.com/direnv/direnv/blob/68978efd9e0051bf9c4db10ac0e50afe0b3e7823/stdlib.sh#L1292-L1304).
+# use nix -p cowsay
+
+# Load the build environment of a derivation, similar to nix develop. I have no clue what that means. (https://github.com/direnv/direnv/blob/68978efd9e0051bf9c4db10ac0e50afe0b3e7823/stdlib.sh#L1306-L1322).
+# use flake nixpkgs#hello

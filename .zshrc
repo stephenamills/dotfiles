@@ -97,7 +97,7 @@ ghs() {
 }
 
 # Searches for GitHub repositories and opens them in the browser
-ghrepob() {
+ghsrepob() {
   gh search repos $@ | awk '{print $1}' | xargs -n 1 -P 8 hub browse
 }
 

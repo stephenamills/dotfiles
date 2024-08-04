@@ -20,7 +20,7 @@ https://github.com/nixos/flake-registry # Flake registry
 https://github.com/nmattia/niv # alternative to Flakes
 
 https://ryantm.github.io/nixpkgs/ # Nix packaging docs - Docker, C++, CUDA, Dotnet, Java, Swift, Rust, Go, Python, JavaScript, PHP, Ruby
-https://github.com/mikeroyal/NixOS-Guide#programming-languages-with-nixos-support # Nix packaging Wiki - C++, CUDA, Dotnet, Java, Rust, Go, Python, Ruby
+https://github.com/mikeroyal/nixos-guide#programming-languages-with-nixos-support # Nix packaging Wiki - C++, CUDA, Dotnet, Java, Rust, Go, Python, Ruby
 https://github.com/nix-community/dream2nix # simplified Nix Flake packaging for Python, JavaScript, PHP, Rust
 https://github.com/tweag/jupyenv # Jupyter
 https://github.com/numtide/flake-utils # utility functions
@@ -51,7 +51,7 @@ https://github.com/determinatesystems/zero-to-nix # Guide
 https://github.com/nixos/nix-pills # blog series
 https://github.com/ryan4yin/nixos-and-flakes-book # book
 https://github.com/nixos/nixos-weekly # newsletter (discontinued)
-https://wiki.nixos.org/wiki/Category:Languages # Wiki
+https://wiki.nixos.org/wiki/category:languages # Wiki
 https://github.com/nixos/rfcs
 https://github.com/tazjin/nix-1p # short intro to Nix language
 https://github.com/nix-community/awesome-nix

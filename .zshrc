@@ -47,7 +47,10 @@ zstyle ':completion:*' list-colors '=(#b)*(-- *)=35=90'
 # Add paths for Perl
 eval "$(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib=$HOME/perl5)"
 
-# The following are useful functions for command-line use
+# The following are useful functions or aliases for command-line use
+
+# Removes error messages when searching for manual pages
+alias man='/usr/bin/man 2>/dev/null'
 
 # Opens a Rust package in a browser
 cb() {

@@ -17,6 +17,7 @@ https://github.com/mozilla/nixpkgs-mozilla # Firefox
 https://github.com/determinatesystems/fh # Flake Hub
 https://github.com/cachix/devenv # Dev Env Hub
 https://github.com/nixos/flake-registry # Flake registry
+https://github.com/flakestry/flakestry.dev # Flake registry
 https://github.com/nmattia/niv # alternative to Flakes
 
 https://ryantm.github.io/nixpkgs/ # Nix packaging docs - Docker, C++, CUDA, Dotnet, Java, Swift, Rust, Go, Python, JavaScript, PHP, Ruby
@@ -27,6 +28,7 @@ https://github.com/numtide/flake-utils # utility functions
 
 https://github.com/numtide/devshell # per-project developer environments
 https://github.com/hercules-ci/arion # uses Docker Compose
+https://github.com/reproducible-containers/buildkit-nix # Buildkit - uses a Nix derivation as a Dockerfile
 https://github.com/hall/kubenix # Kubernetes management
 https://github.com/tweag/rules_nixpkgs # Bazel rules
 https://github.com/nix-community/poetry2nix # converts a Python Poetry project to a Nix package
@@ -39,7 +41,7 @@ https://github.com/cachix/install-nix-action # GitHub Action
 https://github.com/determinatesystems/nix-installer # GitHub Action for package manager
 https://github.com/determinatesystems/flake-checker # GitHub Action to keep a Flake updated
 https://github.com/xtruder/nix-devcontainer # Nix devcontainer for VS Code
-https://github.com/nix-community/dream2nix
+https://github.com/fluent-ci-templates/dockerfiles/ # Nix-based Dockerfiles used by Fluent CI
 https://github.com/nix-rust/nix
 https://github.com/tazjin/nix-diff # meh
 https://github.com/nixos/nixpkgs-channels # old channels

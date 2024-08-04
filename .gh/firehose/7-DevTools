@@ -6,21 +6,39 @@ https://github.com/tiimgreen/github-cheat-sheet
 Buildpacks
 
 Nixpacks
-https://github.com/railwayapp/nixpacks # App source + Nix packages + Docker = Image
+https://github.com/railwayapp/nixpacks # Nixpacks
+https://github.com/nlewo/nix2container # creates a Docker container
 
 https://github.com/nixos/nix # Nix package manager
-https://github.com/nix-community/NUR # Nix packages (user-contributed)
+https://github.com/nix-community/nur # Nix packages (user-contributed)
+https://github.com/mozilla/nixpkgs-mozilla # Firefox
+
+https://github.com/determinatesystems/fh # Flake Hub
+https://github.com/cachix/devenv # Dev Env Hub
+https://github.com/nixos/flake-registry # Flake registry
+https://github.com/nmattia/niv # alternative to Flakes
+
+https://ryantm.github.io/nixpkgs/ # Nix packaging docs - Docker, C++, CUDA, Dotnet, Java, Rust, Go, Python, Ruby
+https://github.com/mikeroyal/NixOS-Guide#programming-languages-with-nixos-support # Nix packaging Wiki - C++, CUDA, Dotnet, Java, Rust, Go, Python, Ruby
+https://github.com/nix-community/dream2nix # Flake packaging - Python, JavaScript, PHP, Rust
+
 https://github.com/nixos/hydra # continuous build system
-
-https://github.com/NixOS/rfcs
-
-https://github.com/nix-community/poetry2nix # automatically converts a Python Poetry project to Nix
-https://github.com/nixos/flake-registry
-https://github.com/DeterminateSystems/fh # FlakeHub
+https://github.com/determinatesystems/nix-installer # GitHub Action for package manager
+https://github.com/nix-community/poetry2nix # automatically converts a Python Poetry project to a Nix package
+https://github.com/cargo2nix/cargo2nix # converts a Rust project to a Nix package
+https://github.com/nix-community/dream2nix
 https://github.com/nix-rust/nix
+https://github.com/nixos/rfcs
+https://github.com/replit/overlang/ # recipes for runtimes on Replit
+https://github.com/replit/nixmodules # recipes for developer tools on Replit
+https://github.com/nixos/nixpkgs-channels # old channels
 
-https://github.com/nixos/nix.dev # Official documentation
-
+https://github.com/nixos/nix.dev # official documentation
+https://github.com/dustinlyons/nixos-config#for-macos-august-2024 # macOS guide
+https://github.com/determinatesystems/zero-to-nix # Guide by Determinate Systems
+https://github.com/nixos/nix-pills # blog series
+https://github.com/ryan4yin/nixos-and-flakes-book # book
+https://wiki.nixos.org/wiki/Category:Languages # Wiki
 https://github.com/nix-community/awesome-nix
 
 Docker

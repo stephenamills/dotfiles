@@ -8,6 +8,7 @@ Buildpacks
 Nixpacks
 https://github.com/railwayapp/nixpacks # Nixpacks
 https://github.com/nlewo/nix2container # creates a Docker container
+https://github.com/tazjin/nixery # container registry which builds images using the Nix package manager
 
 https://github.com/nixos/nix # Nix package manager
 https://github.com/nix-community/nur # Nix packages (user-contributed)
@@ -18,27 +19,41 @@ https://github.com/cachix/devenv # Dev Env Hub
 https://github.com/nixos/flake-registry # Flake registry
 https://github.com/nmattia/niv # alternative to Flakes
 
-https://ryantm.github.io/nixpkgs/ # Nix packaging docs - Docker, C++, CUDA, Dotnet, Java, Rust, Go, Python, Ruby
+https://ryantm.github.io/nixpkgs/ # Nix packaging docs - Docker, C++, CUDA, Dotnet, Java, Swift, Rust, Go, Python, JavaScript, PHP, Ruby
 https://github.com/mikeroyal/NixOS-Guide#programming-languages-with-nixos-support # Nix packaging Wiki - C++, CUDA, Dotnet, Java, Rust, Go, Python, Ruby
-https://github.com/nix-community/dream2nix # Flake packaging - Python, JavaScript, PHP, Rust
+https://github.com/nix-community/dream2nix # simplified Nix Flake packaging for Python, JavaScript, PHP, Rust
+https://github.com/tweag/jupyenv # Jupyter
+https://github.com/numtide/flake-utils # utility functions
 
-https://github.com/nixos/hydra # continuous build system
-https://github.com/determinatesystems/nix-installer # GitHub Action for package manager
-https://github.com/nix-community/poetry2nix # automatically converts a Python Poetry project to a Nix package
+https://github.com/numtide/devshell # per-project developer environments
+https://github.com/hercules-ci/arion # uses Docker Compose
+https://github.com/hall/kubenix # Kubernetes management
+https://github.com/tweag/rules_nixpkgs # Bazel rules
+https://github.com/nix-community/poetry2nix # converts a Python Poetry project to a Nix package
 https://github.com/cargo2nix/cargo2nix # converts a Rust project to a Nix package
-https://github.com/nix-community/dream2nix
-https://github.com/nix-rust/nix
-https://github.com/nixos/rfcs
 https://github.com/replit/overlang/ # recipes for runtimes on Replit
 https://github.com/replit/nixmodules # recipes for developer tools on Replit
+
+https://github.com/nixos/hydra # continuous build system
+https://github.com/cachix/install-nix-action # GitHub Action
+https://github.com/determinatesystems/nix-installer # GitHub Action for package manager
+https://github.com/determinatesystems/flake-checker # GitHub Action to keep a Flake updated
+https://github.com/xtruder/nix-devcontainer # Nix devcontainer for VS Code
+https://github.com/nix-community/dream2nix
+https://github.com/nix-rust/nix
+https://github.com/tazjin/nix-diff # meh
 https://github.com/nixos/nixpkgs-channels # old channels
+https://github.com/nix-community/nix-index # locates the package that owns a file
 
 https://github.com/nixos/nix.dev # official documentation
 https://github.com/dustinlyons/nixos-config#for-macos-august-2024 # macOS guide
-https://github.com/determinatesystems/zero-to-nix # Guide by Determinate Systems
+https://github.com/determinatesystems/zero-to-nix # Guide
 https://github.com/nixos/nix-pills # blog series
 https://github.com/ryan4yin/nixos-and-flakes-book # book
+https://github.com/nixos/nixos-weekly # newsletter (discontinued)
 https://wiki.nixos.org/wiki/Category:Languages # Wiki
+https://github.com/nixos/rfcs
+https://github.com/tazjin/nix-1p # short intro to Nix language
 https://github.com/nix-community/awesome-nix
 
 Docker

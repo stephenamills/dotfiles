@@ -96,6 +96,11 @@ ghs() {
   gh search repos $@
 }
 
+# Searches for GitHub repositories and opens them in the browser
+ghsb() {
+  gh search repos $@ | xargs -n 1 -P 8 hub browse
+}
+
 # Commits changes to a Git repository
 gitp() {
   # Prompt for the commit message

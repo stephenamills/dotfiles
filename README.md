@@ -14,7 +14,7 @@ Lastly, run the commands below to install:
 
 - The Homebrew packages listed in the `Brewfile`
 - The Go packages in the `Gofile`
-- The JavaScript packages in the `JavaScriptfile`
+- The JavaScript packages in the `Javascriptfile`
 - The Python packages in the `Pythonfile`
 - The Rust packages in the `Rustfile`
 - The Swift packages in the `Swiftfile`
@@ -23,7 +23,7 @@ Lastly, run the commands below to install:
 ```shell
 brew bundle install --no-lock
 xargs -n 1 go install < Gofile
-pnpm install -g $(tr '\n' ' ' < JavaScriptfile)
+pnpm install -g $(tr '\n' ' ' < Javascriptfile)
 xargs -n 1 pipx install < Pythonfile
 cargo-binstall -y $(tr '\n' ' ' < Rustfile)
 mint install $(tr '\n' ' ' < Swiftfile)

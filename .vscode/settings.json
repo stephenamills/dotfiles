@@ -2,16 +2,18 @@
   "[astro]": {
     "editor.defaultFormatter": "astro-build.astro-vscode"
   },
-  "[css][graphql][html][javascript][jsonl][markdown][mdx][properties][svelte][tailwindcss][typescript][typescriptreact][vue][vue-html][yaml]": {
+  "[css][graphql][html][javascript][jsonl][mdx][properties][svelte][tailwindcss][typescript][typescriptreact][vue][vue-html][yaml]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[json][jsonc]": {
-    // Note: this does not work - you must manually associate the formatter using "Format Document With..." in the command palette.
-    "editor.defaultFormatter": "denoland.vscode-deno"
+    "editor.defaultFormatter": "denoland.vscode-deno" // You may need manually associate this formatter opening a JSON file, opening the command palette, and running "Format Document With..."
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnPaste": true
   },
   "[shellscript]": {
-    "editor.defaultFormatter": "mkhl.shfmt",
-    "editor.formatOnSave": false
+    "editor.defaultFormatter": "mkhl.shfmt"
   },
 
   "bashIde.shellcheckPath": "",
@@ -81,14 +83,17 @@
   "javascript.updateImportsOnFileMove.enabled": "always",
 
   "search.exclude": {
+    "**/*.snap": true,
+    "**/*.svg": true,
     "**/.git": true,
     "**/.github": false,
     "**/.nuxt": true,
     "**/.output": true,
     "**/.pnpm": true,
+    "**/.vscode": true,
     "**/.yarn": true,
-    "**/*.svg": true,
     "**/assets": true,
+    "**/bower_components": true,
     "**/CHANGELOG*": true,
     "**/dist/**": true,
     "**/LICENSE*": true,
@@ -141,5 +146,7 @@
   "workbench.preferredDarkColorTheme": "Visual Studio Dark",
   "workbench.preferredLightColorTheme": "Visual Studio Light",
   "workbench.startupEditor": "none",
-  "workbench.tree.indent": 10
+  "workbench.tree.indent": 10,
+  "tlaplus.tlc.statisticsSharing": "share",
+  "extensions.ignoreRecommendations": true
 }

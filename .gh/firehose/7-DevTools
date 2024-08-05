@@ -6,13 +6,15 @@ https://github.com/tiimgreen/github-cheat-sheet
 Buildpacks
 
 Nixpacks
+https://github.com/nixos/nix # Nix package manager
+https://github.com/nix-community/nur # Nix packages (user-contributed)
+https://github.com/mozilla/nixpkgs-mozilla # Firefox
+
 https://github.com/railwayapp/nixpacks # Nixpacks
 https://github.com/nlewo/nix2container # creates a Docker container
 https://github.com/tazjin/nixery # container registry which builds images using the Nix package manager
 
-https://github.com/nixos/nix # Nix package manager
-https://github.com/nix-community/nur # Nix packages (user-contributed)
-https://github.com/mozilla/nixpkgs-mozilla # Firefox
+https://github.com/direnv/direnv/wiki/nix # direnv
 
 https://github.com/determinatesystems/fh # Flake Hub
 https://github.com/cachix/devenv # Dev Env Hub
@@ -46,16 +48,18 @@ https://github.com/nix-rust/nix
 https://github.com/tazjin/nix-diff # meh
 https://github.com/nixos/nixpkgs-channels # old channels
 https://github.com/nix-community/nix-index # locates the package that owns a file
+https://github.com/nixos/rfcs
 
 https://github.com/nixos/nix.dev # official documentation
 https://github.com/dustinlyons/nixos-config#for-macos-august-2024 # macOS guide
 https://github.com/determinatesystems/zero-to-nix # Guide
 https://github.com/nixos/nix-pills # blog series
 https://github.com/ryan4yin/nixos-and-flakes-book # book
+https://github.com/jorelali/nixos4noobs # guide but not about packaging (abandoned)
+https://github.com/moretea/nix-guides # hello world (abandoned)
 https://github.com/nixos/nixos-weekly # newsletter (discontinued)
 https://wiki.nixos.org/wiki/category:languages # Wiki
-https://github.com/nixos/rfcs
-https://github.com/tazjin/nix-1p # short intro to Nix language
+https://github.com/tazjin/nix-1p # Nix language (intro)
 https://github.com/nix-community/awesome-nix
 
 Docker

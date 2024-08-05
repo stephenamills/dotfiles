@@ -6,33 +6,49 @@ https://github.com/tiimgreen/github-cheat-sheet
 Buildpacks
 
 Nixpacks
-https://github.com/nixos/nix # Nix package manager
-https://github.com/nixos/nixpkgs # Nix packages
-https://github.com/nix-community/nur # Nix packages (user-contributed)
-https://github.com/mozilla/nixpkgs-mozilla # Firefox package
-
 https://github.com/railwayapp/nixpacks # Nixpacks
-https://github.com/nlewo/nix2container # creates a Docker container
+https://github.com/nlewo/nix2container # converts a Nix package to a Docker container
 https://github.com/tazjin/nixery # container registry which builds images using the Nix package manager
 
 https://github.com/direnv/direnv/wiki/nix # direnv
 https://github.com/jetify-com/devbox # developer environments
 https://github.com/cachix/devenv # developer environments
+https://github.com/flox/flox # developer environments
 
-https://github.com/tazjin/nix-diff # tools - compare two derivations
-https://github.com/nixos/patchelf # changes the dynamic linker and RPATH of a Linux ELF executable
-
-https://github.com/determinatesystems/fh # Flake Hub
-https://github.com/cachix/devenv # Dev Env Hub
-https://github.com/nixos/flake-registry # Flake registry
-https://github.com/flakestry/flakestry.dev # Flake registry
-https://github.com/nmattia/niv # alternative to Flakes
+https://github.com/nixos/nix # Nix package manager
+https://github.com/nixos/nixpkgs # Nix packages (main)
+https://github.com/nix-community/nur # Nix packages (user-contributed)
+https://github.com/mozilla/nixpkgs-mozilla # Firefox package
 
 https://ryantm.github.io/nixpkgs/ # Nix packaging docs - Docker, C++, CUDA, Dotnet, Java, Swift, Rust, Go, Python, JavaScript, PHP, Ruby
 https://github.com/mikeroyal/nixos-guide#programming-languages-with-nixos-support # Nix packaging Wiki - C++, CUDA, Dotnet, Java, Rust, Go, Python, Ruby
-https://github.com/nix-community/dream2nix # simplified Nix Flake packaging for Python, JavaScript, PHP, Rust
+https://github.com/nix-community/awesome-nix#programming-languages # Rust, Scala, Python, JavaScript, Ruby, PHP
+https://github.com/nix-community/dream2nix # converts Python, JavaScript, PHP, or Rust to a Nix flake package
 https://github.com/tweag/jupyenv # Jupyter
-https://github.com/numtide/flake-utils # utility functions
+
+https://github.com/nix-community/comma # Tools - runs a package without installing it
+https://github.com/viperml/nh # basic commands
+https://github.com/tazjin/nix-diff # compares two derivations
+https://github.com/symphorien/nix-du # shows gc-roots (?)
+https://github.com/nix-community/nix-init # converts a URL to a package
+https://github.com/nix-community/nix-index # locates the package that owns a file
+https://github.com/maralorn/nix-output-monitor # shows details during package building
+https://github.com/msteen/nix-prefetch # updates checksum (?)
+https://github.com/utdemir/nix-tree # shows dependencies of a derivation
+https://github.com/Mic92/nix-update # updates a package
+https://github.com/nix-community/nurl # converts a GitHub link to a Nix fetch expression
+https://github.com/nixos/patchelf # changes the dynamic linker and RPATH of a Linux ELF executable
+
+https://github.com/the-nix-way/dev-templates # templates
+https://github.com/nix-community/templates # templates
+https://github.com/determinatesystems/fh # Flakes - Flake Hub
+https://github.com/cachix/devenv # Dev Env Hub
+https://github.com/nixos/flake-registry # Flake registry
+https://github.com/flakestry/flakestry.dev # Flake registry
+https://github.com/hercules-ci/flake-parts # modules (?)
+https://github.com/numtide/flake-utils # functions
+https://github.com/gytis-ivaskevicius/flake-utils-plus # functions
+https://github.com/nmattia/niv # alternative to Flakes
 
 https://github.com/numtide/devshell # per-project developer environments
 https://github.com/hercules-ci/arion # uses Docker Compose
@@ -52,20 +68,24 @@ https://github.com/xtruder/nix-devcontainer # Nix devcontainer for VS Code
 https://github.com/fluent-ci-templates/dockerfiles/ # Nix-based Dockerfiles used by Fluent CI
 https://github.com/nix-rust/nix
 https://github.com/nixos/nixpkgs-channels # old channels
-https://github.com/nix-community/nix-index # locates the package that owns a file
 https://github.com/nixos/rfcs
 
 https://github.com/nixos/nix.dev # official documentation
 https://github.com/dustinlyons/nixos-config#for-macos-august-2024 # macOS guide
-https://github.com/determinatesystems/zero-to-nix # Guide
-https://github.com/nixos/nix-pills # blog series
+https://tonyfinn.com/blog/nix-from-first-principles-flake-edition/ # guide with mostly good writing
+https://github.com/mhwombat/nix-for-numbskulls # book and tutorials
+https://github.com/alper/nix-shorts # short guide with pretty good writing
+https://determinate.systems/posts/nix-direnv/ # direnv blog post
+https://github.com/determinatesystems/zero-to-nix # guide
+https://www.tweag.io/blog/2020-05-25-flakes/ # blog series by creator of the flakes packaging feature
+https://github.com/divnix/nix-book # book
 https://github.com/ryan4yin/nixos-and-flakes-book # book
+https://github.com/evertras/simple-homemanager/ # guide
 https://github.com/jorelali/nixos4noobs # guide but not about packaging (abandoned)
 https://github.com/moretea/nix-guides # hello world (abandoned)
 https://github.com/nixos/nixos-weekly # newsletter (discontinued)
 https://wiki.nixos.org/wiki/category:languages # Wiki
 https://github.com/tazjin/nix-1p # Nix language (intro)
-https://github.com/nix-community/awesome-nix
 
 Docker
 

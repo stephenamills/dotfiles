@@ -7,14 +7,20 @@ Buildpacks
 
 Nixpacks
 https://github.com/nixos/nix # Nix package manager
+https://github.com/nixos/nixpkgs # Nix packages
 https://github.com/nix-community/nur # Nix packages (user-contributed)
-https://github.com/mozilla/nixpkgs-mozilla # Firefox
+https://github.com/mozilla/nixpkgs-mozilla # Firefox package
 
 https://github.com/railwayapp/nixpacks # Nixpacks
 https://github.com/nlewo/nix2container # creates a Docker container
 https://github.com/tazjin/nixery # container registry which builds images using the Nix package manager
 
 https://github.com/direnv/direnv/wiki/nix # direnv
+https://github.com/jetify-com/devbox # developer environments
+https://github.com/cachix/devenv # developer environments
+
+https://github.com/tazjin/nix-diff # tools - compare two derivations
+https://github.com/nixos/patchelf #
 
 https://github.com/determinatesystems/fh # Flake Hub
 https://github.com/cachix/devenv # Dev Env Hub
@@ -45,7 +51,6 @@ https://github.com/determinatesystems/flake-checker # GitHub Action to keep a Fl
 https://github.com/xtruder/nix-devcontainer # Nix devcontainer for VS Code
 https://github.com/fluent-ci-templates/dockerfiles/ # Nix-based Dockerfiles used by Fluent CI
 https://github.com/nix-rust/nix
-https://github.com/tazjin/nix-diff # meh
 https://github.com/nixos/nixpkgs-channels # old channels
 https://github.com/nix-community/nix-index # locates the package that owns a file
 https://github.com/nixos/rfcs

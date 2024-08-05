@@ -1,16 +1,12 @@
 {
+  "[apex][css][graphql][html][javascript][javascriptreact][markdown][mdx][properties][svelte][tailwindcss][typescript][typescriptreact][vue][vue-html][yaml]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   "[astro]": {
     "editor.defaultFormatter": "astro-build.astro-vscode"
   },
-  "[css][graphql][html][javascript][jsonl][mdx][properties][svelte][tailwindcss][typescript][typescriptreact][vue][vue-html][yaml]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
   "[json][jsonc]": {
-    "editor.defaultFormatter": "denoland.vscode-deno" // You may need manually associate this formatter opening a JSON file, opening the command palette, and running "Format Document With..."
-  },
-  "[markdown]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnPaste": true
+    "editor.defaultFormatter": "denoland.vscode-deno"
   },
   "[shellscript]": {
     "editor.defaultFormatter": "mkhl.shfmt"
@@ -148,5 +144,5 @@
   "workbench.startupEditor": "none",
   "workbench.tree.indent": 10,
   "tlaplus.tlc.statisticsSharing": "share",
-  "extensions.ignoreRecommendations": true
+  "extensions.ignoreRecommendations": true,
 }

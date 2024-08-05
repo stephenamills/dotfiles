@@ -77,7 +77,8 @@ https://github.com/mhwombat/nix-for-numbskulls # book and tutorials
 https://github.com/alper/nix-shorts # short guide with pretty good writing
 https://determinate.systems/posts/nix-direnv/ # direnv blog post
 https://github.com/determinatesystems/zero-to-nix # guide
-https://www.tweag.io/blog/2020-05-25-flakes/ # blog series by creator of the flakes packaging feature
+https://www.tweag.io/blog/2020-05-25-flakes/ # blog series by Eelco Dolstra
+https://www.infoq.com/articles/configuration-management-with-nix/ # InfoQ article by Eelco Dolstra
 https://github.com/divnix/nix-book # book
 https://github.com/ryan4yin/nixos-and-flakes-book # book
 https://github.com/evertras/simple-homemanager/ # guide

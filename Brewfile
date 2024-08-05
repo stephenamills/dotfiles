@@ -2,6 +2,7 @@ tap "GitJournal/tap"
 tap "hashicorp/tap"
 tap "replicate/tap"
 tap "supabase/tap"
+tap "harelba/q/q"
 
 # Git
 brew "gitless" # by Daniel Jackson squad at MIT - better interface
@@ -2019,36 +2020,135 @@ brew "levant" # templating and deployment tool for jobs
 # Data Engineering
 
 # Databases
-# brew "cassandra" # column-oriented database
-# brew "clickhouse" # column-oriented database
-# brew "citus" # replicated Postgres
-# brew "dynomite" # by Netflix - Dynamo implementation
-# brew "mysql"
-# brew "postgresql"
-# brew "rqlite" # replicated SQLite (good documentation, in Go)
-# brew "sqlite"
-# brew "vitess" # replicated MySQL
-# also, Porcupine checker on pkg.go.dev, and MIT 6.5840
 
-# brew "etcd" # replicated BoltDB
-# brew "redis" # in-memory key/value store
-
-# brew "dynein" # DynamoDB client
-# also, Spanner and CockroachDB and LevelDB
-# also, ScyllaDB
-# also, YugabyteDB
-
-# brew "atlas" #
+# brew "atlas" # schema - manages your database schema as code
+# brew "dbmate" # Lightweight, framework-agnostic database migration tool
 # brew "goose" # database migration
 # brew "flyway" # database version control to control migrations
-# brew "geni" # database migration
+# brew "geni" # standalone database migration tool
 # brew "golang-migrate" # database migration
+# brew "goose" # command-line interface for database migrations
 # brew "pillar" # manages Cassandra migrations
 # brew "reshape" # Postgres migrations
 # brew "schema-evolution-manager" # Postgres migrations
 # brew "skeema" # declarative pure-SQL schema management for MySQL
 # brew "sql-migrate" # SQL schema migrations
+# postgraphile: GraphQL schema created by reflection over a PostgreSQL schema
+# reshape: Easy-to-use, zero-downtime schema migration tool for Postgres
+# schema-evolution-manager: Manage postgresql database schema migrations
+# skeema: Declarative pure-SQL schema management for MySQL and MariaDB
+# sql-migrate: SQL schema migration tool for Go
+# sqlboiler: Generate a Go ORM tailored to your database schema
 # Also, see SchemaHero on pkg.go.dev
+
+# brew "rqlite" # replicated SQLite (good documentation, in Go)
+# brew "sqlite" # row-oriented
+# dbhash: Computes the SHA1 hash of schema and content of a SQLite database
+# harelba/q/q: query an sqlite database directly without loading it into memory
+# historian: Command-line utility for managing shell history in a SQLite database
+# libspatialite: Adds spatial SQL capabilities to SQLite
+# litecli: CLI for SQLite Databases with auto-completion and syntax highlighting
+# sqlcipher: SQLite extension providing 256-bit AES encryption
+# sqldiff: Displays the differences between SQLite databases
+# sqlite-analyzer: Analyze how space is allocated inside an SQLite file
+# sqlite-utils: CLI utility for manipulating SQLite databases
+# sqliteodbc: ODBC driver for SQLite
+# virtualpg: Loadable dynamic extension for SQLite and SpatiaLite
+
+# brew "mysql" # row-oriented 
+# brew "vitess" # replicated MySQL
+# automysqlbackup: Automate MySQL backups
+# db-vcs: Version control for MySQL databases
+# dbdeployer: Tool to deploy sandboxed MySQL database servers
+# dolphie: Feature-rich top tool for monitoring MySQL
+# dumpling: Creating SQL dump from a MySQL-compatible database
+# innotop: Top clone for MySQL
+# maxwell: Reads MySQL binlogs and writes row updates as JSON to Kafka
+# mycli: CLI for MySQL with auto-completion and syntax highlighting
+# mydumper: How a MySQL DBA & support engineer would imagine 'mysqldump'
+# mysqltuner: Increase performance and stability of a MySQL installation
+# mytop: Top-like query monitor for MySQL
+# percona-toolkit: Command-line tools for MySQL, MariaDB and system tasks
+# phpmyadmin: Web interface for MySQL and MariaDB
+# skeema: Declarative pure-SQL schema management for MySQL and MariaDB
+
+# brew "citus" # replicated Postgres
+# brew "postgresql" # row-oriented database
+# apgdiff: Another PostgreSQL diff tool
+# check_postgres: Monitor Postgres databases
+# dexter: Automatic indexer for Postgres
+# doltgres: Dolt for Postgres
+# ephemeralpg: Run tests on an isolated, temporary Postgres database
+# greenmask: PostgreSQL dump and obfuscation tool
+# imposm3: Imports OpenStreetMap data into PostgreSQL/PostGIS databases
+# osm2pgsql: OpenStreetMap data to PostgreSQL converter
+# pex: Package manager for PostgreSQL
+# pg_cron: Run periodic jobs in PostgreSQL
+# pg_partman: Partition management extension for PostgreSQL
+# pg_top: Monitor PostgreSQL processes
+# pgbadger: Log analyzer for PostgreSQL
+# pgbouncer: Lightweight connection pooler for PostgreSQL
+# pgcli: CLI for Postgres with auto-completion and syntax highlighting
+# pgdbf: Converter of XBase/FoxPro tables to PostgreSQL
+# pgloader: Data loading tool for PostgreSQL
+# pgpool-ii: PostgreSQL connection pool server
+# pgroonga: PostgreSQL plugin to use Groonga as index
+# pgrouting: Provides geospatial routing for PostGIS/PostgreSQL database
+# pgsync: Sync Postgres data between databases
+# pgtoolkit: Tools for PostgreSQL maintenance
+# pgtune: Tuning wizard for postgresql.conf
+# pgvector: Open-source vector similarity search for Postgres
+# pgweb: Web-based PostgreSQL database browser
+# pgxnclient: Command-line client for the PostgreSQL Extension Network
+# postgis: Adds support for geographic objects to PostgreSQL
+# postgraphile: GraphQL schema created by reflection over a PostgreSQL schema
+# postgrest: Serves a fully RESTful API from any existing PostgreSQL database
+# prestd: Simplify and accelerate development on any Postgres application, existing or new
+# psqlodbc: Official PostgreSQL ODBC driver
+# reshape: Easy-to-use, zero-downtime schema migration tool for Postgres
+# schema-evolution-manager: Manage postgresql database schema migrations
+# stolon: Cloud native PostgreSQL manager for high availability
+# temporal_tables: Temporal Tables PostgreSQL Extension
+# tsung: Load testing for HTTP, PostgreSQL, Jabber, and others
+# wal2json: Convert PostgreSQL changesets to JSON format
+
+# brew "dynomite" # by Netflix - Dynamo implementation
+# dynein: DynamoDB CLI
+
+# also, Spanner and CockroachDB and LevelDB
+# also, ScyllaDB
+# also, YugabyteDB
+
+# mongo-orchestration: REST API to manage MongoDB configurations on a single host
+# mongocli: MongoDB CLI for MongoDB in the Cloud
+# mongodb-atlas-cli: Atlas CLI enables you to manage your MongoDB Atlas
+# mongoose: Web server built on top of Libmongoose embedded library
+# mongosh: MongoDB Shell to connect, configure, query, and work with your MongoDB database
+
+# brew "etcd" # replicated BoltDB
+
+# brew "redis" # in-memory key/value store
+# hiredis: Minimalistic client
+# iredis: Client with autocompletion and syntax highlighting
+# juicefs: Cloud-based, distributed POSIX file system built on top of Redis and S3
+# keydb: Multithreaded fork of Redis
+# nutcracker: Proxy for memcached and redis
+# rdb: Redis RDB parser
+# redis-leveldb: Redis-protocol compatible frontend to LevelDB
+# ssdb: NoSQL database supporting many data structures: Redis alternative
+# webdis: Redis HTTP interface with JSON output
+
+# brew "cassandra" # column-oriented database
+# cassandra-reaper: Management interface for Cassandra
+# ccm: Create and destroy an Apache Cassandra cluster on localhost
+# cql-proxy: DataStax cql-proxy enables Cassandra apps to use Astra DB without code changes
+# cqlkit: CLI tool to export Cassandra query as CSV and JSON format
+# pillar: Manage migrations for Cassandra data stores
+
+# brew "clickhouse" # column-oriented database
+# clickhouse-odbc: Official ODBC driver implementation for accessing ClickHouse as a data source
+
+# also, see the Porcupine checker on pkg.go.dev, and MIT course 6.5840
 
 # brew "tile38" #  geolocation data store, spatial index, and realtime geofence - their landing page animation is very good
 
@@ -2057,7 +2157,7 @@ brew "levant" # templating and deployment tool for jobs
 
 # also, elasticsearch
 # brew "solr" # best search indexer, schema-based by default, has rich query language, etc., but in Java
-# brew "sonic" # second-best Rust option
+# brew "sonic" # second-best Rust option - lightweight & schema-less search backend
 # also, swirl # supports retrieval (RAG), currently from Microsoft 365 or Postgres
 # also, tantivy
 # also, toshi
@@ -2168,8 +2268,9 @@ brew "jtbl" # converts JSON to CSV or HTML or Markdown tables
 brew "qsv" # one of the best - xsv replacement with a lot of features and documentation
 brew "xsv" # looks very useful for csv files though kinda abandoned
 
-brew "csvq" # runs an SQL query against CSV
-brew "dsq" # runs an SQL query against CSV or Parquet
+brew "csvq" # runs an SQL query on a CSV file
+brew "dsq" # runs an SQL query on a CSV file
+brew "harelba/q/q" # runs an SQL query on a CSV file
 # brew "cqlkit" # exports Cassandra query as CSV or JSON
 # brew "psql2csv" # runs a query in PSQL and outputs the result as CSV
 
@@ -2187,6 +2288,8 @@ brew "json2tsv" # converts JSON to TSV
 # brew "json-table" # converts JSON to TSV or CSV
 
 # Data Formats - Parquet
+brew "parquet-cli" # tools
+# dsq: runs an SQL query on a Parquet file (see CSV section)
 
 # Data Formats - HTML & XML
 brew "cascadia" # HTML selector

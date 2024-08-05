@@ -1,3 +1,9 @@
+Links to useful GitHub repos
+
+Backblaze
+
+---
+
 Network Discovery
 https://github.com/nskelsey/aaalm # creates a pretty decent network diagram using packet captures
 
@@ -23,3 +29,48 @@ https://github.com/mttaggart/jupyter-pcap # Jupyter
 BGP
 
 VXLAN
+
+---
+
+Duo
+
+Palo Alto
+
+Wireguard
+
+Webauthn
+
+SSH
+
+Okta
+
+Vault
+
+JWT & Paseto
+
+---
+
+Bug Bounty
+
+CodeQL
+
+Salesforce
+
+Upwork
+
+Indeed
+
+Zapier
+
+Unity
+
+Unreal
+
+Godot
+
+SceneKit
+
+GitHub Actions
+
+SRE
+https://github.com/linkedin/school-of-sre

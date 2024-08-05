@@ -15,21 +15,20 @@ export PIPX_PATH="$HOME/.local/bin"
 export PNPM_HOME="$HOME/Library/pnpm"
 export PYTHON_PATH="$(brew --prefix python)/libexec/bin" # Dynamically expands to the path of whatever the latest version of Python is.
 export RUBY_PATH="$(brew --prefix ruby)/bin"
-export RUBYGEMS_PATH="$(brew --prefix ruby)/bin/gem env gemdir)/bin" # Use the gem command installed by Homebrew, overriding the old that comes with macOS.
+export RUBYGEMS_PATH="$($(brew --prefix ruby)/bin/gem env gemdir)/bin" # Use the gem command installed by Homebrew, overriding the old that comes with macOS.
 export RUST_PATH="$HOME/.cargo/bin"
 
-export PATH=\
-"$ARGC_COMPLETIONS_PATH:"\
-"$DOTNET_PATH:"\
-"$GOPATH/bin:"\
-"$JAVA_HOME:"\
-"$JETBRAINS_PATH:"\
-"$MINT_PATH:"\
-"$NODE_PATH:"\
-"$PIPX_PATH:"\
-"$PNPM_HOME:"\
-"$PYTHON_PATH:"\
-"$RUBY_PATH:"\
-"$RUBYGEMS_PATH:"\
-"$RUST_PATH:"\
-"$PATH"
+export PATH="$ARGC_COMPLETIONS_PATH:""\
+$DOTNET_PATH:""\
+$GOPATH/bin:""\
+$JAVA_HOME:""\
+$JETBRAINS_PATH:""\
+$MINT_PATH:""\
+$NODE_PATH:""\
+$PIPX_PATH:""\
+$PNPM_HOME:""\
+$PYTHON_PATH:""\
+$RUBY_PATH:""\
+$RUBYGEMS_PATH:""\
+$RUST_PATH:""\
+$PATH"

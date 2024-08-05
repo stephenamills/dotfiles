@@ -20,7 +20,7 @@ https://github.com/jetify-com/devbox # developer environments
 https://github.com/cachix/devenv # developer environments
 
 https://github.com/tazjin/nix-diff # tools - compare two derivations
-https://github.com/nixos/patchelf #
+https://github.com/nixos/patchelf # changes the dynamic linker and RPATH of a Linux ELF executable
 
 https://github.com/determinatesystems/fh # Flake Hub
 https://github.com/cachix/devenv # Dev Env Hub

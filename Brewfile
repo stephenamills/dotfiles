@@ -80,17 +80,10 @@ brew "git-when-merged" # finds where a commit was merged
 # brew "cig" # CLI app for checking the state of your git repositories
 # brew "cmt" # Write consistent git commit messages based on a custom template
 # brew "cocogitto" # Conventional Commits toolbox
-# brew "ctl" # Programming language for digital color management
-# brew "dcraw" # Digital camera RAW photo decoding software
-# brew "digitemp" # Read temperature sensors in a 1-Wire net
-# brew "dmd" # Digital Mars D compiler
-# brew "doctl" # Command-line tool for DigitalOcean
 # brew "dolt" # Git for Data
 # brew "dstask" # Git-powered personal task tracker
 # brew "dura" # Backs up your work automatically via Git commits
 # brew "dvc" # Git for data science projects
-# brew "exiftags" # Utility to read EXIF tags from a digital camera JPEG file
-# brew "exiftran" # Transform digital camera jpegs and their EXIF data
 # brew "fluxctl" # Command-line tool to access Weave Flux, the Kubernetes GitOps operator
 # brew "forgit" # Interactive git commands in the terminal
 # brew "g2" # Friendly git client
@@ -201,10 +194,8 @@ brew "git-when-merged" # finds where a commit was merged
 # brew "lazygit" # Simple terminal UI for git commands
 # brew "lefthook" # Fast and powerful Git hooks manager for any type of projects
 # brew "legit" # Command-line interface for Git, optimized for workflow simplicity
-# brew "lensfun" # Remove defects from digital images
 # brew "literate-git" # Render hierarchical git repositories into HTML
 # brew "lucky-commit" # Customize your git commit hashes!
-# brew "mac-robber" # Digital investigation tool
 # brew "microplane" # CLI tool to make git changes across many repos
 # brew "modgit" # Tool for git repo deploy with filters. Used for magento development
 # brew "moz-git-tools" # Tools for working with Git at Mozilla
@@ -219,7 +210,6 @@ brew "git-when-merged" # finds where a commit was merged
 # brew "pygit2" # Bindings to the libgit2 shared library
 # brew "pygitup" # Nicer 'git pull'
 # brew "sagittarius-scheme" # Free Scheme implementation supporting R6RS and R7RS
-# brew "sail" # CLI toolkit to provision and deploy WordPress applications to DigitalOcean
 # brew "scm-manager" # Manage Git, Mercurial, and Subversion repos over HTTP
 # brew "scmpuff" # Adds numbered shortcuts for common git commands
 # brew "semtag" # Semantic tagging script for git
@@ -234,11 +224,9 @@ brew "git-when-merged" # finds where a commit was merged
 # brew "topgit" # Git patch queue manager
 # brew "transcrypt" # Configure transparent encryption of files in a Git repo
 # brew "trivy" # Vulnerability scanner for container images, file systems, and Git repos
-# brew "tty-clock" # Digital clock in ncurses
 # brew "ugit" # Undo git commands. Your damage control git buddy
 # brew "ungit" # Easiest way to use Git. On any platform. Anywhere
 # brew "vcsh" # Config manager based on git
-# brew "vtclock" # Text-mode fullscreen digital clock
 # brew "willgit" # William's miscellaneous git tools
 # brew "zsh-git-prompt" # Informative git prompt for zsh
 

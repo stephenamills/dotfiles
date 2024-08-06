@@ -1772,16 +1772,7 @@ cask "dotnet-sdk" # runtime and compiler
 # brew "llvm"
 
 # Lightweight Formal Methods
-#
-# Alloy: particularly strong for modeling data relationships, weaker for time and concurrent systems. Uses relational logic concepts.
-# Dafny: particularly strong for modeling and verifying sequential programs, weaker for time and concurrent systems. Uses Hoare logic concepts.
-# Pluscal: not sure
-# If you are modeling and verifying a data-intensive system, Alloy might be the best choice.
-# If you are modeling and verifying a sequential program, Dafny might be the best choice.
-#
-#
-# Estimate of applicability to diffcult backend problems:
-# TLA+ > Dafny > Alloy
+
 brew "dafny"
 cask "alloy"
 cask "tla-plus-toolbox"

@@ -1,8 +1,8 @@
 tap "GitJournal/tap"
+tap "harelba/q/q"
 tap "hashicorp/tap"
 tap "replicate/tap"
 tap "supabase/tap"
-tap "harelba/q/q"
 
 # Git
 brew "gitless" # by Daniel Jackson squad at MIT - better interface

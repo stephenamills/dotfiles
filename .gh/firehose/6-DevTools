@@ -12,10 +12,28 @@ https://github.com/flox/flox # folder-specific developer environment (by Flox)
 https://github.com/cachix/devenv # folder-specific developer environment
 https://github.com/numtide/devshell # folder-specific developer environment
 
+https://github.com/xtruder/nix-devcontainer # Nix package installer - good features and writeup
+https://github.com/lucernae/devcontainer-nix # Nix
+https://github.com/pshirshov/haskell-vscode-hie-stack-debugger-devcontainer # Nix
+https://github.com/snyssen/nix-devcontainers-template/ # Nix
+https://github.com/xtruder/nix-devcontainer-golang # Nix and Go
+https://github.com/jbott/devcontainer-nix-direnv/ # Nix Flakes
+https://github.com/jmgilman/dev-container # Nix Flakes
+https://github.com/devtemplates/niximages # Nix Flakes
+https://github.com/xtruder-archive/nix-devcontainer
+https://github.com/a-h/devcontainer # Nix - also uses devcontainer cli
+https://github.com/zombiezen/codespaces-nix # Nix and Codespaces
+https://github.com/ZeroDeth/devcontainer-nix # Nix and Codespaces
+https://github.com/xtruder/nix-devcontainer-python-jupyter # Nix and Jupyter
+https://github.com/crazy4pi314/nixos-devcontainer # Nix
+https://github.com/suin/devcontainer-starter # Nix
+https://github.com/cameronraysmith/nixpod # Nix
+
 https://github.com/railwayapp/nixpacks # Nixpacks (by Railway)
 https://github.com/nlewo/nix2container # converts a Nix package to a Docker container
 https://github.com/tazjin/nixery # container registry that converts source code to an image on-demand, using the Nix package manager
 https://github.com/reproducible-containers/buildkit-nix # Buildkit - uses a Nix derivation as a Dockerfile
+https://github.com/nix-community/nixos-generators # image builders
 
 https://github.com/the-nix-way/real-world-devops-with-nix # builds some containers with Nix and deploys them to Kubernetes on Digital Ocean
 https://github.com/fluent-ci-templates/dockerfiles/ # Nix-based Dockerfiles (by Fluent CI)
@@ -102,22 +120,6 @@ https://github.com/devcontainers/template-starter # dev containers - template st
 https://github.com/devcontainers/cli # creates a dev container
 https://github.com/qdm12/devtainr # sets up a development container in your repository
 https://github.com/devcontainers/images/ # pre-built dev container images
-https://github.com/xtruder/nix-devcontainer # has Nix package installer - good features and writeup
-https://github.com/lucernae/devcontainer-nix # Nix
-https://github.com/pshirshov/haskell-vscode-hie-stack-debugger-devcontainer # Nix
-https://github.com/snyssen/nix-devcontainers-template/ # Nix
-https://github.com/xtruder/nix-devcontainer-golang # Nix and Go
-https://github.com/jbott/devcontainer-nix-direnv/ # Nix Flakes
-https://github.com/jmgilman/dev-container # Nix Flakes
-https://github.com/devtemplates/niximages # Nix Flakes
-https://github.com/xtruder-archive/nix-devcontainer
-https://github.com/a-h/devcontainer # Nix - also uses devcontainer cli
-https://github.com/zombiezen/codespaces-nix # Nix and Codespaces
-https://github.com/ZeroDeth/devcontainer-nix # Nix and Codespaces
-https://github.com/xtruder/nix-devcontainer-python-jupyter # Nix and Jupyter
-https://github.com/crazy4pi314/nixos-devcontainer # Nix
-https://github.com/suin/devcontainer-starter # Nix
-https://github.com/cameronraysmith/nixpod # Nix
 
 https://github.com/qdm12/reactdevcontainer # React
 https://github.com/luizkowalski/devcontainer-rails # Rails

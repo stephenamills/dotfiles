@@ -441,22 +441,88 @@ brew "vsh" # community-created shell for Vault
 # https://thoughtworks.github.io/talisman/
 
 # Docker Containers
-brew "apko" # creates an image from an Alpine APK, without a Dockerfile
+brew "dive" # Tool for exploring each layer in a docker image
+# brew "apko" # builds an OCI image from an APK package directly, without a Dockerfile
+# brew "container-structure-test" # Validate the structure of your container images
+# brew "copa" # Tool to directly patch container images given the vulnerability scanning results
+# brew "diffoci" # Diff for Docker and OCI container images
+# brew "disktype" # Detect content format of a disk or disk image
+# brew "dmg2img" # Utilities for converting macOS DMG images
+# brew "docker-clean" # Clean Docker containers, images, networks, and volumes
+# brew "docker-slim" # Minify and secure Docker images
+# brew "docker-squash" # Docker image squashing tool
+# brew "docuum" # Perform least recently used (LRU) eviction of Docker images
+# brew "grype" # Vulnerability scanner for container images and filesystems
+# brew "manifest-tool" # Command-line tool to create and query container image manifest list/indexes
+# brew "nixpacks" # App source + Nix packages + Docker = Image
+# brew "notation" # CLI tool to sign and verify OCI artifacts and container images
+# brew "skopeo" # Work with remote images registries
+# brew "source-to-image" # Tool for building source and injecting into docker images
+# brew "syft" # CLI for generating a Software Bill of Materials from container images
+# brew "trivy" # Vulnerability scanner for container images, file systems, and Git repos
+# brew "whalebrew" # Homebrew, but with Docker images
+# brew "xeol" # Xcanner for end-of-life software in container images, filesystems, and SBOMs
+# brew "xmount" # Convert between multiple input & output disk image types
+
 brew "cog" # by Replicate - creates containers for machine learning without a Dockerfile
 brew "container-structure-test" # by Google - tests the structure of your container image
 brew "copa" # patches a container image using reports from vulnerability scanners like trivy
 brew "cosign"
-brew "dive" # image explorer
+brew "devcontainer" # Reference implementation for the Development Containers specification
 brew "hadolint" # checks Dockerfile
 brew "grype" #
 brew "nixpacks" # creates Docker images without a Dockerfile
 brew "sysdig"
+
+# brew "argo" # Get stuff done with container-native workflows for Kubernetes
+# brew "buildkit" # Concurrent, cache-efficient, and Dockerfile-agnostic builder toolkit
+# brew "cdebug" # Swiss army knife of container debugging
+# brew "cekit" # Container Evolution Kit
 # brew "clair" # audits container using static analysis
-# brew "ctop" # container top
-# brew "cosign" # signs containers
+# brew "clair" # Vulnerability Static Analysis for Containers
+# brew "cog" # Containers for machine learning
+# brew "colima" # Container runtimes on MacOS (and Linux) with minimal setup
+# brew "conmon" # OCI container runtime monitor
+# brew "container-diff" # Diff your Docker containers
+# brew "coreos-ct" # Convert a Container Linux Config into Ignition
+# brew "cosign" # signs a container
+# brew "cri-tools" # CLI and validation tools for Kubelet Container Runtime Interface (CRI)
+# brew "crun" # Fast and lightweight fully featured OCI runtime and C library
+# brew "ctop" # Top-like interface for container metrics
+# brew "dcp" # Docker cp made easy
 # brew "ddev/ddev/ddev" # installs PHP or other dev environments
-# brew "diffoci" # compares two Docker images
-# brew "trivy" scans container images, Kubernetes, Git repos, and AWS etc. (very popular tool)
+# brew "devspace" # CLI helps develop/deploy/debug apps with Docker and k8s
+# brew "docker-buildx" # Docker CLI plugin for extended build capabilities with BuildKit
+# brew "docker-compose" # Isolated development environments using Docker
+# brew "docker-credential-helper-ecr" # Docker Credential Helper for Amazon ECR
+# brew "docker-credential-helper" # Platform keystore credential helper for Docker
+# brew "docker-gen" # Generate files from docker container metadata
+# brew "docker-ls" # Tools for browsing and manipulating docker registries
+# brew "docker" # Pack, ship and run any application as a lightweight container
+# brew "dockerize" # Utility to simplify running applications in docker containers
+# brew "dockviz" # Visualizing docker data
+# brew "dockward" # Port forwarding tool for Docker containers
+# brew "dory" # Development proxy for docker
+# brew "earthly" # Build automation tool for the container era
+# brew "gebug" # Debug Dockerized Go applications better
+# brew "gitlab-ci-local" # Run gitlab pipelines locally as shell executor or docker executor
+# brew "hadolint" # Smarter Dockerfile linter to validate best practices
+# brew "instalooter" # Download any picture or video associated from an Instagram profile
+# brew "k3d" # Little helper to run CNCF's k3s in Docker
+# brew "kind" # Run local Kubernetes cluster in Docker
+# brew "kompose" # Tool to move from `docker-compose` to Kubernetes
+# brew "kustomizer" # Package manager for distributing Kubernetes configuration as OCI artifacts
+# brew "lazydocker" # Lazier way to manage everything docker
+# brew "nerdctl" # ContaiNERD CTL - Docker-compatible CLI for containerd
+# brew "oras" # OCI Registry As Storage
+# brew "podman-compose" # Alternative to docker-compose using podman
+# brew "podman" # Tool for managing OCI containers and pods
+# brew "powerman-dockerize" # Utility to simplify running applications in docker containers
+# brew "pug" # Drive terraform at terminal velocity
+# brew "pumba" # Chaos testing tool for Docker
+# brew "reg" # Docker registry v2 command-line client
+# brew "regclient" # Docker and OCI Registry Client in Go and tooling using those libraries
+# brew "toast" # Tool for running tasks in containers
 
 # Provisioning
 
@@ -1511,9 +1577,20 @@ brew "zlint" # certificate checker, see also zcertificate and zschema
 # brew "tlsx" # Fast and configurable TLS grabber focused on TLS based data collection
 
 # brew "jsign" # signs a Windows executable, installer, or script, using a key from cloud services or other sources
-# lego
-# Let's Encrypt client and ACME library
-# https://go-acme.github.io/lego/
+
+# brew "cosign" # Container Signing
+# brew "gitsign" # Keyless Git signing using Sigstore
+# brew "jsign" # Tool for signing Windows executable files, installers and scripts
+# brew "ldid-procursus" # Put real or fake signatures in a Mach-O binary
+# brew "osslsigncode" # OpenSSL based Authenticode signing for PE/MSI/Java CAB files
+# brew "pius" # PGP individual UID signer
+# brew "pivit" # Sign and verify data using hardware (Yubikey) backed x509 certificates (PIV)
+# brew "sh4d0wup" # Signing-key abuse and update exploitation framework
+# brew "signify-osx" # Cryptographically sign and verify files
+# brew "signmykey" # Automated SSH Certificate Authority
+# brew "sigstore" # Codesigning tool for Python packages
+# brew "smimesign" # S/MIME signing utility for use with Git
+# brew "xmlsectool" # Check schema validity and signature of an XML document
 
 # VPN
 brew "bore-cli" # only 400 lines of code
@@ -1525,6 +1602,59 @@ cask "ngrok"
 # Also, see Tailscale below (Mac App Store)
 # brew "wireguard-go"
 # brew "wireguard-tools"
+
+# SSH
+# brew "apt-dater" # Manage package updates on remote hosts using SSH
+# brew "assh" # Advanced SSH config - Regex, aliases, gateways, includes and dynamic hosts
+# brew "autossh" # Automatically restart SSH sessions and tunnels
+# brew "connect" # Provides SOCKS and HTTPS proxy support to SSH
+# brew "corkscrew" # Tunnel SSH through HTTP proxies
+# brew "csshx" # Cluster ssh tool for Terminal.app
+# brew "dropbear" # Small SSH server/client for POSIX-based system
+# brew "duo_unix" # Two-factor authentication for SSH
+# brew "fabric" # Library and command-line tool for SSH
+# brew "git-ssh" # Proxy for serving git repositories over SSH
+# brew "github-keygen" # Bootstrap GitHub SSH configuration
+# brew "gssh" # SSH automation tool based on Groovy DSL
+# brew "hss" # Interactive parallel SSH client
+# brew "keepkey-agent" # Keepkey Hardware-based SSH/GPG agent
+# brew "keychain" # User-friendly front-end to ssh-agent(1)
+# brew "libssh" # C library SSHv1/SSHv2 client and server protocols
+# brew "libssh2" # C library implementing the SSH2 protocol
+# brew "monkeysphere" # Use the OpenPGP web of trust to verify ssh connections
+# brew "mpssh" # Mass parallel ssh
+# brew "mussh" # Multi-host SSH wrapper
+# brew "onlykey-agent" # Middleware that lets you use OnlyKey as a hardware SSH/GPG device
+# brew "openssh" # OpenBSD freely-licensed SSH connectivity tools
+# brew "orgalorg" # Parallel SSH commands executioner and file synchronization tool
+# brew "pssh" # Parallel versions of OpenSSH and related tools
+# brew "putty" # Implementation of Telnet and SSH
+# brew "rmate" # Edit files from an SSH session in TextMate
+# brew "rospo" # Simple, reliable, persistent ssh tunnels with embedded ssh server
+# brew "signmykey" # Automated SSH Certificate Authority
+# brew "ssh-audit" # SSH server & client auditing
+# brew "ssh-copy-id" # Add a public key to a remote machine's authorized_keys file
+# brew "ssh-mitm" # SSH server for security audits and malware analysis
+# brew "ssh-permit-a38" # Central management and deployment for SSH keys
+# brew "ssh-vault" # Encrypt/decrypt using SSH keys
+# brew "ssh3" # Faster and richer secure shell using HTTP/3
+# brew "sshfs" # File system client based on SSH File Transfer Protocol
+# brew "sshguard" # Protect from brute force attacks against SSH
+# brew "sshpass" # Non-interactive SSH password auth
+# brew "sshportal" # SSH & Telnet bastion server
+# brew "sshs" # Graphical command-line client for SSH
+# brew "sshtrix" # SSH login cracker
+# brew "sshuttle" # Proxy server that works as a poor man's VPN
+# brew "stormssh-completion" # Completion for storm-ssh
+# brew "teleport" # Modern SSH server for teams managing distributed infrastructure
+# brew "tkey-ssh-agent" # SSH agent for use with the TKey security stick
+# brew "trezor-agent" # Hardware SSH/GPG agent for Trezor, Keepkey & Ledger
+# brew "trzsz-ssh" # Simple ssh client with trzsz ( trz / tsz ) support
+# brew "tssh" # SSH Lightweight management tools
+# brew "vassh" # Vagrant Host-Guest SSH Command Wrapper/Proxy/Forwarder
+# brew "xxh" # Bring your favorite shell wherever you go through the ssh
+# brew "yubikey-agent" # Seamless ssh-agent for YubiKeys and other PIV tokens
+# brew "zssh" # Interactive file transfers over SSH
 
 # Networking - Transport
 brew "aerleon" # generates firewall configurations
@@ -1640,6 +1770,7 @@ brew "difftastic" # super high-quality diff tool
 brew "direnv" # sets and unsets environment variables per directory
 brew "diskus" # directory size
 brew "f2" # renames files
+brew "fcp" # faster cp
 brew "fd"
 brew "fex" # cut and awk alternative that tries to be more concise and readable
 brew "grex" # regex generator
@@ -1979,10 +2110,6 @@ vscode "YoavBls.pretty-ts-errors"
 # Command-line interface for managing Knative Serving and Eventing resources
 # https://github.com/knative/client
 
-# lazydocker
-# Lazier way to manage everything docker
-# https://github.com/jesseduffield/lazydocker
-
 # ld-find-code-refs
 # Build tool for sending feature flag code references to LaunchDarkly
 # https://github.com/launchdarkly/ld-find-code-refs
@@ -2295,10 +2422,6 @@ vscode "YoavBls.pretty-ts-errors"
 # CLI for interfacing with Neosync
 # https://www.neosync.dev/
 
-# nerdctl
-# ContaiNERD CTL - Docker-compatible CLI for containerd
-# https://github.com/containerd/nerdctl
-
 # net-snmp
 # Implements SNMP v1, v2c, and v3, using IPv4 and IPv6
 # http://www.net-snmp.org/
@@ -2563,10 +2686,6 @@ vscode "YoavBls.pretty-ts-errors"
 # CLI for Apache Pulsar written in Go
 # https://streamnative.io/
 
-# pumba
-# Chaos testing tool for Docker
-# https://github.com/alexei-led/pumba
-
 # pwncat
 # Netcat with FW/IDS/IPS evasion, self-inject-, bind- and reverse shell
 # https://pwncat.org
@@ -2614,14 +2733,6 @@ vscode "YoavBls.pretty-ts-errors"
 # recon-ng
 # Web Reconnaissance Framework
 # https://github.com/lanmaster53/recon-ng
-
-# reg
-# Docker registry v2 command-line client
-# https://r.j3ss.co
-
-# regclient
-# Docker and OCI Registry Client in Go and tooling using those libraries
-# https://github.com/regclient/regclient
 
 # rem
 # Command-line tool to access OSX Reminders.app database

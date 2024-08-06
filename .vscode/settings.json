@@ -56,6 +56,8 @@
   "explorer.confirmDelete": false,
   "explorer.confirmDragAndDrop": false,
 
+  "extensions.ignoreRecommendations": true,
+
   "files.associations": {
     "*.json": "jsonc"
   },
@@ -139,10 +141,9 @@
   "workbench.editor.limit.value": 4,
   "workbench.fontAliasing": "antialiased",
   "workbench.iconTheme": "eq-material-theme-icons",
+  "workbench.layoutControl.enabled": false,
   "workbench.preferredDarkColorTheme": "Visual Studio Dark",
   "workbench.preferredLightColorTheme": "Visual Studio Light",
   "workbench.startupEditor": "none",
-  "workbench.tree.indent": 10,
-  "tlaplus.tlc.statisticsSharing": "share",
-  "extensions.ignoreRecommendations": true,
+  "workbench.tree.indent": 10
 }

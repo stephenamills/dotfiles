@@ -6,27 +6,55 @@ https://github.com/tiimgreen/github-cheat-sheet
 Buildpacks
 
 Nixpacks
-https://github.com/railwayapp/nixpacks # Nixpacks
-https://github.com/nlewo/nix2container # converts a Nix package to a Docker container
-https://github.com/tazjin/nixery # container registry which builds images using the Nix package manager
+https://github.com/direnv/direnv/wiki/nix # direnv - directory-specific environment variables
+https://github.com/jetify-com/devbox # folder-specific developer environment (by Jetify)
+https://github.com/flox/flox # folder-specific developer environment (by Flox)
+https://github.com/cachix/devenv # folder-specific developer environment
+https://github.com/numtide/devshell # folder-specific developer environment
 
-https://github.com/direnv/direnv/wiki/nix # direnv
-https://github.com/jetify-com/devbox # developer environments
-https://github.com/cachix/devenv # developer environments
-https://github.com/flox/flox # developer environments
+https://github.com/railwayapp/nixpacks # Nixpacks (by Railway)
+https://github.com/nlewo/nix2container # converts a Nix package to a Docker container
+https://github.com/tazjin/nixery # container registry that converts source code to an image on-demand, using the Nix package manager
+https://github.com/reproducible-containers/buildkit-nix # Buildkit - uses a Nix derivation as a Dockerfile
+
+https://github.com/the-nix-way/real-world-devops-with-nix # builds some containers with Nix and deploys them to Kubernetes on Digital Ocean
+https://github.com/fluent-ci-templates/dockerfiles/ # Nix-based Dockerfiles (by Fluent CI)
+https://github.com/cachix/install-nix-action # GitHub Action
+https://github.com/determinatesystems/nix-installer # GitHub Action for package manager
+https://github.com/determinatesystems/flake-checker # GitHub Action to keep a Flake updated
+https://github.com/xtruder/nix-devcontainer # Nix devcontainer for VS Code
+https://github.com/tweag/jupyenv # Jupyter
+https://github.com/jmgilman/lima-nix # Ubuntu and Lima
+https://github.com/gitpod-samples/template-nix # Gitpod
+https://github.com/hercules-ci/arion # Docker Compose (?)
+https://github.com/hall/kubenix # Kubernetes management
+https://github.com/tweag/rules_nixpkgs # Bazel rules
+https://github.com/nixos/hydra # continuous build system
 
 https://github.com/nixos/nix # Nix package manager
 https://github.com/nixos/nixpkgs # Nix packages (main)
 https://github.com/nix-community/nur # Nix packages (user-contributed)
 https://github.com/mozilla/nixpkgs-mozilla # Firefox package
-
-https://ryantm.github.io/nixpkgs/ # Nix packaging docs - Docker, C++, CUDA, Dotnet, Java, Swift, Rust, Go, Python, JavaScript, PHP, Ruby
-https://github.com/mikeroyal/nixos-guide#programming-languages-with-nixos-support # Nix packaging Wiki - C++, CUDA, Dotnet, Java, Rust, Go, Python, Ruby
+https://github.com/the-nix-way/dev-templates # templates
+https://github.com/nix-community/templates # templates
+https://github.com/replit/overlang/ # templates (by Replit)
+https://github.com/replit/nixmodules # modules (by Replit)
+https://github.com/mikeroyal/nixos-guide#programming-languages-with-nixos-support # C++, Python, Dotnet, Java, Scala, Perl, Rust, Go, etc.
 https://github.com/nix-community/awesome-nix#programming-languages # Rust, Scala, Python, JavaScript, Ruby, PHP
-https://github.com/nix-community/dream2nix # converts Python, JavaScript, PHP, or Rust to a Nix flake package
-https://github.com/tweag/jupyenv # Jupyter
+https://github.com/nix-community/dream2nix # converts a Python, JavaScript, PHP, or Rust project to a Nix Flake package
+https://github.com/nix-community/poetry2nix # converts a Python Poetry project to a Nix package
+https://github.com/cargo2nix/cargo2nix # converts a Rust project to a Nix package
+https://github.com/hercules-ci/flake-parts # modules (?)
+https://github.com/numtide/flake-utils # functions
+https://github.com/gytis-ivaskevicius/flake-utils-plus # functions
+https://github.com/determinatesystems/fh # Flake Hub
+https://github.com/nixos/flake-registry # Flake registry
+https://github.com/flakestry/flakestry.dev # Flake registry
+https://github.com/nmattia/niv # alternative to Flakes
+https://github.com/nix-rust/nix # use modules from Rust (?)
+https://github.com/nixos/nixpkgs-channels # old channels approach
 
-https://github.com/nix-community/comma # Tools - runs a package without installing it
+https://github.com/nix-community/comma # runs a package without installing it
 https://github.com/viperml/nh # basic commands
 https://github.com/tazjin/nix-diff # compares two derivations
 https://github.com/symphorien/nix-du # shows gc-roots (?)
@@ -35,43 +63,13 @@ https://github.com/nix-community/nix-index # locates the package that owns a fil
 https://github.com/maralorn/nix-output-monitor # shows details during package building
 https://github.com/msteen/nix-prefetch # updates checksum (?)
 https://github.com/utdemir/nix-tree # shows dependencies of a derivation
-https://github.com/Mic92/nix-update # updates a package
+https://github.com/mic92/nix-update # updates a package
 https://github.com/nix-community/nurl # converts a GitHub link to a Nix fetch expression
 https://github.com/nixos/patchelf # changes the dynamic linker and RPATH of a Linux ELF executable
 
-https://github.com/the-nix-way/dev-templates # templates
-https://github.com/nix-community/templates # templates
-https://github.com/determinatesystems/fh # Flakes - Flake Hub
-https://github.com/cachix/devenv # Dev Env Hub
-https://github.com/nixos/flake-registry # Flake registry
-https://github.com/flakestry/flakestry.dev # Flake registry
-https://github.com/hercules-ci/flake-parts # modules (?)
-https://github.com/numtide/flake-utils # functions
-https://github.com/gytis-ivaskevicius/flake-utils-plus # functions
-https://github.com/nmattia/niv # alternative to Flakes
-
-https://github.com/numtide/devshell # per-project developer environments
-https://github.com/hercules-ci/arion # uses Docker Compose
-https://github.com/reproducible-containers/buildkit-nix # Buildkit - uses a Nix derivation as a Dockerfile
-https://github.com/hall/kubenix # Kubernetes management
-https://github.com/tweag/rules_nixpkgs # Bazel rules
-https://github.com/nix-community/poetry2nix # converts a Python Poetry project to a Nix package
-https://github.com/cargo2nix/cargo2nix # converts a Rust project to a Nix package
-https://github.com/replit/overlang/ # recipes for runtimes on Replit
-https://github.com/replit/nixmodules # recipes for developer tools on Replit
-
-https://github.com/nixos/hydra # continuous build system
-https://github.com/cachix/install-nix-action # GitHub Action
-https://github.com/determinatesystems/nix-installer # GitHub Action for package manager
-https://github.com/determinatesystems/flake-checker # GitHub Action to keep a Flake updated
-https://github.com/xtruder/nix-devcontainer # Nix devcontainer for VS Code
-https://github.com/fluent-ci-templates/dockerfiles/ # Nix-based Dockerfiles used by Fluent CI
-https://github.com/nix-rust/nix
-https://github.com/nixos/nixpkgs-channels # old channels
-https://github.com/nixos/rfcs
-
-https://github.com/nixos/nix.dev # official documentation
-https://github.com/dustinlyons/nixos-config#for-macos-august-2024 # macOS guide
+https://github.com/nixos/nix.dev # documentation
+https://ryantm.github.io/nixpkgs/ # packaging documentation - Docker, C++, CUDA, Dotnet, Java, Swift, Rust, Go, Python, JavaScript, PHP, Ruby
+https://wiki.nixos.org/wiki/category:languages # packaging wiki
 https://tonyfinn.com/blog/nix-from-first-principles-flake-edition/ # guide with mostly good writing
 https://github.com/mhwombat/nix-for-numbskulls # book and tutorials
 https://github.com/alper/nix-shorts # short guide with pretty good writing
@@ -79,14 +77,14 @@ https://determinate.systems/posts/nix-direnv/ # direnv blog post
 https://github.com/determinatesystems/zero-to-nix # guide
 https://www.tweag.io/blog/2020-05-25-flakes/ # blog series by Eelco Dolstra
 https://www.infoq.com/articles/configuration-management-with-nix/ # InfoQ article by Eelco Dolstra
+https://github.com/nixos/nixos-weekly # newsletter (discontinued)
 https://github.com/divnix/nix-book # book
 https://github.com/ryan4yin/nixos-and-flakes-book # book
 https://github.com/evertras/simple-homemanager/ # guide
-https://github.com/jorelali/nixos4noobs # guide but not about packaging (abandoned)
+https://github.com/jorelali/nixos4noobs # guide but about ancillary topics (abandoned)
 https://github.com/moretea/nix-guides # hello world (abandoned)
-https://github.com/nixos/nixos-weekly # newsletter (discontinued)
-https://wiki.nixos.org/wiki/category:languages # Wiki
-https://github.com/tazjin/nix-1p # Nix language (intro)
+https://github.com/tazjin/nix-1p # Nix programming language introduction
+https://github.com/nixos/rfcs # proposals
 
 Docker
 
@@ -104,10 +102,26 @@ https://github.com/devcontainers/template-starter # dev containers - template st
 https://github.com/devcontainers/cli # creates a dev container
 https://github.com/qdm12/devtainr # sets up a development container in your repository
 https://github.com/devcontainers/images/ # pre-built dev container images
+https://github.com/xtruder/nix-devcontainer # has Nix package installer - good features and writeup
+https://github.com/lucernae/devcontainer-nix # Nix
+https://github.com/pshirshov/haskell-vscode-hie-stack-debugger-devcontainer # Nix
+https://github.com/snyssen/nix-devcontainers-template/ # Nix
+https://github.com/xtruder/nix-devcontainer-golang # Nix and Go
+https://github.com/jbott/devcontainer-nix-direnv/ # Nix Flakes
+https://github.com/jmgilman/dev-container # Nix Flakes
+https://github.com/devtemplates/niximages # Nix Flakes
+https://github.com/xtruder-archive/nix-devcontainer
+https://github.com/a-h/devcontainer # Nix - also uses devcontainer cli
+https://github.com/zombiezen/codespaces-nix # Nix and Codespaces
+https://github.com/ZeroDeth/devcontainer-nix # Nix and Codespaces
+https://github.com/xtruder/nix-devcontainer-python-jupyter # Nix and Jupyter
+https://github.com/crazy4pi314/nixos-devcontainer # Nix
+https://github.com/suin/devcontainer-starter # Nix
+https://github.com/cameronraysmith/nixpod # Nix
 
 https://github.com/qdm12/reactdevcontainer # React
 https://github.com/luizkowalski/devcontainer-rails # Rails
-https://github.com/AliOsm/ruby-on-rails-devcontainer # Rails, Postgres, Redis, MeiliSearch
+https://github.com/aliosm/ruby-on-rails-devcontainer # Rails, Postgres, Redis, MeiliSearch
 https://github.com/valenvb/vscode-devcontainer-wordpress # Wordpress
 https://github.com/jungleboogie-pl/vscode-wordpress # Wordpress
 https://github.com/backendclub/example-django-devcontainers # Django
@@ -123,7 +137,7 @@ https://github.com/guiyomh/features
 https://github.com/xtruder/nix-devcontainer # Nix
 https://github.com/zimbatm/vscode-devcontainer-nix # Nix
 https://github.com/0916dhkim/vscode-devcontainer-tutorial # Several databases and more
-https://github.com/Pwd9000-ML/devcontainer-templates # GitHub Actions, Azure Pipelines and more
+https://github.com/pwd9000-ml/devcontainer-templates # GitHub Actions, Azure Pipelines and more
 https://github.com/wtfzambo/glue-devcontainer-template # AWS Glue
 https://github.com/vincentclaes/glue-devcontainer # AWS Glue
 https://github.com/awslabs/aws-terraform-dev-container # by Amazon - Terraform
@@ -137,7 +151,7 @@ https://github.com/amatzk/docker-template-for-vscode # multiple language environ
 https://github.com/mamba-org/micromamba-devcontainer # Python
 https://github.com/b-data/data-science-devcontainers # R, Python, Julia
 https://github.com/ilanco/vscode-devcontainer-php # PHP (Codespaces also)
-https://github.com/EspressoCake/BOF_Development_Docker # C
+https://github.com/espressocake/bof_development_docker # C
 https://github.com/avsm/ocaml-devcontainers # OCaml
 https://github.com/hiroyaonoe/ocaml-devcontainer # OCaml
 https://github.com/jomazu/elixir-devcontainer # Elixir
@@ -145,8 +159,8 @@ https://github.com/devrt/ros-devcontainer-vscode # robotics (interesting feature
 https://github.com/clearbluejar/ghidra-python-vscode-devcontainer-skeleton # Ghidra
 https://github.com/theomessin/laravel-devcontainer
 https://github.com/madebygps/multiple-dev-container-vscode # usage of multiple decontainer.json files
-https://github.com/ContainerCraft/Konductor # various ops tools
-https://github.com/opsec-infosec/42-Devcontainer
+https://github.com/containercraft/konductor # various ops tools
+https://github.com/opsec-infosec/42-devcontainer
 https://github.com/h4l/dev-container-docker-compose-volume-or-bind # template for Docker Compose bind mounts and container volumes
 https://github.com/stuartleeks/devcontainer-cli # commands to work with dev containers
 https://github.com/webksde/ddev-vscode-devcontainer-drupal-template

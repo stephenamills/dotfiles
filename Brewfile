@@ -5,21 +5,21 @@ tap "replicate/tap"
 tap "supabase/tap"
 
 # Git
-brew "gitless" # by Daniel Jackson squad at MIT - better interface
-brew "jj" # Google employee side-project
-brew "sapling" # by Facebook
-brew "sugarjar" # like sapling
-cask "gitbutler" # by Scott Chacon
+brew "gitless" # better interface (by Daniel Jackson squad at MIT)
+brew "jj" # better interface (Google employee side project)
+brew "sapling" # better interface (by Facebook)
+brew "sugarjar" # better interface like sapling
+cask "gitbutler" # better interface (by Scott Chacon)
 
 brew "bit-git" # better interface
 brew "git-branchless" # better interface
-brew "git-town" # better interface supporting multiple branch strategies
+brew "git-town" # better interface supporting several branch strategies
 
-brew "GitJournal/tap/git-auto-sync" # daemon that automatically syncs a repo
-brew "gitup" # manually syncs multiple repos
+brew "GitJournal/tap/git-auto-sync" # automatically syncs a repo
+brew "gitup" # syncs a repo
 brew "git-sync" # automatically syncs a repo
-brew "git-workspace" # manually syncs multiple repos
-brew "git-xargs" # manually commits changes or pull requests to multiple repos
+brew "git-workspace" # syncs multiple repos
+brew "git-xargs" # commits changes or pull requests to multiple repos
 brew "gitwatch" # watches a file or folder and commits changes
 
 brew "blackbox" # encrypts and stores secrets in Git
@@ -30,8 +30,6 @@ brew "git"
 brew "gitleaks" # secrets audit
 brew "lefthook" # hook manager
 brew "ugit" # tries to undo a git command
-# brew "git-credential-libsecret" # Git helper for accessing credentials via libsecret
-# brew "git-credential-oauth" # Git credential helper that authenticates in browser using OAuth
 
 brew "g2" # interface to aid learning
 brew "git-absorb" # incorporates uncommitted changes into relevant past commits, using automatic decision making, simplifying history management without manual rebasing
@@ -52,22 +50,42 @@ brew "git-remote-codecommit" # simple method to push to and pull from AWS CodeCo
 brew "git-subrepo" # submodule alternative
 brew "git-vendor" # creates a vendored dependency (as the Go community does)
 brew "git-when-merged" # finds where a commit was merged
-# brew "git-annex" # manages files with git without checking in file contents
-# brew "git-annex-remote-rclone" # rclone-supported cloud storage for Git Annex
-# brew "changie" # changelog tool
-# brew "cocogitto" # commit message
-# brew "codecov" # code coverage
-# brew "commitlint" # probably intended to be installed locally per-project
-# brew "cycode-cli" # boring scanner
-# brew "forgit" # interactive git commands in the terminal
-# brew "git-grab" # does basically nothing
-# brew "git-interactive-rebase-tool" # not useful
-# brew "thefuck" # Corrects commands
-# brew "vcsh" # config manager based on git that manages subrepos
 
 # brew "aicommits" # Writes your git commit messages for you with AI
-# brew "argocd" # GitOps Continuous Delivery for Kubernetes
+# brew "cmt" # Write consistent git commit messages based on a custom template
+# brew "cocogitto" # Conventional Commits toolbox
+# brew "commitizen" # Defines a standard way of committing rules and communicating it
+# brew "commitlint" # Lint commit messages according to a commit convention
+# brew "czg" # Interactive Commitizen CLI that generate standardized commit messages
+# brew "dura" # Backs up your work automatically via Git commits
+# brew "fetch" # Download assets from a commit, branch, or tag of GitHub repositories
+# brew "git-absorb" # Automatic git commit --fixup
+# brew "git-fixup" # Alias for git commit --fixup <ref>
+# brew "git-game" # Game for git to guess who made which commit
+# brew "git-hound" # Git plugin that prevents sensitive data from being committed
+# brew "git-now" # Light, temporary commits for git
+# brew "git-remote-codecommit" # Git Remote Helper to interact with AWS CodeCommit
+# brew "git-secrets" # Prevents you from committing sensitive information to a git repo
+# brew "git-when-merged" # Find where a commit was merged in git
+# brew "gitlint" # Linting for your git commit messages
+# brew "gitmoji" # Interactive command-line tool for using emoji in commit messages
+# brew "gitwatch" # Watch a file or folder and automatically commit changes to a git repo easily
+# brew "kommit" # More detailed commit messages without committing!
+# brew "lucky-commit" # Customize your git commit hashes!
+# brew "multi-git-status" # Show uncommitted, untracked and unpushed changes for multiple Git repos
+# brew "pre-commit" # Framework for managing multi-language pre-commit hooks
+# brew "ripsecrets" # Prevent committing secret keys into your source code
+# brew "spr" # Submit pull requests for individual, amendable, rebaseable commits to GitHub
+# brew "squealer" # Scans Git repositories or filesystems for secrets in commit histories
+# brew "stgit" # Manage Git commits as a stack of patches
+
+# brew "changie" # Automated changelog tool for preparing releases
+# brew "convco" # Conventional commits, changelog, versioning, validation
+# brew "git-cliff" # Highly customizable changelog generator
+
+# brew "all-repos" # Clone all your repositories and apply sweeping changes
 # brew "argocd-autopilot" # Opinionated way of installing Argo CD and managing GitOps repositories
+# brew "argocd" # GitOps Continuous Delivery for Kubernetes
 # brew "bash-git-prompt" # Informative, fancy bash prompt for Git users
 # brew "bat" # Clone of cat(1) with syntax highlighting and Git integration
 # brew "bazel-diff" # Performs Bazel Target Diffing between two revisions in Git
@@ -78,27 +96,24 @@ brew "git-when-merged" # finds where a commit was merged
 # brew "cargo-generate" # Use pre-existing git repositories as templates
 # brew "cgit" # Hyperfast web frontend for Git repositories written in C
 # brew "cig" # CLI app for checking the state of your git repositories
-# brew "cmt" # Write consistent git commit messages based on a custom template
-# brew "cocogitto" # Conventional Commits toolbox
 # brew "dolt" # Git for Data
 # brew "dstask" # Git-powered personal task tracker
-# brew "dura" # Backs up your work automatically via Git commits
 # brew "dvc" # Git for data science projects
 # brew "fluxctl" # Command-line tool to access Weave Flux, the Kubernetes GitOps operator
 # brew "forgit" # Interactive git commands in the terminal
 # brew "g2" # Friendly git client
 # brew "gfold" # Help keep track of your Git repositories, written in Rust
-# brew "git" # Distributed revision control system
-# brew "git-absorb" # Automatic git commit --fixup
-# brew "git-annex" # Manage files with git without checking in file contents
+# brew "ghorg" # Quickly clone an entire org's or user's repositories into one directory
+# brew "ghq" # Remote repository management made easy
+# brew "gickup" # Backup all your repositories with ease
 # brew "git-annex-remote-rclone" # Use rclone supported cloud storage with git-annex
+# brew "git-annex" # Manage files with git without checking in file contents
 # brew "git-appraise" # Distributed code review system for Git repos
 # brew "git-archive-all" # Archive a project and its submodules
 # brew "git-big-picture" # Visualization tool for Git repositories
 # brew "git-branchless" # High-velocity, monorepo-scale workflow for Git
 # brew "git-bug" # Distributed, offline-first bug tracker embedded in git, with bridges
 # brew "git-cinnabar" # Git remote helper to interact with mercurial repositories
-# brew "git-cliff" # Highly customizable changelog generator
 # brew "git-codereview" # Tool for working with Gerrit code reviews
 # brew "git-cola" # Highly caffeinated git GUI
 # brew "git-credential-libsecret" # Git helper for accessing credentials via libsecret
@@ -108,17 +123,14 @@ brew "git-when-merged" # finds where a commit was merged
 # brew "git-delta" # Syntax-highlighting pager for git and diff output
 # brew "git-extras" # Small git utilities
 # brew "git-filter-repo" # Quickly rewrite git repository history
-# brew "git-fixup" # Alias for git commit --fixup <ref>
-# brew "git-flow" # Extensions to follow Vincent Driessen's branching model
 # brew "git-flow-avh" # AVH edition of git-flow
+# brew "git-flow" # Extensions to follow Vincent Driessen's branching model
 # brew "git-fresh" # Utility to keep git repos fresh
 # brew "git-ftp" # Git-powered FTP client
-# brew "git-game" # Game for git to guess who made which commit
 # brew "git-gerrit" # Gerrit code review helper scripts
 # brew "git-grab" # Clone a git repository into a standard location organised by domain and path
 # brew "git-gui" # Tcl/Tk UI for the git revision control system
 # brew "git-hooks-go" # Git hooks manager
-# brew "git-hound" # Git plugin that prevents sensitive data from being committed
 # brew "git-if" # Glulx interpreter that is optimized for speed
 # brew "git-imerge" # Incremental merge for git
 # brew "git-integration" # Manage git integration branches
@@ -127,27 +139,24 @@ brew "git-when-merged" # finds where a commit was merged
 # brew "git-machete" # Git repository organizer & rebase workflow automation tool
 # brew "git-mediate" # Utility to help resolve merge conflicts
 # brew "git-multipush" # Push a branch to multiple remotes in one command
-# brew "git-now" # Light, temporary commits for git
 # brew "git-number" # Use numbers for dealing with files in git
 # brew "git-octopus" # Continuous merge workflow
 # brew "git-plus" # Git utilities: git multi, git relation, git old-branches, git recent
 # brew "git-quick-stats" # Simple and efficient way to access statistics in git
 # brew "git-recent" # See your latest local git branches, formatted real fancy
-# brew "git-remote-codecommit" # Git Remote Helper to interact with AWS CodeCommit
 # brew "git-remote-gcrypt" # GPG-encrypted git remotes
 # brew "git-remote-hg" # Transparent bidirectional bridge between Git and Mercurial
 # brew "git-review" # Submit git branches to gerrit for review
 # brew "git-revise" # Rebase alternative for easy & efficient in-memory rebases and fixups
 # brew "git-secret" # Bash-tool to store the private data inside a git repo
-# brew "git-secrets" # Prevents you from committing sensitive information to a git repo
 # brew "git-series" # Track changes to a patch series over time
 # brew "git-sizer" # Compute various size metrics for a Git repository
 # brew "git-split-diffs" # Syntax highlighted side-by-side diffs in your terminal
 # brew "git-ssh" # Proxy for serving git repositories over SSH
 # brew "git-standup" # Git extension to generate reports for standup meetings
 # brew "git-subrepo" # Git Submodule Alternative
-# brew "git-svn" # Bidirectional operation between a Subversion repository and Git
 # brew "git-svn-abandon" # History-preserving svn-to-git migration
+# brew "git-svn" # Bidirectional operation between a Subversion repository and Git
 # brew "git-sync" # Clones a git repository and keeps it synchronized with the upstream
 # brew "git-test" # Run tests on each distinct tree in a revision list
 # brew "git-tools" # Assorted git-related scripts and tools
@@ -156,8 +165,8 @@ brew "git-when-merged" # finds where a commit was merged
 # brew "git-trim" # Trim your git remote tracking branches that are merged or gone
 # brew "git-url-sub" # Recursively substitute remote URLs for multiple repos
 # brew "git-vendor" # Command for managing git vendored dependencies
-# brew "git-when-merged" # Find where a commit was merged in git
 # brew "git-workspace" # Sync personal and work git repositories from multiple providers
+# brew "git" # Distributed revision control system
 # brew "gitbatch" # Manage your git repositories in one place
 # brew "gitbucket" # Git platform powered by Scala offering
 # brew "gitea" # Painless self-hosted all-in-one software development service
@@ -168,8 +177,6 @@ brew "git-when-merged" # finds where a commit was merged
 # brew "gitlab-runner" # Official GitLab CI runner
 # brew "gitleaks" # Audit git repos for secrets
 # brew "gitless" # Simplified version control system on top of git
-# brew "gitlint" # Linting for your git commit messages
-# brew "gitmoji" # Interactive command-line tool for using emoji in commit messages
 # brew "gitoxide" # Idiomatic, lean, fast & safe pure Rust implementation of Git
 # brew "gitql" # Git query language
 # brew "gitsign" # Keyless Git signing using Sigstore
@@ -180,7 +187,6 @@ brew "git-when-merged" # finds where a commit was merged
 # brew "gitui" # Blazing fast terminal-ui for git written in rust
 # brew "gitup" # Update multiple git repositories at once
 # brew "gitversion" # Easy semantic versioning for projects using Git
-# brew "gitwatch" # Watch a file or folder and automatically commit changes to a git repo easily
 # brew "glab" # Open-source GitLab command-line tool
 # brew "grokmirror" # Framework to smartly mirror git repositories
 # brew "gws" # Manage workspaces composed of git repositories
@@ -195,63 +201,61 @@ brew "git-when-merged" # finds where a commit was merged
 # brew "lefthook" # Fast and powerful Git hooks manager for any type of projects
 # brew "legit" # Command-line interface for Git, optimized for workflow simplicity
 # brew "literate-git" # Render hierarchical git repositories into HTML
-# brew "lucky-commit" # Customize your git commit hashes!
 # brew "microplane" # CLI tool to make git changes across many repos
 # brew "modgit" # Tool for git repo deploy with filters. Used for magento development
+# brew "moon" # Task runner and repo management tool for the web ecosystem
 # brew "moz-git-tools" # Tools for working with Git at Mozilla
+# brew "mr" # Multiple Repository management tool
 # brew "mu-repo" # Tool to work with multiple git repositories
-# brew "multi-git-status" # Show uncommitted, untracked and unpushed changes for multiple Git repos
 # brew "noseyparker" # Finds secrets and sensitive information in textual data and Git history
 # brew "onefetch" # Command-line Git information tool
 # brew "paket" # Dependency manager for .NET with support for NuGet and Git repositories
 # brew "pass-git-helper" # Git credential helper interfacing with pass
 # brew "pit" # Project manager from hell (integrates with Git)
 # brew "prs" # Secure, fast & convenient password manager CLI with GPG & git sync
-# brew "pygit2" # Bindings to the libgit2 shared library
 # brew "pygitup" # Nicer 'git pull'
+# brew "repo" # Repository tool for Android development
+# brew "reposurgeon" # Edit version-control repository history
 # brew "sagittarius-scheme" # Free Scheme implementation supporting R6RS and R7RS
 # brew "scm-manager" # Manage Git, Mercurial, and Subversion repos over HTTP
 # brew "scmpuff" # Adds numbered shortcuts for common git commands
 # brew "semtag" # Semantic tagging script for git
 # brew "shallow-backup" # Git-integrated backup tool for macOS and Linux devs
 # brew "smimesign" # S/MIME signing utility for use with Git
-# brew "squealer" # Scans Git repositories or filesystems for secrets in commit histories
-# brew "stgit" # Manage Git commits as a stack of patches
 # brew "tartufo" # Searches through git repositories for high entropy strings and secrets
 # brew "tea" # Command-line tool to interact with Gitea servers
 # brew "tfmigrate" # Terraform/OpenTofu state migration tool for GitOps
+# brew "thefuck" # Programmatically correct mistyped console commands
 # brew "tig" # Text interface for Git repositories
 # brew "topgit" # Git patch queue manager
 # brew "transcrypt" # Configure transparent encryption of files in a Git repo
 # brew "trivy" # Vulnerability scanner for container images, file systems, and Git repos
 # brew "ugit" # Undo git commands. Your damage control git buddy
 # brew "ungit" # Easiest way to use Git. On any platform. Anywhere
-# brew "vcsh" # Config manager based on git
+# brew "vcsh" # Config manager based on git - also manages subrepos
 # brew "willgit" # William's miscellaneous git tools
-# brew "zsh-git-prompt" # Informative git prompt for zsh
 
 # GitHub
-brew "gh" # command-line tool
+brew "gh" # client
 brew "git-open" # opens a GitHub page
 brew "hub" # older command-line tool
+
 # brew "act" # Run your GitHub Actions locally
 # brew "action-validator" # Tool to validate GitHub Action and Workflow YAML files
 # brew "actionlint" # Static checker for GitHub Actions workflow files
 # brew "actions-batch" # Time-sharing supercomputer built on GitHub Actions
 # brew "cmark-gfm" # C implementation of GitHub Flavored Markdown
 # brew "eget" # Easily install prebuilt binaries from GitHub
-# brew "fetch" # Download assets from a commit, branch, or tag of GitHub repositories
 # brew "fork-cleaner" # Cleans up old and inactive forks on your GitHub account
 # brew "ghi" # Work on GitHub issues on the command-line
 # brew "ghr" # Upload multiple artifacts to GitHub Release in parallel
 # brew "gibo" # Access GitHub's .gitignore boilerplates
 # brew "gist" # creates a gist
 # brew "gistit" # creates a gist
+# brew "gitbackup" # Tool to backup your Bitbucket, GitHub and GitLab repositories
 # brew "git-cal" # GitHub-like contributions calendar but on the command-line
 # brew "git-open" # Open GitHub webpages from a terminal
-# brew "git-xargs" # CLI for making updates across multiple Github repositories with a single command
-# brew "git-xargs" # updates multiple Github repositories
-# brew "gitbackup" # Tool to backup your Bitbucket, GitHub and GitLab repositories
+# brew "git-xargs" # Updates multiple Github repositories
 # brew "github-keygen" # Bootstrap GitHub SSH configuration
 # brew "github-keygen" # bootstraps GitHub SSH configuration
 # brew "github-markdown-toc" # creates table of contents for a Readme markdown file
@@ -264,7 +268,6 @@ brew "hub" # older command-line tool
 # brew "legitify" # Tool to detect/remediate misconfig and security risks of GitHub/GitLab assets
 # brew "nushell" # Modern shell for the GitHub era
 # brew "prr" # Mailing list style code reviews for github
-# brew "spr" # Submit pull requests for individual, amendable, rebaseable commits to GitHub
 # brew "sugarjar" # Helper utility for a better Git/GitHub experience
 
 # GitLab
@@ -1003,6 +1006,7 @@ brew "yq" # jq for YAML
 
 # Data Formats - CSV & TSV
 brew "csvlens" # viewer
+brew "tabiew" # viewer that supports SQL queries
 brew "tidy-viewer" # great viewer
 # brew "csvprintf" # formats CSVs from a table to separate lines
 # csview: High performance csv viewer for cli
@@ -1012,6 +1016,7 @@ brew "csvtk" # toolkit
 brew "dasel" # jq for CSV, TOML, HTML, and JSON/YAML
 brew "jtbl" # converts JSON to CSV or HTML or Markdown tables
 brew "qsv" # one of the best - xsv replacement with a lot of features and documentation
+brew "sq" # jq for CSV
 brew "xsv" # looks very useful for csv files though kinda abandoned
 
 brew "csvq" # runs an SQL query on a CSV file
@@ -1358,27 +1363,58 @@ brew "viu" # view high-resolution images in the terminal
 # Networking - Application
 
 # DNS
-brew "airshare"
-brew "bbot"
-brew "bind" # dig
-brew "checkdmarc"
-brew "csprecon" # discovers target domains using content security policy
-brew "dnsgen" # generates names from an existing one
-brew "dnsrobocert" # sends a DNS challenge and generates a Let's Encrypt TLS certificate
-brew "dnstracer"
-brew "doggo"
-# brew "dnscontrol" # by Stack Exchange - Synchronize DNS records to multiple providers using a DSL
-# brew "dnsperf" # performance testing
-# brew "hostdb" # generates DNS zones and a DHCP configuration from hostlist.txt
-# brew "lexicon" # manipulates records on various DNS providers in a standardized way
-# brew "massdns" # by Project Discovery
-# brew "nuclei" # by Project Discovery - DNS scanner configurable via YAML templates
-# brew "scilla" # subdomain finder
-# brew "shuffledns" # by Project Discovery - subdomain finder
+brew "dnsrobocert" # manages a Let's Encrypt SSL certificate using a DNS challenge
 
-# subfinder
-# Subdomain discovery tool
-# https://github.com/projectdiscovery/subfinder
+brew "checkdmarc" # Command-line parser for SPF and DMARC DNS records
+brew "parsedmarc" # DMARC report analyzer and visualizer
+
+brew "bind" # has dig client
+brew "dog" # client
+brew "doggo" # client
+# brew "hickory-dns" # Rust based DNS client, server, and resolver
+
+brew "bbot" # Scanner
+brew "csprecon" # Discover new target domains using Content Security Policy
+brew "dnsgen" # Generates DNS names from existing domain names
+brew "dnstracer" # traces a chain of DNS servers to the source
+brew "dnsviz" # Tools for analyzing and visualizing DNS and DNSSEC behavior
+brew "dnsx" # DNS query toolkit
+brew "dnsmap" # Passive DNS network mapper (a.k.a. subdomains bruteforcer)
+brew "findomain" # Cross-platform subdomain enumerator
+brew "nuclei" # HTTP/DNS scanner configurable via YAML templates
+brew "scilla" # DNS, subdomain, port, directory enumeration tool
+brew "shuffledns" # Enumerate subdomains using active bruteforce & resolve subdomains with wildcards
+brew "subfinder" # Subdomain discovery tool
+brew "urlfinder" # Extracting URLs and subdomains from JS files on a website
+brew "whois" # Lookup tool for domain names and other internet resources
+brew "wtfis" # Passive hostname, domain, and IP lookup tool
+
+# brew "adns" # C/C++ resolver library and DNS resolver utilities
+# brew "airshare" # content sharing over local network using multicast DNS
+# brew "cjdns" # Advanced mesh routing system with cryptographic addressing
+# brew "coredns" # DNS server that chains plugins
+# brew "ddclient" # Update dynamic DNS entries
+# brew "ddns-go" # Simple and easy-to-use DDNS
+# brew "djbdns" # D.J. Bernstein's DNS tools
+# brew "dnscontrol" # Synchronize your DNS to multiple providers from a simple DSL
+# brew "dnsdist" # Highly DNS-, DoS- and abuse-aware loadbalancer
+# brew "dnsmasq" # Lightweight DNS forwarder and DHCP server
+# brew "dnsperf" # Measure DNS performance by simulating network conditions
+# brew "dnstop" # Console tool to analyze DNS traffic
+# brew "dnstwist" # Test domains for typo squatting, phishing and corporate espionage
+# brew "fpdns" # Fingerprint DNS server versions
+# brew "getdns" # Modern asynchronous DNS API
+# brew "gobuster" # Directory/file & DNS busting tool written in Go
+# brew "hesiod" # Library for the simple string lookup service built on top of DNS
+# brew "hostdb" # Generate DNS zones and DHCP configuration from hostlist.txt
+# brew "inadyn" # Dynamic DNS client with IPv4, IPv6, and SSL/TLS support
+# brew "iodine" # Tunnel IPv4 traffic through a DNS server
+# brew "jdnssec-tools" # Java command-line tools for DNSSEC
+# brew "launchdns" # Mini DNS server designed solely to route queries to localhost
+# brew "lexicon" # Manipulate DNS records on various DNS providers in a standardized way
+# brew "massdns" # High-performance DNS stub resolver
+# brew "mergelog" # Merges httpd logs from web servers behind round-robin DNS
+# brew "nextdns" # CLI for NextDNS's DNS-over-HTTPS (DoH)
 
 # HTTP - API Server
 brew "autorest" # by Microsoft - converts an OpenAPI specification to client code
@@ -1575,7 +1611,6 @@ brew "zlint" # certificate checker, see also zcertificate and zschema
 # brew "pivit" # Sign and verify data using hardware (Yubikey) backed x509 certificates (PIV)
 # brew "sh4d0wup" # Signing-key abuse and update exploitation framework
 # brew "signify-osx" # Cryptographically sign and verify files
-# brew "signmykey" # Automated SSH Certificate Authority
 # brew "sigstore" # Codesigning tool for Python packages
 # brew "smimesign" # S/MIME signing utility for use with Git
 # brew "xmlsectool" # Check schema validity and signature of an XML document
@@ -1592,6 +1627,7 @@ cask "ngrok"
 # brew "wireguard-tools"
 
 # SSH
+brew "openssh" # OpenBSD freely-licensed SSH connectivity tools
 # brew "apt-dater" # Manage package updates on remote hosts using SSH
 # brew "assh" # Advanced SSH config - Regex, aliases, gateways, includes and dynamic hosts
 # brew "autossh" # Automatically restart SSH sessions and tunnels
@@ -1607,13 +1643,10 @@ cask "ngrok"
 # brew "hss" # Interactive parallel SSH client
 # brew "keepkey-agent" # Keepkey Hardware-based SSH/GPG agent
 # brew "keychain" # User-friendly front-end to ssh-agent(1)
-# brew "libssh" # C library SSHv1/SSHv2 client and server protocols
-# brew "libssh2" # C library implementing the SSH2 protocol
 # brew "monkeysphere" # Use the OpenPGP web of trust to verify ssh connections
 # brew "mpssh" # Mass parallel ssh
 # brew "mussh" # Multi-host SSH wrapper
 # brew "onlykey-agent" # Middleware that lets you use OnlyKey as a hardware SSH/GPG device
-# brew "openssh" # OpenBSD freely-licensed SSH connectivity tools
 # brew "orgalorg" # Parallel SSH commands executioner and file synchronization tool
 # brew "pssh" # Parallel versions of OpenSSH and related tools
 # brew "putty" # Implementation of Telnet and SSH
@@ -1625,7 +1658,7 @@ cask "ngrok"
 # brew "ssh-mitm" # SSH server for security audits and malware analysis
 # brew "ssh-permit-a38" # Central management and deployment for SSH keys
 # brew "ssh-vault" # Encrypt/decrypt using SSH keys
-# brew "ssh3" # Faster and richer secure shell using HTTP/3
+# brew "ssh3" # Faster and richer secure shell using HTTP 3
 # brew "sshfs" # File system client based on SSH File Transfer Protocol
 # brew "sshguard" # Protect from brute force attacks against SSH
 # brew "sshpass" # Non-interactive SSH password auth
@@ -1640,7 +1673,7 @@ cask "ngrok"
 # brew "trzsz-ssh" # Simple ssh client with trzsz ( trz / tsz ) support
 # brew "tssh" # SSH Lightweight management tools
 # brew "vassh" # Vagrant Host-Guest SSH Command Wrapper/Proxy/Forwarder
-# brew "xxh" # Bring your favorite shell wherever you go through the ssh
+# brew "xxh" # Bring your favorite shell wherever you go through ssh
 # brew "yubikey-agent" # Seamless ssh-agent for YubiKeys and other PIV tokens
 # brew "zssh" # Interactive file transfers over SSH
 
@@ -1708,6 +1741,7 @@ cask "wireshark"
 # Shell
 brew "argc"
 brew "asdf"
+brew "direnv" # sets and unsets environment variables per directory
 brew "pure" # by Sindre Sorhus
 brew "zsh"
 brew "zsh-autocomplete"
@@ -1715,8 +1749,10 @@ brew "zsh-autopair"
 brew "zsh-autosuggestions"
 brew "zsh-syntax-highlighting"
 
-brew "chalk-cli" # by Sindre Sorhus - colorizes teminal text
+brew "chalk-cli" # colorizes teminal text (by Sindre Sorhus)
 brew "shellcheck" # checks a shell script
+brew "shellspec" # unit testing framework
+brew "shelltestrunner" # portable command-line tool for testing command-line programs
 brew "shfmt" # formats a shell script
 
 # brew "clitest"
@@ -1739,14 +1775,6 @@ brew "shfmt" # formats a shell script
 # Export command-line tools to web based terminal emulator
 # https://github.com/shellinabox/shellinabox
 
-# shellspec
-# BDD unit testing framework for dash, bash, ksh, zsh and all POSIX shells
-# https://shellspec.info/
-
-# shelltestrunner
-# Portable command-line tool for testing command-line programs
-# https://github.com/simonmichael/shelltestrunner
-
 # Utilities
 brew "align"
 brew "as-tree"
@@ -1755,7 +1783,6 @@ brew "choose-rust" # cut and awk alternative
 brew "comby" # sed replacement, matches with syntax instead of regexes
 brew "dasht" # searches offline documentation aggregated by Dash
 brew "difftastic" # super high-quality diff tool
-brew "direnv" # sets and unsets environment variables per directory
 brew "diskus" # directory size
 brew "f2" # renames files
 brew "fcp" # faster cp
@@ -1763,7 +1790,7 @@ brew "fd"
 brew "fex" # cut and awk alternative that tries to be more concise and readable
 brew "grex" # regex generator
 brew "hyperfine" # useful benchmarking tool
-brew "openssh"
+brew "progressline" # track commands progress in a compact one-line format
 brew "sd" # sed replacement
 brew "s-search" # searches the web, also has a web interface
 brew "tailspin" # colorizes log files
@@ -1772,6 +1799,7 @@ brew "tldr"
 brew "tree"
 brew "trurl" # by curl team - tr for URLs
 brew "uni" # search unicode and emoji database
+brew "usage" # specification for CLIs
 brew "viddy" # better watch command
 brew "watch"
 brew "watchexec" # watches files and triggers actions
@@ -1784,18 +1812,12 @@ brew "xidel" # super useful for reading web pages I think
 # brew "hck" # cut alternative that supports regex delimiters
 # brew "invoice" # generates pretty, professional invoices
 # brew "just" # runs project-specific commands, like Make
+# brew "nq" # Unix command-line queue utility
 # brew "rename" # renames files
+# brew "sampler" # Tool for shell commands execution, visualization and alerting
 # brew "titlecase" # capitalizes titles
 # brew "tuc" # cut replacement
 # brew "watchman" # by Facebook - watches files and triggers actions
-
-# nq
-# Unix command-line queue utility
-# https://github.com/leahneukirchen/nq
-
-# sampler
-# Tool for shell commands execution, visualization and alerting
-# https://sampler.dev
 
 # steampipe
 # Use SQL to instantly query your cloud services
@@ -1873,10 +1895,50 @@ brew "php"
 # brew "julia"
 # brew "r"
 
-brew "kotlin"
-brew "maven"
-brew "openjdk"
-# brew "gradle"
+# brew "detekt" # Static code analysis for Kotlin
+# brew "gradle" # Open-source build automation tool based on the Groovy and Kotlin DSL
+# brew "kdoctor" # Environment diagnostics for Kotlin Multiplatform Mobile app development
+# brew "ki" # Kotlin Language Interactive Shell
+# brew "kotlin" # Statically typed programming language for the JVM
+# brew "kotlin-language-server" # Intelligent Kotlin support for any editor/IDE using the Language Server Protocol
+# brew "ktfmt" # Kotlin code formatter
+# brew "ktlint" # Anti-bikeshedding Kotlin linter with built-in formatter
+# brew "xcode-kotlin" # Kotlin Native Xcode Plugin
+
+# brew "ant" # Java build tool
+# brew "asciidoctorj" # Java wrapper and bindings for Asciidoctor
+# brew "checkstyle" # Check Java source against a coding standard
+# brew "dex2jar" # Tools to work with Android .dex and Java .class files
+# brew "google-java-format" # Reformats Java source code to comply with Google Java Style
+# brew "java-service-wrapper" # Simplify the deployment, launch and monitoring of Java applications
+# brew "jbang" # Tool to create, edit and run self-contained source-only Java programs
+# brew "jenv" # Manage your Java environment
+# brew "jsonschema2pojo" # Generates Java types from JSON Schema (or example JSON)
+# brew "jsvc" # Wrapper to launch Java applications as daemons
+# brew "launch4j" # Cross-platform Java executable wrapper
+# brew "maven" # Java-based project management
+# brew "openjdk" # Development kit for the Java programming language
+# brew "osslsigncode" # OpenSSL based Authenticode signing for PE/MSI/Java CAB files
+# brew "spotbugs" # Tool for Java static analysis
+
+# brew "conduit" # Streams data between data stores. Kafka Connect replacement. No JVM required
+# brew "derby" # Apache Derby is an embedded relational database running on JVM
+# brew "gcviewer" # Java garbage collection visualization tool
+# brew "golo" # Lightweight dynamic language for the JVM
+# brew "gosu" # Pragmatic language for the JVM
+# brew "jhiccup" # Measure pauses and stalls of an app's Java runtime platform
+# brew "jmxtrans" # Tool to connect to JVMs and query their attributes
+# brew "jvm-mon" # Console-based JVM monitoring
+# brew "jvmtop" # Console application for monitoring all running JVMs on a machine
+# brew "kcat" # Generic command-line non-JVM Apache Kafka producer and consumer
+# brew "kotlin" # Statically typed programming language for the JVM
+# brew "leakcanary-shark" # CLI Java memory leak explorer for LeakCanary
+# brew "micronaut" # Modern JVM-based framework for building modular microservices
+# brew "proguard" # Java class file shrinker, optimizer, and obfuscator
+# brew "sjk" # Tools for JVM troubleshooting, monitoring, and profiling
+# brew "spring-loaded" # Java agent to enable class reloading in a running JVM
+# brew "spring-loaded" # Java agent to enable class reloading in a running JVM
+# brew "vert.x" # Toolkit for building reactive applications on the JVM
 
 brew "nuget" # package installer
 cask "dotnet-sdk" # runtime and compiler
@@ -1886,9 +1948,52 @@ cask "dotnet-sdk" # runtime and compiler
 # brew "erlang"
 # brew "elixir"
 
-# brew "cmake"
-# brew "conan"
-# brew "llvm"
+# brew "conan" # Package manager
+
+# brew "autoconf" # Automatic configure script builder
+# brew "automake" # Tool for generating GNU Standards-compliant Makefiles
+# brew "bmake" # Portable version of NetBSD make(1)
+# brew "bsdmake" # BSD version of the Make build tool
+# brew "cargo-make" # Rust task runner and build tool
+# brew "checkmake" # Linter/analyzer for Makefiles
+# brew "cmake-docs" # Documentation for CMake
+# brew "cmake" # Cross-platform make
+# brew "colormake" # Wrapper around make to colorize the output
+# brew "compiledb" # Generate a Clang compilation database for Make-based build systems
+# brew "extra-cmake-modules" # Extra modules and scripts for CMake
+# brew "ftjam" # Build tool that can be used as a replacement for Make
+# brew "goredo" # Go implementation of djb's redo, a Makefile replacement that sucks less
+# brew "jam" # Make-like build tool
+# brew "mage" # Make/rake-like build tool using Go
+# brew "make" # Utility for directing compilation
+# brew "makedepend" # Creates dependencies in makefiles
+# brew "makefile2graph" # Create a graph of dependencies from GNU-Make
+# brew "netsurf-buildsystem" # Makefiles shared by NetSurf projects
+# brew "ninja" # Small build system for use with gyp or CMake
+# brew "omake" # Build system designed for scalability, portability, and concision
+# brew "premake" # Write once, build anywhere Lua-based build system
+# brew "redo" # Implements djb's redo: an alternative to make
+# brew "remake" # GNU Make with improved error handling, tracing, and a debugger
+# brew "scons" # Substitute for classic 'make' tool with autoconf/automake functionality
+# brew "smake" # Portable make program with automake features
+
+# brew "bear" # Generate compilation database for clang tooling
+# brew "cargo-binutils" # Cargo subcommands to invoke the LLVM tools shipped with the Rust toolchain
+# brew "cargo-llvm-cov" # Cargo subcommand to easily use LLVM source-based code coverage
+# brew "cargo-llvm-lines" # Count lines of LLVM IR per generic function
+# brew "clang-build-analyzer" # Tool to analyze compilation time
+# brew "clang-format" # Formatting tools for C, C++, Obj-C, Java, JavaScript, TypeScript
+# brew "clang-uml" # Customizable automatic UML diagram generator for C++ based on Clang
+# brew "clangql" # Run a SQL like language to perform queries on C/C++ files
+# brew "emscripten" # LLVM bytecode to JavaScript compiler
+# brew "enzyme" # High-performance automatic differentiation of LLVM
+# brew "lit" # Portable tool for LLVM- and Clang-style test suites
+# brew "llgo" # Go compiler based on LLVM integrate with the C ecosystem and Python
+# brew "llvm" # Next-gen compiler infrastructure
+# brew "retdec" # Retargetable machine-code decompiler based on LLVM
+# brew "rtags" # Source code cross-referencer like ctags with a clang frontend
+# brew "spirv-llvm-translator" # Tool and a library for bi-directional translation between SPIR-V and LLVM IR
+# brew "wllvm" # Toolkit for building whole-program LLVM bitcode files
 
 # Lightweight Formal Methods
 
@@ -3001,18 +3106,6 @@ vscode "YoavBls.pretty-ts-errors"
 # sqsmover
 # AWS SQS Message mover
 # https://github.com/mercury2269/sqsmover
-
-# ssh-audit
-# SSH server & client auditing
-# https://github.com/jtesta/ssh-audit
-
-# ssh-permit-a38
-# Central management and deployment for SSH keys
-# https://github.com/ierror/ssh-permit-a38
-
-# ssh-vault
-# Encrypt/decrypt using SSH keys
-# https://ssh-vault.com/
 
 # ssh3
 # Faster and richer secure shell using HTTP/3

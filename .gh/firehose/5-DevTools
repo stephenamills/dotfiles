@@ -116,10 +116,11 @@ https://github.com/microsoft/vscode-remote-try-python # Python
 https://github.com/microsoft/vscode-remote-try-node # Node.js
 https://github.com/microsoft/vscode-remote-try-php # PHP
 https://github.com/microsoft/vscode-remote-try-cpp # C++
-https://github.com/devcontainers/template-starter # dev containers - template starter
+https://github.com/devcontainers/template-starter # template
+https://github.com/devcontainers/feature-starter # Features template
 https://github.com/devcontainers/cli # creates a dev container
-https://github.com/qdm12/devtainr # sets up a development container in your repository
 https://github.com/devcontainers/images/ # pre-built dev container images
+https://github.com/qdm12/devtainr # sets up a development container in your repository
 
 https://github.com/qdm12/reactdevcontainer # React
 https://github.com/luizkowalski/devcontainer-rails # Rails
@@ -133,11 +134,8 @@ https://github.com/allaboutapps/go-starter # Go JSON API with OpenAPI and SQL
 https://github.com/edhaase/vscode-devcontainer-php7-apache # PHP and Apache
 https://github.com/iterativo-git/dockerdoo # Odoo
 
-https://github.com/devcontainers/feature-starter # Features
 https://github.com/guiyomh/features
 
-https://github.com/xtruder/nix-devcontainer # Nix
-https://github.com/zimbatm/vscode-devcontainer-nix # Nix
 https://github.com/0916dhkim/vscode-devcontainer-tutorial # Several databases and more
 https://github.com/pwd9000-ml/devcontainer-templates # GitHub Actions, Azure Pipelines and more
 https://github.com/wtfzambo/glue-devcontainer-template # AWS Glue

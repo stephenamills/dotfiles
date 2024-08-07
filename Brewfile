@@ -36,7 +36,6 @@ brew "git-absorb" # incorporates uncommitted changes into relevant past commits,
 brew "git-appraise" # by Google - code review system
 brew "git-delete-merged-branches" # deletes a merged branch, keeping the repo clean
 brew "git-delta" # superb upgrade to git blame and also for diff etc.
-brew "git-delete-merged-branches" # deletes a merged branch
 brew "git-filter-repo" # rewrites repository history
 brew "git-flow" # branching model popularized in a blog post
 brew "git-flow-avh" # another git-flow

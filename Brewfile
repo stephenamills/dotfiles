@@ -83,12 +83,45 @@ brew "git-when-merged" # finds where a commit was merged
 # brew "convco" # Conventional commits, changelog, versioning, validation
 # brew "git-cliff" # Highly customizable changelog generator
 
+# brew "apgdiff" # Another PostgreSQL diff tool
+# brew "bazel-diff" # Performs Bazel Target Diffing between two revisions in Git
+# brew "colordiff" # Color-highlighted diff(1) output
+# brew "container-diff" # Diff your Docker containers
+# brew "diff-so-fancy" # Good-lookin' diffs with diff-highlight and more
+# brew "diffoci" # Diff for Docker and OCI container images
+# brew "diffoscope" # In-depth comparison of files, archives, and directories
+# brew "diffr" # LCS based diff highlighting tool to ease code review from your terminal
+# brew "diffstat" # Produce graph of changes introduced by a diff file
+# brew "difftastic" # Diff that understands syntax
+# brew "diffutils" # File comparison utilities
+# brew "dwdiff" # Diff that operates at the word level
+# brew "excel-compare" # tool (and API) for diffing Excel Workbooks
+# brew "git-delta" # Syntax-highlighting pager for git and diff output
+# brew "git-split-diffs" # Syntax highlighted side-by-side diffs in your terminal
+# brew "gpatch" # Apply a diff file to an original
+# brew "httpdiff" # Compare two HTTP(S) responses
+# brew "icdiff" # Improved colored diff
+# brew "imgdiff" # Pixel-by-pixel image difference tool
+# brew "jd" # JSON diff and patch
+# brew "nbdime" # Jupyter Notebook Diff and Merge tools
+# brew "numdiff" # Putative files comparison tool
+# brew "perceptualdiff" # Perceptual image comparison tool
+# brew "pkgdiff" # Tool for analyzing changes in software packages (e.g. RPM, DEB, TAR.GZ)
+# brew "rancid" # Cisco config differ
+# brew "riff" # Diff filter highlighting which line parts have changed
+# brew "spaceman-diff" # Diff images from the command-line
+# brew "sqldiff" # Displays the differences between SQLite databases
+# brew "uutils-diffutils" # diffutils
+# brew "wdiff" # Display word differences between text files
+# brew "xcdiff" # Tool to diff xcodeproj files
+# brew "ydiff" # View colored diff with side by side and auto pager support
+# brew "zet" # CLI utility to find the union, intersection, and set difference of files
+
 # brew "all-repos" # Clone all your repositories and apply sweeping changes
 # brew "argocd-autopilot" # Opinionated way of installing Argo CD and managing GitOps repositories
 # brew "argocd" # GitOps Continuous Delivery for Kubernetes
 # brew "bash-git-prompt" # Informative, fancy bash prompt for Git users
 # brew "bat" # Clone of cat(1) with syntax highlighting and Git integration
-# brew "bazel-diff" # Performs Bazel Target Diffing between two revisions in Git
 # brew "bfg" # Remove large files or passwords from Git history like git-filter-branch
 # brew "bit-git" # Bit is a modern Git CLI
 # brew "blackbox" # Safely store secrets in Git/Mercurial/Subversion
@@ -120,7 +153,6 @@ brew "git-when-merged" # finds where a commit was merged
 # brew "git-credential-oauth" # Git credential helper that authenticates in browser using OAuth
 # brew "git-crypt" # Enable transparent encryption/decryption of files in a git repo
 # brew "git-delete-merged-branches" # Command-line tool to delete merged Git branches
-# brew "git-delta" # Syntax-highlighting pager for git and diff output
 # brew "git-extras" # Small git utilities
 # brew "git-filter-repo" # Quickly rewrite git repository history
 # brew "git-flow-avh" # AVH edition of git-flow
@@ -151,7 +183,6 @@ brew "git-when-merged" # finds where a commit was merged
 # brew "git-secret" # Bash-tool to store the private data inside a git repo
 # brew "git-series" # Track changes to a patch series over time
 # brew "git-sizer" # Compute various size metrics for a Git repository
-# brew "git-split-diffs" # Syntax highlighted side-by-side diffs in your terminal
 # brew "git-ssh" # Proxy for serving git repositories over SSH
 # brew "git-standup" # Git extension to generate reports for standup meetings
 # brew "git-subrepo" # Git Submodule Alternative

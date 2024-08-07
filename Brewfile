@@ -1,5 +1,5 @@
 tap "GitJournal/tap"
-tap "harelba/q/q"
+tap "harelba/q"
 tap "hashicorp/tap"
 tap "replicate/tap"
 tap "supabase/tap"

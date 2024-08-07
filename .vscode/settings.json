@@ -6,7 +6,7 @@
     "editor.defaultFormatter": "astro-build.astro-vscode"
   },
   "[json][jsonc]": {
-    "editor.defaultFormatter": "denoland.vscode-deno" // Much better than Prettier because it fixes JSON syntax errors
+    "editor.defaultFormatter": "denoland.vscode-deno" // Much better than Prettier because it fixes JSON syntax errors.
   },
   "[markdown]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
@@ -66,8 +66,7 @@
     "*.json": "jsonc"
   },
   "files.autoSave": "afterDelay",
-  "files.autoSaveDelay": 300,
-  "files.autoSaveWhenNoErrors": true,
+  "files.autoSaveDelay": 1000,
   "files.defaultLanguage": "{activeEditorLanguage}",
   "files.simpleDialog.enable": true,
 
@@ -83,6 +82,8 @@
   "javascript.inlayHints.propertyDeclarationTypes.enabled": true,
   "javascript.inlayHints.variableTypes.enabled": true,
   "javascript.updateImportsOnFileMove.enabled": "always",
+
+  "outline.collapseItems": "alwaysCollapse",
 
   "search.exclude": {
     "**/*.snap": true,

@@ -1,12 +1,16 @@
 {
-  "[apex][css][graphql][html][javascript][javascriptreact][markdown][mdx][properties][svelte][tailwindcss][typescript][typescriptreact][vue][vue-html][yaml]": {
+  "[apex][css][graphql][html][javascript][javascriptreact][mdx][properties][svelte][tailwindcss][typescript][typescriptreact][vue][vue-html][yaml]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[astro]": {
     "editor.defaultFormatter": "astro-build.astro-vscode"
   },
   "[json][jsonc]": {
-    "editor.defaultFormatter": "denoland.vscode-deno"
+    "editor.defaultFormatter": "denoland.vscode-deno" // Much better than Prettier because it fixes JSON syntax errors
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "files.trimTrailingWhitespace": false
   },
   "[shellscript]": {
     "editor.defaultFormatter": "mkhl.shfmt"

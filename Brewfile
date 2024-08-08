@@ -1253,7 +1253,6 @@ brew "yatas" # audits for misconfiguration or security issues
 
 # AWS
 brew "amazon-ecs-cli"
-brew "aws-amplify"
 brew "awscli"
 brew "aws-shell"
 brew "ec2-ami-tools"
@@ -1305,7 +1304,7 @@ brew "s3cmd" # client
 
 # brew "amazon-ecs-cli" # CLI for Amazon ECS to manage clusters and tasks for development
 # brew "athenacli" # CLI tool for AWS Athena service
-# brew "aws-amplify" # Build full-stack web and mobile apps in hours. Easy to start, easy to scale
+# brew "aws-amplify" # Build full-stack web and mobile apps in hours. (on npm)
 # brew "aws-auth" # Allows you to programmatically authenticate into AWS accounts through IAM roles
 # brew "aws-cdk" # AWS Cloud Development Kit - framework for defining AWS infra as code
 # brew "aws-console" # Command-line to use AWS CLI credentials to launch the AWS console in a browser

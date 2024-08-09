@@ -454,7 +454,17 @@ brew "vsh" # community-created shell for Vault
 # brew "yubikey-agent" # Seamless ssh-agent for YubiKeys and other PIV tokens
 
 # Docker
-brew "dive" # Tool for exploring each layer in a docker image
+brew "cog" # by Replicate - creates containers for machine learning without a Dockerfile
+brew "container-structure-test" # by Google - tests the structure of your container image
+brew "copa" # patches a container image using reports from vulnerability scanners like trivy
+brew "cosign"
+brew "devcontainer" # Reference implementation for the Development Containers specification
+brew "dive" # explores each layer in a Docker image
+brew "grype" #
+brew "hadolint" # checks Dockerfile
+brew "nixpacks" # creates Docker images without a Dockerfile
+brew "sysdig"
+
 # brew "apko" # builds an OCI image from an APK package directly, without a Dockerfile
 # brew "container-structure-test" # Validate the structure of your container images
 # brew "copa" # Tool to directly patch container images given the vulnerability scanning results
@@ -476,16 +486,6 @@ brew "dive" # Tool for exploring each layer in a docker image
 # brew "whalebrew" # Homebrew, but with Docker images
 # brew "xeol" # Xcanner for end-of-life software in container images, filesystems, and SBOMs
 # brew "xmount" # Convert between multiple input & output disk image types
-
-brew "cog" # by Replicate - creates containers for machine learning without a Dockerfile
-brew "container-structure-test" # by Google - tests the structure of your container image
-brew "copa" # patches a container image using reports from vulnerability scanners like trivy
-brew "cosign"
-brew "devcontainer" # Reference implementation for the Development Containers specification
-brew "hadolint" # checks Dockerfile
-brew "grype" #
-brew "nixpacks" # creates Docker images without a Dockerfile
-brew "sysdig"
 
 # brew "argo" # Get stuff done with container-native workflows for Kubernetes
 # brew "buildkit" # Concurrent, cache-efficient, and Dockerfile-agnostic builder toolkit
@@ -668,6 +668,8 @@ brew "vespa-cli" # by Yahoo - has a guide to deploy machine learning to Kubernet
 # brew "chart-testing" # Testing and linting Helm charts
 # brew "cilium-cli" # CLI to install, manage & troubleshoot Kubernetes clusters running Cilium
 # brew "click" # Command-line interactive controller for Kubernetes
+# brew "clusterawsadm" # Home for bootstrapping, AMI, EKS, and other helpers in Cluster API Provider AWS
+# brew "clusterctl" # Home for the Cluster Management API work, a subproject of sig-cluster-lifecycle
 # brew "consul-backinator" # Consul backup and restoration application
 # brew "cri-tools" # CLI and validation tools for Kubelet Container Runtime Interface (CRI)
 # brew "ctlptl" # Making local Kubernetes clusters fun and easy to set up
@@ -695,8 +697,10 @@ brew "vespa-cli" # by Yahoo - has a guide to deploy machine learning to Kubernet
 # brew "k3sup" # Utility to create k3s clusters on any local or remote VM
 # brew "k8sgpt" # Scanning your k8s clusters, diagnosing, and triaging issues in simple English
 # brew "k9s" # Kubernetes CLI To Manage Your Clusters In Style!
+# brew "karmadactl" # CLI for Karmada control plane
 # brew "kconf" # CLI for managing multiple kubeconfigs
 # brew "kind" # Run local Kubernetes cluster in Docker
+# brew "kn" # Command-line interface for managing Knative Serving and Eventing resources
 # brew "ko" # Build and deploy Go applications on Kubernetes
 # brew "kompose" # Tool to move from `docker-compose` to Kubernetes
 # brew "kops" # Production Grade K8s Installation, Upgrades, and Management
@@ -741,6 +745,7 @@ brew "vespa-cli" # by Yahoo - has a guide to deploy machine learning to Kubernet
 # brew "kwctl" # CLI tool for the Kubewarden policy engine for Kubernetes
 # brew "kwok" # Kubernetes WithOut Kubelet - Simulates thousands of Nodes and Clusters
 # brew "kyverno" # Kubernetes Native Policy Management
+# brew "liqoctl" # Is a CLI tool to install and manage Liqo-enabled clusters
 # brew "minikube" # Run a Kubernetes cluster locally
 # brew "minio" # High Performance, Kubernetes Native Object Storage
 # brew "naml" # Convert Kubernetes YAML to Golang
@@ -759,15 +764,17 @@ brew "vespa-cli" # by Yahoo - has a guide to deploy machine learning to Kubernet
 # brew "skaffold" # Easy and Repeatable Kubernetes Development
 # brew "sonobuoy" # Kubernetes component that generates reports on cluster conformance
 # brew "stern" # Tail multiple Kubernetes pods & their containers
+# brew "talhelper" # Configuration helper for talos clusters
 # brew "tanka" # Flexible, reusable and concise configuration for Kubernetes using Jsonnet
 # brew "testkube" # Kubernetes-native framework for test definition and execution
 # brew "tfk8s" # Kubernetes YAML manifests to Terraform HCL converter
 # brew "tilt" # Define your dev environment as code. For microservice apps on Kubernetes
+# brew "tm" # TriggerMesh CLI to work with knative objects
 # brew "uffizzi" # Self-serve developer platforms in minutes, not months with k8s virtual clusters
 # brew "vcluster" # Creates fully functional virtual k8s cluster inside host k8s cluster's namespace
 # brew "velero" # Disaster recovery for Kubernetes resources and persistent volumes
 # brew "virtctl" # Allows for using more advanced kubevirt features
-# brew "vkectl" # Command-Line Interface for VKE(VolcanoEngine Kubernetes Engine)
+# brew "vkectl" # Command-Line Interface for VKE (VolcanoEngine Kubernetes Engine)
 # brew "werf" # Consistent delivery tool for Kubernetes
 
 # Nomad
@@ -788,97 +795,101 @@ brew "levant" # templating and deployment tool for jobs
 # brew "schema-evolution-manager" # Postgres migrations
 # brew "skeema" # declarative pure-SQL schema management for MySQL
 # brew "sql-migrate" # SQL schema migrations
-# postgraphile: GraphQL schema created by reflection over a PostgreSQL schema
-# reshape: Easy-to-use, zero-downtime schema migration tool for Postgres
-# schema-evolution-manager: Manage postgresql database schema migrations
-# skeema: Declarative pure-SQL schema management for MySQL and MariaDB
-# sql-migrate: SQL schema migration tool for Go
-# sqlboiler: Generate a Go ORM tailored to your database schema
+# brew "postgraphile" # GraphQL schema created by reflection over a PostgreSQL schema
+# brew "reshape" # Easy-to-use, zero-downtime schema migration tool for Postgres
+# brew "schema-evolution-manager" # Manage postgresql database schema migrations
+# brew "skeema" # Declarative pure-SQL schema management for MySQL and MariaDB
+# brew "sqlboiler" # Generate a Go ORM tailored to your database schema
 # Also, see SchemaHero on pkg.go.dev
 
 # brew "rqlite" # replicated SQLite (good documentation, in Go)
-# brew "sqlite" # row-oriented
-# dbhash: Computes the SHA1 hash of schema and content of a SQLite database
-# harelba/q/q: query an sqlite database directly without loading it into memory
-# historian: Command-line utility for managing shell history in a SQLite database
-# libspatialite: Adds spatial SQL capabilities to SQLite
-# litecli: CLI for SQLite Databases with auto-completion and syntax highlighting
-# sqlcipher: SQLite extension providing 256-bit AES encryption
-# sqldiff: Displays the differences between SQLite databases
-# sqlite-analyzer: Analyze how space is allocated inside an SQLite file
-# sqlite-utils: CLI utility for manipulating SQLite databases
-# sqliteodbc: ODBC driver for SQLite
-# virtualpg: Loadable dynamic extension for SQLite and SpatiaLite
+# brew "sqlite" # row-oriented database (client)
 
-# brew "mysql" # row-oriented
-# brew "vitess" # replicated MySQL
-# automysqlbackup: Automate MySQL backups
-# db-vcs: Version control for MySQL databases
-# dbdeployer: Tool to deploy sandboxed MySQL database servers
-# dolphie: Feature-rich top tool for monitoring MySQL
-# dumpling: Creating SQL dump from a MySQL-compatible database
-# innotop: Top clone for MySQL
-# maxwell: Reads MySQL binlogs and writes row updates as JSON to Kafka
-# mycli: CLI for MySQL with auto-completion and syntax highlighting
-# mydumper: How a MySQL DBA & support engineer would imagine 'mysqldump'
-# mysqltuner: Increase performance and stability of a MySQL installation
-# mytop: Top-like query monitor for MySQL
-# percona-toolkit: Command-line tools for MySQL, MariaDB and system tasks
-# phpmyadmin: Web interface for MySQL and MariaDB
-# skeema: Declarative pure-SQL schema management for MySQL and MariaDB
+# brew "dbhash" # Computes the SHA1 hash of schema and content of a SQLite database
+# brew "libspatialite" # Adds spatial SQL capabilities to SQLite
+# brew "litecli" # CLI for SQLite Databases with auto-completion and syntax highlighting
+# brew "sqlcipher" # SQLite extension providing 256-bit AES encryption
+# brew "sqldiff" # Displays the differences between SQLite databases
+# brew "sqlite-analyzer" # Analyze how space is allocated inside an SQLite file
+# brew "sqlite-utils" # CLI utility for manipulating SQLite databases
+# brew "sqliteodbc" # ODBC driver for SQLite
+# brew "virtualpg" # Loadable dynamic extension for SQLite and SpatiaLite
+
+brew "mysql" # row-oriented database
+brew "vitess" # replicated MySQL
+
+# brew "automysqlbackup" # Automate MySQL backups
+# brew "db-vcs" # Version control for MySQL databases
+# brew "dbdeployer" # Tool to deploy sandboxed MySQL database servers
+# brew "dolphie" # Feature-rich top tool for monitoring MySQL
+# brew "dumpling" # Creating SQL dump from a MySQL-compatible database
+# brew "innotop" # Top clone for MySQL
+# brew "maxwell" # Reads MySQL binlogs and writes row updates as JSON to Kafka
+# brew "mycli" # CLI for MySQL with auto-completion and syntax highlighting
+# brew "mydumper" # How a MySQL DBA & support engineer would imagine 'mysqldump'
+# brew "mysql-client" # Open source relational database management system
+# brew "mysql-connector-c++" # MySQL database connector for C++ applications
+# brew "mysql-search-replace" # Database search and replace script in PHP
+# brew "mysqltuner" # Increase performance and stability of a MySQL installation
+# brew "mytop" # Top-like query monitor for MySQL
+# brew "percona-toolkit" # Command-line tools for MySQL and system tasks
+# brew "phpmyadmin" # Web interface for MySQL and MariaDB
+# brew "skeema" # Declarative pure-SQL schema management for MySQL
 
 # brew "citus" # replicated Postgres
 # brew "postgresql" # row-oriented database
-# apgdiff: Another PostgreSQL diff tool
-# check_postgres: Monitor Postgres databases
-# dexter: Automatic indexer for Postgres
-# doltgres: Dolt for Postgres
-# ephemeralpg: Run tests on an isolated, temporary Postgres database
-# greenmask: PostgreSQL dump and obfuscation tool
-# imposm3: Imports OpenStreetMap data into PostgreSQL/PostGIS databases
-# osm2pgsql: OpenStreetMap data to PostgreSQL converter
-# pex: Package manager for PostgreSQL
-# pg_cron: Run periodic jobs in PostgreSQL
-# pg_partman: Partition management extension for PostgreSQL
-# pg_top: Monitor PostgreSQL processes
-# pgbadger: Log analyzer for PostgreSQL
-# pgbouncer: Lightweight connection pooler for PostgreSQL
-# pgcli: CLI for Postgres with auto-completion and syntax highlighting
-# pgdbf: Converter of XBase/FoxPro tables to PostgreSQL
-# pgloader: Data loading tool for PostgreSQL
-# pgpool-ii: PostgreSQL connection pool server
-# pgroonga: PostgreSQL plugin to use Groonga as index
-# pgrouting: Provides geospatial routing for PostGIS/PostgreSQL database
-# pgsync: Sync Postgres data between databases
-# pgtoolkit: Tools for PostgreSQL maintenance
-# pgtune: Tuning wizard for postgresql.conf
-# pgvector: Open-source vector similarity search for Postgres
-# pgweb: Web-based PostgreSQL database browser
-# pgxnclient: Command-line client for the PostgreSQL Extension Network
-# postgis: Adds support for geographic objects to PostgreSQL
-# postgraphile: GraphQL schema created by reflection over a PostgreSQL schema
-# postgrest: Serves a fully RESTful API from any existing PostgreSQL database
-# prestd: Simplify and accelerate development on any Postgres application, existing or new
-# psqlodbc: Official PostgreSQL ODBC driver
-# reshape: Easy-to-use, zero-downtime schema migration tool for Postgres
-# schema-evolution-manager: Manage postgresql database schema migrations
-# stolon: Cloud native PostgreSQL manager for high availability
-# temporal_tables: Temporal Tables PostgreSQL Extension
-# tsung: Load testing for HTTP, PostgreSQL, Jabber, and others
-# wal2json: Convert PostgreSQL changesets to JSON format
 
-# brew "dynomite" # by Netflix - Dynamo implementation
-# dynein: DynamoDB CLI
+# brew "apgdiff" # Another PostgreSQL diff tool
+# brew "check_postgres" # Monitor Postgres databases
+# brew "dexter" # Automatic indexer for Postgres
+# brew "doltgres" # Dolt for Postgres
+# brew "ephemeralpg" # Run tests on an isolated, temporary Postgres database
+# brew "greenmask" # PostgreSQL dump and obfuscation tool
+# brew "imposm3" # Imports OpenStreetMap data into PostgreSQL/PostGIS databases
+# brew "osm2pgsql" # OpenStreetMap data to PostgreSQL converter
+# brew "pex" # Package manager for PostgreSQL
+# brew "pg_cron" # Run periodic jobs in PostgreSQL
+# brew "pg_partman" # Partition management extension for PostgreSQL
+# brew "pg_top" # Monitor PostgreSQL processes
+# brew "pgbadger" # Log analyzer for PostgreSQL
+# brew "pgbouncer" # Lightweight connection pooler for PostgreSQL
+# brew "pgcli" # CLI for Postgres with auto-completion and syntax highlighting
+# brew "pgdbf" # Converter of XBase/FoxPro tables to PostgreSQL
+# brew "pgformatter" # PostgreSQL syntax beautifier
+# brew "pgloader" # Data loading tool for PostgreSQL
+# brew "pgpool-ii" # PostgreSQL connection pool server
+# brew "pgroonga" # PostgreSQL plugin to use Groonga as index
+# brew "pgrouting" # Provides geospatial routing for PostGIS/PostgreSQL database
+# brew "pgsync" # Sync Postgres data between databases
+# brew "pgtoolkit" # Tools for PostgreSQL maintenance
+# brew "pgtune" # Tuning wizard for postgresql.conf
+# brew "pgvector" # Open-source vector similarity search for Postgres
+# brew "pgweb" # Web-based PostgreSQL database browser
+# brew "pgxnclient" # Command-line client for the PostgreSQL Extension Network
+# brew "postgis" # Adds support for geographic objects to PostgreSQL
+# brew "postgraphile" # GraphQL schema created by reflection over a PostgreSQL schema
+# brew "postgrest" # Serves a fully RESTful API from any existing PostgreSQL database
+# brew "prestd" # Simplify and accelerate development on any Postgres application, existing or new
+# brew "psqlodbc" # Official PostgreSQL ODBC driver
+# brew "reshape" # Easy-to-use, zero-downtime schema migration tool for Postgres
+# brew "schema-evolution-manager" # Manage Postgresql database schema migrations
+# brew "stolon" # Cloud native PostgreSQL manager for high availability
+# brew "temporal_tables" # Temporal Tables PostgreSQL Extension
+# brew "tsung" # Load testing for HTTP, PostgreSQL, Jabber, and others
+# brew "wal2json" # Convert PostgreSQL changesets to JSON format
+
+# brew "dynomite" # strongly consistent, replicated key-value store - a Dynamo implementation (by Netflix)
+# brew "dynein" # DynamoDB client
 
 # also, Spanner and CockroachDB and LevelDB
 # also, ScyllaDB
 # also, YugabyteDB
 
-# mongo-orchestration: REST API to manage MongoDB configurations on a single host
-# mongocli: MongoDB CLI for MongoDB in the Cloud
-# mongodb-atlas-cli: Atlas CLI enables you to manage your MongoDB Atlas
-# mongoose: Web server built on top of Libmongoose embedded library
-# mongosh: MongoDB Shell to connect, configure, query, and work with your MongoDB database
+# brew "mongo-orchestration" # REST API to manage MongoDB configurations on a single host
+# brew "mongocli" # MongoDB CLI enables you to manage your MongoDB in the Cloud
+# brew "mongodb-atlas-cli" # Atlas CLI enables you to manage your MongoDB Atlas
+# brew "mongoose" # Web server build on top of Libmongoose embedded library
+# brew "mongosh" # MongoDB Shell to connect, configure, query, and work with your MongoDB database
 
 # brew "etcd" # replicated BoltDB
 
@@ -896,11 +907,14 @@ brew "levant" # templating and deployment tool for jobs
 # brew "valkey" # High-performance data structure server that primarily serves key/value workloads
 
 # brew "cassandra" # column-oriented database
-# cassandra-reaper: Management interface for Cassandra
-# ccm: Create and destroy an Apache Cassandra cluster on localhost
-# cql-proxy: DataStax cql-proxy enables Cassandra apps to use Astra DB without code changes
-# cqlkit: CLI tool to export Cassandra query as CSV and JSON format
-# pillar: Manage migrations for Cassandra data stores
+
+# brew "cassandra" # Eventually consistent, distributed key-value store
+# brew "cassandra-cpp-driver" # DataStax C/C++ Driver for Apache Cassandra
+# brew "cassandra-reaper" # Management interface for Cassandra
+# brew "ccm" # Create and destroy an Apache Cassandra cluster on localhost
+# brew "cql-proxy" # DataStax cql-proxy enables Cassandra apps to use Astra DB without code changes
+# brew "cqlkit" # CLI tool to export Cassandra query as CSV and JSON format
+# brew "pillar" # Manage migrations for Cassandra data stores
 
 # brew "clickhouse" # column-oriented database
 # clickhouse-odbc: Official ODBC driver implementation for accessing ClickHouse as a data source
@@ -913,15 +927,53 @@ brew "levant" # templating and deployment tool for jobs
 # brew "meilisearch" # the winner - ultra relevant, instant and typo-tolerant, and has sample projects and 45k stars
 
 # also, elasticsearch
-# brew "solr" # best search indexer, schema-based by default, has rich query language, etc., but in Java
-# brew "sonic" # second-best Rust option - lightweight & schema-less search backend
+# brew "solr" # search platform from the Lucene project
+# brew "sonic" # fast, lightweight & schema-less search backend
 # also, swirl # supports retrieval (RAG), currently from Microsoft 365 or Postgres
+
+# brew "ack" # Search tool like grep, but optimized for programmers
+# brew "ast-grep" # Code searching, linting, rewriting
+# brew "aws-es-proxy" # Small proxy between HTTP client and AWS Elasticsearch
+# brew "carrot2" # Search results clustering engine
+# brew "clean" # Search for files matching a regex and delete them
+# brew "clucene" # C++ port of Lucene: high-performance, full-featured text search engine
+# brew "codequery" # Code-understanding, code-browsing or code-search tool
+# brew "dasht" # Search API docs offline, in your terminal or browser
+# brew "faiss" # Efficient similarity search and clustering of dense vectors
+# brew "filebeat" # File harvester to ship log files to Elasticsearch or Logstash
+# brew "fsql" # Search through your filesystem with SQL-esque queries
+# brew "groonga" # Fulltext search engine and column store
+# brew "gsar" # General Search And Replace on files
+# brew "hyperestraier" # Full-text search system for communities
+# brew "mairix" # Email index and search tool
+# brew "manticoresearch" # text search engine
+# brew "mysql-search-replace" # Database search and replace script
+# brew "notmuch" # Thread-based email index, search, and tagging
+# brew "omega" # Packaged search engine for websites, built on top of Xapian
+# brew "opensearch" # Open source distributed and RESTful search engine
+# brew "opensearch-dashboards" # Open source visualization dashboards for OpenSearch
+# brew "pazpar2" # Metasearching middleware webservice
+# brew "pdfgrep" # Search PDFs for strings matching a regular expression
+# brew "pgvector" # Open-source vector similarity search for Postgres
+# brew "ripgrep" # Search tool like grep and The Silver Searcher
+# brew "s-search" # Web search from the terminal
+# brew "sad" # CLI search and replace | Space Age seD
+# brew "serpl" # Simple terminal UI for search and replace
+# brew "sgrep" # Search SGML, XML, and HTML
+# brew "sphinx" # Full-text search engine
+# brew "the_platinum_searcher" # Multi-platform code-search similar to ack and ag
+# brew "the_silver_searcher" # Code-search similar to ack
+# brew "tinysearch" # Tiny, full-text search engine for static websites built with Rust and Wasm
+# brew "tokyo-dystopia" # Lightweight full-text search system
+# brew "tracker" # Library and daemon that is an efficient search engine and triplestore
+# brew "ucg" # Tool for searching large bodies of source code (like grep)
+# brew "ugrep" # Ultra fast grep with query UI, fuzzy search, archive search, and more
+# brew "weggli" # Fast and robust semantic search tool for C and C++ codebases
+# brew "zfind" # Search for files (even inside tar/zip/7z/rar) using an SQL-WHERE filter
+# brew "zinclabs/tap/zincsearch" # must tap zinclabs/tap first
 # also, tantivy
 # also, toshi
 # also, typesense
-
-# brew "manticoresearch"
-# brew "zinclabs/tap/zincsearch" # must tap zinclabs/tap first
 
 # Spark
 # brew "flintrock" # launches a Spark cluster
@@ -935,12 +987,12 @@ brew "levant" # templating and deployment tool for jobs
 # brew "sloth" # creates Prometheus SLOs
 
 # GraphQL
+brew "httpyac" # sends a REST, SOAP, GraphQL or gRPC request
+
 # brew "graphqlviz" # visualizes a GraphQL Server schema
 # brew "graphqxl" # language for creating a server-side schema
 # brew "postgraphile" # creates a GraphQL schema by doing reflection over a PostgreSQL schema (whatever that means)
 # quicktype: Generate types and converters from GraphQL (see JSON Schema section)
-
-brew "httpyac" # sends a REST, SOAP, GraphQL or gRPC request
 
 # brew "graphql-cli" # Tools
 # brew "graphqurl" # Curl for GraphQL with autocomplete, subscriptions and GraphiQL
@@ -1370,6 +1422,12 @@ brew "s3cmd" # client
 # brew "trailscraper" # Tool to get valuable information out of AWS CloudTrail
 # brew "yatas" # Tool to audit AWS/GCP infrastructure for misconfiguration or security issues
 
+# Azure
+# brew "azcopy" # Azure Storage data transfer utility
+# brew "aztfexport" # Bring your existing Azure resources under the management of Terraform
+# brew "azure-cli" # Microsoft Azure CLI 2.0
+# brew "azure-storage-cpp" # Microsoft Azure Storage Client Library for C++
+
 # Modern App Hosting Platforms
 brew "convox" # by former Heroku engineers - lacks nixpacks or buildpacks but can deploy Rails to Kubernetes
 brew "doctl" # buildpacks (old)
@@ -1500,8 +1558,9 @@ brew "wtfis" # Passive hostname, domain, and IP lookup tool
 # brew "massdns" # High-performance DNS stub resolver
 # brew "mergelog" # Merges httpd logs from web servers behind round-robin DNS
 # brew "nextdns" # CLI for NextDNS's DNS-over-HTTPS (DoH)
+# brew "uncover" # Tool to discover exposed hosts on the internet using multiple search engines
 
-# HTTP - API Server
+# HTTP API
 brew "autorest" # by Microsoft - converts an OpenAPI specification to client code
 brew "fern-api" # converts a Fern or OpenAPI specification to client code
 brew "tygo" # converts a Go JSON API to TypeScript type declarations for use in the frontend
@@ -1521,7 +1580,6 @@ brew "wiremock-standalone"
 # brew "swagger-codegen" # Generate clients, server stubs, and docs from an OpenAPI spec
 # brew "swagger2markup-cli" # Swagger to AsciiDoc or Markdown converter
 
-# HTTP - API Client
 brew "curl" # multi-protocol client
 brew "curlie" # power of curl, ease of use of httpie
 brew "h2c" # converts an HTTP request to curl – also has a web version
@@ -1539,15 +1597,161 @@ cask "rapidapi" # can generate client code
 # brew "resty" # shell script wrapper for curl – abandoned 7 years ago and conflicts with nss package
 # brew "wcurl" # Wrapper around curl to easily download files
 
-# stepci
-# API Testing and Monitoring made simple
-# https://stepci.com
+# brew "ain" # HTTP API client for the terminal
+# brew "algernon" # Pure Go web server with Lua, Markdown, HTTP/2 and template support
+# brew "ali" # Generate HTTP load and plot the results in real-time
+# brew "apib" # HTTP performance-testing tool
+# brew "arjun" # HTTP parameter discovery suite
+# brew "autocannon" # Fast HTTP/1.1 benchmarking tool written in Node.js
+# brew "aws-es-proxy" # Small proxy between HTTP client and AWS Elasticsearch
+# brew "bozohttpd" # Small and secure http version 1.1 server
+# brew "caddy" # Powerful, enterprise-ready, open source web server with automatic HTTPS
+# brew "cassowary" # Modern cross-platform HTTP load-testing tool written in Go
+# brew "certbot" # Tool to obtain certs from Let's Encrypt and autoenable HTTPS
+# brew "chisel-tunnel" # Fast TCP/UDP tunnel over HTTP
+# brew "cloudflare-quiche" # Savoury implementation of the QUIC transport protocol and HTTP/3
+# brew "condure" # HTTP/WebSocket connection manager
+# brew "connect" # Provides SOCKS and HTTPS proxy support to SSH
+# brew "corkscrew" # Tunnel SSH through HTTP proxies
+# brew "cpp-httplib" # C++ header-only HTTP/HTTPS server and client library
+# brew "curl" # Get a file from an HTTP, HTTPS or FTP server
+# brew "curlie" # Power of curl, ease of use of httpie
+# brew "darkhttpd" # Small static webserver without CGI
+# brew "davix" # Library and tools for advanced file I/O with HTTP-based protocols
+# brew "drill" # HTTP load testing application written in Rust
+# brew "fabio" # Zero-conf load balancing HTTP(S) router
+# brew "forbidden" # Bypass 4xx HTTP response status codes and more
+# brew "fortio" # HTTP and gRPC load testing and visualization tool and server
+# brew "gor" # Real-time HTTP traffic replay tool written in Go
+# brew "h2o" # HTTP server with support for HTTP/1.x and HTTP/2
+# brew "h2spec" # Conformance testing tool for HTTP/2 implementation
+# brew "haproxy" # Reliable, high performance TCP/HTTP load balancer
+# brew "haproxy@2.8" # Reliable, high performance TCP/HTTP load balancer
+# brew "hey" # HTTP load generator, ApacheBench (ab) replacement
+# brew "http-parser" # HTTP request/response parser for c
+# brew "http-prompt" # Interactive command-line HTTP client with autocomplete and syntax highlighting
+# brew "http-server" # Simple zero-configuration command-line HTTP server
+# brew "http_load" # Test throughput of a web server by running parallel fetches
+# brew "httpd" # Apache HTTP server
+# brew "httpdiff" # Compare two HTTP(S) responses
+# brew "httperf" # Tool for measuring webserver performance
+# brew "httpflow" # Packet capture and analysis utility similar to tcpdump for HTTP
+# brew "httpie" # User-friendly cURL replacement (command-line HTTP client)
+# brew "httping" # Ping-like tool for HTTP requests
+# brew "httpry" # Packet sniffer for displaying and logging HTTP traffic
+# brew "httpstat" # Curl statistics made simple
+# brew "httpx" # Fast and multi-purpose HTTP toolkit
+# brew "httpyac" # Quickly and easily send REST, SOAP, GraphQL and gRPC requests
+# brew "hurl" # Run and Test HTTP Requests with plain text and curl
+# brew "hz" # Golang HTTP framework for microservices
+# brew "jtbl" # Convert JSON and JSON Lines to terminal, CSV, HTTP, and markdown tables
+# brew "kiota" # OpenAPI based HTTP Client code generator
+# brew "lighttpd" # Small memory footprint, flexible web-server
+# brew "mergelog" # Merges httpd logs from web servers behind round-robin DNS
+# brew "mighttpd2" # HTTP server
+# brew "mockserver" # Mock HTTP server and proxy
+# brew "neon" # HTTP and WebDAV client library with a C interface
+# brew "nextdns" # CLI for NextDNS's DNS-over-HTTPS (DoH)
+# brew "nghttp2" # HTTP/2 C Library
+# brew "nginx" # HTTP(S) server and reverse proxy, and IMAP/POP3 proxy server
+# brew "nuclei" # HTTP/DNS scanner configurable via YAML templates
+# brew "oha" # HTTP load generator, inspired by rakyll/hey with tui animation
+# brew "pgrok" # Poor man's ngrok, multi-tenant HTTP/TCP reverse tunnel solution
+# brew "plow" # High-performance and real-time metrics displaying HTTP benchmarking tool
+# brew "proxify" # Portable proxy for capturing, manipulating, and replaying HTTP/HTTPS traffic
+# brew "proxygen" # Collection of C++ HTTP libraries
+# brew "proxytunnel" # Create TCP tunnels through HTTPS proxies
+# brew "python-requests" # Python HTTP for Humans
+# brew "python-urllib3" # HTTP library with thread-safe connection pooling, file post, and more
+# brew "req" # Simple and opinionated HTTP scripting language
+# brew "scm-manager" # Manage Git, Mercurial, and Subversion repos over HTTP
+# brew "serve" # Static http server anywhere you need one
+# brew "sftpgo" # Fully featured SFTP server with optional HTTP/S, FTP/S and WebDAV support
+# brew "shell2http" # Executing shell commands via HTTP server
+# brew "siege" # HTTP regression testing and benchmarking utility
+# brew "slowhttptest" # Simulates application layer denial of service attacks
+# brew "sproxy" # HTTP proxy server collecting URLs in a 'siege-friendly' manner
+# brew "squid" # Advanced proxy caching server for HTTP, HTTPS, FTP, and Gopher
+# brew "ssh3" # Faster and richer secure shell using HTTP/3
+# brew "stripe-mock" # Mock HTTP server that responds like the real Stripe API
+# brew "tinyproxy" # HTTP/HTTPS proxy for POSIX systems
+# brew "trafficserver" # HTTP/1.1 and HTTP/2 compliant caching proxy server
+# brew "tsung" # Load testing for HTTP, PostgreSQL, Jabber, and others
+# brew "ulfius" # HTTP Framework for REST Applications in C
+# brew "varnish" # High-performance HTTP accelerator
+# brew "vegeta" # HTTP load testing tool and library
+# brew "wbox" # HTTP testing tool and configuration-less HTTP server
+# brew "webdis" # Redis HTTP interface with JSON output
+# brew "webfs" # HTTP server for purely static content
+# brew "weighttp" # Webserver benchmarking tool that supports multithreading
+# brew "whistle" # HTTP, HTTP2, HTTPS, Websocket debugging proxy
+# brew "wiremock-standalone" # Simulator for HTTP-based APIs
+# brew "wrk" # HTTP benchmarking tool
+# brew "wstunnel" # Tunnel all your traffic over Websocket or HTTP2
+# brew "xh" # Friendly and fast tool for sending HTTP requests
+# brew "xmlrpc-c" # Lightweight RPC library (based on XML and HTTP)
+# brew "zurl" # HTTP and WebSocket client worker with ZeroMQ interface
 
-# Two Factor Authentication
+# brew "apidoc" # RESTful web API Documentation Generator
+# brew "autorest" # Swagger (OpenAPI) Specification code generator
+# brew "autorestic" # High level CLI utility for restic
+# brew "luajit-openresty" # OpenResty's Branch of LuaJIT 2
+# brew "mongo-orchestration" # REST API to manage MongoDB configurations on a single host
+# brew "postgrest" # Serves a fully RESTful API from any existing PostgreSQL database
+# brew "resty" # Command-line REST client that can be used in pipelines
+
+# brew "brpc" # Better RPC framework
+# brew "goctl" # Generates server-side and client-side code for web and RPC services
+# brew "ice" # Comprehensive RPC framework
+# brew "jsonrpc-glib" # GNOME library to communicate with JSON-RPC based peers
+# brew "kitex" # Golang RPC framework for microservices
+# brew "libjson-rpc-cpp" # C++ framework for json-rpc
+# brew "libtirpc" # Port of Sun's Transport-Independent RPC library to Linux
+# brew "rpcgen" # Protocol Compiler
+# brew "xmlrpc-c" # Lightweight RPC library (based on XML and HTTP)
+
+# brew "gowsdl" # WSDL2Go code generation as well as its SOAP proxy
+# brew "gsoap" # SOAP stub and skeleton compiler for C and C++
+
+# brew "apibuilder-cli" # Command-line interface to generate clients for api builder
+# brew "apify-cli" # Apify command-line interface
+# brew "asyncapi" # All in one CLI for all AsyncAPI tools
+# brew "bic" # C interpreter and API explorer
+# brew "create-api" # Delightful code generator for OpenAPI specs
+# brew "dasht" # Search API docs offline, in your terminal or browser
+# brew "docfx" # Tools for building and publishing API documentation for .NET projects
+# brew "drafter" # Native C/C++ API Blueprint Parser
+# brew "fern-api" # Stripe-level SDKs and Docs for your API
+# brew "glooctl" # Envoy-Powered API Gateway
+# brew "hoverfly" # API simulations for development and testing
+# brew "jsdoc3" # API documentation generator for JavaScript
+# brew "keploy" # Testing Toolkit creates test-cases and data mocks from API calls, DB queries
+# brew "krakend" # Ultra-High performance API Gateway built in Go
+# brew "openapi-generator" # Generate clients, server & docs from an OpenAPI spec (v2, v3)
+# brew "roapi" # Full-fledged APIs for static datasets without writing a single line of code
+# brew "spectral-cli" # JSON/YAML linter that supports OpenAPI 3 and AsyncAPI 2
+# brew "stepci" # API Testing and Monitoring made simple
+# brew "swagger-codegen" # Generate clients, server stubs, and docs from an OpenAPI spec
+
+brew "apprise" # very useful for sending notifications and triggering webhooks to popular notification services
+brew "webhook" # lightweight incoming webhook server
+
+brew "websocat" # command-line client for WebSockets
+brew "websocketd" # turns any command-line program into a websocket server
+# brew "anycable-go" # WebSocket server with action cable protocol
+# brew "condure" # HTTP/WebSocket connection manager
+# brew "nopoll" # open-source C WebSocket toolkit
+# brew "tcpkali" # High performance TCP and WebSocket load generator and sink
+# brew "whistle" # HTTP, HTTP2, HTTPS, Websocket debugging proxy
+# brew "wstunnel" # Tunnel all your traffic over Websocket or HTTP2
+# brew "zurl" # HTTP and WebSocket client worker with ZeroMQ interface
+
+# Two-Factor Authentication
 brew "cotp" # TOTP/HOTP authenticator app with import functionality
 brew "duo_unix" # by Duo - two-factor authentication for SSH
 brew "pass-otp" # Pass extension for managing one-time-password tokens
 brew "rsc_2fa" # by Russ Cox - Two-factor authentication on the command-line
+brew "tailscale" # easiest way to use WireGuard and 2FA
 brew "totp-cli" # Authy/Google Authenticator like TOTP CLI tool written in Go
 # brew "google-authenticator-libpam" # PAM module for two-factor authentication
 
@@ -1587,21 +1791,6 @@ brew "gimme-aws-creds" # retrieves AWS credentials from Okta
 # brew "findomain" # fastest complete solution for finding domains
 # brew "httpx" # by Project Discovery - HTTP scan tool
 # brew "openfga" # nice open-source website - flexible authorization/permission engine
-
-# HTTP - Webhooks
-brew "apprise" # very useful for sending notifications and triggering webhooks to popular notification services
-brew "webhook" # lightweight incoming webhook server
-
-# HTTP - WebSocket
-brew "websocat" # command-line client for WebSockets
-brew "websocketd" # turns any command-line program into a websocket server
-# brew "anycable-go" # WebSocket server with action cable protocol
-# brew "condure" # HTTP/WebSocket connection manager
-# brew "nopoll" # open-source C WebSocket toolkit
-# brew "tcpkali" # High performance TCP and WebSocket load generator and sink
-# brew "whistle" # HTTP, HTTP2, HTTPS, Websocket debugging proxy
-# brew "wstunnel" # Tunnel all your traffic over Websocket or HTTP2
-# brew "zurl" # HTTP and WebSocket client worker with ZeroMQ interface
 
 # Certificates
 brew "certbot" # tool to obtain certs from Let's Encrypt and autoenable HTTPS
@@ -1816,49 +2005,173 @@ brew "arping"
 brew "cdpr" # cisco discovery protocol reporter
 
 # Packet Captures
-brew "tcpdump"
+brew "tcpdump" # packet analyzer
 brew "yaf" # really useful networking data pipeline architecture and flow record display tool
-cask "wireshark"
-# brew "argus" # tcpdump alternative that has shows TCP state for each line such as CON FIN RST, or flow records whatever
+cask "wireshark" # network analyzer and capture tool - command line interface
+# brew "argus" # tcpdump alternative that shows TCP state for each line such as CON FIN RST, or flow records whatever
 # brew "argus-clients"
-# brew "pywhat" # can identify some things in a pcap file
+
+# brew "bittwist" # Libcap-based Ethernet packet generator
+# brew "daemonlogger" # Network packet logger and soft tap daemon
+# brew "httpflow" # Packet capture and analysis utility similar to tcpdump for HTTP
+# brew "httpry" # Packet sniffer for displaying and logging HTTP traffic
+# brew "ndpi" # Deep Packet Inspection (DPI) library
+# brew "packetbeat" # Lightweight Shipper for Network Data
+# brew "packetq" # SQL-like frontend to PCAP files
+# brew "pcapplusplus" # C++ network sniffing, packet parsing and crafting framework
+# brew "pktanon" # Packet trace anonymization
+# brew "pywhat" # Can identify some things in a pcap file
+# brew "sniffglue" # Secure multithreaded packet sniffer
+
+# brew "fprobe" # Libpcap-based NetFlow probe
+# brew "libpcap" # Portable library for network traffic capture
+# brew "packetq" # SQL-like frontend to PCAP files
+# brew "pcapplusplus" # C++ network sniffing, packet parsing and crafting framework
+# brew "yaf" # Yet another flowmeter: processes packet data from pcap(3)
 
 # Shell
-brew "argc"
+brew "argc" # needed to create autocompletions
 brew "asdf"
-brew "direnv" # sets and unsets environment variables per directory
-brew "pure" # by Sindre Sorhus
-brew "zsh"
-brew "zsh-autocomplete"
-brew "zsh-autopair"
-brew "zsh-autosuggestions"
-brew "zsh-syntax-highlighting"
+brew "direnv" # sets/unsets environment variables per-directory
+brew "pure" # pretty, minimal and fast zsh prompt (by Sindre Sorhus)
+brew "zsh" # UNIX shell (command interpreter)
+brew "zsh-autocomplete" # real-time, type-ahead completion for Zsh
+brew "zsh-autopair" # auto-closes and deletes matching delimiters in zsh
+brew "zsh-autosuggestions" # fast/unobtrusive autosuggestions for zsh (like Fish)
+brew "zsh-syntax-highlighting" # syntax highlighting for zsh (like Fish)
 
 brew "chalk-cli" # colorizes teminal text (by Sindre Sorhus)
 brew "shellcheck" # checks a shell script
 brew "shellspec" # unit testing framework
-brew "shelltestrunner" # portable command-line tool for testing command-line programs
+brew "shelltestrunner" # tests command-line programs
 brew "shfmt" # formats a shell script
 
-# brew "clitest"
-# brew "gum" tool for glamorous shell scripts
+# brew "antidote" # Plugin manager for zsh, inspired by antigen and antibody
+# brew "antigen" # Plugin manager for zsh, inspired by oh-my-zsh and vundle
+# brew "atuin" # Improved shell history for zsh, bash, fish and nushell
+# brew "fizsh" # Fish-like front end for ZSH
+# brew "geometry" # Minimal, fully customizable and composable zsh prompt theme
+# brew "hstr" # Bash and zsh history suggest box
+# brew "kube-ps1" # Kubernetes prompt info for bash and zsh
+# brew "liquidprompt" # Adaptive prompt for bash and zsh shells
+# brew "powerlevel10k" # Theme for zsh
+# brew "pure" # Pretty, minimal and fast ZSH prompt
+# brew "purr" # Versatile zsh CLI tool for viewing and searching through Android logcat output
+# brew "shellspec" # BDD unit testing framework for dash, bash, ksh, zsh and all POSIX shells
+# brew "spaceship" # Zsh prompt for Astronauts
+# brew "typewritten" # Minimal zsh prompt
+# brew "zinit" # Flexible and fast Zsh plugin manager
+# brew "zplug" # Next-generation plugin manager for zsh
+# brew "zsh-async" # Perform tasks asynchronously without external tools
+# brew "zsh-fast-syntax-highlighting" # Feature-rich syntax highlighting for Zsh
+# brew "zsh-git-prompt" # Informative git prompt for zsh
+# brew "zsh-history-substring-search" # Zsh port of Fish shell's history search
+# brew "zsh-lovers" # Tips, tricks, and examples for zsh
+# brew "zsh-navigation-tools" # Zsh curses-based tools, e.g. multi-word history searcher
+# brew "zshdb" # Debugger for zsh
+
+# brew "argc" # Helps create autocompletions
+# brew "bash" # Bourne-Again SHell, a UNIX command interpreter
+# brew "bash-preexec" # Preexec and precmd functions for Bash (like Zsh)
+# brew "bash-snippets" # Collection of small bash scripts for heavy terminal users
+# brew "bash_unit" # Bash unit testing enterprise edition framework for professionals
+# brew "bashate" # Code style enforcement for bash programs
+# brew "bashdb" # Bash shell debugger
+# brew "bashunit" # Simple testing library for bash scripts
+# brew "bat-extras" # Bash scripts that integrate bat with various command-line tools
+# brew "bats-core" # Bash Automated Testing System
+# brew "bork" # Bash-Operated Reconciling Kludge
+# brew "checkbashisms" # Checks for bashisms in shell scripts
+# brew "dhall-bash" # Compile Dhall to Bash
+# brew "fff" # Simple file manager written in bash
+# brew "git-secret" # Bash-tool to store private data inside a git repo
+# brew "goto" # Bash tool for navigation to aliased directories with auto-completion
+# brew "homeshick" # Git dotfiles synchronizer written in bash
+# brew "oil" # Bash-compatible Unix shell with more consistent syntax and semantics
+# brew "oils-for-unix" # Bash-compatible Unix shell with more consistent syntax and semantics
+# brew "xcv" # Cut, copy and paste files with Bash
+
+# brew "aardvark_shell_utils" # Utilities to aid shell scripts or command-line users
+# brew "autoenv" # Per-project, per-directory shell environments
+# brew "bar" # Provide progress bars for shell scripts
+# brew "beakerlib" # Shell-level integration testing library
+# brew "clitest" # command-line tester
+# brew "create-dmg" # Shell script to build fancy DMGs
+# brew "dash" # POSIX-compliant descendant of NetBSD's ash (the Almquist SHell)
+# brew "dehydrated" # LetsEncrypt/acme client implemented as a shell-script
+# brew "desk" # Lightweight workspace manager for the shell
+# brew "dialog" # Display user-friendly message boxes from shell scripts
+# brew "doitlive" # Replay stored shell commands for live presentations
+# brew "dsh" # Dancer's shell, or distributed shell
+# brew "elvish" # Friendly and expressive shell
+# brew "empty" # Lightweight Expect-like PTY tool for shell scripts
+# brew "envv" # Shell-independent handling of environment variables
+# brew "fswatch" # Monitor a directory for changes and run a shell command
+# brew "gitlab-ci-local" # Run gitlab pipelines locally as shell executor or docker executor
+# brew "gum" # Tool for glamorous shell scripts
+# brew "historian" # Command-line utility for managing shell history in a SQLite database
+# brew "jo" # JSON output from a shell
+# brew "kcov" # Code coverage tester for compiled programs, Python, and shell scripts
 # brew "m-cli" # macOS shell scripts
-# brew "nushell" # very advanced shell
-# brew "powershell" # advanced but bloated
-# brew "shellcheck"
-# brew "starship" # prompt that works on Windows
-# brew "xonsh" # advanced shell
-# brew "xxh" # tool to ssh and bring your shell - useful, assuming it works
-# brew "zx" # new shell
-# Also, ora on npm by Sindre Sorhus - elegant terminal progress spinner
+# brew "mcfly" # Fly through your shell history
+# brew "mdsh" # Markdown shell pre-processor
+# brew "murex" # Bash-like shell designed for greater command-line productivity and safer scripts
+# brew "ngs" # Powerful programming language and shell designed specifically for Ops
+# brew "nushell" # Modern shell for the GitHub era
+# brew "objc-run" # Use Objective-C files for shell script-like tasks
+# brew "parallel" # Shell command parallelization utility
+# brew "posh" # Policy-compliant ordinary shell
+# brew "powerline-go" # Beautiful and useful low-latency prompt for your shell
+# brew "ppss" # Shell script to execute commands in parallel
+# brew "pueue" # Command-line tool for managing long-running shell commands
+# brew "rc" # Implementation of the AT&T Plan 9 shell
+# brew "sampler" # Tool for shell commands execution, visualization and alerting
+# brew "shc" # Shell Script Compiler
+# brew "sheldon" # Fast, configurable, shell plugin manager
+# brew "shell2http" # Executing shell commands via HTTP server
+# brew "shellharden" # Bash syntax highlighter that encourages/fixes variables quoting
+# brew "shellinabox" # Export command-line tools to web based terminal emulator
+# brew "shellshare" # Live Terminal Broadcast
+# brew "shelltestrunner" # Portable command-line tool for testing command-line programs
+# brew "shellz" # Small utility to track and control custom shellz
+# brew "shfmt" # Autoformat shell script source code
+# brew "shunit2" # Unit testing framework for Bourne-based shell scripts
+# brew "spark" # Sparklines for the shell
+# brew "starship" # Cross-shell prompt for astronauts
+# brew "tzdiff" # Displays Timezone differences with localtime in CLI (shell script)
+# brew "wait_on" # Provides shell scripts with access to kqueue(3)
+# brew "webify" # Wrapper for shell commands as web services
+# brew "xonsh" # Python-powered, cross-platform, Unix-gazing shell language and command prompt
+# brew "xxh" # Bring your favorite shell wherever you go through the ssh
+# brew "zx" # tool for writing better scripts
+# Also, ora on npm - elegant terminal progress spinner (by Sindre Sorhus)
 
-# shell2http
-# Executing shell commands via HTTP server
-# https://github.com/msoap/shell2http
+# Perl
+brew "perl" # Highly capable, feature-rich programming language
 
-# shellinabox
-# Export command-line tools to web based terminal emulator
-# https://github.com/shellinabox/shellinabox
+# brew "carton" # Perl module dependency manager (aka Bundler for Perl)
+# brew "chcase" # Perl file-renaming script
+# brew "clean" # Search for files matching a regex and delete them
+# brew "cpanminus" # Get, unpack, build, and install modules from CPAN
+# brew "cpansearch" # CPAN module search written in C
+# brew "cpm" # Fast CPAN module installer
+# brew "extract_url" # Perl script to extracts URLs from emails or plain text
+# brew "grex" # Command-line tool for generating regular expressions
+# brew "grok" # DRY and RAD for regular expressions and then some
+# brew "melody" # Language that compiles to regular expressions
+# brew "pdfgrep" # Search PDFs for strings matching a regular expression
+# brew "perl-build" # Perl builder
+# brew "perltidy" # Perl formatter
+# brew "platypus" # Create macOS applications from {Perl,Ruby,sh,Python} scripts
+# brew "pod2man" # Perl documentation generator
+# brew "pomsky" # Regular expression language
+# brew "re2c" # Generate C-based recognizers from regular expressions
+# brew "regex-opt" # Perl-compatible regular expression optimizer
+# brew "regex-opt" # Perl-compatible regular expression optimizer
+# brew "regldg" # Regular expression grammar language dictionary generator
+# brew "rename" # Perl-powered file rename script with many helpful built-ins
+# brew "rgxg" # C library and command-line tool to generate (extended) regular expressions
+# brew "superlu" # Solve large, sparse nonsymmetric systems of equations
 
 # Utilities
 brew "align"
@@ -1926,8 +2239,92 @@ brew "go"
 brew "goreleaser" # publishes on Homebrew
 brew "nfpm" # creates a Debian or Red Hat package
 
-brew "cargo-binstall" # installs pre-compiled Rust packages instead of compiling
-brew "rust"
+# brew "counterfeiter" # Tool for generating self-contained, type-safe test doubles in go
+# brew "cxgo" # Transpiling C to Go
+# brew "cyclonedx-gomod" # Creates CycloneDX Software Bill of Materials (SBOM) from Go modules
+# brew "delve" # Debugger for the Go programming language
+# brew "garble" # Obfuscate Go builds
+# brew "gdm" # Go Dependency Manager (gdm)
+# brew "glide" # Simplified Go project management, dependency management, and vendoring
+# brew "go" # Open source programming language to build simple/reliable/efficient software
+# brew "go-bindata" # Small utility that generates Go code from any file
+# brew "go-boring" # Go programming language with BoringCrypto
+# brew "go-critic" # Opinionated Go source code linter
+# brew "go-feature-flag-relay-proxy" # Stand alone server to run GO Feature Flag
+# brew "go-size-analyzer" # Analyzing the dependencies in compiled Golang binaries
+# brew "go-statik" # Embed files into a Go executable
+# brew "go-task" # Task is a task runner/build tool that aims to be simpler and easier to use
+# brew "gofumpt" # Stricter gofmt
+# brew "gokart" # Static code analysis for securing Go code
+# brew "gokey" # Simple vaultless password manager in Go
+# brew "golangci-lint" # Fast linters runner for Go
+# brew "golines" # Golang formatter that fixes long lines
+# brew "gomodifytags" # Go tool to modify struct field tags
+# brew "gomplate" # Command-line Golang template processor
+# brew "goproxy" # Global proxy for Go modules
+# brew "gops" # Tool to list and diagnose Go processes currently running on your system
+# brew "goreleaser" # Deliver Go binaries as fast and easily as possible
+# brew "goreman" # Foreman clone written in Go
+# brew "goresym" # Go symbol recovery tool
+# brew "gosec" # Golang security checker
+# brew "gotags" # Tag generator for Go, compatible with ctags
+# brew "gotests" # Automatically generate Go test boilerplate from your source code
+# brew "gotestsum" # Human friendly `go test` runner
+# brew "gotify" # Command-line interface for pushing messages to gotify/server
+# brew "govulncheck" # Database client and tools for the Go vulnerability database
+# brew "gowsdl" # WSDL2Go code generation as well as its SOAP proxy
+# brew "gox" # Go cross compile tool
+# brew "gpm" # Barebones dependency manager for Go
+# brew "gx-go" # Tool to use with the gx package manager for packages written in go
+# brew "hotbuild" # Cross platform hot compilation tool for go
+# brew "llgo" # Go compiler based on LLVM integrate with the C ecosystem and Python
+# brew "lunchy-go" # Friendly wrapper for launchctl
+# brew "mockery" # Mock code autogenerator for Golang
+# brew "packr" # Easy way to embed static files into Go binaries
+# brew "pkg-config-wrapper" # Easier way to include C code in your Go program
+# brew "pkger" # Embed static files in Go binaries (replacement for gobuffalo/packr)
+# brew "redress" # Tool for analyzing stripped Go binaries compiled with the Go compiler
+# brew "regula" # Checks infrastructure as code templates using Open Policy Agent/Rego
+# brew "revive" # Fast, configurable, extensible, flexible, and beautiful linter for Go
+# brew "richgo" # Enrich `go test` outputs with text decorations
+# brew "risor" # Fast and flexible scripting for Go developers and DevOps
+# brew "spdx-sbom-generator" # Support CI generation of SBOMs via golang tooling
+# brew "sqlboiler" # Generate a Go ORM tailored to your database schema
+# brew "sqlc" # Generate type safe Go from SQL
+# brew "staticcheck" # State of the art linter for the Go programming language
+# brew "stuffbin" # Compress and embed static files and assets into Go binaries
+# brew "tengo" # Fast script language for Go
+# brew "tygo" # Generate Typescript types from Golang source code
+# brew "vulsio-gost" # Local CVE tracker & notification system
+# brew "yaegi" # Yet another elegant Go interpreter
+
+# brew "bacon" # Background rust code check
+# brew "bindgen" # Automatically generates Rust FFI bindings to C (and some C++) libraries
+# brew "c2rust" # Migrate C code to Rust
+# brew "cargo-auditable" # Make production Rust binaries auditable
+# brew "cargo-binstall" # Binary installation for rust projects
+# brew "cargo-binutils" # Cargo subcommands to invoke the LLVM tools shipped with the Rust toolchain
+# brew "cargo-bundle" # Wrap rust executables in OS-specific app bundles
+# brew "cargo-deps" # Cargo subcommand to building dependency graphs of Rust projects
+# brew "cargo-docset" # Cargo subcommand to generate a Dash/Zeal docset for your Rust packages
+# brew "cargo-instruments" # Easily generate Instruments traces for your rust crate
+# brew "cargo-make" # Rust task runner and build tool
+# brew "cargo-nextest" # Next-generation test runner for Rust
+# brew "cargo-outdated" # Cargo subcommand for displaying when Rust dependencies are out of date
+# brew "cargo-release" # Cargo subcommand `release`: everything about releasing a rust crate
+# brew "cbindgen" # Project for generating C bindings from Rust code
+# brew "corrosion" # Easy Rust and C/C++ Integration
+# brew "maturin" # Build and publish Rust crates as Python packages
+# brew "rure" # C API for RUst's REgex engine
+# brew "rust" # Safe, concurrent, practical language
+# brew "rust-analyzer" # Experimental Rust compiler front-end for IDEs
+# brew "rust-parallel" # Run commands in parallel with Rust's Tokio framework
+# brew "rustfmt" # Format Rust code
+# brew "rustls-ffi" # FFI bindings for the rustls TLS library
+# brew "rustup" # Rust toolchain installer
+# brew "uftrace" # Function graph tracer for C/C++/Rust
+# brew "wasm-pack" # Your favorite rust -> wasm workflow tool
+# brew "wasm-tools" # Low level tooling for WebAssembly in Rust
 
 brew "pipx"
 brew "python"
@@ -1945,9 +2342,6 @@ cask "miniconda"
 brew "ruby"
 # rubocop
 # rufo
-
-brew "perl"
-# File::Rename
 
 brew "mint" # package manager for Swift
 # brew "chisel" # by Facebook - collection of LLDB commands
@@ -2033,7 +2427,24 @@ cask "dotnet-sdk" # runtime and compiler
 # brew "erlang"
 # brew "elixir"
 
+# brew "bear" # Generate compilation database for clang tooling
+# brew "cargo-binutils" # Cargo subcommands to invoke the LLVM tools shipped with the Rust toolchain
+# brew "cargo-llvm-cov" # Cargo subcommand to easily use LLVM source-based code coverage
+# brew "cargo-llvm-lines" # Count lines of LLVM IR per generic function
+# brew "clang-build-analyzer" # Tool to analyze compilation time
+# brew "clang-format" # Formatting tools for C, C++, Obj-C, Java, JavaScript, TypeScript
+# brew "clang-uml" # Customizable automatic UML diagram generator for C++ based on Clang
+# brew "clangql" # Run a SQL like language to perform queries on C/C++ files
 # brew "conan" # Package manager
+# brew "emscripten" # LLVM bytecode to JavaScript compiler
+# brew "enzyme" # High-performance automatic differentiation of LLVM
+# brew "lit" # Portable tool for LLVM- and Clang-style test suites
+# brew "llgo" # Go compiler based on LLVM integrate with the C ecosystem and Python
+# brew "llvm" # Next-gen compiler infrastructure
+# brew "retdec" # Retargetable machine-code decompiler based on LLVM
+# brew "rtags" # Source code cross-referencer like ctags with a clang frontend
+# brew "spirv-llvm-translator" # Tool and a library for bi-directional translation between SPIR-V and LLVM IR
+# brew "wllvm" # Toolkit for building whole-program LLVM bitcode files
 
 # brew "autoconf" # Automatic configure script builder
 # brew "automake" # Tool for generating GNU Standards-compliant Makefiles
@@ -2061,24 +2472,6 @@ cask "dotnet-sdk" # runtime and compiler
 # brew "remake" # GNU Make with improved error handling, tracing, and a debugger
 # brew "scons" # Substitute for classic 'make' tool with autoconf/automake functionality
 # brew "smake" # Portable make program with automake features
-
-# brew "bear" # Generate compilation database for clang tooling
-# brew "cargo-binutils" # Cargo subcommands to invoke the LLVM tools shipped with the Rust toolchain
-# brew "cargo-llvm-cov" # Cargo subcommand to easily use LLVM source-based code coverage
-# brew "cargo-llvm-lines" # Count lines of LLVM IR per generic function
-# brew "clang-build-analyzer" # Tool to analyze compilation time
-# brew "clang-format" # Formatting tools for C, C++, Obj-C, Java, JavaScript, TypeScript
-# brew "clang-uml" # Customizable automatic UML diagram generator for C++ based on Clang
-# brew "clangql" # Run a SQL like language to perform queries on C/C++ files
-# brew "emscripten" # LLVM bytecode to JavaScript compiler
-# brew "enzyme" # High-performance automatic differentiation of LLVM
-# brew "lit" # Portable tool for LLVM- and Clang-style test suites
-# brew "llgo" # Go compiler based on LLVM integrate with the C ecosystem and Python
-# brew "llvm" # Next-gen compiler infrastructure
-# brew "retdec" # Retargetable machine-code decompiler based on LLVM
-# brew "rtags" # Source code cross-referencer like ctags with a clang frontend
-# brew "spirv-llvm-translator" # Tool and a library for bi-directional translation between SPIR-V and LLVM IR
-# brew "wllvm" # Toolkit for building whole-program LLVM bitcode files
 
 # Lightweight Formal Methods
 
@@ -2253,10 +2646,6 @@ vscode "yoavbls.pretty-ts-errors"
 
 ## Non-triaged Whatever
 
-# karmadactl
-# CLI for Karmada control plane
-# https://karmada.io/
-
 # katana
 # Crawling and spidering framework
 # https://github.com/projectdiscovery/katana
@@ -2280,14 +2669,6 @@ vscode "yoavbls.pretty-ts-errors"
 # kitchen-sync
 # Fast efficiently sync database without dumping & reloading
 # https://github.com/willbryant/kitchen_sync
-
-# kitex
-# Golang RPC framework for microservices
-# https://github.com/cloudwego/kitex
-
-# kn
-# Command-line interface for managing Knative Serving and Eventing resources
-# https://github.com/knative/client
 
 # ld-find-code-refs
 # Build tool for sending feature flag code references to LaunchDarkly
@@ -2321,10 +2702,6 @@ vscode "yoavbls.pretty-ts-errors"
 # Command-line utility to interact with linkerd
 # https://linkerd.io
 
-# liqoctl
-# Is a CLI tool to install and manage Liqo-enabled clusters
-# https://liqo.io
-
 # liquibase
 # Library for database change tracking
 # https://www.liquibase.org/
@@ -2332,10 +2709,6 @@ vscode "yoavbls.pretty-ts-errors"
 # litani
 # Metabuild system
 # https://awslabs.github.io/aws-build-accumulator/
-
-# litecli
-# CLI for SQLite Databases with auto-completion and syntax highlighting
-# https://github.com/dbcli/litecli
 
 # literate-git
 # Render hierarchical git repositories into HTML
@@ -2468,10 +2841,6 @@ vscode "yoavbls.pretty-ts-errors"
 # megatools
 # Command-line client for Mega.co.nz
 # https://megatools.megous.com/
-
-# microplane
-# CLI tool to make git changes across many repos
-# https://github.com/Clever/microplane
 
 # mimalloc
 # Compact general purpose allocator
@@ -2692,10 +3061,6 @@ vscode "yoavbls.pretty-ts-errors"
 # opa
 # Open source, general-purpose policy engine
 # https://www.openpolicyagent.org
-
-# openshift-cli
-# OpenShift command-line interface tools
-# https://www.openshift.com/
 
 # oras
 # OCI Registry As Storage

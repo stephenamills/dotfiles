@@ -1480,28 +1480,58 @@ brew "plantuml" # creates super ugly diagrams but has been maintained for a whil
 # brew "umlet"
 
 # Image Processing
-brew "fileicon" # sets a macOS folder or file icon
+brew "agg" # converts an Asciicast to GIF
+brew "asciinema" # creates an Asciicast screen recording file
+brew "gifify" # converts a screen recording to a GIF
+brew "gifski" # good for Dribble - converts a video into the highest quality GIF (large file size)
+brew "vhs" # creates a terminal session GIF
+
+brew "gif2png" # Convert GIFs to PNGs
+brew "giflib" # Library and utilities for processing GIFs
+brew "gifsicle" # GIF image/animation creator/editor
+brew "t-rec" # Blazingly fast terminal recorder that generates animated gif images for the web
+
+brew "fileicon" # sets the icon of a folder or file on macOS (used by iconsur)
 brew "folderify" # creates a pixel-perfect custom macOS folder icon
-brew "iconsur" # creates a macOS app icon from an image
-# brew "swiftdraw" # converts an SVG file into a PNG or SF Symbol, automatically sizing and aligning the content to template guides
+brew "iconsur" # converts an image into a macOS app icon
+
+# brew "favirecon" # Uses favicon.ico to improve the target recon phase
+# brew "fileicon" # macOS CLI for managing custom icons for files and folders
+# brew "folderify" # Generate pixel-perfect macOS folder icons in the native style
+# brew "icon-naming-utils" # Script to handle icon names in desktop icon themes
+# brew "iconsur" # macOS Big Sur Adaptive Icon Generator
+# brew "icoutils" # Create and extract MS Windows icons and cursors
+# brew "png2ico" # PNG to icon converter
+# brew "setweblocthumb" # Assigns custom icons to webloc files
 # also, icnsify on pkg.go.dev # converts a PNG to an ICNS file
 
-brew "agg"  # converts an Asciicast screen recording video to GIF
-brew "asciinema" # creates an Asciicast file
 brew "caire" # resizes an image in an advanced content-aware way
 brew "ffmpeg" # extracts an image from a video
-brew "gifify" # converts a screen recording to a GIF (shell script)
-brew "gifski" # converts a video to a very high quality GIF (large file size, but good for Dribble)
 brew "imagemagick" # image conversion
-brew "vhs" # creates a terminal session GIF
 brew "viu" # view high-resolution images in the terminal
+
 # brew "imgdiet" # optimizes an image using libvips
-# brew "imgdiff" # compares images
+# brew "imgdiff" # compares two images
 # brew "imageoptim" # converts a gif to a video
 # brew "imgproxy" # resizes and converts images on the fly
 # brew "setweblocthumb" # creates website screenshot icon
 # brew "timg" # terminal image viewer
 # brew "triangle" # converts an image to computer-generated art using Delaunay triangulation
+
+# brew "autotrace" # Convert a bitmap to vector graphics
+# brew "batik" # Java-based toolkit for SVG images
+# brew "pdf2svg" # PDF converter to SVG
+# brew "potrace" # Convert bitmaps to vector graphics
+# brew "pstoedit" # Convert PostScript and PDF files to editable vector graphics
+# brew "resvg" # SVG rendering tool and library
+# brew "scour" # SVG file scrubber
+# brew "svg2pdf" # Renders SVG images to a PDF file (using Cairo)
+# brew "svg2png" # SVG to PNG converter
+# brew "svgbob" # Convert your ascii diagram scribbles into happy little SVG
+# brew "svgo" # Nodejs-based tool for optimizing SVG vector graphics files
+# brew "svgo" # Nodejs-based tool for optimizing SVG vector graphics files
+# brew "swiftdraw" # Convert SVG into PDF, PNG, JPEG or SF Symbol
+# cask "inkscape" # Vector graphics editor (has commands)
 
 # Networking - Application
 
@@ -2199,7 +2229,7 @@ brew "trurl" # by curl team - tr for URLs
 brew "uni" # search unicode and emoji database
 brew "usage" # specification for CLIs
 brew "viddy" # better watch command
-brew "watch"
+brew "watch" # # runs a program periodically, its showing output
 brew "watchexec" # watches files and triggers actions
 brew "wcurl"
 brew "xe" # xargs replacement
@@ -2419,9 +2449,9 @@ brew "php"
 # brew "spring-loaded" # Java agent to enable class reloading in a running JVM
 # brew "vert.x" # Toolkit for building reactive applications on the JVM
 
-brew "nuget" # package installer
+brew "nuget" # package manager
 cask "dotnet-sdk" # runtime and compiler
-# brew "cake" # package installer
+# brew "cake" # package manager
 # brew "paket" # package installer
 
 # brew "erlang"

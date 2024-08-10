@@ -441,11 +441,6 @@ brew "vsh" # community-created shell for Vault
 # brew "vifm" # Ncurses-based file manager with vi-like keybindings
 # brew "vimpc" # Ncurses based mpd client with vi like key bindings
 # brew "voldemort" # Distributed key-value storage system
-# brew "xcb-util-keysyms" # Standard X constants and conversion to/from keycodes
-# brew "xdotool" # Fake keyboard/mouse input and window management for X
-# brew "xkbcomp" # XKB keyboard description compiler
-# brew "xkeyboardconfig" # Keyboard configuration database for the X Window System
-# brew "xmodmap" # Modify keymaps and pointer button mappings in X
 # brew "ykman" # Tool for managing your YubiKey configuration
 # brew "ykpers" # YubiKey personalization library and tool
 # brew "yubico-piv-tool" # Command-line tool for the YubiKey PIV application

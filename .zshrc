@@ -68,10 +68,6 @@ gb() {
   xargs -n 1 -P 8 hub browse <<<$@
 }
 
-gi() {
-  xargs -n 1 -P 8 gh <<<$@
-}
-
 # Load the Google Cloud SDK – it's too bloated to load everytime the shell starts
 gcloud() {
   # Check if Google Cloud SDK is installed

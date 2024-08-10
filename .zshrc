@@ -102,11 +102,14 @@ ghissueb() {
   gh search issues -R $repo $@ | awk '{ print $2 }' | xargs -I {} gh issue view -R $repo {} -w
 }
 
-# Open a GitHub issue in the browser
+# Open multiple GitHub issues in the browser
+# Must be invoked as ghib <repo> <issue1> <issue2> ...
 ghib() {
   repo=$1
   shift # This shifts the positional parameters to the left, so $2 becomes $1, $3 becomes $2, etc. Zero clue what that actually means.
-  echo "$@" | xargs -n 1 -P 8 -I {} gh issue view -R "$repo" {} -w
+  for issue in "$@"; do
+    open "https://github.com/$repo/issues/$issue"
+  done
 }
 
 # Search for GitHub repositories and opens them in the browser

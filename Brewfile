@@ -2252,18 +2252,63 @@ brew "xidel" # super useful for reading web pages I think
 # https://steampipe.io/
 
 # Programming
-brew "corepack"
-brew "deno"
-brew "node@20"
-# eslint-config-prettier
-# eslint-plugin-tailwindcss
-# typescript-eslint
+brew "corepack" # Installs a package manager that is not npm, such as pnpm or yarn
+brew "deno" # Run JavaScript code outside of a browser
+brew "node" # Platform built on V8 to build network applications
+brew "node@20" # Run JavaScript code outside of a browser
+# also, np on npm - a better npm publish (by Sindre Sorhus)
+
+# brew "json2ts" # Compile JSONSchema to TypeScript type declarations
+# brew "roblox-ts" # TypeScript-to-Luau Compiler for Roblox
+# brew "tygo" # Generate Typescript types from Golang source code
+# brew "typescript" # Language for application scale JavaScript development
+
+# brew "babel" # Compiler for writing next generation JavaScript
+# brew "biome" # Toolchain of the web
+# brew "closure-compiler" # JavaScript optimizing compiler
+# brew "cubejs-cli" # Cube.js command-line interface
+# brew "emscripten" # LLVM bytecode to JavaScript compiler
+# brew "esbuild" # Extremely fast JavaScript bundler and minifier
+# brew "eslint" # AST-based pattern checker for JavaScript
+# brew "flamebearer" # creates a flamegraph for a JavaScript app from a terminal – also has a web UI
+# brew "flow" # Static type checker for JavaScript
+# brew "imagejs" # Tool to hide JavaScript inside valid image files
+# brew "jose" # C-language implementation of Javascript Object Signing and Encryption
+# brew "jsdoc3" # API documentation generator for JavaScript
+# brew "jsmin" # Minify JavaScript code
+# brew "kuto" # Reverse JS bundler
+# brew "lerna" # Tool for managing JavaScript projects with multiple packages
+# brew "mantra" # Tool to hunt down API key leaks in JS files and pages
+# brew "mjml" # JavaScript framework that makes responsive-email easy
+# brew "pmd" # Source code analyzer for Java, JavaScript, and more
+# brew "prettier" # Code formatter for JavaScript, CSS, JSON, GraphQL, and Markdown
+# brew "protoc-gen-js" # Protocol buffers JavaScript generator plugin
+# brew "protoc-gen-js" # Protocol buffers JavaScript generator plugin
+# brew "quick-lint-js" # Find bugs in your JavaScript code
+# brew "quick-lint-js" # Find bugs in your JavaScript code
+# brew "retire" # Scanner detecting the use of JavaScript libraries with known vulnerabilities
+# brew "rslint" # Extremely fast JavaScript and TypeScript linter
+# brew "standard" # JavaScript Style Guide, with linter & automatic code fixer
+# brew "urlfinder" # Extracting URLs and subdomains from JS files on a website
+# brew "v8" # Google's JavaScript engine
+# brew "vue-cli" # Standard Tooling for Vue.js Development
+# brew "webpack" # Bundler for JavaScript and friends
+
+# brew "llnode" # LLDB plugin for live/post-mortem debugging of node.js apps
+# brew "ncc" # Compile a Node.js project into a single file
+# brew "node@18" # Run JavaScript code outside of a browser
+# brew "orogene" # `node_modules/` package manager and utility toolkit
+# brew "patch-package" # Fix broken node modules instantly
 
 # prettier
 # prettier-plugin-tailwindcss
 
-# brew "flamebearer" # creates a flamegraph for a JavaScript app from a terminal, has web version
-# np on npm by Sindre Sorhus - a better npm publish
+# biome
+# deno
+# eslint-config-prettier
+# eslint-plugin-tailwindcss
+# quick-lint-js
+# typescript-eslint
 
 brew "go"
 brew "goreleaser" # publishes on Homebrew
@@ -2356,50 +2401,162 @@ brew "nfpm" # creates a Debian or Red Hat package
 # brew "wasm-pack" # Your favorite rust -> wasm workflow tool
 # brew "wasm-tools" # Low level tooling for WebAssembly in Rust
 
-brew "pipx"
-brew "python"
-cask "miniconda"
-# brew "black" # formatter
-# brew "flake8" # Python checker
-# brew "flit" # by PyPA - publishes Python package to PyPI
-# brew "hatch" # by PyPA - yes, yet another tool lmao
-# brew "ipython"
-# brew "isort" # sorts Python imports
-# brew "ruff" Python formatter and checker
-# brew "twine" # by PyPA - publishes Python package to PyPI
-# brew "yapf" # by Google - Python formatter
+brew "pipx" # runs binaries from Python packages in isolated environments
+brew "python" # interpreted, interactive, object-oriented programming language
+cask "miniconda" # minimal installer for conda
 
-brew "ruby"
-# rubocop
-# rufo
+# brew "abi3audit" # Scans Python packages for abi3 violations and inconsistencies
+# brew "austin" # Python frame stack sampler for CPython
+# brew "autopep8" # Automatically formats Python code to conform to the PEP 8 style guide
+# brew "bandit" # Security-oriented static analyser for Python code
+# brew "black" # Python code formatter
+# brew "bpython" # Fancy interface to the Python interpreter
+# brew "certifi" # Mozilla CA bundle for Python
+# brew "cffi" # C Foreign Function Interface for Python
+# brew "cyclonedx-python" # Creates CycloneDX Software Bill of Materials (SBOM) from Python projects
+# brew "cython" # Compiler for writing C extensions for the Python language
+# brew "darglint" # Python docstring argument linter
+# brew "dynaconf" # Configuration Management for Python
+# brew "fades" # Automatically handle virtualenvs for python scripts
+# brew "flake8" # Lint your Python code for style and logical errors
+# brew "flit" # Simplified packaging of Python modules
+# brew "fred" # Fully featured Federal Reserve command-line interface & Python API wrapper
+# brew "fypp" # Python powered Fortran preprocessor
+# brew "hatch" # Modern, extensible Python project management
+# brew "honcho" # Python clone of Foreman, for managing Procfile-based applications
+# brew "ipython" # Interactive computing in Python
+# brew "isort" # Sort Python imports automatically
+# brew "jello" # Filter JSON and JSON Lines data with Python syntax
+# brew "johnnydep" # Display dependency tree of Python distribution
+# brew "jsonschema" # Implementation of JSON Schema for Python
+# brew "kcov" # Code coverage tester for compiled programs, Python, and shell scripts
+# brew "keyring" # Easy way to access the system keyring service from python
+# brew "llgo" # Go compiler based on LLVM which integrates with the C ecosystem and Python
+# brew "maturin" # Build and publish Rust crates as Python packages
+# brew "memray" # Memory profiler for Python applications
+# brew "nox" # Flexible test automation for Python
+# brew "pdm" # Modern Python package and dependency manager supporting the latest PEP standards
+# brew "pip-audit" # Audits Python environments and dependency trees for known vulnerabilities
+# brew "pipdeptree" # CLI to display dependency tree of the installed Python packages
+# brew "pipenv" # Python dependency management tool
+# brew "pipx" # Execute binaries from Python packages in isolated environments
+# brew "platypus" # Create macOS applications from {Perl,Ruby,sh,Python} scripts
+# brew "poetry" # Python package management tool
+# brew "ptpython" # Advanced Python REPL
+# brew "py-spy" # Sampling profiler for Python programs
+# brew "pycodestyle" # Simple Python style checker in one Python file
+# brew "pydocstyle" # Python docstring style checker
+# brew "pyflow" # Installation and dependency system for Python
+# brew "pyinstaller" # Bundle a Python application and all its dependencies
+# brew "pyinvoke" # Pythonic task management & command execution
+# brew "pylyzer" # Fast static code analyzer & language server for Python
+# brew "pyoxidizer" # Modern Python application packaging and distribution tool
+# brew "python-argcomplete" # Tab completion for Python argparse
+# brew "python-build" # Simple, correct PEP 517 build frontend
+# brew "python-launcher" # Launch your Python interpreter the lazy/smart way
+# brew "python-packaging" # Core utilities for Python packages
+# brew "python-trove-classifiers" # Canonical source for classifiers on PyPI
+# brew "reorder-python-imports" # Rewrites source to reorder python imports
+# brew "ruff" # Extremely fast Python linter, written in Rust
+# brew "rye" # Experimental Package Management Solution for Python
+# brew "safety" # Checks Python dependencies for known vulnerabilities and suggests remediations
+# brew "sigstore" # Codesigning tool for Python packages
+# brew "sip" # Tool to create Python bindings for C and C++ libraries
+# brew "snakeviz" # Web-based viewer for Python profiler output
+# brew "tox" # Generic Python virtualenv management and test command-line tool
+# brew "twine" # publishes a Python package to PyPI
+# brew "uv" # Extremely fast Python package installer and resolver, written in Rust
+# brew "vermin" # Concurrently detect the minimum Python versions needed to run code
+# brew "virtualenv" # Tool for creating isolated virtual python environments
+# brew "virtualenvwrapper" # Python virtualenv extensions
+# brew "vulture" # Find dead Python code
+# brew "xonsh" # Python-powered, cross-platform, Unix-gazing shell language and command prompt
+# brew "yapf" # Formatter for python code
 
-brew "mint" # package manager for Swift
-# brew "chisel" # by Facebook - collection of LLDB commands
-# brew "carthage" #
-# brew "cocoapods" #
-# brew "create-dmg" # by Sindre Sorhus
-# brew "fastlane"
-# brew "flank" # Massively parallel test runner for Firebase Test Lab
-# brew "swift"
-# brew "swift-format" # by Apple
-# brew "swift-protobuf"
-# brew "swift-sh" # scripting with easy zero-conf dependency imports
-# brew "swiftbrew/tap/swiftbrew"
-# brew "swiftformat"
-# brew "swiftgen"
-# brew "swiftlint"
-# brew "switchaudio-osx" # Change macOS audio source from the command-line
-# brew "xcbeautify"
-# brew "xcdiff"
-# brew "xcinfo"
-# brew "xclogparser"
-# brew "xcodegen"
-# brew "xcodes"
-# brew "xcprojectlint"
-# Also, see https://github.com/sindresorhus/quick-look-plugins
+brew "ruby" # Powerful, clean, object-oriented scripting language
 
-brew "composer"
-brew "php"
+# brew "brew-gem" # Install RubyGems as Homebrew formulae
+# brew "platypus" # Create macOS applications from {Perl,Ruby,sh,Python} scripts
+# brew "rbspy" # Sampling profiler for Ruby
+# brew "rubyfmt" # Ruby autoformatter
+# brew "solargraph" # Ruby language server
+# # also, rubocop on Rubygems
+# # also, rufo on Rubygems
+
+brew "carthage" # package manager
+brew "cocoapods" # package manager
+brew "mint" # package manager
+
+# brew "grpc-swift" # Swift language implementation of gRPC
+# brew "mint" # Dependency manager that installs and runs Swift command-line tool packages
+# brew "mockolo" # Efficient Mock Generator for Swift
+# brew "mogenerator" # Generate Objective-C & Swift classes from your Core Data model
+# brew "needle" # Compile-time safe Swift dependency injection framework with real code
+# brew "rswift" # Get strong typed, autocompleted resources like images, fonts and segues
+# brew "sourcery" # Meta-programming for Swift, stop writing boilerplate code
+# brew "swift" # High-performance system programming language
+# brew "swift-format" # Formatting technology for Swift source code
+# brew "swift-outdated" # Check for outdated Swift package manager dependencies
+# brew "swift-protobuf" # Plugin and runtime library for using protobuf with Swift
+# brew "swift-sh" # Scripting with easy zero-conf dependency imports
+# brew "swiftdraw" # Convert SVG into PDF, PNG, JPEG or SF Symbol
+# brew "swiftformat" # Formatting tool for reformatting Swift code
+# brew "swiftgen" # Swift code generator for assets, storyboards, Localizable.strings, etc.
+# brew "swiftlint" # Tool to enforce Swift style and conventions
+# brew "swiftplantuml" # Generate UML class diagrams from Swift sources
+# brew "swimat" # Command-line tool to help format Swift code
+# brew "tailor" # Cross-platform static analyzer and linter for Swift
+
+# brew "ios-class-guard" # Objective-C obfuscator for Mach-O executables
+# brew "libobjc2" # Objective-C runtime library intended for use with Clang
+# brew "objc-run" # Use Objective-C files for shell script-like tasks
+# brew "objfw" # Portable, lightweight framework for the Objective-C language
+# brew "runcocoa" # Tools to run Cocoa/Objective-C and C code from the command-line
+
+# brew "configen" # Configuration file code generator for use in Xcode projects
+# brew "create-dmg" # Create a good-looking DMG for your macOS app in seconds (by Sindre Sorhus)
+# brew "nef" # Steroids for Xcode Playgrounds
+# brew "objc-codegenutils" # Three small tools to help work with XCode
+# brew "unxip" # Fast Xcode unarchiver
+# brew "xcbeautify" # Little beautifier tool for xcodebuild
+# brew "xcdiff" # Tool to diff xcodeproj files
+# brew "xcenv" # Xcode version manager
+# brew "xcinfo" # Tool to get information about and install available Xcode versions
+# brew "xclogparser" # Tool to parse the SLF serialization format used by Xcode
+# brew "xcode-build-server" # Build server protocol implementation for integrating Xcode with sourcekit-lsp
+# brew "xcode-kotlin" # Kotlin Native Xcode Plugin
+# brew "xcodegen" # Generate your Xcode project from a spec file and your folder structure
+# brew "xcodes" # Best command-line tool to install and switch between multiple versions of Xcode
+# brew "xcproj" # Manipulate Xcode project files
+# brew "xcprojectlint" # Xcode project linter
+# brew "xctesthtmlreport" # Xcode-like HTML report for Unit and UI Tests
+
+# brew "aws-amplify" # Build full-stack web and mobile apps in hours. Easy to start, easy to scale
+# brew "bluepill" # Testing tool for iOS that runs UI tests using multiple simulators
+# brew "chisel" # Collection of LLDB commands to assist debugging iOS apps
+# brew "fastlane" # Easiest way to build and release mobile apps
+# brew "flank" # Massively parallel Android and iOS test runner for Firebase Test Lab
+# brew "ideviceinstaller" # Tool for managing apps on iOS devices
+# brew "ifuse" # FUSE module for iOS devices
+# brew "ios-deploy" # Install and debug iPhone apps from the command-line
+# brew "ios-sim" # Command-line application launcher for the iOS Simulator
+# brew "ios-webkit-debug-proxy" # DevTools proxy for iOS devices
+# brew "ipsw" # Research tool for iOS & macOS devices
+# brew "kdoctor" # Environment diagnostics for Kotlin Multiplatform Mobile app development
+# brew "licenseplist" # License list generator of all your dependencies for iOS applications
+# brew "mobiledevice" # CLI for Apple's Private (Closed) Mobile Device Framework
+# brew "react-native-cli" # Tools for creating native apps for Android and iOS
+
+brew "composer" # Dependency Manager for PHP
+brew "php" # General-purpose scripting language
+
+# brew "php-code-sniffer" # Check coding standards in PHP, JavaScript and CSS
+# brew "php-cs-fixer" # Tool to automatically fix PHP coding standards issues
+# brew "phpmd" # PHP Mess Detector
+# brew "phpstan" # PHP Static Analysis Tool
+# brew "pickle" # PHP Extension installer
+# brew "psalm" # PHP Static Analysis Tool
+# brew "psysh" # Runtime developer console, interactive debugger and REPL for PHP
 
 # brew "julia"
 # brew "r"
@@ -2428,13 +2585,17 @@ brew "php"
 # brew "maven" # Java-based project management
 # brew "openjdk" # Development kit for the Java programming language
 # brew "osslsigncode" # OpenSSL based Authenticode signing for PE/MSI/Java CAB files
+# brew "pmd" # Source code analyzer for Java, JavaScript, and more
 # brew "spotbugs" # Tool for Java static analysis
 
 # brew "conduit" # Streams data between data stores. Kafka Connect replacement. No JVM required
+# brew "crash" # Kernel debugging shell for Java that allows gdb-like syntax
 # brew "derby" # Apache Derby is an embedded relational database running on JVM
 # brew "gcviewer" # Java garbage collection visualization tool
 # brew "golo" # Lightweight dynamic language for the JVM
 # brew "gosu" # Pragmatic language for the JVM
+# brew "jadx" # Dex to Java decompiler
+# brew "jasmin" # Assembler for the Java Virtual Machine
 # brew "jhiccup" # Measure pauses and stalls of an app's Java runtime platform
 # brew "jmxtrans" # Tool to connect to JVMs and query their attributes
 # brew "jvm-mon" # Console-based JVM monitoring
@@ -2446,16 +2607,18 @@ brew "php"
 # brew "proguard" # Java class file shrinker, optimizer, and obfuscator
 # brew "sjk" # Tools for JVM troubleshooting, monitoring, and profiling
 # brew "spring-loaded" # Java agent to enable class reloading in a running JVM
-# brew "spring-loaded" # Java agent to enable class reloading in a running JVM
 # brew "vert.x" # Toolkit for building reactive applications on the JVM
 
 brew "nuget" # package manager
-cask "dotnet-sdk" # runtime and compiler
-# brew "cake" # package manager
-# brew "paket" # package installer
+cask "dotnet-sdk" # runtime and compiler of .NET Core
+# brew "paket" # package manager
 
-# brew "erlang"
-# brew "elixir"
+# brew "astyle" # Source code beautifier for C#
+# brew "cake" # Cross platform build automation system with a C# DSL
+# brew "scriptcs" # Tools to write and execute C#
+# brew "docfx" # Tools for building and publishing API documentation for .NET projects
+# brew "dotnet" # .NET Core - runtime only
+# brew "mono" # Cross platform, open source .NET development framework
 
 # brew "bear" # Generate compilation database for clang tooling
 # brew "cargo-binutils" # Cargo subcommands to invoke the LLVM tools shipped with the Rust toolchain
@@ -2502,6 +2665,15 @@ cask "dotnet-sdk" # runtime and compiler
 # brew "remake" # GNU Make with improved error handling, tracing, and a debugger
 # brew "scons" # Substitute for classic 'make' tool with autoconf/automake functionality
 # brew "smake" # Portable make program with automake features
+
+# brew "elixir-ls" # Language Server and Debugger for Elixir
+# brew "elixir" # Functional metaprogramming aware language built on Erlang VM
+# brew "elvis" # Erlang Style Reviewer
+# brew "erlang" # Programming language for highly scalable real-time systems
+# brew "proper" # QuickCheck-inspired property-based testing tool for Erlang
+# brew "rebar3" # Erlang build tool
+# brew "syntaxerl" # Syntax checker for Erlang code and config files
+# brew "wrangler" # Refactoring tool for Erlang
 
 # Lightweight Formal Methods
 

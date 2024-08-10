@@ -49,31 +49,30 @@ eval "$(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib=$HOME/perl5)"
 
 # The following are useful functions or aliases for command-line use
 
-# Removes error messages when searching for manual pages
+# Remove error messages when searching for manual pages
 alias man='/usr/bin/man 2>/dev/null'
 
-# Opens a Rust package in a browser
+# Open a Rust package in a browser
 cb() {
   open "https://crates.io/crates/${1}"
 }
 
-# Deletes a line from the zsh history file
+# Delete a line from the zsh history file
 del() {
   # Delete the line by its line number
   sed -i '' $1d ~/.zsh_history
 }
 
-# Opens a GitHub repository in the browser
+# Open a GitHub repository in the browser
 gb() {
-  xargs -n 1 -P 8 hub browse <<< $@
+  xargs -n 1 -P 8 hub browse <<<$@
 }
 
-# Opens a Homebrew package in a browser
-hb() {
-  brew home $@
+gi() {
+  xargs -n 1 -P 8 gh <<<$@
 }
 
-# Loads the Google Cloud SDK – it's too bloated to load everytime the shell starts
+# Load the Google Cloud SDK – it's too bloated to load everytime the shell starts
 gcloud() {
   # Check if Google Cloud SDK is installed
   if [ -d "$(brew --prefix)/share/google-cloud-sdk" ]; then
@@ -91,17 +90,34 @@ gcloud() {
   fi
 }
 
-# Searches for GitHub repositories
+# Search GitHub
 ghs() {
-  gh search repos $@
+  gh search $@
 }
 
-# Searches for GitHub repositories and opens them in the browser
-ghsrepob() {
+# Search for GitHub issues and opens them in the browser
+ghissueb() {
+  repo=$1
+  shift # zero clue what this does
+  gh search issues -R $repo $@ | awk '{ print $2 }' | xargs -I {} gh issue view -R $repo {} -w
+}
+
+# Open a GitHub issue in the browser
+ghib() {
+  echo "$@" | xargs -P 8 gh issue view --web
+}
+
+# Search for GitHub repositories and opens them in the browser
+ghrepob() {
   gh search repos $@ | awk '{print $1}' | xargs -n 1 -P 8 hub browse
 }
 
-# Commits changes to a Git repository
+# Open GitHub repositories in the browser
+ghrb() {
+  echo "$@" | xargs -n 1 -P 8 hub browse
+}
+
+# Commit changes to a Git repository
 gitp() {
   # Prompt for the commit message
   printf 'Enter commit message: '
@@ -115,7 +131,7 @@ gitp() {
 }
 alias gitc=gitp
 
-# Commits changes to a Git repository with an optional extended message, accepts 'l' or 'long' as an argument for an extended commit message
+# Commit changes to a Git repository with an optional extended message, accepts 'l' or 'long' as an argument for an extended commit message
 gitpl() {
   # Prompt for the commit message
   printf 'Enter commit message: '
@@ -132,24 +148,29 @@ gitpl() {
   git push
 }
 
-# Updates my local Git repos
+# Update my local Git repos
 gitu() {
   gitup -c -t 2 .
 }
 
-# Installs multiple .pkg files
+# Open a Homebrew package in a browser
+hb() {
+  brew home $@
+}
+
+# Install multiple .pkg files
 ins() {
   for pkg in "$@"; do
     sudo installer -pkg "$pkg" -target /
   done
 }
 
-# Lists dependencies of an npm package
+# List dependencies of an npm package
 npmd() {
   npm view $1 dependencies
 }
 
-# Signs a macOS app bundle
+# Sign a macOS app bundle
 prep() {
   sudo xattr -r -d com.apple.quarantine "$1"
   sudo codesign --force --deep --sign - "$1"

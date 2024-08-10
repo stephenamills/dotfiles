@@ -454,6 +454,11 @@ brew "vsh" # community-created shell for Vault
 # brew "yubikey-agent" # Seamless ssh-agent for YubiKeys and other PIV tokens
 
 # Docker
+brew "colima" # run containers in a Linux virtual machine (uses Docker CLI)
+# cask "docker" # run containers in a Linux virtual machine
+# cask "podman-desktop" # run containers in a Linux virtual machine
+# cask "rancher" # run containers in a Linux virtual machine
+
 brew "cog" # by Replicate - creates containers for machine learning without a Dockerfile
 brew "container-structure-test" # by Google - tests the structure of your container image
 brew "copa" # patches a container image using reports from vulnerability scanners like trivy
@@ -494,7 +499,6 @@ brew "sysdig"
 # brew "clair" # audits container using static analysis
 # brew "clair" # Vulnerability Static Analysis for Containers
 # brew "cog" # Containers for machine learning
-# brew "colima" # Container runtimes on MacOS (and Linux) with minimal setup
 # brew "conmon" # OCI container runtime monitor
 # brew "container-diff" # Diff your Docker containers
 # brew "coreos-ct" # Convert a Container Linux Config into Ignition

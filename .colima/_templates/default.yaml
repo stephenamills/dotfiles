@@ -11,6 +11,12 @@ memory: 4
 # NOTE: this cannot be changed after the virtual machine is created.
 arch: host
 
+# Container runtime to be used (docker, containerd).
+#
+# NOTE: value cannot be changed after virtual machine is created.
+# Default: docker
+runtime: "docker"
+
 # Virtual machine type (qemu or vz).
 # The VZ virtualization framework requires macOS 13.
 # NOTE: this cannot be changed after the virtual machine is created.

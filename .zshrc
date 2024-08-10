@@ -95,7 +95,7 @@ ghs() {
 ghissueb() {
   repo=$1
   shift # This shifts the positional parameters to the left, so $2 becomes $1, $3 becomes $2, etc. Zero clue what that actually means.
-  gh search issues -R $repo $@ | awk '{ print $2 }' | xargs -I {} gh issue view -R $repo {} -w
+  gh search issues -R $repo $@ | awk '{ print $2 }' | xargs -P 8 -I {} gh issue view -R $repo {} -w
 }
 
 # Open multiple GitHub issues in the browser

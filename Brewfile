@@ -2220,6 +2220,7 @@ brew "f2" # renames files
 brew "fcp" # faster cp
 brew "fd"
 brew "fex" # cut and awk alternative that tries to be more concise and readable
+brew "flawz" # terminal browser for security vulnerabilities (CVEs)
 brew "grex" # regex generator
 brew "hyperfine" # useful benchmarking tool
 brew "progressline" # track commands progress in a compact one-line format
@@ -2233,6 +2234,7 @@ brew "trurl" # by curl team - tr for URLs
 brew "uni" # search unicode and emoji database
 brew "usage" # specification for CLIs
 brew "viddy" # better watch command
+brew "vulsio-gost" # local CVE tracker & notification system
 brew "watch" # # runs a program periodically, its showing output
 brew "watchexec" # watches files and triggers actions
 brew "wcurl"

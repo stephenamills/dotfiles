@@ -265,7 +265,7 @@ brew "git-when-merged" # finds where a commit was merged
 # brew "vcsh" # Config manager based on git - also manages subrepos
 # brew "willgit" # William's miscellaneous git tools
 
-# GitHub
+# GitHub & GitLab & Hugging Face
 brew "gh" # client
 brew "git-open" # opens a GitHub page
 brew "hub" # older command-line tool
@@ -300,10 +300,8 @@ brew "hub" # older command-line tool
 # brew "prr" # Mailing list style code reviews for github
 # brew "sugarjar" # Helper utility for a better Git/GitHub experience
 
-# GitLab
 brew "glab"
 
-# Hugging Face
 brew "huggingface-cli"
 # brew "cortexso" # ollama-like, drop-in local alternative to the OpenAI stack
 # brew "ollama" # downloads and runs a language model
@@ -455,91 +453,91 @@ brew "vsh" # community-created shell for Vault
 
 # Docker
 brew "colima" # run containers in a Linux virtual machine (uses Docker CLI)
-# cask "docker" # run containers in a Linux virtual machine
-# cask "podman-desktop" # run containers in a Linux virtual machine
-# cask "rancher" # run containers in a Linux virtual machine
+brew "docker" # pack, ship and run any application as a lightweight container (Docker CLI)
+brew "docker-compose" # isolated development environments using Docker
+brew "lima" # Linux virtual machines
 
-brew "cog" # by Replicate - creates containers for machine learning without a Dockerfile
-brew "container-structure-test" # by Google - tests the structure of your container image
-brew "copa" # patches a container image using reports from vulnerability scanners like trivy
-brew "cosign"
+# cask "docker" # Docker Desktop - runs containers in a Linux virtual machine
+# cask "podman-desktop" # runs containers in a Linux virtual machine
+# cask "rancher" # runs containers in a Linux virtual machine
+
+# brew "buildkit" # Concurrent, cache-efficient, and Dockerfile-agnostic builder toolkit
+# brew "container-diff" # Diff your Docker containers
+# brew "dcp" # Docker cp made easy
+# brew "ddev/ddev/ddev" # Installs PHP or other dev environments
+# brew "devspace" # CLI helps develop/deploy/debug apps with Docker and k8s
+# brew "docker-buildx" # Docker CLI plugin for extended build capabilities with BuildKit
+# brew "docker-clean" # Clean Docker containers, images, networks, and volumes
+# brew "docker-credential-helper" # Platform keystore credential helper for Docker
+# brew "docker-credential-helper-ecr" # Docker Credential Helper for Amazon ECR
+# brew "docker-gen" # Generate files from docker container metadata
+# brew "docker-ls" # Tools for browsing and manipulating docker registries
+# brew "docker-slim" # Minify and secure Docker images
+# brew "docker-squash" # Docker image squashing tool
+# brew "dockerfile-language-server" # Language server for Dockerfiles powered by Node, TypeScript, and VSCode
+# brew "dockerize" # Utility to simplify running applications in docker containers
+# brew "dockly" # Immersive terminal interface for managing docker containers and services
+# brew "dockviz" # Visualizing docker data
+# brew "dockward" # Port forwarding tool for Docker containers
+# brew "dory" # Development proxy for docker
+# brew "gebug" # Debug Dockerized Go applications better
+# brew "gitlab-ci-local" # Run gitlab pipelines locally as a shell executor or Docker executor
+# brew "hadolint" # Smarter Dockerfile linter to validate best practices
+# brew "k3d" # Little helper to run CNCF's k3s in Docker
+# brew "kind" # Run local Kubernetes cluster in Docker
+# brew "kompose" # Tool to move from `docker-compose` to Kubernetes
+# brew "lazydocker" # Lazier way to manage everything docker
+# brew "nerdctl" # ContaiNERD CTL - Docker-compatible CLI for containerd
+# brew "oxker" # Terminal User Interface (TUI) to view & control docker containers
+# brew "podman-compose" # Alternative to docker-compose using podman
+# brew "powerman-dockerize" # Utility to simplify running applications in docker containers
+# brew "pumba" # Chaos testing tool for Docker
+# brew "reg" # Docker registry v2 command-line client
+# brew "regclient" # Docker and OCI Registry Client in Go and tooling using those libraries
+
+brew "cog" # Containers for machine learning without a Dockerfile (by Replicate)
 brew "devcontainer" # Reference implementation for the Development Containers specification
-brew "dive" # explores each layer in a Docker image
-brew "grype" #
-brew "hadolint" # checks Dockerfile
-brew "nixpacks" # creates Docker images without a Dockerfile
-brew "sysdig"
+# brew "argo" # Get stuff done with container-native workflows for Kubernetes
+# brew "cdebug" # Swiss army knife of container debugging
+# brew "cekit" # Container Evolution Kit
+# brew "clair" # Audits a container using static analysis
+# brew "clair" # Vulnerability Static Analysis for Containers
+# brew "conmon" # OCI container runtime monitor
+# brew "cosign" # Container Signing
+# brew "cosign" # Signs a container
+# brew "cri-tools" # CLI and validation tools for Kubelet Container Runtime Interface (CRI)
+# brew "ctop" # Top-like interface for container metrics
+# brew "earthly" # Build automation tool for the container era
+# brew "mcap" # Serialization-agnostic container file format for pub/sub messages
+# brew "podman" # Tool for managing OCI containers and pods
+# brew "singularity" # Application container and unprivileged sandbox platform for Linux
+# brew "stern" # Tail multiple Kubernetes pods & their containers
+# brew "toast" # Tool for running tasks in containers
 
-# brew "apko" # builds an OCI image from an APK package directly, without a Dockerfile
-# brew "container-structure-test" # Validate the structure of your container images
-# brew "copa" # Tool to directly patch container images given the vulnerability scanning results
+brew "container-structure-test" # Validate the structure of your container images
+brew "dive" # Explore each layer in a docker image
+# brew "apko" # Builds an OCI image from an APK package directly, without a Dockerfile
+# brew "copa" # Tool to directly patch container images using vulnerability scanning results
+# brew "crun" # Fast and lightweight fully featured OCI runtime and C library
 # brew "diffoci" # Diff for Docker and OCI container images
 # brew "disktype" # Detect content format of a disk or disk image
 # brew "dmg2img" # Utilities for converting macOS DMG images
-# brew "docker-clean" # Clean Docker containers, images, networks, and volumes
-# brew "docker-slim" # Minify and secure Docker images
-# brew "docker-squash" # Docker image squashing tool
 # brew "docuum" # Perform least recently used (LRU) eviction of Docker images
 # brew "grype" # Vulnerability scanner for container images and filesystems
+# brew "kustomizer" # Package manager for distributing Kubernetes configuration as OCI artifacts
 # brew "manifest-tool" # Command-line tool to create and query container image manifest list/indexes
 # brew "nixpacks" # App source + Nix packages + Docker = Image
 # brew "notation" # CLI tool to sign and verify OCI artifacts and container images
+# brew "oras" # OCI Registry As Storage
+# brew "pug" # Drive terraform at terminal velocity
 # brew "skopeo" # Work with remote images registries
 # brew "source-to-image" # Tool for building source and injecting into docker images
+# brew "sysdig" # System-level exploration and troubleshooting tool
 # brew "syft" # CLI for generating a Software Bill of Materials from container images
 # brew "trivy" # Vulnerability scanner for container images, file systems, and Git repos
 # brew "whalebrew" # Homebrew, but with Docker images
 # brew "xeol" # Xcanner for end-of-life software in container images, filesystems, and SBOMs
 # brew "xmount" # Convert between multiple input & output disk image types
-
-# brew "argo" # Get stuff done with container-native workflows for Kubernetes
-# brew "buildkit" # Concurrent, cache-efficient, and Dockerfile-agnostic builder toolkit
-# brew "cdebug" # Swiss army knife of container debugging
-# brew "cekit" # Container Evolution Kit
-# brew "clair" # audits container using static analysis
-# brew "clair" # Vulnerability Static Analysis for Containers
-# brew "cog" # Containers for machine learning
-# brew "conmon" # OCI container runtime monitor
-# brew "container-diff" # Diff your Docker containers
-# brew "coreos-ct" # Convert a Container Linux Config into Ignition
-# brew "cosign" # signs a container
-# brew "cri-tools" # CLI and validation tools for Kubelet Container Runtime Interface (CRI)
-# brew "crun" # Fast and lightweight fully featured OCI runtime and C library
-# brew "ctop" # Top-like interface for container metrics
-# brew "dcp" # Docker cp made easy
-# brew "ddev/ddev/ddev" # installs PHP or other dev environments
-# brew "devspace" # CLI helps develop/deploy/debug apps with Docker and k8s
-# brew "docker-buildx" # Docker CLI plugin for extended build capabilities with BuildKit
-# brew "docker-compose" # Isolated development environments using Docker
-# brew "docker-credential-helper-ecr" # Docker Credential Helper for Amazon ECR
-# brew "docker-credential-helper" # Platform keystore credential helper for Docker
-# brew "docker-gen" # Generate files from docker container metadata
-# brew "docker-ls" # Tools for browsing and manipulating docker registries
-# brew "docker" # Pack, ship and run any application as a lightweight container
-# brew "dockerize" # Utility to simplify running applications in docker containers
-# brew "dockviz" # Visualizing docker data
-# brew "dockward" # Port forwarding tool for Docker containers
-# brew "dory" # Development proxy for docker
-# brew "earthly" # Build automation tool for the container era
-# brew "gebug" # Debug Dockerized Go applications better
-# brew "gitlab-ci-local" # Run gitlab pipelines locally as shell executor or docker executor
-# brew "hadolint" # Smarter Dockerfile linter to validate best practices
-# brew "instalooter" # Download any picture or video associated from an Instagram profile
-# brew "k3d" # Little helper to run CNCF's k3s in Docker
-# brew "kind" # Run local Kubernetes cluster in Docker
-# brew "kompose" # Tool to move from `docker-compose` to Kubernetes
-# brew "kustomizer" # Package manager for distributing Kubernetes configuration as OCI artifacts
-# brew "lazydocker" # Lazier way to manage everything docker
-# brew "nerdctl" # ContaiNERD CTL - Docker-compatible CLI for containerd
-# brew "oras" # OCI Registry As Storage
-# brew "podman-compose" # Alternative to docker-compose using podman
-# brew "podman" # Tool for managing OCI containers and pods
-# brew "powerman-dockerize" # Utility to simplify running applications in docker containers
-# brew "pug" # Drive terraform at terminal velocity
-# brew "pumba" # Chaos testing tool for Docker
-# brew "reg" # Docker registry v2 command-line client
-# brew "regclient" # Docker and OCI Registry Client in Go and tooling using those libraries
-# brew "toast" # Tool for running tasks in containers
 
 # Ignition
 brew "butane" # by Red Hat - converts a Butane YAML desired system configuration into a Ignition JSON configuration, both schema-validated
@@ -808,7 +806,6 @@ brew "levant" # templating and deployment tool for jobs
 
 # brew "rqlite" # replicated SQLite (good documentation, in Go)
 # brew "sqlite" # row-oriented database (client)
-
 # brew "dbhash" # Computes the SHA1 hash of schema and content of a SQLite database
 # brew "libspatialite" # Adds spatial SQL capabilities to SQLite
 # brew "litecli" # CLI for SQLite Databases with auto-completion and syntax highlighting
@@ -818,7 +815,6 @@ brew "levant" # templating and deployment tool for jobs
 # brew "sqlite-utils" # CLI utility for manipulating SQLite databases
 # brew "sqliteodbc" # ODBC driver for SQLite
 # brew "virtualpg" # Loadable dynamic extension for SQLite and SpatiaLite
-
 brew "mysql" # row-oriented database
 brew "vitess" # replicated MySQL
 
@@ -842,7 +838,6 @@ brew "vitess" # replicated MySQL
 
 # brew "citus" # replicated Postgres
 # brew "postgresql" # row-oriented database
-
 # brew "apgdiff" # Another PostgreSQL diff tool
 # brew "check_postgres" # Monitor Postgres databases
 # brew "dexter" # Automatic indexer for Postgres
@@ -871,20 +866,20 @@ brew "vitess" # replicated MySQL
 # brew "pgweb" # Web-based PostgreSQL database browser
 # brew "pgxnclient" # Command-line client for the PostgreSQL Extension Network
 # brew "postgis" # Adds support for geographic objects to PostgreSQL
-# brew "postgraphile" # GraphQL schema created by reflection over a PostgreSQL schema
 # brew "postgrest" # Serves a fully RESTful API from any existing PostgreSQL database
 # brew "prestd" # Simplify and accelerate development on any Postgres application, existing or new
 # brew "psqlodbc" # Official PostgreSQL ODBC driver
-# brew "reshape" # Easy-to-use, zero-downtime schema migration tool for Postgres
 # brew "schema-evolution-manager" # Manage Postgresql database schema migrations
 # brew "stolon" # Cloud native PostgreSQL manager for high availability
 # brew "temporal_tables" # Temporal Tables PostgreSQL Extension
+# brew "tile38" #  geolocation data store, spatial index, and realtime geofence - their landing page animation is very good
 # brew "tsung" # Load testing for HTTP, PostgreSQL, Jabber, and others
 # brew "wal2json" # Convert PostgreSQL changesets to JSON format
 
 # brew "dynomite" # strongly consistent, replicated key-value store - a Dynamo implementation (by Netflix)
 # brew "dynein" # DynamoDB client
 
+# also, Porcupine checker on pkg.go.dev, and MIT course 6.5840
 # also, Spanner and CockroachDB and LevelDB
 # also, ScyllaDB
 # also, YugabyteDB
@@ -911,7 +906,6 @@ brew "vitess" # replicated MySQL
 # brew "valkey" # High-performance data structure server that primarily serves key/value workloads
 
 # brew "cassandra" # column-oriented database
-
 # brew "cassandra" # Eventually consistent, distributed key-value store
 # brew "cassandra-cpp-driver" # DataStax C/C++ Driver for Apache Cassandra
 # brew "cassandra-reaper" # Management interface for Cassandra
@@ -923,11 +917,46 @@ brew "vitess" # replicated MySQL
 # brew "clickhouse" # column-oriented database
 # clickhouse-odbc: Official ODBC driver implementation for accessing ClickHouse as a data source
 
-# also, see the Porcupine checker on pkg.go.dev, and MIT course 6.5840
-
-# brew "tile38" #  geolocation data store, spatial index, and realtime geofence - their landing page animation is very good
+# brew "apache-drill" # Schema-free SQL Query Engine for Hadoop, NoSQL and Cloud Storage
+# brew "clangql" # Run a SQL like language to perform queries on C/C++ files
+# brew "cloud-sql-proxy" # Utility for connecting securely to your Cloud SQL instances
+# brew "csvq" # SQL-like query language for csv
+# brew "dbml-cli" # Convert a DBML file to SQL and vice versa
+# brew "dsq" # CLI tool for running SQL queries against JSON, CSV, Excel, Parquet, and more
+# brew "fselect" # Find files with SQL-like queries
+# brew "fsql" # Search through your filesystem with SQL-esque queries
+# brew "google-sql-tool" # Command-line tool for executing common SQL statements
+# brew "gqlplus" # Drop-in replacement for sqlplus, an Oracle SQL client
+# brew "jet" # Type safe SQL builder with code generation and auto query result data mapping
+# brew "octosql" # SQL query tool to analyze data from different file formats and databases
+# brew "packetq" # SQL-like frontend to PCAP files
+# brew "prestodb" # Distributed SQL query engine for big data
+# brew "prqlc" # Simple, powerful, pipelined SQL replacement
+# brew "pspg" # Unix pager optimized for psql
+# brew "psql2csv" # Run a query in psql and output the result as CSV
+# brew "sql-language-server" # Language Server for SQL
+# brew "sql-lint" # SQL linter to do sanity checks on your queries and bring errors back from the DB
+# brew "sql-migrate" # SQL schema migration tool for Go
+# brew "sql-translator" # Manipulate structured data definitions (SQL and more)
+# brew "sqlancer" # Detecting Logic Bugs in DBMS
+# brew "sqlbench" # Measures and compares the execution time of one or more SQL queries
+# brew "sqlc" # Generate type safe Go from SQL
+# brew "sqlcmd" # Microsoft SQL Server command-line interface
+# brew "sqlfluff" # SQL linter and auto-formatter for Humans
+# brew "sqlfmt" # SQL formatter with width-aware output
+# brew "sqlmap" # Penetration testing for SQL injection and database servers
+# brew "sqlpage" # Web application framework, for creation of websites with simple database queries
+# brew "sqlsmith" # Random SQL query generator
+# brew "sqlx-cli" # Command-line utility for SQLx, the Rust SQL toolkit
+# brew "stackql" # SQL interface for arbitrary resources with full CRUD support
+# brew "steampipe" # Use SQL to instantly query your cloud services
+# brew "textql" # Executes SQL across text files
+# brew "trino" # Distributed SQL query engine for big data
+# brew "zfind" # Search for files (even inside tar/zip/7z/rar) using a SQL-WHERE filter
+# brew "zorba" # NoSQL query processor
 
 # Search
+
 # brew "meilisearch" # the winner - ultra relevant, instant and typo-tolerant, and has sample projects and 45k stars
 
 # also, elasticsearch
@@ -2252,10 +2281,6 @@ brew "xidel" # super useful for reading web pages I think
 # brew "titlecase" # capitalizes titles
 # brew "tuc" # cut replacement
 # brew "watchman" # by Facebook - watches files and triggers actions
-
-# steampipe
-# Use SQL to instantly query your cloud services
-# https://steampipe.io/
 
 # Programming
 brew "corepack" # Installs a package manager that is not npm, such as pnpm or yarn
@@ -3686,10 +3711,6 @@ vscode "yoavbls.pretty-ts-errors"
 # Microsoft SQL Server command-line interface
 # https://github.com/microsoft/go-sqlcmd
 
-# sqldiff
-# Displays the differences between SQLite databases
-# https://www.sqlite.org/sqldiff.html
-
 # sqlfluff
 # SQL linter and auto-formatter for Humans
 # https://docs.sqlfluff.com/
@@ -3697,22 +3718,6 @@ vscode "yoavbls.pretty-ts-errors"
 # sqlfmt
 # SQL formatter with width-aware output
 # https://sqlfum.pt/
-
-# sqlite
-# Command-line interface for SQLite
-# https://sqlite.org/index.html
-
-# sqlite-analyzer
-# Analyze how space is allocated inside an SQLite file
-# https://www.sqlite.org/
-
-# sqlite-utils
-# CLI utility for manipulating SQLite databases
-# https://sqlite-utils.datasette.io/
-
-# sqliteodbc
-# ODBC driver for SQLite
-# https://ch-werner.homepage.t-online.de/sqliteodbc/
 
 # sqlmap
 # Penetration testing for SQL injection and database servers

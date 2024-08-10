@@ -12,9 +12,7 @@ memory: 4
 arch: host
 
 # Container runtime to be used (docker, containerd).
-#
 # NOTE: value cannot be changed after virtual machine is created.
-# Default: docker
 runtime: "docker"
 
 # Virtual machine type (qemu or vz).

@@ -98,13 +98,15 @@ ghs() {
 # Search for GitHub issues and opens them in the browser
 ghissueb() {
   repo=$1
-  shift # zero clue what this does
+  shift # This shifts the positional parameters to the left, so $2 becomes $1, $3 becomes $2, etc. Zero clue what that actually means.
   gh search issues -R $repo $@ | awk '{ print $2 }' | xargs -I {} gh issue view -R $repo {} -w
 }
 
 # Open a GitHub issue in the browser
 ghib() {
-  echo "$@" | xargs -P 8 gh issue view --web
+  repo=$1
+  shift # This shifts the positional parameters to the left, so $2 becomes $1, $3 becomes $2, etc. Zero clue what that actually means.
+  echo "$@" | xargs -n 1 -P 8 -I {} gh issue view -R "$repo" {} -w
 }
 
 # Search for GitHub repositories and opens them in the browser

@@ -106,6 +106,10 @@ https://github.com/nixos/rfcs # proposals
 
 Docker
 
+Colima
+https://github.com/abiosoft/colima/blob/main/docs/FAQ.md
+https://github.com/lima-vm/lima
+
 Visual Studio Code
 https://github.com/microsoft/dstoolkit-devcontainers # data science toolkit
 https://github.com/microsoft/vscode-remote-try-go # Go

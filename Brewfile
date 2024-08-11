@@ -525,7 +525,7 @@ brew "dive" # Explore each layer in a docker image
 # brew "notation" # CLI tool to sign and verify OCI artifacts and container images
 # brew "oras" # OCI Registry As Storage
 # brew "pug" # Drive terraform at terminal velocity
-# brew "skopeo" # Work with remote images registries
+# brew "skopeo" # Work with remote image registries
 # brew "source-to-image" # Tool for building source and injecting into docker images
 # brew "sysdig" # System-level exploration and troubleshooting tool
 # brew "syft" # CLI for generating a Software Bill of Materials from container images
@@ -1102,7 +1102,6 @@ brew "jsonlint" # checker
 # brew "msgpack-tools" # Command-line tools for converting between MessagePack and JSON
 # brew "netlistsvg" # Draws an SVG schematic from a yosys JSON netlist
 # brew "nlohmann-json" # JSON for modern C++
-# brew "npm-check-updates" # Find newer versions of dependencies than what your package.json allows
 # brew "oj" # JSON parser and visualization tool
 # brew "oq" # Performant, and portable jq wrapper to support formats other than JSON
 # brew "otree" # Command-line tool to view objects (JSON/YAML/TOML) in TUI tree widget
@@ -1254,6 +1253,8 @@ brew "yq" # jq for XML (see YAML section)
 brew "xq" # jq for XML
 # dasel: XML query and modification tool
 # html-xml-utils: Tools for manipulating HTML and XML files
+
+brew "monolith" # saves complete web pages as a single HTML file
 
 # brew "xmlsectool" # for SAML - Check schema and signature of an XML document
 
@@ -1828,6 +1829,7 @@ brew "okta-awscli" # Okta authentication for awscli, don't know why there are tw
 # brew "lasso" # Library for Liberty Alliance and SAML protocols
 # brew "opensaml" # Library for Security Assertion Markup Language
 # brew "saml2aws" # Login and retrieve AWS temporary credentials using a SAML IDP
+# brew "xmlsectool" # for SAML - Check schema and signature of an XML document
 
 # OAuth
 # brew "git-credential-oauth" # Git credential helper that authenticates in browser using OAuth
@@ -1960,6 +1962,7 @@ cask "ngrok"
 
 # SSH
 brew "openssh" # OpenBSD freely-licensed SSH connectivity tools
+
 # brew "apt-dater" # Manage package updates on remote hosts using SSH
 # brew "assh" # Advanced SSH config - Regex, aliases, gateways, includes and dynamic hosts
 # brew "autossh" # Automatically restart SSH sessions and tunnels
@@ -2142,7 +2145,7 @@ brew "shfmt" # formats a shell script
 # brew "checkbashisms" # Checks for bashisms in shell scripts
 # brew "dhall-bash" # Compile Dhall to Bash
 # brew "fff" # Simple file manager written in bash
-# brew "git-secret" # Bash-tool to store private data inside a git repo
+# brew "git-secret" # Bash-tool to store private data inside a Git repo
 # brew "goto" # Bash tool for navigation to aliased directories with auto-completion
 # brew "homeshick" # Git dotfiles synchronizer written in bash
 # brew "oil" # Bash-compatible Unix shell with more consistent syntax and semantics
@@ -2244,8 +2247,8 @@ brew "f2" # renames files
 brew "fcp" # faster cp
 brew "fd"
 brew "fex" # cut and awk alternative that tries to be more concise and readable
-brew "flawz" # terminal browser for security vulnerabilities (CVEs)
 brew "grex" # regex generator
+brew "maclaunch" # Manage your macOS startup items
 brew "hyperfine" # useful benchmarking tool
 brew "progressline" # track commands progress in a compact one-line format
 brew "sd" # sed replacement
@@ -2258,13 +2261,22 @@ brew "trurl" # by curl team - tr for URLs
 brew "uni" # search unicode and emoji database
 brew "usage" # specification for CLIs
 brew "viddy" # better watch command
-brew "vulsio-gost" # local CVE tracker & notification system
 brew "watch" # # runs a program periodically, its showing output
 brew "watchexec" # watches files and triggers actions
 brew "wcurl"
 brew "xe" # xargs replacement
 brew "xidel" # super useful for reading web pages I think
-# cask "raycast" # searches DevDocs - commented out because you must install manually since the app manages its own updates like Google Chrome
+
+brew "exploitdb" # Database of public exploits and corresponding vulnerable software
+brew "flawz" # terminal browser for security vulnerabilities (CVEs)
+brew "osv-scanner" # Vulnerability scanner which uses the OSV database (by Google)
+brew "vulsio-gost" # local CVE tracker & notification system
+brew "vunnel" # Tool for collecting vulnerability data from various sources
+
+# brew "govulncheck" # Database client and tools for the Go vulnerability database
+# brew "pip-audit" # Audits Python environments and dependency trees for known vulnerabilities
+
+# cask "raycast" # searches DevDocs - commented out because the app manages its own updates like Google Chrome
 # brew "flamegraph" # by Brendan Gregg - stack trace visualizer
 # brew "gat" # cat alternative in Go
 # brew "hck" # cut alternative that supports regex delimiters
@@ -2282,6 +2294,8 @@ brew "corepack" # Installs a package manager that is not npm, such as pnpm or ya
 brew "deno" # Run JavaScript code outside of a browser
 brew "node" # Platform built on V8 to build network applications
 brew "node@20" # Run JavaScript code outside of a browser
+
+# brew "npm-check-updates" # Find newer versions of dependencies than what your package.json allows
 # also, np on npm - a better npm publish (by Sindre Sorhus)
 
 # brew "json2ts" # Compile JSONSchema to TypeScript type declarations
@@ -2427,9 +2441,13 @@ brew "nfpm" # creates a Debian or Red Hat package
 # brew "wasm-pack" # Your favorite rust -> wasm workflow tool
 # brew "wasm-tools" # Low level tooling for WebAssembly in Rust
 
-brew "pipx" # runs binaries from Python packages in isolated environments
-brew "python" # interpreted, interactive, object-oriented programming language
-cask "miniconda" # minimal installer for conda
+brew "pipx" # Install a Python package as a command
+brew "python" # Interpreted, interactive, object-oriented programming language
+cask "miniconda" # Minimal installer for conda
+
+# brew "pipdeptree" # CLI to display dependency tree of the installed Python packages
+# brew "pipgrip" # Lightweight pip dependency resolver
+# brew "pip-tools" # Locking and sync for Pip requirements files
 
 # brew "abi3audit" # Scans Python packages for abi3 violations and inconsistencies
 # brew "austin" # Python frame stack sampler for CPython
@@ -2463,7 +2481,6 @@ cask "miniconda" # minimal installer for conda
 # brew "nox" # Flexible test automation for Python
 # brew "pdm" # Modern Python package and dependency manager supporting the latest PEP standards
 # brew "pip-audit" # Audits Python environments and dependency trees for known vulnerabilities
-# brew "pipdeptree" # CLI to display dependency tree of the installed Python packages
 # brew "pipenv" # Python dependency management tool
 # brew "pipx" # Execute binaries from Python packages in isolated environments
 # brew "platypus" # Create macOS applications from {Perl,Ruby,sh,Python} scripts
@@ -2646,6 +2663,7 @@ cask "dotnet-sdk" # runtime and compiler of .NET Core
 # brew "dotnet" # .NET Core - runtime only
 # brew "mono" # Cross platform, open source .NET development framework
 
+brew "llvm" # Compiler infrastructure for C/C++ and Rust
 # brew "bear" # Generate compilation database for clang tooling
 # brew "cargo-binutils" # Cargo subcommands to invoke the LLVM tools shipped with the Rust toolchain
 # brew "cargo-llvm-cov" # Cargo subcommand to easily use LLVM source-based code coverage
@@ -2659,7 +2677,7 @@ cask "dotnet-sdk" # runtime and compiler of .NET Core
 # brew "enzyme" # High-performance automatic differentiation of LLVM
 # brew "lit" # Portable tool for LLVM- and Clang-style test suites
 # brew "llgo" # Go compiler based on LLVM integrate with the C ecosystem and Python
-# brew "llvm" # Next-gen compiler infrastructure
+# brew "pkg-config-wrapper" # Easier way to include C code in your Go program
 # brew "retdec" # Retargetable machine-code decompiler based on LLVM
 # brew "rtags" # Source code cross-referencer like ctags with a clang frontend
 # brew "spirv-llvm-translator" # Tool and a library for bi-directional translation between SPIR-V and LLVM IR
@@ -2740,7 +2758,6 @@ brew "hcloud" # Hetzner Cloud
 brew "linode-cli"
 brew "mas"
 brew "md5deep"
-brew "monolith"
 brew "netlify-cli"
 brew "oci-cli"
 brew "pocketbase"
@@ -2878,10 +2895,6 @@ vscode "yoavbls.pretty-ts-errors"
 # Crawling and spidering framework
 # https://github.com/projectdiscovery/katana
 
-# kcat
-# Generic command-line non-JVM Apache Kafka producer and consumer
-# https://github.com/edenhill/kcat
-
 # keploy
 # Testing Toolkit creates test-cases and data mocks from API calls, DB queries
 # https://keploy.io
@@ -2910,21 +2923,9 @@ vscode "yoavbls.pretty-ts-errors"
 # LDAP enumeration utility
 # https://github.com/franc-pentest/ldeep
 
-# leaps
-# Collaborative web-based text editing service written in Golang
-# https://github.com/jeffail/leaps
-
 # leetup
 # Command-line tool to solve Leetcode problems
 # https://github.com/dragfire/leetup
-
-# legit
-# Command-line interface for Git, optimized for workflow simplicity
-# https://frostming.github.io/legit/
-
-# lerna
-# Tool for managing JavaScript projects with multiple packages
-# https://lerna.js.org
 
 # linkerd
 # Command-line utility to interact with linkerd
@@ -2937,10 +2938,6 @@ vscode "yoavbls.pretty-ts-errors"
 # litani
 # Metabuild system
 # https://awslabs.github.io/aws-build-accumulator/
-
-# literate-git
-# Render hierarchical git repositories into HTML
-# https://github.com/bennorth/literate-git
 
 # livekit
 # Scalable, high-performance WebRTC server
@@ -2957,10 +2954,6 @@ vscode "yoavbls.pretty-ts-errors"
 # llm
 # Access large language models from the command-line
 # https://llm.datasette.io/
-
-# llnode
-# LLDB plugin for live/post-mortem debugging of node.js apps
-# https://github.com/nodejs/llnode
 
 # localtunnel
 # Exposes your localhost to the world for easy testing and sharing
@@ -3006,18 +2999,6 @@ vscode "yoavbls.pretty-ts-errors"
 # Extremely fast file and directory name linter
 # https://ls-lint.org/
 
-# lucky-commit
-# Customize your git commit hashes!
-# https://github.com/not-an-aardvark/lucky-commit
-
-# lux
-# Fast and simple video downloader
-# https://github.com/iawia002/lux
-
-# maclaunch
-# Manage your macOS startup items
-# https://github.com/hazcod/maclaunch
-
 # macosvpn
 # Create Mac OS VPNs programmatically
 # https://github.com/halo/macosvpn
@@ -3038,14 +3019,6 @@ vscode "yoavbls.pretty-ts-errors"
 # Quickly generate a temporary email address
 # https://github.com/BalliAsghar/Mailsy
 
-# manifest-tool
-# Command-line tool to create and query container image manifest list/indexes
-# https://github.com/estesp/manifest-tool/
-
-# mantra
-# Tool to hunt down API key leaks in JS files and pages
-# https://amoloht.github.io
-
 # masscan
 # TCP port scanner, scans entire Internet in under 5 minutes
 # https://github.com/robertdavidgraham/masscan/
@@ -3053,14 +3026,6 @@ vscode "yoavbls.pretty-ts-errors"
 # massren
 # Easily rename multiple files using your text editor
 # https://github.com/laurent22/massren
-
-# maturin
-# Build and publish Rust crates as Python packages
-# https://github.com/PyO3/maturin
-
-# maxwell
-# Reads MySQL binlogs and writes row updates as JSON to Kafka
-# https://maxwells-daemon.io/
 
 # megacmd
 # Command-line client for mega.co.nz storage service
@@ -3090,17 +3055,9 @@ vscode "yoavbls.pretty-ts-errors"
 # Sign files & verify signatures. Works with signify in OpenBSD
 # https://jedisct1.github.io/minisign/
 
-# miruo
-# Pretty-print TCP session monitor/analyzer
-# https://github.com/KLab/miruo/
-
 # mist-cli
 # Mac command-line tool that automatically downloads macOS Firmwares / Installers
 # https://github.com/ninxsoft/mist-cli
-
-# mjml
-# JavaScript framework that makes responsive-email easy
-# https://mjml.io
 
 # mkp224o
 # Vanity address generator for tor onion v3 (ed25519) hidden services
@@ -3118,57 +3075,17 @@ vscode "yoavbls.pretty-ts-errors"
 # Remote CLI tool for Mattermost server
 # https://github.com/mattermost/mmctl
 
-# mockery
-# Mock code autogenerator for Golang
-# https://github.com/vektra/mockery
-
-# mockolo
-# Efficient Mock Generator for Swift
-# https://github.com/uber/mockolo
-
-# modgit
-# Tool for git repo deploy with filters. Used for magento development
-# https://github.com/jreinke/modgit
-
 # modman
 # Module deployment script geared towards Magento development
 # https://github.com/colinmollenhour/modman
-
-# mogenerator
-# Generate Objective-C & Swift classes from your Core Data model
-# https://rentzsch.github.io/mogenerator/
-
-# monolith
-# CLI tool for saving complete web pages as a single HTML file
-# https://github.com/Y2Z/monolith
-
-# moon
-# Task runner and repo management tool for the web ecosystem, written in Rust
-# https://moonrepo.dev/moon
-
-# moz-git-tools
-# Tools for working with Git at Mozilla
-# https://github.com/mozilla/moz-git-tools
 
 # mqttui
 # Subscribe to a MQTT Topic or publish something quickly from the terminal
 # https://github.com/EdJoPaTo/mqttui
 
-# mr
-# Multiple Repository management tool
-# https://myrepos.branchable.com/
-
 # msktutil
 # Active Directory keytab management
 # https://github.com/msktutil/msktutil
-
-# mu-repo
-# Tool to work with multiple git repositories
-# https://github.com/fabioz/mu-repo
-
-# multi-git-status
-# Show uncommitted, untracked and unpushed changes for multiple Git repos
-# https://github.com/fboender/multi-git-status
 
 # naga-cli
 # Shader translation command-line tool
@@ -3177,14 +3094,6 @@ vscode "yoavbls.pretty-ts-errors"
 # nebula
 # Scalable overlay networking tool for connecting computers anywhere
 # https://github.com/slackhq/nebula
-
-# needle
-# Compile-time safe Swift dependency injection framework with real code
-# https://github.com/uber/needle
-
-# nef
-# Steroids for Xcode Playgrounds
-# https://nef.bow-swift.io
 
 # neonctl
 # Neon CLI tool
@@ -3238,10 +3147,6 @@ vscode "yoavbls.pretty-ts-errors"
 # Stream the output of any CLI and publish it to a variety of supported platforms
 # https://github.com/projectdiscovery/notify
 
-# npm-check-updates
-# Find newer versions of dependencies than what your package.json allows
-# https://github.com/raineorshine/npm-check-updates
-
 # nsq
 # Realtime distributed messaging platform
 # https://nsq.io/
@@ -3262,14 +3167,6 @@ vscode "yoavbls.pretty-ts-errors"
 # Renders an animated, color, ANSI-text loop of the Poptart Cat
 # https://github.com/klange/nyancat
 
-# objc-codegenutils
-# Three small tools to help work with XCode
-# https://github.com/puls/objc-codegenutils
-
-# ocm
-# CLI for the Red Hat OpenShift Cluster Manager
-# https://www.openshift.com/
-
 # octobuild
 # Compiler cache for Unreal Engine
 # https://github.com/octobuild/octobuild
@@ -3278,21 +3175,9 @@ vscode "yoavbls.pretty-ts-errors"
 # Tool to manage your Oh Dear sites
 # https://github.com/ohdearapp/ohdear-cli
 
-# oj
-# JSON parser and visualization tool
-# https://github.com/ohler55/ojg
-
-# onefetch
-# Command-line Git information tool
-# https://onefetch.dev/
-
 # opa
 # Open source, general-purpose policy engine
 # https://www.openpolicyagent.org
-
-# oras
-# OCI Registry As Storage
-# https://github.com/oras-project/oras
 
 # osc
 # Command-line interface to work with an Open Build Service
@@ -3306,10 +3191,6 @@ vscode "yoavbls.pretty-ts-errors"
 # Fast and efficient osquery management
 # https://osctrl.net
 
-# osv-scanner
-# Vulnerability scanner which uses the OSV database
-# https://github.com/google/osv-scanner
-
 # oslo
 # CLI tool for the OpenSLO spec
 # https://openslo.com/
@@ -3317,10 +3198,6 @@ vscode "yoavbls.pretty-ts-errors"
 # packetbeat
 # Lightweight Shipper for Network Data
 # https://www.elastic.co/products/beats/packetbeat
-
-# packetq
-# SQL-like frontend to PCAP files
-# https://www.dns-oarc.net/tools/packetq
 
 # pawk
 # Python line processor (like AWK)
@@ -3330,10 +3207,6 @@ vscode "yoavbls.pretty-ts-errors"
 # Interactive grep tool
 # https://github.com/mooz/percol
 
-# percona-toolkit
-# Command-line tools for MySQL, MariaDB and system tasks
-# https://www.percona.com/software/percona-toolkit/
-
 # percona-xtrabackup
 # Open source hot backup tool for InnoDB and XtraDB databases
 # https://www.percona.com/software/mysql-database/percona-xtrabackup
@@ -3342,26 +3215,6 @@ vscode "yoavbls.pretty-ts-errors"
 # Tool to interact with the Phrase API
 # https://phrase.com/
 
-# pip-audit
-# Audits Python environments and dependency trees for known vulnerabilities
-# https://pypi.org/project/pip-audit/
-
-# pip-tools
-# Locking and sync for Pip requirements files
-# https://pip-tools.readthedocs.io
-
-# pipdeptree
-# CLI to display dependency tree of the installed Python packages
-# https://github.com/tox-dev/pipdeptree
-
-# pkg-config-wrapper
-# Easier way to include C code in your Go program
-# https://github.com/influxdata/pkg-config
-
-# platypus
-# Create macOS applications from {Perl,Ruby,sh,Python} scripts
-# https://sveinbjorn.org/platypus
-
 # pocketbase
 # Open source backend for your next project in 1 file
 # https://pocketbase.io/
@@ -3369,10 +3222,6 @@ vscode "yoavbls.pretty-ts-errors"
 # ponysay
 # Cowsay but with ponies
 # https://github.com/erkin/ponysay/
-
-# pre-commit
-# Framework for managing multi-language Git pre-commit hooks
-# https://pre-commit.com/
 
 # principalmapper
 # Quickly evaluate IAM permissions in AWS
@@ -3386,38 +3235,6 @@ vscode "yoavbls.pretty-ts-errors"
 # Log agent for Loki
 # https://grafana.com/loki
 
-# protoc-gen-go
-# Go support for Google's protocol buffers
-# https://github.com/protocolbuffers/protobuf-go
-
-# protoc-gen-go-grpc
-# Protoc plugin that generates code for gRPC-Go clients
-# https://github.com/grpc/grpc-go
-
-# protoc-gen-gogo
-# Protocol Buffers for Go with Gadgets
-# https://github.com/gogo/protobuf
-
-# protoc-gen-gogofaster
-# Protocol Buffers for Go with Gadgets
-# https://github.com/gogo/protobuf
-
-# protoc-gen-grpc-web
-# Protoc plugin that generates code for gRPC-Web clients
-# https://github.com/grpc/grpc-web
-
-# protoc-gen-js
-# Protocol buffers JavaScript generator plugin
-# https://github.com/protocolbuffers/protobuf-javascript
-
-# protolint
-# Pluggable linter and fixer to enforce Protocol Buffer style and conventions
-# https://github.com/yoheimuta/protolint
-
-# prototool
-# Your Swiss Army Knife for Protocol Buffers
-# https://github.com/uber/prototool
-
 # prowler
 # Tool for cloud security assessments, audits, incident response, and more
 # https://prowler.com/
@@ -3430,10 +3247,6 @@ vscode "yoavbls.pretty-ts-errors"
 # Show ps output as a tree
 # https://github.com/FredHucht/pstree
 
-# ptpython
-# Advanced Python REPL
-# https://github.com/prompt-toolkit/ptpython
-
 # pulsarctl
 # CLI for Apache Pulsar written in Go
 # https://streamnative.io/
@@ -3445,10 +3258,6 @@ vscode "yoavbls.pretty-ts-errors"
 # rack
 # CLI for Rackspace
 # https://github.com/rackspace/rack
-
-# rain
-# Command-line tool for working with AWS CloudFormation
-# https://github.com/aws-cloudformation/rain
 
 # rancher-cli
 # Unified tool to manage your Rancher server
@@ -3474,10 +3283,6 @@ vscode "yoavbls.pretty-ts-errors"
 # Unofficial Bitwarden CLI client
 # https://github.com/doy/rbw
 
-# rds-command-line-tools
-# Amazon RDS command-line toolkit
-# https://aws.amazon.com/developertools/2928
-
 # react-native-cli
 # Tools for creating native apps for Android and iOS
 # https://facebook.github.io/react-native/
@@ -3490,29 +3295,9 @@ vscode "yoavbls.pretty-ts-errors"
 # Command-line tool to access OSX Reminders.app database
 # https://github.com/kykim/rem
 
-# remarshal
-# Convert between TOML, YAML and JSON
-# https://github.com/dbohdan/remarshal
-
-# reorder-python-imports
-# Rewrites source to reorder python imports
-# https://github.com/asottile/reorder_python_imports
-
-# revive
-# Fast, configurable, extensible, flexible, and beautiful linter for Go
-# https://revive.run
-
 # rhit
 # Nginx log explorer
 # https://dystroy.org/rhit/
-
-# risor
-# Fast and flexible scripting for Go developers and DevOps
-# https://risor.io/
-
-# river
-# Reverse proxy application, based on the pingora library from Cloudflare (HTTP or WebSocket)
-# https://github.com/memorysafety/river
 
 # rocksdb
 # Embeddable, persistent key-value store for fast storage
@@ -3526,10 +3311,6 @@ vscode "yoavbls.pretty-ts-errors"
 # Carthage cache for S3, Minio, Ceph, Google Storage, Artifactory and many others
 # https://github.com/tmspzz/Rome
 
-# rosa-cli
-# RedHat OpenShift Service on AWS (ROSA) command-line interface
-# https://www.openshift.com/products/amazon-openshift
-
 # rpm
 # Standard unix software packaging tool
 # https://rpm.org/
@@ -3542,14 +3323,6 @@ vscode "yoavbls.pretty-ts-errors"
 # Utility for handling RPM spec files
 # https://github.com/nphilipp/rpmspectool
 
-# rslint
-# Extremely fast JavaScript and TypeScript linter
-# https://rslint.org/
-
-# rubyfmt
-# Ruby autoformatter
-# https://github.com/fables-tales/rubyfmt
-
 # ruler
 # Tool to abuse Exchange services (#email)
 # https://github.com/sensepost/ruler
@@ -3558,21 +3331,9 @@ vscode "yoavbls.pretty-ts-errors"
 # Easily manage and invoke small scripts and wrappers
 # https://github.com/TekWizely/run
 
-# rust-analyzer
-# Experimental Rust compiler front-end for IDEs
-# https://rust-analyzer.github.io/
-
-# rustfmt
-# Format Rust code
-# https://rust-lang.github.io/rustfmt/
-
 # salt-lint
 # Check for best practices in SaltStack
 # https://github.com/warpnet/salt-lint
-
-# saml2aws
-# Login and retrieve AWS temporary credentials using a SAML IDP
-# https://github.com/Versent/saml2aws
 
 # sbom-tool
 # Scalable and enterprise ready tool to create SBOMs for any variety of artifacts
@@ -3581,10 +3342,6 @@ vscode "yoavbls.pretty-ts-errors"
 # scalingo
 # CLI for working with Scalingo's PaaS
 # https://doc.scalingo.com/cli
-
-# sceptre
-# Build better AWS infrastructure doing whatever with Cloudformation templates
-# https://docs.sceptre-project.org/
 
 # scorecard
 # Security health metrics for Open Source
@@ -3605,10 +3362,6 @@ vscode "yoavbls.pretty-ts-errors"
 # semgrep
 # Easily detect and prevent bugs and anti-patterns in your codebase
 # https://semgrep.dev
-
-# semtag
-# Semantic tagging script for git
-# https://github.com/nico2sh/semtag
 
 # serverless
 # Build applications with serverless architectures
@@ -3633,14 +3386,6 @@ vscode "yoavbls.pretty-ts-errors"
 # silicon
 # Create beautiful image of your source code
 # https://github.com/Aloxaf/silicon/
-
-# singularity
-# Application container and unprivileged sandbox platform for Linux
-# https://apptainer.org/
-
-# skopeo
-# Work with remote images registries
-# https://github.com/containers/skopeo
 
 # smap
 # Drop-in replacement for Nmap powered by shodan.io
@@ -3670,97 +3415,13 @@ vscode "yoavbls.pretty-ts-errors"
 # Spoof your MAC address in macOS
 # https://github.com/feross/SpoofMAC
 
-# spr
-# Submit pull requests for individual, amendable, rebaseable commits to GitHub
-# https://github.com/getcord/spr
-
-# sql-lint
-# SQL linter to do sanity checks on your queries and bring errors back from the DB
-# https://github.com/joereynolds/sql-lint
-
-# sql-translator
-# Manipulate structured data definitions (SQL and more)
-# https://github.com/dbsrgits/sql-translator/
-
-# sqlancer
-# Detecting Logic Bugs in DBMS
-# https://github.com/sqlancer/sqlancer
-
-# sqlbench
-# Measures and compares the execution time of one or more SQL queries
-# https://github.com/felixge/sqlbench
-
-# sqlboiler
-# Generate a Go ORM tailored to your database schema
-# https://github.com/volatiletech/sqlboiler
-
-# sqlc
-# Generate type safe Go from SQL
-# https://sqlc.dev/
-
-# sqlcipher
-# SQLite extension providing 256-bit AES encryption
-# https://www.zetetic.net/sqlcipher/
-
-# sqlcmd
-# Microsoft SQL Server command-line interface
-# https://github.com/microsoft/go-sqlcmd
-
-# sqlfluff
-# SQL linter and auto-formatter for Humans
-# https://docs.sqlfluff.com/
-
-# sqlfmt
-# SQL formatter with width-aware output
-# https://sqlfum.pt/
-
-# sqlmap
-# Penetration testing for SQL injection and database servers
-# https://sqlmap.org
-
-# sqlpage
-# Web application framework, for creation of websites with simple database queries
-# https://sql.ophir.dev/
-
-# sqlparse
-# Non-validating SQL parser
-# https://github.com/andialbrecht/sqlparse
-
-# sqlsmith
-# Random SQL query generator
-# https://github.com/anse1/sqlsmith
-
-# sqlx-cli
-# Command-line utility for SQLx, the Rust SQL toolkit
-# https://github.com/launchbadge/sqlx
-
-# sqsmover
-# AWS SQS Message mover
-# https://github.com/mercury2269/sqsmover
-
-# ssh3
-# Faster and richer secure shell using HTTP/3
-# https://github.com/francoismichel/ssh3
-
-# staticcheck
-# State of the art linter for the Go programming language
-# https://staticcheck.io/
-
 # suricata
 # Network IDS, IPS, and security monitoring engine
 # https://suricata.io
 
-# taplo
-# TOML toolkit written in Rust
-# https://taplo.tamasfe.dev
-
 # tbls
 # CI-Friendly tool for document a database
 # https://github.com/k1LoW/tbls
-
-# tea
-# Command-line tool to interact with Gitea servers
-# https://gitea.com/gitea/tea
 
 # temporal
 # Command-line interface for running and interacting with Temporal Server and UI
@@ -3813,7 +3474,3 @@ vscode "yoavbls.pretty-ts-errors"
 # tremor-runtime
 # Early-stage event processing system for unstructured data
 # https://www.tremor.rs/
-
-# trino
-# Distributed SQL query engine for big data
-# https://trino.io

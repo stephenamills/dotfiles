@@ -91,42 +91,45 @@ ghs() {
   gh search $@
 }
 
-# Search for GitHub issues and opens them in the browser
+# Search a GitHub repo for issues matching some search terms and open each issue in a browser
+# Usage: ghissueb <owner/repo> <search terms>
 ghissueb() {
   repo=$1
-  shift # This shifts the positional parameters to the left, so $2 becomes $1, $3 becomes $2, etc. Zero clue what that actually means.
+
+  shift # This shifts the positional parameters down by one, which deletes the first argument in $@
   gh search issues -R $repo $@ | awk '{ print $2 }' | xargs -P 8 -I {} gh issue view -R $repo {} -w
 }
 
-# Open multiple GitHub issues in the browser
-# Must be invoked as ghib <repo> <issue1> <issue2> ...
-ghib() {
-  repo=$1
-  shift # This shifts the positional parameters to the left, so $2 becomes $1, $3 becomes $2, etc.
-  for issue in "$@"; do
-    # Remove preceding # if it exists
-    clean_issue=${issue#\#}
-    open "https://github.com/$repo/issues/$clean_issue"
-  done
-}
-
-# Search for GitHub repositories and opens them in the browser
+# Search for GitHub repos and open each result in a browser
 ghrepob() {
   gh search repos $@ | awk '{print $1}' | xargs -n 1 -P 8 hub browse
 }
 
-# Open GitHub repositories in the browser
+# Open GitHub repos in a browser
 ghrb() {
   echo "$@" | xargs -n 1 -P 8 hub browse
 }
 
-# Commit changes to a Git repository
+# Open GitHub issues in a browser
+# Usage: ghib <owner/repo> <issue1> <issue2> ...
+gi() {
+  repo=$1
+
+  shift # This shifts the positional parameters down by one, which deletes the first argument in $@
+  for issue in "$@"; do
+    # Remove preceding '#' if it exists and construct the URL
+    clean_issue=${issue#\#}
+    echo "https://github.com/$repo/issues/$clean_issue"
+  done | xargs -n 1 -P 8 open
+}
+
+# Commit changes to a Git repo
 gitp() {
   # Prompt for the commit message
   printf 'Enter commit message: '
   read msg
 
-  # Execute git commands without an additional note
+  # Execute Git commands without an additional note
   git add .
   git commit -m "$msg"
 
@@ -144,7 +147,7 @@ gitpl() {
   printf 'Enter commit note: '
   read msg2
 
-  # Execute git commands with an additional note
+  # Execute Git commands with an additional note
   git add .
   git commit -m "$msg" -m "$msg2"
 

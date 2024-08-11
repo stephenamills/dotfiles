@@ -112,7 +112,7 @@ ghrb() {
 
 # Open GitHub issues in a browser
 # Usage: ghib <owner/repo> <issue1> <issue2> ...
-gi() {
+ghrepoib() {
   repo=$1
 
   shift # This shifts the positional parameters down by one, which deletes the first argument in $@

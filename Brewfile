@@ -1813,6 +1813,7 @@ brew "rsc_2fa" # by Russ Cox - Two-factor authentication on the command-line
 brew "tailscale" # easiest way to use WireGuard and 2FA
 brew "totp-cli" # Authy/Google Authenticator like TOTP CLI tool written in Go
 # brew "google-authenticator-libpam" # PAM module for two-factor authentication
+# brew "descope" # Tool for performing common tasks on Descope projects
 
 # brew "age-plugin-yubikey" # Plugin for encrypting files with age and PIV tokens such as YubiKeys
 # brew "pivit" # Sign and verify data using hardware (Yubikey) backed x509 certificates (PIV)
@@ -1950,18 +1951,50 @@ brew "zlint" # certificate checker, see also zcertificate and zschema
 # brew "xmlsectool" # Check schema validity and signature of an XML document
 
 # VPN
-brew "bore-cli" # only 400 lines of code
-brew "boringtun"
-brew "openconnect" # client for Palo Alto, Cisco, Juniper, and Fortinet VPNs
-brew "vpn-slice"
-cask "ngrok"
+brew "bore-cli" # Modern, simple TCP tunnel in Rust that exposes local ports to a remote server (only 400 lines of code)
+brew "openconnect" # Client for Palo Alto, Cisco, Juniper, and Fortinet VPNs
+brew "vpn-slice" # Vpnc-script replacement for easy and secure split-tunnel VPN setup
+cask "ngrok" # Reverse proxy, secure introspectable tunnels to localhost
 
-# Also, see Tailscale below (Mac App Store)
-# brew "wireguard-go"
-# brew "wireguard-tools"
+# brew "boringtun" # Userspace WireGuard implementation in Rust
+# brew "tailscale" # Easiest, most secure way to use WireGuard and 2FA (Server - also, see the Mac App Store Tailscale client below)
+# brew "wgcf" # Generate WireGuard profile from Cloudflare Warp account
+# brew "wireguard-go" # Userspace Go implementation of WireGuard
+# brew "wireguard-tools" # Tools for the WireGuard secure network tunnel
+
+# brew "dsvpn" # Dead Simple VPN
+# brew "killswitch" # VPN kill switch for macOS
+# brew "kubevpn" # Offers a Cloud-Native Dev Environment that connects to your K8s cluster network
+# brew "macosvpn" # Create Mac OS VPNs programmatically
+# brew "openfortivpn" # Open Fortinet client for PPP+TLS VPN tunnel services
+# brew "openvpn" # SSL/TLS VPN implementing OSI layer 2 or 3 secure network extension
+# brew "strongswan" # VPN based on IPsec
+# brew "tinc" # Virtual Private Network (VPN) tool
+
+# brew "autossh" # Automatically restart SSH sessions and tunnels
+# brew "chisel-tunnel" # Fast TCP/UDP tunnel over HTTP
+# brew "clash" # Rule-based tunnel in Go
+# brew "cloudflared" # Cloudflare Tunnel client (formerly Argo Tunnel)
+# brew "corkscrew" # Tunnel SSH through HTTP proxies
+# brew "fastd" # Fast and Secure Tunnelling Daemon
+# brew "ghostunnel" # Simple SSL/TLS proxy with mutual authentication
+# brew "gost" # Go Simple Tunnel - a simple tunnel written in golang
+# brew "kcptun" # Stable & Secure Tunnel based on KCP with N:M multiplexing and FEC
+# brew "localtunnel" # Exposes your localhost to the world for easy testing and sharing
+# brew "mihomo" # Another rule-based tunnel in Go, formerly known as ClashMeta
+# brew "openssh" # OpenBSD SSH connectivity tools (SSH tunneling)
+# brew "pgrok" # ngrok alternative - multi-tenant HTTP/TCP reverse tunnel solution
+# brew "proxytunnel" # Create TCP tunnels through HTTPS proxies
+# brew "ptunnel" # Tunnel over ICMP
+# brew "rospo" # Simple, reliable, persistent ssh tunnels with embedded ssh server
+# brew "stunnel" # SSL tunneling program
+# brew "tcptunnel" # TCP port forwarder
+# brew "tunnel" # Expose local servers to the internet securely
+# brew "udptunnel" # Tunnel UDP packets over a TCP connection
+# brew "wstunnel" # Tunnel all your traffic over Websocket or HTTP2
 
 # SSH
-brew "openssh" # OpenBSD freely-licensed SSH connectivity tools
+brew "openssh" # OpenBSD SSH connectivity tools
 
 # brew "apt-dater" # Manage package updates on remote hosts using SSH
 # brew "assh" # Advanced SSH config - Regex, aliases, gateways, includes and dynamic hosts
@@ -2235,37 +2268,111 @@ brew "perl" # Highly capable, feature-rich programming language
 # brew "superlu" # Solve large, sparse nonsymmetric systems of equations
 
 # Utilities
-brew "align"
-brew "as-tree"
+
+brew "cowsay" # Configurable talking characters in ASCII art
+brew "lolcat" # Rainbows and unicorns in your console!
+brew "nyancat" # Renders an animated, color, ANSI-text loop of the Poptart Cat
+brew "ponysay" # Cowsay but with ponies
+
+brew "rargs" # Util like xargs + awk with pattern matching support
+brew "xe" # Simple xargs and apply replacement
+
+brew "align" # Text column alignment filter
+# also, the column command is useful for this
+
+brew "viddy" # Modern watch command
+brew "watch" # Run a program periodically, showing its output
+# brew "cargo-watch" # Watches over your Cargo project's source
+# brew "direnv" # Load/unload environment variables based on $PWD (is also able to watch files)
+# brew "dwatch" # Watch programs and perform actions based on a configuration file
+# brew "fsevent_watch" # macOS FSEvents client
+# brew "fswatch" # Monitor a directory for changes and run a shell command
+# brew "hwatch" # Modern alternative to the watch command
+# brew "urlwatch" # Get notified when a webpage changes
+# brew "visionmedia-watch" # Periodically executes the given command
+# brew "watchexec" # Execute commands when watched files change
+# brew "watchman" # Watch files and take action when they change
+
+brew "as-tree" # Print a list of paths as a tree of paths
+brew "tree" # Display directories as trees
+
+# brew "bfs" # Breadth-first version of find
+# brew "fd" # Simple, fast and user-friendly alternative to find
+# brew "ffind" # Friendlier find
+# brew "findutils" # Collection of GNU find, xargs, and locate
+# brew "fselect" # Find files with SQL-like queries
+# brew "fuzzy-find" # Fuzzy filename finder matching across directories as well as files
+# brew "fzf" # Command-line fuzzy finder written in Go
+# brew "sk" # Fuzzy Finder in rust!
+# brew "uutils-findutils" # Cross-platform Rust rewrite of the GNU findutils
+# brew "zf" # Command-line fuzzy finder that prioritizes matches on filenames
+# brew "zfind" # Search for files (even inside tar/zip/7z/rar) using a SQL-WHERE filter
+
+# brew "broot" # New way to see and navigate directory trees
+# brew "dep-tree" # Tool for visualizing dependencies between files and enforcing dependency rules
+# brew "erdtree" # Multi-threaded file-tree visualizer and disk usage analyzer
+# brew "johnnydep" # Display dependency tree of Python distribution
+# brew "ngt" # Neighborhood graph and tree for indexing high-dimensional data
+# brew "pip-audit" # Audits Python environments and dependency trees for known vulnerabilities
+# brew "pipdeptree" # CLI to display dependency tree of the installed Python packages
+# brew "pstree" # Show ps output as a tree
+# brew "tre-command" # Tree command, improved
+
+# brew "cargo-depgraph" # Creates dependency graphs for cargo projects
+# brew "certgraph" # Crawl the graph of certificate Alternate Names
+# brew "diffstat" # Produce graph of changes introduced by a diff file
+# brew "makefile2graph" # Create a graph of dependencies from GNU-Make
+# brew "ngt" # Neighborhood graph and tree for indexing high-dimensional data
+# brew "scotch" # Package for graph partitioning, graph clustering, and sparse matrix ordering
+# brew "uftrace" # Function graph tracer for C/C++/Rust
+
+brew "sd" # Intuitive find & replace
+brew "trurl" # URL parsing and manipulation - tr for URLs (by cURL team)
+
+# brew "cf" # Filter to replace numeric timestamps with a formatted date time
+# brew "comby" # Sed replacement, matches syntax instead of using a regex
+# brew "detox" # Utility to replace problematic characters in filenames
+# brew "f2" # Batch renaming tool
+# brew "gnu-sed" # GNU implementation of the stream editor
+# brew "gsar" # General Search And Replace on files
+# brew "minised" # Smaller sed implementation
+# brew "mysql-search-replace" # Database search and replace script in PHP
+# brew "rename" # renames files
+# brew "rpl" # Text replacement utility
+# brew "sad" # CLI search and replace | Space Age sed
+# brew "serpl" # Simple terminal UI for search and replace
+# brew "ssed" # Super sed stream editor
+
+brew "fex" # field extraction tool
+
+# brew "bioawk" # AWK modified for biological data
+# brew "choose-rust" # Human-friendly and fast alternative to cut and (sometimes) awk
+# brew "gawk" # GNU awk utility
+# brew "goawk" # POSIX-compliant AWK interpreter
+# brew "jsawk" # Like awk, but for JSON, using JavaScript objects and arrays
+# brew "mawk" # Interpreter for the AWK Programming Language
+# brew "miller" # Like sed, awk, cut, join & sort for name-indexed data such as CSV
+# brew "pawk" # Python line processor (like AWK)
+# brew "pk" # Field extractor
+# brew "rargs" # Util like xargs + awk with pattern matching support
+
 brew "bat"
-brew "choose-rust" # cut and awk alternative
-brew "comby" # sed replacement, matches with syntax instead of regexes
 brew "dasht" # searches offline documentation aggregated by Dash
 brew "difftastic" # super high-quality diff tool
 brew "diskus" # directory size
-brew "f2" # renames files
 brew "fcp" # faster cp
-brew "fd"
-brew "fex" # cut and awk alternative that tries to be more concise and readable
 brew "grex" # regex generator
 brew "maclaunch" # Manage your macOS startup items
 brew "hyperfine" # useful benchmarking tool
 brew "progressline" # track commands progress in a compact one-line format
-brew "sd" # sed replacement
 brew "s-search" # searches the web, also has a web interface
 brew "tailspin" # colorizes log files
 brew "tal"
 brew "tldr"
-brew "tree"
-brew "trurl" # by curl team - tr for URLs
 brew "uni" # search unicode and emoji database
 brew "usage" # specification for CLIs
-brew "viddy" # better watch command
-brew "watch" # # runs a program periodically, its showing output
-brew "watchexec" # watches files and triggers actions
 brew "wcurl"
-brew "xe" # xargs replacement
-brew "xidel" # super useful for reading web pages I think
+# brew "par" # Paragraph reflow for email
 
 brew "exploitdb" # Database of public exploits and corresponding vulnerable software
 brew "flawz" # terminal browser for security vulnerabilities (CVEs)
@@ -2277,13 +2384,14 @@ brew "vunnel" # Tool for collecting vulnerability data from various sources
 # brew "pip-audit" # Audits Python environments and dependency trees for known vulnerabilities
 
 # cask "raycast" # searches DevDocs - commented out because the app manages its own updates like Google Chrome
+# brew "fastmod" # Fast partial replacement for the codemod tool
 # brew "flamegraph" # by Brendan Gregg - stack trace visualizer
 # brew "gat" # cat alternative in Go
+# brew "hello" # Hello world program
 # brew "hck" # cut alternative that supports regex delimiters
 # brew "invoice" # generates pretty, professional invoices
 # brew "just" # runs project-specific commands, like Make
 # brew "nq" # Unix command-line queue utility
-# brew "rename" # renames files
 # brew "sampler" # Tool for shell commands execution, visualization and alerting
 # brew "titlecase" # capitalizes titles
 # brew "tuc" # cut replacement
@@ -2312,6 +2420,7 @@ brew "node@20" # Run JavaScript code outside of a browser
 # brew "eslint" # AST-based pattern checker for JavaScript
 # brew "flamebearer" # creates a flamegraph for a JavaScript app from a terminal – also has a web UI
 # brew "flow" # Static type checker for JavaScript
+# brew "grunt-cli" # JavaScript Task Runner
 # brew "imagejs" # Tool to hide JavaScript inside valid image files
 # brew "jose" # C-language implementation of Javascript Object Signing and Encryption
 # brew "jsdoc3" # API documentation generator for JavaScript
@@ -2615,6 +2724,7 @@ brew "php" # General-purpose scripting language
 # brew "xcode-kotlin" # Kotlin Native Xcode Plugin
 
 # brew "ant" # Java build tool
+# brew "ant-contrib" # Collection of tasks for Apache Ant
 # brew "asciidoctorj" # Java wrapper and bindings for Asciidoctor
 # brew "checkstyle" # Check Java source against a coding standard
 # brew "dex2jar" # Tools to work with Android .dex and Java .class files
@@ -2683,7 +2793,15 @@ brew "llvm" # Compiler infrastructure for C/C++ and Rust
 # brew "spirv-llvm-translator" # Tool and a library for bi-directional translation between SPIR-V and LLVM IR
 # brew "wllvm" # Toolkit for building whole-program LLVM bitcode files
 
+# brew "go-task" # Task is a task runner/build tool that aims to be simpler and easier to use
+# brew "mask" # CLI task runner defined by a simple markdown file
+# brew "moon" # Task runner and repo management tool for the web ecosystem, written in Rust
+# brew "pyinvoke" # Pythonic task management & command execution
+# brew "release-it" # Generic CLI tool to automate versioning and package publishing related tasks
+# brew "toast" # Tool for running tasks in containers
+
 # brew "autoconf" # Automatic configure script builder
+# brew "autoconf-archive" # Collection of over 500 reusable autoconf macros
 # brew "automake" # Tool for generating GNU Standards-compliant Makefiles
 # brew "bmake" # Portable version of NetBSD make(1)
 # brew "bsdmake" # BSD version of the Make build tool
@@ -2697,10 +2815,12 @@ brew "llvm" # Compiler infrastructure for C/C++ and Rust
 # brew "ftjam" # Build tool that can be used as a replacement for Make
 # brew "goredo" # Go implementation of djb's redo, a Makefile replacement that sucks less
 # brew "jam" # Make-like build tool
+# brew "m4" # Macro processing language
 # brew "mage" # Make/rake-like build tool using Go
 # brew "make" # Utility for directing compilation
 # brew "makedepend" # Creates dependencies in makefiles
 # brew "makefile2graph" # Create a graph of dependencies from GNU-Make
+# brew "mk-configure" # Lightweight replacement for GNU autotools
 # brew "netsurf-buildsystem" # Makefiles shared by NetSurf projects
 # brew "ninja" # Small build system for use with gyp or CMake
 # brew "omake" # Build system designed for scalability, portability, and concision
@@ -2987,10 +3107,6 @@ vscode "yoavbls.pretty-ts-errors"
 # Horizontally-scalable, highly-available log aggregation system
 # https://grafana.com/loki
 
-# lolcat
-# Rainbows and unicorns in your console!
-# https://github.com/busyloop/lolcat
-
 # lrzsz
 # Tools for zmodem/xmodem/ymodem file transfer
 # https://www.ohse.de/uwe/software/lrzsz.html
@@ -3163,10 +3279,6 @@ vscode "yoavbls.pretty-ts-errors"
 # Network UPS Tools: Support for various power devices
 # https://networkupstools.org/
 
-# nyancat
-# Renders an animated, color, ANSI-text loop of the Poptart Cat
-# https://github.com/klange/nyancat
-
 # octobuild
 # Compiler cache for Unreal Engine
 # https://github.com/octobuild/octobuild
@@ -3219,10 +3331,6 @@ vscode "yoavbls.pretty-ts-errors"
 # Open source backend for your next project in 1 file
 # https://pocketbase.io/
 
-# ponysay
-# Cowsay but with ponies
-# https://github.com/erkin/ponysay/
-
 # principalmapper
 # Quickly evaluate IAM permissions in AWS
 # https://github.com/nccgroup/PMapper
@@ -3266,10 +3374,6 @@ vscode "yoavbls.pretty-ts-errors"
 # rancid
 # Really Awesome New Cisco confIg Differ
 # https://www.shrubbery.net/rancid/
-
-# rargs
-# Util like xargs + awk with pattern matching support
-# https://github.com/lotabout/rargs
 
 # ratchet
 # Tool for securing CI/CD workflows with version pinning
@@ -3450,10 +3554,6 @@ vscode "yoavbls.pretty-ts-errors"
 # tmt
 # Test Management Tool
 # https://tmt.readthedocs.io
-
-# toast
-# Tool for running tasks in containers
-# https://github.com/stepchowfun/toast
 
 # touca
 # Open source tool for regression testing complex software workflows

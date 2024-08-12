@@ -91,6 +91,11 @@ ghs() {
   gh search $@
 }
 
+# Search GitHub repos
+ghrs() {
+  gh search repos $@
+}
+
 # Search a GitHub repo for issues matching some search terms and open each issue in a browser
 # Usage: ghissueb <owner/repo> <search terms>
 ghissueb() {

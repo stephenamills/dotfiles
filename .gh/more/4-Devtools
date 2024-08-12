@@ -104,7 +104,26 @@ https://github.com/moretea/nix-guides # hello world (abandoned)
 https://github.com/tazjin/nix-1p # Nix programming language introduction
 https://github.com/nixos/rfcs # proposals
 
-Docker
+Docker & Containers
+
+https://github.com/opencontainers/umoci
+https://github.com/opencontainers/runtime-tools
+
+https://github.com/opencontainers/runc
+
+https://github.com/opencontainers/runtime-spec
+https://github.com/opencontainers/image-spec
+https://github.com/opencontainers/distribution-spec
+
+https://github.com/moby/buildkit
+https://github.com/moby/docker-image-spec
+https://github.com/moby/containerd
+
+https://github.com/moby/swarmkit
+https://github.com/moby/vpnkit
+https://github.com/moby/libnetwork
+
+https://github.com/moby/hyperkit
 
 Colima
 https://github.com/abiosoft/colima/blob/main/docs/FAQ.md

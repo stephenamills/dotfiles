@@ -642,41 +642,34 @@ brew "jinja2-cli" # jinja2
 # Also, Nornir on PyPI
 
 # Kubernetes
-brew "ctlptl" # Run Kubernetes locally
-brew "kubectl" # Kubernetes command-line interface
-brew "minikube" # Run Kubernetes locally
 
-# brew "rancher-cli" # Unified tool to manage your Rancher server
-# brew "rke" # Rancher Kubernetes Engine, a Kubernetes installer that works everywhere
-# cask "rancher" # Rancher Desktop - Run Kubernetes locally
+brew "kubernetes-cli" # Kubernetes command-line interface
+brew "openshift-cli" # OpenShift command-line interface tools
+brew "rancher-cli" # Unified tool to manage your Rancher server
+
+brew "colima" # Run Kubernetes locally
+brew "ctlptl" # Run Kubernetes locally
+brew "minikube" # Run Kubernetes locally
+brew "rke" # Run Kubernetes locally
 
 # cask "docker" # Docker Desktop - run containers in a Linux virtual machine
 # cask "podman-desktop" # Run containers in a Linux virtual machine
+# cask "rancher" # Run Kubernetes locally (Rancher Desktop)
 
-brew "colima" # Run containers in a Linux virtual machine (uses Docker CLI)
+# brew "direnv" # Load/unload environment variables based on $PWD (has a script for Kubernetes contexts)
+# brew "kubectx" # Switch between kubectl contexts and namespaces
 
-brew "werf" # it has 4000 stars, why are there so many Kubernetes toools
+brew "clusterawsadm" # Bootstrap the Cluster API Provider for AWS - commands for the virtual machine image (AMI), cluster (EKS), and access policies (IAM)
+brew "clusterctl" # Provision, operate, and upgrade Kubernetes servers using the Cluster API
 
-brew "clusterawsadm" # helpers for bootstrapping the Cluster API Provider for AWS, including commands for virtual machine images (AMI), the Kubernetes cluster (EKS), and access policies (IAM)
-brew "clusterctl" # tool to provision, operate, and upgrade Kubernetes servers using the Cluster API
-
-brew "arkade" # Open source Kubernetes marketplace
-brew "cdk8s" # Cloud development kit
-brew "click" # Interactive controller (by Databricks)
-brew "confd" # Manage application configuration files using templates and data from etcd or Consul
-brew "cri-tools" # Create, start, inspect, stop, and delete containers using the Kubelet Container Runtime Interface (CRI) Protobuf API
-brew "cyctl" # really cool UI tool
-brew "okteto" # detects local file edits and automatically synchronizes changes to your Kubernetes remote development container
-brew "talhelper" # GitOps version controls your Talos configuration files and secrets using sops
-brew "tilt" # run tilt up to create a Kubernetes development environment - 7.4k stars
-brew "trivy"
-brew "uffizzi" # Rails app apparently used by Spotify with or for Backstage
+brew "uffizzi" # # Self-serve developer platforms in minutes, not months with k8s virtual clusters - Rails app apparently used by Spotify with or for Backstage
 brew "vespa-cli" # Has a guide to deploy machine learning to Kubernetes (by Yahoo)
 
 # brew "argo" # Get stuff done with container-native workflows for Kubernetes
 # brew "argocd-autopilot" # Opinionated way of installing Argo CD and managing GitOps repositories
 # brew "argocd-vault-plugin" # Argo CD plugin to retrieve secrets from Secret Management tools
 # brew "argocd" # GitOps Continuous Delivery for Kubernetes
+# brew "arkade" # Open source Kubernetes marketplace
 # brew "aws-iam-authenticator" # Use AWS IAM credentials to authenticate to Kubernetes
 # brew "bpftop" # Dynamic real-time view of running eBPF programs
 # brew "cdk8s" # Define k8s native apps and abstractions using object-oriented programming
@@ -684,16 +677,15 @@ brew "vespa-cli" # Has a guide to deploy machine learning to Kubernetes (by Yaho
 # brew "chart-testing" # Testing and linting Helm charts
 # brew "cilium-cli" # CLI to install, manage & troubleshoot Kubernetes clusters running Cilium
 # brew "click" # Command-line interactive controller for Kubernetes
-# brew "clusterawsadm" # Home for bootstrapping, AMI, EKS, and other helpers in Cluster API Provider AWS
-# brew "clusterctl" # Home for the Cluster Management API work, a subproject of sig-cluster-lifecycle
 # brew "cmctl" # Manage TLS certificates in Kubernetes via cert-manager
+# brew "confd" # Manage application configuration files using templates and data from etcd or Consul
 # brew "conftest" # Test your configuration files using Open Policy Agent
 # brew "consul-backinator" # Consul backup and restoration application
-# brew "ctlptl" # Making local Kubernetes clusters fun and easy to set up
+# brew "cri-tools" # Create, start, inspect, stop, and delete containers using the Kubelet Container Runtime Interface (CRI) Protobuf API
 # brew "cyctl" # Customizable UI for Kubernetes workloads
+# brew "ctlptl" # Making local Kubernetes clusters fun and easy to set up
 # brew "datree" # CLI tool to run policies against Kubernetes manifests YAML files or Helm charts
 # brew "devspace" # CLI helps develop/deploy/debug apps with Docker and k8s
-# brew "direnv" # Load/unload environment variables based on $PWD (has a script for Kubernetes contexts)
 # brew "envconsul" # Launch process with environment variables from Consul and Vault
 # brew "epinio" # CLI for Epinio, the Application Development Engine for Kubernetes
 # brew "fleet-cli" # Manage large fleets of Kubernetes clusters
@@ -715,7 +707,7 @@ brew "vespa-cli" # Has a guide to deploy machine learning to Kubernetes (by Yaho
 # brew "k3d" # Little helper to run CNCF's k3s in Docker
 # brew "k3sup" # Utility to create k3s clusters on any local or remote VM
 # brew "k8sgpt" # Scanning your k8s clusters, diagnosing, and triaging issues in simple English
-# brew "k9s" # Kubernetes CLI
+# brew "k9s" # Kubernetes terminal UI
 # brew "karmadactl" # CLI for Karmada control plane
 # brew "kconf" # CLI for managing multiple kubeconfigs
 # brew "kind" # Run local Kubernetes cluster in Docker
@@ -739,14 +731,12 @@ brew "vespa-cli" # Has a guide to deploy machine learning to Kubernetes (by Yaho
 # brew "kubeconform" # FAST Kubernetes manifests validator, with support for Custom Resources!
 # brew "kubectl-cnpg" # CloudNativePG plugin for kubectl
 # brew "kubectl-rook-ceph" # Rook plugin for Ceph management
-# brew "kubectx" # Tool that can switch between kubectl contexts easily and create aliases
 # brew "kubefirst" # GitOps Infrastructure & Application Delivery Platform for kubernetes
 # brew "kubehound" # Tool for building Kubernetes attack paths
 # brew "kubekey" # Installer for Kubernetes and / or KubeSphere, and related cloud-native add-ons
 # brew "kubelogin" # OpenID Connect authentication plugin for kubectl
 # brew "kubent" # Easily check your clusters for use of deprecated APIs
 # brew "kubergrunt" # Collection of commands to fill in the gaps between Terraform, Helm, and Kubectl
-# brew "kubernetes-cli" # Kubernetes command-line interface
 # brew "kubescape" # Kubernetes testing according to Hardening Guidance by NSA and CISA
 # brew "kubeseal" # Kubernetes controller and tool for one-way encrypted Secrets
 # brew "kubesess" # Manage multiple kubernetes cluster at the same time
@@ -774,13 +764,12 @@ brew "vespa-cli" # Has a guide to deploy machine learning to Kubernetes (by Yaho
 # brew "odo-dev" # Developer-focused CLI for Kubernetes and OpenShift
 # brew "okteto" # Build better apps by developing and testing code directly in Kubernetes
 # brew "opa" # Open source, general-purpose policy engine
-# brew "openshift-cli" # OpenShift command-line interface tools
 # brew "operator-sdk" # SDK for building Kubernetes applications
 # brew "pixie" # Observability tool for Kubernetes applications
 # brew "pluto" # CLI tool to help discover deprecated apiVersions in Kubernetes
 # brew "popeye" # Kubernetes cluster resource sanitizer
 # brew "regula" # Checks infrastructure as code templates using Open Policy Agent/Rego
-# brew "rosa-cli" # RedHat OpenShift Service on AWS (ROSA) command-line interface
+# brew "rosa-cli" # RedHat OpenShift Service on AWS command-line interface
 # brew "skaffold" # Easy and Repeatable Kubernetes Development
 # brew "sonobuoy" # Kubernetes component that generates reports on cluster conformance
 # brew "stern" # Tail multiple Kubernetes pods & their containers
@@ -791,11 +780,9 @@ brew "vespa-cli" # Has a guide to deploy machine learning to Kubernetes (by Yaho
 # brew "tfk8s" # Kubernetes YAML manifests to Terraform HCL converter
 # brew "tilt" # Define your dev environment as code. For microservice apps on Kubernetes
 # brew "tm" # TriggerMesh CLI to work with knative objects
-# brew "uffizzi" # Self-serve developer platforms in minutes, not months with k8s virtual clusters
 # brew "vcluster" # Creates fully functional virtual k8s cluster inside host k8s cluster's namespace
 # brew "velero" # Disaster recovery for Kubernetes resources and persistent volumes
 # brew "virtctl" # Allows for using more advanced kubevirt features
-# brew "vkectl" # Command-Line Interface for VKE (VolcanoEngine Kubernetes Engine)
 # brew "werf" # Consistent delivery tool for Kubernetes
 
 # Nomad
@@ -1865,16 +1852,14 @@ brew "okta-awscli" # Okta authentication for awscli, don't know why there are tw
 # brew "ory-hydra" # OpenID Certified OAuth 2.0 Server and OpenID Connect Provider
 
 # More
+
 brew "arjun" # hidden parameter discovery
 brew "authz0" # tests authorization
-brew "cotp" # generates two-step verification codes
 brew "dalfox" # XSS scanner
+brew "ffuf" # fast web fuzzer
 brew "flawz" # browses security vulnerabilities (CVEs)
-brew "gimme-aws-creds" # retrieves AWS credentials from Okta
+
 # brew "auth0" # must tap auth0/auth0-cli
-# brew "ffuf" # fast web fuzzer
-# brew "findomain" # fastest complete solution for finding domains
-# brew "httpx" # by Project Discovery - HTTP scan tool
 # brew "openfga" # nice open-source website - flexible authorization/permission engine
 
 # Certificates
@@ -2331,26 +2316,28 @@ brew "perl" # Highly capable, feature-rich programming language
 # brew "cpansearch" # CPAN module search written in C
 # brew "cpm" # Fast CPAN module installer
 # brew "extract_url" # Perl script to extracts URLs from emails or plain text
-# brew "grex" # Command-line tool for generating regular expressions
-# brew "grok" # DRY and RAD for regular expressions and then some
-# brew "melody" # Language that compiles to regular expressions
-# brew "pdfgrep" # Search PDFs for strings matching a regular expression
 # brew "perl-build" # Perl builder
 # brew "perltidy" # Perl formatter
 # brew "platypus" # Create macOS applications from {Perl,Ruby,sh,Python} scripts
 # brew "pod2man" # Perl documentation generator
+# brew "rename" # Perl-powered file rename script with many helpful built-ins
+# brew "superlu" # Solve large, sparse nonsymmetric systems of equations
+
+# brew "grex" # Command-line tool for generating regular expressions
+# brew "grok" # DRY and RAD for regular expressions and then some
+# brew "melody" # Language that compiles to regular expressions
+# brew "pdfgrep" # Search PDFs for strings matching a regular expression
 # brew "pomsky" # Regular expression language
 # brew "re2c" # Generate C-based recognizers from regular expressions
 # brew "regex-opt" # Perl-compatible regular expression optimizer
 # brew "regex-opt" # Perl-compatible regular expression optimizer
 # brew "regldg" # Regular expression grammar language dictionary generator
-# brew "rename" # Perl-powered file rename script with many helpful built-ins
 # brew "rgxg" # C library and command-line tool to generate (extended) regular expressions
-# brew "superlu" # Solve large, sparse nonsymmetric systems of equations
 
 # Utilities
 
 brew "cowsay" # Configurable talking characters in ASCII art
+brew "hello" # Hello world program
 brew "lolcat" # Rainbows and unicorns in your console!
 brew "nyancat" # Renders an animated, color, ANSI-text loop of the Poptart Cat
 brew "ponysay" # Cowsay but with ponies
@@ -2469,7 +2456,6 @@ brew "vunnel" # Tool for collecting vulnerability data from various sources
 # brew "fastmod" # Fast partial replacement for the codemod tool
 # brew "flamegraph" # by Brendan Gregg - stack trace visualizer
 # brew "gat" # cat alternative in Go
-# brew "hello" # Hello world program
 # brew "hck" # cut alternative that supports regex delimiters
 # brew "invoice" # generates pretty, professional invoices
 # brew "just" # runs project-specific commands, like Make

@@ -92,7 +92,7 @@ ghs() {
 }
 
 # Search GitHub repos
-ghrs() {
+ghsr() {
   gh search repos $@
 }
 

@@ -647,10 +647,16 @@ brew "kubernetes-cli" # Kubernetes command-line interface
 brew "openshift-cli" # OpenShift command-line interface tools
 brew "rancher-cli" # Unified tool to manage your Rancher server
 
-brew "colima" # Run Kubernetes locally
-brew "ctlptl" # Run Kubernetes locally
+brew "k3d" # Run Kubernetes locally (in Docker)
+brew "kind" # Run Kubernetes locally (in Docker)
 brew "minikube" # Run Kubernetes locally
+
+brew "colima" # Run Kubernetes locally
 brew "rke" # Run Kubernetes locally
+
+brew "ctlptl" # Run Kubernetes locally
+brew "k3sup" # Run Kubernetes locally or remotely
+brew "kwok" # Kubernetes Without Kubelet - Simulate thousands of nodes and clusters
 
 # cask "docker" # Docker Desktop - run containers in a Linux virtual machine
 # cask "podman-desktop" # Run containers in a Linux virtual machine
@@ -683,7 +689,6 @@ brew "vespa-cli" # Has a guide to deploy machine learning to Kubernetes (by Yaho
 # brew "consul-backinator" # Consul backup and restoration application
 # brew "cri-tools" # Create, start, inspect, stop, and delete containers using the Kubelet Container Runtime Interface (CRI) Protobuf API
 # brew "cyctl" # Customizable UI for Kubernetes workloads
-# brew "ctlptl" # Making local Kubernetes clusters fun and easy to set up
 # brew "datree" # CLI tool to run policies against Kubernetes manifests YAML files or Helm charts
 # brew "devspace" # CLI helps develop/deploy/debug apps with Docker and k8s
 # brew "envconsul" # Launch process with environment variables from Consul and Vault
@@ -704,19 +709,16 @@ brew "vespa-cli" # Has a guide to deploy machine learning to Kubernetes (by Yaho
 # brew "ingress2gateway" # Convert Kubernetes Ingress resources to Kubernetes Gateway API resources
 # brew "istioctl" # Istio configuration tool
 # brew "k2tf" # Kubernetes YAML to Terraform HCL converter
-# brew "k3d" # Little helper to run CNCF's k3s in Docker
-# brew "k3sup" # Utility to create k3s clusters on any local or remote VM
 # brew "k8sgpt" # Scanning your k8s clusters, diagnosing, and triaging issues in simple English
 # brew "k9s" # Kubernetes terminal UI
 # brew "karmadactl" # CLI for Karmada control plane
 # brew "kconf" # CLI for managing multiple kubeconfigs
-# brew "kind" # Run local Kubernetes cluster in Docker
 # brew "kn" # Command-line interface for managing Knative Serving and Eventing resources
 # brew "ko" # Build and deploy Go applications on Kubernetes
 # brew "kompose" # Tool to move from `docker-compose` to Kubernetes
 # brew "kops" # Production Grade K8s Installation, Upgrades, and Management
 # brew "kor" # CLI tool to discover unused Kubernetes resources
-# brew "krew" # Package manager for kubectl plugins
+# brew "krew" # Package manager for kubectl
 # brew "ksync" # Sync files between your local system and a kubernetes cluster
 # brew "kt-connect" # Toolkit for integrating with kubernetes dev environment more efficiently
 # brew "ktmpl" # Parameterized templates for Kubernetes manifests
@@ -752,11 +754,9 @@ brew "vespa-cli" # Has a guide to deploy machine learning to Kubernetes (by Yaho
 # brew "kustomizer" # Package manager for distributing Kubernetes configuration as OCI artifacts
 # brew "kuttl" # Kubernetes Test Tool
 # brew "kwctl" # CLI tool for the Kubewarden policy engine for Kubernetes
-# brew "kwok" # Kubernetes WithOut Kubelet - Simulates thousands of Nodes and Clusters
 # brew "kyverno" # Kubernetes Native Policy Management
 # brew "liqoctl" # Is a CLI tool to install and manage Liqo-enabled clusters
 # brew "litmusctl" # Command-line interface for interacting with LitmusChaos
-# brew "minikube" # Run a Kubernetes cluster locally
 # brew "minio" # High Performance, Kubernetes Native Object Storage
 # brew "naml" # Convert Kubernetes YAML to Golang
 # brew "ocm" # CLI for the Red Hat OpenShift Cluster Manager

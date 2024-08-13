@@ -1960,16 +1960,21 @@ brew "zlint" # certificate checker, see also zcertificate and zschema
 # brew "xmlsectool" # Check schema validity and signature of an XML document
 
 # VPN
-brew "bore-cli" # Modern, simple TCP tunnel in Rust that exposes local ports to a remote server (only 400 lines of code)
-brew "openconnect" # Client for Palo Alto, Cisco, Juniper, and Fortinet VPNs
-brew "vpn-slice" # Vpnc-script replacement for easy and secure split-tunnel VPN setup
-cask "ngrok" # Reverse proxy, secure introspectable tunnels to localhost
 
 # brew "boringtun" # Userspace WireGuard implementation in Rust
 # brew "tailscale" # Easiest, most secure way to use WireGuard and 2FA (Server - also, see the Mac App Store Tailscale client below)
 # brew "wgcf" # Generate WireGuard profile from Cloudflare Warp account
 # brew "wireguard-go" # Userspace Go implementation of WireGuard
 # brew "wireguard-tools" # Tools for the WireGuard secure network tunnel
+
+# brew "ike-scan" # Discover and fingerprint IKE hosts
+# brew "openiked" # IKEv2 daemon - portable version of OpenBSD iked
+
+brew "bore-cli" # Modern, simple TCP tunnel in Rust that exposes local ports to a remote server (only 400 lines of code)
+brew "openconnect" # Client for Palo Alto, Cisco, Juniper, and Fortinet VPNs
+brew "vpn-slice" # Vpnc-script replacement for easy and secure split-tunnel VPN setup
+
+cask "ngrok" # Reverse proxy, secure introspectable tunnels to localhost
 
 # brew "dsvpn" # Dead Simple VPN
 # brew "killswitch" # VPN kill switch for macOS
@@ -2001,8 +2006,6 @@ cask "ngrok" # Reverse proxy, secure introspectable tunnels to localhost
 # brew "tunnel" # Expose local servers to the internet securely
 # brew "udptunnel" # Tunnel UDP packets over a TCP connection
 # brew "wstunnel" # Tunnel all your traffic over Websocket or HTTP2
-
-# brew "ike-scan" # Discover and fingerprint IKE hosts
 
 # SSH
 brew "openssh" # OpenBSD SSH connectivity tools

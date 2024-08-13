@@ -3,6 +3,7 @@ git.rootprojects.org/root/keypairs/cmd/keypairs@latest
 github.com/ciena/gns3ctl@latest
 github.com/cloudflare/cloudflare-go/cmd/flarectl@latest
 github.com/deepfence/PacketStreamer@latest
+github.com/docker/hub-tool@latest
 github.com/facebookincubator/tacquito/cmds/client@latest
 github.com/jackmordaunt/icns/cmd/icnsify@latest
 github.com/opencontainers/umoci/cmd/umoci@latest

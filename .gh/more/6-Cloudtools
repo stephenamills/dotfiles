@@ -1,5 +1,19 @@
 Links to useful GitHub repos
 
+Terraform
+
+Pulumi
+
+SST
+
+GCP Deployment Manager
+
+AWS Cloud Formation
+
+Azure Bicep
+
+--
+
 Packer
 
 Ignition & Cloud-init
@@ -59,19 +73,7 @@ https://github.com/iddocohen/vce_cloudinit
 https://github.com/exoscale/openbsd-cloud-init
 
 --
-Terraform
 
-Pulumi
-
-SST
-
-GCP Deployment Manager
-
-AWS Cloud Formation
-
-Azure Bicep
-
---
 Ansible
 
 Nornir

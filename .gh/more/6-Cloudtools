@@ -12,8 +12,6 @@ AWS Cloud Formation
 
 Azure Bicep
 
---
-
 Packer
 
 Ignition & Cloud-init
@@ -73,7 +71,6 @@ https://github.com/iddocohen/vce_cloudinit
 https://github.com/exoscale/openbsd-cloud-init
 
 --
-
 Ansible
 
 Nornir

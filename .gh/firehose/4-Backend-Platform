@@ -27,50 +27,51 @@ Certificates
 Nomad
 
 Kubernetes
+https://github.com/cncf/cartografos # business value group
+
 https://github.com/cncf/llm-starter-pack # Run a language model in Kubernetes (Docker)
 https://github.com/cncf/telecom-user-group # 5G Kubernetes examples (see links)
-https://github.com/cncf/devstats-helm # bare metal (complete mess)
 https://github.com/kubernetes/examples # Guestbook-Redis (Deployment, Service), Wordpress-MySQL (Deployment, Persistent Volume with Claim), Cassandra (Daemon Set, Stateful Set, Replication Controller)
 https://github.com/dockersamples/example-voting-app VoteApp-Postgres-Redis
-https://github.com/googlecloudplatform/microservices-demo # OnlineBoutique
+https://github.com/googlecloudplatform/microservices-demo # Online Boutique
 
-https://github.com/containersolutions/k8s-deployment-strategies # six deployment strategies (recreate, rampled, blue/green, canary, a/b testing, shadow)
+https://github.com/cncf/devstats-helm # bare metal (mess)
 
-https://github.com/k3s-io/k3s # lightweight Kubernetes
+https://github.com/k3s-io/k3s # lightweight Kubernetes (by Rancher)
 
 https://github.com/cncf/tag-network
 https://github.com/cncf/tag-storage
-https://github.com/kubernetes/community/ # network, storage, etc. groups
-https://github.com/kubernetes-sigs # major org
-
-https://github.com/cncf/tag-security
 https://github.com/cncf/tag-app-delivery
+https://github.com/cncf/tag-security
 https://github.com/cncf/tag-observability
 https://github.com/cncf/tag-runtime
-
 https://github.com/cncf/k8s-conformance
 
-https://github.com/cncf/techdocs
-https://github.com/cncf/communitygroups
-https://github.com/cncf/awards
-https://github.com/cncf/clotributor
-https://github.com/cncf/cartografos
-https://github.com/cncf/landscape
-https://github.com/cncf/trailmap
-https://github.com/cncf/glossary
+https://github.com/kubernetes/community/ # all groups (Kubernetes community)
+https://github.com/kubernetes-sigs # major org
+
+https://github.com/cncf/cncf-fuzzing/
+https://github.com/cncf/clowarden
+https://github.com/cncf/chaosengineering-wg
+https://github.com/cncf/wg-serverless # good distinction between serverless and functions-as-a-service
+
+https://github.com/cncf/presentations
+https://github.com/cncf/curriculum
+https://github.com/containersolutions/k8s-deployment-strategies # six deployment strategies (recreate, rampled, blue/green, canary, a/b testing, shadow)
+https://github.com/stacksimplify/kubernetes-fundamentals # good course writeups
+https://github.com/justmeandopensource/kubernetes/ # recent demos - Rancher, Keepalived, HAProxy
 
 https://killercoda.com
 https://labs.play-with-k8s.com
 https://github.com/cncf/cluster
 
-https://github.com/cncf/cncf-fuzzing/
-https://github.com/cncf/clowarden
-https://github.com/cncf/chaosengineering-wg
-
-https://github.com/cncf/presentations
-https://github.com/cncf/curriculum
-https://github.com/stacksimplify/kubernetes-fundamentals # good course writeups
-https://github.com/justmeandopensource/kubernetes/ # recent demos - Rancher, Keepalived, HAProxy
+https://github.com/cncf/techdocs
+https://github.com/cncf/communitygroups
+https://github.com/cncf/awards
+https://github.com/cncf/clotributor
+https://github.com/cncf/landscape
+https://github.com/cncf/trailmap
+https://github.com/cncf/glossary
 
 Kamal
 

@@ -647,6 +647,7 @@ brew "kubernetes-cli" # Kubernetes command-line interface
 brew "openshift-cli" # OpenShift command-line interface tools
 brew "rancher-cli" # Unified tool to manage your Rancher server
 
+brew "ctlptl" # Run Kubernetes locally
 brew "k3d" # Run Kubernetes locally (in Docker)
 brew "kind" # Run Kubernetes locally (in Docker)
 brew "minikube" # Run Kubernetes locally
@@ -654,7 +655,6 @@ brew "minikube" # Run Kubernetes locally
 brew "colima" # Run Kubernetes locally
 brew "rke" # Run Kubernetes locally
 
-brew "ctlptl" # Run Kubernetes locally
 brew "k3sup" # Run Kubernetes locally or remotely
 brew "kwok" # Kubernetes Without Kubelet - Simulate thousands of nodes and clusters
 

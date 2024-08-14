@@ -1,7 +1,5 @@
 Links to useful GitHub repos
 
-
-
 -- Google --
 
 Cloud Run
@@ -21,7 +19,9 @@ Cloud Run
 --
 Traefik
 
-DNS & Certificates
+DNS
+
+Certificates
 
 --
 Nomad
@@ -72,6 +72,7 @@ https://github.com/cncf/curriculum
 https://github.com/stacksimplify/kubernetes-fundamentals # good course writeups
 https://github.com/justmeandopensource/kubernetes/ # recent demos - Rancher, Keepalived, HAProxy
 
-Swarm
-
 Kamal
+
+Swarm
+https://github.com/moby/swarmkit

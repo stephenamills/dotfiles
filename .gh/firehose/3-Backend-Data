@@ -3,24 +3,6 @@ Links to useful GitHub repos
 https://mad.firstmark.com
 https://landscape.lfai.foundation
 
-Cohere
-https://github.com/cohere-ai/examples # sample apps using the API
-https://github.com/cohere-ai/notebooks # API cookbook in Python notebooks
-https://github.com/cohere-ai/cohere-toolkit # Docker container with Toolkit
-https://github.com/cohere-ai/cohere-aws # AWS Sagemaker & Bedrock
-
-https://github.com/menloparklab/cohere-weaviate-wikipedia-retrieval # Wikipedia (LangChain, Weaviate)
-https://github.com/sangwan70/cohere-chatbot-pdf-langchain # PDF documents (Pinecone)
-https://github.com/menloparklab/langchain-cohere-qdrant-retrieval
-https://github.com/menloparklab/langchain-cohere-qdrant-doc-retrieval
-
-https://github.com/cohere-ai/cohere-python
-https://github.com/cohere-ai/cohere-typescript
-https://github.com/cohere-ai/sandbox-conversant-lib
-https://github.com/cohere-ai/binaryvectordb
-https://github.com/cohere-ai/cohere-terrarium # unsure why this exists
-https://github.com/berriai/litellm
-
 Visual Studio Code Chat
 https://github.com/lukvonstrom/copilot-verification # Chat extension - verifies Python code or creates tests using preconditions and postconditions
 https://github.com/phoevos/vscode-extension-verifier # verifies Python code or creates tests using preconditions and postconditions
@@ -38,6 +20,24 @@ https://github.com/continuedev/continue
 https://github.com/xnul/code-llama-for-vscode
 https://github.com/hieunc229/copilot-clone
 https://github.com/rubberduck-ai/rubberduck-vscode
+
+Cohere
+https://github.com/cohere-ai/examples # sample apps using the API
+https://github.com/cohere-ai/notebooks # API cookbook in Python notebooks
+https://github.com/cohere-ai/cohere-toolkit # Docker container with Toolkit
+https://github.com/cohere-ai/cohere-aws # AWS Sagemaker & Bedrock
+
+https://github.com/menloparklab/cohere-weaviate-wikipedia-retrieval # Wikipedia (LangChain, Weaviate)
+https://github.com/sangwan70/cohere-chatbot-pdf-langchain # PDF documents (Pinecone)
+https://github.com/menloparklab/langchain-cohere-qdrant-retrieval
+https://github.com/menloparklab/langchain-cohere-qdrant-doc-retrieval
+
+https://github.com/cohere-ai/cohere-python
+https://github.com/cohere-ai/cohere-typescript
+https://github.com/cohere-ai/sandbox-conversant-lib
+https://github.com/cohere-ai/binaryvectordb
+https://github.com/cohere-ai/cohere-terrarium # unsure why this exists
+https://github.com/berriai/litellm
 
 Confluence
 

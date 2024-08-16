@@ -57,11 +57,11 @@ MySQL & Vitess
 
 Postgres & Citus
 
+Conflict-free replicated data types
+
 DynamoDB
 
 Redis
-
-Conflict-free replicated data types
 
 Debezium
 https://github.com/redhat-scholars/debezium-tutorial

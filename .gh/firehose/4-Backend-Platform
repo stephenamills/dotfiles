@@ -56,10 +56,46 @@ https://github.com/cncf/wg-serverless # good distinction between serverless and 
 
 https://github.com/cncf/presentations
 https://github.com/cncf/curriculum
+
+https://github.com/redhat-scholars/kubernetes-tutorial
+https://github.com/redhat-scholars/helm-tutorial
+https://github.com/redhat-scholars/openshift-starter-guides-javascript # web hook (JavaScript)
+https://github.com/redhat-scholars/openshift-starter-guides-python # web hook (Python)
+https://github.com/redhat-scholars/openshift-starter-guides-dotnet # web hook (Dotnet)
+https://github.com/redhat-scholars/openshift-starter-guides # web hook (Java)
+https://github.com/redhat-scholars/spring-boot-k8s-tutorial
+https://github.com/redhat-scholars/getting-started-fullstack-js
+https://github.com/redhat-scholars/serverless-workflow # saga pattern
+https://github.com/redhat-scholars/rhoda-pacman-workshop # Pacman game and hosted MongoDB
+https://github.com/redhat-scholars/rhods-od-workshop # Jupyter, TensorFlow, Kafka
+https://github.com/redhat-scholars/rhods-lp-workshop # Jupyter, Flask
+https://github.com/rhecosystemappeng/llm-on-openshift # Hugging Face, Redis vector database, etc.
+https://github.com/redhat-scholars/rhoda-guide # Java & MySQL
+https://github.com/redhat-scholars/cloud-native-apps
+https://github.com/redhat-scholars/devnation-labs-dashboard
+https://github.com/redhat-scholars/tekton-tutorial
+https://github.com/redhat-scholars/argocd-tutorial
+https://github.com/redhat-scholars/inner-outer-guides # Tekton & ArgoCD
+https://github.com/redhat-scholars/outer-loop-guide
+https://github.com/redhat-scholars/inner-loop-guide
+https://github.com/redhat-scholars/debug-microservices # debugging
+https://github.com/redhat-scholars/debugging-guide # debugging - Istio and Kiali, Jaeger, Kibana
+https://github.com/redhat-scholars/istio-tutorial # Istio
+https://github.com/redhat-scholars/chaos-engineering-guide # chaos engineering - ArgoCD, service mesh, Grafana, Kiali
+https://github.com/redhat-scholars/kube-native-java-apps # buildpack
+https://github.com/redhat-scholars/ansible-tutorial # Ansible
+https://github.com/redhat-scholars/operator-javasdk-workshop # quickstart Java Operator
+https://github.com/redhat-scholars/operators-sdk-tutorial # Go and Java Operators
+https://github.com/redhat-scholars/backstage-workshop # Backstage
+https://github.com/redhat-scholars/kubernetes-apps-resource-management
+https://github.com/redhat-scholars/rhoam-sandbox-getting-started
+
 https://github.com/containersolutions/k8s-deployment-strategies # six deployment strategies (recreate, rampled, blue/green, canary, a/b testing, shadow)
 https://github.com/stacksimplify/kubernetes-fundamentals # good course writeups
 https://github.com/justmeandopensource/kubernetes/ # recent demos - Rancher, Keepalived, HAProxy
 https://github.com/mialeevs/kubernetes_installation_docker # Ubuntu 22.04 install guide
+
+https://github.com/coreos/coreos-kubernetes/
 
 https://killercoda.com
 https://labs.play-with-k8s.com
@@ -239,6 +275,10 @@ https://github.com/kubernetes-sigs/noderesourcetopology-api # CRD based API to c
 https://github.com/kubernetes-sigs/cloud-pv-admission-labeler # External admission webhook to label PVs created by cloud providers
 https://github.com/kubernetes-sigs/porche # This project exists to explore the creation of a redirector for specific artifacts, similar to the redirector for registry.k8s.io.
 https://github.com/kubernetes-sigs/referencegrant-poc #
+
+https://github.com/helm/helm
+https://github.com/helm/charts
+https://github.com/hjacobs/kubernetes-failure-stories
 
 Kamal
 

@@ -63,7 +63,12 @@ Redis
 
 Conflict-free replicated data types
 
+Debezium
+https://github.com/redhat-scholars/debezium-tutorial
+
 Kafka
+https://github.com/redhat-scholars/debezium-tutorial
+https://github.com/redhat-scholars/cloud-native-business-automation
 
 Elasticsearch
 

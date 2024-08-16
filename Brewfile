@@ -479,9 +479,9 @@ brew "docker-compose" # isolated development environments using Docker
 
 # brew "cri-tools" # CLI and validation tools for Kubelet Container Runtime Interface (CRI)
 
-# brew "podlet" # Generate podman quadlet files from a podman command or compose file
-# brew "podman" # Tool for managing OCI containers and pods
-# brew "podman-compose" # Alternative to docker-compose using podman
+brew "podlet" # Generate podman quadlet files from a podman command or compose file
+brew "podman" # Tool for managing OCI containers and pods
+brew "podman-compose" # Alternative to docker-compose using podman
 
 brew "devcontainer" # Command implementing the Development Containers specification
 

@@ -8,6 +8,8 @@ https://github.com/docker/cli
 https://github.com/docker/hub-tool
 
 https://github.com/opencontainers/umoci
+https://github.com/googlecontainertools
+https://github.com/containers
 https://github.com/opencontainers/runtime-tools
 
 https://github.com/opencontainers/image-spec
@@ -44,6 +46,9 @@ https://github.com/docker/docker-php-sample
 https://github.com/docker/bindmount-apps/
 https://github.com/docker/packaging
 https://github.com/docker/whalesay
+
+https://github.com/redhat-scholars/build-a-container
+https://github.com/redhat-scholars/containers-tutorial
 
 Virtualization framework
 https://github.com/abiosoft/colima/blob/main/docs/FAQ.md

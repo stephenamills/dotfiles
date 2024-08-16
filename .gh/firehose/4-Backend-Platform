@@ -79,7 +79,7 @@ https://github.com/redhat-scholars/inner-outer-guides # Tekton & ArgoCD
 https://github.com/redhat-scholars/outer-loop-guide
 https://github.com/redhat-scholars/inner-loop-guide
 https://github.com/redhat-scholars/debug-microservices # debugging
-https://github.com/redhat-scholars/debugging-guide # debugging - Istio and Kiali, Jaeger, Kibana
+https://github.com/redhat-scholars/debugging-guide # debugging - Istio and the circuit breaker pattern, Jaeger, Kibana
 https://github.com/redhat-scholars/istio-tutorial # Istio
 https://github.com/redhat-scholars/chaos-engineering-guide # chaos engineering - ArgoCD, service mesh, Grafana, Kiali
 https://github.com/redhat-scholars/kube-native-java-apps # buildpack
@@ -257,7 +257,6 @@ https://github.com/kubernetes-sigs/cosi-driver-sample # Sample Driver that provi
 https://github.com/kubernetes-sigs/contributor-katacoda # Host repository of katacoda scenarios for upstream contributors
 https://github.com/kubernetes-sigs/testgrid-json-exporter #
 https://github.com/kubernetes-sigs/instrumentation-addons # Addons owned by sig-instrumentation
-https://github.com/kubernetes-sigs/ibm-powervs-block-csi-driver # CSI Driver for IBM® Power Systems™ Virtual Server
 https://github.com/kubernetes-sigs/gluster-file-external-provisioner # Gluster File Dynamic Volume Provisioner
 https://github.com/kubernetes-sigs/cve-feed-osv # OSV JSON format file generator for official Kubernetes CVE Feed
 https://github.com/kubernetes-sigs/verify-conformance # CNCF CI bot for verifying Kubernetes conformance product submissions
@@ -280,7 +279,7 @@ https://github.com/helm/helm
 https://github.com/helm/charts
 https://github.com/hjacobs/kubernetes-failure-stories
 
-Kamal
-
 Swarm
 https://github.com/moby/swarmkit
+
+Kamal

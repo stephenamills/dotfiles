@@ -821,6 +821,7 @@ brew "levant" # templating and deployment tool for jobs
 # brew "sqlite-utils" # CLI utility for manipulating SQLite databases
 # brew "sqliteodbc" # ODBC driver for SQLite
 # brew "virtualpg" # Loadable dynamic extension for SQLite and SpatiaLite
+
 brew "mysql" # row-oriented database
 brew "vitess" # replicated MySQL
 
@@ -882,14 +883,6 @@ brew "vitess" # replicated MySQL
 # brew "tsung" # Load testing for HTTP, PostgreSQL, Jabber, and others
 # brew "wal2json" # Convert PostgreSQL changesets to JSON format
 
-# brew "dynomite" # strongly consistent, replicated key-value store - a Dynamo implementation (by Netflix)
-# brew "dynein" # DynamoDB client
-
-# also, Porcupine checker on pkg.go.dev, and MIT course 6.5840
-# also, Spanner and CockroachDB and LevelDB
-# also, ScyllaDB
-# also, YugabyteDB
-
 # brew "mongo-orchestration" # REST API to manage MongoDB configurations on a single host
 # brew "mongocli" # MongoDB CLI enables you to manage your MongoDB in the Cloud
 # brew "mongodb-atlas-cli" # Atlas CLI enables you to manage your MongoDB Atlas
@@ -897,6 +890,9 @@ brew "vitess" # replicated MySQL
 # brew "mongosh" # MongoDB Shell to connect, configure, query, and work with your MongoDB database
 
 # brew "etcd" # replicated BoltDB
+
+# also, LevelDB
+# also, ScyllaDB
 
 # brew "redis" # in-memory key/value store
 # brew "hiredis" # Minimalistic client for Redis
@@ -919,6 +915,15 @@ brew "vitess" # replicated MySQL
 # brew "cql-proxy" # DataStax cql-proxy enables Cassandra apps to use Astra DB without code changes
 # brew "cqlkit" # CLI tool to export Cassandra query as CSV and JSON format
 # brew "pillar" # Manage migrations for Cassandra data stores
+
+# brew "dynomite" # strongly consistent, key-value store - a Dynamo implementation (by Netflix)
+# brew "dynein" # DynamoDB client
+
+# also, Porcupine checker on pkg.go.dev, and MIT course 6.5840
+
+# also, Aerospike
+# also, Spanner and CockroachDB
+# also, YugabyteDB
 
 # brew "clickhouse" # column-oriented database
 # clickhouse-odbc: Official ODBC driver implementation for accessing ClickHouse as a data source

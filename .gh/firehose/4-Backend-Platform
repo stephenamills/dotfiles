@@ -1,8 +1,4 @@
-Links to useful GitHub repos
-
 -- Google --
-
-Cloud Run
 
 -- Amazon --
 
@@ -12,9 +8,11 @@ Cloud Run
 
 -- Digital Ocean --
 
--- Railway --
+-- Hetzner --
 
--- Heroku --
+Railway
+
+Heroku
 
 --
 Traefik
@@ -34,28 +32,6 @@ https://github.com/cncf/telecom-user-group # 5G Kubernetes examples (see links)
 https://github.com/kubernetes/examples # Guestbook-Redis (Deployment, Service), Wordpress-MySQL (Deployment, Persistent Volume with Claim), Cassandra (Daemon Set, Stateful Set, Replication Controller)
 https://github.com/dockersamples/example-voting-app VoteApp-Postgres-Redis
 https://github.com/googlecloudplatform/microservices-demo # Online Boutique
-
-https://github.com/cncf/devstats-helm # bare metal (mess)
-
-https://github.com/k3s-io/k3s # lightweight Kubernetes (by Rancher)
-
-https://github.com/cncf/tag-network
-https://github.com/cncf/tag-storage
-https://github.com/cncf/tag-app-delivery
-https://github.com/cncf/tag-security
-https://github.com/cncf/tag-observability
-https://github.com/cncf/tag-runtime
-https://github.com/cncf/k8s-conformance
-
-https://github.com/kubernetes/community/ # all groups (Kubernetes community)
-
-https://github.com/cncf/cncf-fuzzing/
-https://github.com/cncf/clowarden
-https://github.com/cncf/chaosengineering-wg
-https://github.com/cncf/wg-serverless # good distinction between serverless and functions-as-a-service
-
-https://github.com/cncf/presentations
-https://github.com/cncf/curriculum
 
 https://github.com/redhat-scholars/kubernetes-tutorial
 https://github.com/redhat-scholars/helm-tutorial
@@ -89,26 +65,18 @@ https://github.com/redhat-scholars/operators-sdk-tutorial # Go and Java Operator
 https://github.com/redhat-scholars/backstage-workshop # Backstage
 https://github.com/redhat-scholars/kubernetes-apps-resource-management
 https://github.com/redhat-scholars/rhoam-sandbox-getting-started
-
-https://github.com/containersolutions/k8s-deployment-strategies # six deployment strategies (recreate, rampled, blue/green, canary, a/b testing, shadow)
-https://github.com/stacksimplify/kubernetes-fundamentals # good course writeups
-https://github.com/justmeandopensource/kubernetes/ # recent demos - Rancher, Keepalived, HAProxy
-https://github.com/mialeevs/kubernetes_installation_docker # Ubuntu 22.04 install guide
-
-https://github.com/coreos/coreos-kubernetes/
-
-https://killercoda.com
-https://labs.play-with-k8s.com
+https://github.com/cncf/devstats-helm # bare metal (mess)
+https://killercoda.com # lab site mentioned by CNCF
+https://labs.play-with-k8s.com # labs (by Docker)
 https://github.com/cncf/cluster
 
-https://github.com/cncf/techdocs
-https://github.com/kubernetes-sigs/contributor-playground
-https://github.com/cncf/communitygroups
-https://github.com/cncf/awards
-https://github.com/cncf/clotributor
-https://github.com/cncf/landscape
-https://github.com/cncf/trailmap
-https://github.com/cncf/glossary
+https://github.com/cncf/tag-app-delivery
+https://github.com/cncf/tag-storage
+https://github.com/cncf/tag-runtime
+https://github.com/cncf/tag-security
+https://github.com/cncf/tag-observability
+
+https://github.com/kubernetes/community/ # networking, AI, bare metal, and much more
 
 https://github.com/kubernetes-sigs/kubespray # Deploy a Production Ready Kubernetes Cluster
 https://github.com/kubernetes-sigs/kind # Kubernetes IN Docker - local clusters for testing Kubernetes
@@ -143,7 +111,7 @@ https://github.com/kubernetes-sigs/cluster-api-provider-aws # Kubernetes Cluster
 https://github.com/kubernetes-sigs/krew-index # Plugin index for Krew. This repo is for plugin maintainers.
 https://github.com/kubernetes-sigs/cluster-proportional-autoscaler # Kubernetes Cluster Proportional Autoscaler Container
 https://github.com/kubernetes-sigs/hierarchical-namespaces # Home of the Hierarchical Namespace Controller (HNC). Adds hierarchical policies and delegated creation to Kubernetes namespaces for improved in-cluster multitenancy.
-https://github.com/kubernetes-sigs/sig-storage-lib-external-provisioner #
+https://github.com/kubernetes-sigs/sig-storage-lib-external-provisioner
 https://github.com/kubernetes-sigs/application # Application metadata descriptor CRD
 https://github.com/kubernetes-sigs/e2e-framework # A Go framework for end-to-end testing of components running in Kubernetes clusters.
 https://github.com/kubernetes-sigs/custom-metrics-apiserver # Framework for implementing custom metrics support for Kubernetes
@@ -151,8 +119,8 @@ https://github.com/kubernetes-sigs/karpenter # Karpenter is a Kubernetes Node Au
 https://github.com/kubernetes-sigs/cluster-capacity # Cluster capacity analysis
 https://github.com/kubernetes-sigs/nfs-ganesha-server-and-external-provisioner # NFS Ganesha Server and Volume Provisioner.
 https://github.com/kubernetes-sigs/image-builder # Tools for building Kubernetes disk images
-https://github.com/kubernetes-sigs/apiserver-network-proxy #
-https://github.com/kubernetes-sigs/cluster-api-provider-vsphere #
+https://github.com/kubernetes-sigs/apiserver-network-proxy
+https://github.com/kubernetes-sigs/cluster-api-provider-vsphere
 https://github.com/kubernetes-sigs/ingress2gateway # Convert Ingress resources to Gateway API resources
 https://github.com/kubernetes-sigs/kubetest2 # Kubetest2 is the framework for launching and running end-to-end tests on Kubernetes.
 https://github.com/kubernetes-sigs/bom # A utility to generate SPDX-compliant Bill of Materials manifests
@@ -175,7 +143,7 @@ https://github.com/kubernetes-sigs/cluster-api-operator # Home for Cluster API O
 https://github.com/kubernetes-sigs/azurefile-csi-driver # Azure File CSI Driver
 https://github.com/kubernetes-sigs/promo-tools # Container and file artifact promotion tooling for the Kubernetes project
 https://github.com/kubernetes-sigs/azuredisk-csi-driver # Azure Disk CSI Driver
-https://github.com/kubernetes-sigs/kubectl-validate #
+https://github.com/kubernetes-sigs/kubectl-validate
 https://github.com/kubernetes-sigs/kube-storage-version-migrator #
 https://github.com/kubernetes-sigs/cloud-provider-kind # Cloud provider for Kind clusters
 https://github.com/kubernetes-sigs/aws-fsx-csi-driver # CSI Driver of Amazon FSx for Lustre https://aws.amazon.com/fsx/lustre/
@@ -190,7 +158,7 @@ https://github.com/kubernetes-sigs/cluster-api-provider-digitalocean # The Digit
 https://github.com/kubernetes-sigs/cluster-api-addon-provider-helm # CAAPH uses Helm charts to manage the installation and lifecycle of Cluster API add-ons.
 https://github.com/kubernetes-sigs/cluster-api-provider-kubevirt # Cluster API Provider for KubeVirt
 https://github.com/kubernetes-sigs/cluster-api-provider-packet # Cluster API Provider for Packet (now Equinix Metal)
-https://github.com/kubernetes-sigs/prow # Prow is a Kubernetes based CI/CD system developed to serve the Kubernetes community. This repository contains Prow source code and Hugo sources for Prow documentation site.
+https://github.com/kubernetes-sigs/prow # Prow is a Kubernetes based CI/CD system developed to serve the Kubernetes community.
 https://github.com/kubernetes-sigs/structured-merge-diff # Test cases and implementation for "server-side apply"
 https://github.com/kubernetes-sigs/kube-scheduler-wasm-extension # All the things to make the scheduler extendable with wasm.
 https://github.com/kubernetes-sigs/slack-infra # Tooling for kubernetes.slack.com
@@ -201,7 +169,6 @@ https://github.com/kubernetes-sigs/kernel-module-management # The kernel module 
 https://github.com/kubernetes-sigs/gcp-filestore-csi-driver # The Google Cloud Filestore Container Storage Interface (CSI) Plugin.
 https://github.com/kubernetes-sigs/apiserver-runtime # Libraries for implementing aggregated apiservers
 https://github.com/kubernetes-sigs/cli-experimental # Experimental Kubectl libraries and commands.
-https://github.com/kubernetes-sigs/sig-windows-dev-tools # This is a batteries included local development environment for Kubernetes on Windows.
 https://github.com/kubernetes-sigs/cloud-provider-equinix-metal # Kubernetes Cloud Provider for Equinix Metal (formerly Packet Cloud Controller Manager)
 https://github.com/kubernetes-sigs/node-feature-discovery-operator # Operator for managing Node Feature Discovery deployment
 https://github.com/kubernetes-sigs/cluster-api-ipam-provider-in-cluster # An IPAM provider for Cluster API that manages pools of IP addresses using Kubernetes resources.
@@ -216,12 +183,11 @@ https://github.com/kubernetes-sigs/work-api # Kubernetes Work API
 https://github.com/kubernetes-sigs/iptables-wrappers # Wrapper scripts for using iptables in containers
 https://github.com/kubernetes-sigs/network-policy-api # This repo addresses further work involving Kubernetes network security beyond the initial NetworkPolicy resource
 https://github.com/kubernetes-sigs/release-notes # This repo contains tooling around generating and publishing release notes for the Kubernetes organization.
-https://github.com/kubernetes-sigs/cluster-proportional-vertical-autoscaler #
+https://github.com/kubernetes-sigs/cluster-proportional-vertical-autoscaler
 https://github.com/kubernetes-sigs/minikube-gui # GUI for minikube
 https://github.com/kubernetes-sigs/clientgofix # clientgofix rewrites calls to old k8s.io/client-go methods to use newer invocations
 https://github.com/kubernetes-sigs/ingress-controller-conformance # Repository for a compliance specification of ingress-controllers.
 https://github.com/kubernetes-sigs/dra-example-driver # Example DRA driver that developers can fork and modify to get them started writing their own.
-https://github.com/kubernetes-sigs/windows-testing # Containers, scripts and documentation for running Kubernetes tests with Windows nodes
 https://github.com/kubernetes-sigs/cluster-inventory-api # Kubernetes ClusterInventory API
 https://github.com/kubernetes-sigs/mdtoc # Markdown table-of-contents generator
 https://github.com/kubernetes-sigs/cluster-api-provider-cloudstack # A Kubernetes Cluster API Provider implementation for Apache CloudStack.
@@ -274,6 +240,109 @@ https://github.com/kubernetes-sigs/noderesourcetopology-api # CRD based API to c
 https://github.com/kubernetes-sigs/cloud-pv-admission-labeler # External admission webhook to label PVs created by cloud providers
 https://github.com/kubernetes-sigs/porche # This project exists to explore the creation of a redirector for specific artifacts, similar to the redirector for registry.k8s.io.
 https://github.com/kubernetes-sigs/referencegrant-poc #
+
+https://github.com/kubernetes/kubernetes # Production-Grade Container Scheduling and Management
+https://github.com/kubernetes/minikube # Run Kubernetes locally
+https://github.com/kubernetes/ingress-nginx # Ingress-NGINX Controller for Kubernetes
+https://github.com/kubernetes/kops # Kubernetes Operations (kOps) - Production Grade k8s Installation, Upgrades and Management
+https://github.com/kubernetes/dashboard # General-purpose web UI for Kubernetes clusters
+https://github.com/kubernetes/kompose # Convert Compose to Kubernetes
+https://github.com/kubernetes/client-go # Go client for Kubernetes.
+https://github.com/kubernetes/autoscaler # Autoscaling components for Kubernetes
+https://github.com/kubernetes/kube-state-metrics # Add-on agent to generate and expose cluster-level metrics.
+https://github.com/kubernetes/test-infra # Test infrastructure for the Kubernetes project.
+https://github.com/kubernetes/kubeadm # Aggregator for issues filed against kubeadm
+https://github.com/kubernetes/enhancements # Enhancements tracking repo for Kubernetes
+https://github.com/kubernetes/sample-controller # Repository for sample controller. Complements sample-apiserver
+https://github.com/kubernetes/node-problem-detector # This is a place for various problem detectors running on the Kubernetes nodes.
+https://github.com/kubernetes/kubectl # kubectl code
+https://github.com/kubernetes/git-sync # A sidecar app which clones a git repo and keeps it in sync with the upstream.
+https://github.com/kubernetes/code-generator # Generators for kube-like API types
+https://github.com/kubernetes/ingress-gce # Ingress controller for Google Cloud
+https://github.com/kubernetes/dns # Kubernetes DNS service
+https://github.com/kubernetes/perf-tests # Performance tests and benchmarks
+https://github.com/kubernetes/apimachinery
+https://github.com/kubernetes/k8s.io # Code and configuration to manage Kubernetes project infrastructure, including various \*.k8s.io sites
+https://github.com/kubernetes/api # The canonical location of the Kubernetes API definition.
+https://github.com/kubernetes/apiserver # Library for writing a Kubernetes-style API server.
+https://github.com/kubernetes/cloud-provider-openstack
+https://github.com/kubernetes/gengo # gengo library for code generation.
+https://github.com/kubernetes/sig-release # Repo for SIG release
+https://github.com/kubernetes/sample-apiserver # Reference implementation of an apiserver for a custom Kubernetes API.
+https://github.com/kubernetes/metrics # Kubernetes metrics-related API types and clients
+https://github.com/kubernetes/release # Release infrastructure for Kubernetes and related components
+https://github.com/kubernetes/design-proposals-archive # Archive of Kubernetes Design Proposals
+https://github.com/kubernetes/cloud-provider-aws # Cloud provider for AWS
+https://github.com/kubernetes/registry.k8s.io # This project is the repo for registry.k8s.io, the production OCI registry service for Kubernetes' container image artifacts
+https://github.com/kubernetes/cri-api # Container Runtime Interface (CRI) – a plugin interface which enables kubelet to use a wide variety of container runtimes.
+https://github.com/kubernetes/cloud-provider-alibaba-cloud # CloudProvider for Alibaba Cloud
+https://github.com/kubernetes/utils # Non-Kubernetes-specific utility libraries which are consumed by multiple projects.
+https://github.com/kubernetes/kube-openapi # Kubernetes OpenAPI spec generation & serving
+https://github.com/kubernetes/kubelet # kubelet component configs
+https://github.com/kubernetes/sample-cli-plugin # Sample kubectl plugin
+https://github.com/kubernetes/cli-runtime # Set of helpers for creating kubectl commands and plugins.
+https://github.com/kubernetes/kube-aggregator # Aggregator for Kubernetes-style API servers: dynamic registration, discovery summarization, secure proxy
+https://github.com/kubernetes/cloud-provider # cloud-provider defines the shared interfaces which Kubernetes cloud providers implement. These interfaces allow various controllers to integrate with any cloud provider in a pluggable fashion. Also serves as an issue tracker for SIG Cloud Provider.  
+https://github.com/kubernetes/org # Meta configuration for Kubernetes Github Org
+https://github.com/kubernetes/cloud-provider-vsphere # Kubernetes Cloud Provider for vSphere
+https://cloud-provider-vsphere.sigs.k8s.io
+https://github.com/kubernetes/apiextensions-apiserver # API server for API extensions like CustomResourceDefinitions
+https://github.com/kubernetes/kubernetes-template-project # A template for starting new projects on the github.com/kubernetes organization
+https://github.com/kubernetes/kube-proxy # kube-proxy component configs
+https://github.com/kubernetes/sig-security # Process documentation, non-code deliverables, and miscellaneous artifacts of Kubernetes SIG Security
+https://github.com/kubernetes/committee-security-response # Kubernetes Security Process and Security Committee docs
+https://github.com/kubernetes/kube-scheduler # kube-scheduler component configs
+https://github.com/kubernetes/cloud-provider-gcp # cloud-provider-gcp contains several projects used to run Kubernetes in Google Cloud
+https://github.com/kubernetes/component-base # Shared code for kubernetes core components
+https://github.com/kubernetes/pod-security-admission # Kubernetes Pod Security Standards implementation -
+https://github.com/kubernetes/enhancements/blob/master/keps/sig-auth/2579-psp-replacement/README.md  
+https://github.com/kubernetes/repo-infra # Kubernetes repository infrastucture tools
+https://github.com/kubernetes/kube-controller-manager # kube-controller-manager component configs
+https://github.com/kubernetes/steering # The Kubernetes Steering Committee
+https://github.com/kubernetes/publishing-bot # Code behind the robot to publish from staging to real repositories.
+https://github.com/kubernetes/controller-manager # This repo is intended to contain common public library code for kube-controller-manager, cloud-controller-manager as well as any other controller managers which people build.  
+https://github.com/kubernetes/contributor-site # Code for kubernetes.dev
+https://github.com/kubernetes/mount-utils # Package mount defines an interface to mounting filesystems.
+https://github.com/kubernetes/legacy-cloud-providers # This repository hosts the legacy in-tree cloud providers. Out-of-tree cloud providers can consume packages in this repo to support legacy implementations of their Kubernetes cloud provider.  
+https://github.com/kubernetes/system-validators # A set of system-oriented validators for kubeadm preflight checks.
+https://github.com/kubernetes/cluster-bootstrap #
+https://github.com/kubernetes/dynamic-resource-allocation #
+https://github.com/kubernetes/cloud-provider-sample # Sample of how to build a cloud provider repo. This will build a Kubernetes image which deploys on bare metal. It uses the fake cloud provider. It consumes the K8s/K8s build artifact and adds to it the Cloud Controller Manager and CSI Daemon Set.  
+https://github.com/kubernetes/kms # Kubernetes KMS implementation
+https://github.com/kubernetes/node-api #
+https://github.com/kubernetes/component-helpers # High-level helpers for Kubernetes components
+https://github.com/kubernetes/csi-translation-lib # Staging repo for CSI Migration/Translation libraries
+https://github.com/kubernetes/cel-admission-webhook #
+https://github.com/kubernetes/sig-testing # Home for SIG Testing discussion and documents.
+https://github.com/kubernetes/endpointslice #
+https://github.com/kubernetes/cri-client # Container Runtime Interface client implementation
+https://github.com/kubernetes/.github # Default files for all repos in the Kubernetes GitHub org
+
+https://github.com/cncf/k8s-conformance # all Kubernetes distributions
+https://github.com/coreos/coreos-kubernetes/
+
+https://github.com/cncf/cncf-fuzzing/
+https://github.com/cncf/clowarden
+https://github.com/cncf/chaosengineering-wg
+https://github.com/cncf/wg-serverless # good distinction between serverless and functions-as-a-service
+
+https://github.com/containersolutions/k8s-deployment-strategies # six deployment strategies (recreate, rampled, blue/green, canary, a/b testing, shadow)
+https://github.com/stacksimplify/kubernetes-fundamentals # good course writeups
+https://github.com/justmeandopensource/kubernetes/ # recent demos - Rancher, Keepalived, HAProxy
+https://github.com/mialeevs/kubernetes_installation_docker # Ubuntu 22.04 install guide
+
+https://github.com/cncf/presentations
+https://github.com/cncf/techdocs
+https://github.com/cncf/curriculum
+
+https://github.com/cncf/awards
+https://github.com/kubernetes-sigs/contributor-playground
+https://github.com/cncf/clotributor
+https://github.com/cncf/communitygroups
+https://github.com/cncf/trailmap
+https://github.com/cncf/landscape
+https://github.com/cncf/tag-network
+https://github.com/cncf/glossary
 
 https://github.com/helm/helm
 https://github.com/helm/charts

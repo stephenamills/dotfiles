@@ -108,6 +108,28 @@ Appwrite
 Supabase
 
 Rails
+https://github.com/wardencommunity/warden
+https://github.com/heartcombo/devise
+https://github.com/omniauth/omniauth
+https://github.com/thoughtbot/clearance
+https://github.com/basecamp/google_sign_in
+https://github.com/square/rails-auth
+https://github.com/ankane/pretender
+
+https://github.com/instacart/wilson_score
+https://github.com/instacart/cloudflare-rails
+https://github.com/zendesk/racecar # Kafka
+https://github.com/soundcloud/lhm
+https://github.com/soundcloud/simple_circuit_breaker
+
+https://github.com/heroku/rails_12factor#migrating-to-rails-5
+https://github.com/heroku/rails_stdout_logging
+https://github.com/heroku/configerator
+
+https://github.com/stevepolitodesign/rails-authentication-from-scratch
+https://github.com/stevepolitodesign/rails-code-along
+
+https://github.com/rails/rails
 
 OpenAPI
 

@@ -9,10 +9,17 @@ https://github.com/ankane/pretender
 https://github.com/square/rails-auth
 https://github.com/thoughtbot/clearance
 
+https://github.com/aaronlasseigne/active_interaction
 https://github.com/collectiveidea/interactor
 
 https://github.com/norman/friendly_id
 https://github.com/excid3/prefixed_ids
+https://github.com/learn-co-curriculum/phase-4-rails-and-active-record-readme
+https://github.com/learn-co-curriculum/phase-3-orms-mapping-classes-to-database-tables
+https://github.com/learn-co-students/sinatra-activerecord-associations-v-000
+https://github.com/learn-co-curriculum/phase-4-serializing-associations
+https://github.com/learn-co-students/rails-activerecord-models-and-rails-readme-onl01-seng-pt-070620
+https://github.com/learn-co-students/dynamic-orms-readme-v-000
 
 https://github.com/sidekiq/sidekiq
 https://github.com/eliotsykes/real-world-rails # real projects, and searching them with the ag command
@@ -37,18 +44,24 @@ https://github.com/stevepolitodesign/rails-authentication-from-scratch
 https://github.com/stevepolitodesign/rails-code-along
 https://github.com/railsgirls/guides.railsgirls.com
 https://github.com/railsbridge/docs
+https://github.com/learn-co-curriculum/rails-application-basics-readme
+https://github.com/learn-co-curriculum/phase-4-creating-a-rails-app-readme
 https://github.com/learn-co-curriculum/phase-4-rails-routing-basics-readme
+https://github.com/learn-co-students/rack-intro-v-000
 https://github.com/learn-co-curriculum/rails-create-action-readme
 https://github.com/learn-co-curriculum/rails-static-request-readme
 https://github.com/learn-co-curriculum/phase-4-rails-route-params-readme
 https://github.com/learn-co-curriculum/phase-4-rails-resources-create
 https://github.com/learn-co-curriculum/rails-edit-update-action-readme
 https://github.com/learn-co-curriculum/phase-4-rails-resources-update
-https://github.com/learn-co-curriculum/phase-4-rails-and-active-record-readme
 https://github.com/learn-co-curriculum/phase-4-rails-resources-index-show
-https://github.com/learn-co-curriculum/rails-sidekiq-readme
-https://github.com/rubocop/rails-style-guide
+https://github.com/learn-co-students/omniauth_readme-v-000
+https://github.com/learn-co-students/rails-generators-readme-v-000
 https://github.com/learn-co-curriculum/phase-3-chatterbox-sinatra-react-lab
+https://github.com/learn-co-students/rails-paperclip-readme-v-000
+https://github.com/learn-co-curriculum/rails-sidekiq-readme
+https://github.com/learn-co-students/rack-dynamic-web-apps-v-000
+https://github.com/rubocop/rails-style-guide
 https://github.com/bullet-train-co/bullet_train # template
 https://jumpstartrails.com # template
 https://businessclasskit.com # template

@@ -318,4 +318,10 @@ https://github.com/creusot-rs/creusot # Rust
 https://github.com/zhang-xiyue/evm-why3
 https://github.com/xldenis/why3-tools
 
-Concolic & Property Testing
+Fuzz testing
+https://tag-security.cncf.io/community/resources/security-fuzzing-handbook/fuzzing-handbook/ # fuzzing handbook (by CNCF)
+https://github.com/cncf/cncf-fuzzing/
+
+Property testing
+
+Concolic testing

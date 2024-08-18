@@ -26,11 +26,23 @@ Nomad
 
 Kubernetes
 https://github.com/cncf/cartografos # business value group
+https://contribute.cncf.io/maintainers/ # community building & management
 
-https://github.com/cncf/llm-starter-pack # Run a language model in Kubernetes (Docker)
-https://github.com/cncf/telecom-user-group # 5G Kubernetes examples (see links)
-https://github.com/kubernetes/examples # Guestbook-Redis (Deployment, Service), Wordpress-MySQL (Deployment, Persistent Volume with Claim), Cassandra (Daemon Set, Stateful Set, Replication Controller)
-https://github.com/dockersamples/example-voting-app VoteApp-Postgres-Redis
+https://github.com/cncf/llm-starter-pack # Run a language model in Kubernetes (in Docker)
+https://github.com/cncf/llm-in-action # Run a language model in Kubernetes (Ollama service)
+https://github.com/rhecosystemappeng/llm-on-openshift # Hugging Face, Redis vector, etc.
+https://github.com/redhat-scholars/rhods-od-workshop # Jupyter, TensorFlow, Kafka
+https://github.com/redhat-scholars/rhods-lp-workshop # Jupyter, Flask
+https://github.com/ibm-ecosystem-engineering/superknowa # Retrieval demo on all IBM docs
+https://github.com/rh-aiservices-bu/multi-gpu-llms # GPU cluster
+https://github.com/rh-aiservices-bu/jumpstart-library/
+https://github.com/rh-aiservices-bu/openshift-ai-resources
+https://github.com/vmware-private-ai/ # GPU cluster
+
+https://github.com/cncf/telecom-user-group # 5G Kubernetes examples (follow links)
+
+https://github.com/kubernetes/examples # Guestbook Redis (Deployment, Service) | Wordpress MySQL (Deployment, Persistent Volume with Claim) | Cassandra (Daemon Set, Stateful Set, Replication Controller)
+https://github.com/dockersamples/example-voting-app Voting App Postgres Redis
 https://github.com/googlecloudplatform/microservices-demo # Online Boutique
 
 https://github.com/redhat-scholars/kubernetes-tutorial
@@ -43,9 +55,6 @@ https://github.com/redhat-scholars/spring-boot-k8s-tutorial
 https://github.com/redhat-scholars/getting-started-fullstack-js
 https://github.com/redhat-scholars/serverless-workflow # saga pattern
 https://github.com/redhat-scholars/rhoda-pacman-workshop # Pacman game and hosted MongoDB
-https://github.com/redhat-scholars/rhods-od-workshop # Jupyter, TensorFlow, Kafka
-https://github.com/redhat-scholars/rhods-lp-workshop # Jupyter, Flask
-https://github.com/rhecosystemappeng/llm-on-openshift # Hugging Face, Redis vector database, etc.
 https://github.com/redhat-scholars/rhoda-guide # Java & MySQL
 https://github.com/redhat-scholars/cloud-native-apps
 https://github.com/redhat-scholars/devnation-labs-dashboard
@@ -60,23 +69,56 @@ https://github.com/redhat-scholars/istio-tutorial # Istio
 https://github.com/redhat-scholars/chaos-engineering-guide # chaos engineering - ArgoCD, service mesh, Grafana, Kiali
 https://github.com/redhat-scholars/kube-native-java-apps # buildpack
 https://github.com/redhat-scholars/ansible-tutorial # Ansible
-https://github.com/redhat-scholars/operator-javasdk-workshop # quickstart Java Operator
+https://github.com/redhat-scholars/operator-javasdk-workshop # basic Java Operator
 https://github.com/redhat-scholars/operators-sdk-tutorial # Go and Java Operators
 https://github.com/redhat-scholars/backstage-workshop # Backstage
 https://github.com/redhat-scholars/kubernetes-apps-resource-management
 https://github.com/redhat-scholars/rhoam-sandbox-getting-started
+
 https://github.com/cncf/devstats-helm # bare metal (mess)
-https://killercoda.com # lab site mentioned by CNCF
+
+https://github.com/artifacthub/hub
+https://github.com/bitnami/charts
+https://github.com/helm/helm
+
+https://killercoda.com # labs (mentioned by CNCF)
 https://labs.play-with-k8s.com # labs (by Docker)
-https://github.com/cncf/cluster
 
-https://github.com/cncf/tag-app-delivery
+https://tag-app-delivery.cncf.io
 https://github.com/cncf/tag-storage
-https://github.com/cncf/tag-runtime
-https://github.com/cncf/tag-security
+https://tag-runtime.cncf.io # AI
+https://tag-security.cncf.io # security
 https://github.com/cncf/tag-observability
-
 https://github.com/kubernetes/community/ # networking, AI, bare metal, and much more
+
+https://radar.cncf.io/overview # industry tech stack surveys
+https://github.com/cncf/trailmap # project trailmap
+https://github.com/cncf/velocity # project activity
+https://github.com/cncf/students#10-finding-a-job # job board
+https://github.com/cncf/clowarden
+https://github.com/cncf/cncf-fuzzing/
+https://github.com/cncf/chaosengineering-wg
+https://github.com/cncf/wg-serverless # good distinction between serverless and functions-as-a-service
+https://github.com/cncf/presentations
+https://github.com/cncf/techdocs
+https://github.com/cncf/curriculum
+https://github.com/cncf/awards
+https://github.com/kubernetes-sigs/contributor-playground
+https://github.com/cncf/clotributor
+https://github.com/cncf/communitygroups
+https://github.com/cncf/landscape
+https://github.com/cncf/tag-network
+https://glossary.cncf.io # glossary
+https://maturitymodel.cncf.io # maturity model - build, operate, scale, adapt
+https://tag-env-sustainability.cncf.io/landscape/
+https://github.com/cncf/cluster
+https://github.com/hjacobs/kubernetes-failure-stories
+
+https://github.com/containersolutions/k8s-deployment-strategies # six deployment strategies (recreate, rampled, blue/green, canary, a/b testing, shadow)
+https://github.com/stacksimplify/kubernetes-fundamentals # good course writeups
+https://github.com/justmeandopensource/kubernetes/ # recent demos - Rancher, Keepalived, HAProxy
+https://www.cncf.io/training/courses/ # CNCF courses
+https://github.com/mialeevs/kubernetes_installation_docker # Ubuntu 22.04 install guide
 
 https://github.com/kubernetes-sigs/kubespray # Deploy a Production Ready Kubernetes Cluster
 https://github.com/kubernetes-sigs/kind # Kubernetes IN Docker - local clusters for testing Kubernetes
@@ -275,6 +317,9 @@ https://github.com/kubernetes/design-proposals-archive # Archive of Kubernetes D
 https://github.com/kubernetes/cloud-provider-aws # Cloud provider for AWS
 https://github.com/kubernetes/registry.k8s.io # This project is the repo for registry.k8s.io, the production OCI registry service for Kubernetes' container image artifacts
 https://github.com/kubernetes/cri-api # Container Runtime Interface (CRI) – a plugin interface which enables kubelet to use a wide variety of container runtimes.
+https://github.com/containernetworking/cni # Container Network Interface (CNI) - a plugin interface which enables networking for Linux containers
+https://github.com/containernetworking/plugins # Example networking plugins
+https://github.com/container-storage-interface/spec # Container Storage Interface (CSI) - a plugin interface which enables storage for Linux containers
 https://github.com/kubernetes/cloud-provider-alibaba-cloud # CloudProvider for Alibaba Cloud
 https://github.com/kubernetes/utils # Non-Kubernetes-specific utility libraries which are consumed by multiple projects.
 https://github.com/kubernetes/kube-openapi # Kubernetes OpenAPI spec generation & serving
@@ -317,36 +362,9 @@ https://github.com/kubernetes/sig-testing # Home for SIG Testing discussion and 
 https://github.com/kubernetes/endpointslice #
 https://github.com/kubernetes/cri-client # Container Runtime Interface client implementation
 https://github.com/kubernetes/.github # Default files for all repos in the Kubernetes GitHub org
-
-https://github.com/cncf/k8s-conformance # all Kubernetes distributions
 https://github.com/coreos/coreos-kubernetes/
-
-https://github.com/cncf/cncf-fuzzing/
-https://github.com/cncf/clowarden
-https://github.com/cncf/chaosengineering-wg
-https://github.com/cncf/wg-serverless # good distinction between serverless and functions-as-a-service
-
-https://github.com/containersolutions/k8s-deployment-strategies # six deployment strategies (recreate, rampled, blue/green, canary, a/b testing, shadow)
-https://github.com/stacksimplify/kubernetes-fundamentals # good course writeups
-https://github.com/justmeandopensource/kubernetes/ # recent demos - Rancher, Keepalived, HAProxy
-https://github.com/mialeevs/kubernetes_installation_docker # Ubuntu 22.04 install guide
-
-https://github.com/cncf/presentations
-https://github.com/cncf/techdocs
-https://github.com/cncf/curriculum
-
-https://github.com/cncf/awards
-https://github.com/kubernetes-sigs/contributor-playground
-https://github.com/cncf/clotributor
-https://github.com/cncf/communitygroups
-https://github.com/cncf/trailmap
-https://github.com/cncf/landscape
-https://github.com/cncf/tag-network
-https://github.com/cncf/glossary
-
-https://github.com/helm/helm
-https://github.com/helm/charts
-https://github.com/hjacobs/kubernetes-failure-stories
+https://github.com/cncf/k8s-conformance # all Kubernetes implementations
+https://tag-runtime.cncf.io/wgs/spos/charter/#open-source-projects # special-purpose container Linux distributions
 
 Swarm
 https://github.com/moby/swarmkit

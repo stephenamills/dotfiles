@@ -86,27 +86,38 @@ gcloud() {
   fi
 }
 
-# Search GitHub
-ghs() {
-  gh search $@
+# Search GitHub code
+ghsc() {
+  gh search code $@
 }
 
-# Search GitHub repos
+# Search GitHub issues
+ghsi() {
+  gh search issues $@
+}
+
+# Search for GitHub issues matching the search terms, and open them all in a browser
+# Usage: ghissueb <owner/repo> <search terms>
+ghsib() {
+  repo=$1
+
+  # Shift the positional parameters down by one, which deletes the first argument in $@
+  shift
+  gh search issues -R $repo $@ | awk '{ print $2 }' | xargs -P 8 -I {} gh issue view -R $repo {} -w
+}
+
+# Search GitHub pull requests
+ghspr() {
+  gh search prs $@
+}
+
+# Search for GitHub repos
 ghsr() {
   gh search repos $@
 }
 
-# Search a GitHub repo for issues matching some search terms and open each issue in a browser
-# Usage: ghissueb <owner/repo> <search terms>
-ghissueb() {
-  repo=$1
-
-  shift # This shifts the positional parameters down by one, which deletes the first argument in $@
-  gh search issues -R $repo $@ | awk '{ print $2 }' | xargs -P 8 -I {} gh issue view -R $repo {} -w
-}
-
 # Search for GitHub repos and open each result in a browser
-ghrepob() {
+ghsrb() {
   gh search repos $@ | awk '{print $1}' | xargs -n 1 -P 8 hub browse
 }
 
@@ -117,7 +128,7 @@ ghrb() {
 
 # Open GitHub issues in a browser
 # Usage: ghib <owner/repo> <issue1> <issue2> ...
-ghrepoib() {
+gi() {
   repo=$1
 
   shift # This shifts the positional parameters down by one, which deletes the first argument in $@
@@ -128,57 +139,26 @@ ghrepoib() {
   done | xargs -n 1 -P 8 open
 }
 
-# Commit changes to a Git repo
-gitp() {
-  # Prompt for the commit message
-  printf 'Enter commit message: '
-  read msg
-
-  # Execute Git commands without an additional note
-  git add .
-  git commit -m "$msg"
-
-  git push
-}
-alias gitc=gitp
-
-# Commit changes to a Git repository with an optional extended message, accepts 'l' or 'long' as an argument for an extended commit message
-gitpl() {
-  # Prompt for the commit message
-  printf 'Enter commit message: '
-  read msg
-
-  # Prompt for the additional note
-  printf 'Enter commit note: '
-  read msg2
-
-  # Execute Git commands with an additional note
-  git add .
-  git commit -m "$msg" -m "$msg2"
-
-  git push
-}
-
-# Update my local Git repos
-gitu() {
+# Update local Git repos
+gu() {
   gitup -c -t 2 .
 }
-alias gu=gitu
+alias gitu=gu
 
-# Open a Homebrew package in a browser
+# Open a Homebrew package in your browser
 hb() {
   brew home $@
 }
 
-# Install multiple .pkg files
+# Install .pkg files
 ins() {
   for pkg in "$@"; do
     sudo installer -pkg "$pkg" -target /
   done
 }
 
-# List dependencies of an npm package
-npmd() {
+# List an npm package's dependencies
+npmdeps() {
   npm view $1 dependencies
 }
 

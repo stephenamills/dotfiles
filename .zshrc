@@ -163,6 +163,7 @@ gitpl() {
 gitu() {
   gitup -c -t 2 .
 }
+alias gu=gitu
 
 # Open a Homebrew package in a browser
 hb() {

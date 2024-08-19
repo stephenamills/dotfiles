@@ -141,7 +141,7 @@ gi() {
 
 # Update local Git repos
 gu() {
-  gitup -c -t 2 .
+  gitup -c -t 2
 }
 alias gitu=gu
 

@@ -3,17 +3,23 @@
 Rails
 https://github.com/wardencommunity/warden
 https://github.com/heartcombo/devise
-https://github.com/omniauth/omniauth
 https://github.com/basecamp/google_sign_in
+https://github.com/ankane/authtrail
 https://github.com/ankane/pretender
-https://github.com/square/rails-auth
-https://github.com/thoughtbot/clearance
 
-https://github.com/aaronlasseigne/active_interaction
-https://github.com/collectiveidea/interactor
+https://github.com/ankane/mailkick
 
+https://github.com/excid3/prefixed_ids # by Chris Oliver
 https://github.com/norman/friendly_id
-https://github.com/excid3/prefixed_ids
+https://github.com/ankane/strong_migrations
+https://github.com/ankane/searchkick # search features
+https://github.com/ankane/searchjoy # search analytics
+https://github.com/ankane/autosuggest # search autocompletion suggestions
+https://github.com/sidekiq/sidekiq # Sidekiq
+https://github.com/zendesk/racecar # Kafka
+https://github.com/instacart/wilson_score # sort
+https://github.com/excid3/noticed # notifications
+https://github.com/ilyakatz/data-migrate # run data migrations alongside schema migrations
 https://github.com/learn-co-curriculum/phase-4-rails-and-active-record-readme
 https://github.com/learn-co-curriculum/phase-3-orms-mapping-classes-to-database-tables
 https://github.com/learn-co-students/sinatra-activerecord-associations-v-000
@@ -21,23 +27,56 @@ https://github.com/learn-co-curriculum/phase-4-serializing-associations
 https://github.com/learn-co-students/rails-activerecord-models-and-rails-readme-onl01-seng-pt-070620
 https://github.com/learn-co-students/dynamic-orms-readme-v-000
 
-https://github.com/sidekiq/sidekiq
+https://github.com/pay-rails/pay # payments
+https://github.com/excid3/receipts # payment receipt and invoice
+
+https://github.com/aaronlasseigne/active_interaction
+https://github.com/collectiveidea/interactor
+
+https://github.com/bettererrors/better_errors
+https://github.com/deivid-rodriguez/byebug # debugger
+https://github.com/pry/pry # runtime developer console (debugger)
+https://github.com/excid3/stack_rescue
+https://github.com/learn-co-curriculum/phase-3-debugging-with-pry
+https://github.com/learn-co-curriculum/phase-4-debugging-network-requests
+
 https://github.com/eliotsykes/real-world-rails # real projects, and searching them with the ag command
-https://github.com/instacart/wilson_score
-https://github.com/elastic/elasticsearch-rails
 https://github.com/instacart/cloudflare-rails
-https://github.com/zendesk/racecar # Kafka
+https://github.com/ankane/ahoy # visitor analytics
+https://github.com/ankane/ahoy_email # email analytics
 https://github.com/soundcloud/lhm
+https://github.com/erwinm/acts_as_tenant # row-level "multitenacy"
+https://github.com/activemerchant/active_merchant # payments
+https://github.com/excid3/refer # referral codes
 https://github.com/soundcloud/simple_circuit_breaker
 https://github.com/heroku/rails_12factor#migrating-to-rails-5
 https://github.com/heroku/rails_stdout_logging
 https://github.com/heroku/configerator
 https://github.com/rspec/rspec-rails
+https://github.com/excid3/zapier # Zapier
 https://github.com/paper-trail-gem/paper_trail
 https://github.com/collectiveidea/audited
+https://github.com/elastic/elasticsearch-rails
+https://github.com/ankane/groupdate
+https://github.com/ankane/logstop
+https://github.com/ankane/notable
+https://github.com/stefankroes/ancestry
+https://github.com/jalkoby/squasher
 https://github.com/varvet/pundit
 https://github.com/owasp/railsgoat
 https://github.com/voormedia/rails-erd
+https://github.com/ankane/the-ultimate-guide-to-ruby-timeouts
+https://github.com/omniauth/omniauth
+https://github.com/square/rails-auth
+https://github.com/excid3/revise_auth
+https://github.com/thoughtbot/clearance
+https://github.com/huacnlee/rails-settings-cached
+https://github.com/jmettraux/rufus-scheduler
+https://github.com/djezzzl/database_consistency
+https://github.com/palkan/isolator
+https://github.com/cloudinary/cloudinary_gem # Cloudinary
+https://github.com/magnusvk/counter_culture
+
 https://github.com/dejan/rails_panel # Chrome extension
 
 https://github.com/stevepolitodesign/rails-authentication-from-scratch
@@ -47,20 +86,28 @@ https://github.com/railsbridge/docs
 https://github.com/learn-co-curriculum/rails-application-basics-readme
 https://github.com/learn-co-curriculum/phase-4-creating-a-rails-app-readme
 https://github.com/learn-co-curriculum/phase-4-rails-routing-basics-readme
-https://github.com/learn-co-students/rack-intro-v-000
+https://github.com/learn-co-curriculum/phase-4-authenticating-users-readme # login
+https://github.com/learn-co-curriculum/hs-bcrypt-set-up
+https://github.com/learn-co-curriculum/phrg-has_secure_password_readme
+https://github.com/learn-co-curriculum/phase-3-rails-url-helpers-readme
 https://github.com/learn-co-curriculum/rails-create-action-readme
 https://github.com/learn-co-curriculum/rails-static-request-readme
 https://github.com/learn-co-curriculum/phase-4-rails-route-params-readme
 https://github.com/learn-co-curriculum/phase-4-rails-resources-create
 https://github.com/learn-co-curriculum/rails-edit-update-action-readme
+https://github.com/learn-co-curriculum/phase-4-validation-messages-and-error-handling
 https://github.com/learn-co-curriculum/phase-4-rails-resources-update
 https://github.com/learn-co-curriculum/phase-4-rails-resources-index-show
+https://github.com/learn-co-curriculum/phase-3-rails-form_tag-readme # CSRF
+https://github.com/learn-co-curriculum/rails-form_for-on-edit-readme
+https://github.com/learn-co-curriculum/phase-4-password-protection-lab
+https://github.com/learn-co-curriculum/react-hooks-auth-session # advanced
+https://github.com/learn-co-curriculum/rails-kaminari-readme
 https://github.com/learn-co-students/omniauth_readme-v-000
 https://github.com/learn-co-students/rails-generators-readme-v-000
-https://github.com/learn-co-curriculum/phase-3-chatterbox-sinatra-react-lab
 https://github.com/learn-co-students/rails-paperclip-readme-v-000
 https://github.com/learn-co-curriculum/rails-sidekiq-readme
-https://github.com/learn-co-students/rack-dynamic-web-apps-v-000
+https://github.com/excid3/simple_discussion # forum
 https://github.com/rubocop/rails-style-guide
 https://github.com/bullet-train-co/bullet_train # template
 https://jumpstartrails.com # template
@@ -68,17 +115,44 @@ https://businessclasskit.com # template
 https://railsbytes.com # templates
 https://github.com/thoughtbot/suspenders/
 https://github.com/mattbrictson/nextgen
-https://github.com/ankane/production_rails
+https://github.com/ankane/production_rails # by Andrew Kane
+https://github.com/ankane/secure_rails # by Andrew Kane
 
 https://github.com/learn-co-curriculum/react-rails-project-setup-guide # fetch JSON from Rails using useEffect(), adds client-side routing, has create-react-app proxy tip, and Rails cookies & sessions
 https://github.com/learn-co-curriculum/phase-4-adding-react-to-rails # fetches JSON from Rails using useEffect() but unfinished because it doesn't include the fetched JSON on the page
 https://github.com/learn-co-curriculum/react-rails-project-setup-guide # useful proxy feature
+https://github.com/learn-co-curriculum/phase-4-deploying-demo-app
 https://github.com/learn-co-curriculum/phase-4-deploying-rails-react-to-heroku # talks about React routes conflicting with Rails routes
+https://github.com/learn-co-curriculum/react-hooks-auth-session # advanced, React plus Rails API mode with Google sign-in
+https://github.com/learn-co-curriculum/phase-3-chatterbox-sinatra-react-lab
 https://github.com/learn-co-curriculum/connecting-react-app-to-rails-api # old
 https://github.com/shakacode/react_on_rails
 https://github.com/reactjs/react-rails
 
-https://github.com/rails/rails
+https://github.com/sinatra/sinatra
+https://github.com/learn-co-curriculum/sinatra-from-scratch-readme
+https://github.com/learn-co-curriculum/sinatra-routes-readme
+https://github.com/learn-co-curriculum/sinatra-restful-routes-readme
+https://github.com/learn-co-curriculum/sinatra-params-readme
+https://github.com/learn-co-curriculum/sinatra-mechanics-of-sessions-readme
+https://github.com/learn-co-curriculum/sinatra-view-and-controller-readme-walkthrough
+https://github.com/learn-co-curriculum/sinatra-nested-forms-readme
+https://github.com/learn-co-curriculum/sinatra-forms-params-readme-walkthrough
+https://github.com/learn-co-curriculum/sinatra-cookies-readme
+https://github.com/learn-co-curriculum/sinatra-mvc-file-structure-readme
+https://github.com/learn-co-curriculum/sinatra-classic-file-structure-readme
+
+https://github.com/rack/rack
+https://github.com/rack/rack-attack
+https://github.com/learn-co-students/rack-intro-v-000
+https://github.com/learn-co-curriculum/rack-http-request-readme
+https://github.com/learn-co-curriculum/rack-dynamic-paths-readme
+https://github.com/learn-co-curriculum/rack-headers-readme
+https://github.com/learn-co-curriculum/rack-status-codes-readme
+https://github.com/learn-co-students/rack-dynamic-web-apps-v-000
+
+https://guides.rubyonrails.org/v7.1/ # release notes
+https://github.com/rails/rails # issues, pull requests
 
 Cloud Run
 https://github.com/googlecloudplatform/cloud-run-button # Let anyone deploy your GitHub repos to Google Cloud Run with a single click

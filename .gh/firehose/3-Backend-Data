@@ -94,3 +94,16 @@ Snowflake
 Redshift
 
 Firebase
+
+Kubernetes
+https://github.com/cncf/llm-starter-pack # Run a language model in Kubernetes (in Docker)
+https://github.com/cncf/llm-in-action # Run a language model in Kubernetes (Ollama service)
+https://github.com/rhecosystemappeng/llm-on-openshift # Hugging Face, Redis vector, etc.
+https://github.com/redhat-scholars/rhods-od-workshop # Jupyter, TensorFlow, Kafka
+https://github.com/redhat-scholars/rhods-lp-workshop # Jupyter, Flask
+https://github.com/ibm-ecosystem-engineering/superknowa # Retrieval demo on all IBM docs
+https://www.wwt.com/topic/genai/overview # retrieval demo by WWT
+https://github.com/rh-aiservices-bu/multi-gpu-llms # GPU cluster
+https://github.com/rh-aiservices-bu/jumpstart-library
+https://github.com/rh-aiservices-bu/openshift-ai-resources
+https://github.com/vmware-private-ai/vmware-generative-ai-reference-architecture # GPU cluster

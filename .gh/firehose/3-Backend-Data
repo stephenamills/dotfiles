@@ -1,8 +1,7 @@
 https://mad.firstmark.com # industries
-
-https://tag-runtime.cncf.io/wgs/cnaiwg/whitepapers/ # tech stack (CNCF)
-https://landscape.lfai.foundation # tech stack (Linux Foundation AI)
-https://landscape.cncf.io/?group=cnai # tech stack (CNCF)
+https://tag-runtime.cncf.io/wgs/cnaiwg/whitepapers # stack
+https://landscape.lfai.foundation # stack
+https://landscape.cncf.io/?group=cnai # stack
 
 Visual Studio Code Chat
 https://github.com/lukvonstrom/copilot-verification # Chat extension - verifies Python code or creates tests using preconditions and postconditions
@@ -96,6 +95,7 @@ Redshift
 Firebase
 
 Kubernetes
+
 https://github.com/cncf/llm-starter-pack # Run a language model in Kubernetes (in Docker)
 https://github.com/cncf/llm-in-action # Run a language model in Kubernetes (Ollama service)
 https://github.com/rhecosystemappeng/llm-on-openshift # Hugging Face, Redis vector, etc.

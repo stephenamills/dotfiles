@@ -26,8 +26,8 @@ Certificates
 Nomad
 
 Kubernetes
-https://github.com/cncf/cartografos # business value group
-https://contribute.cncf.io/maintainers # community building & management
+https://maturitymodel.cncf.io # business outcomes
+https://contribute.cncf.io/maintainers # community building & relationship management
 
 https://github.com/cncf/telecom-user-group # 5G Kubernetes examples (follow links)
 https://github.com/kubernetes/examples # Guestbook Redis (Deployment, Service) | Wordpress MySQL (Deployment, Persistent Volume with Claim) | Cassandra (Daemon Set, Stateful Set, Replication Controller)

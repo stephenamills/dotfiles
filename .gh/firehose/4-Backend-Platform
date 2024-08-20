@@ -10,6 +10,7 @@
 
 -- Hetzner --
 
+--
 Railway
 
 Heroku
@@ -168,7 +169,7 @@ https://github.com/kubernetes-sigs/kubetest2 # Kubetest2 is the framework for la
 https://github.com/kubernetes-sigs/bom # A utility to generate SPDX-compliant Bill of Materials manifests
 https://github.com/kubernetes-sigs/blixt # Layer 4 Kubernetes load-balancer
 https://github.com/kubernetes-sigs/cluster-api-provider-nested # Cluster API Provider for Nested Clusters
-https://github.com/kubernetes-sigs/vsphere-csi-driver # vSphere storage Container Storage Interface (CSI) plugin
+https://github.com/kubernetes-sigs/vsphere-csi-driver # Container Storage Interface (CSI) plugin for vSphere storage
 https://github.com/kubernetes-sigs/cluster-api-provider-azure # Cluster API implementation for Microsoft Azure
 https://github.com/kubernetes-sigs/cluster-api-provider-openstack # Cluster API implementation for OpenStack
 https://github.com/kubernetes-sigs/cloud-provider-azure # Cloud provider for Azure
@@ -204,7 +205,7 @@ https://github.com/kubernetes-sigs/prow # Prow is a Kubernetes based CI/CD syste
 https://github.com/kubernetes-sigs/structured-merge-diff # Test cases and implementation for "server-side apply"
 https://github.com/kubernetes-sigs/kube-scheduler-wasm-extension # All the things to make the scheduler extendable with wasm.
 https://github.com/kubernetes-sigs/slack-infra # Tooling for kubernetes.slack.com
-https://github.com/kubernetes-sigs/container-object-storage-interface-controller # Container Object Storage Interface (COSI) controller responsible to manage lifecycle of COSI objects.
+https://github.com/kubernetes-sigs/container-object-storage-interface-controller # Container Object Storage Interface (COSI) controller responsible for managing the lifecycle of COSI objects.
 https://github.com/kubernetes-sigs/dashboard-metrics-scraper # Container to scrape, store, and retrieve a window of time from the Metrics Server.
 https://github.com/kubernetes-sigs/apisnoop # Snooping on the Kubernetes OpenAPI communications
 https://github.com/kubernetes-sigs/kernel-module-management # The kernel module management operator builds, signs and loads kernel modules in Kubernetes clusters.
@@ -283,7 +284,6 @@ https://github.com/kubernetes-sigs/cloud-pv-admission-labeler # External admissi
 https://github.com/kubernetes-sigs/porche # This project exists to explore the creation of a redirector for specific artifacts, similar to the redirector for registry.k8s.io.
 https://github.com/kubernetes-sigs/referencegrant-poc #
 
-https://github.com/kubernetes/kubernetes # Production-Grade Container Scheduling and Management
 https://github.com/kubernetes/minikube # Run Kubernetes locally
 https://github.com/kubernetes/ingress-nginx # Ingress-NGINX Controller for Kubernetes
 https://github.com/kubernetes/kops # Kubernetes Operations (kOps) - Production Grade k8s Installation, Upgrades and Management
@@ -316,10 +316,7 @@ https://github.com/kubernetes/release # Release infrastructure for Kubernetes an
 https://github.com/kubernetes/design-proposals-archive # Archive of Kubernetes Design Proposals
 https://github.com/kubernetes/cloud-provider-aws # Cloud provider for AWS
 https://github.com/kubernetes/registry.k8s.io # This project is the repo for registry.k8s.io, the production OCI registry service for Kubernetes' container image artifacts
-https://github.com/kubernetes/cri-api # Container Runtime Interface (CRI) – a plugin interface which enables kubelet to use a wide variety of container runtimes.
-https://github.com/containernetworking/cni # Container Network Interface (CNI) - a plugin interface which enables networking for Linux containers
-https://github.com/containernetworking/plugins # Example networking plugins
-https://github.com/container-storage-interface/spec # Container Storage Interface (CSI) - a plugin interface which enables storage for Linux containers
+https://github.com/containernetworking/plugins # Container Networking Interface plugin examples and reference implementations
 https://github.com/kubernetes/cloud-provider-alibaba-cloud # CloudProvider for Alibaba Cloud
 https://github.com/kubernetes/utils # Non-Kubernetes-specific utility libraries which are consumed by multiple projects.
 https://github.com/kubernetes/kube-openapi # Kubernetes OpenAPI spec generation & serving
@@ -327,10 +324,8 @@ https://github.com/kubernetes/kubelet # kubelet component configs
 https://github.com/kubernetes/sample-cli-plugin # Sample kubectl plugin
 https://github.com/kubernetes/cli-runtime # Set of helpers for creating kubectl commands and plugins.
 https://github.com/kubernetes/kube-aggregator # Aggregator for Kubernetes-style API servers: dynamic registration, discovery summarization, secure proxy
-https://github.com/kubernetes/cloud-provider # cloud-provider defines the shared interfaces which Kubernetes cloud providers implement. These interfaces allow various controllers to integrate with any cloud provider in a pluggable fashion. Also serves as an issue tracker for SIG Cloud Provider.  
 https://github.com/kubernetes/org # Meta configuration for Kubernetes Github Org
 https://github.com/kubernetes/cloud-provider-vsphere # Kubernetes Cloud Provider for vSphere
-https://cloud-provider-vsphere.sigs.k8s.io
 https://github.com/kubernetes/apiextensions-apiserver # API server for API extensions like CustomResourceDefinitions
 https://github.com/kubernetes/kubernetes-template-project # A template for starting new projects on the github.com/kubernetes organization
 https://github.com/kubernetes/kube-proxy # kube-proxy component configs
@@ -360,11 +355,18 @@ https://github.com/kubernetes/csi-translation-lib # Staging repo for CSI Migrati
 https://github.com/kubernetes/cel-admission-webhook #
 https://github.com/kubernetes/sig-testing # Home for SIG Testing discussion and documents.
 https://github.com/kubernetes/endpointslice #
-https://github.com/kubernetes/cri-client # Container Runtime Interface client implementation
 https://github.com/kubernetes/.github # Default files for all repos in the Kubernetes GitHub org
 https://github.com/coreos/coreos-kubernetes/
 https://github.com/cncf/k8s-conformance # all Kubernetes implementations
 https://tag-runtime.cncf.io/wgs/spos/charter/#open-source-projects # special-purpose container Linux distributions
+
+https://github.com/kubernetes/cri-api # Container Runtime Interface (CRI) – a plugin interface which enables kubelet to use a wide variety of container runtimes.
+https://github.com/kubernetes/cri-client # Container Runtime Interface client implementation
+
+https://github.com/containernetworking/cni # Container Network Interface (CNI) - a plugin interface which enables networking for Linux containers
+https://github.com/container-storage-interface/spec # Container Storage Interface (CSI) - a plugin interface which enables storage for Linux containers
+https://github.com/kubernetes/cloud-provider # Cloud Provider Interface (CPI) - a plugin interface which enables management of cloud provider infrastructure
+https://github.com/kubernetes/kubernetes # Production-grade container scheduling and management
 
 Swarm
 https://github.com/moby/swarmkit

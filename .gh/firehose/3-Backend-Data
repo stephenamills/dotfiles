@@ -1,8 +1,8 @@
 https://mad.firstmark.com # industries
 
-https://tag-runtime.cncf.io/wgs/cnaiwg/whitepapers/ # tech stack
-https://landscape.lfai.foundation # tech stack
-https://landscape.cncf.io/?group=cnai # tech stack
+https://tag-runtime.cncf.io/wgs/cnaiwg/whitepapers/ # tech stack (CNCF)
+https://landscape.lfai.foundation # tech stack (Linux Foundation AI)
+https://landscape.cncf.io/?group=cnai # tech stack (CNCF)
 
 Visual Studio Code Chat
 https://github.com/lukvonstrom/copilot-verification # Chat extension - verifies Python code or creates tests using preconditions and postconditions

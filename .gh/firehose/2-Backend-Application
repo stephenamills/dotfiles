@@ -96,6 +96,7 @@ https://github.com/learn-co-curriculum/phase-4-rails-route-params-readme
 https://github.com/learn-co-curriculum/phase-4-rails-resources-create
 https://github.com/learn-co-curriculum/rails-edit-update-action-readme
 https://github.com/learn-co-curriculum/phase-4-validation-messages-and-error-handling
+https://github.com/learn-co-curriculum/rails-5-json-api
 https://github.com/learn-co-curriculum/phase-4-rails-resources-update
 https://github.com/learn-co-curriculum/phase-4-rails-resources-index-show
 https://github.com/learn-co-curriculum/phase-3-rails-form_tag-readme # CSRF
@@ -131,25 +132,44 @@ https://github.com/reactjs/react-rails
 
 https://github.com/sinatra/sinatra
 https://github.com/learn-co-curriculum/sinatra-from-scratch-readme
+https://github.com/learn-co-curriculum/phase-3-intro-to-sinatra
 https://github.com/learn-co-curriculum/sinatra-routes-readme
 https://github.com/learn-co-curriculum/sinatra-restful-routes-readme
 https://github.com/learn-co-curriculum/sinatra-params-readme
 https://github.com/learn-co-curriculum/sinatra-mechanics-of-sessions-readme
+https://github.com/learn-co-curriculum/sinatra-user-auth
+https://github.com/learn-co-curriculum/sinatra-multiple-controllers
 https://github.com/learn-co-curriculum/sinatra-view-and-controller-readme-walkthrough
+https://github.com/learn-co-curriculum/sinatra-activerecord-setup
+https://github.com/learn-co-curriculum/sinatra-activerecord-reading
+https://github.com/learn-co-curriculum/sinatra-activerecord-associations # primary and foreign key, has many, belongs to
+https://github.com/learn-co-curriculum/sinatra-activerecord-associations-join-tables # join table
+https://github.com/learn-co-curriculum/mechanics-of-migrations # migrations
+https://github.com/learn-co-curriculum/dynamic-orm-inheritance
+https://github.com/learn-co-curriculum/sinatra-integrating-models-walkthrough
 https://github.com/learn-co-curriculum/sinatra-nested-forms-readme
 https://github.com/learn-co-curriculum/sinatra-forms-params-readme-walkthrough
 https://github.com/learn-co-curriculum/sinatra-cookies-readme
+https://github.com/learn-co-curriculum/phase-3-building-sinatra-applications
+https://github.com/learn-co-curriculum/sinatra-basics
+https://github.com/learn-co-curriculum/sinatra-shotgun-server
+https://github.com/learn-co-curriculum/sinatra-activerecord-using-tux
+https://github.com/learn-co-curriculum/intro-to-capybara
+https://github.com/learn-co-curriculum/sinatra-tic-tac-toe # game
 https://github.com/learn-co-curriculum/sinatra-mvc-file-structure-readme
 https://github.com/learn-co-curriculum/sinatra-classic-file-structure-readme
-
 https://github.com/rack/rack
+https://github.com/cyu/rack-cors
 https://github.com/rack/rack-attack
 https://github.com/learn-co-students/rack-intro-v-000
+https://github.com/learn-co-curriculum/phase-3-web-server-fundamentals-with-rack
+https://github.com/learn-co-curriculum/middleware-tutorial
+https://github.com/learn-co-curriculum/rack-dynamic-web-apps
 https://github.com/learn-co-curriculum/rack-http-request-readme
 https://github.com/learn-co-curriculum/rack-dynamic-paths-readme
 https://github.com/learn-co-curriculum/rack-headers-readme
 https://github.com/learn-co-curriculum/rack-status-codes-readme
-https://github.com/learn-co-students/rack-dynamic-web-apps-v-000
+https://github.com/learn-co-curriculum/lecture-crud-with-rack-react
 
 https://guides.rubyonrails.org/v7.1/ # release notes
 https://github.com/rails/rails # issues, pull requests

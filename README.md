@@ -1,12 +1,10 @@
-# My dotfiles
+This repo contains my shell configurations and packages.
 
-This collection contains my shell configuration files and command and app lists.
+These are for my personal use cases, but here in case someone finds them useful.
 
-This repo is really for personal use but here in case someone finds these useful.
+### Usage
 
-# Usage
-
-Homebrew is required to install dependencies the two shell configuration files rely on.
+[Homebrew](https://brew.sh) is required to install dependencies the two shell configuration files rely on.
 
 Clone this repository and copy `.zprofile` and `.zshrc` to your home directory.
 
@@ -22,6 +20,7 @@ Lastly, run the commands below to install:
 
 ```shell
 brew bundle install --no-lock
+
 xargs -n 1 go install < Gofile
 pnpm install -g $(tr '\n' ' ' < Javascriptfile)
 xargs -n 1 pipx install < Pythonfile

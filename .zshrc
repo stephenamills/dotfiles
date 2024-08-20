@@ -1,4 +1,4 @@
-# This file depends on seven modules installed from the Brewfile:
+# This file depends on eight packages installed from the Brewfile:
 # argc asdf direnv pure zsh-autocomplete zsh-autopair zsh-autosuggestions zsh-syntax-highlighting
 
 # If the `brew` command exists

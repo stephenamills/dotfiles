@@ -27,7 +27,7 @@ Nomad
 
 Kubernetes
 https://github.com/cncf/cartografos # business value group
-https://contribute.cncf.io/maintainers/ # community building & management
+https://contribute.cncf.io/maintainers # community building & management
 
 https://github.com/cncf/llm-starter-pack # Run a language model in Kubernetes (in Docker)
 https://github.com/cncf/llm-in-action # Run a language model in Kubernetes (Ollama service)
@@ -36,9 +36,9 @@ https://github.com/redhat-scholars/rhods-od-workshop # Jupyter, TensorFlow, Kafk
 https://github.com/redhat-scholars/rhods-lp-workshop # Jupyter, Flask
 https://github.com/ibm-ecosystem-engineering/superknowa # Retrieval demo on all IBM docs
 https://github.com/rh-aiservices-bu/multi-gpu-llms # GPU cluster
-https://github.com/rh-aiservices-bu/jumpstart-library/
+https://github.com/rh-aiservices-bu/jumpstart-library
 https://github.com/rh-aiservices-bu/openshift-ai-resources
-https://github.com/vmware-private-ai/ # GPU cluster
+https://github.com/vmware-private-ai # GPU cluster
 
 https://github.com/cncf/telecom-user-group # 5G Kubernetes examples (follow links)
 
@@ -90,14 +90,14 @@ https://github.com/cncf/tag-storage
 https://tag-runtime.cncf.io # AI
 https://tag-security.cncf.io # security
 https://github.com/cncf/tag-observability
-https://github.com/kubernetes/community/ # networking, AI, bare metal, and much more
+https://github.com/kubernetes/community # networking, AI, bare metal, and much more
 
 https://radar.cncf.io/overview # industry tech stack surveys
 https://github.com/cncf/trailmap # project trailmap
 https://github.com/cncf/velocity # project activity
 https://github.com/cncf/students#10-finding-a-job # job board
 https://github.com/cncf/clowarden
-https://github.com/cncf/cncf-fuzzing/
+https://github.com/cncf/cncf-fuzzing
 https://github.com/cncf/chaosengineering-wg
 https://github.com/cncf/wg-serverless # good distinction between serverless and functions-as-a-service
 https://github.com/cncf/presentations
@@ -111,7 +111,7 @@ https://github.com/cncf/landscape
 https://github.com/cncf/tag-network
 https://glossary.cncf.io # glossary
 https://maturitymodel.cncf.io # maturity model - build, operate, scale, adapt
-https://tag-env-sustainability.cncf.io/landscape/
+https://tag-env-sustainability.cncf.io/landscape
 https://github.com/cncf/cluster
 https://github.com/hjacobs/kubernetes-failure-stories
 
@@ -356,7 +356,7 @@ https://github.com/kubernetes/cel-admission-webhook #
 https://github.com/kubernetes/sig-testing # Home for SIG Testing discussion and documents.
 https://github.com/kubernetes/endpointslice #
 https://github.com/kubernetes/.github # Default files for all repos in the Kubernetes GitHub org
-https://github.com/coreos/coreos-kubernetes/
+https://github.com/coreos/coreos-kubernetes
 https://github.com/cncf/k8s-conformance # all Kubernetes implementations
 https://tag-runtime.cncf.io/wgs/spos/charter/#open-source-projects # special-purpose container Linux distributions
 

@@ -29,19 +29,7 @@ Kubernetes
 https://github.com/cncf/cartografos # business value group
 https://contribute.cncf.io/maintainers # community building & management
 
-https://github.com/cncf/llm-starter-pack # Run a language model in Kubernetes (in Docker)
-https://github.com/cncf/llm-in-action # Run a language model in Kubernetes (Ollama service)
-https://github.com/rhecosystemappeng/llm-on-openshift # Hugging Face, Redis vector, etc.
-https://github.com/redhat-scholars/rhods-od-workshop # Jupyter, TensorFlow, Kafka
-https://github.com/redhat-scholars/rhods-lp-workshop # Jupyter, Flask
-https://github.com/ibm-ecosystem-engineering/superknowa # Retrieval demo on all IBM docs
-https://github.com/rh-aiservices-bu/multi-gpu-llms # GPU cluster
-https://github.com/rh-aiservices-bu/jumpstart-library
-https://github.com/rh-aiservices-bu/openshift-ai-resources
-https://github.com/vmware-private-ai # GPU cluster
-
 https://github.com/cncf/telecom-user-group # 5G Kubernetes examples (follow links)
-
 https://github.com/kubernetes/examples # Guestbook Redis (Deployment, Service) | Wordpress MySQL (Deployment, Persistent Volume with Claim) | Cassandra (Daemon Set, Stateful Set, Replication Controller)
 https://github.com/dockersamples/example-voting-app Voting App Postgres Redis
 https://github.com/googlecloudplatform/microservices-demo # Online Boutique
@@ -75,6 +63,7 @@ https://github.com/redhat-scholars/operators-sdk-tutorial # Go and Java Operator
 https://github.com/redhat-scholars/backstage-workshop # Backstage
 https://github.com/redhat-scholars/kubernetes-apps-resource-management
 https://github.com/redhat-scholars/rhoam-sandbox-getting-started
+https://github.com/vmware-tanzu-labs/tanzu-validated-solutions
 
 https://github.com/cncf/devstats-helm # bare metal (mess)
 
@@ -315,6 +304,7 @@ https://github.com/kubernetes/metrics # Kubernetes metrics-related API types and
 https://github.com/kubernetes/release # Release infrastructure for Kubernetes and related components
 https://github.com/kubernetes/design-proposals-archive # Archive of Kubernetes Design Proposals
 https://github.com/kubernetes/cloud-provider-aws # Cloud provider for AWS
+https://github.com/kubernetes/cri-api # Container Runtime Interface (CRI) – a plugin interface which enables kubelet to use a wide variety of container runtimes.
 https://github.com/kubernetes/registry.k8s.io # This project is the repo for registry.k8s.io, the production OCI registry service for Kubernetes' container image artifacts
 https://github.com/containernetworking/plugins # Container Networking Interface plugin examples and reference implementations
 https://github.com/kubernetes/cloud-provider-alibaba-cloud # CloudProvider for Alibaba Cloud
@@ -355,17 +345,15 @@ https://github.com/kubernetes/csi-translation-lib # Staging repo for CSI Migrati
 https://github.com/kubernetes/cel-admission-webhook #
 https://github.com/kubernetes/sig-testing # Home for SIG Testing discussion and documents.
 https://github.com/kubernetes/endpointslice #
-https://github.com/kubernetes/.github # Default files for all repos in the Kubernetes GitHub org
+https://github.com/kubernetes/cri-client # Container Runtime Interface client implementation
 https://github.com/coreos/coreos-kubernetes
 https://github.com/cncf/k8s-conformance # all Kubernetes implementations
 https://tag-runtime.cncf.io/wgs/spos/charter/#open-source-projects # special-purpose container Linux distributions
 
-https://github.com/kubernetes/cri-api # Container Runtime Interface (CRI) – a plugin interface which enables kubelet to use a wide variety of container runtimes.
-https://github.com/kubernetes/cri-client # Container Runtime Interface client implementation
-
 https://github.com/containernetworking/cni # Container Network Interface (CNI) - a plugin interface which enables networking for Linux containers
 https://github.com/container-storage-interface/spec # Container Storage Interface (CSI) - a plugin interface which enables storage for Linux containers
 https://github.com/kubernetes/cloud-provider # Cloud Provider Interface (CPI) - a plugin interface which enables management of cloud provider infrastructure
+
 https://github.com/kubernetes/kubernetes # Production-grade container scheduling and management
 
 Swarm

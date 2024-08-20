@@ -52,6 +52,11 @@ eval "$(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib=$HOME/perl5)"
 # Remove error messages when searching for manual pages
 alias man='/usr/bin/man 2>/dev/null'
 
+# Open a Homebrew package in your browser
+bh() {
+  brew home $@
+}
+
 # Open a Rust package in a browser
 cb() {
   open "https://crates.io/crates/${1}"
@@ -63,10 +68,8 @@ del() {
   sed -i '' $1d ~/.zsh_history
 }
 
-# Open a GitHub repository in the browser
-gb() {
-  xargs -n 1 -P 8 hub browse <<<$@
-}
+# Example usage:
+# open_github_file "cncf/cnf-testbed examples/use_case/external-packet-filtering-on-k8s-nsm-on-packet/README.md"
 
 # Load the Google Cloud SDK – it's too bloated to load everytime the shell starts
 gcloud() {
@@ -84,6 +87,29 @@ gcloud() {
   else
     echo "Google Cloud SDK is not installed."
   fi
+}
+
+ghcb() {
+  # Extract repository full name and file path from the input arguments
+  local repo="$1"
+  local file_path="$2"
+
+  # Determine default branch (main or master)
+  local default_branch="main"
+  if curl --head --silent --fail "https://github.com/$repo/tree/master" >/dev/null; then
+    default_branch="master"
+  fi
+
+  # Construct URL to the file on GitHub
+  local url="https://github.com/$repo/blob/$default_branch/$file_path"
+
+  # Open in a browser
+  open "$url"
+}
+
+# Open a GitHub repository in the browser
+ghrb() {
+  xargs -n 1 -P 8 hub browse <<<$@
 }
 
 # Search GitHub code
@@ -121,14 +147,9 @@ ghsrb() {
   gh search repos $@ | awk '{print $1}' | xargs -n 1 -P 8 hub browse
 }
 
-# Open GitHub repos in a browser
-ghrb() {
-  echo "$@" | xargs -n 1 -P 8 hub browse
-}
-
 # Open GitHub issues in a browser
 # Usage: ghib <owner/repo> <issue1> <issue2> ...
-gi() {
+ghib() {
   repo=$1
 
   shift # This shifts the positional parameters down by one, which deletes the first argument in $@
@@ -144,11 +165,6 @@ gu() {
   gitup -c -t 2
 }
 alias gitu=gu
-
-# Open a Homebrew package in your browser
-hb() {
-  brew home $@
-}
 
 # Install .pkg files
 ins() {

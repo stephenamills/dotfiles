@@ -89,22 +89,28 @@ gcloud() {
   fi
 }
 
+# Open GitHub files in a browser
+# Usage: ghcb <repo1> <file_path1> <repo2> <file_path2> ...
 ghcb() {
-  # Extract repository full name and file path from the input arguments
-  local repo="$1"
-  local file_path="$2"
+  while [ "$#" -gt 0 ]; do
+    repo=$1
+    file_path=$2
 
-  # Determine default branch (main or master)
-  local default_branch="main"
-  if curl --head --silent --fail "https://github.com/$repo/tree/master" >/dev/null; then
-    default_branch="master"
-  fi
+    # Determine default branch (main or master)
+    default_branch="main"
+    if curl --head --silent --fail "https://github.com/$repo/tree/master" >/dev/null; then
+      default_branch="master"
+    fi
 
-  # Construct URL to the file on GitHub
-  local url="https://github.com/$repo/blob/$default_branch/$file_path"
+    # Construct URL to the file on GitHub
+    url="https://github.com/$repo/blob/$default_branch/$file_path"
 
-  # Open in a browser
-  open "$url"
+    # Shift to the next pair of arguments
+    shift 2
+
+    echo "$url"
+
+  done | xargs -n 1 -P 8 open
 }
 
 # Open a GitHub repository in the browser

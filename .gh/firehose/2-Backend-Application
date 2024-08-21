@@ -1,5 +1,3 @@
--- Google --
-
 Rails
 https://github.com/wardencommunity/warden
 https://github.com/heartcombo/devise
@@ -7,19 +5,9 @@ https://github.com/basecamp/google_sign_in
 https://github.com/ankane/authtrail
 https://github.com/ankane/pretender
 
-https://github.com/ankane/mailkick
-
 https://github.com/excid3/prefixed_ids # by Chris Oliver
 https://github.com/norman/friendly_id
-https://github.com/ankane/strong_migrations
-https://github.com/ankane/searchkick # search features
-https://github.com/ankane/searchjoy # search analytics
-https://github.com/ankane/autosuggest # search autocompletion suggestions
-https://github.com/sidekiq/sidekiq # Sidekiq
-https://github.com/zendesk/racecar # Kafka
-https://github.com/instacart/wilson_score # sort
-https://github.com/excid3/noticed # notifications
-https://github.com/ilyakatz/data-migrate # run data migrations alongside schema migrations
+
 https://github.com/learn-co-curriculum/phase-4-rails-and-active-record-readme
 https://github.com/learn-co-curriculum/phase-3-orms-mapping-classes-to-database-tables
 https://github.com/learn-co-students/sinatra-activerecord-associations-v-000
@@ -27,11 +15,13 @@ https://github.com/learn-co-curriculum/phase-4-serializing-associations
 https://github.com/learn-co-students/rails-activerecord-models-and-rails-readme-onl01-seng-pt-070620
 https://github.com/learn-co-students/dynamic-orms-readme-v-000
 
+https://github.com/aaronlasseigne/active_interaction
+https://github.com/collectiveidea/interactor
+
 https://github.com/pay-rails/pay # payments
 https://github.com/excid3/receipts # payment receipt and invoice
 
-https://github.com/aaronlasseigne/active_interaction
-https://github.com/collectiveidea/interactor
+https://github.com/ankane/mailkick
 
 https://github.com/bettererrors/better_errors
 https://github.com/deivid-rodriguez/byebug # debugger
@@ -42,6 +32,15 @@ https://github.com/learn-co-curriculum/phase-4-debugging-network-requests
 
 https://github.com/eliotsykes/real-world-rails # real projects, and searching them with the ag command
 https://github.com/instacart/cloudflare-rails
+https://github.com/ankane/strong_migrations
+https://github.com/ankane/searchkick # search features
+https://github.com/ankane/searchjoy # search analytics
+https://github.com/ankane/autosuggest # search autocompletion suggestions
+https://github.com/sidekiq/sidekiq # Sidekiq
+https://github.com/zendesk/racecar # Kafka
+https://github.com/instacart/wilson_score # sort
+https://github.com/excid3/noticed # notifications
+https://github.com/ilyakatz/data-migrate # run data migrations alongside schema migrations
 https://github.com/ankane/ahoy # visitor analytics
 https://github.com/ankane/ahoy_email # email analytics
 https://github.com/soundcloud/lhm
@@ -105,9 +104,11 @@ https://github.com/learn-co-curriculum/phase-4-password-protection-lab
 https://github.com/learn-co-curriculum/react-hooks-auth-session # advanced
 https://github.com/learn-co-curriculum/rails-kaminari-readme
 https://github.com/learn-co-students/omniauth_readme-v-000
+https://github.com/learn-co-curriculum/rails-blog-scaffold
 https://github.com/learn-co-students/rails-generators-readme-v-000
 https://github.com/learn-co-students/rails-paperclip-readme-v-000
 https://github.com/learn-co-curriculum/rails-sidekiq-readme
+https://github.com/learn-co-curriculum/rails-form_tag-readme
 https://github.com/excid3/simple_discussion # forum
 https://github.com/rubocop/rails-style-guide
 https://github.com/bullet-train-co/bullet_train # template
@@ -130,27 +131,43 @@ https://github.com/learn-co-curriculum/connecting-react-app-to-rails-api # old
 https://github.com/shakacode/react_on_rails
 https://github.com/reactjs/react-rails
 
+https://guides.rubyonrails.org/v7.1/ # release notes
+https://github.com/rails/rails # issues, pull requests
+
+Sinatra
 https://github.com/sinatra/sinatra
+
 https://github.com/learn-co-curriculum/sinatra-from-scratch-readme
 https://github.com/learn-co-curriculum/phase-3-intro-to-sinatra
 https://github.com/learn-co-curriculum/sinatra-routes-readme
+https://github.com/learn-co-curriculum/sinatra-dynamic-routes-codealong
 https://github.com/learn-co-curriculum/sinatra-restful-routes-readme
 https://github.com/learn-co-curriculum/sinatra-params-readme
-https://github.com/learn-co-curriculum/sinatra-mechanics-of-sessions-readme
-https://github.com/learn-co-curriculum/sinatra-user-auth
 https://github.com/learn-co-curriculum/sinatra-multiple-controllers
 https://github.com/learn-co-curriculum/sinatra-view-and-controller-readme-walkthrough
+
+https://github.com/learn-co-curriculum/phase-3-active-record-migrations
+https://github.com/learn-co-curriculum/phase-3-active-record-intro-to-rake
 https://github.com/learn-co-curriculum/sinatra-activerecord-setup
 https://github.com/learn-co-curriculum/sinatra-activerecord-reading
+https://github.com/learn-co-curriculum/sinatra-password-security # Active Record has_secure_password
 https://github.com/learn-co-curriculum/sinatra-activerecord-associations # primary and foreign key, has many, belongs to
 https://github.com/learn-co-curriculum/sinatra-activerecord-associations-join-tables # join table
 https://github.com/learn-co-curriculum/mechanics-of-migrations # migrations
+https://github.com/learn-co-curriculum/sinatra-activerecord-reading
+https://github.com/learn-co-curriculum/phase-3-dynamic-orms-readme
 https://github.com/learn-co-curriculum/dynamic-orm-inheritance
 https://github.com/learn-co-curriculum/sinatra-integrating-models-walkthrough
-https://github.com/learn-co-curriculum/sinatra-nested-forms-readme
-https://github.com/learn-co-curriculum/sinatra-forms-params-readme-walkthrough
+
+https://github.com/learn-co-curriculum/sinatra-mechanics-of-sessions-readme
+https://github.com/learn-co-curriculum/sinatra-user-auth
 https://github.com/learn-co-curriculum/sinatra-cookies-readme
+
+https://github.com/learn-co-curriculum/sinatra-views
+https://github.com/learn-co-curriculum/sinatra-nested-forms-readme
 https://github.com/learn-co-curriculum/phase-3-building-sinatra-applications
+https://github.com/learn-co-curriculum/sinatra-forms-params-readme-walkthrough
+https://github.com/learn-co-curriculum/sinatra-complex-forms-associations
 https://github.com/learn-co-curriculum/sinatra-basics
 https://github.com/learn-co-curriculum/sinatra-shotgun-server
 https://github.com/learn-co-curriculum/sinatra-activerecord-using-tux
@@ -158,6 +175,9 @@ https://github.com/learn-co-curriculum/intro-to-capybara
 https://github.com/learn-co-curriculum/sinatra-tic-tac-toe # game
 https://github.com/learn-co-curriculum/sinatra-mvc-file-structure-readme
 https://github.com/learn-co-curriculum/sinatra-classic-file-structure-readme
+
+Rack
+https://github.com/puma/puma
 https://github.com/rack/rack
 https://github.com/cyu/rack-cors
 https://github.com/rack/rack-attack
@@ -170,117 +190,3 @@ https://github.com/learn-co-curriculum/rack-dynamic-paths-readme
 https://github.com/learn-co-curriculum/rack-headers-readme
 https://github.com/learn-co-curriculum/rack-status-codes-readme
 https://github.com/learn-co-curriculum/lecture-crud-with-rack-react
-
-https://guides.rubyonrails.org/v7.1/ # release notes
-https://github.com/rails/rails # issues, pull requests
-
-Cloud Run
-https://github.com/googlecloudplatform/cloud-run-button # Let anyone deploy your GitHub repos to Google Cloud Run with a single click
-https://github.com/googlecloudplatform/cloud-run-hello # Demo container for Google Cloud Run
-https://github.com/googlecloudplatform/cloud-run-samples # Samples for Cloud Run
-https://github.com/googlecloudplatform/terraform-google-cloud-run # Deploys apps to Cloud Run, along with option to map custom domain
-https://github.com/googlecloudplatform/cloud-run-microservice-template-nodejs # Microservice template for Cloud Run
-https://github.com/googlecloudplatform/cloud-run-microservice-template-python #
-https://github.com/googlecloudplatform/cloud-run-proxy # Local proxy for authenticating requests to Cloud Run
-https://github.com/googlecloudplatform/opentelemetry-cloud-run
-https://github.com/googlecloudplatform/cloud-run-microservice-template-go # A template repository for a Cloud Run microservice, written in Go.
-https://github.com/googlecloudplatform/terraform-google-three-tier-web-app # Deploys a three tier web application using Cloud Run and Cloud SQL
-https://github.com/googlecloudplatform/cloud-run-microservice-template-java
-https://github.com/googlecloudplatform/cloud-run-mesh
-https://github.com/googlecloudplatform/migrate-from-app-engine-to-cloud-run # Helper library and webpage to migrate from App Engine to Cloud Run
-https://github.com/googlecloudplatform/developer-journey-app # Developer Journey App is a gaming sample app, built with Cloud Run, Cloud Storage, Cloud Firestore, and Cloud Build.
-https://github.com/googlecloudplatform/avocano # Avocano is a sample dropship/fake product website, built with Firebase Hosting, Cloud Run, Cloud SQL and Cloud Build
-https://github.com/googlecloudplatform/cloudsql-jump-start-solution-for-genai # A jump start solution using GKE or Cloud Run with Cloud SQL and VertexAI
-https://github.com/googlecloudplatform/crbt # Cloud Run Bootstrap Tool
-https://github.com/googlecloudplatform/jit-access # Just-In-Time Access is a self-service web application that lets you manage just-in-time privileged access to Google Cloud projects. JIT Access runs on App Engine and Cloud Run.
-https://github.com/googlecloudplatform/jobs-demos # Cloud Run Jobs Demos - A collection of samples to show you how and when to run a container to completion without a server
-https://github.com/googlecloudplatform/serverless-photosharing-workshop # This is the code for the Pic-a-daily, an application to upload, analyse and share pictures
-https://github.com/googlecloudplatform/gce-automated-ad-join # A Cloud Run application that enables you to automatically join VM instances to an Active Directory domain.
-https://github.com/googlecloudplatform/dlp-pdf-redaction # This solution provides an automated, serverless way to redact sensitive data from PDF files using Google Cloud Services like Data Loss Prevention (DLP), Cloud Workflows, and Cloud Run.
-https://github.com/googlecloudplatform/app2run # app2run is a python CLI tool to translate App Engine configuration into compatible Cloud Run configuration, it aims to help App Engine users to migrate their App Engine applications to Cloud Run.
-https://github.com/googlecloudplatform/cloud-run-release-manager # [EXPERIMENTAL] Automated canary rollout tool for Cloud Run services.
-https://github.com/googlecloudplatform/cloud-run-anthos-reference-web-app # An opinionated set of best practices aimed at demonstrating a reference architecture for building a web application on Google Cloud using Cloud Run for anthos.
-https://github.com/googlecloudplatform/cloud-run-helloworld-python
-https://github.com/googlecloudplatform/vpc-network-tester # Deploy VPC Network Tester to App Engine or Cloud Run to investigate the traffic flow. This app demonstrates how to package network tools as a serverless service.
-https://github.com/google/lasso
-https://github.com/googlecodelabs/cloud-slack-bot # Slack bot
-https://github.com/google-github-actions/deploy-cloudrun # GitHub Action
-
-https://github.com/kelseyhightower/serverless-vault-with-cloud-run
-https://github.com/kelseyhightower/lambda-on-cloud-run
-https://github.com/kelseyhightower/opa-on-cloud-run
-https://github.com/kelseyhightower/container-instance-metadata-server
-https://github.com/ahmetb/cloud-run-faq
-
-Firebase
-https://github.com/firebase/functions-samples # Collection of sample apps showcasing popular use cases using Cloud Functions for Firebase
-https://github.com/firebase/quickstart-js # Firebase Quickstart Samples for Web
-https://github.com/firebase/firebase-js-sdk # Firebase Javascript SDK
-https://github.com/firebase/firebaseui-web # FirebaseUI is an open-source JavaScript library for Web that provides simple, customizable UI bindings on top of Firebase SDKs to eliminate boilerplate code and promote best practices.
-https://github.com/firebase/firebase-tools # The Firebase Command Line Tools
-https://github.com/firebase/firebaseui-web-react # React Wrapper for firebaseUI Web
-https://github.com/firebase/extensions # Official Firebase extensions
-https://github.com/firebase/friendlyeats-web
-https://github.com/firebase/quickstart-testing # Samples demonstrating how to test your Firebase app
-https://github.com/firebase/emulators-codelab #
-https://github.com/firebase/snippets-rules # security rules
-https://github.com/firebase/firestore-bundle-builder #
-
-https://github.com/firebase/quickstart-android # Firebase Quickstart Samples for Android
-https://github.com/firebase/flutterfire # 🔥 A collection of Firebase plugins for Flutter apps.
-https://github.com/firebase/firebase-ios-sdk # Firebase SDK for Apple App Development
-https://github.com/firebase/firebaseui-android # Optimized UI components for Firebase
-https://github.com/firebase/quickstart-ios # Firebase Quickstart Samples for iOS
-https://github.com/firebase/firebase-android-sdk # Firebase Android SDK
-https://github.com/firebase/codelab-friendlychat-web # The source for the Firebase codelab for building a cross-platform chat app
-https://github.com/firebase/firebase-admin-node # Firebase Admin Node.js SDK
-https://github.com/firebase/firebaseui-ios # iOS UI bindings for Firebase.
-https://github.com/firebase/geofire-js # GeoFire for JavaScript - Realtime location queries with Firebase
-https://github.com/firebase/firebase-admin-go # Firebase Admin Go SDK
-https://github.com/firebase/superstatic # Superstatic: a static file server for fancy apps.
-https://github.com/firebase/firebase-functions # Firebase SDK for Cloud Functions
-https://github.com/firebase/firebase-admin-python # Firebase Admin Python SDK
-https://github.com/firebase/quickstart-nodejs
-https://github.com/firebase/quickstart-unity # Firebase Quickstart Samples for Unity
-https://github.com/firebase/snippets-android # Android snippets for firebase.google.com
-https://github.com/firebase/snippets-web # Web snippets for firebase.google.com
-https://github.com/firebase/genkit # Integrate, test, and deploy sophisticated AI features
-https://github.com/firebase/firebase-admin-java # Firebase Admin Java SDK
-https://github.com/firebase/geofire-objc # GeoFire for Objective-C - Realtime location queries with Firebase
-https://github.com/firebase/snippets-node # Node.js snippets for firebase.google.com
-https://github.com/firebase/firebase-admin-dotnet # Firebase Admin .NET SDK
-https://github.com/firebase/firebase-cpp-sdk # Firebase C++ SDK
-https://github.com/firebase/firebase-tools-ui # A local-first UI for Firebase Emulator Suite.
-https://github.com/firebase/friendlyeats-android # Cloud Firestore Android codelab
-https://github.com/firebase/codelab-friendlychat-android # Firebase FriendlyChat codelab
-https://github.com/firebase/quickstart-java # Quickstart samples for Firebase Java Admin SDK
-https://github.com/firebase/firebase-functions-test #
-https://github.com/firebase/quickstart-cpp # Firebase Quickstart Samples for C++
-https://github.com/firebase/firebase-unity-sdk # The Firebase SDK for Unity
-https://github.com/firebase/fastlane-plugin-firebase_app_distribution # fastlane plugin for Firebase App Distribution.
-https://github.com/firebase/quickstart-flutter #
-https://github.com/firebase/geofire-android # GeoFire for Android apps
-https://github.com/firebase/firebase-functions-python #
-https://github.com/firebase/snippets-ios # iOS snippets used in firebase.google.com
-https://github.com/firebase/friendlyeats-ios #
-https://github.com/firebase/firebaseopensource.com # Source for firebase open source site
-https://github.com/firebase/quickstart-python #
-https://github.com/firebase/firebaseui-flutter #
-https://github.com/firebase/codelab-friendlychat-ios #
-https://github.com/firebase/snippets-flutter #
-https://github.com/firebase/oss-bot # Robot friend for open source repositories
-https://github.com/firebase/level-up-with-firebase #
-https://github.com/firebase/snippets-java # Java snippets for firebase.google.com
-https://github.com/firebase/snippets-cpp # C++ snippets for firebase.google.com
-https://github.com/firebase/appquality-codelab-ios # Firebase iOS App Quality Codelab
-https://github.com/firebase/firebase-release-dashboard #
-
-Amplify
-
-Appwrite
-
-Supabase
-
-Mock APIs
-
-OpenAPI

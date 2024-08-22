@@ -1,36 +1,144 @@
 Rails
-https://github.com/wardencommunity/warden
-https://github.com/heartcombo/devise
-https://github.com/basecamp/google_sign_in
-https://github.com/ankane/authtrail
-https://github.com/ankane/pretender
+https://github.com/learn-co-curriculum/phase-4-rails-resources-create # routes & controller
+https://github.com/learn-co-curriculum/phase-4-rails-resources-index-show
+https://github.com/learn-co-curriculum/phase-4-rails-resources-destroy
+https://github.com/learn-co-curriculum/phase-4-rails-routing-basics-readme
+https://github.com/learn-co-curriculum/phase-3-rails-url-helpers-readme # route helpers
+https://github.com/learn-co-curriculum/phase-4-controller-exception-handling # controller exception handling
+https://github.com/learn-co-curriculum/phase-4-authenticating-users-readme # login
+https://github.com/learn-co-curriculum/hs-bcrypt-set-up
+https://github.com/learn-co-curriculum/phrg-has_secure_password_readme
+https://github.com/learn-co-curriculum/react-rails-project-setup-guide # cookies and CSRF
+https://github.com/learn-co-curriculum/phase-3-rails-url-helpers-readme
+https://github.com/learn-co-curriculum/rails-create-action-readme
+https://github.com/learn-co-curriculum/rails-static-request-readme
+https://github.com/learn-co-curriculum/phase-4-rails-route-params-readme
+https://github.com/learn-co-curriculum/rails-edit-update-action-readme
+https://github.com/learn-co-curriculum/phase-4-validation-messages-and-error-handling
 
-https://github.com/excid3/prefixed_ids # by Chris Oliver
-https://github.com/norman/friendly_id
-
+https://github.com/excid3/prefixed_ids # readable identifiers for database records (by Chris Oliver)
+https://github.com/norman/friendly_id # readable identifiers for web links
+https://github.com/basecamp/google_sign_in # Sign in (or up) with Google (by Basecamp)
+https://github.com/ankane/pretender # Log in as another user (by Andrew Kane)
 https://github.com/learn-co-curriculum/phase-4-rails-and-active-record-readme
 https://github.com/learn-co-curriculum/phase-3-orms-mapping-classes-to-database-tables
 https://github.com/learn-co-students/sinatra-activerecord-associations-v-000
 https://github.com/learn-co-curriculum/phase-4-serializing-associations
 https://github.com/learn-co-students/rails-activerecord-models-and-rails-readme-onl01-seng-pt-070620
+https://github.com/learn-co-curriculum/phase-4-using-active-model-serializer
+https://github.com/learn-co-curriculum/phase-4-displaying-associated-data
+https://github.com/learn-co-curriculum/phase-4-deleting-associated-data
+https://github.com/learn-co-curriculum/rails-generators-readme
 https://github.com/learn-co-students/dynamic-orms-readme-v-000
+https://github.com/learn-co-curriculum/rails-guided-project-immersive-module-two # domain model for picture sharing app
+https://github.com/learn-co-curriculum/devise_roles_lab # Devise
+https://github.com/learn-co-curriculum/devise_lab # Devise and Omniauth
+https://github.com/learn-co-curriculum/omniauth_readme # Omniauth
+https://github.com/learn-co-curriculum/omniauth_lab # Omniauth
+https://github.com/learn-co-curriculum/devise_roles_readme # Can
+https://github.com/learn-co-curriculum/cancan_readme # Can
+https://github.com/learn-co-curriculum/cancan_lab # Can
+https://github.com/learn-co-curriculum/devise_pundit_readme # Pundit authorization - clear conclusion
+https://github.com/learn-co-curriculum/devise_pundit_lab # Pundit authorization
+https://github.com/learn-co-curriculum/phase-4-password-protection-readme # has_secure_password
+https://github.com/learn-co-curriculum/has_secure_password_readme # has_secure_password
+https://github.com/learn-co-curriculum/guided-module-two-project-assessment#phase-2-scaffolding--execution # seed a database
+https://github.com/learn-co-curriculum/rails-guided-project-module-2 # seed a database
 
-https://github.com/aaronlasseigne/active_interaction
-https://github.com/collectiveidea/interactor
-
-https://github.com/pay-rails/pay # payments
-https://github.com/excid3/receipts # payment receipt and invoice
-
-https://github.com/ankane/mailkick
-
-https://github.com/bettererrors/better_errors
 https://github.com/deivid-rodriguez/byebug # debugger
 https://github.com/pry/pry # runtime developer console (debugger)
-https://github.com/excid3/stack_rescue
+https://github.com/bettererrors/better_errors # better error page
 https://github.com/learn-co-curriculum/phase-3-debugging-with-pry
 https://github.com/learn-co-curriculum/phase-4-debugging-network-requests
+https://github.com/learn-co-curriculum/rails-guided-project-immersive-module-two # console
+https://github.com/learn-co-curriculum/phase-4-rails-and-active-record-readme # console
+https://github.com/learn-co-curriculum/rails-guided-project-module-2 # console
+https://github.com/learn-co-curriculum/rails-5-api-template # console
+https://github.com/learn-co-curriculum/phase-3-rails-activerecord-models-and-rails-readme # console
+https://github.com/learn-co-curriculum/review_of_rendering_content_in_a_rails_app # console
 
+https://github.com/collectiveidea/interactor
+https://github.com/learn-co-curriculum/web-service-objects-readme # web service class
+https://github.com/learn-co-curriculum/js-rails-as-api-extracting-a-service-class # service class with JSON API
+https://github.com/learn-co-curriculum/js-rails-as-api-using-fast-json-api
+https://github.com/learn-co-curriculum/rails-github-api/
+https://github.com/learn-co-curriculum/rails-refactoring-apis # service object
+
+https://github.com/pay-rails/pay # payments (by Chris Oliver)
+https://github.com/excid3/receipts # payment receipt and invoice
+
+https://github.com/ankane/mailkick # email
+
+https://github.com/learn-co-curriculum/phase-4-creating-a-rails-api
+https://github.com/learn-co-curriculum/js-rails-as-api-rendering-different-content-types-using-rails
+https://github.com/learn-co-curriculum/using-to-json-ruby # to_json
+https://github.com/learn-co-curriculum/js-rails-as-api-pokemon-teams-project-new # Pokemon JSON API
+https://github.com/learn-co-curriculum/js-rails-as-api-custom-json-rendering-using-rails # JSON API
+https://github.com/learn-co-curriculum/rails-5-json-api # JSON API
+https://github.com/learn-co-curriculum/js-rails-as-api-creating-a-rails-api-from-scratch # JSON API
+https://github.com/learn-co-curriculum/js-rails-as-api-rendering-related-object-data-in-json #
+https://github.com/learn-co-curriculum/js-rails-as-api-extracting-a-service-class # JSON API service class
+https://github.com/learn-co-curriculum/js-rails-as-api-using-fast-json-api
+https://github.com/learn-co-curriculum/js-tictactoe-rails-api-backend
+https://github.com/learn-co-curriculum/phase-4-cookies-in-rails-api
+
+https://github.com/stevepolitodesign/rails-authentication-from-scratch
+https://github.com/stevepolitodesign/rails-code-along
+https://github.com/railsgirls/guides.railsgirls.com
+https://github.com/railsbridge/docs
+
+https://github.com/learn-co-curriculum/react-rails-project-setup-guide # fetch JSON from Rails using useEffect(), adds client-side routing, has create-react-app proxy tip, and Rails cookies & sessions
+https://github.com/learn-co-curriculum/phase-4-adding-react-to-rails # fetches JSON from Rails using useEffect() but unfinished because it doesn't include the fetched JSON on the page
+https://github.com/learn-co-curriculum/react-rails-project-setup-guide # useful proxy feature
+https://github.com/learn-co-curriculum/phase-4-deploying-demo-app
+https://github.com/learn-co-curriculum/phase-4-deploying-rails-react-to-heroku # talks about React routes conflicting with Rails routes
+https://github.com/learn-co-curriculum/react-hooks-auth-session # advanced, React plus Rails API mode with Google sign-in
+https://github.com/learn-co-curriculum/iron-starter-part-one # advanced, long guide
+https://github.com/learn-co-curriculum/phase-3-chatterbox-sinatra-react-lab
+https://github.com/learn-co-curriculum/connecting-react-app-to-rails-api # old
+https://github.com/shakacode/react_on_rails
+https://github.com/reactjs/react-rails
+
+https://github.com/learn-co-curriculum/phase-4-rails-resources-update
+https://github.com/learn-co-curriculum/phase-4-rails-resources-index-show
+https://github.com/learn-co-curriculum/phase-3-rails-form_tag-readme # CSRF
+https://github.com/learn-co-curriculum/rails-form_for-on-edit-readme
+https://github.com/learn-co-curriculum/phase-4-password-protection-lab
+https://github.com/learn-co-curriculum/react-hooks-auth-session # advanced
+https://github.com/learn-co-curriculum/rails-kaminari-readme
+https://github.com/learn-co-students/omniauth_readme-v-000
+https://github.com/learn-co-curriculum/rails-blog-scaffold
+https://github.com/learn-co-students/rails-generators-readme-v-000
+https://github.com/learn-co-students/rails-paperclip-readme-v-000
+https://github.com/learn-co-curriculum/rails-sidekiq-readme
+https://github.com/learn-co-curriculum/rails-form_tag-readme
+https://github.com/learn-co-curriculum/authentication_and_authorization_with_gems # authentication and authorization concepts
+https://github.com/learn-co-curriculum/phrg-authentication-and-authorization-recap-and-gems # authentication and authorization concepts
+https://github.com/learn-co-curriculum/guided-module-two-project-assessment#phase-3-teamwork-and-general-tips # browser request flow
+https://github.com/learn-co-curriculum/phase-4-creating-a-rails-app-readme # getting started intro
+
+https://github.com/learn-co-curriculum/phase-3-ruby-building-applications-gems-and-bundler # Gemfile and Bundler
+https://github.com/learn-co-curriculum/rails-application-basics-readme # Rails project folders
+
+https://github.com/wardencommunity/warden # Rack authentication framework
+https://github.com/heartcombo/devise # authentication based on Warden
+https://github.com/ankane/authtrail # Track devise login activity (by Andrew Kane)
+https://github.com/omniauth/omniauth # authentication system
+https://github.com/omniauth/omniauth-github # Sign in (or up) with GitHub
+https://github.com/doorkeeper-gem/doorkeeper
+https://github.com/binarylogic/authlogic
+https://github.com/thoughtbot/clearance
+https://github.com/sorcery/sorcery
+https://github.com/cedarcode/webauthn-ruby
+https://github.com/jeremyevans/rodauth
+https://github.com/lazaronixon/authentication-zero
+https://github.com/mikker/passwordless # magic link login
+https://github.com/technion/ruby-argon2
+https://github.com/RolifyCommunity/rolify
 https://github.com/eliotsykes/real-world-rails # real projects, and searching them with the ag command
+https://github.com/awesome-print/awesome_print # nice object pretty printer for debugging
+https://github.com/pry/pry-rails #
+https://github.com/kaminari/kaminari
 https://github.com/instacart/cloudflare-rails
 https://github.com/ankane/strong_migrations
 https://github.com/ankane/searchkick # search features
@@ -43,6 +151,19 @@ https://github.com/excid3/noticed # notifications
 https://github.com/ilyakatz/data-migrate # run data migrations alongside schema migrations
 https://github.com/ankane/ahoy # visitor analytics
 https://github.com/ankane/ahoy_email # email analytics
+https://github.com/aaronlasseigne/active_interaction
+https://github.com/cypriss/mutations
+https://github.com/adomokos/light-service # service objects
+https://github.com/nebulab/simple_command
+https://github.com/dry-rb/dry-transaction
+https://github.com/sunny/actor
+https://github.com/serradura/u-case
+https://github.com/saturnflyer/surrounded
+https://github.com/trailblazer/trailblazer
+https://github.com/pabloh/pathway
+https://github.com/jspillers/simple_service
+https://github.com/trickstersio/performify
+https://github.com/servactory/servactory # service objects
 https://github.com/soundcloud/lhm
 https://github.com/erwinm/acts_as_tenant # row-level "multitenacy"
 https://github.com/activemerchant/active_merchant # payments
@@ -52,6 +173,7 @@ https://github.com/heroku/rails_12factor#migrating-to-rails-5
 https://github.com/heroku/rails_stdout_logging
 https://github.com/heroku/configerator
 https://github.com/rspec/rspec-rails
+https://github.com/excid3/stack_rescue
 https://github.com/excid3/zapier # Zapier
 https://github.com/paper-trail-gem/paper_trail
 https://github.com/collectiveidea/audited
@@ -75,40 +197,7 @@ https://github.com/djezzzl/database_consistency
 https://github.com/palkan/isolator
 https://github.com/cloudinary/cloudinary_gem # Cloudinary
 https://github.com/magnusvk/counter_culture
-
 https://github.com/dejan/rails_panel # Chrome extension
-
-https://github.com/stevepolitodesign/rails-authentication-from-scratch
-https://github.com/stevepolitodesign/rails-code-along
-https://github.com/railsgirls/guides.railsgirls.com
-https://github.com/railsbridge/docs
-https://github.com/learn-co-curriculum/rails-application-basics-readme
-https://github.com/learn-co-curriculum/phase-4-creating-a-rails-app-readme
-https://github.com/learn-co-curriculum/phase-4-rails-routing-basics-readme
-https://github.com/learn-co-curriculum/phase-4-authenticating-users-readme # login
-https://github.com/learn-co-curriculum/hs-bcrypt-set-up
-https://github.com/learn-co-curriculum/phrg-has_secure_password_readme
-https://github.com/learn-co-curriculum/phase-3-rails-url-helpers-readme
-https://github.com/learn-co-curriculum/rails-create-action-readme
-https://github.com/learn-co-curriculum/rails-static-request-readme
-https://github.com/learn-co-curriculum/phase-4-rails-route-params-readme
-https://github.com/learn-co-curriculum/phase-4-rails-resources-create
-https://github.com/learn-co-curriculum/rails-edit-update-action-readme
-https://github.com/learn-co-curriculum/phase-4-validation-messages-and-error-handling
-https://github.com/learn-co-curriculum/rails-5-json-api
-https://github.com/learn-co-curriculum/phase-4-rails-resources-update
-https://github.com/learn-co-curriculum/phase-4-rails-resources-index-show
-https://github.com/learn-co-curriculum/phase-3-rails-form_tag-readme # CSRF
-https://github.com/learn-co-curriculum/rails-form_for-on-edit-readme
-https://github.com/learn-co-curriculum/phase-4-password-protection-lab
-https://github.com/learn-co-curriculum/react-hooks-auth-session # advanced
-https://github.com/learn-co-curriculum/rails-kaminari-readme
-https://github.com/learn-co-students/omniauth_readme-v-000
-https://github.com/learn-co-curriculum/rails-blog-scaffold
-https://github.com/learn-co-students/rails-generators-readme-v-000
-https://github.com/learn-co-students/rails-paperclip-readme-v-000
-https://github.com/learn-co-curriculum/rails-sidekiq-readme
-https://github.com/learn-co-curriculum/rails-form_tag-readme
 https://github.com/excid3/simple_discussion # forum
 https://github.com/rubocop/rails-style-guide
 https://github.com/bullet-train-co/bullet_train # template
@@ -117,22 +206,13 @@ https://businessclasskit.com # template
 https://railsbytes.com # templates
 https://github.com/thoughtbot/suspenders/
 https://github.com/mattbrictson/nextgen
+https://github.com/thoughtbot/active-record-recipes
 https://github.com/ankane/production_rails # by Andrew Kane
 https://github.com/ankane/secure_rails # by Andrew Kane
+https://www.ruby-toolbox.com # best Ruby gems
 
-https://github.com/learn-co-curriculum/react-rails-project-setup-guide # fetch JSON from Rails using useEffect(), adds client-side routing, has create-react-app proxy tip, and Rails cookies & sessions
-https://github.com/learn-co-curriculum/phase-4-adding-react-to-rails # fetches JSON from Rails using useEffect() but unfinished because it doesn't include the fetched JSON on the page
-https://github.com/learn-co-curriculum/react-rails-project-setup-guide # useful proxy feature
-https://github.com/learn-co-curriculum/phase-4-deploying-demo-app
-https://github.com/learn-co-curriculum/phase-4-deploying-rails-react-to-heroku # talks about React routes conflicting with Rails routes
-https://github.com/learn-co-curriculum/react-hooks-auth-session # advanced, React plus Rails API mode with Google sign-in
-https://github.com/learn-co-curriculum/phase-3-chatterbox-sinatra-react-lab
-https://github.com/learn-co-curriculum/connecting-react-app-to-rails-api # old
-https://github.com/shakacode/react_on_rails
-https://github.com/reactjs/react-rails
-
+https://github.com/rails/rails # framework - Action Pack, Active Record, and more
 https://guides.rubyonrails.org/v7.1/ # release notes
-https://github.com/rails/rails # issues, pull requests
 
 Sinatra
 https://github.com/sinatra/sinatra
@@ -177,16 +257,25 @@ https://github.com/learn-co-curriculum/sinatra-mvc-file-structure-readme
 https://github.com/learn-co-curriculum/sinatra-classic-file-structure-readme
 
 Rack
-https://github.com/puma/puma
-https://github.com/rack/rack
-https://github.com/cyu/rack-cors
-https://github.com/rack/rack-attack
-https://github.com/learn-co-students/rack-intro-v-000
+https://github.com/learn-co-curriculum/phase-3-todo-app-rack-react # Todo app - React and Rack
+https://github.com/learn-co-curriculum/lecture-crud-with-rack-react # React and Rack
+
+https://github.com/learn-co-curriculum/rack-intro
 https://github.com/learn-co-curriculum/phase-3-web-server-fundamentals-with-rack
+https://github.com/learn-co-curriculum/rack-todo # intro
 https://github.com/learn-co-curriculum/middleware-tutorial
 https://github.com/learn-co-curriculum/rack-dynamic-web-apps
 https://github.com/learn-co-curriculum/rack-http-request-readme
 https://github.com/learn-co-curriculum/rack-dynamic-paths-readme
 https://github.com/learn-co-curriculum/rack-headers-readme
 https://github.com/learn-co-curriculum/rack-status-codes-readme
-https://github.com/learn-co-curriculum/lecture-crud-with-rack-react
+https://github.com/learn-co-curriculum/react-hooks-auth-session # Rack CORS
+https://github.com/learn-co-curriculum/connecting-react-app-to-rails-api # Rack CORS
+https://github.com/learn-co-curriculum/rails-5-json-api # Rack CORS
+https://github.com/learn-co-curriculum/separating-client-and-api-services # Rack CORS
+https://github.com/learn-co-curriculum/phase-4-cors # Rack CORS intro
+
+https://github.com/rack/rack # A Ruby web server interface
+https://github.com/cyu/rack-cors
+https://github.com/rack/rack-attack
+https://github.com/puma/puma

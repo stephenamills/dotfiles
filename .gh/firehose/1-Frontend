@@ -461,7 +461,7 @@ https://github.com/tailwindlabs/tailwindcss.com # very good
 https://github.com/mintlify/starter
 https://github.com/shadcn-ui/taxonomy # fastest documentation transitions
 
-Also, GitHub readme marketing:
+GitHub Readme
 https://github.com/octokatherine/readme.so
 https://github.com/sindresorhus/css-in-readme-like-wat
 https://github.com/sindresorhus/github-markdown-css
@@ -471,6 +471,8 @@ https://github.com/adrianhajdin/nike_landing_page # pretty badges
 https://github.com/brendandburns/designing-distributed-systems-labs # basic
 https://badgen.net # creates badges
 https://github.com/learn-co-curriculum/git-resources-readme
+https://github.com/github-linguist/linguist/vendor # supported syntax highlighting languages
+https://github.com/github-linguist/linguist/blob/master/lib/linguist/languages.yml # alternative language alias names
 
 Portfolios
 https://github.com/rafaelconde/rafaelconde # unique

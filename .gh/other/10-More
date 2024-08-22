@@ -69,5 +69,276 @@ GitHub Actions
 SRE
 https://github.com/linkedin/school-of-sre
 
+Rails
+https://github.com/learn-co-curriculum/phase-4-controller-exception-handling # controller exception handling
+https://github.com/learn-co-curriculum/phase-4-authenticating-users-readme # login
+https://github.com/learn-co-curriculum/hs-bcrypt-set-up
+https://github.com/learn-co-curriculum/phrg-has_secure_password_readme
+https://github.com/learn-co-curriculum/react-rails-project-setup-guide # cookies and CSRF
+https://github.com/learn-co-curriculum/rails-create-action-readme
+https://github.com/learn-co-curriculum/rails-edit-update-action-readme
+https://github.com/learn-co-curriculum/phase-4-validation-messages-and-error-handling
+
+https://github.com/learn-co-curriculum/devise_roles_lab # Devise
+https://github.com/learn-co-curriculum/devise_lab # Devise and Omniauth
+https://github.com/learn-co-curriculum/omniauth_readme # Omniauth
+https://github.com/learn-co-curriculum/omniauth_lab # Omniauth
+https://github.com/learn-co-curriculum/devise_roles_readme # Can
+https://github.com/learn-co-curriculum/cancan_readme # Can
+https://github.com/learn-co-curriculum/cancan_lab # Can
+https://github.com/learn-co-curriculum/devise_pundit_readme # Pundit authorization - clear conclusion
+https://github.com/learn-co-curriculum/devise_pundit_lab # Pundit authorization
+https://github.com/learn-co-curriculum/phase-4-password-protection-readme # has_secure_password
+https://github.com/learn-co-curriculum/has_secure_password_readme # has_secure_password
+
+https://github.com/deivid-rodriguez/byebug # debugger
+https://github.com/pry/pry # runtime developer console (debugger)
+https://github.com/bettererrors/better_errors # better error page
+https://github.com/learn-co-curriculum/phase-3-debugging-with-pry # pry
+https://github.com/learn-co-curriculum/phase-4-debugging-network-requests
+https://github.com/learn-co-curriculum/rails-guided-project-immersive-module-two # console
+https://github.com/learn-co-curriculum/phase-4-rails-and-active-record-readme # console
+https://github.com/learn-co-curriculum/rails-guided-project-module-2 # console
+https://github.com/learn-co-curriculum/rails-5-api-template # console
+https://github.com/learn-co-curriculum/phase-3-rails-activerecord-models-and-rails-readme # console
+https://github.com/learn-co-curriculum/review_of_rendering_content_in_a_rails_app # console
+
+https://github.com/pay-rails/pay # payments (by Chris Oliver)
+https://github.com/excid3/receipts # payment receipt and invoice
+
+https://github.com/ankane/mailkick # email
+
+https://github.com/stevepolitodesign/rails-authentication-from-scratch
+https://github.com/stevepolitodesign/rails-code-along
+https://github.com/railsgirls/guides.railsgirls.com
+https://github.com/railsbridge/docs
+
+https://github.com/learn-co-curriculum/phase-3-rails-form_tag-readme # CSRF
+https://github.com/learn-co-curriculum/rails-form_for-on-edit-readme
+https://github.com/learn-co-curriculum/phase-4-password-protection-lab
+https://github.com/learn-co-curriculum/react-hooks-auth-session # advanced
+https://github.com/learn-co-curriculum/rails-kaminari-readme
+https://github.com/learn-co-students/omniauth_readme-v-000
+https://github.com/learn-co-curriculum/rails-blog-scaffold
+https://github.com/learn-co-students/rails-generators-readme-v-000
+https://github.com/learn-co-students/rails-paperclip-readme-v-000
+https://github.com/learn-co-curriculum/rails-sidekiq-readme
+https://github.com/learn-co-curriculum/rails-form_tag-readme
+https://github.com/learn-co-curriculum/authentication_and_authorization_with_gems # authentication and authorization concepts
+https://github.com/learn-co-curriculum/phrg-authentication-and-authorization-recap-and-gems # authentication and authorization concepts
+https://github.com/learn-co-curriculum/guided-module-two-project-assessment#phase-3-teamwork-and-general-tips # browser request flow
+https://github.com/learn-co-curriculum/phase-4-creating-a-rails-app-readme # getting started intro
+
+https://github.com/learn-co-curriculum/phase-3-ruby-building-applications-gems-and-bundler # Gemfile and Bundler
+https://github.com/learn-co-curriculum/rails-application-basics-readme # Rails project folders
+
+https://github.com/wardencommunity/warden # Rack authentication framework
+https://github.com/heartcombo/devise # authentication based on Warden
+https://github.com/ankane/authtrail # Track devise login activity (by Andrew Kane)
+https://github.com/omniauth/omniauth # authentication system
+https://github.com/omniauth/omniauth-github # Sign in (or up) with GitHub
+https://github.com/doorkeeper-gem/doorkeeper
+https://github.com/binarylogic/authlogic
+https://github.com/thoughtbot/clearance
+https://github.com/sorcery/sorcery
+https://github.com/cedarcode/webauthn-ruby
+https://github.com/jeremyevans/rodauth
+https://github.com/lazaronixon/authentication-zero
+https://github.com/mikker/passwordless # magic link login
+https://github.com/technion/ruby-argon2
+https://github.com/RolifyCommunity/rolify
+https://github.com/eliotsykes/real-world-rails # real projects, and searching them with the ag command
+https://github.com/awesome-print/awesome_print # nice object pretty printer for debugging
+https://github.com/pry/pry-rails #
+https://github.com/kaminari/kaminari
+https://github.com/instacart/cloudflare-rails
+https://github.com/ankane/strong_migrations
+https://github.com/ankane/searchkick # search features
+https://github.com/ankane/searchjoy # search analytics
+https://github.com/ankane/autosuggest # search autocompletion suggestions
+https://github.com/sidekiq/sidekiq # Sidekiq
+https://github.com/zendesk/racecar # Kafka
+https://github.com/instacart/wilson_score # sort
+https://github.com/excid3/noticed # notifications
+https://github.com/ilyakatz/data-migrate # run data migrations alongside schema migrations
+https://github.com/ankane/ahoy # visitor analytics
+https://github.com/ankane/ahoy_email # email analytics
+https://github.com/aaronlasseigne/active_interaction
+https://github.com/cypriss/mutations
+https://github.com/adomokos/light-service # service objects
+https://github.com/nebulab/simple_command
+https://github.com/dry-rb/dry-transaction
+https://github.com/sunny/actor
+https://github.com/serradura/u-case
+https://github.com/saturnflyer/surrounded
+https://github.com/trailblazer/trailblazer
+https://github.com/pabloh/pathway
+https://github.com/jspillers/simple_service
+https://github.com/trickstersio/performify
+https://github.com/servactory/servactory # service objects
+https://github.com/soundcloud/lhm
+https://github.com/erwinm/acts_as_tenant # row-level "multitenacy"
+https://github.com/activemerchant/active_merchant # payments
+https://github.com/excid3/refer # referral codes
+https://github.com/soundcloud/simple_circuit_breaker
+https://github.com/heroku/rails_12factor#migrating-to-rails-5
+https://github.com/heroku/rails_stdout_logging
+https://github.com/heroku/configerator
+https://github.com/rspec/rspec-rails
+https://github.com/excid3/stack_rescue
+https://github.com/excid3/zapier # Zapier
+https://github.com/paper-trail-gem/paper_trail
+https://github.com/collectiveidea/audited
+https://github.com/elastic/elasticsearch-rails
+https://github.com/ankane/groupdate
+https://github.com/ankane/logstop
+https://github.com/ankane/notable
+https://github.com/stefankroes/ancestry
+https://github.com/jalkoby/squasher
+https://github.com/varvet/pundit
+https://github.com/owasp/railsgoat
+https://github.com/voormedia/rails-erd
+https://github.com/ankane/the-ultimate-guide-to-ruby-timeouts
+https://github.com/omniauth/omniauth
+https://github.com/square/rails-auth
+https://github.com/excid3/revise_auth
+https://github.com/thoughtbot/clearance
+https://github.com/huacnlee/rails-settings-cached
+https://github.com/jmettraux/rufus-scheduler
+https://github.com/djezzzl/database_consistency
+https://github.com/palkan/isolator
+https://github.com/cloudinary/cloudinary_gem # Cloudinary
+https://github.com/magnusvk/counter_culture
+https://github.com/dejan/rails_panel # Chrome extension
+https://github.com/excid3/simple_discussion # forum
+https://github.com/rubocop/rails-style-guide
+https://github.com/bullet-train-co/bullet_train # template
+https://jumpstartrails.com # template
+https://businessclasskit.com # template
+https://railsbytes.com # templates
+https://github.com/thoughtbot/suspenders/
+https://github.com/mattbrictson/nextgen
+https://github.com/thoughtbot/active-record-recipes
+https://github.com/ankane/production_rails # by Andrew Kane
+https://github.com/ankane/secure_rails # by Andrew Kane
+https://www.ruby-toolbox.com # best Ruby gems
+
+Sinatra
+https://github.com/sinatra/sinatra
+
+https://github.com/learn-co-curriculum/sinatra-from-scratch-readme
+https://github.com/learn-co-curriculum/phase-3-intro-to-sinatra
+https://github.com/learn-co-curriculum/sinatra-routes-readme
+https://github.com/learn-co-curriculum/sinatra-dynamic-routes-codealong
+https://github.com/learn-co-curriculum/sinatra-restful-routes-readme
+https://github.com/learn-co-curriculum/sinatra-params-readme
+https://github.com/learn-co-curriculum/sinatra-multiple-controllers
+https://github.com/learn-co-curriculum/sinatra-view-and-controller-readme-walkthrough
+
+https://github.com/learn-co-curriculum/phase-3-active-record-migrations
+https://github.com/learn-co-curriculum/phase-3-active-record-intro-to-rake
+https://github.com/learn-co-curriculum/sinatra-activerecord-setup
+https://github.com/learn-co-curriculum/sinatra-activerecord-reading
+https://github.com/learn-co-curriculum/sinatra-password-security # Active Record has_secure_password
+https://github.com/learn-co-curriculum/sinatra-activerecord-associations # primary and foreign key, has many, belongs to
+https://github.com/learn-co-curriculum/sinatra-activerecord-associations-join-tables # join table
+https://github.com/learn-co-curriculum/mechanics-of-migrations # migrations
+https://github.com/learn-co-curriculum/sinatra-activerecord-reading
+https://github.com/learn-co-curriculum/phase-3-dynamic-orms-readme
+https://github.com/learn-co-curriculum/dynamic-orm-inheritance
+https://github.com/learn-co-curriculum/sinatra-integrating-models-walkthrough
+
+https://github.com/learn-co-curriculum/sinatra-mechanics-of-sessions-readme
+https://github.com/learn-co-curriculum/sinatra-user-auth
+https://github.com/learn-co-curriculum/sinatra-cookies-readme
+
+https://github.com/learn-co-curriculum/sinatra-views
+https://github.com/learn-co-curriculum/sinatra-nested-forms-readme
+https://github.com/learn-co-curriculum/phase-3-building-sinatra-applications
+https://github.com/learn-co-curriculum/sinatra-forms-params-readme-walkthrough
+https://github.com/learn-co-curriculum/sinatra-complex-forms-associations
+https://github.com/learn-co-curriculum/sinatra-basics
+https://github.com/learn-co-curriculum/sinatra-shotgun-server
+https://github.com/learn-co-curriculum/sinatra-activerecord-using-tux
+https://github.com/learn-co-curriculum/intro-to-capybara
+https://github.com/learn-co-curriculum/sinatra-tic-tac-toe # game
+https://github.com/learn-co-curriculum/sinatra-mvc-file-structure-readme
+https://github.com/learn-co-curriculum/sinatra-classic-file-structure-readme
+
+Rack
+https://github.com/rack/rack # A modular Ruby web server interface.
+https://github.com/puma/puma # A Ruby/Rack web server built for parallelism
+https://github.com/wardencommunity/warden # General Rack Authentication Framework
+https://github.com/bettererrors/better_errors # Better error page for Rack apps
+https://github.com/omniauth/omniauth # OmniAuth is a flexible authentication system utilizing Rack middleware.
+https://github.com/gonzalo-bulnes/dredd-rack # The Dredd API blueprint testing tool for your Rack applications.
+https://github.com/square/rails-auth # Modular resource-based authentication and authorization for Rails/Rack
+https://github.com/rack/rack-attack # Rack middleware for blocking & throttling
+https://github.com/rack/rack-test # Rack::Test is a small, simple testing API for Rack apps.
+https://github.com/redis-store/redis-store # Namespaced Rack::Session, Rack::Cache, I18n and cache Redis stores for Ruby web frameworks
+https://github.com/miniprofiler/rack-mini-profiler # Profiler for your development and production Ruby rack apps.
+https://github.com/rack/rack-contrib # Contributed Rack Middleware and Utilities
+https://github.com/influitive/apartment # Database multi-tenancy for Rack (and Rails) applications
+https://github.com/hanami/router # Ruby/Rack HTTP router
+https://github.com/zombocom/rack-timeout # Abort requests that are taking too long
+https://github.com/jaswope/rack-reverse-proxy # A Reverse Proxy for Rack
+https://github.com/rack/rack-cache # Real HTTP Caching for Ruby Web Apps
+https://github.com/steveklabnik/request_store # Per-request global storage for Rack.
+https://github.com/dryruby/rack-throttle # Rack middleware for rate-limiting incoming HTTP requests.
+https://github.com/brynary/rack-bug # Debugging toolbar for Rack applications implemented as middleware
+https://github.com/biola/rack-cas # Rack-CAS is simple Rack middleware to perform CAS client authentication.
+https://github.com/splitrb/split # The Rack Based A/B testing framework
+https://github.com/railslove/rack-tracker # Tracking made easy
+https://github.com/nov/rack-oauth2 # OAuth 2.0 Server & Client Library. Both Bearer and MAC token type are supported.
+https://github.com/jtrupiano/rack-rewrite # A web server agnostic rack middleware for defining and applying rewrite rules. In many cases you can get away with Rack::Rewrite instead of writing Apache mod_rewrite rules.
+https://github.com/chrisroberts/dav4rack # WebDAV for Rack
+https://github.com/grackorg/grack # Git Smart HTTP Server Rack Implementation
+https://github.com/railsware/rack_session_access # Rack middleware that provides access to rack.session environment
+https://github.com/tobmatth/rack-ssl-enforcer # Simple Rack middleware to enforce ssl connections
+https://github.com/ncr/rack-proxy # A request/response rewriting HTTP proxy. A Rack app.
+https://github.com/rails-on-services/apartment # Database multi-tenancy for Rack (and Rails) applications
+https://github.com/georgi/rack_dav # WebDav Handler for Rack
+https://github.com/discourse/message_bus # A reliable and robust messaging bus for Ruby and Rack
+https://github.com/interagent/committee # A collection of Rack middleware to support JSON Schema.
+https://github.com/waterlink/rack-reverse-proxy # A Reverse Proxy for Rack
+https://github.com/discourse/logster # Log viewer UI and framework for rack
+https://github.com/ruby-grape/grape-on-rack # A demo Grape API mounted on Rack.
+https://github.com/whitequark/rack-utf8_sanitizer # Rack::UTF8Sanitizer is a Rack middleware which cleans up invalid UTF8 characters in request URI and headers.
+https://github.com/hanami/controller # Complete, fast and testable actions for Rack and Hanami
+https://github.com/r7kamura/autodoc # Generate documentation from your rack application & request-spec.
+https://github.com/bugsnag/bugsnag-ruby # BugSnag error monitoring & reporting software for rails, sinatra, rack and ruby
+https://github.com/tylerhunt/rack-canonical-host # Rack middleware for defining a canonical host name.
+https://github.com/redis-store/redis-rack # Redis session store for Rack
+https://github.com/dtaniwaki/rack-dev-mark # Show dev mark on development env
+https://github.com/baldowl/rack_csrf # Anti-CSRF Rack middleware
+https://github.com/ku1ik/racksh # Console for Rack based ruby web apps
+https://github.com/rack-app/rack-app # minimalist framework for building rack applications
+https://github.com/ankane/slowpoke # Rack::Timeout enhancements for Rails
+https://github.com/skinandbones/rack-gridfs # Rack middleware for adding HTTP endpoints for files stored in MongoDB GridFS
+https://github.com/jeremy/rack-ratelimit # Flexible rate limiting for your Rack apps
+https://github.com/redis-store/redis-rack-cache # Redis stores for Rack::Cache
+https://github.com/scoutapp/scout_apm_ruby # ScoutAPM Ruby Agent. Supports Rails, Sinatra, Grape, Rack, and many other frameworks
+https://github.com/heroku/rack-queue-metrics # Rack server queue reporting
+https://github.com/eparreno/rack-jwt # Rack middleware that provides authentication based on JSON Web Tokens
+https://github.com/prometheus/client_ruby # Prometheus instrumentation library for Ruby applications
+https://github.com/incandescent/session-injector # Rack cross-domain session-injector
+https://github.com/honeybadger-io/incoming # Incoming! helps you receive email in your Rack apps.
+https://github.com/r7kamura/rack-json_schema # JSON Schema based Rack middlewares
+https://github.com/braintree/open_api_parser # A parser for Open API specifications
+https://github.com/bwillis/versioncake # :cake: Version Cake is an unobtrusive way to version APIs in your Rails or Rack apps
+https://github.com/github/secure_headers # Manages application of security headers with many safe defaults
+https://github.com/jbarnette/pinglish # A simple Rack middleware for checking application health.
+https://github.com/elmassimo/vite_ruby # ⚡️ Vite.js in Ruby, bringing joy to your JavaScript experience
+https://github.com/guitsaru/rack-idempotency # Rack middleware for idempotency guarantees in mutating endpoints.
+https://github.com/imajes/rack-heartbeat # a little gem to provide a heartbeat for your app
+https://github.com/envato/rack-ecg # Health check page as Rack middleware
+https://github.com/rack/rackup #
+https://github.com/qonto/idempotent-request # Rack middleware ensuring at most once requests for mutating endpoints.
+https://github.com/jamesarosen/casrack_the_authenticator # CAS + Rack == happy authentication for the Corporate World
+https://github.com/dry-rb/dry-monitor # Monitoring and instrumentation APIs
+
 Career
 https://github.com/learn-co-curriculum/post-graduate-roadmap
+https://github.com/learn-co-curriculum/ios-careers-interviewing-apps-you-built
+
+https://github.com/producthired/open-product-management

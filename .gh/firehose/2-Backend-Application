@@ -1,4 +1,4 @@
-React with Rails
+React + Rails
 https://github.com/learn-co-curriculum/react-rails-project-setup-guide # fetch JSON from Rails using useEffect(), adds client-side routing, has create-react-app proxy tip, and Rails cookies & sessions
 https://github.com/learn-co-curriculum/phase-4-adding-react-to-rails # fetches JSON from Rails using useEffect() but unfinished because it doesn't include the fetched JSON on the page
 https://github.com/learn-co-curriculum/react-rails-project-setup-guide # useful proxy feature
@@ -41,7 +41,6 @@ https://github.com/corsego/corsego # Udemy
 https://github.com/corsego/119-trello-drag-drop-save # Trello
 https://github.com/hopegipson/spotify_clone # Spotify
 https://github.com/zkural1/alljourneys # AllTrails
-
 
 https://github.com/learn-co-curriculum/phase-4-rails-routing-basics-readme
 https://github.com/learn-co-curriculum/phase-3-rails-url-helpers-readme # route helper
@@ -105,7 +104,6 @@ https://github.com/learn-co-curriculum/rails-github-api/
 https://github.com/learn-co-curriculum/rails-refactoring-apis # service object
 https://github.com/collectiveidea/interactor
 
-Rack
 https://github.com/rack/rack # A Ruby web server interface
 https://github.com/cyu/rack-cors
 https://github.com/rack/rack-attack

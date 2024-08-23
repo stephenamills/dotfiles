@@ -69,6 +69,66 @@ GitHub Actions
 SRE
 https://github.com/linkedin/school-of-sre
 
+Git
+https://github.com/learn-co-curriculum/git-github-pushing-code-to-github
+https://github.com/learn-co-curriculum/git-github-collaborating
+https://github.com/learn-co-curriculum/git-basics-mod-branch-based-development-readme
+https://github.com/learn-co-curriculum/html-css-git-branches
+https://github.com/learn-co-curriculum/git-workflow-branching
+https://github.com/learn-co-curriculum/git-flow
+https://github.com/learn-co-curriculum/git-github-merging-branches
+https://github.com/learn-co-curriculum/git-github-resolving-merge-conflicts
+https://github.com/learn-co-curriculum/git-github-undoing-changes-with-git
+https://github.com/learn-co-curriculum/git-github-viewing-git-history
+https://github.com/learn-co-curriculum/dsc-git-stash-lab
+
+https://github.com/learn-co-curriculum/dsc-git-resources
+
+Data Science
+https://github.com/learn-co-curriculum/dsc-data-science-env-config # Anaconda setup
+https://github.com/learn-co-curriculum/dsc-data-science-env-setup-v2-1 # Anaconda setup
+https://github.com/learn-co-curriculum/dsc-data-science-env # Anaconda and Jupyter setup
+https://github.com/learn-co-curriculum/dsc-1-01-08-your-first-data-science-codealong
+https://github.com/learn-co-curriculum/data-science-capstone-examples
+https://github.com/learn-co-curriculum/excel-to-python # opening an Excel file with Pandas
+
+https://github.com/learn-co-curriculum/dsc-word-embeddings # word embeddings
+https://github.com/learn-co-curriculum/dsc-classification-with-word-embeddings
+https://github.com/learn-co-curriculum/dsc-04-45-06-classification-with-word-embeddings-lab
+https://github.com/learn-co-curriculum/dsc-generating-word-embeddings-lab
+https://github.com/learn-co-curriculum/dsc-04-45-06-mean-word-embeddings
+https://github.com/learn-co-curriculum/dsc-distance-metrics
+
+https://github.com/learn-co-curriculum/dsc-lp-statistics-central-limit-theorem-confidence-intervals # central limit theorem and calculating confidence intervals using the T-distribution
+https://github.com/learn-co-curriculum/dsc-confidence-intervals-intro-v2-2
+https://github.com/learn-co-curriculum/da-amz-confidence_intervals # notebooks
+https://github.com/learn-co-curriculum/dsc-z-score-p-value # population vs sample
+https://github.com/learn-co-curriculum/dsc-normal-distribution # normal distribution
+https://github.com/learn-co-curriculum/dsc-measures-of-dispersion # dispersion
+https://github.com/learn-co-curriculum/dsc-measures-of-central-tendency # central tendency
+
+https://github.com/learn-co-curriculum/dsc-probability-introduction
+https://github.com/learn-co-curriculum/dsc-intro-to-probability
+https://github.com/learn-co-curriculum/dsc-intro-to-probability-lab
+https://github.com/learn-co-curriculum/dsc-conditional-probability
+https://github.com/learn-co-curriculum/dsc-law-of-total-probability
+https://github.com/learn-co-curriculum/dsc-probability-density-function # probability density function
+https://github.com/learn-co-curriculum/dsc-probability-mass-function # probability mass function
+https://github.com/learn-co-curriculum/set_theory_and_probability
+https://github.com/learn-co-curriculum/da-amz-probability_combinatorics
+https://github.com/learn-co-curriculum/dsc-probability-section-recap
+
+https://github.com/learn-co-curriculum/dsc-problems-data-science-can-solve # regression, classification, anomaly, recommender
+https://github.com/learn-co-curriculum/dsc-the-data-science-process
+https://github.com/learn-co-curriculum/dsc-data-science-processes
+https://github.com/learn-co-curriculum/dsc-data-science-toolbox-review-v2-1 # SQL
+https://github.com/learn-co-curriculum/dsc-tuning-decision-trees # hyperparameter
+https://github.com/learn-co-curriculum/dsc-using-pretrained-networks-codealong
+https://github.com/learn-co-curriculum/dsc-arma-models # autoregressive
+https://github.com/learn-co-curriculum/dsc-gradient-to-cost-function-v2-1 # gardient of a cost function
+
+https://github.com/learn-co-curriculum/dsc-scalars-vectors-matrices-tensors-codealong # scalar, vector, matrix, tensor
+
 Rails
 https://github.com/christianotieno/scheduled-tweets
 https://github.com/daniel-enqz/studio

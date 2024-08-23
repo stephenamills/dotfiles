@@ -384,34 +384,63 @@ https://github.com/alexjlockwood/shapeshifter
 Solid
 
 Basics
-https://github.com/learn-co-curriculum/react-ts-components-basics # React component basics
-https://github.com/learn-co-curriculum/react-component-mounting-lifecycle-readme # React component mounting
-https://github.com/learn-co-curriculum/react-update-lifecycle-readme # React rendering
-https://github.com/learn-co-curriculum/react-ts-jsx # JSX tips - string interpolation, expressions, single return value, and className or class
-https://github.com/learn-co-curriculum/react-state-readme # state
+https://github.com/learn-co-curriculum/react-ts-data-fetching # fetch
+https://github.com/learn-co-curriculum/async-redux # fetch - Redux
+https://github.com/learn-co-curriculum/phrg-redux-flow # Redux flow
+https://github.com/learn-co-curriculum/react-hooks-data-fetching
+https://github.com/learn-co-curriculum/react-ts-fetch-crud-code-along # fetch - create, read, update, delte
+https://github.com/learn-co-curriculum/phase-4-validation-messages-and-error-handling # fetch - async/await
+https://github.com/learn-co-curriculum/react-async-readme # fetch
+https://github.com/learn-co-curriculum/react-ts-simple-data-fetching-lab # fetch
+https://github.com/learn-co-curriculum/react-ts-fetch-crud-lab # fetch
+
 https://github.com/learn-co-curriculum/react-ts-use-effect # mutate a variable in a React component and then re-render it - useEffect
 https://github.com/learn-co-curriculum/react-ts-state # initialize or update state in a React component and then re-render it - useState
 https://github.com/learn-co-curriculum/react-hooks-use-effect-cleanup
-https://github.com/learn-co-curriculum/react-ts-props-basics # turn a React component into a dynamic template - props
-https://github.com/learn-co-curriculum/react-ts-props-destructuring # access props more easily - props destructuring and default values
-https://github.com/learn-co-curriculum/react-ts-data-fetching # data fetching in React - use fetch within a React component
-https://github.com/learn-co-curriculum/react-hooks-fetch-crud-code-along # fetch - crud
-https://github.com/learn-co-curriculum/phase-4-validation-messages-and-error-handling # data fetching - async/await
-https://github.com/learn-co-curriculum/react-hooks-redux-thunk-readme # asynchronous web request - Thunk and Redux
-https://github.com/learn-co-curriculum/react-async-readme # fetch (no TypeScript)
-https://github.com/learn-co-curriculum/react-props-readme # defaultProps
-https://github.com/learn-co-curriculum/why-redux # Redux
-https://github.com/learn-co-curriculum/react-redux-stores-readme # Redux
+https://github.com/learn-co-curriculum/react-ts-state-and-events-codealong # update state based on events - setState
+https://github.com/learn-co-curriculum/react-hooks-state-arrays # arrays and setState
+https://github.com/learn-co-curriculum/react-hooks-class-state
+
+https://github.com/learn-co-curriculum/react-hooks-redux-intro-to-redux-codealong
+https://github.com/learn-co-curriculum/react-hooks-redux-toolkit # Redux Toolkit
+https://github.com/learn-co-curriculum/redux-reducer # reducer
+https://github.com/learn-co-curriculum/react-hooks-redux-combine-reducers # reducers - combineReducers
+https://github.com/learn-co-curriculum/react-hooks-redux-create-store # stores - getState
+https://github.com/learn-co-curriculum/react-redux-stores-readme # stores - createStore
+https://github.com/learn-co-curriculum/react-hooks-redux-thunk-readme # thunk for asynchronous actions
+https://github.com/learn-co-curriculum/react-hooks-redux-use-dispatch-readme # dispatch - connect Redux actions to component events
+https://github.com/learn-co-curriculum/react-hooks-redux-initial-dispatch # dispatch
+https://github.com/learn-co-curriculum/react-hooks-redux-dispatch # dispatch
+https://github.com/learn-co-curriculum/react-hooks-redux-dispatch-with-events # dispatch
+https://github.com/learn-co-curriculum/intro-to-redux-library-codealong
+https://github.com/learn-co-curriculum/react-hooks-redux-why-redux # Redux
+https://github.com/learn-co-curriculum/async-redux # Redux with fetch
+https://github.com/learn-co-curriculum/react-hooks-redux-data-flow # flow
 https://github.com/learn-co-curriculum/react-ts-use-context # share "global" data between components - useContext (used by Router and Redux)
 https://github.com/learn-co-curriculum/react-hooks-redux-use-dispatch-readme # connect Redux actions to component events - useDispatch
-https://github.com/learn-co-curriculum/redux-delete-codealong
 https://github.com/learn-co-curriculum/react-hooks-redux-index-codealong
+https://github.com/learn-co-curriculum/redux-delete-codealong
 https://github.com/learn-co-curriculum/react-hooks-redux-forms-codealong
 https://github.com/learn-co-curriculum/redux-action-creators
+https://github.com/learn-co-curriculum/react-hooks-redux-component-state-vs-store-state
+https://github.com/learn-co-curriculum/tcg_redux_docs
+https://github.com/learn-co-curriculum/tcg_getting_started_with_redux_egghead
+https://github.com/learn-co-curriculum/tcg_idiomatic_redux
+
+https://github.com/learn-co-curriculum/react-ts-components-basics # React component basics
+https://github.com/learn-co-curriculum/react-hooks-class-component-lifecycle # React component lifecycle - three phases
+https://github.com/learn-co-curriculum/react-update-lifecycle-readme # React rendering
+https://github.com/learn-co-curriculum/react-ts-jsx # JSX tips - string interpolation, expressions, single return value, and className or class
+https://github.com/learn-co-curriculum/react-state-readme # state
+
+https://github.com/learn-co-curriculum/react-ts-props-basics # turn a React component into a dynamic template - props
+https://github.com/learn-co-curriculum/react-ts-props-destructuring # access props more easily - props destructuring and default values
+
+https://github.com/learn-co-curriculum/react-hooks-redux-thunk-readme # asynchronous web request - Thunk and Redux
+https://github.com/learn-co-curriculum/react-props-readme # defaultProps
+
 https://github.com/learn-co-curriculum/react-hooks-children
 https://github.com/learn-co-curriculum/react-events-crash-course-readme # events
-https://github.com/learn-co-curriculum/react-ts-event-handling # events listeners onClick, onChange, onSubmit, and callbacks
-https://github.com/learn-co-curriculum/react-ts-state-and-events-codealong # update state based on events - setState
 https://github.com/learn-co-curriculum/react-ts-information-flow-code-along # update state in a parent component using a callback
 https://github.com/learn-co-curriculum/react-hooks-dq-conditional-rendering
 https://github.com/learn-co-curriculum/react-ts-react-app-example # app example
@@ -431,8 +460,6 @@ https://github.com/learn-co-curriculum/javascript-virtual-dom
 https://github.com/learn-co-curriculum/react-hooks-class-state
 https://github.com/learn-co-curriculum/react-component-mounting-and-unmounting
 https://github.com/learn-co-curriculum/react-create-element
-https://github.com/learn-co-curriculum/react-ts-use-ref # access HTML elements or persist data - useRef
-https://github.com/learn-co-curriculum/react-ts-custom-hooks # custom hooks
 https://github.com/learn-co-curriculum/react-ts-forms # create a form that derives its input values from state - a controlled form
 https://github.com/learn-co-curriculum/react-ts-forms-submit # handle a form's submit event in React
 https://github.com/learn-co-curriculum/react-ts-forms-abstraction
@@ -440,7 +467,9 @@ https://github.com/learn-co-curriculum/react-ts-running-tests # test a React app
 https://github.com/learn-co-curriculum/react-hooks-tdd-writing-integration-tests
 https://github.com/learn-co-curriculum/js-tdd-types-of-tests
 https://github.com/learn-co-curriculum/react-hooks-reconciliation
-https://github.com/learn-co-curriculum/react-ts-simple-data-fetching-lab
+https://github.com/learn-co-curriculum/react-hooks-dq-lifting-state
+https://github.com/learn-co-curriculum/lutrivia-react
+https://github.com/learn-co-curriculum/se-west-071524-react-pokemon-searcher-lecture
 https://github.com/learn-co-curriculum/react-modular-code # import and export
 https://github.com/learn-co-curriculum/react-ts-import-export
 https://github.com/learn-co-curriculum/react-ts-create-react-app
@@ -451,6 +480,14 @@ https://github.com/learn-co-curriculum/react-ts-typescript-features-continued # 
 https://github.com/learn-co-curriculum/react-ts-typescript-configuration # watch mode and configuration options
 https://github.com/learn-co-curriculum/working-with-typescript
 https://github.com/learn-co-curriculum/react-ts-typescript-intro
+https://github.com/learn-co-curriculum/react-ts-use-effect-lab # TypeScript
+https://github.com/learn-co-curriculum/react-ts-use-context
+https://github.com/learn-co-curriculum/react-ts-typescript-features-lab-1
+https://github.com/learn-co-curriculum/react-ts-typescript-features-lab-2
+https://github.com/learn-co-curriculum/react-ts-react-router-programmatic-navigation
+https://github.com/learn-co-curriculum/react-ts-use-ref # access HTML elements or persist data - useRef
+https://github.com/learn-co-curriculum/react-ts-event-handling # events listeners onClick, onChange, onSubmit, and callbacks
+https://github.com/learn-co-curriculum/react-ts-custom-hooks
 
 Documentation & Help Center
 https://github.com/fuma-nama/fumadocs # the best

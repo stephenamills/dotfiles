@@ -56,6 +56,7 @@ brew "git-when-merged" # finds where a commit was merged
 # brew "commitizen" # Defines a standard way of committing rules and communicating it
 # brew "commitlint" # Lint commit messages according to a commit convention
 # brew "czg" # Interactive Commitizen CLI that generate standardized commit messages
+# brew "dependabot" # Automated dependency updates for GitHub and GitLab
 # brew "dura" # Backs up your work automatically via Git commits
 # brew "fetch" # Download assets from a commit, branch, or tag of GitHub repositories
 # brew "git-absorb" # Automatic git commit --fixup
@@ -218,6 +219,7 @@ brew "git-when-merged" # finds where a commit was merged
 # brew "gitup" # Update multiple git repositories at once
 # brew "gitversion" # Easy semantic versioning for projects using Git
 # brew "glab" # Open-source GitLab command-line tool
+# brew "gql" # Perform queries on .git files
 # brew "grokmirror" # Framework to smartly mirror git repositories
 # brew "gws" # Manage workspaces composed of git repositories
 # brew "hg-fast-export" # Fast Mercurial to Git converter
@@ -265,15 +267,16 @@ brew "git-when-merged" # finds where a commit was merged
 # brew "vcsh" # Config manager based on git - also manages subrepos
 # brew "willgit" # William's miscellaneous git tools
 
-# GitHub & GitLab & Hugging Face
+brew "glab"
+
+brew "huggingface-cli"
+# brew "cortexso" # ollama-like, drop-in local alternative to the OpenAI stack
+# brew "ollama" # downloads and runs a language model
+
 brew "gh" # client
 brew "git-open" # opens a GitHub page
 brew "hub" # older command-line tool
 
-# brew "act" # Run your GitHub Actions locally
-# brew "action-validator" # Tool to validate GitHub Action and Workflow YAML files
-# brew "actionlint" # Static checker for GitHub Actions workflow files
-# brew "actions-batch" # Time-sharing supercomputer built on GitHub Actions
 # brew "cmark-gfm" # C implementation of GitHub Flavored Markdown
 # brew "eget" # Easily install prebuilt binaries from GitHub
 # brew "fork-cleaner" # Cleans up old and inactive forks on your GitHub account
@@ -300,11 +303,13 @@ brew "hub" # older command-line tool
 # brew "prr" # Mailing list style code reviews for github
 # brew "sugarjar" # Helper utility for a better Git/GitHub experience
 
-brew "glab"
+# GitHub Actions
 
-brew "huggingface-cli"
-# brew "cortexso" # ollama-like, drop-in local alternative to the OpenAI stack
-# brew "ollama" # downloads and runs a language model
+# brew "act" # Run your GitHub Actions locally
+# brew "action-validator" # Tool to validate GitHub Action and Workflow YAML files
+# brew "actionlint" # Static checker for GitHub Actions workflow files
+# brew "actions-batch" # Time-sharing supercomputer built on GitHub Actions
+# brew "gabo" # Generates GitHub Actions boilerplate
 
 # Continuous Integration
 brew "act" # Run your GitHub Actions locally

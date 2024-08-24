@@ -85,12 +85,19 @@ https://github.com/learn-co-curriculum/dsc-git-stash-lab
 https://github.com/learn-co-curriculum/dsc-git-resources
 
 Data Science
-https://github.com/learn-co-curriculum/dsc-data-science-env-config # Anaconda setup
-https://github.com/learn-co-curriculum/dsc-data-science-env-setup-v2-1 # Anaconda setup
-https://github.com/learn-co-curriculum/dsc-data-science-env # Anaconda and Jupyter setup
-https://github.com/learn-co-curriculum/dsc-1-01-08-your-first-data-science-codealong
-https://github.com/learn-co-curriculum/data-science-capstone-examples
-https://github.com/learn-co-curriculum/excel-to-python # opening an Excel file with Pandas
+https://github.com/learn-co-curriculum/dsc-mathematical-notation # math notation
+
+https://github.com/learn-co-curriculum/dsc-data-science-env-config # Anaconda
+https://github.com/learn-co-curriculum/dsc-data-science-env-setup-v2-1 # Anaconda
+https://github.com/learn-co-curriculum/dsc-data-science-env # Anaconda and Jupyter
+
+https://github.com/learn-co-curriculum/dsc-prework-jupyter-notebook # Jupyter
+https://github.com/learn-co-curriculum/dsc-run-jupyter-locally # Jupyter
+https://github.com/learn-co-curriculum/dsc-running-jupyter-locally-lab # Jupyter
+https://github.com/learn-co-curriculum/jupyter-notebook-introduction # Jupyter
+https://github.com/learn-co-curriculum/jupyter-workflow # Jupyter
+https://github.com/learn-co-curriculum/dsc-1-01-08-your-first-data-science-codealong # Jupyter
+https://github.com/learn-co-curriculum/data-science-capstone-examples # Jupyter
 
 https://github.com/learn-co-curriculum/dsc-word-embeddings # word embeddings
 https://github.com/learn-co-curriculum/dsc-classification-with-word-embeddings
@@ -125,7 +132,8 @@ https://github.com/learn-co-curriculum/dsc-data-science-toolbox-review-v2-1 # SQ
 https://github.com/learn-co-curriculum/dsc-tuning-decision-trees # hyperparameter
 https://github.com/learn-co-curriculum/dsc-using-pretrained-networks-codealong
 https://github.com/learn-co-curriculum/dsc-arma-models # autoregressive
-https://github.com/learn-co-curriculum/dsc-gradient-to-cost-function-v2-1 # gardient of a cost function
+https://github.com/learn-co-curriculum/dsc-gradient-to-cost-function-v2-1 # gradient of a cost function
+https://github.com/learn-co-curriculum/excel-to-python # opening an Excel file with Pandas
 
 https://github.com/learn-co-curriculum/dsc-scalars-vectors-matrices-tensors-codealong # scalar, vector, matrix, tensor
 

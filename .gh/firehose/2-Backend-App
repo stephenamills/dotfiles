@@ -43,24 +43,35 @@ https://github.com/rails/rails # Action Pack, Active Record
 https://guides.rubyonrails.org/v7.1/ # release notes
 
 https://github.com/learn-co-curriculum/phase-4-rails-routing-basics-readme # routes
+https://github.com/learn-co-curriculum/phase-4-rails-routing-basics-lab #
 https://github.com/learn-co-curriculum/phase-3-rails-url-helpers-readme # route helper
 https://github.com/learn-co-curriculum/rails-static-request-readme # static route
 https://github.com/learn-co-curriculum/phase-4-rails-route-params-readme # dynamic route
+https://github.com/learn-co-curriculum/phase-4-rails-route-params-lab #
 https://github.com/learn-co-curriculum/phase-3-rails-dynamic-request-readme
 https://github.com/learn-co-curriculum/namespaced-routes-reading # scope and namespace
+https://github.com/learn-co-curriculum/namespaced-routes-lab
 https://github.com/learn-co-curriculum/phase-4-rails-resources-create
 https://github.com/learn-co-curriculum/phase-4-rails-resources-index-show
 https://github.com/learn-co-curriculum/phase-4-rails-resources-update
 https://github.com/learn-co-curriculum/phase-4-rails-resources-destroy
 https://github.com/learn-co-curriculum/phase-4-rails-route-params-readme
-https://github.com/learn-co-curriculum/phase-4-nested-resource-routing
 https://github.com/learn-co-curriculum/routing-nested-resources-reading
+https://github.com/learn-co-curriculum/routing-nested-resources-lab
+https://github.com/learn-co-curriculum/phase-4-nested-resource-routing
+https://github.com/learn-co-curriculum/phase-4-nested-resource-routing-lab
 https://github.com/learn-co-curriculum/modification-nested-routes-reading
+https://github.com/learn-co-curriculum/phase-3-modification-nested-routes-lab
+https://github.com/learn-co-curriculum/phrg-sinatra-dynamic-routes-codealong #
 https://github.com/learn-co-curriculum/phrg-rails-generators-readme#resource-generators # resource generator
 
-https://github.com/learn-co-curriculum/rails-create-action-readme # controllers
+https://github.com/learn-co-curriculum/rails-create-action-readme # controller
+https://github.com/learn-co-curriculum/rails-create-action-lab #
+https://github.com/learn-co-curriculum/rails-restful-index-action-lab #
 https://github.com/learn-co-curriculum/rails-edit-update-action-readme
 https://github.com/learn-co-curriculum/phase-4-controller-validations-readme
+https://github.com/learn-co-curriculum/phase-4-controller-validations-lab
+https://github.com/learn-co-curriculum/phase-4-controller-exception-handling # controller exception
 https://github.com/learn-co-curriculum/phase-4-creating-a-rails-api
 https://github.com/learn-co-curriculum/js-rails-as-api-rendering-different-content-types-using-rails
 https://github.com/learn-co-curriculum/using-to-json-ruby # to_json
@@ -73,6 +84,7 @@ https://github.com/learn-co-curriculum/js-rails-as-api-extracting-a-service-clas
 https://github.com/learn-co-curriculum/js-rails-as-api-using-fast-json-api
 https://github.com/learn-co-curriculum/js-tictactoe-rails-api-backend
 https://github.com/learn-co-curriculum/phase-4-cookies-in-rails-api
+https://github.com/learn-co-curriculum/sessions_controller_lab # controller generator
 https://github.com/learn-co-curriculum/phrg-rails-generators-readme#controller-generators # controller generator
 
 https://github.com/learn-co-curriculum/phase-3-active-record-migrations # Active Record migrations
@@ -167,8 +179,6 @@ https://github.com/learn-co-curriculum/ds_course1_week1_module4_sqlpandas
 https://github.com/learn-co-curriculum/dsc-sql-summative-lab
 https://github.com/learn-co-curriculum/python-p3-sql-queries
 https://github.com/learn-co-curriculum/python-p3-sql-crud
-
-
 
 MySQL & Vitess
 

@@ -10,9 +10,6 @@ https://github.com/learn-co-curriculum/phase-3-chatterbox-sinatra-react-lab
 https://github.com/learn-co-curriculum/connecting-react-app-to-rails-api # old
 
 Rails
-https://github.com/rails/rails # framework - Action Pack, Active Record, and more
-https://guides.rubyonrails.org/v7.1/ # release notes
-
 https://github.com/brandonfang/lilnotion # Notion (React)
 https://github.com/taisiat/caro # Turo (React)
 https://github.com/justalever/tweeter # Twitter
@@ -42,7 +39,10 @@ https://github.com/corsego/119-trello-drag-drop-save # Trello
 https://github.com/hopegipson/spotify_clone # Spotify
 https://github.com/zkural1/alljourneys # AllTrails
 
-https://github.com/learn-co-curriculum/phase-4-rails-routing-basics-readme
+https://github.com/rails/rails # Action Pack, Active Record
+https://guides.rubyonrails.org/v7.1/ # release notes
+
+https://github.com/learn-co-curriculum/phase-4-rails-routing-basics-readme # routes
 https://github.com/learn-co-curriculum/phase-3-rails-url-helpers-readme # route helper
 https://github.com/learn-co-curriculum/rails-static-request-readme # static route
 https://github.com/learn-co-curriculum/phase-4-rails-route-params-readme # dynamic route
@@ -58,7 +58,7 @@ https://github.com/learn-co-curriculum/routing-nested-resources-reading
 https://github.com/learn-co-curriculum/modification-nested-routes-reading
 https://github.com/learn-co-curriculum/phrg-rails-generators-readme#resource-generators # resource generator
 
-https://github.com/learn-co-curriculum/rails-create-action-readme
+https://github.com/learn-co-curriculum/rails-create-action-readme # controllers
 https://github.com/learn-co-curriculum/rails-edit-update-action-readme
 https://github.com/learn-co-curriculum/phase-4-controller-validations-readme
 https://github.com/learn-co-curriculum/phase-4-creating-a-rails-api
@@ -75,23 +75,47 @@ https://github.com/learn-co-curriculum/js-tictactoe-rails-api-backend
 https://github.com/learn-co-curriculum/phase-4-cookies-in-rails-api
 https://github.com/learn-co-curriculum/phrg-rails-generators-readme#controller-generators # controller generator
 
+https://github.com/learn-co-curriculum/phase-3-active-record-migrations # Active Record migrations
+https://github.com/learn-co-curriculum/phase-4-rails-and-active-record-readme # migrations - creating a table
+https://github.com/learn-co-curriculum/activerecord-migrations # migrations
+https://github.com/learn-co-curriculum/phase-3-active-record-costume-store-lab # migrations
+https://github.com/learn-co-curriculum/active-record-associations-and-migrations # migrations
+https://github.com/learn-co-curriculum/phase-3-active-record-associations-one-to-many # migrations - nice games example
+https://github.com/learn-co-curriculum/phase-3-active-record-associations-many-to-many # migrations - games example
+https://github.com/learn-co-curriculum/active-record-querying-methods-lab # migration practice
+https://github.com/learn-co-curriculum/phase-3-active-record-theater-work # migration practice - nice theater actors example
+https://github.com/learn-co-curriculum/phase-4-active-record-associations-review-lab # migration practice - foreign key and has_many through
+https://github.com/learn-co-curriculum/phase-3-active-record-associations-methods # migration practice
+https://github.com/learn-co-curriculum/phase-3-active-record-associations-tvland-lab # migration practice
+https://github.com/learn-co-curriculum/phase-3-active-record-querying-methods-lab # migration practice
+https://github.com/learn-co-curriculum/active-record-writing-migrations-lab # migration practice
+https://github.com/learn-co-curriculum/ruby-squirrels-trees # migration practice
+https://github.com/learn-co-curriculum/phase-3-active-record-costume-store-lab # migration practice
+https://github.com/learn-co-curriculum/phase-3-active-record-crud-operations-lab # migration practice
+https://github.com/learn-co-curriculum/rails-blog-associations-validations # migration practice
+https://github.com/learn-co-curriculum/rails-activerecord-model-rails-lab # migration practice
+https://github.com/learn-co-curriculum/activerecord-yelp-exercises # migration practice
+https://github.com/learn-co-curriculum/join-the-fun-rails # migration practice - taxi example
+https://github.com/learn-co-curriculum/rails-generators-readme#migration-generators # migration generator
+
 https://github.com/learn-co-curriculum/rails-guided-project-immersive-module-two # domain model for picture sharing app
 https://github.com/learn-co-curriculum/phase-4-rails-and-active-record-readme
 https://github.com/learn-co-curriculum/phase-3-orms-mapping-classes-to-database-tables
-https://github.com/learn-co-students/sinatra-activerecord-associations-v-000
-https://github.com/learn-co-curriculum/phase-4-serializing-associations
+https://github.com/learn-co-curriculum/active-record-associations-and-migrations # associations
+https://github.com/learn-co-students/sinatra-activerecord-associations-v-000 # associations
+https://github.com/learn-co-curriculum/phase-4-serializing-associations # associations
+https://github.com/learn-co-curriculum/phase-4-displaying-associated-data # associations
+https://github.com/learn-co-curriculum/phase-4-deleting-associated-data # associations
 https://github.com/learn-co-students/rails-activerecord-models-and-rails-readme-onl01-seng-pt-070620
 https://github.com/learn-co-curriculum/phase-4-using-active-model-serializer
-https://github.com/learn-co-curriculum/phase-4-displaying-associated-data
-https://github.com/learn-co-curriculum/phase-4-deleting-associated-data
 https://github.com/learn-co-curriculum/performance-api # N + 1 queries and eager loading
 https://github.com/learn-co-students/dynamic-orms-readme-v-000
+https://github.com/learn-co-curriculum/activerecord-lifecycle-reading # callbacks
 https://github.com/learn-co-curriculum/phase-4-validation-messages-and-error-handling
 https://github.com/learn-co-curriculum/activerecord-yelp-exercises
 https://github.com/learn-co-curriculum/guided-module-two-project-assessment#phase-2-scaffolding--execution # seed the database
 https://github.com/learn-co-curriculum/rails-guided-project-module-2 # seed the database
 https://github.com/learn-co-curriculum/rails-generators-readme#model-generators # model generator
-https://github.com/learn-co-curriculum/rails-generators-readme#migration-generators # migration generator
 https://github.com/excid3/prefixed_ids # readable identifiers for database records (by Chris Oliver)
 https://github.com/norman/friendly_id # readable identifiers for web links
 https://github.com/basecamp/google_sign_in # Sign in (or up) with Google (by Basecamp)

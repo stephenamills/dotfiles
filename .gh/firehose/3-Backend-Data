@@ -3,59 +3,11 @@ https://tag-runtime.cncf.io/wgs/cnaiwg/whitepapers # stack
 https://landscape.lfai.foundation # stack
 https://landscape.cncf.io/?group=cnai # stack
 
-Visual Studio Code Chat
-https://github.com/lukvonstrom/copilot-verification # Chat extension - verifies Python code or creates tests using preconditions and postconditions
-https://github.com/phoevos/vscode-extension-verifier # verifies Python code or creates tests using preconditions and postconditions
-https://github.com/scottholden/copilotchatextensions # three examples
-https://github.com/jonlester/vscode-copilot-dev
-https://github.com/flaviodelgrosso/wikipedia-participant # Wikipedia
-https://github.com/harrybin/vscode-copilot-extension # GitHub issue
-https://github.com/microsoft/vscode-extension-samples/ # official example
-https://github.com/nksleiman/vscode-extension
-
-https://github.com/microsoft/mastering-github-copilot-for-paired-programming
-https://github.com/skills/copilot-codespaces-vscode
-https://github.com/xnul/codestral-mamba-for-vscode # Mistral Codestral
-https://github.com/continuedev/continue
-https://github.com/xnul/code-llama-for-vscode
-https://github.com/hieunc229/copilot-clone
-https://github.com/rubberduck-ai/rubberduck-vscode
-
-Cohere
-https://github.com/cohere-ai/examples # sample apps using the API
-https://github.com/cohere-ai/notebooks # API cookbook in Python notebooks
-https://github.com/cohere-ai/cohere-toolkit # Docker container with Toolkit
-https://github.com/cohere-ai/cohere-aws # AWS Sagemaker & Bedrock
-
-https://github.com/menloparklab/cohere-weaviate-wikipedia-retrieval # Wikipedia (LangChain, Weaviate)
-https://github.com/sangwan70/cohere-chatbot-pdf-langchain # PDF documents (Pinecone)
-https://github.com/menloparklab/langchain-cohere-qdrant-retrieval
-https://github.com/menloparklab/langchain-cohere-qdrant-doc-retrieval
-
-https://github.com/cohere-ai/cohere-python
-https://github.com/cohere-ai/cohere-typescript
-https://github.com/cohere-ai/sandbox-conversant-lib
-https://github.com/cohere-ai/binaryvectordb
-https://github.com/cohere-ai/cohere-terrarium # unsure why this exists
-https://github.com/berriai/litellm
-
-Confluence
-
-Sharepoint
-
-Serp API
-
-Bing API
-
-Colab
-
----
-
 Backblaze
 
-Schema
-
 MySQL & Vitess
+
+--
 
 Postgres & Citus
 
@@ -64,6 +16,8 @@ Cassandra
 DynamoDB & Aerospike & Spanner & CockroachDB & YugabyteDB & TiDB
 
 Redis
+
+---
 
 Debezium
 https://github.com/redhat-scholars/debezium-tutorial
@@ -122,6 +76,54 @@ Snowflake
 Redshift
 
 Firebase
+
+---
+
+Visual Studio Code Chat
+https://github.com/lukvonstrom/copilot-verification # Chat extension - verifies Python code or creates tests using preconditions and postconditions
+https://github.com/phoevos/vscode-extension-verifier # verifies Python code or creates tests using preconditions and postconditions
+https://github.com/scottholden/copilotchatextensions # three examples
+https://github.com/jonlester/vscode-copilot-dev
+https://github.com/flaviodelgrosso/wikipedia-participant # Wikipedia
+https://github.com/harrybin/vscode-copilot-extension # GitHub issue
+https://github.com/microsoft/vscode-extension-samples/ # official example
+https://github.com/nksleiman/vscode-extension
+
+https://github.com/microsoft/mastering-github-copilot-for-paired-programming
+https://github.com/skills/copilot-codespaces-vscode
+https://github.com/xnul/codestral-mamba-for-vscode # Mistral Codestral
+https://github.com/continuedev/continue
+https://github.com/xnul/code-llama-for-vscode
+https://github.com/hieunc229/copilot-clone
+https://github.com/rubberduck-ai/rubberduck-vscode
+
+Cohere
+https://github.com/cohere-ai/examples # sample apps using the API
+https://github.com/cohere-ai/notebooks # API cookbook in Python notebooks
+https://github.com/cohere-ai/cohere-toolkit # Docker container with Toolkit
+https://github.com/cohere-ai/cohere-aws # AWS Sagemaker & Bedrock
+
+https://github.com/menloparklab/cohere-weaviate-wikipedia-retrieval # Wikipedia (LangChain, Weaviate)
+https://github.com/sangwan70/cohere-chatbot-pdf-langchain # PDF documents (Pinecone)
+https://github.com/menloparklab/langchain-cohere-qdrant-retrieval
+https://github.com/menloparklab/langchain-cohere-qdrant-doc-retrieval
+
+https://github.com/cohere-ai/cohere-python
+https://github.com/cohere-ai/cohere-typescript
+https://github.com/cohere-ai/sandbox-conversant-lib
+https://github.com/cohere-ai/binaryvectordb
+https://github.com/cohere-ai/cohere-terrarium # unsure why this exists
+https://github.com/berriai/litellm
+
+Confluence
+
+Sharepoint
+
+Serp API
+
+Bing API
+
+Colab
 
 Kubernetes
 https://github.com/cncf/llm-starter-pack # Run a language model in Kubernetes (in Docker)

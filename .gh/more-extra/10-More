@@ -209,6 +209,75 @@ https://github.com/learn-co-curriculum/hbs-ds-060120 # lstm
 https://github.com/learn-co-curriculum/dsc-04-45-06-mean-word-embeddings
 https://github.com/learn-co-curriculum/dsc-04-45-06-classification-with-word-embeddings-lab
 
+SQL
+https://github.com/learn-co-curriculum/sql-v3-sql-select # select
+https://github.com/learn-co-curriculum/dsc-selecting-data-v2-4 #
+https://github.com/learn-co-curriculum/phase-3-sql-select-and-update #
+https://github.com/learn-co-curriculum/da-amz-sql_select #
+https://github.com/learn-co-curriculum/dsc-selecting-data #
+https://github.com/learn-co-curriculum/dsc-selecting-data-lab #
+https://github.com/learn-co-curriculum/sql-intro-why-select-join-groupby-pandas-lp #
+
+https://github.com/learn-co-curriculum/dsc-filtering-v2-4 # filter
+https://github.com/learn-co-curriculum/dsc-filtering-lab-v2-4 #
+https://github.com/learn-co-curriculum/dsc-filtering-and-ordering #
+https://github.com/learn-co-curriculum/dsc-filtering-and-ordering-lab #
+
+https://github.com/learn-co-curriculum/sql-v3-aggregate-grouping # group by and having
+https://github.com/learn-co-curriculum/dsc-grouping-data-with-sql #
+https://github.com/learn-co-curriculum/dsc-grouping-data-with-sql-lab #
+https://github.com/learn-co-curriculum/da_amz_sql_groupby_aggregation #
+https://github.com/learn-co-curriculum/phase-3-sql-grouping-and-sorting-readme #
+https://github.com/learn-co-curriculum/sql-queries-where-groupby-having #
+https://github.com/learn-co-curriculum/dsc-pandas-groupby #
+
+https://github.com/learn-co-curriculum/sql-table-relations-intro-to-joins # join
+https://github.com/learn-co-curriculum/phase-3-sql-table-relations-intro-to-joins #
+https://github.com/learn-co-curriculum/phase-3-sql-table-relations-creating-join-tables #
+https://github.com/learn-co-curriculum/phase-3-sql-table-relations-complex-joins #
+https://github.com/learn-co-curriculum/phase-3-sql-table-relations-crowdfunding-join-table-lab #
+https://github.com/learn-co-curriculum/sql-v3-sql-join #
+https://github.com/learn-co-curriculum/python-p3-creating-join-tables #
+https://github.com/learn-co-curriculum/python-p3-sql-joins #
+https://github.com/learn-co-curriculum/dsc-one-to-many-and-many-to-many-joins #
+https://github.com/learn-co-curriculum/dsc-one-to-many-and-many-to-many-joins-lab #
+https://github.com/learn-co-curriculum/dsc-join-statements #
+https://github.com/learn-co-curriculum/dsc-join-statements-lab #
+https://github.com/learn-co-curriculum/java-mod-5-sql-join #
+https://github.com/learn-co-curriculum/da-amz-sql_join #
+https://github.com/learn-co-curriculum/sinatra-activerecord-associations-join-tables #
+https://github.com/learn-co-curriculum/sql-table-relations-creating-join-tables #
+https://github.com/learn-co-curriculum/sql-table-relations-crowdfunding-join-table-lab #
+https://github.com/learn-co-curriculum/sql-table-relations-complex-joins #
+https://github.com/learn-co-curriculum/sql-join-tables-readme #
+https://github.com/learn-co-curriculum/sql-complex-joins-readme #
+https://github.com/learn-co-curriculum/dsc-enterprise-chevron-one-to-many-and-many-to-many-joins #
+https://github.com/learn-co-curriculum/dsc-enterprise-chevron-one-to-many-and-many-to-many-joins-lab #
+https://github.com/learn-co-curriculum/dsc-enterprise-chevron-join-statements #
+https://github.com/learn-co-curriculum/dsc-enterprise-chevron-join-statements-lab #
+https://github.com/learn-co-curriculum/dsc-enterprise-hsbc-spark-dataframe-joining #
+https://github.com/learn-co-curriculum/dsc-enterprise-hsbc-join-statements #
+https://github.com/learn-co-curriculum/dsc-enterprise-hsbc-join-statments-lab #
+https://github.com/learn-co-curriculum/dsc-enterprise-hsbc-advanced-joins #
+https://github.com/learn-co-curriculum/dsc-enterprise-hsbc-advanced-joins-lab #
+https://github.com/learn-co-curriculum/sql-intro-why-select-join-groupby-pandas-lp #
+https://github.com/learn-co-curriculum/ds-skills2-join-statements #
+https://github.com/learn-co-curriculum/ds-skills2-join-statements-lab #
+https://github.com/learn-co-curriculum/ds-skills2-one-to-many-and-many-to-many-joins #
+https://github.com/learn-co-curriculum/ds-skills2-one-to-many-and-many-to-many-joins-lab #
+https://github.com/learn-co-curriculum/sql-book-joins #
+https://github.com/learn-co-curriculum/dsc-sql-relations-recap # join - on clause and using clause
+
+https://github.com/learn-co-curriculum/dsc-sql-subqueries # subquery
+https://github.com/learn-co-curriculum/dsc-sql-subqueries-lab #
+https://github.com/learn-co-curriculum/da-amz-sql_subqueries #
+
+https://github.com/learn-co-curriculum/python-p3-associating-tables-with-foreign-keys # foreign key
+https://github.com/learn-co-curriculum/phase-3-sql-table-relations-associating-tables-with-foreign-keys #
+https://github.com/learn-co-curriculum/sql-table-relations-associating-tables-with-foreign-keys #
+https://github.com/learn-co-curriculum/python-p4v3-many-many-relationships #
+https://github.com/learn-co-curriculum/python-p4v3-one-many-relationships #
+
 Rails
 https://github.com/christianotieno/scheduled-tweets
 https://github.com/daniel-enqz/studio

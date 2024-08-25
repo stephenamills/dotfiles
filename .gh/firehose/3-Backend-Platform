@@ -1,5 +1,4 @@
 -- Google --
-
 Cloud Run
 https://github.com/googlecloudplatform/cloud-run-button # Let anyone deploy your GitHub repos to Google Cloud Run with a single click
 https://github.com/googlecloudplatform/cloud-run-hello # Demo container for Google Cloud Run
@@ -101,11 +100,9 @@ https://github.com/firebase/appquality-codelab-ios # Firebase iOS App Quality Co
 https://github.com/firebase/firebase-release-dashboard #
 
 -- Amazon --
-
 Amplify
 
 SageMaker
-
 https://github.com/learn-co-curriculum/dsc-productionizing-models-with-sagemaker
 https://github.com/learn-co-curriculum/dsc-ent-deloitte-aws-pipelines
 

@@ -1,4 +1,4 @@
-React + Rails
+Rails & React
 https://github.com/learn-co-curriculum/react-rails-project-setup-guide # fetch JSON from Rails using useEffect(), adds client-side routing, has create-react-app proxy tip, and Rails cookies & sessions
 https://github.com/learn-co-curriculum/phase-4-adding-react-to-rails # fetches JSON from Rails using useEffect() but unfinished because it doesn't include the fetched JSON on the page
 https://github.com/learn-co-curriculum/react-rails-project-setup-guide # useful proxy feature

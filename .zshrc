@@ -113,6 +113,11 @@ ghcb() {
   done | xargs -n 1 -P 8 open
 }
 
+ghgv() {
+  gh gist view $@
+}
+alias ghv=ghgv
+
 # Open a GitHub repository in the browser
 ghrb() {
   xargs -n 1 -P 8 hub browse <<<$@

@@ -4,7 +4,6 @@ https://landscape.lfai.foundation # stack
 https://landscape.cncf.io/?group=cnai # stack
 
 --
-
 Postgres & Citus
 
 Cassandra
@@ -13,8 +12,7 @@ DynamoDB & Aerospike & Spanner & CockroachDB & YugabyteDB & TiDB
 
 Redis
 
----
-
+--
 Debezium
 https://github.com/redhat-scholars/debezium-tutorial
 
@@ -73,8 +71,7 @@ Redshift
 
 Firebase
 
----
-
+--
 Visual Studio Code Chat
 https://github.com/lukvonstrom/copilot-verification # Chat extension - verifies Python code or creates tests using preconditions and postconditions
 https://github.com/phoevos/vscode-extension-verifier # verifies Python code or creates tests using preconditions and postconditions

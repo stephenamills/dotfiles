@@ -94,7 +94,7 @@ https://github.com/hashicorp/learn-terraform-console #
 https://github.com/hashicorp/learn-terraform-variable-sets #
 https://github.com/hashicorp/learn-terraform-aws-default-tags #
 https://github.com/hashicorp/learn-terraform-migrate-s3-tfc # Companion repository for "Migrate from Remote S3 Backend to Terraform Cloud" Learn tutorial
-https://github.com/hashicorp/learn-terraform-enterprise-metrics-prometheus # Repository for the enterprise metrics prometheus learn tutorial
+https://github.com/hashicorp/learn-terraform-enterprise-metrics-prometheus # Enterprise metrics prometheus learn tutorial
 https://github.com/hashicorp/learn-terraform-multicloud-kubernetes-eks #
 https://github.com/hashicorp/learn-terraform-aws-dynamodb-scale #
 https://github.com/hashicorp/learn-terraform-k8s-crd-openfaas #
@@ -108,7 +108,7 @@ https://github.com/hashicorp/learn-hcp-vault-replication-terraform # Vault tutor
 https://github.com/hashicorp/learn-terraform-multicloud-kubernetes-consul #
 https://github.com/hashicorp/learn-terraform-multicloud-kubernetes-aks #
 https://github.com/hashicorp/learn-terraform-multicloud-kubernetes-counting-service #
-https://github.com/hashicorp/learn-manage-codified-hcp-vault-terraform # HCP Vault tutorial assets used to for the HCP Vault Operations With Terraform virtual lab from HashiConf EU 2022.
+https://github.com/hashicorp/learn-manage-codified-hcp-vault-terraform # HCP Vault tutorial assets used to for the HCP Vault Operations With Terraform tutorial from HashiConf EU 2022.
 
 https://github.com/hashicorp-education/learn-terraform-github-actions #
 https://github.com/hashicorp-education/learn-terraform-dynamic-credentials #

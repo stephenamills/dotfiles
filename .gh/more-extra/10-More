@@ -16,6 +16,14 @@ https://oreilly.com
 
 https://jetbrains.com
 
+--
+Backblaze
+
+Railway
+
+Heroku
+
+--
 Network Discovery
 https://github.com/nskelsey/aaalm # creates a pretty decent network diagram using packet captures
 
@@ -42,12 +50,10 @@ BGP
 
 VXLAN
 
----
-
+--
 Wireguard
 
----
-
+--
 Appwrite
 
 Supabase
@@ -57,6 +63,9 @@ Mock APIs
 OpenAPI
 
 Bug Bounty
+
+SEO
+https://github.com/traefik/seo-doc # Processes the documentation folder from traefik/doc and iterate each HTML file adding the requirements for better SEO
 
 CodeQL
 

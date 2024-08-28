@@ -1,134 +1,69 @@
-- Google -
-
-Cloud Run
-https://github.com/googlecloudplatform/cloud-run-button # Let anyone deploy your GitHub repos to Google Cloud Run with a single click
-https://github.com/googlecloudplatform/cloud-run-hello # Demo container for Google Cloud Run
-https://github.com/googlecloudplatform/cloud-run-samples # Samples for Cloud Run
-https://github.com/googlecloudplatform/terraform-google-cloud-run # Deploys apps to Cloud Run, along with option to map custom domain
-https://github.com/googlecloudplatform/cloud-run-microservice-template-nodejs # Microservice template for Cloud Run
-https://github.com/googlecloudplatform/cloud-run-microservice-template-python #
-https://github.com/googlecloudplatform/cloud-run-proxy # Local proxy for authenticating requests to Cloud Run
-https://github.com/googlecloudplatform/opentelemetry-cloud-run
-https://github.com/googlecloudplatform/cloud-run-microservice-template-go # A template repository for a Cloud Run microservice, written in Go.
-https://github.com/googlecloudplatform/terraform-google-three-tier-web-app # Deploys a three tier web application using Cloud Run and Cloud SQL
-https://github.com/googlecloudplatform/cloud-run-microservice-template-java
-https://github.com/googlecloudplatform/cloud-run-mesh
-https://github.com/googlecloudplatform/migrate-from-app-engine-to-cloud-run # Helper library and webpage to migrate from App Engine to Cloud Run
-https://github.com/googlecloudplatform/developer-journey-app # Developer Journey App is a gaming sample app, built with Cloud Run, Cloud Storage, Cloud Firestore, and Cloud Build.
-https://github.com/googlecloudplatform/avocano # Avocano is a sample dropship/fake product website, built with Firebase Hosting, Cloud Run, Cloud SQL and Cloud Build
-https://github.com/googlecloudplatform/cloudsql-jump-start-solution-for-genai # A jump start solution using GKE or Cloud Run with Cloud SQL and VertexAI
-https://github.com/googlecloudplatform/crbt # Cloud Run Bootstrap Tool
-https://github.com/googlecloudplatform/jit-access # Just-In-Time Access is a self-service web application that lets you manage just-in-time privileged access to Google Cloud projects. JIT Access runs on App Engine and Cloud Run.
-https://github.com/googlecloudplatform/jobs-demos # Cloud Run Jobs Demos - A collection of samples to show you how and when to run a container to completion without a server
-https://github.com/googlecloudplatform/serverless-photosharing-workshop # This is the code for the Pic-a-daily, an application to upload, analyse and share pictures
-https://github.com/googlecloudplatform/gce-automated-ad-join # A Cloud Run application that enables you to automatically join VM instances to an Active Directory domain.
-https://github.com/googlecloudplatform/dlp-pdf-redaction # This solution provides an automated, serverless way to redact sensitive data from PDF files using Google Cloud Services like Data Loss Prevention (DLP), Cloud Workflows, and Cloud Run.
-https://github.com/googlecloudplatform/app2run # app2run is a python CLI tool to translate App Engine configuration into compatible Cloud Run configuration, it aims to help App Engine users to migrate their App Engine applications to Cloud Run.
-https://github.com/googlecloudplatform/cloud-run-release-manager # [EXPERIMENTAL] Automated canary rollout tool for Cloud Run services.
-https://github.com/googlecloudplatform/cloud-run-anthos-reference-web-app # An opinionated set of best practices aimed at demonstrating a reference architecture for building a web application on Google Cloud using Cloud Run for anthos.
-https://github.com/googlecloudplatform/cloud-run-helloworld-python
-https://github.com/googlecloudplatform/vpc-network-tester # Deploy VPC Network Tester to App Engine or Cloud Run to investigate the traffic flow. This app demonstrates how to package network tools as a serverless service.
-https://github.com/google/lasso
-https://github.com/googlecodelabs/cloud-slack-bot # Slack bot
-https://github.com/google-github-actions/deploy-cloudrun # GitHub Action
-
-https://github.com/kelseyhightower/serverless-vault-with-cloud-run
-https://github.com/kelseyhightower/lambda-on-cloud-run
-https://github.com/kelseyhightower/opa-on-cloud-run
-https://github.com/kelseyhightower/container-instance-metadata-server
-https://github.com/ahmetb/cloud-run-faq
-
-Firebase
-https://github.com/firebase/functions-samples # Collection of sample apps showcasing popular use cases using Cloud Functions for Firebase
-https://github.com/firebase/quickstart-js # Firebase Quickstart Samples for Web
-https://github.com/firebase/firebase-js-sdk # Firebase Javascript SDK
-https://github.com/firebase/firebaseui-web # FirebaseUI is an open-source JavaScript library for Web that provides simple, customizable UI bindings on top of Firebase SDKs to eliminate boilerplate code and promote best practices.
-https://github.com/firebase/firebase-tools # The Firebase Command Line Tools
-https://github.com/firebase/firebaseui-web-react # React Wrapper for firebaseUI Web
-https://github.com/firebase/extensions # Official Firebase extensions
-https://github.com/firebase/friendlyeats-web
-https://github.com/firebase/quickstart-testing # Samples demonstrating how to test your Firebase app
-https://github.com/firebase/emulators-codelab #
-https://github.com/firebase/snippets-rules # security rules
-https://github.com/firebase/firestore-bundle-builder #
-https://github.com/firebase/quickstart-android # Firebase Quickstart Samples for Android
-https://github.com/firebase/flutterfire # 🔥 A collection of Firebase plugins for Flutter apps.
-https://github.com/firebase/firebase-ios-sdk # Firebase SDK for Apple App Development
-https://github.com/firebase/firebaseui-android # Optimized UI components for Firebase
-https://github.com/firebase/quickstart-ios # Firebase Quickstart Samples for iOS
-https://github.com/firebase/firebase-android-sdk # Firebase Android SDK
-https://github.com/firebase/codelab-friendlychat-web # The source for the Firebase codelab for building a cross-platform chat app
-https://github.com/firebase/firebase-admin-node # Firebase Admin Node.js SDK
-https://github.com/firebase/firebaseui-ios # iOS UI bindings for Firebase.
-https://github.com/firebase/geofire-js # GeoFire for JavaScript - Realtime location queries with Firebase
-https://github.com/firebase/firebase-admin-go # Firebase Admin Go SDK
-https://github.com/firebase/superstatic # Superstatic: a static file server for fancy apps.
-https://github.com/firebase/firebase-functions # Firebase SDK for Cloud Functions
-https://github.com/firebase/firebase-admin-python # Firebase Admin Python SDK
-https://github.com/firebase/quickstart-nodejs
-https://github.com/firebase/quickstart-unity # Firebase Quickstart Samples for Unity
-https://github.com/firebase/snippets-android # Android snippets for firebase.google.com
-https://github.com/firebase/snippets-web # Web snippets for firebase.google.com
-https://github.com/firebase/genkit # Integrate, test, and deploy sophisticated AI features
-https://github.com/firebase/firebase-admin-java # Firebase Admin Java SDK
-https://github.com/firebase/geofire-objc # GeoFire for Objective-C - Realtime location queries with Firebase
-https://github.com/firebase/snippets-node # Node.js snippets for firebase.google.com
-https://github.com/firebase/firebase-admin-dotnet # Firebase Admin .NET SDK
-https://github.com/firebase/firebase-cpp-sdk # Firebase C++ SDK
-https://github.com/firebase/firebase-tools-ui # A local-first UI for Firebase Emulator Suite.
-https://github.com/firebase/friendlyeats-android # Cloud Firestore Android codelab
-https://github.com/firebase/codelab-friendlychat-android # Firebase FriendlyChat codelab
-https://github.com/firebase/quickstart-java # Quickstart samples for Firebase Java Admin SDK
-https://github.com/firebase/firebase-functions-test #
-https://github.com/firebase/quickstart-cpp # Firebase Quickstart Samples for C++
-https://github.com/firebase/firebase-unity-sdk # The Firebase SDK for Unity
-https://github.com/firebase/fastlane-plugin-firebase_app_distribution # fastlane plugin for Firebase App Distribution.
-https://github.com/firebase/quickstart-flutter #
-https://github.com/firebase/geofire-android # GeoFire for Android apps
-https://github.com/firebase/firebase-functions-python #
-https://github.com/firebase/snippets-ios # iOS snippets used in firebase.google.com
-https://github.com/firebase/friendlyeats-ios #
-https://github.com/firebase/firebaseopensource.com # Source for firebase open source site
-https://github.com/firebase/quickstart-python #
-https://github.com/firebase/firebaseui-flutter #
-https://github.com/firebase/codelab-friendlychat-ios #
-https://github.com/firebase/snippets-flutter #
-https://github.com/firebase/oss-bot # Robot friend for open source repositories
-https://github.com/firebase/level-up-with-firebase #
-https://github.com/firebase/snippets-java # Java snippets for firebase.google.com
-https://github.com/firebase/snippets-cpp # C++ snippets for firebase.google.com
-https://github.com/firebase/appquality-codelab-ios # Firebase iOS App Quality Codelab
-https://github.com/firebase/firebase-release-dashboard #
-
-- Amazon -
-
-Amplify
-
-SageMaker
-https://github.com/learn-co-curriculum/dsc-productionizing-models-with-sagemaker
-https://github.com/learn-co-curriculum/dsc-ent-deloitte-aws-pipelines
-
-- Microsoft -
-
-- Oracle -
-
-- Digital Ocean -
-
-- Hetzner -
-
---
-Railway
-
-Heroku
-
---
 Traefik
+https://github.com/traefik/traefik # The Cloud Native Application Proxy
 
-DNS
+https://github.com/traefik-workshops/traefik-workshop # Getting started with Traefik on Kubernetes. A few exercises that help you to start the journey with Traefik Proxy.
+https://github.com/traefik-workshops/traefik-gitops # Multi environment Traefik deployment with a GitOps Strategy
+https://github.com/traefik-workshops/traefik-workshop-2 # Advanced Load Balancing with Traefik
+https://github.com/traefik-workshops/k3s-and-traefik-proxy # Repository for the SUSE and Traefik Labs webinar on 2022-02-08
+https://github.com/traefik-workshops/traefik-2.6 # Traefik Proxy 2.6 demo
+https://github.com/traefik-workshops/hub-tutorials #
+https://github.com/traefik-workshops/planet-api # Basic example API based on FastAPI
+https://github.com/traefik-workshops/traefik-hub-gitops # Complete demo of Traefik Hub usage with FluxCD
 
-Certificates
+https://github.com/traefik-tech-blog/traefik-docker101 #
+https://github.com/traefik-tech-blog/traefik-sre-metrics # Capture Traefik Metrics for Apps on Kubernetes with Prometheus
+https://github.com/traefik-tech-blog/hashicorp-webinar # Simplifying Infrastructure and Networking Automation with HashiCorp and Traefik
+https://github.com/traefik-tech-blog/traefik-lb-expert-guide #
+https://github.com/traefik-tech-blog/traefik-http3 #
+https://github.com/traefik-tech-blog/k8s-gateway-api # How to use the new Kubernetes Service APIs with Traefik 2.4 and later
+https://github.com/traefik-tech-blog/traefik-sre-logging # Explore log visualization with Traefik and the Elastic Stack
+https://github.com/traefik-tech-blog/traefik-sre-tracing # Distributed Tracing with Traefik and Jaeger on Kubernetes
+https://github.com/traefik-tech-blog/traefik-k8s-tls #
+https://github.com/traefik-tech-blog/traefik-tor #
+https://github.com/traefik-tech-blog/azure-news-kast #
+https://github.com/traefik-tech-blog/traefik-k8s-deployment #
+https://github.com/traefik-tech-blog/sample-app-whoami # This is a simple echo application that displays header from the containers.
+https://github.com/traefik-tech-blog/traefik-traffic-middlewares # The Ultimate Guide to Managing Application Traffic Using Traefik Middlewares
+https://github.com/traefik/hub # Traefik Hub Tutorials
 
---
+https://github.com/56kcloud/traefik-training # Traefik Training course resources
+https://github.com/frigi83/traefik-examples # docker-compose configurations examples for traefik
+https://github.com/dotheevo/traefik-v2-examples # Traefik v2 guide by examples
+https://github.com/ibuetler/docker-keycloak-traefik-workshop # Docker with Keycloak and Traefik Workshop
+https://github.com/Heziode/traefik-v2-https-ssl-localhost # A simple example on how to use Traefik on localhost with HTTPS
+https://github.com/jensknipper/traefik-examples # Minimalistic examples for Traefik reverse proxy and docker-compose. Locally executable for easy testing and adjusting
+https://github.com/asatrya/keycloak-traefik-tutorial # Tutorial how to use Keycloak for authentication and Traefik for API gateway in Microservices architecture
+https://github.com/codeaprendiz/learn_kubernetes # Learning Kubernetes
+https://github.com/containeroo/traefik-simple # A simple example for Traefik + Portainer.
+https://github.com/patrickeasters/traefik-k8s-tls-example #
+https://github.com/appsecco/opa-traefik-microservice-authz # Proof of concept implementation of a scenario using Open Policy Agent for microservices authorization in API Gateway (Traefik).
+https://github.com/alexhyett/traefik-vs-nginx-docker # Examples showing how to use Traefik and Nginx for Reverse Proxy
+https://github.com/clarenceb/traefik-ingress-example # Demo using the Traefik ingress controller in AKS
+https://github.com/vikas027/traefik-demo-ecs # Use Traefik v1 as a reverse proxy for ECS Services.
+https://github.com/simonbecker1997/traefikcourse # This repository suits as example storage for the traefik course I've published on udemy
+https://github.com/geraldcroes/kubernetes-traefik-article #
+https://github.com/apress/traefik-api-gateway-microservices # Source Code for 'Traefik API Gateway for Microservices' by Rahul Sharma and Akshay Mathur
+
+https://github.com/traefik/mesh # Traefik Mesh - Simpler Service Mesh
+https://github.com/traefik/mesh-helm-chart # Traefik Mesh - Helm Chart
+https://github.com/traefik/traefik-helm-chart # Traefik Proxy Helm Chart
+https://github.com/traefik/traefikee-helm-chart # This chart installs the Traefik Enterprise on a Kubernetes cluster, an optional subchart of Traefik Mesh is also bundled
+https://github.com/traefik/whoami # Tiny Go server that prints os information and HTTP request to output
+https://github.com/traefik/whoamitcp # Tiny Go server that prints os information and TCP request to output
+https://github.com/traefik/whoamiudp # Tiny Go webserver that prints os information and UDP request to output
+https://github.com/traefik/traefik-library-image # Used to build Official Docker image of Traefik Proxy
+https://github.com/traefik/plugindemo # Example plugin, for you to use as a reference for developing your own plugins
+https://github.com/traefik/plugindemowasm # Example wasm plugin, for you to use as a reference for developing your own plugins
+https://github.com/traefik/plugindemowasm-http-call # Example wasm plugin with http calls that you to use as a reference for developing your own
+https://github.com/traefik/pluginproviderdemo # Example provider plugin, for you to use as a reference for developing your own plugins
+https://github.com/traefik/plugin-rewritebody # Middleware plugin for Traefik that rewrites the HTTP response body
+https://github.com/traefik/plugin-simplecache # Simple cache plugin middleware caches responses on disk
+https://github.com/traefik/plugin-blockpath # Middleware plugin for Traefik that sends an HTTP 403 Forbidden response for an HTTP path  
+https://github.com/traefik/hub-static-analyzer-action # Github Action for Hub static analyzer
+https://github.com/traefik/hub-crds # Traefik Hub CRDs
+
+DNS & Certificates
+
 Nomad
 https://github.com/hashicorp/nomad # Nomad is an easy-to-use, flexible, and performant workload orchestrator that can deploy a mix of microservice, batch, containerized, and non-containerized applications. Nomad is easy to operate and scale and has native Consul and Vault integrations.
 
@@ -329,7 +264,7 @@ https://github.com/FRosner/nomad-docker-wrapper # Small wrapper to enable runnin
 https://github.com/travier/fedora-coreos-nomad # Butane configs to deploy Nomad on Fedora CoreOS
 https://github.com/schuurman-group/nomad # Multi-state Dynamics using Trajectory Basis Functions
 https://github.com/nicholasjackson/nomad-arm6l # Build of Nomad for Arm6l such as the Raspberry Pi Zero
-https://github.com/smaeda-ks/nomad-github-runners-autoscaler-demo # A demo-purpose Node.js application that listens to the GitHub Webhooks event (workflow_job.queued) and dispatches Nomad parameterized jobs using Nomad HTTP API to launch "on-demand" GitHub Actions Self-hosted Runners easily and efficiently. 
+https://github.com/smaeda-ks/nomad-github-runners-autoscaler-demo # A demo-purpose Node.js application that listens to the GitHub Webhooks event (workflow_job.queued) and dispatches Nomad parameterized jobs using Nomad HTTP API to launch "on-demand" GitHub Actions Self-hosted Runners easily and efficiently.
 https://github.com/jordan-rash/wasmcloud-nomad-pack #
 https://github.com/notnoop/nomad-debug #
 https://github.com/avillela/nomad-conversions # Repo containing conversions of Kubernetes and/or Docker Compose apps to Nomad jobspecs
@@ -617,7 +552,6 @@ https://github.com/kubernetes/metrics # Kubernetes metrics-related API types and
 https://github.com/kubernetes/release # Release infrastructure for Kubernetes and related components
 https://github.com/kubernetes/design-proposals-archive # Archive of Kubernetes Design Proposals
 https://github.com/kubernetes/cloud-provider-aws # Cloud provider for AWS
-https://github.com/kubernetes/cri-api # Container Runtime Interface (CRI) – a plugin interface which enables kubelet to use a wide variety of container runtimes.
 https://github.com/kubernetes/registry.k8s.io # This project is the repo for registry.k8s.io, the production OCI registry service for Kubernetes' container image artifacts
 https://github.com/containernetworking/plugins # Container Networking Interface plugin examples and reference implementations
 https://github.com/kubernetes/cloud-provider-alibaba-cloud # CloudProvider for Alibaba Cloud
@@ -663,6 +597,7 @@ https://github.com/coreos/coreos-kubernetes
 https://github.com/cncf/k8s-conformance # all Kubernetes implementations
 https://tag-runtime.cncf.io/wgs/spos/charter/#open-source-projects # special-purpose container Linux distributions
 
+https://github.com/kubernetes/cri-api # Container Runtime Interface (CRI) – a plugin interface which enables kubelet to use a wide variety of container runtimes
 https://github.com/containernetworking/cni # Container Network Interface (CNI) - a plugin interface which enables networking for Linux containers
 https://github.com/container-storage-interface/spec # Container Storage Interface (CSI) - a plugin interface which enables storage for Linux containers
 https://github.com/kubernetes/cloud-provider # Cloud Provider Interface (CPI) - a plugin interface which enables management of cloud provider infrastructure
@@ -673,3 +608,31 @@ Swarm
 https://github.com/moby/swarmkit
 
 Kamal
+https://github.com/basecamp/kamal # Deploy web apps anywhere.
+https://github.com/basecamp/kamal-skiff # Deploy static sites using nginx + SSI with Kamal
+
+https://github.com/guillaumebriday/kamal-ansible-manager # Manage and optimize your servers automatically for Kamal with Ansible
+https://github.com/luizkowalski/terraform-hetzner # Set up two (or more) servers on Hetzner Cloud
+https://github.com/geetfun/deployed # Mountable deployment engine for Ruby on Rails using Kamal
+https://github.com/abratashov/kamal-blog # Exemplar Rails project with Kamal deployment
+https://github.com/shipyrd/shipyrd # The deployment dashboard for Kamal
+https://github.com/lewispb/kamal-prometheus-example # An example Rails app demonstrating using Prometheus metrics with Kamal
+https://github.com/cardmagic/kamalx # enhances the user experience of the kamal deploy tool
+https://github.com/deanout/kamal_video # Deploy a Rails app with Kamal, Rails 7.1, esbuild and tailwind.
+https://github.com/ashwin47/kamal.directory # A directory of kamal deploy.yml config files
+https://github.com/consist-sh/kamal-single-server # Consistfile suitable for a single server setup to run Kamal
+https://github.com/codergeek121/kamal-stacks # production ready kamal deployment templates
+https://github.com/anthonynsimon/awesome-kamal # Awesome list of all things Kamal
+https://github.com/rzilient-club/kamal-makefile # Kamal make file to gather most used kamal command lines
+https://github.com/deepakmahakale/kamal_wiki # Unofficial kamal wiki
+https://github.com/ghillert/kamal-demo # Demo project illustrating the use of Kamal for deployments of Spring Boot applications to Cloud VMs
+https://github.com/fluentci-io/kamal-plugin # CI/CD Plugin for kamal
+
+https://github.com/tannakartikey/rails_71_mrsk_deploy # Rails 7.1
+https://github.com/nagariahussain/pocket_mrsk # Pocketbase MRSK deploy
+https://github.com/knightoftheoldcode/rails-mrsk-sqlite # rails-mrsk-sqlite
+https://github.com/kalashnikovisme/wall # The sample app for MRSK deploy testing
+https://github.com/dekubu/panamax # panamax is mrsk on lxd-kit instead of ssh-kit
+https://github.com/trugamr/trying-mrsk #
+https://github.com/tonysm/mrsk-laravel-demo #
+https://github.com/teggr/deploy4j # deploy app to digital ocean

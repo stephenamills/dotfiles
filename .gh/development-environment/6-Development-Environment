@@ -1,22 +1,14 @@
 Docker
 https://github.com/moby/moby
-https://github.com/docker/compose
-
 https://github.com/docker/cli
 https://github.com/docker/buildx
 https://github.com/moby/buildkit
+https://github.com/docker/compose
 
 https://github.com/opencontainers/umoci
-https://github.com/googlecontainertools
-https://github.com/containers
-https://github.com/opencontainers/distribution-spec
-https://github.com/opencontainers/image-spec
-https://github.com/moby/docker-image-spec
 
 https://github.com/opencontainers/runc
 https://github.com/moby/containerd
-https://github.com/opencontainers/runtime-tools
-https://github.com/opencontainers/runtime-spec
 
 https://github.com/moby/vpnkit
 https://github.com/moby/libnetwork
@@ -141,6 +133,13 @@ https://github.com/docker/dc23-secure-workshop # DockerCon 2023 Secure Developme
 https://github.com/docker/labs-githooks #
 https://github.com/docker/compose-bridge-binaries # public repository to get the `compose-bridge` CLI binary for your platform
 https://github.com/docker/enable-macos-virtualization-framework # How-To Enable virtualization.framework on macOS hosts
+https://github.com/opencontainers/image-spec
+https://github.com/moby/docker-image-spec
+https://github.com/opencontainers/runtime-tools
+https://github.com/opencontainers/runtime-spec
+https://github.com/googlecontainertools
+https://github.com/containers
+https://github.com/opencontainers/distribution-spec
 
 Virtualization framework
 https://github.com/abiosoft/colima/blob/main/docs/FAQ.md

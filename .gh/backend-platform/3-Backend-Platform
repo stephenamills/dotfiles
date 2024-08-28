@@ -250,7 +250,6 @@ https://github.com/redbrick/nomad # Collection of Redbrick's Nomad job files, wi
 https://github.com/sepulworld/deadman-check # Monitoring companion for Nomad periodic jobs and Cron
 https://github.com/nicholasjackson/terraform-nomad-multicloud # Example repository for running a federated Nomad / Consul / Vault cluster in AWS and GCP
 https://github.com/liquidinvestigations/node # Deploy Liquid Investigations on Nomad
-https://github.com/thesandlord/container-orchestration-comparisons # Set of tutorials demonstrating common uses cases with various Container Orchestration tools (Kubernetes, Swarm, Mesos, Nomad, etc)
 https://github.com/aretelabs/nomad-resource # Concourse resource for Nomad
 https://github.com/jamesdmorgan/nomad-cluster # Hashicorp Nomad Docker Cluster
 https://github.com/jsiebens/nomad-droplets-autoscaler # DigitalOcean Droplets target plugin for HashiCorp Nomad Autoscaler

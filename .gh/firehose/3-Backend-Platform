@@ -68,23 +68,35 @@ Nomad
 https://github.com/hashicorp/nomad # Nomad is an easy-to-use, flexible, and performant workload orchestrator that can deploy a mix of microservice, batch, containerized, and non-containerized applications. Nomad is easy to operate and scale and has native Consul and Vault integrations.
 
 https://github.com/hashicorp-education/learn-nomad-getting-started # Companion repo for the HashiCorp Nomad Get Started collection of tutorials
-https://github.com/hashicorp/nomad-guides # Example usage of HashiCorp Nomad
+https://github.com/hashicorp-education/learn-nomad-gs-pytechco #
+https://github.com/hashicorp-education/learn-nomad-workload-identity-federation # Terraform assets for using Nomad with Google Cloud Platform's Federated Identity
+
 https://github.com/hashicorp/learn-nomad-cluster-setup # Companion repo for the HashiCorp tutorial collection on Nomad cluster setup
-https://github.com/hashicorp/field-workshops-nomad # Slides, Instructor Guides and Instruqt Tracks for Nomad Field Workshops
-https://github.com/hashicorp/terraform-container-deploy-nomad # Example repository showing how to build and deploy a container using Terraform for Nomad, Kubernetes and Docker Swarm
-https://github.com/hashicorp/demo-nomad-101 # Demo code for the HashiCorp Nomad 101 course
-https://github.com/hashicorp/demo-nomad-201 # Demo code for the HashiCorp Nomad 201 course
 https://github.com/hashicorp/learn-nomad-edge # Learn Nomad Edge
-https://github.com/hashicorp/nomad-education-content #
 https://github.com/hashicorp/learn-nomad-features #
-https://github.com/hashicorp/nomad-cheatsheet # A cheatsheet for getting started with Nomad!
-https://github.com/russparsloe/nomad-zero-to-wow # Workshop
-https://github.com/hashicorp/nomad-connect-examples # Examples of using Consul Connect features in Nomad
 https://github.com/hashicorp/learn-nomad-external-alb # Companion repo for the HashiCorp Learn guide: Manage External Traffic with Application Load Balancing
 https://github.com/hashicorp/learn-nomad-sd # Companion repo for the HashiCorp Learn guide: Deploy an App with Nomad Service Discovery
 https://github.com/hashicorp/learn-nomad-migrate-java # This is a companion repository containing resources used in the Migrate a Java Application HashiCorp Learn tutorial.
 https://github.com/hashicorp/learn-nomad-jobspec # Content to support the Nomad Job Specification tutorial collection
 https://github.com/hashicorp/learn-nomad-test-drive # Job Specifications to support the "Test Drive Nomad" tutorial on learn.hashicorp.com
+
+https://github.com/hashicorp/nomad-guides # Example usage of HashiCorp Nomad
+https://github.com/hashicorp/field-workshops-nomad # Slides, Instructor Guides and Instruqt Tracks for Nomad Field Workshops
+https://github.com/hashicorp/terraform-container-deploy-nomad # Example of how to build and deploy a container using Terraform for Nomad, Kubernetes and Docker Swarm
+https://github.com/hashicorp/demo-nomad-101 # Demo code for the HashiCorp Nomad 101 course
+https://github.com/hashicorp/demo-nomad-201 # Demo code for the HashiCorp Nomad 201 course
+https://github.com/hashicorp/nomad-education-content #
+https://github.com/hashicorp/nomad-cheatsheet # A cheatsheet for getting started with Nomad!
+https://github.com/russparsloe/nomad-zero-to-wow # Workshop
+https://github.com/hashicorp/nomad-connect-examples # Examples of using Consul Connect features in Nomad
+https://github.com/hashicorp-modules/hashistack-aws # Nomad, Vault and Consul server on a single ASG
+https://github.com/hashicorp-modules/terraform-consul-nomad-setup # Terraform module to configure a Consul cluster for Nomad workload identities.
+https://github.com/hashicorp-modules/terraform-vault-nomad-setup # Terraform module to configure a Vault cluster for Nomad workload identities.
+https://github.com/hashicorp-modules/nomad-lb-aws #
+https://github.com/hashicorp-modules/nomad-aws #
+https://github.com/hashicorp-modules/nomad-server-ports-aws #
+https://github.com/hashicorp-modules/nomad-spark-ports-aws #
+https://github.com/hashicorp-modules/nomad-client-ports-aws #
 
 https://github.com/hashicorp/nomad-autoscaler # Nomad Autoscaler brings autoscaling to your Nomad workloads.
 https://github.com/hashicorp/terraform-provider-nomad # Terraform Nomad provider
@@ -605,7 +617,40 @@ https://github.com/kubernetes/cloud-provider # Cloud Provider Interface (CPI) - 
 https://github.com/kubernetes/kubernetes # Production-grade container scheduling and management
 
 Swarm
+https://github.com/moby/moby
 https://github.com/moby/swarmkit
+
+https://github.com/dockersamples/example-voting-app # Example distributed app composed of multiple containers for Docker, Compose, Swarm, and Kubernetes
+https://github.com/dockersamples/docker-swarm-visualizer # A visualizer for Docker Swarm Mode using the Docker Remote API, Node.JS, and D3
+https://github.com/docker-archive/swarm-microservice-demo-v1 # Swarm Web App Demo Cluster: Voting App
+
+https://github.com/ajeetraina/docker101 # Visit https://dockerlabs.collabnix.com
+https://github.com/eon01/dockercheatsheet # 🐋 Docker Cheat Sheet 🐋
+https://github.com/tiangolo/dockerswarm.rocks # Docker Swarm mode rocks! Ideas, tools and recipes
+https://github.com/vfarcic/docker-swarm #
+https://github.com/bretfisher/awesome-swarm # All the awesome tools, docs, and training on Docker and Mirantis Swarm Mode (SwarmKit)
+https://github.com/jpetazzo/container.training # Slides and code samples for training, tutorials, and workshops about Docker, containers, and Kubernetes.
+https://github.com/g0t4/docker-swarm-mode-getting-started # Repository for my Pluralsight course Getting Started with Docker Swarm Mode
+https://github.com/piroddi/dockerswarmaws # Docker Swarm - A journey to the cloud
+https://github.com/marcelo-ochoa/oci-swarm-cluster # A Docker Swarm Cluster deployed as terraform scripts at Oracle OCI
+https://github.com/sixeyed/docker-networking-workshop # Workshop covering networking features in Docker swarm mode and Kubernetes in Docker EE
+https://github.com/devopsplayground/hands-on-with-container-orchestration-using-docker-swarm-and-kubernetes #
+https://github.com/jakubhajek/traefik-swarm-mastery # Traefik 2.x with Swarm
+https://github.com/naresh240/docker-swarm-depoly #
+https://github.com/utrains/utrains_docker_swarm # implementation and deployment of the voting application with Docker Swarm
+https://github.com/aerospike/aerospike-docker-swarm #
+https://github.com/presstofan/shinyproxy-docker-swarm-demo # A template for deploying R Shiny apps with ShinyProxy in Docker Swarm mode
+https://github.com/bitlogic/hello-docker # Docker 101 workshop
+https://github.com/mlabouardy/alexa-swarm # Deploy a Docker Swarm cluster on AWS :cloud: using Amazon Echo
+https://github.com/vfarcic/docker-swarm-networking #
+https://github.com/pgarbe/containers_on_aws # Some practical examples how to run containers on AWS. Docker Swarm (mode), Docker for AWS and ECS.
+https://github.com/doublez13/docker-swarm-example-setup # Guide for setting up a basic Docker Swarm cluster.
+https://github.com/foxylion/docker-swarm-ingress # A minimalistic approach to allow routing into a Docker Swarm based on the public hostnames.
+https://github.com/sw360cab/websockets-scaling # A tutorial to scale Websockets both via Docker Swarm and Kubernetes
+https://github.com/mogensen/docker-swarm-meetup # Exercises that walks a new developer through setting up and using docker swarm for the first time.
+https://github.com/grahamhoyes/django-docker-swarm-example # An example project for deploying Django on Docker Swarm
+https://github.com/capside/docker-swarm-mode-workshop #
+https://github.com/ddewaele/nifi.cluster.docker.swarm #
 
 Kamal
 https://github.com/basecamp/kamal # Deploy web apps anywhere.

@@ -1,9 +1,5 @@
-Git & GitOps
+Git
 https://github.com/tiimgreen/github-cheat-sheet
-
-Buildpacks & Nixpacks
-https://github.com/railwayapp/nixpacks # Nixpacks (by Railway)
-https://github.com/nlewo/nix2container # converts a Nix package to a Docker container
 
 Figma
 https://github.com/planetscale/figma-diagram-generator # truly superb video demonstration by Benjamin Dicken, Developer Educator at Planetscale - generates a FigJam diagram of your MySQL database using the Figma API and Planetscale API

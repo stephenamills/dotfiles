@@ -3199,7 +3199,6 @@ mas "tailscale", id: 1475387142
 mas "telegram", id: 747648890
 mas "vimari", id: 1480933944
 
-vscode "alygin.vscode-tlaplus"
 vscode "arashsahebolamri.alloy"
 vscode "astro-build.astro-vscode"
 vscode "bierner.markdown-mermaid"
@@ -3233,6 +3232,7 @@ vscode "styled-components.vscode-styled-components"
 vscode "stylelint.vscode-stylelint"
 vscode "tamasfe.even-better-toml"
 vscode "timonwong.shellcheck"
+vscode "tlaplus.vscode-ide"
 vscode "unifiedjs.vscode-mdx"
 vscode "visualstudioexptteam.vscodeintellicode"
 vscode "yoavbls.pretty-ts-errors"

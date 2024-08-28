@@ -30,19 +30,19 @@ https://github.com/56kcloud/traefik-training # Traefik Training course resources
 https://github.com/frigi83/traefik-examples # docker-compose configurations examples for traefik
 https://github.com/dotheevo/traefik-v2-examples # Traefik v2 guide by examples
 https://github.com/ibuetler/docker-keycloak-traefik-workshop # Docker with Keycloak and Traefik Workshop
-https://github.com/Heziode/traefik-v2-https-ssl-localhost # A simple example on how to use Traefik on localhost with HTTPS
+https://github.com/heziode/traefik-v2-https-ssl-localhost # A simple example on how to use Traefik on localhost with HTTPS
 https://github.com/jensknipper/traefik-examples # Minimalistic examples for Traefik reverse proxy and docker-compose. Locally executable for easy testing and adjusting
 https://github.com/asatrya/keycloak-traefik-tutorial # Tutorial how to use Keycloak for authentication and Traefik for API gateway in Microservices architecture
 https://github.com/codeaprendiz/learn_kubernetes # Learning Kubernetes
 https://github.com/containeroo/traefik-simple # A simple example for Traefik + Portainer.
 https://github.com/patrickeasters/traefik-k8s-tls-example #
-https://github.com/appsecco/opa-traefik-microservice-authz # Proof of concept implementation of a scenario using Open Policy Agent for microservices authorization in API Gateway (Traefik).
+https://github.com/appsecco/opa-traefik-microservice-authz # A scenario using Open Policy Agent for microservices authorization in an API Gateway (Traefik).
 https://github.com/alexhyett/traefik-vs-nginx-docker # Examples showing how to use Traefik and Nginx for Reverse Proxy
 https://github.com/clarenceb/traefik-ingress-example # Demo using the Traefik ingress controller in AKS
 https://github.com/vikas027/traefik-demo-ecs # Use Traefik v1 as a reverse proxy for ECS Services.
-https://github.com/simonbecker1997/traefikcourse # This repository suits as example storage for the traefik course I've published on udemy
+https://github.com/simonbecker1997/traefikcourse # Traefik course on Udemy
 https://github.com/geraldcroes/kubernetes-traefik-article #
-https://github.com/apress/traefik-api-gateway-microservices # Source Code for 'Traefik API Gateway for Microservices' by Rahul Sharma and Akshay Mathur
+https://github.com/apress/traefik-api-gateway-microservices # 'Traefik API Gateway for Microservices' Apress book
 
 https://github.com/traefik/mesh # Traefik Mesh - Simpler Service Mesh
 https://github.com/traefik/mesh-helm-chart # Traefik Mesh - Helm Chart

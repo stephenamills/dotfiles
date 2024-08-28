@@ -45,7 +45,7 @@ https://github.com/unllamas/nextjs-page-transitions-with-framer-motion # ecommer
 
 Webflow
 
-Wordpress Elementor
+Elementor
 
 Astro - Landing Pages
 https://github.com/mickasmt/astro-nomy # features section has professional icons and text in an actually tasteful bento layout
@@ -297,7 +297,7 @@ https://github.com/pycoder2000/blog
 https://github.com/wutali/nextjs-netlify-blog-template
 
 Vue
-https://github.com/jazee6/cloudflare-ai-web/ # uses 'nuxt build --preset=vercel_edge' which loads faster than my Astro site :/ 
+https://github.com/jazee6/cloudflare-ai-web/ # uses 'nuxt build --preset=vercel_edge' which loads faster than my Astro site :/
 https://github.com/rogden/tailwind-config-viewer # really useful to view your Tailwind config
 https://github.com/sdras/cssgridgenerator # by Sarah Drasner - pretty CSS Grid demo/creator
 https://github.com/thisdot/starter.dev-github-showcases # GitHub

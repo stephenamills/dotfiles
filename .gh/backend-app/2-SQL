@@ -1,18 +1,6 @@
 SQLite
 https://github.com/sqlite/sqlite # SQLite database
 
-https://github.com/harelba/q # q - Run SQL directly on delimited files and multi-file sqlite databases
-https://github.com/dbcli/litecli # CLI for SQLite Databases with auto-completion and syntax highlighting
-
-https://github.com/lerocha/chinook-database # Sample database for SQL Server, Oracle, MySQL, PostgreSQL, SQLite, DB2
-https://github.com/tthibo/sql-tutorial # A Gentle Introduction to SQL Using SQLite
-https://github.com/render-examples/strapi-sqlite # Deploy Strapi with SQLite on Render
-https://github.com/aaemnnosttv/wp-sqlite-db # A single file drop-in for using a SQLite database with WordPress. Based on the original SQLite Integration plugin.
-https://github.com/expo/examples/ # Example projects of how to use Expo APIs
-https://github.com/geshan/nodejs-sqlite # Node.js and SQLIte example for a blog post
-https://github.com/ptyadana/sql-data-analysis-and-visualization-projects # SQL data analysis & visualization projects
-https://github.com/remix-run/indie-stack # The Remix Stack for deploying to Fly with SQLite, authentication, testing, linting, formatting, etc.
-
 https://github.com/learn-co-curriculum/python-p3-setting-up-sqlite
 https://github.com/learn-co-curriculum/python-p3-writing-db-commands-to-a-file
 https://github.com/learn-co-curriculum/dsc-intro-to-sqlite
@@ -25,6 +13,18 @@ https://github.com/learn-co-curriculum/ds_course1_week1_module4_sqlpandas
 https://github.com/learn-co-curriculum/dsc-sql-summative-lab
 https://github.com/learn-co-curriculum/python-p3-sql-queries
 https://github.com/learn-co-curriculum/python-p3-sql-crud
+
+https://github.com/lerocha/chinook-database # Sample database for SQL Server, Oracle, MySQL, PostgreSQL, SQLite, DB2
+https://github.com/tthibo/sql-tutorial # A Gentle Introduction to SQL Using SQLite
+https://github.com/render-examples/strapi-sqlite # Deploy Strapi with SQLite on Render
+https://github.com/aaemnnosttv/wp-sqlite-db # A single file drop-in for using a SQLite database with WordPress. Based on the original SQLite Integration plugin.
+https://github.com/expo/examples/ # Example projects of how to use Expo APIs
+https://github.com/geshan/nodejs-sqlite # Node.js and SQLIte example for a blog post
+https://github.com/ptyadana/sql-data-analysis-and-visualization-projects # SQL data analysis & visualization projects
+https://github.com/remix-run/indie-stack # The Remix Stack for deploying to Fly with SQLite, authentication, testing, linting, formatting, etc.
+
+https://github.com/harelba/q # q - Run SQL directly on delimited files and multi-file sqlite databases
+https://github.com/dbcli/litecli # CLI for SQLite Databases with auto-completion and syntax highlighting
 
 https://github.com/dogsheep/github-to-sqlite # Save data from GitHub to a SQLite database
 https://github.com/cldellow/sqlite-parquet-vtable # A SQLite vtable extension to read Parquet files

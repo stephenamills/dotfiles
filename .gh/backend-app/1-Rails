@@ -1,0 +1,171 @@
+React with Rails
+https://github.com/learn-co-curriculum/react-rails-project-setup-guide # fetch JSON from Rails using useEffect() — adds client-side routing, has a create-react-app proxy tip, and Rails cookies & sessions
+https://github.com/learn-co-curriculum/phase-4-adding-react-to-rails # fetches JSON from Rails using useEffect() – unfinished
+https://github.com/learn-co-curriculum/react-rails-project-setup-guide # useful proxy feature
+https://github.com/learn-co-curriculum/phase-4-deploying-demo-app
+https://github.com/learn-co-curriculum/phase-4-deploying-rails-react-to-heroku # talks about React routes conflicting with Rails routes
+https://github.com/learn-co-curriculum/react-hooks-auth-session # advanced, React plus Rails API mode with Google sign-in
+https://github.com/learn-co-curriculum/iron-starter-part-one # advanced, long guide
+https://github.com/learn-co-curriculum/phase-3-chatterbox-sinatra-react-lab
+https://github.com/learn-co-curriculum/connecting-react-app-to-rails-api # old
+
+Rails
+https://github.com/brandonfang/lilnotion # Notion (React)
+https://github.com/taisiat/caro # Turo (React)
+https://github.com/justalever/tweeter # Twitter
+https://github.com/planetscale/tweeter-public # Twitter
+https://github.com/adamvenord17/rutube # YouTube (React)
+https://github.com/tbeddy/tremolonimbus # SoundCloud (React)
+https://github.com/braisoncrece/airbnb-clone # Airbnb
+https://github.com/carly-schaaf/adventurebnb # Airbnb
+https://github.com/m8825/villow # Zillow
+https://github.com/ceci007/dribbble-clone # Dribble
+https://github.com/youyoumu/discord-clone # Discord
+https://github.com/lafeber/fullcalendar-hotwire # Google Calendar
+https://github.com/hopsoft/chatter
+https://github.com/john-hamnavoe/rails-trello-clone # Trello
+https://github.com/marcoroth/boxdrop # Dropbox
+https://github.com/kaycbas/rocket # Pocket
+https://github.com/fractaledmind/hottable # AirTable
+https://github.com/chriscavs/mead # Medium (React)
+https://github.com/lifeiscontent/realworld # Medium (React)
+https://github.com/steveninouye/iBuy # Ebay (React)
+https://github.com/rustam-tolipov/instagram-clone-rails # Instagram
+https://github.com/truongnmt/instagram-clone # Instagram
+https://github.com/ghoshnirmalya/linkedin-clone-rails-backend # LinkedIn
+https://github.com/alexawesomecode/facebook-clone-project # Facebook
+https://github.com/crespire/rails_railsbook # Facebook
+https://github.com/corsego/corsego # Udemy
+https://github.com/corsego/119-trello-drag-drop-save # Trello
+https://github.com/hopegipson/spotify_clone # Spotify
+https://github.com/zkural1/alljourneys # AllTrails
+
+https://github.com/rails/rails # Action Pack, Active Record
+https://guides.rubyonrails.org/v7.1/ # release notes
+
+https://github.com/learn-co-curriculum/phase-4-rails-routing-basics-readme # routes
+https://github.com/learn-co-curriculum/phase-4-rails-routing-basics-lab #
+https://github.com/learn-co-curriculum/phase-3-rails-url-helpers-readme # route helper
+https://github.com/learn-co-curriculum/rails-static-request-readme # static route
+https://github.com/learn-co-curriculum/phase-4-rails-route-params-readme # dynamic route
+https://github.com/learn-co-curriculum/phase-4-rails-route-params-lab #
+https://github.com/learn-co-curriculum/phase-3-rails-dynamic-request-readme
+https://github.com/learn-co-curriculum/namespaced-routes-reading # scope and namespace
+https://github.com/learn-co-curriculum/namespaced-routes-lab
+https://github.com/learn-co-curriculum/phase-4-rails-resources-create
+https://github.com/learn-co-curriculum/phase-4-rails-resources-index-show
+https://github.com/learn-co-curriculum/phase-4-rails-resources-update
+https://github.com/learn-co-curriculum/phase-4-rails-resources-destroy
+https://github.com/learn-co-curriculum/phase-4-rails-route-params-readme
+https://github.com/learn-co-curriculum/routing-nested-resources-reading
+https://github.com/learn-co-curriculum/routing-nested-resources-lab
+https://github.com/learn-co-curriculum/phase-4-nested-resource-routing
+https://github.com/learn-co-curriculum/phase-4-nested-resource-routing-lab
+https://github.com/learn-co-curriculum/modification-nested-routes-reading
+https://github.com/learn-co-curriculum/phase-3-modification-nested-routes-lab
+https://github.com/learn-co-curriculum/phrg-sinatra-dynamic-routes-codealong #
+https://github.com/learn-co-curriculum/phrg-rails-generators-readme#resource-generators # resource generator
+
+https://github.com/learn-co-curriculum/rails-create-action-readme # controller
+https://github.com/learn-co-curriculum/rails-create-action-lab #
+https://github.com/learn-co-curriculum/rails-restful-index-action-lab #
+https://github.com/learn-co-curriculum/rails-edit-update-action-readme
+https://github.com/learn-co-curriculum/phase-4-controller-validations-readme
+https://github.com/learn-co-curriculum/phase-4-controller-validations-lab
+https://github.com/learn-co-curriculum/phase-4-controller-exception-handling # controller exception
+https://github.com/learn-co-curriculum/phase-4-creating-a-rails-api
+https://github.com/learn-co-curriculum/js-rails-as-api-rendering-different-content-types-using-rails
+https://github.com/learn-co-curriculum/using-to-json-ruby # to_json
+https://github.com/learn-co-curriculum/js-rails-as-api-pokemon-teams-project-new # Pokemon JSON API
+https://github.com/learn-co-curriculum/js-rails-as-api-custom-json-rendering-using-rails # JSON API
+https://github.com/learn-co-curriculum/rails-5-json-api # JSON API
+https://github.com/learn-co-curriculum/js-rails-as-api-creating-a-rails-api-from-scratch # JSON API
+https://github.com/learn-co-curriculum/js-rails-as-api-rendering-related-object-data-in-json #
+https://github.com/learn-co-curriculum/js-rails-as-api-extracting-a-service-class # JSON API service class
+https://github.com/learn-co-curriculum/js-rails-as-api-using-fast-json-api
+https://github.com/learn-co-curriculum/js-tictactoe-rails-api-backend
+https://github.com/learn-co-curriculum/phase-4-cookies-in-rails-api
+https://github.com/learn-co-curriculum/sessions_controller_lab # controller generator
+https://github.com/learn-co-curriculum/phrg-rails-generators-readme#controller-generators # controller generator
+
+https://github.com/learn-co-curriculum/phase-3-active-record-intro-to-rake # Rake
+https://github.com/learn-co-curriculum/rake-todo # Rake
+https://github.com/learn-co-curriculum/rake-lab # Rake
+https://github.com/learn-co-curriculum/phase-3-active-record-migrations # Active Record migrations
+https://github.com/learn-co-curriculum/phase-4-rails-and-active-record-readme # migrations - creating a table
+https://github.com/learn-co-curriculum/activerecord-migrations # migrations
+https://github.com/learn-co-curriculum/phase-3-active-record-costume-store-lab # migrations
+https://github.com/learn-co-curriculum/active-record-associations-and-migrations # migrations
+https://github.com/learn-co-curriculum/phase-3-active-record-associations-one-to-many # migrations - nice games example
+https://github.com/learn-co-curriculum/phase-3-active-record-associations-many-to-many # migrations - games example
+https://github.com/learn-co-curriculum/active-record-querying-methods-lab # migration practice
+https://github.com/learn-co-curriculum/phase-3-active-record-theater-work # migration practice - nice theater actors example
+https://github.com/learn-co-curriculum/phase-4-active-record-associations-review-lab # migration practice - foreign key and has_many through
+https://github.com/learn-co-curriculum/phase-3-active-record-associations-methods # migration practice
+https://github.com/learn-co-curriculum/phase-3-active-record-associations-tvland-lab # migration practice
+https://github.com/learn-co-curriculum/phase-3-active-record-querying-methods-lab # migration practice
+https://github.com/learn-co-curriculum/active-record-writing-migrations-lab # migration practice
+https://github.com/learn-co-curriculum/ruby-squirrels-trees # migration practice
+https://github.com/learn-co-curriculum/phase-3-active-record-costume-store-lab # migration practice
+https://github.com/learn-co-curriculum/phase-3-active-record-crud-operations-lab # migration practice
+https://github.com/learn-co-curriculum/rails-blog-associations-validations # migration practice
+https://github.com/learn-co-curriculum/rails-activerecord-model-rails-lab # migration practice
+https://github.com/learn-co-curriculum/activerecord-yelp-exercises # migration practice
+https://github.com/learn-co-curriculum/join-the-fun-rails # migration practice - taxi example
+https://github.com/sf-wdi-31/rails-migrations-practice # migration practice
+https://github.com/sf-wdi-31/migrations # migration practice - mentions schema.rb
+https://github.com/learn-co-curriculum/rails-generators-readme#migration-generators # migration generator
+
+https://github.com/learn-co-curriculum/rails-guided-project-immersive-module-two # domain model for picture sharing app
+https://github.com/learn-co-curriculum/phase-4-rails-and-active-record-readme
+https://github.com/learn-co-curriculum/phase-3-orms-mapping-classes-to-database-tables
+https://github.com/learn-co-curriculum/active-record-associations-and-migrations # associations
+https://github.com/learn-co-students/sinatra-activerecord-associations-v-000 # associations
+https://github.com/learn-co-curriculum/phase-4-serializing-associations # associations
+https://github.com/learn-co-curriculum/phase-4-displaying-associated-data # associations
+https://github.com/learn-co-curriculum/phase-4-deleting-associated-data # associations
+https://github.com/learn-co-students/rails-activerecord-models-and-rails-readme-onl01-seng-pt-070620
+https://github.com/learn-co-curriculum/phase-4-using-active-model-serializer
+https://github.com/learn-co-curriculum/performance-api # N + 1 queries and eager loading
+https://github.com/learn-co-students/dynamic-orms-readme-v-000
+https://github.com/learn-co-curriculum/activerecord-lifecycle-reading # callbacks
+https://github.com/learn-co-curriculum/phase-4-validation-messages-and-error-handling
+https://github.com/learn-co-curriculum/activerecord-yelp-exercises
+https://github.com/weedySeaDragon/rails-guides-bookstore-models # bookstore example
+https://github.com/learn-co-curriculum/guided-module-two-project-assessment#phase-2-scaffolding--execution # seed the database
+https://github.com/learn-co-curriculum/rails-guided-project-module-2 # seed the database
+https://github.com/learn-co-curriculum/rails-generators-readme#model-generators # model generator
+https://github.com/excid3/prefixed_ids # readable identifiers for database records (by Chris Oliver)
+https://github.com/norman/friendly_id # readable identifiers for web links
+https://github.com/basecamp/google_sign_in # Sign in (or up) with Google (by Basecamp)
+https://github.com/ankane/pretender # Log in as another user (by Andrew Kane)
+
+https://github.com/learn-co-curriculum/web-service-objects-readme # web service class
+https://github.com/learn-co-curriculum/js-rails-as-api-extracting-a-service-class # service class with JSON API
+https://github.com/learn-co-curriculum/js-rails-as-api-using-fast-json-api
+https://github.com/learn-co-curriculum/rails-github-api/
+https://github.com/learn-co-curriculum/rails-refactoring-apis # service object
+https://github.com/collectiveidea/interactor
+
+https://github.com/rack/rack # A Ruby web server interface
+https://github.com/cyu/rack-cors
+https://github.com/rack/rack-attack
+https://github.com/puma/puma
+
+https://github.com/learn-co-curriculum/rack-intro
+https://github.com/learn-co-curriculum/phase-3-web-server-fundamentals-with-rack
+https://github.com/learn-co-curriculum/rack-todo # intro
+https://github.com/learn-co-curriculum/middleware-tutorial
+https://github.com/learn-co-curriculum/rack-dynamic-web-apps
+https://github.com/learn-co-curriculum/rack-http-request-readme
+https://github.com/learn-co-curriculum/rack-dynamic-paths-readme
+https://github.com/learn-co-curriculum/rack-headers-readme
+https://github.com/learn-co-curriculum/rack-status-codes-readme
+https://github.com/learn-co-curriculum/react-hooks-auth-session # Rack CORS
+https://github.com/learn-co-curriculum/connecting-react-app-to-rails-api # Rack CORS
+https://github.com/learn-co-curriculum/rails-5-json-api # Rack CORS
+https://github.com/learn-co-curriculum/separating-client-and-api-services # Rack CORS
+https://github.com/learn-co-curriculum/phase-4-cors # Rack CORS intro
+
+https://github.com/learn-co-curriculum/phase-3-todo-app-rack-react # Todo app - React and Rack
+https://github.com/learn-co-curriculum/lecture-crud-with-rack-react # React and Rack

@@ -65,7 +65,7 @@ https://github.com/traefik/hub-crds # Traefik Hub CRDs
 DNS & Certificates
 
 Nomad
-https://github.com/hashicorp/nomad # Nomad is an easy-to-use, flexible, and performant workload orchestrator that can deploy a mix of microservice, batch, containerized, and non-containerized applications. Nomad is easy to operate and scale and has native Consul and Vault integrations.
+https://github.com/hashicorp/nomad # Nomad is an easy-to-use, flexible, and performant workload orchestrator
 
 https://github.com/hashicorp-education/learn-nomad-getting-started # Companion repo for the HashiCorp Nomad Get Started collection of tutorials
 https://github.com/hashicorp-education/learn-nomad-gs-pytechco #
@@ -76,7 +76,7 @@ https://github.com/hashicorp/learn-nomad-edge # Learn Nomad Edge
 https://github.com/hashicorp/learn-nomad-features #
 https://github.com/hashicorp/learn-nomad-external-alb # Companion repo for the HashiCorp Learn guide: Manage External Traffic with Application Load Balancing
 https://github.com/hashicorp/learn-nomad-sd # Companion repo for the HashiCorp Learn guide: Deploy an App with Nomad Service Discovery
-https://github.com/hashicorp/learn-nomad-migrate-java # This is a companion repository containing resources used in the Migrate a Java Application HashiCorp Learn tutorial.
+https://github.com/hashicorp/learn-nomad-migrate-java # Resources used in the Migrate a Java Application HashiCorp Learn tutorial.
 https://github.com/hashicorp/learn-nomad-jobspec # Content to support the Nomad Job Specification tutorial collection
 https://github.com/hashicorp/learn-nomad-test-drive # Job Specifications to support the "Test Drive Nomad" tutorial on learn.hashicorp.com
 
@@ -285,6 +285,13 @@ https://github.com/kurron/docker-nomad # A Docker image that can run Hashicorp N
 https://github.com/jrasell/sherpa # Highly available, fast, and flexible horizontal job scaling for HashiCorp Nomad
 
 Kubernetes
+https://github.com/kubernetes/kubernetes # Production-grade container scheduling and management
+
+https://github.com/kubernetes/cri-api # Container Runtime Interface (CRI) – a plugin interface that enables kubelet to use a wide variety of container runtimes
+https://github.com/containernetworking/cni # Container Network Interface (CNI) - a plugin interface that enables networking for Linux containers
+https://github.com/container-storage-interface/spec # Container Storage Interface (CSI) - a plugin interface that enables storage for Linux containers
+https://github.com/kubernetes/cloud-provider # Cloud Provider Interface (CPI) - a plugin interface that enables the management of cloud provider infrastructure
+
 https://maturitymodel.cncf.io # business outcomes
 https://contribute.cncf.io/maintainers # community building & relationship management
 
@@ -326,9 +333,9 @@ https://github.com/vmware-tanzu-labs/tanzu-validated-solutions
 
 https://github.com/cncf/devstats-helm # bare metal (mess)
 
+https://github.com/helm/helm
 https://github.com/artifacthub/hub
 https://github.com/bitnami/charts
-https://github.com/helm/helm
 
 https://killercoda.com # labs (mentioned by CNCF)
 https://labs.play-with-k8s.com # labs (by Docker)
@@ -607,13 +614,6 @@ https://github.com/kubernetes/cri-client # Container Runtime Interface client im
 https://github.com/coreos/coreos-kubernetes
 https://github.com/cncf/k8s-conformance # all Kubernetes implementations
 https://tag-runtime.cncf.io/wgs/spos/charter/#open-source-projects # special-purpose container Linux distributions
-
-https://github.com/kubernetes/cri-api # Container Runtime Interface (CRI) – a plugin interface which enables kubelet to use a wide variety of container runtimes
-https://github.com/containernetworking/cni # Container Network Interface (CNI) - a plugin interface which enables networking for Linux containers
-https://github.com/container-storage-interface/spec # Container Storage Interface (CSI) - a plugin interface which enables storage for Linux containers
-https://github.com/kubernetes/cloud-provider # Cloud Provider Interface (CPI) - a plugin interface which enables management of cloud provider infrastructure
-
-https://github.com/kubernetes/kubernetes # Production-grade container scheduling and management
 
 Swarm
 https://github.com/moby/moby

@@ -21,7 +21,7 @@ https://github.com/hugo-dz/figma_autoname_client_app # creates names for layers
 https://github.com/andreincu/styler # creates styles for layers
 https://github.com/dokozero/okcolor # color picker
 https://github.com/kawamurakazushi/figma-walker # searches frames and components and jumps to the selected one
-https://github.com/glmrvn/Appearance-figma-plugin # generates a light/dark mode theme
+https://github.com/glmrvn/appearance-figma-plugin # generates a light/dark mode theme
 https://github.com/yenargy/figma-pattern-hero # arranges items into a grid
 https://github.com/codelastnight/to-path-figma # places objects on a path
 https://github.com/brianlovin/figma-responsify # quickly test designs across multiple screen sizes
@@ -39,9 +39,9 @@ https://github.com/DWilliames/google-sheets-sync-figma # Google Sheets
 https://github.com/jordansinger/figma-slack-updates # posts daily file changes to Slack
 https://github.com/destefanis/figma-table-of-contents # creates a table of contents for your project
 https://github.com/brianlovin/figma-export-zip # exports assets to a zip file
-https://github.com/ParthJadhav/Tkinter-Designer # uses the Figma API to analyze a design file and run code in a UI
+https://github.com/parthjadhav/tkinter-designer # uses the Figma API to analyze a design file and run code in a UI
 https://github.com/streamlit/figma-to-streamlit # by Streamlit - converts a Figma component into a Streamlit code snippet
-https://github.com/tushar7d/Project-Scaffold-Figma-Plugin # scaffolds a project
+https://github.com/tushar7d/project-scaffold-figma-plugin # scaffolds a project
 https://github.com/thomas-lowry/status-annotations # annotates a design with its progress/status
 https://github.com/petekp/diagrammaton-figma-plugin # diagram
 https://github.com/diagram/diagram-figma-plugin-template # diagram or something
@@ -117,23 +117,23 @@ https://github.com/tsimenis/figma-export-icons
 https://github.com/irustm/figma-to-angular
 https://github.com/kat-tax/figma-to-react-native
 https://github.com/bannzai/Sigma
-https://github.com/Tgemayel/variable-fonts-figma
+https://github.com/tgemayel/variable-fonts-figma
 https://github.com/alyssaxuu/figma-to-google-slides
-https://github.com/HcySunYang/vue3-figma-plugin-starter
-https://github.com/CaelumF/FigmaToCompose
+https://github.com/hcysunyang/vue3-figma-plugin-starter
+https://github.com/caelumf/figmatocompose
 https://github.com/tiltshift/figmint
 https://github.com/alyssaxuu/figma-platformer-engine
 https://github.com/jordansinger/build-it-figma-ai
-https://github.com/realvjy/Cool-Loaders-SwiftUI
+https://github.com/realvjy/cool-loaders-swiftui
 https://github.com/buildo/bento-design-system
-https://github.com/SoYoung210/figleton
+https://github.com/soyoung210/figleton
 https://github.com/colebemis/figjam-live-code-block
 https://github.com/liaobinbin/fig-to-json
 https://github.com/c5inco/shape-composer-figma
 https://github.com/rsms/TypoFig
 https://github.com/kaleidocode-app/kaleidocode
 https://github.com/ixtgorilla/figma-code-highlighter
-https://github.com/px2code/Figma-to-HTML
+https://github.com/px2code/figma-to-html
 https://github.com/basiclines/figma-content-buddy
 https://github.com/jordansinger/livedraw-figma
 
@@ -145,20 +145,20 @@ https://github.com/hhru/FigmaGen
 https://github.com/gavinmcfarland/figma-node-decoder
 https://github.com/jacobtyq/export-figma-svg
 https://github.com/zouhangwithsweet/fubukicss-tool # Figma browser extension to export CSS
-https://github.com/Moonvy/figmaEX
+https://github.com/moonvy/figmaex
 https://github.com/okotoki/mixpanel-figma # Mixpanel
 https://github.com/leadream/figma-viewer-chrome-plugin
 https://github.com/figma-tools/figma-tools
 https://github.com/b3nnyl/figgo # command to sync design tokens
 https://github.com/artemnovichkov/figma-preview # Xcode
-https://github.com/RedMadRobot/figma-export # Xcode
-https://github.com/Phil-L-101/Figma2Unreal # Unreal
-https://github.com/Volorf/figma-ui-image # Unity
-https://github.com/TrackMan/Unity.Package.FigmaToUnity # Unity
-https://github.com/simonoliver/UnityFigmaBridge # Unity
-https://github.com/ManakhovN/FigmaToUnityImporter # Unity
+https://github.com/redmadrobot/figma-export # Xcode
+https://github.com/phil-l-101/figma2unreal # Unreal
+https://github.com/volorf/figma-ui-image # Unity
+https://github.com/trackman/unity.package.figmatounity # Unity
+https://github.com/simonoliver/unityfigmabridge # Unity
+https://github.com/manakhovn/figmatounityimporter # Unity
 https://github.com/cdmvision/unity-figma-importer # Unity
-https://github.com/Prism-Client/Aether-UI # Minecraft
+https://github.com/prism-client/aether-ui # Minecraft
 https://github.com/almazrafi/Fugen
 https://github.com/mrustaa/FigmaConvertXib
 https://github.com/jsuarezruiz/figma-to-maui-graphics # .NET
@@ -169,10 +169,10 @@ https://github.com/microsoft/vscode-icons
 https://github.com/microsoft/vscode-figma-toolkit
 https://github.com/headwindz/figx # utilities library
 https://github.com/idered/vscode-extension-figma
-https://github.com/ideo/Figproxy
+https://github.com/ideo/figproxy
 https://github.com/figma-linux/figma-linux-font-helper
 https://github.com/tryvin/figma-linux-font-helper
-https://github.com/sameersyd/Wiggles-iOS
+https://github.com/sameersyd/wiggles-ios
 https://github.com/figma/strict-null-check-migration-tools
 https://github.com/ashung/android-resources-export-figma
 https://github.com/jackiecorn/figma-plugin-drag-and-drop
@@ -221,7 +221,7 @@ https://github.com/loft-sh/devpod # DevPod
 https://github.com/qdm12/godevcontainer # Go
 https://github.com/yiwiy9/atcoder-rust-devcontainer # Rust
 https://github.com/SergioGasquez/esp-rs-devcontainer # Rust
-https://github.com/MathiasGruber/vscode-devcontainer # Node.js and Terraform
+https://github.com/mathiasgruber/vscode-devcontainer # Node.js and Terraform
 https://github.com/amatzk/docker-template-for-vscode # multiple language environments
 https://github.com/mamba-org/micromamba-devcontainer # Python
 https://github.com/b-data/data-science-devcontainers # R, Python, Julia
@@ -260,7 +260,7 @@ https://github.com/moalamri/vscode-inline-fold # folds Tailwind CSS utility clas
 https://github.com/microsoft/vscode-extension-samples # by Microsoft - extension samples
 https://github.com/mattpocock/ts-error-translator # turns TypeScripts errors into plain English
 https://github.com/microsoft/vscode-generator-code
-https://github.com/AustinLeeGordon/vscode-schema-dot-org # Google Structured Data schema JSON-LD objects
+https://github.com/austinleegordon/vscode-schema-dot-org # Google Structured Data schema JSON-LD objects
 https://github.com/redhat-developer/vscode-extension-tester # tests an extension using Selenium WebDriver
 https://github.com/microsoft/vscode-docs-authoring # edits Markdown for docs.microsoft.com
 https://github.com/philnash/ngrok-for-vscode # ngrok
@@ -280,7 +280,7 @@ https://github.com/CoenraadS/Bracket-Pair-Colorizer-2 # bracket pair colorizer
 https://github.com/codota/tabnine-vscode # Tabnine machine learning
 https://github.com/huggingface/llm-vscode
 https://github.com/antfu/vscode-settings
-https://github.com/stkb/Rewrap # wrap lines
+https://github.com/stkb/rewrap # wrap lines
 https://github.com/wesbos/dotfiles/ # nice hard links technique
 https://github.com/albertobasalo/dotfiles/
 https://github.com/microsoft/vscode-vsce # extension publisher

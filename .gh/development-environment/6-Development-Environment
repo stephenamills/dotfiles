@@ -97,6 +97,10 @@ https://github.com/moretea/nix-guides # hello world (abandoned)
 https://github.com/tazjin/nix-1p # Nix programming language introduction
 https://github.com/nixos/rfcs # proposals
 
+Buildpacks & Nixpacks
+https://github.com/railwayapp/nixpacks # Nixpacks (by Railway)
+https://github.com/nlewo/nix2container # converts a Nix package to a Docker container
+
 Docker
 https://github.com/moby/moby
 https://github.com/docker/cli
@@ -239,10 +243,6 @@ https://github.com/opencontainers/runtime-spec
 https://github.com/googlecontainertools
 https://github.com/containers
 https://github.com/opencontainers/distribution-spec
-
-Buildpacks & Nixpacks
-https://github.com/railwayapp/nixpacks # Nixpacks (by Railway)
-https://github.com/nlewo/nix2container # converts a Nix package to a Docker container
 
 Apple Virtualization
 https://github.com/abiosoft/colima/blob/main/docs/FAQ.md

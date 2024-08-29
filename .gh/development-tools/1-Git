@@ -1,213 +1,32 @@
+Git
 https://github.com/git/git # Git version control system
 
 https://github.com/git/git-reference # Online Git Reference by GitHub team
 https://github.com/github/training-kit # Open source courseware for Git and GitHub
+https://github.com/githubtraining/training-manual # Home of the words in the GitHub Training Manual and teaching scripts.
+https://github.com/githubtraining/advanced-git #
 https://github.com/progit/progit2 # Pro Git 2nd Edition (by Scott Chacon)
 https://github.com/pluralsight/git-internals-pdf # PDF on Git Internals (by Scott Chacon)
 https://github.com/MarkLodato/visual-git-guide # A visual guide to git (by Mark Lodato)
+
 https://github.com/agis/git-style-guide # A Git Style Guide
 
-https://github.com/skills/introduction-to-github # Get started using GitHub in less than an hour.
-https://github.com/skills/secure-code-game # A GitHub Security Lab initiative, providing an in-repo learning experience, where learners secure intentionally vulnerable code.
-https://github.com/skills/github-pages # Create a site or blog from your GitHub repositories with GitHub Pages.
-https://github.com/skills/communicate-using-markdown # Organize ideas and collaborate using Markdown, a lightweight language for text formatting.
-https://github.com/skills/hello-github-actions # Create a GitHub Action and use it in a workflow.
-https://github.com/skills/copilot-codespaces-vscode # Develop with AI-powered code suggestions using GitHub Copilot and VS Code
-https://github.com/skills/test-with-actions # Create workflows that enable you to use Continuous Integration (CI) for your projects.
-https://github.com/skills/code-with-codespaces # Develop code using GitHub Codespaces and Visual Studio Code!
-https://github.com/skills/review-pull-requests # Collaborate and work together on GitHub.
-https://github.com/skills/publish-packages # Use GitHub Actions to publish your project to a Docker image.
-https://github.com/skills/resolve-merge-conflicts # Learn why conflicts happen and how to resolve them.
-https://github.com/skills/release-based-workflow # Create a release based workflow that is built on the foundations of the GitHub flow
-https://github.com/skills/template-template # <<Not a course>> A template to make course templates. Search and replace "TBD".
-https://github.com/skills/connect-the-dots # Useful tips when navigating through your repository
-https://github.com/skills/write-javascript-actions # Write your own GitHub JavaScript Action and automate customized tasks unique to your workflow.
-https://github.com/skills/deploy-to-azure # Create two deployment workflows using GitHub Actions and Microsoft Azure.
-https://github.com/skills/secure-repository-supply-chain # Secure your supply chain, understand dependencies in your environment, know about vulnerabilities in those dependencies and patch them
-https://github.com/skills/.github # <<Not a course>> .github is a special repository.
-https://github.com/skills/reusable-workflows # Make a workflow reusable, call it in another workflow, and use a matrix strategy to run multiple versions.
-https://github.com/skills/introduction-to-codeql # Enable code scanning and secure your code with CodeQL.
-https://github.com/skills/introduction-to-secret-scanning # Enable secret scanning to identify plain-text credentials and prevent them from being written to your repository
-https://github.com/skills/action-update-step # <<Not a course>> Action step: Update the course repository when the learner completes a step.
-https://github.com/skills/change-commit-history # A skills course on changing the commit history with Git
-https://github.com/skills/configure-codeql-language-matrix # Learn how to simplify your code scanning workflows with CodeQL language matrices
-https://github.com/skills/action-check-file # <<Not a course>> Action: Check file for expected changes.
-
-https://github.com/githubtraining/training-manual # Home of the words in the GitHub Training Manual and teaching scripts.
-https://github.com/githubtraining/github-slideshow-demo # Demo repository for the Introduction to GitHub course
-https://github.com/githubtraining/introduction-to-github # Course repo for Learning Lab course "Introduction to GitHub". Template repo ➡️
-https://github.com/githubtraining/advanced-git # 
-https://github.com/githubtraining/hellogitworld # Hello Git World sample training repository
-https://github.com/githubtraining/migrating-your-repository # Course repo for Learning Lab course "Migrating your repository to GitHub".
-https://github.com/githubtraining/community-contributors # Helpful docs and information for contributors to our open source Learning Lab courses
-https://github.com/githubtraining/looking-glass-action # provides feedback to learners based on the outcome of their validation lab grader workflow
-https://github.com/githubtraining/saml-implementation-prep # Resources for preparing to, and implementing SAML with GitHub Enterprise.
-https://github.com/githubtraining/exercise-check-installed-apps # A hands-on exercise using GitHub Actions. See README.md for instructions on how to get started.
-https://github.com/githubtraining/exercise-use-gitignore # A hands-on exercise using GitHub Actions. See README.md for instructions on how to get started.
-https://github.com/githubtraining/caption-this-template # Template repo for Learning Lab course "Introduction to GitHub". Course repo ➡️
-https://github.com/githubtraining/github-games # Template repo for github-games. Primary purpose is in-person training. Bugs are intentional so we can fix them together.
-https://github.com/githubtraining/slideshow-on-pages # 
-https://github.com/githubtraining/github-actions-for-packages-demo # 
-https://github.com/githubtraining/exercise-publish-package # A hands-on exercise using GitHub Actions. See README.md for instructions on how to get started.
-https://github.com/githubtraining/github-pages # Course repo for Learning Lab course "GitHub Pages". Template repo ➡️
-https://github.com/githubtraining/github-move # A tutorial to help you make the move to GitHub
-https://github.com/githubtraining/example-dependency # A repo that is a submodule with a few commits and release tags
-https://github.com/githubtraining/example-submodule # This repository contains several commits of a single project file as a simple example used in conjunction with submodules.
-https://github.com/githubtraining/write-javascript-actions # Course repo for GitHub Actions: Writing JavaScript actions
-https://github.com/githubtraining/example-githubapiscripts # Collection of scripts to practice working with the API
-https://github.com/githubtraining/example-rebase-orphan-branch # 
-https://github.com/githubtraining/hello-github-actions # Course repo for GitHub Actions: Hello World on Learning Lab
-https://github.com/githubtraining/intro-html-demo # 
-https://github.com/githubtraining/intro-to-html # Course repo for Learning Lab course "Introduction to HTML". Template repo ➡️
-https://github.com/githubtraining/example-rebase--onto # A very simple repo to demonstrate rebasing with "rebase onto"
-https://github.com/githubtraining/looking-glass-payload-tester # action to quickly test Looking Glass behavior when altering payload data
-https://github.com/githubtraining/write-a-ll-course # Course repo for Learning Lab course "Write a Learning Lab course".
-https://github.com/githubtraining/write-github-script # Course repo for Learning Lab course GitHub Actions: Using GitHub Script
-https://github.com/githubtraining/write-docker-actions # Course repo for Learning Lab course: GitHub Actions: Write Docker container actions
-https://github.com/githubtraining/exercise-use-secrets # A hands-on exercise using GitHub Actions. See README.md for instructions on how to get started.
-https://github.com/githubtraining/react-course # Course repo for Learning Lab course "Introduction to React". 
-https://github.com/githubtraining/exercise-remove-commit-history # A hands-on exercise using GitHub Actions. See README.md for instructions on how to get started.
-https://github.com/githubtraining/communicating-using-markdown # Course repo for Learning Lab course "Communicating using Markdown". Template repo   ➡
-https://github.com/githubtraining/security-strategy-essentials-demo # 
-https://github.com/githubtraining/merge-conflicts-demo # 
-https://github.com/githubtraining/learning-lab-boilerplate # This repository is a boilerplate for Learning Lab courses.
-https://github.com/githubtraining/example-bisect # 
-https://github.com/githubtraining/three-ducks # Template repository for Codeland 2019
-https://github.com/githubtraining/security # Course repo for Learning Lab course "Securing your workflows". Template repo ➡
-https://github.com/githubtraining/oss-enterprise-demo # 
-https://github.com/githubtraining/innersource-theory # Training manual for InnerSource for Leaders and InnerSource for Teams
-https://github.com/githubtraining/security-strategy-essentials # Course repo for Learning Lab course "Security strategy essentials" 
-https://github.com/githubtraining/exercise-reference-a-codeql-query # A hands-on exercise using GitHub Actions. See README.md for instructions on how to get started.
-https://github.com/githubtraining/ci-circle # Course repo for Learning Lab course "Continuous Integration with CircleCI". Template repo  ➡
-https://github.com/githubtraining/using-github-actions-for-ci # Course repository for "GitHub Actions: Continuous Integration"
-https://github.com/githubtraining/exercise-enable-github-pages # A hands-on exercise using GitHub Actions. See README.md for instructions on how to get started.
-https://github.com/githubtraining/continuous-delivery-aws # This repository is the source for the Learning Lab course, GitHub Actions: Continuous Delivery
-https://github.com/githubtraining/example-groovy # Groovy programming language example with shell script build
-https://github.com/githubtraining/github-pages-with-jekyll-template # Template repo for Learning Lab course "GitHub Pages". Course repo ➡️
-https://github.com/githubtraining/exercise-exclude-files-from-secret-scanning # A hands-on exercise using GitHub Actions. See README.md for instructions on how to get started.
-https://github.com/githubtraining/pin-me # A place to make your very first open source contribution (or your 1,000th - everyone is welcome)
-https://github.com/githubtraining/intro-to-html-template # Template repo for Learning Lab course "Introduction to HTML". Course repo ➡️
-https://github.com/githubtraining/using-github-actions-for-ci-template # The template repository for Learning Lab course on GitHub Actions: Continuous Integration
-https://github.com/githubtraining/introduction-to-github-apps # Course repo for Learning Lab course "introduction-to-github-apps". Template repo :arrow_right:
-https://github.com/githubtraining/example-filter-branch # example of filtering a branch to remove a large binary asset commit
-https://github.com/githubtraining/connect-the-dots-in-a-github-repository # This course is meant to teach skills for working in a larger, older repository with others. 
-https://github.com/githubtraining/conflict-practice # A playable post on how harmless choices can make a harmful world with merge conflicts built in for git practice.
-https://github.com/githubtraining/innersource # Course repo for Learning Lab course "InnerSource Fundamentals". Template repo ➡️
-https://github.com/githubtraining/first-day-on-github # The Learning Lab learning path for your first day on GitHub.
-https://github.com/githubtraining/merge-conflict-template-repo # Template repo for Learning Lab course "Managing merge conflicts". Course repo ➡️
-https://github.com/githubtraining/become-an-open-source-enterprise # The Learning Lab course path for becoming an open source enterprise.
-https://github.com/githubtraining/caption-this # TEMPLATE: Octocat captioning activity for training
-https://github.com/githubtraining/example-maven # A Maven-built Java example
-https://github.com/githubtraining/react-template # Template repo for Learning Lab course "Introduction to React"
-https://github.com/githubtraining/managing-merge-conflicts # Course repo for Learning Lab course "Managing merge conflicts". Template repo  ➡
-https://github.com/githubtraining/repository-template # A general purpose repository template with some starter issue and PR templates and workflows
-https://github.com/githubtraining/continuous-delivery-azure-template # Template repository for GitHub Actions: Continuous Delivery with Azure
-https://github.com/githubtraining/react-solution # Solution repo for the react course
-https://github.com/githubtraining/exercise-configure-dependabot # A hands-on exercise using GitHub Actions. See README.md for instructions on how to get started.
-https://github.com/githubtraining/ci-circle-template # Template repo for Learning Lab course "Continuous Integration with CircleCI". Course repo ➡️
-https://github.com/githubtraining/exercise-configure-codeql-language-matrix # A hands-on exercise using GitHub Actions. See README.md for instructions on how to get started.
-https://github.com/githubtraining/community-starter-kit-template # Template repo for Learning Lab course "Community Starter Kit"
-https://github.com/githubtraining/release-based-workflow-demo # 
-https://github.com/githubtraining/on-demand-merge-conflict # A repo for merge conflicts
-https://github.com/githubtraining/community-starter-kit # Course repo for Learning Lab course "Community Starter Kit"
-https://github.com/githubtraining/configuring-kubernetes-kubectl # This course leads the student through the steps necessary to use the Kubernetes kubectl command from within an Actions workflow
-.                                                                                                                                                                                                 https://github.com/githubtraining/example-gradle # A Gradle-built Java example
-https://github.com/githubtraining/reviewing-a-pull-request # Course repo for Learning Lab course "Reviewing Pull Requests". Template repo ➡
-https://github.com/githubtraining/ci-travis-template # Template repo for Learning Lab course "Continuous Integration with Travis CI"
-https://github.com/githubtraining/innersource-theory-to-practice # The Learning Lab course path for InnerSource theory and practice.
-https://github.com/githubtraining/git-filter-branch # Practice for how to use git-filter-branch
-https://github.com/githubtraining/test-projects # 
-https://github.com/githubtraining/create-a-college-notebook-template # The template repository for the Create a college notebook course on Learning Lab.
-https://github.com/githubtraining/example-html-proofer # 
-https://github.com/githubtraining/github-learning-lab-pins # 
-https://github.com/githubtraining/uploading-your-local-project # Course repo for Learning Lab course "Uploading your project to GitHub".
-https://github.com/githubtraining/configuring-kubernetes-kubectl-in-an-actions-workflow # This course guides the student through a step-by-step process to configure the Kubernetes kubectl comman
-d in a GitHub Actions Workflow.                                                                                                                                                                   https://github.com/githubtraining/.github # Organization-wide files.
-https://github.com/githubtraining/markdown-finder # 🔍📖 Find things in strings of markdown.
-https://github.com/githubtraining/github-games-template # 
-https://github.com/githubtraining/design-thinking-intro # This course will teach you the principles of Design Thinking.
-https://github.com/githubtraining/example-rerere # This repository contains two near-identical branches for merging and exploring Reuse Recorded Resolution.
-https://github.com/githubtraining/protected-branches-codeowners-template # 
-https://github.com/githubtraining/lab-starter-template # 
-https://github.com/githubtraining/github-actions-publish-to-github-packages # Course repo for Learning Lab course: "GitHub Actions: Publish to GitHub Packages"
-https://github.com/githubtraining/oss-enterprise # Course repo for Learning Lab course "Create an open source program"
-https://github.com/githubtraining/first-week-on-github # The Learning Lab course path for your first week on GitHub.
-https://github.com/githubtraining/introduction-to-github-apps-template # Template repo for Learning Lab course "introduction-to-github-apps". Course repo :arrow_right:
-https://github.com/githubtraining/example-bugfix # This repository has a master branch and two feature branches, all with commits, but two being general content changes and one being a bug fix.
-https://github.com/githubtraining/write-javascript-actions-template # The template repository for the Write JavaScript Actions course on Learning Lab.
-https://github.com/githubtraining/certification-path # Prepare for the GitHub foundational certification with this learning path.
-https://github.com/githubtraining/filterbranch-example # 
-https://github.com/githubtraining/example-build # A repository with a long, sordid commit history with elements that can pass a build and fail a Maven build script.
-https://github.com/githubtraining/devops-with-github-actions # The Learning Lab course path for DevOps with GitHub Actions.
-https://github.com/githubtraining/ramp-up-on-git-and-github # The Learning Lab course path for ramping up on Git and GitHub.
-https://github.com/githubtraining/project-four-advanced-commands # A template repository for Project 4: Advanced Commands
-https://github.com/githubtraining/express-template # 
-https://github.com/githubtraining/test-course-creation-template # The template repository for the test-course-creation course on Learning Lab.
-https://github.com/githubtraining/configuring-kubernetes-kubectl-in-an-actions-workflow-template # The template repository for the Configuring Kubernetes kubectl in an Actions Workflow course on
- Learning Lab.                                                                                                                                                                                    https://github.com/githubtraining/create-a-college-notebook # Let's create a college notebook
-https://github.com/githubtraining/education-actions # Repo to hold GitHub Actions used in Learning Lab course authoring
-https://github.com/githubtraining/plumbing-workshop # 
-https://github.com/githubtraining/test-course-creation # Trying to replicate an error --- nothing to see here!
-https://github.com/githubtraining/exercise-scheduled-events # A hands-on exercise using GitHub Actions. See README.md for instructions on how to get started.
-https://github.com/githubtraining/hello-github-actions-template # Template repo for GitHub Actions: Hello World on Learning Lab
-https://github.com/githubtraining/configuring-kubernetes-kubectl-template # The template repository for the Configuring Kubernetes kubectl course on Learning Lab.
-https://github.com/githubtraining/actions-and-packages # A guided hands-on activity to publish an npm package to GtiHub Package Registry using GitHub Actions
-https://github.com/githubtraining/example-ruby # Example ruby application for working with CI and Git and GitHub
-https://github.com/githubtraining/release-workflow # Course repo for Learning Lab course "Create a release based workflow".
-https://github.com/githubtraining/security-template # Template repo for Learning Lab course "Securing your workflows". Course repo ➡
-https://github.com/githubtraining/connect-the-dots-in-a-github-repository-template # The template repository for the Working in large repositories course on Learning Lab.
-https://github.com/githubtraining/continuous-integration-travis-demo # 
-https://github.com/githubtraining/assessment-push-actions # 
-https://github.com/githubtraining/continuous-delivery-azure # Course repository for the Learning Lab course GitHub Actions: Continuous Delivery with Azure
-https://github.com/githubtraining/Program-Management-Test # Test Repo for connection Program Level Views using Github Issues and Azure DevOps Board
-https://github.com/githubtraining/security-strategy-essentials-template # The template repository for the security-strategy-essentials course on Learning Lab.
-https://github.com/githubtraining/check-pages-action # 
-https://github.com/githubtraining/stage-commits-action # 
-https://github.com/githubtraining/caption-this-rwnfoo-test # 
-https://github.com/githubtraining/exercise-enable-code-scanning-using-codeql # 
-https://github.com/githubtraining/example-basic # This repository has just 5 basic commits on master by three different coders, providing a basic commit structure for learning exploring Git comm
-ands.                                                                                                                                                                                             https://github.com/githubtraining/innersource-template # Template repo for Learning Lab course "InnerSource Fundamentals". Course repo ➡️
-https://github.com/githubtraining/write-github-script-template # Template repo for Learning Lab course GitHub Actions: Using GitHub Script
-https://github.com/githubtraining/exercise-use-dependabot # A hands-on exercise using GitHub Actions. See README.md for instructions on how to get started.
-https://github.com/githubtraining/hello-world-4-languages-template # The template repository for the hello-world-6-languages course on Learning Lab.
-https://github.com/githubtraining/assessment-push-template # The template repository for the assessment-push course on Learning Lab.
-https://github.com/githubtraining/hello-world-4-languages # If you are considering getting in to programming, this course will show you how to say Hello World! in 6 different programming languag
-es and explain why you might want to learn each one.                                                                                                                                              https://github.com/githubtraining/github-learn-pins # 
-https://github.com/githubtraining/reviewing-a-pull-request-template # Template repo for Learning Lab course "Reviewing Pull Requests". Course repo ➡
-https://github.com/githubtraining/github-actions-publish-to-github-packages-template # The template repository for the Learning Lab course: "GitHub Actions: Publish to GitHub Packages"
-https://github.com/githubtraining/write-a-ll-course-template # Template repo for Learning Lab course "Write a Learning Lab course"
-https://github.com/githubtraining/design-thinking-intro-template # The template repository for the intro to design thinking course on Learning Lab.
-https://github.com/githubtraining/yaml-parser-action # 
-https://github.com/githubtraining/assessment-push-course # A sample assessment for pushing to GitHub.
-https://github.com/githubtraining/communicating-using-md-template # Template repo for Learning Lab course "Communicating using Markdown". Course repo ➡️
-https://github.com/githubtraining/writing-javascript-actions-template # Template repo for Learning Lab course "GitHub Actions: Writing JavaScript Actions"
-https://github.com/githubtraining/docsify-action # repo for docsify action
-https://github.com/githubtraining/ci-travis # Course repo for Learning Lab course "Continuous Integration with Travis CI".
-https://github.com/githubtraining/security-reporting-template # The template repository for the security-reporting course on Learning Lab.
-https://github.com/githubtraining/security-reporting-course # Set up a security reporting process
-https://github.com/githubtraining/NewGitTestRepo # 
-https://github.com/githubtraining/caption-this-lab-template # 
-https://github.com/githubtraining/open-source-kit # Template repo for Learning Lab course "Create an open source program"
-https://github.com/githubtraining/continuous-delivery-aws-template # Template repository for Learning Lab course "GitHub Actions: Continuous Delivery with AWS"
-https://github.com/githubtraining/write-docker-actions-template # Template repo for Learning Lab course: GitHub Actions: Write Docker container actions
-https://github.com/githubtraining/skills-hello-github-actions # Create a GitHub Action and use it in a workflow.
-
-
-
-
-https://github.com/tiimgreen/github-cheat-sheet
-https://github.com/gazler/githug # Git your game on!
-https://github.com/arslanbilal/git-cheat-sheet # :octocat: git and git flow cheat sheet
+https://github.com/tiimgreen/github-cheat-sheet # A list of cool features of Git and GitHub.
+https://github.com/arslanbilal/git-cheat-sheet # Git and Git flow cheat sheet
 https://github.com/k88hudson/git-flight-rules # Flight rules for git
-https://github.com/pcottle/learngitbranching # An interactive git visualization and tutorial
 https://github.com/git-tips/tips # Most commonly used git tips and tricks.
 https://github.com/joshnh/git-commands # A list of commonly used Git commands
-https://github.com/tiimgreen/github-cheat-sheet # A list of cool features of Git and GitHub.
+
+https://github.com/gazler/githug # Git your game on!
+https://github.com/pcottle/learngitbranching # An interactive git visualization and tutorial
 https://github.com/rogerdudler/git-guide # git - the simple guide
 https://github.com/eficode-academy/git-katas # A set of exercises for deliberate Git Practice
-https://github.com/githubtraining/hellogitworld # Hello Git World sample training repository
 https://github.com/nnja/advanced-git # Frontend Masters Advanced Git - by Nina Zakharenko
-https://github.com/nnja/advanced-git-exercises # Exercises for Frontend Masters Advanced Git http://git.io/advanced-git
+https://github.com/nnja/advanced-git-exercises # Exercises for Frontend Masters Advanced Git
+https://github.com/githubtraining/example-rebase-orphan-branch #
+https://github.com/githubtraining/example-rebase--onto # A very simple repo to demonstrate rebasing with "rebase onto"
+https://github.com/githubtraining/example-bisect #
+https://github.com/githubtraining/example-filter-branch # example of filtering a branch to remove a large binary asset commit
 
 https://github.com/ingydotnet/git-subrepo # Git submodule alternative
 https://github.com/tummychow/git-absorb # git commit --fixup, but automatic
@@ -233,3 +52,34 @@ https://github.com/git-bug/git-bug # Distributed, offline-first bug tracker embe
 https://github.com/kubernetes/git-sync # A sidecar app which clones a git repo and keeps it in sync with the upstream.
 https://github.com/charmbracelet/soft-serve # The mighty, self-hostable Git server for the command line🍦
 https://github.com/pre-commit/pre-commit # A framework for managing and maintaining multi-language pre-commit hooks.
+
+GitHub
+https://github.com/skills/introduction-to-github # Get started using GitHub in less than an hour.
+https://github.com/skills/github-pages # Create a site or blog from your GitHub repositories with GitHub Pages.
+https://github.com/skills/communicate-using-markdown # Organize ideas and collaborate using Markdown, a lightweight language for text formatting.
+https://github.com/skills/hello-github-actions # Create a GitHub Action and use it in a workflow.
+https://github.com/skills/test-with-actions # Create workflows that enable you to use Continuous Integration (CI) for your projects.
+https://github.com/skills/reusable-workflows # Make a workflow reusable, call it in another workflow, and use a matrix strategy to run multiple versions.
+
+https://github.com/skills/review-pull-requests # Collaborate and work together on GitHub.
+https://github.com/skills/publish-packages # Use GitHub Actions to publish your project to a Docker image.
+https://github.com/skills/resolve-merge-conflicts # Learn why conflicts happen and how to resolve them.
+https://github.com/skills/release-based-workflow # Create a release based workflow that is built on the foundations of the GitHub flow
+https://github.com/skills/connect-the-dots # Useful tips when navigating through your repository
+https://github.com/skills/.github # .github is a special repository. <<Not a course>>
+https://github.com/skills/change-commit-history # A skills course on changing the commit history with Git
+
+https://github.com/skills/copilot-codespaces-vscode # Develop with AI-powered code suggestions using GitHub Copilot and VS Code
+https://github.com/skills/code-with-codespaces # Develop code using GitHub Codespaces and Visual Studio Code!
+https://github.com/skills/introduction-to-codeql # Enable code scanning and secure your code with CodeQL.
+https://github.com/skills/secure-code-game # An in-repo learning experience, where learners secure intentionally vulnerable code.
+https://github.com/skills/template-template # A template to make course templates. <<Not a course>>
+https://github.com/skills/write-javascript-actions # Write your own GitHub JavaScript Action and automate customized tasks unique to your workflow.
+https://github.com/skills/deploy-to-azure # Create two deployment workflows using GitHub Actions and Microsoft Azure.
+https://github.com/skills/secure-repository-supply-chain # Secure your supply chain, understand dependencies in your environment
+https://github.com/skills/introduction-to-secret-scanning # Enable secret scanning to identify plain-text credentials and prevent them from being written to your repository
+https://github.com/skills/action-update-step # Action step: Update the course repository when the learner completes a step. <<Not a course>>
+https://github.com/skills/configure-codeql-language-matrix # Learn how to simplify your code scanning workflows with CodeQL language matrices
+https://github.com/skills/action-check-file # Action: Check file for expected changes. <<Not a course>>
+
+https://github.com/githubtraining/training-manual # Home of the words in the GitHub Training Manual and teaching scripts.

@@ -64,6 +64,8 @@ https://github.com/hashicorp/example-nomad-pack-registry # An example registry f
 https://github.com/hashicorp/nomad-driver-exec2 # An official Nomad task driver plugin for sandboxing workloads using native Linux kernel features
 https://github.com/hashicorp/setup-nomad # Run HashiCorp Nomad as part of your GitHub Actions Workflow
 
+https://github.com/letsencrypt/hashicorp-lessons #
+
 https://github.com/ansible-community/ansible-nomad # :watch: Ansible role for Nomad
 https://github.com/jippi/hashi-ui # A modern user interface for @hashicorp Consul & Nomad
 https://github.com/jippi/awesome-nomad # A curated list of amazingly awesome Nomad tools and shiny things.
@@ -216,3 +218,184 @@ https://github.com/Skatteetaten/terraform-nomad-postgres #
 https://github.com/Pondidum/nomad-operator # The Operator Pattern, in Nomad
 https://github.com/kurron/docker-nomad # A Docker image that can run Hashicorp Nomad scripts.
 https://github.com/jrasell/sherpa # Highly available, fast, and flexible horizontal job scaling for HashiCorp Nomad
+
+https://github.com/btkrausen/hashicorp # Random code for HashiCorp related projects, training, etc.
+https://github.com/samber/awesome-prometheus-alerts # 🚨 Collection of Prometheus alerting rules
+https://github.com/virtual-kubelet/virtual-kubelet # Virtual Kubelet is an open source Kubernetes kubelet implementation.
+https://github.com/servian/hashiqube # HashiQube - All the Hashicorp products in a Container or VM for anyone to demo or practise with.
+https://github.com/asdf-community/asdf-hashicorp # HashiCorp plugin for the asdf version manager
+https://github.com/getnelson/nelson # Automated, multi-region container deployment
+https://github.com/mockingbirdconsulting/HashicorpAtHome #
+https://github.com/GuyBarros/terraform-aws-demostack # a quick and dirty Hashistack demo
+https://github.com/iverberk/jenkins-nomad # Nomad cloud plugin for Jenkins
+https://github.com/vistara-labs/vimana # Vimana is an orchestration client that aims to abstract away complexities in operationalizing networks with minimal setup.
+https://github.com/jboero/nomados # An experiment after Hashiconf Digital 2020 for building a minimal Linux Nomad agent.
+https://github.com/star3am/hashiqube # HashiQube - ultimate lab of all HashiCorp Products in a Github Codespace or Docker Container using Vagrant or Docker Compose
+https://github.com/groovemonkey/tutorialinux-hashistack # A hands-on learning project for consul, using Terraform
+https://github.com/fmeringdal/do-hashicorp-cluster #
+https://github.com/jumppad-labs/jumppad # Modern cloud native development environments
+https://github.com/the-nix-way/dev-templates # Dev environments for numerous languages based on Nix flakes [maintainer=@lucperkins]
+https://github.com/dsaidgovsg/terraform-modules # Reusable Terraform modules
+https://github.com/chrisvanmeer/at-hashi-demo # Demonstration environment for the HashiCorp products
+https://github.com/asdf-vm/asdf-plugins # Convenience shortname repository for asdf community plugins
+https://github.com/jvirtanen/vim-hcl # Syntax highlighting for HashiCorp Configuration Language (HCL)
+https://github.com/kangaroot/rootstack-devfactory # Devfactory provides teams a quick container/native/vm runtime enviroment using the Hashicorp toolset
+https://github.com/portworx/terraporx # Portworx Community Repo for Terraform
+https://github.com/piomin/sample-nomad-java-services # Sample Spring applications deployed on Hashicorp Nomad with communication using Consul discovery
+https://github.com/nix-community/nixpkgs-terraform-providers-bin # auto-updating terraform providers for nix
+https://github.com/ansible-collections/community.hashi_vault # Ansible collection for managing and working with HashiCorp Vault.
+https://github.com/solo-io/sqoop # The GraphQL Engine powered by Gloo
+https://github.com/nairnavin/practical-nomad-consul # Set up a 3 Tier application (classic springboot petclinic) in a Nomad / Consul cluster leveraging features of service mesh, ingress and term
+inating gateways, load balancers etc. https://github.com/assareh/tfc-agent # Examples related to the Terraform Cloud Agent, a remote runner for Terraform Cloud Business and Terraform Enterprise
+https://github.com/jrasell/sherpa # Sherpa is a highly available, fast, and flexible horizontal job scaling for HashiCorp Nomad. It is capable of running in a number of different modes to suit d
+ifferent requirements, and can scale based on Nomad resource metrics or external sources. 
+https://github.com/jonasvinther/medusa # A cli tool for importing and exporting Hashicorp Vault secrets
+https://github.com/Skatteetaten/vagrant-hashistack # Vagrant box with the complete hashistack. Use for demo and development.
+https://github.com/greenbrian/musical-spork # hc testing
+https://github.com/getkin/kin-openapi # OpenAPI 3.0 (and Swagger v2) implementation for Go (parsing, converting, validation, and more)
+https://github.com/tprasadtp/ubuntu-post-install # Effortless, Flexible and Simple Post Install Script for Ubuntu, Linux Mint, Debian & their derivatives
+https://github.com/skatteetaten/vagrant-hashistack-template # Starter template for development using the vagrantbox Skatteetaten/hashistack
+https://github.com/rms1000watt/local-hashicorp-stack # Local Hashicorp Stack for DevOps Development without Hypervisor or Cloud
+https://github.com/smaeda-ks/nomad-github-runners-autoscaler-demo # A demo-purpose Node.js application that listens to the GitHub Webhooks event (workflow_job.queued) and dispatches Nomad parame
+terized jobs using Nomad HTTP API to launch "on-demand" GitHub Actions Self-hosted Runners easily and efficiently. https://github.com/hashicorp/nomad-scala-sdk # A Scala SDK for interfacing with HashiCorp's Nomad
+https://github.com/falcosecurity/plugins # Falco plugins registry
+https://github.com/greko6/xfb2xfb # by ex-Facebookers, for ex-Facebookers - a lookup table of similar tech & services
+https://github.com/jboero/hashicorp-schemas # Hashicorp schemas and unofficial specs.
+https://github.com/carlosdomingues/hashicorp-draw.io # draw.io library for HashiCorp products. I am not linked to HashiCorp in any way.
+https://github.com/aquanauts/ozy # An application management tool
+https://github.com/Roblox/nomad-node-problem-detector # NNPD - nomad-node-problem-detector
+https://github.com/Roblox/rblx_nurd # Open Source Nomad Usage Resource Dashboard
+https://github.com/vancluever/docker-nomad # Docker image for Nomad, based on official Consul image
+https://github.com/dhall-lang/awesome-dhall # A curated list of awesome dhall-lang
+https://github.com/gaia-pipeline/gaia # Build powerful pipelines in any programming language.
+https://github.com/ngine-io/chaotic # Chaos for Clouds
+https://github.com/gregbkr/nomad-consult-ansible-centos # Deploy nomad & consult on centos with ansible
+https://github.com/libp2p/testlab # A testlab built with Nomad and Consul to analyze the behavior of p2p networks at scale
+https://github.com/joestack/tfc-aws-hashistack #
+https://github.com/efbar/hashicorp-labs # Deploy locally on VM an Hashicorp cluster formed by Vault, Consul and Nomad. Ready for deploying and testing your apps.
+https://github.com/badtuxx/DevOpsExtreme # Repositório com palestras e arquivos relacionados ao ev
+https://github.com/xyzjace/nomad_client # Ruby client gem for interacting with Hashicorp Nomad HTTP API
+https://github.com/rothgar/awesome-tuis # List of projects that provide terminal user interfaces
+https://github.com/koyeb/kreconciler # A control-loop library for things that are not in k8s
+https://github.com/leowmjw/nomad-box # Nomad Box - Simple Terraform-powered setup to Azure of clustered Consul, Nomad and Traefik Load Balancer that runs Docker/GoLang/Java workloads. NOTE: Onl
+https://github.com/GuillaumeRochat/container-orchestration-comparison # A comparison of the different container orchestration tools available.
+https://github.com/peytoncasper/hashimash # Fleet Management Simulator using Consul, Nomad, Vault, Terraform, Packer and Go
+https://github.com/maxyermayank/developer-mac-setup # Set of Scripts and Documentation to setup Mac as Development Environment
+https://github.com/resinstack/resinstack # The HashiStack, but cast in resin for optimal immutability.
+https://github.com/thegreenwebfoundation/grid-intensity-go # A tool written in go to help you factor carbon intensity into decisions about where and when to run computing jobs.
+https://github.com/donovanmuller/spring-cloud-dataflow-server-nomad # Spring Cloud Data Flow Implementation for Hashicorp Nomad
+https://github.com/github-technology-partners/partner-actions # List of actions created by github technology partners that have self-attested to best practices.
+https://github.com/davidsbond/homad # Repository containing the configuration of my HashiCorp Nomad homelab
+https://github.com/aedifex/nomad-vagrant-cluster # Provision a Nomad cluster using Vagrant
+https://github.com/endoflife-date/release-data # Common Release Data for various projects in a consumable format, automatically updated.
+https://github.com/jboero/hashistack # Complete Hashistack including TFE, Terraform, Consul, Vault, Nomad, Packer all in a single packer manifest. Builds in parallel on Qemu, VirtualBox, GCP, A
+WS, Azure using CentOS 8 base image. https://github.com/Cobra16319/100_Days_Of_Go # 100 days of Go learning
+https://github.com/pshima/consul-snapshot # consul-snapshot is a backup and restore utility for Consul (https://www.consul.io). This is slightly different than some other utilities out there as
+this runs as a daemon for backups and ships them to S3. Also has integrated monitoring and backup health checks. https://github.com/cvandal/nomad-ui # A UI for Nomad by HashiCorp
+https://github.com/freddiecoleman/docker-chia # Docker Image for Chia Blockchain
+https://github.com/livioribeiro/nomad-lxd-terraform # Example nomad cluster on LXD using Terraform
+https://github.com/jsiebens/rpi-hashistack # Ubuntu Pi images with HashiCorp stack tools, like Consul, Vault and Nomad pre-installed
+https://github.com/kevincloud/javaperks-aws-single-server #
+https://github.com/jboero/hashifuse # Experimental FUSE clients for Hashicorp REST APIs.
+https://github.com/camunda-community-hub/awesome-Camunda-and-Robotframework-projects # A collection of projects around the combination of Robotframework and Camunda
+https://github.com/kurron/jvm-development-environment # A Vagrant controlled software development environment built around IntelliJ IDEA, PyCharm, Docker and Ubuntu.
+https://github.com/fhajji/vagrant-consul-nomad # Multi-node Consul/Nomad Cluster Vagrant-spawned inside VirtualBox VMs
+https://github.com/chrisvanmeer/at-hashistack #
+https://github.com/magnologan/awesome-k8s-security # A curated list for Awesome Kubernetes Security resources
+https://github.com/eon01/DevOpsLinks-Is-Awesome # Curated & Must Read Content For DevOps, SysAdmins & Fullstack Developers.
+https://github.com/liemle3893/nomad-redis-cluster-demo # Deploy, manage, connect into Redis Cluster by using Nomad and Envoy Proxy
+https://github.com/grantorchard/field-workshops-terraform # Slide decks and Instruqt code for Terraform Workshops
+https://github.com/jrasell/chemtrail # Chemtrail is a client scaler for HashiCorp Nomad allowing for dynamic and safe scaling of the client workerpool based on demand.
+https://github.com/lonegunmanb/nomad-ucloud-sample #
+https://github.com/UW-Capstone-Nomad/Nomad-Deployment-Recipe #
+https://github.com/nicholasjackson/terraform-aws-open-faas-nomad # Example Terraform configuration to create OpenFaas on Nomad for AWS
+https://github.com/codyde/hashi-demo-app #
+https://github.com/TheAjinkya/remote-job-sites # List of 50+ Remote Job Portals that are actively hiring for a fully remote or semi remote jobs
+https://github.com/koalalorenzo/backpack # Template system and package manager to deploy Hashicorp Nomad Jobs. Mirror on GitHub, Official repo available on Gitlab.com
+https://github.com/haxorof/ansible-role-hashicorp-tools # Ansible role to install HashiCorp's open source DevOps Tool Suite
+https://github.com/fivexl/nomad-events-to-slack # Get nomad's allocations. Retrieve events from the tasks inside allocations. Post events to Slack channel as a Slack bot using incoming web hooks
+. https://github.com/Smithx10/nomad-driver-triton # HashiCorp Nomad Triton driver plugin
+https://github.com/nickvth/ansible-consul-nomad # Deployment for consul + nomad
+https://github.com/traefik-tech-blog/hashicorp-webinar # Simplifying Infrastructure and Networking Automation with HashiCorp and Traefik
+https://github.com/gmr/hashicorp-packaging # Makefile and templates for creating deb packages for HashiCorp (and ecosystem) projects.
+https://github.com/brianshumate/hashipets # :dog: HashiCorp Consul, Nomad, Packer, Vagrant, Vault, and Terraform CLI snippets for pet
+https://github.com/allthingsclowd/web_page_counter # HashiCorp's Dynamic Cloud Infrastructure Toolset used to deliver a scalable application - a Webpage Counter - using Packer, Vagrant, Consul,
+Vault and Nomad. https://github.com/seatgeek/hashi-helper # Disaster Recovery and Configuration Management for Consul and Vault
+https://github.com/torian/ansible-role-nomad # Ansible role for Hashicorp Nomad
+https://github.com/resinstack/nomad # A container with Nomad inside!
+https://github.com/study-groups/devops # DevOps study group. Emphasis on function as a service.
+https://github.com/den-vasyliev/SRE-Competency-Matrix # Competency Matrix for Site Reliability Engineering (SRE)
+https://github.com/robertdebock/ansible-role-nomad # Install and configure Nomad.
+https://github.com/signalfx/splunk-otel-collector #
+https://github.com/abedra/libvault # A C++ library for Hashicorp Vault
+https://github.com/yardbirdsax/kafka-on-nomad # An attempt to get a secured Kafka cluster running on Hashicorp Nomad
+https://github.com/bcadiot/ParisContainerDay_2017 # Repository for sources used for Nomad slot in Paris Container Day 2017
+https://github.com/elasticbyte/hashipm # Get the latest version of various HashiCorp packages.
+https://github.com/pulumi/pulumi-nomad #
+https://github.com/FuturistiCoder/Nomad.OAS # Nomad OpenApi Specification
+https://github.com/icy/w2w # What/Why people move from this to that.
+https://github.com/adavarski/Hashicorp-Nomad-Consul-Ansible # Deploy Nomad & Consult via ansible
+https://github.com/samgabrail/end-to-end-infra-app-deployment #
+https://github.com/star3am/terraform-hashicorp-hashiqube # Terraform Registry Module for HashiQube - A Development Lab Using All the HashiCorp Products
+https://github.com/angrycub/nomad_tf # Terraform files used for Nomad Support.  
+https://github.com/aquasecurity/aqua-nomad # Aqua installation instruction on HashiCorp Nomad
+https://github.com/charmbracelet/bubbletea # A powerful little TUI framework 🏗
+https://github.com/jen20/hashidays-nyc # Code accompanying my talk at HashiDays New York, 2017
+https://github.com/linuxacademy/content-learning-hashicorp-nomad # Kevin James, Learning Hashicorp Nomad, 08.06.2020
+https://github.com/paladin-devops/hashitalks-deploy-blue-green #
+https://github.com/devops-rob/target-cli # A CLI tool to manage context profiles for HashiCorp tools
+https://github.com/akamai-compute-marketplace/nomad-occ # Akamai Compute Marketplace Nomad Cluster Deployment playbook
+https://github.com/mentoriaiac/glossario #
+https://github.com/letsencrypt/attache # A sidecar that allows for effortless scaling of a Redis Cluster
+https://github.com/akamai-compute-marketplace/nomad-client-occ # Akamai Compute Marketplace Nomad Client Deployment playbook
+https://github.com/solo-io/training #
+https://github.com/xtermjs/xterm.js # A terminal for the web
+https://github.com/mrlesmithjr/ansible-hashicorp-toolbox #
+https://github.com/myENA/consul-backinator # Command line Consul backup and restore utility supporting KVs, ACLs and Queries
+https://github.com/radixbio/timberland # A self-bootstrapping Kubernetes alternative with package management capabilities based on Hashicorp software
+https://github.com/masatomo-ito2/Snapshots_2021Jan_Pseudo-containerized #
+https://github.com/robertdebock/ansible-role-hashicorp # Install HashiCorp products using packages.
+https://github.com/jsmickey/kubernetes-consul-vault # Hashicorp Vault with Hashicorp Consul storage running on Kubernetes
+https://github.com/grove-mountain/nomad-up-and-running # Code used for my Nomad Up and Running webinar
+https://github.com/learn-nomad-consul/demo-stack # a demo stack to see Nomad & Consul Connect capabilities
+https://github.com/assareh/hashicorp-traefik # simple Traefik on Nomad with Consul Connect
+https://github.com/lgfa29/hashitalks-brasil-2020 #
+https://github.com/franckverrot/trek # Trek is a CLI/ncurses explorer for HashiCorp Nomad clusters.
+https://github.com/aws-samples/aws-edge-native-nomad #
+https://github.com/acornies/faas-nomad-x # WIP: Comprehensive OpenFaaS on HashiCorp Nomad, Consul and Vault
+https://github.com/sofixa/nomad-cert-manager # cert-manager inspired tool for Hashicorp's Nomad
+https://github.com/rajanadar/VaultSharp # A comprehensive cross-platform .NET Library for HashiCorp's Vault, a secret management tool
+https://github.com/TsuyoshiUshio/NomadClusterARM # HashiCorp Nomad Cluster by ARM
+https://github.com/stevenscg/secrets-management-with-vault # This repository provides a Vagrant environment with HashiCorp Vault, Consul, Nomad
+https://github.com/resinstack/terraform-linuxkit-resinstack # Terraform module for building a complete ResinStack image set.
+https://github.com/hex0punk/wally # Function callpath mapping analysis tool for Go
+https://github.com/www-aiqu-no/nomad-job-awx # Nomad Job-definition for running Ansible Tower (awx) on nomad clusters
+https://github.com/draios/sysdig-container-ecosystem # The Container Ecosystem Project
+https://github.com/dmaes/nomad-logger # Watch Nomad allocations and update logshipper config
+https://github.com/methridge/me-gcp-sandbox #
+https://github.com/davosian/home-cluster-v2 # Cluster running apps and services for my smarthome
+https://github.com/shokunin/maguec-nomadproject # install hashicorp nomad
+https://github.com/briancain/waypoint-flightlist # A repository to help diagnose and triage waypoint issues :rocket:
+https://github.com/input-output-hk/infra-ops #
+https://github.com/kaleido-io/vault-plugin-secrets-ethsign # A HashiCorp Vault plugin that supports secp256k1 based signing, with an API interface that makes the vault a cloud HSM
+https://github.com/gulducat/go-run-programs # run background programs in go
+https://github.com/ykhemani/packer-hashistack #
+https://github.com/hardkeo/bridge-support-on-wsl2 # Enable the bridge and br-netfilter modules on WSL2. This allows you to use "bridge" network mode for Hashicorp Nomad jobs. I believe it also w
+orks for Kubernetes. https://github.com/lustr0/zchain # Zchain Explorer Source Code
+https://github.com/lhaig/ansible-nomad-turing-pi # Ansible Code to deploy Nomad and Consul
+https://github.com/stevenscg/ansible-role-levant # Ansible role that installs and configures Levant - An open source templating and deployment tool for HashiCorp Nomad jobs
+https://github.com/smaeda-ks/jfrog-hashicorp-demo # This example repository showcases simple CI/CD workflows to automate containerized application deployment to HashiCorp Nomad cluster with GitO
+ps model, using JFrog Artifactory and its docker image promotion feature. 
+https://github.com/joelparkerhenderson/software-operations-items # Software operations items
+https://github.com/cioplenu/concourse-nomad-resource # Concourse CI resource to deploy jobs to a nomad cluster
+https://github.com/sevensolutions/nomad-iis # 🧩 A TaskDriver plugin for HashiCorp Nomad to run IIS workloads.
+https://github.com/dockette/hashicorp # 🐳 Dockette Hashicorp Tools (Nomad, Consul, Vault, Levant, Packer, Terraform, Waypoint)
+https://github.com/asyd/textual-hashicorp # Textual based tools for HashiCorp
+https://github.com/brightzheng100/hashistack-by-ansible-footloose # a lightweight, semi-automated setup guide for HashiStack: Consul + Vault + Nomad, on Footloose powered Docker "container VMs",
+with Ansible https://github.com/dominikmi/hashistuff-homelab # Various works with Hashicorp nomad, consul and vault.
+https://github.com/compellon/bedouin # A templating system for Hashicorp's Nomad orchestration
+https://github.com/trailofbits/publications # Publications from Trail of Bits
+https://github.com/Friz-zy/awesome-linux-containers # A curated list of awesome Linux Containers frameworks, libraries and software
+https://github.com/mr-karan/nomcfg #
+https://github.com/Ranjandas/shikari-scenarios # A collection of Lima Templates that will be used with Shikari.
+https://github.com/Ranjandas/shikari # An opinionated Dev Cluster Provisioner using Lima

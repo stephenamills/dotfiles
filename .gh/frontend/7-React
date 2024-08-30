@@ -78,6 +78,17 @@ https://github.com/statichunt/geeky-nextjs
 https://github.com/pycoder2000/blog
 https://github.com/wutali/nextjs-netlify-blog-template
 
+React with Rails
+https://github.com/learn-co-curriculum/react-rails-project-setup-guide # fetch JSON from Rails using useEffect() — adds client-side routing, has a create-react-app proxy tip, and Rails cookies & sessions
+https://github.com/learn-co-curriculum/phase-4-adding-react-to-rails # fetches JSON from Rails using useEffect() – unfinished
+https://github.com/learn-co-curriculum/react-rails-project-setup-guide # useful proxy feature
+https://github.com/learn-co-curriculum/phase-4-deploying-demo-app
+https://github.com/learn-co-curriculum/phase-4-deploying-rails-react-to-heroku # talks about React routes conflicting with Rails routes
+https://github.com/learn-co-curriculum/react-hooks-auth-session # advanced, React plus Rails API mode with Google sign-in
+https://github.com/learn-co-curriculum/iron-starter-part-one # advanced, long guide
+https://github.com/learn-co-curriculum/phase-3-chatterbox-sinatra-react-lab
+https://github.com/learn-co-curriculum/connecting-react-app-to-rails-api # old
+
 Basics
 https://github.com/facebook/react
 https://github.com/reduxjs/redux

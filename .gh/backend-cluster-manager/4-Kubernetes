@@ -1,13 +1,20 @@
 Kubernetes
 https://github.com/kubernetes/kubernetes # Production-grade container scheduling and management
 
+https://maturitymodel.cncf.io # business outcomes
+https://contribute.cncf.io/maintainers # community building & relationship management
+
 https://github.com/kubernetes/cri-api # Container Runtime Interface (CRI) – a plugin interface that enables kubelet to use a wide variety of container runtimes
 https://github.com/containernetworking/cni # Container Network Interface (CNI) - a plugin interface that enables networking for Linux containers
 https://github.com/container-storage-interface/spec # Container Storage Interface (CSI) - a plugin interface that enables storage for Linux containers
 https://github.com/kubernetes/cloud-provider # Cloud Provider Interface (CPI) - a plugin interface that enables the management of cloud provider infrastructure
 
-https://maturitymodel.cncf.io # business outcomes
-https://contribute.cncf.io/maintainers # community building & relationship management
+https://tag-app-delivery.cncf.io
+https://github.com/cncf/tag-storage # storage
+https://tag-runtime.cncf.io # AI
+https://tag-security.cncf.io # security
+https://github.com/cncf/tag-observability # observability
+https://github.com/kubernetes/community # networking, AI, bare metal, and much more
 
 https://github.com/cncf/telecom-user-group # 5G Kubernetes examples (follow links)
 https://github.com/kubernetes/examples # Guestbook Redis (Deployment, Service) | Wordpress MySQL (Deployment, Persistent Volume with Claim) | Cassandra (Daemon Set, Stateful Set, Replication Controller)
@@ -54,17 +61,10 @@ https://github.com/bitnami/charts
 https://killercoda.com # labs (mentioned by CNCF)
 https://labs.play-with-k8s.com # labs (by Docker)
 
-https://tag-app-delivery.cncf.io
-https://github.com/cncf/tag-storage
-https://tag-runtime.cncf.io # AI
-https://tag-security.cncf.io # security
-https://github.com/cncf/tag-observability
-https://github.com/kubernetes/community # networking, AI, bare metal, and much more
-
 https://radar.cncf.io/overview # industry tech stack surveys
+https://github.com/cncf/students#10-finding-a-job # job board
 https://github.com/cncf/trailmap # project trailmap
 https://github.com/cncf/velocity # project activity
-https://github.com/cncf/students#10-finding-a-job # job board
 https://github.com/cncf/clowarden
 https://github.com/cncf/cncf-fuzzing
 https://github.com/cncf/chaosengineering-wg

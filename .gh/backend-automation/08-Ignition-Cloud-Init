@@ -1,16 +1,22 @@
-Ignition & Cloud-init
-https://github.com/hashicorp/learn-terraform-provisioning
-https://github.com/tomkins/cloud-init-vagrant
-https://github.com/craighurley/vagrant-cloud-init
-https://github.com/rancher/systemd-node # by Rancher - container that mimics cloud-init VM for testing
-https://github.com/jalseth/nocloud-metadata-server # server
-https://github.com/jbg/cloud-seed # server
-https://github.com/Jayonics/cloud-init-deployer # cloud-init server (NoCloud)
-https://github.com/piku/cloud-init #interesting small PaaS
+Cloud-init
+https://github.com/canonical/cloud-init
+
+https://github.com/hashicorp/learn-terraform-provisioning # Companion code repository for learning to provision Terraform instances with Packer & cloud-init
+https://github.com/hashicorp/terraform-provider-cloudinit # Utility provider that exposes the cloudinit_config data source for cloud-init
+
+https://github.com/rancher/elemental-toolkit # :snowflake: The toolkit to build, ship and maintain cloud-init driven Linux derivatives based on container images
+https://github.com/rancher/systemd-node # A container image mimics a cloud-init VM for testing
+https://github.com/flatcar/coreos-cloudinit
 https://github.com/crossplane-contrib/provider-cloudinit # Crossplane
 https://github.com/equinix-labs/pulumi-equinix-kubernetes-cluster # Equinix
+
+https://github.com/tomkins/cloud-init-vagrant
+https://github.com/craighurley/vagrant-cloud-init
+https://github.com/jalseth/nocloud-metadata-server # server
+https://github.com/jbg/cloud-seed # server
+https://github.com/jayonics/cloud-init-deployer # cloud-init server (NoCloud)
+https://github.com/piku/cloud-init #interesting small PaaS
 https://github.com/nathancatania/guacamole-sso-cloud-init # Guacamole
-https://github.com/hashicorp/terraform-provider-cloudinit
 https://github.com/rcarmo/terraform-azure-linux-vm
 https://github.com/martinhristov90/3xvault
 https://github.com/garyellis/terraform-cloudinit-scripts
@@ -21,8 +27,10 @@ https://github.com/mrlesmithjr/ansible-cloud-init
 https://github.com/caltechlibrary/cloud-init-examples
 https://github.com/nathancatania/publisher-cloud-init
 https://github.com/bricecamus/proxmox-k8s-cluster
-https://github.com/flatcar/coreos-cloudinit
 https://github.com/mamadiam/whatsapp-proxy
+https://github.com/azure/agentbaker # Agent Baker is aiming to provide a centralized, portable k8s agent node provisioning lib
+https://github.com/azure/iotedge-vm-deploy # ARM template to deploy a VM with IoT Edge pre-installed (via cloud-init)
+https://github.com/azure/terraform-azurerm-vmss-cloudinit # Terraform AzureRM module registry to create a VM Scaleset initialized via cloud-init scripts
 
 https://github.com/sammck/cloud-init-gen # Python library for Amazon EC2
 https://github.com/dermotbradley/create-alpine-disk-image
@@ -50,6 +58,15 @@ https://github.com/markperdue/vsphere-vm-cloud-init-terraform
 https://github.com/andrewglass3/proxmoxcloudinitscript
 https://github.com/red-lichtie/alpine-cloud-init
 https://github.com/kalenarndt/packer-vsphere-cloud-init
-https://github.com/rancher/elemental-toolkit
 https://github.com/iddocohen/vce_cloudinit
 https://github.com/exoscale/openbsd-cloud-init
+
+Ignition
+https://github.com/coreos/ignition # First boot installer and configuration tool
+
+https://github.com/coreos/container-linux-config-transpiler # Convert a Container Linux Config into Ignition
+https://github.com/coreos/ignition-dracut # Archived Dracut modules for Ignition; see Ignition repository for current version
+https://github.com/coreos/butane # Butane translates human-readable Butane Configs into machine-readable Ignition Configs.
+https://github.com/coreos/vagrant-ignition # A Vagrant plugin for providing Ignition Configs to VirtualBox virtual machines
+https://github.com/coreos/ign-converter # Mechanical translator to/from Ignition config spec 3.x
+https://github.com/coreos/ignition-config-rs # Data structures for reading/writing Ignition configs

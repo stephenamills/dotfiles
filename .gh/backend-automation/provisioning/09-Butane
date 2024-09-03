@@ -1,0 +1,8 @@
+https://github.com/coreos/ignition # First boot installer and configuration tool
+https://github.com/coreos/butane # Butane translates human-readable Butane Configs into machine-readable Ignition Configs.
+
+https://github.com/coreos/container-linux-config-transpiler # Convert a Container Linux Config into Ignition
+https://github.com/coreos/ignition-dracut # Archived Dracut modules for Ignition; see Ignition repository for current version
+https://github.com/coreos/vagrant-ignition # A Vagrant plugin for providing Ignition Configs to VirtualBox virtual machines
+https://github.com/coreos/ign-converter # Mechanical translator to/from Ignition config spec 3.x
+https://github.com/coreos/ignition-config-rs # Data structures for reading/writing Ignition configs

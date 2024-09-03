@@ -18,7 +18,6 @@ https://github.com/hubspot/sample-apps-leaky-bucket # Sample App demonstrating t
 https://github.com/hubspot/integration-examples-nodejs #
 https://github.com/hubspot/integration-examples-php #
 https://github.com/hubspot/cms-custom-objects-example #
-https://github.com/hubspot/cms-js-building-block-examples # DEPRECATED, go to https://github.com/HubSpot/cms-react instead
 https://github.com/hubspot/serverless-function-examples # A collection of HubSpot related serverless functions examples.
 https://github.com/hubspot/integration-examples-ruby # Sample Ruby Applications using HubSpot Public API
 https://github.com/hubspot/cms-react # CMS react examples, React defaults modules, and more for CMS devs
@@ -36,7 +35,6 @@ https://github.com/hubspot/hubspot-cms-vscode # A HubL language extension for th
 https://github.com/hubspot/cms-react # A repo to expose CMS react examples, React defaults modules, and more to CMS devs
 https://github.com/hubspot/hubspot-cms-deploy-action # GitHub Action to deploy HubSpot CMS projects
 https://github.com/hubspot/cms-custom-objects-example #
-https://github.com/hubspot/cms-js-building-block-examples # DEPRECATED, go to https://github.com/HubSpot/cms-react instead
 https://github.com/hubspot/local-cms-server-cli # Command line tools for local cms development
 https://github.com/hubspot/cms-migrations #
 https://github.com/hubspot/cms-webpack-serverless-boilerplate # Boilerplate for bundling serverless functions with webpack locally, prior to uploading to the CMS.

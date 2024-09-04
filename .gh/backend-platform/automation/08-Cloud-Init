@@ -9,6 +9,8 @@ https://github.com/rancher/systemd-node # A container image mimics a cloud-init 
 https://github.com/flatcar/coreos-cloudinit
 https://github.com/crossplane-contrib/provider-cloudinit # Crossplane
 https://github.com/equinix-labs/pulumi-equinix-kubernetes-cluster # Equinix
+https://github.com/azure/iotedge-vm-deploy # ARM template to deploy a VM with IoT Edge pre-installed (via cloud-init)
+https://github.com/azure/terraform-azurerm-vmss-cloudinit # Terraform AzureRM module registry to create a VM Scaleset initialized via cloud-init scripts
 
 https://github.com/tomkins/cloud-init-vagrant
 https://github.com/craighurley/vagrant-cloud-init
@@ -28,9 +30,6 @@ https://github.com/caltechlibrary/cloud-init-examples
 https://github.com/nathancatania/publisher-cloud-init
 https://github.com/bricecamus/proxmox-k8s-cluster
 https://github.com/mamadiam/whatsapp-proxy
-https://github.com/azure/agentbaker # Agent Baker is aiming to provide a centralized, portable k8s agent node provisioning lib
-https://github.com/azure/iotedge-vm-deploy # ARM template to deploy a VM with IoT Edge pre-installed (via cloud-init)
-https://github.com/azure/terraform-azurerm-vmss-cloudinit # Terraform AzureRM module registry to create a VM Scaleset initialized via cloud-init scripts
 
 https://github.com/sammck/cloud-init-gen # Python library for Amazon EC2
 https://github.com/dermotbradley/create-alpine-disk-image
@@ -52,7 +51,6 @@ https://github.com/timebertt/pi-cloud-init
 https://github.com/naman1997/arch-cloud-image
 https://github.com/giantswarm/k8scloudconfig
 https://github.com/shantanoo-desai/packer-ubuntu-server-uefi
-https://github.com/vmwarelab/cloud-init-scripts
 https://github.com/rrbarreto/pfsense-cloudinit
 https://github.com/markperdue/vsphere-vm-cloud-init-terraform
 https://github.com/andrewglass3/proxmoxcloudinitscript

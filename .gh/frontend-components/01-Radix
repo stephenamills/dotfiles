@@ -1,5 +1,14 @@
 https://github.com/radix-ui/primitives # Radix Primitives is an open-source UI component library for building high-quality, accessible design systems and web apps.
 
+https://github.com/coopercodes/radixuithemesexample # From the video "My New Favorite Next.js 13 UI Library (Radix UI Themes)"
+
+https://github.com/coopercodes/pokemonfinder # From the video "Build and Deploy A Pokemon Searcher With Next.js 13
+https://github.com/coopercodes/radixuithemesexample # https://www.youtube.com/watch?v=9bsZNic2WBw&t=105s
+https://github.com/coopercodes/introtoshadcnui # From the video "The Best Next.js 13.4 UI Library (shadcn/ui Setup and Tutorial)"
+
+https://github.com/samselikoff/2023-05-30-radix-dialog #
+https://github.com/samselikoff/2023-01-22-radix-dropdown-framer-motion # Demo from "Animating a Radix Dropdown with Framer Motion"
+https://github.com/samselikoff/2023-02-17-radix-dropdown-reusable # Demo from "Refactoring a Radix Dropdown Menu"
 https://github.com/tone-row/radix-primitives-cheatsheet # Radix Primitives Cheatsheet
 
 https://github.com/radix-ui/website # Website and documentation for Radix.
@@ -8,35 +17,29 @@ https://github.com/basehub-ai/docs-template # Fully featured documentation websi
 https://github.com/boilerthing/boilerthing # Next.js 14 Boilerplate with (App Router), Next-auth (v5), Next-intl (translated routes), Prisma ORM, Resend, Tailwind CSS, and Shadcn/UI & Radix UI,
 https://github.com/giacomogaglione/wine-match # The most extensive source of wines, spumanti and champagnes. Built with Next.Js Supabase Tailwind CSS and Radix UI
 https://github.com/danmindru/shadcn-pricing-page-generator # Make beautiful Shadcn pricing pages & get the code for Shadcn UI, Tailwind & Radix UI.
+https://github.com/royquilor/nike-ui-practise # Nike store
 https://github.com/shadcn-ui/next-template # A Next.js 13 template for building apps with Radix UI and Tailwind CSS.
 https://github.com/blefnk/relivator-nextjs-template # Next.js 15 Store Dashboard Starter ▲ i18n Stripe Shadcn Tailwind Drizzle Zod tRPC TypeScript Clerk Authjs Radix UI, Responsive React 19 Serv
 https://github.com/m6io/shadcn-vite-template # A React + TypeScript + Vite template for building apps with Radix UI and Tailwind CSS.
 
 https://github.com/datawan-labs/pg
-https://github.com/suisenwastaken/PokeGo
+https://github.com/suisenwastaken/pokego
 https://github.com/royquilor/twitter-ui-practise # Twitter UI is a beast to style. Practise with Next JS, Tailwind CSS, Radix UI and Storybook.
 https://github.com/dangbt/admin-template-2023 # Nextjs, Radix UI, Tailwindcss, Typescript
 https://github.com/jherr/radix-pokemon # Pokemon Deck Builder using Radix Themes, NextJS, Sqlite and AuthKit
 https://github.com/denosaurabh/space # Productivity & Management app
 https://github.com/joshistoast/hydrogen-skeleton-shadcn # Shopify Hydrogen mock shop, but with shadcdn and radix ui components styling
-https://github.com/giacomogaglione/chef-gpt # Recipe Generator powered by OpenAI and ChatGPT. Built with Next.Js 14 Server Actions, Supabase, Clerk, Tailwind CSS, Radix UI, shadcn/ui
+https://github.com/giacomogaglione/chef-gpt # Recipe Generator
 https://github.com/infonomic/remix.infonomic.io # A Remix demo app with CSS, Tailwind, Radix UI and other headless UI components.
 https://github.com/kaykeeb3/figma-ui # Figma Jam
-https://github.com/subhambharadwaz/scribbly # Scribbly is a web application built with Next.js and Prisma that allows users to create and manage their digital journal. With a user-friendly interface
+https://github.com/subhambharadwaz/scribbly # Scribbly digital journal
 https://github.com/habeeb-nasr-12/airbnb-next
-
-https://github.com/brianruizy/b-r.io # My personal website made with Next.js, Tailwind, MDX, Radix Primitives, Framer Motion, all on Vercel.
-https://github.com/shahsagarm/sagarshah.dev # My portfolio website built with Next.js, Tailwind CSS, Radix UI and deployed on Vercel.⚡
-https://github.com/mitul-s/mitul.ca # 🏄‍♂️ My personal portfolio website built with Next.js, Tailwind CSS and Radix Primitives
-https://github.com/cmoreraz/cmoreraz
-https://github.com/johneatmon/eatmon.co # My personal website, built with Next.js, Tailwind CSS, and Radix UI. Deployed on Vercel.
 
 https://github.com/prithvi2226/blend-metrics-1 # A design system using React, Tailwind CSS, and Radix UI. (shown with Storybook)
 https://github.com/OnedocLabs/pdfreader # Easy Radix-Style PDF Viewer for React.
 https://github.com/timhettler/radix-card # A React component that makes an entire area clickable without common accessibility issues.
 https://github.com/darenmalfait/nerdfishui # a custom opinionated component library built with React, TailwindCSS and Radix-UI
-
-https://github.com/radix-ui/primitives # Radix Primitives is an open-source UI component library for building high-quality, accessible design systems and web apps. Maintained by @workos.
+https://github.com/radix-ui/primitives # Radix Primitives is an open-source UI component library for building high-quality, accessible design systems and web apps.
 https://github.com/radix-ui/themes # Radix Themes is an open-source component library optimized for fast development, easy maintenance, and accessibility.
 https://github.com/lmsqueezy/wedges # An ever-expanding, open-source React UI library built with the Wedges Design System, Radix primitives, and Tailwind CSS.
 https://github.com/sadmann7/sortable # Sortable built with shadcn/ui, radix ui, and dnd-kit.
@@ -44,29 +47,21 @@ https://github.com/jaleelb/emblor # A fully-featured tag input component built w
 https://github.com/shadcn-ui/ui # Beautifully designed components that you can copy and paste into your apps.
 https://github.com/kumaaa-inc/shadow-panda # Accessible and customizable components built with Panda CSS & Radix, based on shadcn/ui.
 https://github.com/johnpolacek/date-range-picker-for-shadcn # Date picker component
-https://github.com/samselikoff/2023-05-30-radix-dialog #
-https://github.com/samselikoff/2023-01-22-radix-dropdown-framer-motion # Demo from "Animating a Radix Dropdown with Framer Motion"
-https://github.com/samselikoff/2023-02-17-radix-dropdown-reusable # Demo from "Refactoring a Radix Dropdown Menu"
+
 https://github.com/subframeapp/core # An open-source wrapper around Radix headless components to build your own component library
 https://github.com/illyism/gradient-picker # Fancy Gradient Picker built with Shadcn UI, Radix UI and Tailwind CSS.
 https://github.com/sadmann7/inputs # Collection of input fields built with shadcn-ui and radix-ui.
 https://github.com/innei/rc-modal # Beautifully designed Modal Component built with Radix UI and Tailwind CSS.
 https://github.com/joaom00/quicklinks # Just a component around the Cmdk and Radix Popover for you just copy.
 
+https://github.com/brianruizy/b-r.io # My personal website made with Next.js, Tailwind, MDX, Radix Primitives, Framer Motion, all on Vercel.
+https://github.com/shahsagarm/sagarshah.dev # My portfolio website built with Next.js, Tailwind CSS, Radix UI and deployed on Vercel.⚡
+https://github.com/mitul-s/mitul.ca # 🏄‍♂️ My personal portfolio website built with Next.js, Tailwind CSS and Radix Primitives
+https://github.com/cmoreraz/cmoreraz
+https://github.com/johneatmon/eatmon.co # My personal website, built with Next.js, Tailwind CSS, and Radix UI. Deployed on Vercel.
+
 https://github.com/alpererdogan8/radix-select # A cli interface where you can select Radix UI components
 
-https://github.com/F-Treasure1990/RadixUI # Exploring RadixUI
-https://github.com/ThaylonHani/RadixForm # Testando o form do radix
-https://github.com/jd-oconnor/radix # Experiment with Radix and Stitches
-https://github.com/richardbarbosa017/RadixTraining # Projeto com o intuito de treinar Angular
-https://github.com/LittoCats/radix # [Radix tree](https://en.wikipedia.org/wiki/Radix_tree) implementation for nodejs
-https://github.com/royquilor/nike-ui-practise # Recreate the UI from Nike e-commerce to practise with Next JS, Radix UI and Tailwind CSS
-https://github.com/Michael-Cowie/RadixFitnessFrontend #
-https://github.com/Eiglimar/radixChallengeFront #
-https://github.com/phanxgames/Radix64Encoding #
-https://github.com/coopercodes/RadixUIThemesExample # From the video "My New Favorite Next.js 13 UI Library (Radix UI Themes)"
-https://github.com/Kromtar/RadixIonicWallet #
-https://github.com/carlosavjr513/RadixCodeTest # Radix Technical Challenge
 https://github.com/HiimKwak/RadixUI-playground #
 https://github.com/vvforekk/Orion # Modern theme for vscode, focused on cleanness and customizability, built on Radix Colors' palette.
 https://github.com/diboune/taildix # tailwindcss plugin to use @radix-ui/colors

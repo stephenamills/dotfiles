@@ -1,15 +1,19 @@
 https://github.com/radix-ui/primitives # Radix Primitives is an open-source UI component library for building high-quality, accessible design systems and web apps.
+https://github.com/radix-ui/themes # Radix Themes is an open-source component library optimized for fast development, easy maintenance, and accessibility.
+https://github.com/shadcn-ui/ui # Beautifully designed components that you can copy and paste into your apps.
 
-https://github.com/coopercodes/radixuithemesexample # From the video "My New Favorite Next.js 13 UI Library (Radix UI Themes)"
-
-https://github.com/coopercodes/pokemonfinder # From the video "Build and Deploy A Pokemon Searcher With Next.js 13
+https://github.com/coopercodes/introtoshadcnui # https://www.youtube.com/watch?v=Ix8KjJxbh2E&t=32s
 https://github.com/coopercodes/radixuithemesexample # https://www.youtube.com/watch?v=9bsZNic2WBw&t=105s
-https://github.com/coopercodes/introtoshadcnui # From the video "The Best Next.js 13.4 UI Library (shadcn/ui Setup and Tutorial)"
+https://github.com/coopercodes/pokemonfinder # https://www.youtube.com/watch?v=vt4IrEfjzWQ
 
-https://github.com/samselikoff/2023-05-30-radix-dialog #
-https://github.com/samselikoff/2023-01-22-radix-dropdown-framer-motion # Demo from "Animating a Radix Dropdown with Framer Motion"
-https://github.com/samselikoff/2023-02-17-radix-dropdown-reusable # Demo from "Refactoring a Radix Dropdown Menu"
-https://github.com/tone-row/radix-primitives-cheatsheet # Radix Primitives Cheatsheet
+https://github.com/samselikoff/2023-05-30-radix-dialog # https://www.youtube.com/watch?v=KvZoBV_1yYE&t=11s
+https://github.com/samselikoff/2023-01-22-radix-dropdown-framer-motion # https://www.youtube.com/watch?v=p8CsotWUas0
+https://github.com/samselikoff/2023-02-17-radix-dropdown-reusable # https://www.youtube.com/watch?v=v7uU77Yl_3k
+https://github.com/samselikoff/radix-toast-remix #
+https://github.com/samselikoff/2024-01-11-radix-slider-rubberband #
+https://github.com/samselikoff/2023-06-12-animate-radix-dialog #
+https://github.com/samselikoff/2023-09-06-radix-themes-intro #
+https://github.com/samselikoff/2023-02-07-radix-popover-child-component #
 
 https://github.com/radix-ui/website # Website and documentation for Radix.
 https://github.com/workos/authkit # The world's best login box powered by WorkOS and Radix.
@@ -53,7 +57,10 @@ https://github.com/illyism/gradient-picker # Fancy Gradient Picker built with Sh
 https://github.com/sadmann7/inputs # Collection of input fields built with shadcn-ui and radix-ui.
 https://github.com/innei/rc-modal # Beautifully designed Modal Component built with Radix UI and Tailwind CSS.
 https://github.com/joaom00/quicklinks # Just a component around the Cmdk and Radix Popover for you just copy.
+https://github.com/jordan-sussman/open-sesame # A customizable drawer component for React.
 
+
+https://github.com/qakrasnokutskyi/krasnokutskiy # My personal website made with Next.js 13 (App Router).
 https://github.com/brianruizy/b-r.io # My personal website made with Next.js, Tailwind, MDX, Radix Primitives, Framer Motion, all on Vercel.
 https://github.com/shahsagarm/sagarshah.dev # My portfolio website built with Next.js, Tailwind CSS, Radix UI and deployed on Vercel.⚡
 https://github.com/mitul-s/mitul.ca # 🏄‍♂️ My personal portfolio website built with Next.js, Tailwind CSS and Radix Primitives
@@ -61,227 +68,32 @@ https://github.com/cmoreraz/cmoreraz
 https://github.com/johneatmon/eatmon.co # My personal website, built with Next.js, Tailwind CSS, and Radix UI. Deployed on Vercel.
 
 https://github.com/alpererdogan8/radix-select # A cli interface where you can select Radix UI components
+https://github.com/tone-row/radix-primitives-cheatsheet # Radix Primitives Cheatsheet
 
-https://github.com/HiimKwak/RadixUI-playground #
-https://github.com/vvforekk/Orion # Modern theme for vscode, focused on cleanness and customizability, built on Radix Colors' palette.
-https://github.com/diboune/taildix # tailwindcss plugin to use @radix-ui/colors
-https://github.com/asmitha16/radixuiToDoFinal #
-https://github.com/SunAider/RadixUI-Component-Custom # Radix UI is an open-source UI component library for building high-quality, accessible design systems and web apps.
-https://github.com/os0xi/radixDLT_nextAuth #
-https://github.com/ekaone/dasboard-radixui # Radix shadcn
-https://github.com/mtrullasp/ProvesRadixClassica # Radix Clàssica
-https://github.com/gabrieljuniorferrari88/NextStart # testando radix
-https://github.com/bythealphabet/bythe-radix # Learning Radix
-https://github.com/saestwo/ruby # Radix experiment
-https://github.com/djsmanchanda/Synapse2.0_RadixAI #
-https://github.com/JulianFurchert/radix-tailwind # radix-tailwind
-https://github.com/preludejs/radix-trie # Radix trie.
-https://github.com/viniciusbsneto/ignite-lab-design-system # A small Design System built with React, TailwindCSS, Radix and Storybook
-https://github.com/ManasSin/Multistep-FHR-ZOD-RadixUI #
-https://github.com/qakrasnokutskyi/krasnokutskiy # My personal website made with Next.js 13 (App Router). Features blog posts, gear list, dark theme and more. Tailwind CSS, MDX, Radix, Framer Mo
-tion, and Vercel. https://github.com/wixplosives/codux-shadcn-example # An example Codux project using shadcn (Tailwind + Radix)
-https://github.com/vagnermengali/developer-blue-portfolio # Este é um portfólio desenvolvido para beneficiar desenvolvedores que ainda não têm seu portfólio ou desenvolvedores que desejam um por
-tfólio já pronto. Foi criado para fins de estudo utilizando as seguintes tecnologias: Next.js, Tailwind CSS, @emailjs/browser, Swiper, Sonner, React Hook Form, Framer Motion, React Countup, TypeScript e Radix UI. https://github.com/tanerengiiin/taner.dev # Creating cool buttons with tailwind and radix.ui
-https://github.com/krinesh-cerebulb/radix-theme-example # Radix theme example
-https://github.com/iannak/polymorphism-react # React e Radix
-https://github.com/fernandobelotto/radix_ui_exploration # Testing radix primitives
-https://github.com/supabase-cats/supabase-yang # react + radix + supabase
-https://github.com/WJSNSeala/next-radix-playground # next14 + radix-ui
-https://github.com/kangactor123/radix-storybook # radix-ui components
-https://github.com/phpaulohenrique/ph-shop # Next.js FullStack E-Commerce made with NextAuth + Prisma + TypeScript + Stitches + Radix UI + Stripe and much more 🛒
-https://github.com/santajitpatra/radixnext #
-https://github.com/mungaben/radixui #
-https://github.com/react-jh-component/ui # radix ui 분석
-https://github.com/Zman1234567/radixvsheadless #
-https://github.com/kuchta/radixverse # Welcome to the RadixVerse
-https://github.com/AsharibAli/ecommerce-store # Ecommerce store build with latest stack | Next.js, Typescript, TailwindCSS, Radix & Shadcn UI, Sanity Studio, Vercel Postgres, and Drizzle ORM.
-https://github.com/uDaniAlves/NLWEsports-web # Tailwind, Radix, API
-https://github.com/PauloLuan/next-radix-tailwind-sample # NextJS + Radix + Tailwind
-https://github.com/Kaoschuks/radixnewapp #
-https://github.com/ssamsara98/nextjs-radix-template # NextJS Radix Template
-https://github.com/Davidjayan/radixplore #
-https://github.com/joshbird/radixslidertest #
-https://github.com/midoru0121/radix-ui-themes-example # radix ui themes
-https://github.com/Abezzam10/Radixx # iOS dev
-https://github.com/jordan-sussman/open-sesame # A customizable drawer component for React.
-https://github.com/notadilnaqvi/zap # ZAP is where I experiment with Next.js, Tailwind, Radix UI, Storybook, Commercetools, Algolia, Prismic
+https://github.com/AsharibAli/ecommerce-store # Ecommerce store build with latest stack
 https://github.com/bitcraft3r/0xVenture-Capitalist # An idle/clicker/incremental browser game built with Next.js v13.4 app router, TypeScript, Tailwind CSS, Prisma, MongoDB, Zustand, Radix UI, F
-ramer Motion and AuthJS. https://github.com/jfilipedias/credit-card-form # :credit_card: Formulário para cartão de crédito
-https://github.com/Lycolia/radix-calculator #
-https://github.com/saywo/react-radixui #
-https://github.com/hrachocode/tokenvest-radix #
-https://github.com/fabioladiniz97/react_radixui #
-https://github.com/inuoluwadunsimi/Radix-buildcon #
-https://github.com/RadixOrg/Radix-Mobile #
-https://github.com/Urvashi-Thacker/Radix-Demo #
-https://github.com/jfilipedias/ignite-lab-design-system # A design system built with React, TailwindCSS and Radix UI
-https://github.com/khwalkowicz/gazelle # Small and incredibly fast Radix tree-based router for Deno
-https://github.com/KenshinYamamoto/radix-converter #
-https://github.com/luizmagno7/polymorphism-radix #
-https://github.com/jitto21/radiXplore # Angular app to plot the map from coordinates as input
-https://github.com/pocari/radix-sample #
-https://github.com/pr4zka/next-radix #
-https://github.com/KushalAmatya/Radix-Practice #
-https://github.com/iTeckHD/radix-sort #
-https://github.com/J-Son89/radix-playground #
-https://github.com/valtercfjunior/listagem-radix # zod | lucide | tanstack | react query | vite
-https://github.com/aridonkrasniqii/Radix-Platform # This project has been developed using the Angular framework and provides a simple user interface for a multi-family real estate platform data
-provider that communicates with a fake REST API. https://github.com/mikekubn/autocomplete-input # stitches.dev, radix-ui
-https://github.com/nascentcorp/radixdlt-client #
-https://github.com/ivanblazevic/radix-interface #
-https://github.com/kimoofey/radix-table #
-https://github.com/philipjc/radix-test # Playing around with a tech stack with a food API.
-https://github.com/gopal1996/radix-poc #
-https://github.com/rakeshkanneeswaran/Radix-AI # RaidexAI is a Next.js application integrated with a machine learning model, YOLOv8, to detect anomalies in radiology images. The output is sent t
-o a Flask server, which uses OpenCV to create Regions of Interest (ROIs) in the images and employs a Language Model (LLM) for contextual analysis, interpreting the content alongside the detected anomalies https://github.com/francesco-belka/radix-styling # Small project to test various styling implementation on radix ui components
-https://github.com/nyxblabs/radix-rapid # ✨ Lightweight and fast router for JavaScript based on Radix Tree 🌱
-https://github.com/ichirin-planet/2023Radix # nextJS, typescript, radix Themes
-https://github.com/hajimism/windy-radix #
-https://github.com/os0xi/nextjs_radixconnect #
-https://github.com/Charlie5DH/Radix-Challenge #
-https://github.com/weebjs/radixui_pulse #
-https://github.com/ale-soares/radix-test # API made for Radix Fullstack Software Engineer test. Built with Node, Express and Typescript
-https://github.com/a11yster/radix-neuflo # React component library for neuflo made with radix ui
-https://github.com/Augani/radix-elec #
-https://github.com/k35o/radix-themes #
-https://github.com/sys8517/useRadix #
-https://github.com/pritammimo/radix-ui #
-https://github.com/fletch-r/radix-table # A React Table component with advanced features built with Radix.
-https://github.com/daisnkzy/tw-radix #
-https://github.com/tiagoRaulino/next-radix #
-https://github.com/TONYJOSHY/Radix-Automation # Dashboard for Radix Automation
-https://github.com/iamhectorsosa/radix-colors # Exploration on Radix Colors for Building UI
-https://github.com/robcrock/radix-tooltip #
-https://github.com/subject026/radix-examples #
-https://github.com/ParkerRex/radix-themes #
-https://github.com/mundizzle/radix-storybook #
-https://github.com/DeCaelo/radix-switch #
-https://github.com/thaboRach/radix-poc # A proof of concept made to test creating components using Radix-UI
-https://github.com/wendelldev/playground-radixui #
-https://github.com/ShreyPurohit/Radix-Bank #
-https://github.com/thevtm/mixed-radix # A small JS library that encode and decode using mixed radix.
-https://github.com/iPhaeton/radix-sort #
-https://github.com/CJWbiu/conversion_radix # 进制转换
-https://github.com/oleandrosiq/radix-stitches # Estudando lib de components - radix e stitches para estilização
-https://github.com/CunhaJoao1/hackathon-radix #
-https://github.com/Aditya6101/radix-dropdown #
-https://github.com/nlimpid/next-radix # template for next
-https://github.com/BFF271/Radix-Next #
-https://github.com/nitinankad/radix-sort # A social Leetcode practice platform
-https://github.com/Rodrigo001-dev/radix-component # Criando um componente utilizando o Radix-UI e o stitches
-https://github.com/ndelanhese/radix-studie #
-https://github.com/JuliusNiedermeier/solid-radix # SolidJS port of Radix UI
+ramer Motion and AuthJS. 
 https://github.com/aadamw/conform-radix # conform & radix & react-router-dom demo
-https://github.com/hkhan6916/radix-dapp #
-https://github.com/RuanLima8727/radix-test #
-https://github.com/KarenChincoya/smartradix # Smart radix web app
-https://github.com/radixtheme/www # Documentation site for Radix.
 https://github.com/anhkhuong975/radix-ui-dashboard-template # Radix UI Dashboard Template
-https://github.com/fedotov/radix-tree #
-https://github.com/larshisken/deno_radix # A Deno radix tree 🦕
-https://github.com/flipps/radix-stictches #
-https://github.com/sunsreng/radix-tw # Created with CodeSandbox
-https://github.com/takunagai/sample-radix # Radix Primitive Sample Code
-https://github.com/emnesty/portfolio-radix #
-https://github.com/willyandan/radix-challenge #
 https://github.com/crashe24/next-radixiu # aplication with radixui basics
-https://github.com/KangWoosung/radix-exercises #
-https://github.com/linuxbean2020/angular-radixal #
-https://github.com/skroski/stitches-radix # CSS-IN-JS com Stitches e Radix
-https://github.com/makotot/radix-playground #
-https://github.com/arifimran5/radix-tailwind #
-https://github.com/orimay/radix-ts # This package provides a powerful Radix data storage and retrieval library for TypeScript. It allows you to efficiently store and manage structured data using
-a Radix tree data structure. https://github.com/jbgoldman1104/Radix-Vote # Voting Dapp ( contract + frontend ) on Radix Chain.
-
 https://github.com/pacocoursey/cmdk # Fast, unstyled command menu React component.
 https://github.com/murgatt/recode-converter # A simple, modern audio codec converter for video files
-
 https://github.com/livepeer/design-system # Design system for Livepeer Inc Products
-
 https://github.com/adam-ridhwan/next-movie # 🍿 A movie library built with Next.js
 https://github.com/lens-protocol/create-lens-app # Create Lens App CLI
-https://github.com/risc0/risc0-ui # Building Blocks for Frontend/UI Components
 https://github.com/duyet/clickhouse-monitoring # Simple UI for ClickHouse Monitoring
-https://github.com/merative/spm-ui-addon-devenv # A collection of front-end third-party tools and libraries that you can use to extend UIM and enable the rapid development of SPM custom applicat
-ion pages based on IBM Carbon components.. https://github.com/rocketseat-education/react-na-pratica #
-https://github.com/Algo-Workout/AW-T3 # MVP T3 App
 https://github.com/eric-barch/sphericle # Build custom geography quizzes in Google Maps.
-https://github.com/mikkmartin/swipable-modal #
 https://github.com/tail-ed/tailed-ui # Tail'ed UI Library
-https://github.com/jerryliangxia/portfolio #
-https://github.com/xtepwxly/insurance-calculator #
-https://github.com/undervalent/issue-tracker #
-https://github.com/manifoldfinance/disco3-react # disco3 - well typed and performant web3 react library
 https://github.com/SarimSyed/shadcn-custom # Modified version of shadcn components that are easily importable and have slight more customization
-https://github.com/nivbendor/john #
-https://github.com/KamoEllen/ScriptApp #
 https://github.com/sub-t/blog-template # Next.js + markdown Blog Template
-https://github.com/lxzLocus/ASEticle-Frontend #
 https://github.com/Streamfinity/Extension # Streamfinity Buddy - Browser Extension
-https://github.com/aidanandrews22/Portfolio #
-https://github.com/GhassenDemni/Project-RH #
-https://github.com/Harsh6575/spotify-clone #
 https://github.com/kodemoapp/util # The @kodemo/util package provides share UI components and utilities for the Kodemo player, editor and web app.
-https://github.com/function03-labs/uniswaphooks # Uniswap Hooks Open Directory
 https://github.com/bmai1/komicate # Communication app with direct messaging, group chats, and video calls
-https://github.com/G3root/astro-octokit #
-https://github.com/trinhvo20/job-board #
 https://github.com/penx/radix-themes-playroom # Playroom for Radix Themes
 https://github.com/MyshinskyIlya/typescript-mern-next-threads-fullstack # In Process... NextJS 14 + Typescript + Node + express+ MongoDB + Tailwind + @clerk/nextjs + @uploadthing/react + svix +
-shadcn/ui + zod https://github.com/marcusviniciusmo/eSports-Next_Level_Week # [FINISHED] - Project listing games where the user can find a duo to play with.
-https://github.com/champion87/Casino_Walls #
-https://github.com/lloopy123123543/resume #
-https://github.com/Ziv89/weather-by-city #
-https://github.com/panchaldeep009/apollo-cache-playground #
-https://github.com/Pawel024/brain-builder #
-https://github.com/ThomazHilario/CRUD-app # Implementação de um sistema de cadastro de usuarios com banco de dados.
-https://github.com/FrhCode/SKRIPSI-FE #
-https://github.com/ChristianNyamekye/EchecsAI #
-https://github.com/BuddhadebKoner/Nexgen #
-https://github.com/maantano/introduce # introduce
 https://github.com/webmakaka/Next.js-Projects-Build-an-Issue-Tracker # [Code With Mosh] Next.js Projects: Build an Issue Tracker [ENG, 2023]
 https://github.com/webmakaka/Next.js-Projects-Build-an-Issue-Tracker # [Code With Mosh] Next.js Projects: Build an Issue Tracker [ENG, 2023]
-https://github.com/LucasHARosa/DT_Money # Projeto React Front-End
 https://github.com/DragonSenses/visionize # A kanban productivity app built in Next.js 14, with a focus on server actions.
-https://github.com/MasonwabeJoka/Oly_Three #
-https://github.com/wpgur/JOONGSINT #
-https://github.com/lucasnbat/curso-reactjs-3-rocketseat-ts # curso-reactjs-3-rocketseat-ts -- uso de APIs
-https://github.com/isyuricunha/website-new-project-version #
-https://github.com/Fajarnur001/Fajarnur #
-https://github.com/HeatherLead/Issue-Tracker #
-https://github.com/M-Sanjay12o52o/liveqna # Live Q and A with upvotes for questions
-https://github.com/IshanSingla/IshanSingla #
-https://github.com/ThaddeusJiang/coding-guidelines #
-https://github.com/spb-59/Personal-Website #
-https://github.com/Betavoid-nuke/NukeBetaDep #
-https://github.com/julialack/react-radix # workshop
-https://github.com/PaulaCCarvalho/Training-Program # O projeto é um website que permite a pessoas com interesse em programação encontrar e realizar desafios de código de acordo com sua experiênc
-ia, criando assim um portfólio visível aos outros usuários. Também permite a interação entre os desenvolvedores, podendo estes comentar as soluções uns dos outros, sugerindo melhorias ou alterações. https://github.com/hazel-ui/hazel-ui # Hazel UI is a flexible React component library that lets you quickly build web elements the way you want. It is built with the goal to allow maximum possib
-le customization and speed of development. https://github.com/UemitGuel/KetchupMayoWebsite #
-https://github.com/Exile21/t3-next #
-https://github.com/biowaffeln/putzplan #
-https://github.com/julialack/react-radix # workshop
-https://github.com/fahidsarker/c-next-app #
-https://github.com/mlejva/code-snippets-feedback # Created with CodeSandbox
-https://github.com/pakaplace/commenda-ethdenver #
-https://github.com/cmoreraz/cmoreraz #
-https://github.com/wpgur/JOONGSINT #
-https://github.com/gbsw-isekai/web #
-https://github.com/Theecypher/TimeSync #
-https://github.com/angelogatz/RUD-Project #
-https://github.com/devdrx/codeforces-explorer # dev darshan's modifications
-https://github.com/chandreshkkhatri/timer-app # A simple timer app styled with radix ui
-https://github.com/playvision/simple-state-machine #
 https://github.com/Vaishnavipurkar/Frontend_assessment # Introducing the Simplified ERP System with React! Designed to streamline business operations, this project offers a user-friendly interfa
-ce for managing products and orders. Built with React, it's perfect for small business owners and aspiring developers alike, offering essential features in a responsive design. https://github.com/HeatherLead/startingCore #
 https://github.com/shefoo-om/todo-list # ToDo List Website Using HTML, CSS, js, Tailwindcss, RadixUi, ReactJs and Redux Toolkit
-https://github.com/PriteeAr0te/myPortfolio #
-https://github.com/marvinthompson-code/vultureboysite #
-https://github.com/purushottamshiwakoti/sapati-backend #
-https://github.com/SawaDev/navruz-v2 #
-https://github.com/tunguyendct/marketplace #
-https://github.com/grantthegreat/Commercial-Drone-Business-Lead-Generation-Checklist # I've created a comprehensive checklist for lead generation strategies tailored to a commercial drone busine
-ss. This checklist covers various channels and activities that can help identify and secure leads. Here's a brief overview of what's included: https://github.com/joycexjiang/ootd-app # midterm for coms 3102 full web stack dev
-https://github.com/Huynhca2k2/fe-dashboard #
-https://github.com/Rutvik599/snappy #
 https://github.com/CyberWalrus/react-vite-linter-template # Template for react app

@@ -1,3 +1,5 @@
+https://dbdb.io/db/sqlite
+
 https://github.com/sqlite/sqlite # SQL database engine
 
 https://github.com/learn-co-curriculum/python-p3-setting-up-sqlite
@@ -47,5 +49,3 @@ https://github.com/k3s-io/kine # Run Kubernetes on MySQL, Postgres, sqlite, dqli
 https://github.com/WordPress/sqlite-database-integration # Feature Plugin to add SQLite support to WordPress. Under Development.
 https://github.com/shuebener/sqlitecompare # Utility for comparing two SQLite database files for both structure and data
 https://github.com/stokry/wp-sqlite # WordPress running on an SQLite database
-
-https://dbdb.io # database pokedex

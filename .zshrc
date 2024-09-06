@@ -116,7 +116,10 @@ ghcb() {
 ghgv() {
   gh gist view $@
 }
-alias ghv=ghgv
+
+ghge() {
+  gh gist edit $@
+}
 
 # Open a GitHub repository in the browser
 ghrb() {

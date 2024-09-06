@@ -1,0 +1,301 @@
+https://www.linuxfoundation.org/lf-security
+https://tag-security.cncf.io
+
+https://github.com/paloaltonetworks/pan-os-python # the PAN-OS SDK for Python is a package for interacting with Palo Alto Networks devices
+https://github.com/paloaltonetworks/pan-os-ansible # Ansible collection for easy automation of Palo Alto Networks next generation firewalls and Panorama, in both physical and virtual form factors.
+https://github.com/paloaltonetworks/iron-skillet # ironSkillet is a set of day-one configuration templates for PAN-OS to enable alignment with security best practices. see the quick start section below to get started using the template configurations.
+https://github.com/paloaltonetworks/unit42-timely-threat-intel # A collection of files with indicators supporting social media posts from Palo Alto Network's Unit 42 team to disseminate timely threat intelligence.
+https://github.com/paloaltonetworks/terraform-templates # This repo contains Terraform templates to deploy infrastructure on AWS and Azure and to secure them using the palo alto networks next generation firewalls
+https://github.com/paloaltonetworks/ansible-playbooks # Sample playbooks for the Palo Alto Networks Ansible modules.
+https://github.com/paloaltonetworks/azure # vm-series ARM Templates for Microsoft Azure
+https://github.com/paloaltonetworks/prisma-cloud-policies # PCS Policies Release Notice
+https://github.com/paloaltonetworks/splunk-apps # palo Alto Networks App for Splunk leverages the data visibility provided by Palo Alto Networks next-generation firewalls and endpoint security with splunk's extensive investigation and visualization capabilities to deliver an advanced security reporting and analysis tool.
+https://github.com/paloaltonetworks/iam-deescalate # IAM-Deescalate helps mitigate privilege escalation risk in AWS identity and access management (IAM)
+https://github.com/paloaltonetworks/terraform-provider-panos # Terraform Panos provider
+https://github.com/paloaltonetworks/prisma-cloud-docs # Prisma Cloud docs
+https://github.com/paloaltonetworks/aws # vm-series for Amazon Web Services
+https://github.com/paloaltonetworks/pan-os-php # framework and utilities to easily manage and edit Palo Alto Network PANOS devices
+https://github.com/paloaltonetworks/pcs-postman # postman collections for Prisma Cloud
+https://github.com/paloaltonetworks/prisma_channel_resources # A collection of technical and sales resources related to Prisma Cloud Compute and Prisma Cloud Enterprise created for the panw channel partner ecosystem and other engineers working with the solution
+https://github.com/paloaltonetworks/cobra-tool # cloud Offensive Breach and Risk Assessment (COBRA) Tool
+https://github.com/paloaltonetworks/prismacloud-api-python # Prisma Cloud utility scripts, and a Python SDK for Prisma Cloud APIs.
+https://github.com/paloaltonetworks/aws-elb-autoscaling # Auto Scaling VM-Series firewalls in AWS
+https://github.com/paloaltonetworks/pango # pango is the underlying library for the Palo Alto Networks Terraform provider
+https://github.com/paloaltonetworks/aws-gwlb-vmseries # This repository contains CFT and TF templates for deploying VM-Series Firewalls behind AWS Gateway Load Balancer
+https://github.com/paloaltonetworks/terraform-provider-prismacloud # Terraform PrismaCloud provider
+https://github.com/paloaltonetworks/prisma-enhanced-remediation # Create custom auto-remediation solutions using serverless functions in the cloud.
+https://github.com/paloaltonetworks/pyjarm # pyjarm is a library for doing JARM fingerprinting using python
+https://github.com/paloaltonetworks/minemeld-ansible # Ansible playbook for installing MineMeld on Linux
+https://github.com/paloaltonetworks/prisma-cloud-scan # GitHub action to scan container images with Palo Alto Networks' Prisma Cloud
+https://github.com/paloaltonetworks/can-ctr-escape-cve-2022-0492 # Test whether a container environment is vulnerable to container escapes via CVE-2022-0492
+https://github.com/paloaltonetworks/installerhijackingVulnerabilityScanner #
+https://github.com/paloaltonetworks/pcs-sizing-scripts # Prisma Cloud sizing scripts
+https://github.com/paloaltonetworks/pan-cortex-data-lake-python # Python idiomatic SDK for Cortex™ Data Lake.
+https://github.com/paloaltonetworks/research-notes #
+https://github.com/paloaltonetworks/panhandler # panhandler is a tool to manage config snippets and Skillets for PAN-OS devices
+https://github.com/paloaltonetworks/pan.dev # palo alto Networks for Developers
+https://github.com/paloaltonetworks/prismacloud-cli # The Prisma Cloud CLI is a command line interface for Prisma Cloud by Palo Alto Networks.
+https://github.com/paloaltonetworks/kubernetes # repository for Palo Alto Networks Kubernetes Security - CN Series.
+https://github.com/paloaltonetworks/transitgatewaydeployment # Creates a Transit Gateway with two server VPCs and a security VPC
+https://github.com/paloaltonetworks/prisma-cloud-compute-sample-code # Example scripts, snippets, and other documents related to Prisma Cloud Compute
+https://github.com/paloaltonetworks/upload-secure-artifact # This GitHub Action scans artifacts for secrets using gitleaks before uploading them.
+https://github.com/paloaltonetworks/terraform-best-practices # A set of best practices to be followed when contributing to the Palo Alto Networks terraform modules
+https://github.com/paloaltonetworks/referencearchitectures # Palo Alto Networks Reference Architectures
+https://github.com/paloaltonetworks/prisma-cloud-devsecops-workshop # DevSecOps with Prisma Cloud
+https://github.com/paloaltonetworks/unit42-wireshark-tutorials # Unit 42 repository hosting packet captures (pcaps) for our series of Wireshark tutorials
+https://github.com/paloaltonetworks/report_to_misp # Parse a report and import the events into MISP
+https://github.com/paloaltonetworks/evident-custom-signatures # Evident Security Platform Custom Signatures Samples
+https://github.com/paloaltonetworks/autofocus-lenz # A command line utility to aid in using autofocus for IR and research
+https://github.com/paloaltonetworks/tg # certificate generation made easy
+https://github.com/paloaltonetworks/azure-applicationgateway # Scale out security for web deployments using VM-Series firewalls and Azure Application Gateway web load balancer
+https://github.com/paloaltonetworks/pan-fca # flexible Cloud Automation
+https://github.com/paloaltonetworks/bahamut # go library to build an API server based on an Elemental model
+https://github.com/paloaltonetworks/lab-aws-gwlb-vmseries # Materials for PS Regional Training AWS lab
+https://github.com/paloaltonetworks/terraform-provider-prismacloudcompute # Terraform provider for Prisma Cloud Compute
+https://github.com/paloaltonetworks/gaia # aporeto apI (Elemental model)
+https://github.com/paloaltonetworks/tcpsession # a python library to extract TCP sessions from PCAPs.
+https://github.com/paloaltonetworks/openstack-templates # VM-Series Firewalls on OpenStack
+https://github.com/paloaltonetworks/autofocus-client-library # A python client library for interfacing with the autofocus rest services
+https://github.com/paloaltonetworks/pan-stix # pan-stix
+https://github.com/paloaltonetworks/regolithe # regolithe Specifications + Dev Tools
+https://github.com/paloaltonetworks/pc-python-integration # Python3 API toolkit for Prisma Cloud APIs
+https://github.com/paloaltonetworks/azure-autoscaling # Azure autoscaling solution using VMSS
+https://github.com/paloaltonetworks/mtlsproxy # simple mtls HTTPs proxy to use as a sidecar for protecting non critical services
+https://github.com/paloaltonetworks/minemeld-docker # Official Palo Alto Networks MineMeld docker
+https://github.com/paloaltonetworks/pantools # a collection of pre-installed tools commonly used with Palo Alto Networks products packaged as a Docker container
+https://github.com/paloaltonetworks/prisma-cloud-compute-operator #
+https://github.com/paloaltonetworks/cn-series-deploy # A set of Terraform plans for deploying a Kubernetes cluster protected by a CN-Series containerize firewall
+https://github.com/paloaltonetworks/elemental # go library implementing the Regolithe specifications as Elemental model
+https://github.com/paloaltonetworks/cortex-xql-queries # Repository for Cortex XDR and Cortex XSIAM XQL queries and more!
+https://github.com/paloaltonetworks/prisma-cloud-go # Prisma Cloud SDK in Go
+https://github.com/paloaltonetworks/pcs-serverless-syslog # Prisma Cloud serverless function that can accept webhook and send alerts to syslog, S3, and SQS
+https://github.com/paloaltonetworks/terraform-provider-cloudngfwaws # The Terraform provider for the Palo Alto Networks AWS cloud NGFW
+https://github.com/paloaltonetworks/multicloud-automation-lab # Multi-Cloud Security Automation Lab
+https://github.com/paloaltonetworks/terraform-ansible-intro # Introduction to Terraform and Ansible
+https://github.com/paloaltonetworks/manipulate # go library to perform CRUD operations on an Elemental model with multiple backend implementations
+https://github.com/paloaltonetworks/aws-alb-sandwich # AWS ALB Sandwich with VM-Series
+https://github.com/paloaltonetworks/cn-series-helm # This repo is for deploying CN-series firewall using Helm Package Manager for Kubernetes
+https://github.com/paloaltonetworks/wsc # wsc is a library that allows to interact with web sockets using channels.
+https://github.com/paloaltonetworks/panos-bootstrapper # A Utility to bootstrap a new PAN-OS NGFW. This utility provides an API only. An example web interface is provided here: https://github.com/paloaltonetworks/panos-bootstrapper-ui
+https://github.com/paloaltonetworks/misp-to-autofocus # Script for pulling events from a MISP database and converting them to Autofocus queries.
+https://github.com/paloaltonetworks/cis-benchmarks # CIS benchmark quickplay for rapid assessments of the NGFW
+https://github.com/paloaltonetworks/safenetworking # Read only mirror. To contribute or submit issues, please go to the website link --->
+https://github.com/paloaltonetworks/prisma-cloud-devops-Security #
+https://github.com/paloaltonetworks/pancloud-nodejs # Palo Alto Networks Application Framework NodeJS SDK
+https://github.com/paloaltonetworks/splunk-app-data-generator # Sample data generator for the Splunk for Palo Alto Networks app.
+https://github.com/paloaltonetworks/homeskillet # simple 2-zone internet gateway configuration for home use
+https://github.com/paloaltonetworks/youtube-miner # mineMeld Miner for Youtube channels
+https://github.com/paloaltonetworks/terraform-aws-swfw-modules # Terraform Reusable Modules for Software Firewalls on AWS
+https://github.com/paloaltonetworks/gcp-two-tier # vm-Series templates for Google Cloud Platform
+https://github.com/paloaltonetworks/github-oidc-utils #
+https://github.com/paloaltonetworks/panos-bootstrapper-ui # PAN-OS Bootstrapper UI provides a simple, example web-UI that consumes the PAN-OS Bootstrapper utility API.
+https://github.com/paloaltonetworks/pan-os-upgrade-assurance # PAN-OS Upgrade Assurance package code
+https://github.com/paloaltonetworks/prisma-access-skillets # Suite of skillets for initial Prisma Access deployment and configuration
+https://github.com/paloaltonetworks/unit42-threat-intelligence-Article-Information # This is the repository for indicators of compromise (IOCs) and other data for threat intelligence articles posted on the palo alto networks Unit 42 website.
+https://github.com/paloaltonetworks/skillets # skillets is the default holding place for useful Panhandler skillets. These are usually smaller one-off bits that may not require their own repository. feel free to add to this repository with your own Skillets via a PR.
+https://github.com/paloaltonetworks/redist-check # tool to check for PANOS Devices with Certificates that will expire on 12-31-23
+https://github.com/paloaltonetworks/azure-terraform-vmseries-fast-ha-failover # Azure Load Balancer and HA Combined Deployment for Faster Failover with no API Calls
+https://github.com/paloaltonetworks/learn-prisma-cloud-automation # A set of tutorials to learn how to automate various Prisma Cloud tasks.
+https://github.com/paloaltonetworks/microsoft_azure_virtual_wan # Implements the automation and integration framework to work with Azure Virtual WAN's and PANW to create vpn connections.
+https://github.com/paloaltonetworks/terraform-iac-lab # Infrastructure as Code lab using Terraform and GCP
+https://github.com/paloaltonetworks/docusaurus-template-openapi-docs # Docusaurus template for bootstrapping with docusaurus-openapi-docs
+https://github.com/paloaltonetworks/logfilehighlighting # Reading large amounts of log files is difficult. These Sublime Text files help highlight events in the log files.
+https://github.com/paloaltonetworks/terraform-aws-panos-bootstrap # This Terraform Module creates a PAN-OS bootstrap package in an AWS S3 bucket to be used for bootstrapping palo alto networks vm-series virtual firewall instances.
+https://github.com/paloaltonetworks/pan-threat-vault-python # Python interface to the Palo Alto Networks Threat Vault API
+https://github.com/paloaltonetworks/skilletbuilder # Docs and tutorial for Skillet template building
+https://github.com/paloaltonetworks/gcp-k8s-north-south-inspection-and-east-west-visibility #
+https://github.com/paloaltonetworks/prisma-access-ip-api-client # Python client to retrieve prisma access IP Addresses from API
+https://github.com/paloaltonetworks/skilletlib # tools and base classes for working with Skillets. Issues and feature requests are tracked here: https://gitlab.com/panw-gse/as/skilletlib/-/issues
+https://github.com/paloaltonetworks/prisma-cloud-bootcamps #
+https://github.com/paloaltonetworks/a3s # auth as a service
+https://github.com/paloaltonetworks/pc-compute-migration # Tool to migration Prisma Cloud Compute Consoles through the use of the Prisma Cloud API
+https://github.com/paloaltonetworks/azure-ha-deployment # This Azure HA Template Allows Launching an Additional VM-Series into a Resource Group.
+https://github.com/paloaltonetworks/barrier # golang Integration Tests Library
+https://github.com/paloaltonetworks/addedeffect # utils is a package that contains various shared utilities tools for Aporeto micro services
+https://github.com/paloaltonetworks/xff-to-user-id-mapping # This solution maps XFF header source IP to User-ID allowing for blocking malicious sources when the vm-series is behind a device that performs source nat such as a load balancer.
+https://github.com/paloaltonetworks/panapi #
+https://github.com/paloaltonetworks/google-cloud-ngfw-tutorial # Learn how to deploy and use Google Cloud Firewall plus, a native Google Cloud service powered by Palo alto networks threat prevention technologies.
+https://github.com/paloaltonetworks/lab-aws-cloud-ngfw # QwikLab setup scripts for Palo Alto Networks Cloud NGFW lab
+https://github.com/paloaltonetworks/pan-python-tools # A collection of utilities that users of pan-python might find useful
+https://github.com/paloaltonetworks/gcp-autoscaling # Google Cloud Auto Scaling Available Now
+https://github.com/paloaltonetworks/prismacfnonboarding # Cloudformation Script to onboard accounts to Redlock
+https://github.com/paloaltonetworks/terraform-provider-scm # The Terraform provider for Strata Cloud Manager
+https://github.com/paloaltonetworks/pan_google_next_istio_lab # This repo contains a lab which demonstrates the use of the Palo Alto Networks Security adapter for Istio
+https://github.com/paloaltonetworks/sharkbait #
+https://github.com/paloaltonetworks/ciscoise-miner # Cisco ISE session miner using pxGrid bulk download REST API
+https://github.com/paloaltonetworks/oidc-mock # simple server to handle OIDC flow
+https://github.com/paloaltonetworks/google-cloud-hub-spoke-tutorial # Build & secure a Google Cloud hub-and-spoke architecture with VM-Series.
+https://github.com/paloaltonetworks/phoenix # phoenix is a library based on bahamut to build hook servers.
+https://github.com/paloaltonetworks/prisma-cloud-ansible # Ansible collection for Prisma Cloud
+https://github.com/paloaltonetworks/terraform-panos-ngfw-modules # Terraform Modules for Palo Alto Networks PAN-OS based Platforms
+https://github.com/paloaltonetworks/advanced_deployment # VM-Series Advanced Deployment for GCP Qwiklab
+https://github.com/paloaltonetworks/prismasasecloudmanaged-Python # A python framework to use the Prisma Access API to configure Cloud Managed
+https://github.com/paloaltonetworks/lab-azure-vmseries # Prerequisites Lab for Palo Alto Networks Professional Service Public Cloud Workshop
+https://github.com/paloaltonetworks/prisma-sase-sdk-python # Prisma SASE SDK
+https://github.com/paloaltonetworks/panos-query-scripts # scripts to query information from a PAN-OS NGFW
+https://github.com/paloaltonetworks/ignite2018-how16 # repo for ignite 2018 hand on lab
+https://github.com/paloaltonetworks/midgard-lib # go client for Midgard authentication
+https://github.com/paloaltonetworks/panos-ansible-upgrade-downgrade # Ansible playbook to license the NGFW, install content updates, and install the required software version
+https://github.com/paloaltonetworks/azure-gwlb # template for deploying Palo Alto VM Series FW with Azure Gateway Load Balancer
+https://github.com/paloaltonetworks/pan_dug # dynamic User Group code for Palo Alto Networks devices
+https://github.com/paloaltonetworks/cloud-ngfw-aws-examples # Cloud Formation template to deploy and manage the Cloud NGFW on AWS.
+https://github.com/paloaltonetworks/intel-framework # Intel Importer
+https://github.com/paloaltonetworks/terraform-google-swfw-modules # Terraform Reusable Modules for Software Firewalls on GCP
+https://github.com/paloaltonetworks/sdwan # sd-wan configuration templates
+https://github.com/paloaltonetworks/pan-tort #
+https://github.com/paloaltonetworks/pcs-metrics-monitoring # Prisma Cloud monitoring and metrics
+https://github.com/paloaltonetworks/azure-interface-options # Azure VM-Series options including differing interfaces
+https://github.com/paloaltonetworks/prisma-cloud-compute-splunk # Splunk app for ingesting Prisma Cloud Compute incidents and forensics
+https://github.com/paloaltonetworks/pan_guard_duty #
+https://github.com/paloaltonetworks/iac-scan-rules #
+https://github.com/paloaltonetworks/lab-aws-zero-trust # Qwiklab setup scripts for deploy Zero Trust lab with Palo Alto Networks VM-Series Firewall
+https://github.com/paloaltonetworks/pcs_alert_tags_acctgrp # Prisma Cloud alert csv output plus tags and account group names
+https://github.com/paloaltonetworks/prisma-cloud-compute-go # Prisma Cloud Compute SDK in Go
+https://github.com/paloaltonetworks/prisma_cloud # qwiklab-Prisma Cloud Compute: Securing GKE Run Time
+https://github.com/paloaltonetworks/aks-k8s-north-south-inspection #
+https://github.com/paloaltonetworks/pandevice-tutorial # Palo Alto Networks Device Framework Jupyter Notebook Tutorial
+https://github.com/paloaltonetworks/minemeld-msgraph-secapi # MineMeld nodes for Microsoft Graph Security API
+https://github.com/paloaltonetworks/iot-automated-solution # set of configuration, validation, and scripts for IoT deployment and traffic generation
+https://github.com/paloaltonetworks/secops_ctf_scoreboard #
+https://github.com/paloaltonetworks/pc-rql-search # python Script for Prisma Cloud CSPM to run RQL queries and record results in a CSV file
+https://github.com/paloaltonetworks/gridmeld # cisco ISE pxGrid to Palo Alto Networks MineMeld Gateway
+https://github.com/paloaltonetworks/cortex-xpanse-python-sdk # Python SDK for Cortex™ Xpanse
+https://github.com/paloaltonetworks/skillet_ansible # Ansible collection for Skillets
+https://github.com/paloaltonetworks/example_skillets # A collection of Example Skillets including terraform, REST, python, and PAN-OS skillets
+https://github.com/paloaltonetworks/pan-custom-signatures # A group of custom vulnerability signatures from various authors.
+https://github.com/paloaltonetworks/pcs-cwp-defender-updater # Kubernetes CronJob to update automatically Prisma Cloud defender DaemonSet in kubernetes clusters.
+https://github.com/paloaltonetworks/azure_training #
+https://github.com/paloaltonetworks/iac-pac-automation # Policy-as-code automation for Prisma Cloud Code Security and Bridgecrew.
+https://github.com/paloaltonetworks/k12skillet # the K-12 Skillet is indented for K-12 educational deployment configuration of the Palo Alto Networks NGFW
+https://github.com/paloaltonetworks/prisma_cloud_aws_Onboard #
+https://github.com/paloaltonetworks/ansible-lab # a hands-on lab showing how to use the PAN-OS Ansible modules.
+https://github.com/paloaltonetworks/oraclecloud # sample Terraform template for deploying VM-Series on Oracle Cloud Infrastructure
+https://github.com/paloaltonetworks/terraform-scm-access-modules # SCM Modules to support Prisma Access
+https://github.com/paloaltonetworks/sfntools #
+https://github.com/paloaltonetworks/terraform-modules-swfw-ci-workflows # Reusable workflows for Terraform Modules code repositories.
+https://github.com/paloaltonetworks/ansible-role-spatula # This Ansible role applies security best practice templates to Palo Alto Networks devices.
+https://github.com/paloaltonetworks/pan-chainguard # Preload Trusted CA Intermediate Certificate Chains on PAN-OS
+https://github.com/paloaltonetworks/aws-traffic-mirroring # Detect and respond to attacks in AWS by sending packets to VM-Series without putting the firewall inline
+https://github.com/paloaltonetworks/custom-imaging # Create custom VM-Series images on public cloud with upgraded PanOS, Plugin and Content versions
+https://github.com/paloaltonetworks/minemeld-taxii-ng # New TAXII Miner for MineMeld
+https://github.com/paloaltonetworks/splunk-docs # source for the documentation of the Splunk App and Add-on
+https://github.com/paloaltonetworks/redlock-automation #
+https://github.com/paloaltonetworks/pan-iot-security-python # Python interface to the Palo Alto Networks IoT Security API
+https://github.com/paloaltonetworks/unused-rules # this utility queries the firewall and out provides information on Unused rules.
+https://github.com/paloaltonetworks/terraform-panos-dag-nia # Palo Alto Networks PAN-OS Dynamic Address Group (DAG) Tags Module for Network Infrastructure Automation (nia)
+https://github.com/paloaltonetworks/cortex-security-guidelines # Partner Security Guidelines for Cortex Apps
+https://github.com/paloaltonetworks/terraform-azurerm-swfw-modules # Terraform Reusable Modules for Software Firewalls on Azure
+https://github.com/paloaltonetworks/terraform-provider-prismacloud-waas # A Terraform provider for the declarative management of Prisma Cloud Web Application & API security (waas) policies
+https://github.com/paloaltonetworks/professional-services #
+https://github.com/paloaltonetworks/istio # this repository contains the various integrations of the Palo Alto Networks Security adapter for Istio
+https://github.com/paloaltonetworks/prisma-cloud-compute #
+https://github.com/paloaltonetworks/azure-availability-zone # Deploys the VM-Series in Azure into an Availability Zone
+https://github.com/paloaltonetworks/mobileskillet # mobile configuration templates to create logging for safenetworking
+https://github.com/paloaltonetworks/pan-cnc # cnc: chevy's, not Cadillacs. Rapid UI prototyping for all Palo Alto Networks WWSE demos and pocs.
+https://github.com/paloaltonetworks/ibmcloud-vmseries # PANW VM-Series FW Terraform template for IBM Cloud
+https://github.com/paloaltonetworks/ccp-as-pytorch # Implements Contrastive Credibility Propagation (CCP) in PyTorch, an iterative semi-supervised learning framework
+https://github.com/paloaltonetworks/aws_security_hub # Integration of IOC from AWS Security Hub with the VM-Series Firewall
+https://github.com/paloaltonetworks/.github # default community health files for all Palo Alto Networks public repositories
+https://github.com/paloaltonetworks/google-cloud-vmseries-ha-tutorial # Terraform tutorial detailing how to deploy Active/Passive VM-Series with session sync in Google cloud.
+https://github.com/paloaltonetworks/panw-test-drive # a collection of scripts that make PaloAltoNetworks test drive
+https://github.com/paloaltonetworks/cov # coverage tool to get patch coverage details from go cover files.
+https://github.com/paloaltonetworks/pccs-custom-policies # A repository to store custom policy examples that do not belong as out-of-the-box policies for Code Security.
+https://github.com/paloaltonetworks/pcs-cwp-collections # Prisma Cloud Compute API management of compute collections.
+https://github.com/paloaltonetworks/cn-series-hackathon #
+https://github.com/paloaltonetworks/pangraft #
+https://github.com/paloaltonetworks/gcp-wildfire-api # A demonstration of using the Wildfire API to scan files uploaded to a Google Cloud Storage bucket to determine if they are malicious or benign.
+https://github.com/paloaltonetworks/vistoq # mssp demo Portal - Art of the Possible
+https://github.com/paloaltonetworks/sli #
+https://github.com/paloaltonetworks/multi-ip #
+https://github.com/paloaltonetworks/palo-azure-saca # SCCA implementation for Palo Alto Networks on Azure
+https://github.com/paloaltonetworks/ironskillet-components # IronSkillet sub-snippets used to create loadable configurations as playlists that may only use select configuration elements
+https://github.com/paloaltonetworks/community-health-test5 # test
+https://github.com/paloaltonetworks/server-hardening-Signatures # Signatures for Palo Alto Networks to detect improperly hardened servers
+https://github.com/paloaltonetworks/minemeld-prisma-access # Miner for Prisma Access API
+https://github.com/paloaltonetworks/panw-multi-cloud-lab # This repository is for automating the deployment of a hybrid multi cloud environment using terraform.
+https://github.com/paloaltonetworks/azure-bootstrap #
+https://github.com/paloaltonetworks/remod # easier go modules developer workflow
+https://github.com/paloaltonetworks/pan_nlb_v1 # this is the V1 (CFT) template to deploy an NLB architecture to AWS.
+https://github.com/paloaltonetworks/terraform-iac-demo # IaC demo using Terraform Cloud
+https://github.com/paloaltonetworks/apocheck # aporeto services integration tests library
+https://github.com/paloaltonetworks/pan-talon # reports and tools for performing various assessments
+https://github.com/paloaltonetworks/ccp_cifar # an implementation of the Contrastive Credibility Propagation (CCP) algorithm in Tensorflow. Includes all the code needed to recreate the cifar-10 and cifar-100 experiments in the paper.
+https://github.com/paloaltonetworks/syncservicenow # A proof of concept to demonstrate synchronization of server assets and their attributes from ServiceNow into registered ip tags and dynamic address groups on a palo Alto Networks next-generation firewall.
+https://github.com/paloaltonetworks/ignite2019-how14 # Repo for ignite how lab
+https://github.com/paloaltonetworks/host-defender-token-refresher #
+https://github.com/paloaltonetworks/pcs-compare-csv-accounts-to-tenant # Utilize a CSV list of accounts to see if a list of accounts exists in a Prisma Cloud tenant
+https://github.com/paloaltonetworks/lab-aws-cn-series-zero-trust # Qwiklab setup scripts for deploy Zero Trust lab with Palo Alto Networks CN-Series Firewall
+https://github.com/paloaltonetworks/qwiklabs # palo alto Networks Qwiklabs
+https://github.com/paloaltonetworks/firebreak-box # firebreak: Fight fire with WildFire
+https://github.com/paloaltonetworks/app-f-oauth2-shared # Application Frameworks OAUTH2 Shared Component implementation as a AWS Lambda Function
+https://github.com/paloaltonetworks/blackhat # code for Black Hat Projects
+https://github.com/paloaltonetworks/gcp-vm-series-k8s-Prisma-Cloud-API # Deploys k8s cluster, VM-Series for N/S and E/W inspection and guides the use of the Prisma Cloud api scan of manifest
+https://github.com/paloaltonetworks/xsoar-panos-upgrade-automation # XSOAR Content for managing the PAN-OS Upgrade process.
+https://github.com/paloaltonetworks/pcs_export_policies # Script for exporting Prisma Cloud policies and their associated RQL into a CSV output file.
+https://github.com/paloaltonetworks/netsecopenskillet #
+https://github.com/paloaltonetworks/scm-go # sdk for Strata Cloud Manager
+https://github.com/paloaltonetworks/cloud-ngfw-aws-go # This is the underlying SDK library for a Terraform provider
+https://github.com/paloaltonetworks/git-security # an application to have a better visibility on our Git repositories in GitHub Enterprise
+https://github.com/paloaltonetworks/wildcardip-miner # MineMeld Miner extension to expand IPv4 wildcards into list of corresponding CDIR's
+https://github.com/paloaltonetworks/gpcsskillets # onboarding and configuration skillets for GPCS
+https://github.com/paloaltonetworks/cns-customer # cnS Customer repository
+https://github.com/paloaltonetworks/pcs-cwp-agentless # Prisma Cloud API management of Cloud Accounts, specifically around agentless.
+https://github.com/paloaltonetworks/azure-load-balancer1 #
+https://github.com/paloaltonetworks/aws-ha-cft # for use with AWS HA Improvements
+https://github.com/paloaltonetworks/yang #
+https://github.com/paloaltonetworks/terraform-google-panos-bootstrap # This Terraform Module creates a PAN-OS bootstrap package in a Google Cloud Storage bucket.
+https://github.com/paloaltonetworks/pan-cortex-xdr-nodejs # NodeJS / Javascript / TypeScript language binding for the XDR PRO API
+https://github.com/paloaltonetworks/simulator-test-harness # Code repository for simulator test harness for scale testing
+https://github.com/paloaltonetworks/panw-gse.skillets # Ansible roles and libraries for working with PAN-OS, Panorama, and Pan-Validation Skillets
+https://github.com/paloaltonetworks/pcs-platform-helper-scripts #
+https://github.com/paloaltonetworks/cn-series-lab # cN-Series Qwiklab
+https://github.com/paloaltonetworks/prisma-cloud-defender #
+https://github.com/paloaltonetworks/gcp_marketplace_istio_adapter # This repo contains the configuration files to build and deploy the Palo Alto Networks Istio adapter into the gcp/kubernetes market place
+https://github.com/paloaltonetworks/autocombo #
+https://github.com/paloaltonetworks/gwlb-tgw-hackathon # Fork of David Spears TGW-GWLB demo to use with CloudShare
+https://github.com/paloaltonetworks/ansible-role-vmware-dagger # An Ansible role that synchronizes VMware vCenter virtual machine IP addresses and tags with PAN-OS.
+https://github.com/paloaltonetworks/cortex.pan.dev # Cortex® for Developers
+https://github.com/paloaltonetworks/ibmcloud-panorama # PANW Panorama Terraform template for IBM Cloud deployments
+https://github.com/paloaltonetworks/pcs_sqs_to_syslog # Prisma Cloud SQS poller to syslog
+https://github.com/paloaltonetworks/cn-series-hackathon-helm # Modified version of the CN-Series-Helm Repo. This will only create 1 MP.
+https://github.com/paloaltonetworks/passport-cortex # A PassportJS strategy for Palo Alto Networks Cortex
+https://github.com/paloaltonetworks/regionaltrainings2021 #
+https://github.com/paloaltonetworks/flex-license-migration-lab #
+https://github.com/paloaltonetworks/cloud-automation-demo # This repo enables you to perform cloud automation demos using Terraform or Ansible
+https://github.com/paloaltonetworks/minemeld-wd-atp # MineMeld nodes for MSFT WD ATP API
+https://github.com/paloaltonetworks/squidproxy # this repository contains squid proxy patch to make it work with the decryption broker feature. This repo also has a brief documentation about how to make squid proxy work with decryption broker feature in order to send traffic to an ICAP server for inspection.
+https://github.com/paloaltonetworks/mgmt-cert-check #
+https://github.com/paloaltonetworks/iac-appsec-guides #
+https://github.com/paloaltonetworks/pc-cloud-status-report #
+https://github.com/paloaltonetworks/aws-vmseries-gwlb-poc #
+https://github.com/paloaltonetworks/minemeld-cef # mineMeld Output node for CEF format
+https://github.com/paloaltonetworks/ignite18-gcp-labs #
+https://github.com/paloaltonetworks/azure-aks # azure Kubernetes Service Security Solution
+https://github.com/paloaltonetworks/prismacloud-tme #
+https://github.com/paloaltonetworks/google-cloud-vmseries-ncc-tutorial # A brief tutorial showing how to use Google Cloud Network Connectivity Center with VM-Series.
+https://github.com/paloaltonetworks/azure-load-balancer2 #
+https://github.com/paloaltonetworks/pan-saas-cli # a lightweight utility to tag Sanctioned applications on Palo Alto Networks Firewalls.
+https://github.com/paloaltonetworks/panos_rust_sdk # A Rust implementation of the PAN-OS API.
+https://github.com/paloaltonetworks/iupg_mnist_demo # A simple demo implementation of the Innocent Until Proven Guilty (IUPG) learning framework to train an MNIST classifier with or without noise.
+https://github.com/paloaltonetworks/pc-cicd-scan-report #
+https://github.com/paloaltonetworks/qwiklabs-cn-v2 #
+https://github.com/paloaltonetworks/gcp_terraform_ignite2018 # This repo contains Terraform templates to deploy a PAN VM-Series FW into GCP.
+https://github.com/paloaltonetworks/airgapped-license-workflow #
+https://github.com/paloaltonetworks/terraform-modules-swfw-tests-skeleton # Test skeleton with Terratest for VM-Series modules
+https://github.com/paloaltonetworks/pan-cortex-data-lake-nodejs # Palo Alto Networks Cortex Data Lake client library
+https://github.com/paloaltonetworks/pcs-inspect # the pcs-inspect.py script queries the Prisma Cloud API for all enabled Policies and for all Alerts within a Relative time range (with a default of one month) for a tenant
+https://github.com/paloaltonetworks/prisma-cloud-docs-website #
+https://github.com/paloaltonetworks/pcs-cwp-host-autodefend # Scripts to install defenders for Windows or Linux instances.
+https://github.com/paloaltonetworks/cdl-decompress-proxy-sentinel-ingest # Proxy application for ingesting into Azure sentinel from Cortex Data Lake
+https://github.com/paloaltonetworks/pcs-migration-management #
+https://github.com/paloaltonetworks/aws-tgw-panorama-bootstrap #
+https://github.com/paloaltonetworks/pcs_rql_search # This script will run RQL search and take the results and format them into CSV (based on current CSV output on investigate page)
+https://github.com/paloaltonetworks/cloud_function_prisma_access_bce #
+https://github.com/paloaltonetworks/azure-marketplace #
+https://github.com/paloaltonetworks/pc-asset-diff #
+https://github.com/paloaltonetworks/pan-tort-source # Source code for using Autofocus (and other applications) to discern hash coverage of known and unknown artifacts.
+https://github.com/paloaltonetworks/cn-series-lab-v2 #
+https://github.com/paloaltonetworks/ibmcloud-cn-series # This repo is for deploying CN-series firewall using Helm Package Manager for Kubernetes in IBM Cloud
+https://github.com/paloaltonetworks/pcs-where-is # prisma Cloud Tenant Locator Script
+https://github.com/paloaltonetworks/prismaclouddemo #
+https://github.com/paloaltonetworks/pulumi-prismasdwan # Pulumi provider for Prisma SD-WAN

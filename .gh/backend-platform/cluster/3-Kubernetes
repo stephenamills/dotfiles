@@ -1,9 +1,12 @@
-Kubernetes
 https://github.com/kubernetes/kubernetes # Container scheduling and management
 https://github.com/cncf/k8s-conformance # Kubernetes variants
 
 https://maturitymodel.cncf.io # Business outcomes
 https://contribute.cncf.io/maintainers # Community building & relationship management
+
+https://github.com/helm/helm
+https://github.com/artifacthub/hub
+https://github.com/bitnami/charts
 
 https://github.com/kubernetes/examples # Guestbook-PHP, Guestbook-Go, Wordpress, Cassandra
 https://github.com/dockersamples/example-voting-app Voting App Postgres Redis
@@ -42,9 +45,8 @@ https://github.com/vmware-tanzu-labs/tanzu-validated-solutions
 https://github.com/cncf/telecom-user-group # 5G Kubernetes examples (follow links)
 https://github.com/cncf/devstats-helm # bare metal (mess)
 
-https://github.com/helm/helm
-https://github.com/bitnami/charts
-https://github.com/artifacthub/hub
+https://killercoda.com # labs (mentioned by CNCF)
+https://labs.play-with-k8s.com # labs (by Docker)
 
 https://github.com/kubernetes/cri-api # Container Runtime Interface (CRI) – a plugin interface that enables kubelet to use a wide variety of container runtimes
 https://github.com/kubernetes/cri-client # Container Runtime Interface client implementation
@@ -116,9 +118,6 @@ https://tag-runtime.cncf.io # AI
 https://tag-security.cncf.io # security
 https://github.com/cncf/tag-observability # observability
 https://github.com/kubernetes/community # networking, AI, bare metal, and much more
-
-https://killercoda.com # labs (mentioned by CNCF)
-https://labs.play-with-k8s.com # labs (by Docker)
 
 https://radar.cncf.io/overview # industry tech stack surveys
 https://github.com/cncf/students#10-finding-a-job # job board

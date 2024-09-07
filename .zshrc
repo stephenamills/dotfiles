@@ -192,6 +192,16 @@ npmdeps() {
   npm view $1 dependencies
 }
 
+# Order files in the current directory by their name
+ord() {
+  counter=1
+  for file in $(ls | sort); do
+    new_file_name=$(printf "%02d-%s" "$counter" "${file#*-}")
+    mv "$file" "$new_file_name"
+    ((counter++))
+  done
+}
+
 # Sign a macOS app bundle
 prep() {
   sudo xattr -r -d com.apple.quarantine "$1"

@@ -1,22 +1,21 @@
-Packer
 https://github.com/hashicorp/packer # Packer is a tool for creating identical machine images for multiple platforms from a single source configuration.
 
-https://github.com/hashicorp/learn-terraform-provisioning # Companion code repository for learning to provision Terraform instances with Packer & cloud-init
+https://github.com/hashicorp/learn-terraform-provisioning # Provision Terraform instances with Packer & cloud-init
 https://github.com/hashicorp/learn-packer-github-actions #
-https://github.com/hashicorp/learn-packer-getting-started # Code for the Packer build tutorial at https://learn.hashicorp.com/packer
+https://github.com/hashicorp/learn-packer-getting-started # Code for the Packer build tutorial
 https://github.com/hashicorp/learn-hcp-packer-get-started #
-https://github.com/hashicorp/learn-packer-hcp-golden-image # Companion repo for the HashiCorp Learn guide: Build a Golden Image Pipeline with HCP Packer.
+https://github.com/hashicorp/learn-packer-hcp-golden-image # HashiCorp Learn guide: Build a Golden Image Pipeline with HCP Packer.
 https://github.com/hashicorp/learn-packer-multicloud #
 https://github.com/hashicorp/learn-hcp-packer-run-tasks #
 https://github.com/hashicorp/learn-packer-upgrade-json-template #
-
 https://github.com/hashicorp-education/learn-packer-windows-ami #
 https://github.com/hashicorp-education/learn-hcp-packer-revocation #
 
 https://github.com/hashicorp/packer-plugin-googlecompute # Packer plugin for Google Compute Builder
-https://github.com/hashicorp/packer-plugin-amazon # Packer plugin for Amazon AMI Builder
 https://github.com/hashicorp/packer-plugin-azure # Packer plugin for Azure Virtual Machine Image Builders
+https://github.com/hashicorp/packer-plugin-amazon # Packer plugin for Amazon AMI Builder
 https://github.com/hashicorp/packer-plugin-oracle # Packer plugin for Oracle Builder
+
 https://github.com/hashicorp/packer-plugin-vsphere # Packer plugin for VMware vSphere Builder
 https://github.com/hashicorp/packer-plugin-proxmox # Packer plugin for Proxmox Builder
 https://github.com/hashicorp/packer-plugin-qemu # Packer plugin for QEMU Builder

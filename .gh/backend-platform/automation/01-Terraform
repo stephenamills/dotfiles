@@ -1,4 +1,3 @@
-Terraform
 https://github.com/hashicorp/terraform # Terraform enables you to safely and predictably create, change, and improve infrastructure.
 https://github.com/hashicorp/terraform-cdk # Define infrastructure resources using programming constructs and provision them using HashiCorp Terraform
 

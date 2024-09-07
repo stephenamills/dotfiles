@@ -1,4 +1,3 @@
-Cloud-init
 https://github.com/canonical/cloud-init
 
 https://github.com/hashicorp/learn-terraform-provisioning # Companion code repository for learning to provision Terraform instances with Packer & cloud-init
@@ -7,8 +6,9 @@ https://github.com/hashicorp/terraform-provider-cloudinit # Utility provider tha
 https://github.com/rancher/elemental-toolkit # :snowflake: The toolkit to build, ship and maintain cloud-init driven Linux derivatives based on container images
 https://github.com/rancher/systemd-node # A container image mimics a cloud-init VM for testing
 https://github.com/flatcar/coreos-cloudinit
-https://github.com/crossplane-contrib/provider-cloudinit # Crossplane
 https://github.com/equinix-labs/pulumi-equinix-kubernetes-cluster # Equinix
+
+https://github.com/crossplane-contrib/provider-cloudinit # Crossplane
 https://github.com/azure/iotedge-vm-deploy # ARM template to deploy a VM with IoT Edge pre-installed (via cloud-init)
 https://github.com/azure/terraform-azurerm-vmss-cloudinit # Terraform AzureRM module registry to create a VM Scaleset initialized via cloud-init scripts
 

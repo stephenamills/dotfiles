@@ -80,6 +80,29 @@ https://github.com/pycoder2000/blog
 https://github.com/wutali/nextjs-netlify-blog-template
 
 Remix.js
+https://github.com/remix-run/remix # Build Better Websites. Create modern, resilient user experiences with web fundamentals.
+
+https://github.com/shopify/hydrogen # Hydrogen lets you build faster headless storefronts in less time, on Shopify.
+https://github.com/remix-run/examples # A community-driven repository showcasing examples using Remix 💿
+https://github.com/remix-run/indie-stack # The Remix Stack for deploying to Fly with SQLite, authentication, testing, linting, formatting, etc.
+https://github.com/remix-run/blues-stack # The Remix Stack for deploying to Fly with PostgreSQL, authentication, testing, linting, formatting, etc.
+https://github.com/remix-run/grunge-stack # The Remix Stack for deploying to AWS with DynamoDB, authentication, testing, linting, formatting, etc.
+https://github.com/remix-run/remix-website #
+https://github.com/remix-run/example-trellix # A partial trello board clone with Remix
+https://github.com/remix-run/react-router-website # The React Router website
+https://github.com/remix-run/example-movies # Data loading demo in Remix
+
+https://github.com/remix-run/react-router # Declarative routing for React
+https://github.com/remix-run/history # Manage session history with JavaScript
+https://github.com/remix-run/advanced-remix-2023 #
+https://github.com/remix-run/remix-discord-bot #
+https://github.com/remix-run/remix-webpack-demo #
+https://github.com/remix-run/meetup-guides # A collection of guides for Remix meetup organizers
+https://github.com/remix-run/v1-compat-utils # Packages that enable v1 APIs in Remix v2 to enable easier upgrades.
+https://github.com/remix-run/remix-replit-template # replit
+https://github.com/remix-run/jamstack-conf-workshop #
+https://github.com/remix-run/changelog-github #
+https://github.com/remix-run/react-router-api-docs #
 
 React with Rails
 https://github.com/learn-co-curriculum/react-rails-project-setup-guide # fetch JSON from Rails using useEffect() — adds client-side routing, has a create-react-app proxy tip, and Rails cookies & sessions
@@ -96,20 +119,20 @@ Basics
 https://github.com/facebook/react
 https://github.com/reduxjs/redux
 
-https://github.com/learn-co-curriculum/react-ts-components-basics # components
-https://github.com/learn-co-curriculum/react-ts-components-basics-lab # components
-https://github.com/learn-co-curriculum/react-ts-component-props-mini-project # components
+https://github.com/learn-co-curriculum/react-ts-components-basics # component
+https://github.com/learn-co-curriculum/react-ts-components-basics-lab # component
+https://github.com/learn-co-curriculum/react-ts-component-props-mini-project # component
 https://github.com/learn-co-curriculum/react-ts-fragments # fragments
 https://github.com/learn-co-curriculum/react-ts-information-flow-code-along # component tree information flow
 https://github.com/learn-co-curriculum/react-ts-information-flow-lab #
-https://github.com/learn-co-curriculum/react-types-of-components # function components vs class components
-https://github.com/learn-co-curriculum/react-components-as-routes # components as routes
-https://github.com/learn-co-curriculum/react-components-as-routes-lab # components as routes
-https://github.com/learn-co-curriculum/react-components # components
-https://github.com/learn-co-curriculum/react-hooks-class-components-intro # class components
-https://github.com/learn-co-curriculum/react-hooks-class-component-lifecycle # class components
-https://github.com/learn-co-curriculum/react-hooks-component-mounting-lab # components
-https://github.com/learn-co-curriculum/components-actions-and-stores-lab # components
+https://github.com/learn-co-curriculum/react-types-of-components # function component vs class component
+https://github.com/learn-co-curriculum/react-components-as-routes # component as route
+https://github.com/learn-co-curriculum/react-components-as-routes-lab # component as route
+https://github.com/learn-co-curriculum/react-components # component
+https://github.com/learn-co-curriculum/react-hooks-class-components-intro # class component
+https://github.com/learn-co-curriculum/react-hooks-class-component-lifecycle # class component
+https://github.com/learn-co-curriculum/react-hooks-component-mounting-lab # component
+https://github.com/learn-co-curriculum/components-actions-and-stores-lab # component
 
 https://github.com/learn-co-curriculum/react-ts-jsx # JSX - string interpolation, expressions, single return value, and className or class
 https://github.com/learn-co-curriculum/react-ts-lists-and-keys # map

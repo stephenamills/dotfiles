@@ -57,6 +57,20 @@ https://github.com/cri-o/cri-o # Open Container Initiative-based implementation 
 https://github.com/containernetworking/cni # Container Network Interface (CNI) - a plugin interface that enables networking for Linux containers
 https://github.com/containernetworking/plugins # Container Networking Interface plugin examples and reference implementations
 
+https://github.com/kubernetes-sigs/ingress2gateway # Convert Ingress resources to Gateway API resources
+https://github.com/kubernetes-sigs/external-dns # Configure external DNS servers (AWS Route53, Google CloudDNS and others) for Kubernetes Ingresses and Services
+https://github.com/kubernetes-sigs/gateway-api # Repository for the next iteration of composite service (e.g. Ingress) and load balancing APIs.
+https://github.com/kubernetes-sigs/ingress-controller-conformance # Repository for a compliance specification of ingress-controllers.
+
+https://github.com/kubernetes-sigs/aws-load-balancer-controller # A Kubernetes controller for Elastic Load Balancers
+https://github.com/zalando-incubator/kube-ingress-aws-controller # Configures AWS Load Balancers according to Kubernetes Ingress resources
+https://github.com/digitalocean/kubernetes-sample-apps # Example DigitalOcean Kubernetes workload with service exposed through a DO load-balancer.
+https://github.com/metallb/metallb # A network load-balancer implementation for Kubernetes using standard routing protocols
+https://github.com/kube-vip/kube-vip # Kubernetes Control Plane Virtual IP and Load-Balancer
+https://github.com/openelb/openelb # Load Balancer Implementation for Kubernetes in Bare-Metal, Edge, and Virtualization
+https://github.com/loxilb-io/loxilb # eBPF based cloud-native load-balancer. Powering Kubernetes|Edge|5G|IoT|XaaS Apps.
+https://github.com/kubermatic/kubelb # Kubernetes based load balancing
+
 https://github.com/kubernetes-sigs/container-object-storage-interface-spec # Container Object Storage Interface (COSI) specification
 https://github.com/kubernetes-sigs/container-object-storage-interface-controller # COSI controller responsible for managing the lifecycle of COSI objects.
 https://github.com/kubernetes-sigs/container-object-storage-interface-api # COSI API responsible for defining the API for COSI objects.

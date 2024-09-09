@@ -68,3 +68,46 @@ https://github.com/coreos/ignition-dracut # Archived Dracut modules for Ignition
 https://github.com/coreos/vagrant-ignition # A Vagrant plugin for providing Ignition Configs to VirtualBox virtual machines
 https://github.com/coreos/ign-converter # Mechanical translator to/from Ignition config spec 3.x
 https://github.com/coreos/ignition-config-rs # Data structures for reading/writing Ignition configs
+
+https://github.com/poseidon/terraform-provider-ct # Terraform provider for converting Butane Configs to Ignition
+https://github.com/poseidon/terraform-provider-matchbox # Terraform provider for Matchbox on-premise / bare-metal provisioning
+https://github.com/lucidsolns/terraform-flatcar-proxmox # Use Terraform to provision Flatcar VMs with Butane/Ignition configurations on a Proxmox (Qemu) server
+https://github.com/lucidsolns/terraform-vm-proxmox # A Terraform module to create Proxmox VMs with support for virtiofs, plan9fs and butane/ignition
+https://github.com/e-breuninger/terraform-provider-ignition # Use Terraform to validate a Butane configuration and transpile it to an Ignition configuration.
+https://github.com/krestomatio/terraform-ct-butane-snippets # Terraform modules to quickly generate butane snippets to config Fedora CoreOS
+https://github.com/yaroze/oci-fcos # Create a Fedora CoreOS VM in Oracle Cloud
+
+https://github.com/cuemby/pulumi-ct # Pulumi provider for validating Butane and Container Linux configuration and transpile to an Ignition config for machine consumption.
+https://github.com/ar4mirez/pulumi-ct # terraform-ct allows Pulumi to validate a Butane config and transpile to an Ignition config for machine consumption.
+https://github.com/wuxxin/infra-shared # Software Defined Git Operated Infrastructure
+
+https://github.com/forem/selfhost # Selfhost your Forem Community on your own infrastructure 🎉
+https://github.com/relativ-it/butane-schemas # Butane Schemas that helps creating Butane files for Fedora Coreos
+https://github.com/travier/fedora-coreos-matrix # Butane config to host a Matrix homeserver on Fedora CoreOS (nginx + Let's Encrypt + Synapse + PostgreSQL + element-web)
+https://github.com/opensuse/fuel-ignition # Easily generate new or edit existing Ignition configs. No more fiddling around with JSON or Butane.
+https://github.com/lorbuschris/butane-config-template #
+https://github.com/kytta/bumerge # Merge Butane configurations
+https://github.com/quickvm/bupy # The Butane Python Toolkit
+https://github.com/smallstep/butane-smallstep-acme-ra # Butane smallstep ACME RA for Fedora CoreOS
+https://github.com/miabbott/butane-configs # Bag of holding for Butane configs
+https://github.com/quickvm/butane-nomad # A butane template for launching Hashicorp Nomad on Fedora CoreOS
+https://github.com/andrewrothstein/ansible-butane #
+https://github.com/quickvm/butane-slack-hubot # A butane template for launching a Slack Hubot on Fedora CoreOS
+https://github.com/alexrfox/coreos-butane # coreos-butane
+https://github.com/glenmillard/butaneignitionfiles # A place for my stuff
+https://github.com/jinglemansweep/butane # Butane Configurations (e.g. for Flatcar Linux)
+https://github.com/nveeser/butanex # Demo of merging Butane YAML
+https://github.com/danner26/butane-netbox # A butane template for launching NetBox on Fedora CoreOS
+https://github.com/scilifelabdatacentre/sftp-geesefs-butane # Butane configuration for a Fedora CoreOS SFTP server using S3 buckets mounted by geesefs
+https://github.com/phrozenbyte/mbutane # Merge multiple Butane Configs and translate them into machine-readable Ignition configs.
+https://github.com/pbburke/coreos_butane_files # experimenting with butane files for provisioning coreos
+https://github.com/mjordan79/fedora-coreos-butane-ignition #
+https://github.com/ydbd/add-ignition-via-butane #
+https://github.com/twent/core-os-configs # Butane config builder for CoreOS
+https://github.com/easy1staking-com/butane-oracle-helm-chart #
+https://github.com/hyperkineticnerd/rpi4-coreos-butane #
+https://github.com/mccormickt/zippo # Serve dynamic Ignition configs based on Butane templates
+https://github.com/tmlev/crud-grpc-rust-tonic-butane-postgres # Playground
+https://github.com/yaroze/oci-fcos # Create a Fedora CoreOS VM in Oracle Cloud
+https://github.com/anubhavkini/envydious-coreos # Configuration files for Envydious Fedora CoreOS server.
+https://github.com/eriksjolund/run-fcos-on-macos # Run Fedora CoreOS on macOS (MacBook Pro M1)

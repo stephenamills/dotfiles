@@ -121,9 +121,27 @@ ghge() {
   gh gist edit $@
 }
 
+# Open GitHub issues in a browser
+# Usage: ghib <owner/repo> <issue1> <issue2> ...
+ghib() {
+  repo=$1
+
+  shift # This shifts the positional parameters down by one, which deletes the first argument in $@
+  for issue in "$@"; do
+    # Remove preceding '#' if it exists and construct the URL
+    clean_issue=${issue#\#}
+    echo "https://github.com/$repo/issues/$clean_issue"
+  done | xargs -n 1 -P 8 open
+}
+
 # Open a GitHub repository in the browser
 ghrb() {
   xargs -n 1 -P 8 hub browse <<<$@
+}
+
+# Clone a GitHub repo
+ghrc() {
+  gh repo clone $@
 }
 
 # Search GitHub code
@@ -159,19 +177,6 @@ ghsr() {
 # Search for GitHub repos and open each result in a browser
 ghsrb() {
   gh search repos $@ | awk '{print $1}' | xargs -n 1 -P 8 hub browse
-}
-
-# Open GitHub issues in a browser
-# Usage: ghib <owner/repo> <issue1> <issue2> ...
-ghib() {
-  repo=$1
-
-  shift # This shifts the positional parameters down by one, which deletes the first argument in $@
-  for issue in "$@"; do
-    # Remove preceding '#' if it exists and construct the URL
-    clean_issue=${issue#\#}
-    echo "https://github.com/$repo/issues/$clean_issue"
-  done | xargs -n 1 -P 8 open
 }
 
 # Update local Git repos

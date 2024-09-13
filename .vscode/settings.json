@@ -118,6 +118,7 @@
   "terminal.integrated.cursorStyle": "underline",
   "terminal.integrated.cwd": "/Users/steph/projects",
   "terminal.integrated.persistentSessionReviveProcess": "never",
+  "terminal.integrated.scrollback": 10000,
 
   "totalTypeScript.hideAllTips": false,
   "totalTypeScript.hideBasicTips": false,

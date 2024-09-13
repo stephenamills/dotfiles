@@ -183,7 +183,6 @@ ghsrb() {
 gito() {
   git-open $@
 }
-alias o=gito
 
 # Update local Git repos
 gu() {

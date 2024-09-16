@@ -1,12 +1,10 @@
 [core]
+	editor = code --wait
 	excludesfile = /Users/steph/.gitignore
 	pager = delta
 
 [credential "https://github.com"]
 	helper = !gh auth git-credential
-
-[credential "https://gitlab.com"]
-	helper = !glab auth git-credential
 
 [delta]
 	hyperlinks = true

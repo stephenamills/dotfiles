@@ -10,7 +10,7 @@
   },
   "[markdown]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "files.trimTrailingWhitespace": false
+    "files.trimTrailingWhitespace": true
   },
   "[shellscript]": {
     "editor.defaultFormatter": "mkhl.shfmt"
@@ -67,11 +67,15 @@
   },
   "files.autoSave": "afterDelay",
   "files.autoSaveDelay": 1000,
-  "files.defaultLanguage": "{activeEditorLanguage}",
+  "files.defaultLanguage": "markdown",
+  "files.exclude": {
+    "**/.DS_Store": false
+  },
   "files.simpleDialog.enable": true,
 
   "git.autofetch": true,
   "git.defaultCloneDirectory": "~/projects",
+  "git.confirmSync": false,
   "git.enableSmartCommit": true,
   "git.postCommitCommand": "push",
 

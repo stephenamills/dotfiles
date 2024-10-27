@@ -633,12 +633,13 @@ brew "tfsec" # static analysis security scanner for Terraform plans
 # brew "yj" # CLI to convert between YAML, TOML, JSON and HCL
 
 # Ansible
-brew "ansible" # automates deployment, configuration, and upgrading
-brew "ansible-cmdb" # generates a static HTML overview page from Ansible facts
-brew "ansible-creator" # scaffolds Ansible content
-brew "ansible-lint" # # checks ansible playbooks for practices and behavior
-brew "molecule" # tests an Ansible role
-brew "terraform-inventory" # converts a Terraform state file to a dynamic Ansible inventory
+brew "ansible" # Automate deployment, configuration, and upgrading
+brew "ansible-builder" # Tool for building Ansible Execution Environments (Containers)
+brew "ansible-cmdb" # Generate a static HTML overview page from Ansible facts
+brew "ansible-creator" # Scaffold Ansible content
+brew "ansible-lint" # Check Ansible playbooks for practices and behavior
+brew "molecule" # Test an Ansible role
+brew "terraform-inventory" # Convert a Terraform state file to a dynamic Ansible inventory
 
 brew "djhtml" # indents Jinja templates
 brew "jinja2-cli" # jinja2
@@ -749,6 +750,7 @@ brew "vespa-cli" # Has a guide to deploy machine learning to Kubernetes (by Yaho
 # brew "kubesess" # Manage multiple kubernetes cluster at the same time
 # brew "kubeshark" # API Traffic Analyzer providing real-time visibility into Kubernetes network
 # brew "kubespy" # Tools for observing Kubernetes resources in realtime
+# brew "kubetail" # Web dashboard for viewing Kubernetes container logs simultaneously
 # brew "kubetui" # TUI tool for monitoring and exploration of Kubernetes resources
 # brew "kubeval" # Validate Kubernetes configuration files, supports multiple Kubernetes versions
 # brew "kubevela" # Application Platform based on Kubernetes and Open Application Model
@@ -931,7 +933,8 @@ brew "vitess" # replicated MySQL
 # also, YugabyteDB
 
 # brew "clickhouse" # column-oriented database
-# clickhouse-odbc: Official ODBC driver implementation for accessing ClickHouse as a data source
+# brew "clickhouse-odbc" # Official ODBC driver implementation for accessing ClickHouse as a data source
+# brew "clickhouse-sql-parser" # Clickhouse sql parser in pure Go
 
 # brew "apache-drill" # Schema-free SQL Query Engine for Hadoop, NoSQL and Cloud Storage
 # brew "clangql" # Run a SQL like language to perform queries on C/C++ files
@@ -1603,6 +1606,7 @@ brew "dnstracer" # traces a chain of DNS servers to the source
 brew "dnsviz" # Tools for analyzing and visualizing DNS and DNSSEC behavior
 brew "dnsx" # DNS query toolkit
 brew "dnsmap" # Passive DNS network mapper (a.k.a. subdomains bruteforcer)
+brew "dug" # Global DNS propagation checker that gives pretty output
 brew "findomain" # Cross-platform subdomain enumerator
 brew "nuclei" # HTTP/DNS scanner configurable via YAML templates
 brew "scilla" # DNS, subdomain, port, directory enumeration tool
@@ -2202,8 +2206,15 @@ cask "wireshark" # network analyzer and capture tool - command line interface
 # brew "pcapplusplus" # C++ network sniffing, packet parsing and crafting framework
 # brew "yaf" # Yet another flowmeter: processes packet data from pcap(3)
 
+# Salesforce
+# brew "sf" # Command-line toolkit for Salesforce development
+
+# Scraping
+brew "pipet" # Swiss-army tool for scraping and extracting data
+
 # Shell
 brew "argc" # needed to create autocompletions
+brew "carapace" # multi-shell multi-command argument completer
 brew "asdf"
 brew "direnv" # sets/unsets environment variables per-directory
 brew "pure" # pretty, minimal and fast zsh prompt (by Sindre Sorhus)

@@ -2490,10 +2490,9 @@ brew "vunnel" # Tool for collecting vulnerability data from various sources
 # brew "watchman" # by Facebook - watches files and triggers actions
 
 # Programming
-brew "corepack" # Installs a package manager that is not npm, such as pnpm or yarn
 brew "deno" # Run JavaScript code outside of a browser
 brew "node" # Platform built on V8 to build network applications
-brew "node@20" # Run JavaScript code outside of a browser
+brew "node@22" # Run JavaScript code outside of a browser
 
 # brew "npm-check-updates" # Find newer versions of dependencies than what your package.json allows
 # also, np on npm - a better npm publish (by Sindre Sorhus)

@@ -1310,6 +1310,7 @@ brew "monolith" # saves complete web pages as a single HTML file
 # dhall-toml: Convert between Dhall and Toml
 # remarshal: Convert between TOML, YAML and JSON
 # taplo: TOML toolkit written in Rust
+# brew "toml2json" # CLI tool for converting TOML to JSON
 # yj: CLI to convert between YAML, TOML, JSON and HCL
 
 # Protocol Buffer
@@ -1477,6 +1478,7 @@ brew "s3cmd" # client
 
 # Azure
 # brew "azcopy" # Azure Storage data transfer utility
+# brew "azqr" # Azure quick review
 # brew "aztfexport" # Bring your existing Azure resources under the management of Terraform
 # brew "azure-cli" # Microsoft Azure CLI 2.0
 # brew "azure-storage-cpp" # Microsoft Azure Storage Client Library for C++

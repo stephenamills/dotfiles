@@ -225,7 +225,6 @@ brew "git-when-merged" # finds where a commit was merged
 # brew "hg-fast-export" # Fast Mercurial to Git converter
 # brew "homeshick" # Git dotfiles synchronizer written in bash
 # brew "jenkins-job-builder" # Configure Jenkins jobs with YAML files stored in Git
-# brew "jj" # Git-compatible distributed version control system
 # brew "karn" # Manage multiple Git identities
 # brew "kubefirst" # GitOps Infrastructure & Application Delivery Platform for kubernetes
 # brew "lab" # Git wrapper for GitLab
@@ -233,6 +232,7 @@ brew "git-when-merged" # finds where a commit was merged
 # brew "lefthook" # Fast and powerful Git hooks manager for any type of projects
 # brew "legit" # Command-line interface for Git, optimized for workflow simplicity
 # brew "literate-git" # Render hierarchical git repositories into HTML
+# brew "mergiraf" # Syntax-aware Git merge driver
 # brew "microplane" # CLI tool to make git changes across many repos
 # brew "modgit" # Tool for git repo deploy with filters. Used for magento development
 # brew "moon" # Task runner and repo management tool for the web ecosystem

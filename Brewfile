@@ -211,7 +211,6 @@ brew "git-when-merged" # finds where a commit was merged
 # brew "gitoxide" # Idiomatic, lean, fast & safe pure Rust implementation of Git
 # brew "gitql" # Git query language
 # brew "gitsign" # Keyless Git signing using Sigstore
-# brew "gitslave" # Create group of related repos with one as superproject
 # brew "gitter-cli" # Extremely simple Gitter client for terminals
 # brew "gittuf" # Security layer for Git repositories
 # brew "gitu" # TUI Git client inspired by Magit

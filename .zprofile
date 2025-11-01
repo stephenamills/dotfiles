@@ -1,16 +1,16 @@
-# Add paths for Homebrew based on architecture.
-[[ $(uname -m) == "arm64" ]] && eval "$(/opt/homebrew/bin/brew shellenv)" || eval "$(/usr/local/bin/brew shellenv)"
+# Add paths for Homebrew
+eval "$(/opt/homebrew/bin/brew shellenv)"
 
 export ARGC_COMPLETIONS_ROOT="$HOME/.argc"
 export ARGC_COMPLETIONS_PATH="$ARGC_COMPLETIONS_ROOT/completions"
 export JETBRAINS_PATH="$HOME/Library/Application Support/JetBrains/Toolbox/scripts"
-export LESSHISTFILE=- # Disables unsolicited creation of a history file by less in the home directory.
+export LESSHISTFILE=- # Disable unsolicited creation of a history file by less in the home directory.
 
 export DOTNET_PATH="$HOME/.dotnet/tools"
 export GOPATH="$HOME/go"
 export MINT_PATH="$HOME/.mint/bin"
 export JAVA_HOME="$(brew --prefix openjdk)/bin"
-export NODE_PATH="$(brew --prefix node@22)/bin"
+export NODE_PATH="$(brew --prefix node@24)/bin"
 export PIPX_PATH="$HOME/.local/bin"
 export PNPM_HOME="$HOME/Library/pnpm"
 export PYTHON_PATH="$(brew --prefix python)/libexec/bin" # Dynamically expands to the path of whatever the latest version of Python is.

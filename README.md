@@ -22,9 +22,9 @@ Lastly, run the commands below to install:
 brew bundle install --no-lock
 
 xargs -n 1 go install < Gofile
-pnpm install -g $(tr '\n' ' ' < Javascriptfile)
+pnpm install -g $(cat Javascriptfile)
 xargs -n 1 pipx install < Pythonfile
-cargo-binstall -y $(tr '\n' ' ' < Rustfile)
-mint install $(tr '\n' ' ' < Swiftfile)
+cargo-binstall -y $(cat Rustfile)
+mint install $(cat Swiftfile)
 xargs -n 1 dotnet tool install -g < Dotnetfile
 ```

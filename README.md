@@ -21,10 +21,10 @@ Lastly, run the commands below to install:
 ```shell
 brew bundle install --no-lock
 
+xargs -n 1 dotnet tool install -g < Dotnetfile
 xargs -n 1 go install < Gofile
 pnpm install -g $(cat Javascriptfile)
 xargs -n 1 pipx install < Pythonfile
 cargo-binstall -y $(cat Rustfile)
 mint install $(cat Swiftfile)
-xargs -n 1 dotnet tool install -g < Dotnetfile
 ```

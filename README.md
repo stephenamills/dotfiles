@@ -11,12 +11,12 @@ Clone this repository and copy `.zprofile` and `.zshrc` to your home directory.
 Lastly, run the commands below to install:
 
 - The Homebrew packages listed in the `Brewfile`
+- The Dotnet packages in the `Dotnetfile`
 - The Go packages in the `Gofile`
 - The JavaScript packages in the `Javascriptfile`
 - The Python packages in the `Pythonfile`
 - The Rust packages in the `Rustfile`
 - The Swift packages in the `Swiftfile`
-- The Dotnet packages in the `Dotnetfile`
 
 ```shell
 brew bundle install --no-lock

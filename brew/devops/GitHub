@@ -1,0 +1,37 @@
+brew "gh" # client
+brew "git-open" # opens a GitHub page
+brew "hub" # older command-line tool
+
+# brew "cmark-gfm" # C implementation of GitHub Flavored Markdown
+# brew "eget" # Easily install prebuilt binaries from GitHub
+# brew "fork-cleaner" # Cleans up old and inactive forks on your GitHub account
+# brew "ghi" # Work on GitHub issues on the command-line
+# brew "ghr" # Upload multiple artifacts to GitHub Release in parallel
+# brew "gibo" # Access GitHub's .gitignore boilerplates
+# brew "gist" # creates a gist
+# brew "gistit" # creates a gist
+# brew "gitbackup" # Tool to backup your Bitbucket, GitHub and GitLab repositories
+# brew "git-cal" # GitHub-like contributions calendar but on the command-line
+# brew "git-open" # Open GitHub webpages from a terminal
+# brew "git-xargs" # Updates multiple Github repositories
+# brew "github-keygen" # Bootstrap GitHub SSH configuration
+# brew "github-keygen" # bootstraps GitHub SSH configuration
+# brew "github-markdown-toc" # creates table of contents for a Readme markdown file
+# brew "github-markdown-toc" # Easy TOC creation for GitHub README.md (in go)
+# brew "github-release" # Create and edit releases on Github (and upload artifacts)
+# brew "github-release" # creates a release or uploads artifacts
+# brew "grip" # GitHub Markdown previewer
+# brew "hub" # Add GitHub support to git on the command-line
+# brew "hubflow" # GitFlow for GitHub
+# brew "legitify" # Tool to detect/remediate misconfig and security risks of GitHub/GitLab assets
+# brew "nushell" # Modern shell for the GitHub era
+# brew "prr" # Mailing list style code reviews for github
+# brew "sugarjar" # Helper utility for a better Git/GitHub experience
+
+# GitHub Actions
+
+# brew "act" # Run your GitHub Actions locally
+# brew "action-validator" # Tool to validate GitHub Action and Workflow YAML files
+# brew "actionlint" # Static checker for GitHub Actions workflow files
+# brew "actions-batch" # Time-sharing supercomputer built on GitHub Actions
+# brew "gabo" # Generates GitHub Actions boilerplate

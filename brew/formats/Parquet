@@ -1,0 +1,3 @@
+# Parquet
+brew "dsq" # runs an SQL query on a Parquet file
+brew "parquet-cli" # tools

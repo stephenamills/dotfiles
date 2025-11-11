@@ -1,0 +1,51 @@
+# SSH
+brew "openssh" # OpenBSD SSH connectivity tools
+
+# brew "apt-dater" # Manage package updates on remote hosts using SSH
+# brew "assh" # Advanced SSH config - Regex, aliases, gateways, includes and dynamic hosts
+# brew "autossh" # Automatically restart SSH sessions and tunnels
+# brew "connect" # Provides SOCKS and HTTPS proxy support to SSH
+# brew "corkscrew" # Tunnel SSH through HTTP proxies
+# brew "csshx" # Cluster ssh tool for Terminal.app
+# brew "dropbear" # Small SSH server/client for POSIX-based system
+# brew "duo_unix" # Two-factor authentication for SSH
+# brew "fabric" # Library and command-line tool for SSH
+# brew "git-ssh" # Proxy for serving git repositories over SSH
+# brew "github-keygen" # Bootstrap GitHub SSH configuration
+# brew "gssh" # SSH automation tool based on Groovy DSL
+# brew "hss" # Interactive parallel SSH client
+# brew "keepkey-agent" # Keepkey Hardware-based SSH/GPG agent
+# brew "keychain" # User-friendly front-end to ssh-agent(1)
+# brew "monkeysphere" # Use the OpenPGP web of trust to verify ssh connections
+# brew "mpssh" # Mass parallel ssh
+# brew "mussh" # Multi-host SSH wrapper
+# brew "onlykey-agent" # Middleware that lets you use OnlyKey as a hardware SSH/GPG device
+# brew "orgalorg" # Parallel SSH commands executioner and file synchronization tool
+# brew "pssh" # Parallel versions of OpenSSH and related tools
+# brew "putty" # Implementation of Telnet and SSH
+# brew "rmate" # Edit files from an SSH session in TextMate
+# brew "rospo" # Simple, reliable, persistent ssh tunnels with embedded ssh server
+# brew "signmykey" # Automated SSH Certificate Authority
+# brew "ssh-audit" # SSH server & client auditing
+# brew "ssh-copy-id" # Add a public key to a remote machine's authorized_keys file
+# brew "ssh-mitm" # SSH server for security audits and malware analysis
+# brew "ssh-permit-a38" # Central management and deployment for SSH keys
+# brew "ssh-vault" # Encrypt/decrypt using SSH keys
+# brew "ssh3" # Faster and richer secure shell using HTTP 3
+# brew "sshfs" # File system client based on SSH File Transfer Protocol
+# brew "sshguard" # Protect from brute force attacks against SSH
+# brew "sshpass" # Non-interactive SSH password auth
+# brew "sshportal" # SSH & Telnet bastion server
+# brew "sshs" # Graphical command-line client for SSH
+# brew "sshtrix" # SSH login cracker
+# brew "sshuttle" # Proxy server that works as a poor man's VPN
+# brew "stormssh-completion" # Completion for storm-ssh
+# brew "teleport" # Modern SSH server for teams managing distributed infrastructure
+# brew "tkey-ssh-agent" # SSH agent for use with the TKey security stick
+# brew "trezor-agent" # Hardware SSH/GPG agent for Trezor, Keepkey & Ledger
+# brew "trzsz-ssh" # Simple ssh client with trzsz ( trz / tsz ) support
+# brew "tssh" # SSH Lightweight management tools
+# brew "vassh" # Vagrant Host-Guest SSH Command Wrapper/Proxy/Forwarder
+# brew "xxh" # Bring your favorite shell wherever you go through ssh
+# brew "yubikey-agent" # Seamless ssh-agent for YubiKeys and other PIV tokens
+# brew "zssh" # Interactive file transfers over SSH

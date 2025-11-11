@@ -1,0 +1,24 @@
+brew "tcpdump" # packet analyzer
+brew "yaf" # really useful networking data pipeline architecture and flow record display tool
+cask "wireshark" # network analyzer and capture tool - command line interface
+
+# brew "argus" # tcpdump alternative that shows TCP state for each line such as CON FIN RST, or flow records whatever
+# brew "argus-clients"
+
+# brew "bittwist" # Libcap-based Ethernet packet generator
+# brew "daemonlogger" # Network packet logger and soft tap daemon
+# brew "httpflow" # Packet capture and analysis utility similar to tcpdump for HTTP
+# brew "httpry" # Packet sniffer for displaying and logging HTTP traffic
+# brew "ndpi" # Deep Packet Inspection (DPI) library
+# brew "packetbeat" # Lightweight Shipper for Network Data
+# brew "packetq" # SQL-like frontend to PCAP files
+# brew "pcapplusplus" # C++ network sniffing, packet parsing and crafting framework
+# brew "pktanon" # Packet trace anonymization
+# brew "pywhat" # Can identify some things in a pcap file
+# brew "sniffglue" # Secure multithreaded packet sniffer
+
+# brew "fprobe" # Libpcap-based NetFlow probe
+# brew "libpcap" # Portable library for network traffic capture
+# brew "packetq" # SQL-like frontend to PCAP files
+# brew "pcapplusplus" # C++ network sniffing, packet parsing and crafting framework
+# brew "yaf" # Yet another flowmeter: processes packet data from pcap(3)

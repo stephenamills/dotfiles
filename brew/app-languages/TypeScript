@@ -1,0 +1,61 @@
+brew "deno" # Run JavaScript code outside of a browser
+brew "node" # Platform built on V8 to build network applications
+brew "node@22" # Run JavaScript code outside of a browser
+
+# brew "npm-check-updates" # Find newer versions of dependencies than what your package.json allows
+# also, np on npm - a better npm publish (by Sindre Sorhus)
+
+# brew "json2ts" # Compile JSONSchema to TypeScript type declarations
+# brew "roblox-ts" # TypeScript-to-Luau Compiler for Roblox
+# brew "tygo" # Generate Typescript types from Golang source code
+# brew "typescript" # Language for application scale JavaScript development
+
+# brew "babel" # Compiler for writing next generation JavaScript
+# brew "biome" # Toolchain of the web
+# brew "closure-compiler" # JavaScript optimizing compiler
+# brew "cubejs-cli" # Cube.js command-line interface
+# brew "emscripten" # LLVM bytecode to JavaScript compiler
+# brew "esbuild" # Extremely fast JavaScript bundler and minifier
+# brew "eslint" # AST-based pattern checker for JavaScript
+# brew "flamebearer" # creates a flamegraph for a JavaScript app from a terminal – also has a web UI
+# brew "flow" # Static type checker for JavaScript
+# brew "grunt-cli" # JavaScript Task Runner
+# brew "imagejs" # Tool to hide JavaScript inside valid image files
+# brew "jose" # C-language implementation of Javascript Object Signing and Encryption
+# brew "jsdoc3" # API documentation generator for JavaScript
+# brew "jsmin" # Minify JavaScript code
+# brew "kuto" # Reverse JS bundler
+# brew "lerna" # Tool for managing JavaScript projects with multiple packages
+# brew "mantra" # Tool to hunt down API key leaks in JS files and pages
+# brew "mjml" # JavaScript framework that makes responsive-email easy
+# brew "pmd" # Source code analyzer for Java, JavaScript, and more
+# brew "prettier" # Code formatter for JavaScript, CSS, JSON, GraphQL, and Markdown
+# brew "protoc-gen-js" # Protocol buffers JavaScript generator plugin
+# brew "protoc-gen-js" # Protocol buffers JavaScript generator plugin
+# brew "quick-lint-js" # Find bugs in your JavaScript code
+# brew "quick-lint-js" # Find bugs in your JavaScript code
+# brew "retire" # Scanner detecting the use of JavaScript libraries with known vulnerabilities
+# brew "rslint" # Extremely fast JavaScript and TypeScript linter
+# brew "standard" # JavaScript Style Guide, with linter & automatic code fixer
+# brew "urlfinder" # Extracting URLs and subdomains from JS files on a website
+# brew "v8" # Google's JavaScript engine
+# brew "vite" # Next generation frontend tooling. It's fast!
+# brew "vue-cli" # Standard Tooling for Vue.js Development
+# brew "webpack" # Bundler for JavaScript and friends
+
+# brew "llnode" # LLDB plugin for live/post-mortem debugging of node.js apps
+# brew "ncc" # Compile a Node.js project into a single file
+# brew "node@18" # Run JavaScript code outside of a browser
+# brew "orogene" # `node_modules/` package manager and utility toolkit
+# brew "patch-package" # Fix broken node modules instantly
+
+# Also,
+# prettier
+# prettier-plugin-tailwindcss
+
+# biome
+# deno
+# eslint-config-prettier
+# eslint-plugin-tailwindcss
+# quick-lint-js
+# typescript-eslint

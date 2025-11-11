@@ -1,0 +1,5 @@
+# brew "mongo-orchestration" # REST API to manage MongoDB configurations on a single host
+# brew "mongocli" # MongoDB CLI enables you to manage your MongoDB in the Cloud
+# brew "mongodb-atlas-cli" # Atlas CLI enables you to manage your MongoDB Atlas
+# brew "mongoose" # Web server build on top of Libmongoose embedded library
+# brew "mongosh" # MongoDB Shell to connect, configure, query, and work with your MongoDB database

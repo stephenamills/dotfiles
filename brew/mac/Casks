@@ -1,0 +1,18 @@
+cask "dropbox"
+cask "framer"
+cask "ilok-license-manager"
+cask "inkscape"
+cask "microsoft-auto-update"
+cask "replay"
+cask "visual-studio-code"
+
+# Audio
+cask "fl-studio"
+cask "surge-xt"
+
+cask "blackhole-2ch"
+cask "loopback"
+
+# cask "reaper"
+# brew "jack"
+

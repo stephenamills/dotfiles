@@ -1,0 +1,94 @@
+brew "docker" # pack, ship and run any application as a lightweight container (Docker CLI)
+brew "docker-buildx" # Docker CLI plugin for extended build capabilities with BuildKit
+brew "docker-compose" # isolated development environments using Docker
+
+# brew "nerdctl" # CLI for containerd (Docker-compatible)
+# brew "crun" # Fast and lightweight fully featured OCI runtime and C library
+# also, runc
+
+# brew "cri-tools" # CLI and validation tools for Kubelet Container Runtime Interface (CRI)
+
+brew "podlet" # Generate podman quadlet files from a podman command or compose file
+brew "podman" # Tool for managing OCI containers and pods
+brew "podman-compose" # Alternative to docker-compose using podman
+
+brew "devcontainer" # Command implementing the Development Containers specification
+
+brew "colima" # run containers in a Linux virtual machine (uses Docker CLI)
+brew "lima" # Linux virtual machines
+
+# cask "docker" # Docker Desktop - runs containers in a Linux virtual machine
+# cask "podman-desktop" # runs containers in a Linux virtual machine
+# cask "rancher" # runs containers in a Linux virtual machine
+
+# brew "buildkit" # Concurrent, cache-efficient, and Dockerfile-agnostic builder toolkit
+# brew "container-diff" # Diff your Docker containers
+# brew "dcp" # Docker cp made easy
+# brew "ddev/ddev/ddev" # Installs PHP or other dev environments
+# brew "devspace" # CLI helps develop/deploy/debug apps with Docker and k8s
+# brew "docker-clean" # Clean Docker containers, images, networks, and volumes
+# brew "docker-credential-helper" # Platform keystore credential helper for Docker
+# brew "docker-credential-helper-ecr" # Docker Credential Helper for Amazon ECR
+# brew "docker-gen" # Generate files from docker container metadata
+# brew "docker-ls" # Tools for browsing and manipulating docker registries
+# brew "docker-slim" # Minify and secure Docker images
+# brew "docker-squash" # Docker image squashing tool
+# brew "dockerfile-language-server" # Language server for Dockerfiles powered by Node, TypeScript, and VSCode
+# brew "dockerize" # Utility to simplify running applications in docker containers
+# brew "dockly" # Immersive terminal interface for managing docker containers and services
+# brew "dockviz" # Visualizing docker data
+# brew "dockward" # Port forwarding tool for Docker containers
+# brew "dory" # Development proxy for docker
+# brew "gebug" # Debug Dockerized Go applications better
+# brew "gitlab-ci-local" # Run gitlab pipelines locally as a shell executor or Docker executor
+# brew "hadolint" # Smarter Dockerfile linter to validate best practices
+# brew "k3d" # Little helper to run CNCF's k3s in Docker
+# brew "kind" # Run local Kubernetes cluster in Docker
+# brew "kompose" # Tool to move from `docker-compose` to Kubernetes
+# brew "lazydocker" # Lazier way to manage everything docker
+# brew "oxker" # Terminal User Interface (TUI) to view & control docker containers
+# brew "powerman-dockerize" # Utility to simplify running applications in docker containers
+# brew "pumba" # Chaos testing tool for Docker
+# brew "reg" # Docker registry v2 command-line client
+# brew "regclient" # Docker and OCI Registry Client in Go and tooling using those libraries
+
+brew "cog" # Containers for machine learning without a Dockerfile (by Replicate)
+
+# brew "argo" # Get stuff done with container-native workflows for Kubernetes
+# brew "cdebug" # Swiss army knife of container debugging
+# brew "cekit" # Container Evolution Kit
+# brew "clair" # Vulnerability Static Analysis for Containers
+# brew "conmon" # OCI container runtime monitor
+# brew "cosign" # Container signing
+# brew "cri-tools" # CLI and validation tools for Kubelet Container Runtime Interface (CRI)
+# brew "ctop" # Top-like interface for container metrics
+# brew "earthly" # Build automation tool for the container era
+# brew "mcap" # Serialization-agnostic container file format for pub/sub messages
+# brew "podman" # Tool for managing OCI containers and pods
+# brew "singularity" # Application container and unprivileged sandbox platform for Linux
+# brew "stern" # Tail multiple Kubernetes pods & their containers
+# brew "toast" # Tool for running tasks in containers
+
+brew "container-structure-test" # Validate the structure of your container images
+brew "dive" # Explore each layer in a docker image
+brew "manifest-tool" # Command-line tool to create and query container image manifest list/indexes
+brew "skopeo" # Work with remote image registries
+
+# brew "apko" # Builds an OCI image from an APK package directly, without a Dockerfile
+# brew "copa" # Tool to directly patch container images using vulnerability scanning results
+# brew "diffoci" # Diff for Docker and OCI container images
+# brew "disktype" # Detect content format of a disk or disk image
+# brew "dmg2img" # Utilities for converting macOS DMG images
+# brew "docuum" # Perform least recently used (LRU) eviction of Docker images
+# brew "grype" # Vulnerability scanner for container images and filesystems
+# brew "nixpacks" # App source + Nix packages + Docker = Image
+# brew "notation" # CLI tool to sign and verify OCI artifacts and container images
+# brew "oras" # OCI Registry As Storage
+# brew "pug" # Drive terraform at terminal velocity
+# brew "source-to-image" # Tool for building source and injecting into docker images
+# brew "sysdig" # System-level exploration and troubleshooting tool
+# brew "syft" # CLI for generating a Software Bill of Materials from container images
+# brew "trivy" # Vulnerability scanner for container images, file systems, and Git repos
+# brew "whalebrew" # Homebrew, but with Docker images
+# brew "xeol" # Xcanner for end-of-life software in container images, filesystems, and SBOMs
+# brew "xmount" # Convert between multiple input & output disk image types

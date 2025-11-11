@@ -1,0 +1,32 @@
+brew "cidr" # a lifesaver
+brew "cidr2range"
+brew "cidrmerge"
+brew "gping"
+brew "grepip" # by IPinfo - filters IPv4 & IPv6 addresses
+brew "ipinfo-cli" # by IPinfo - gets IP geolocation and other types of IP data
+brew "iproute2mac" # Linux ip and bridge command for macOS
+brew "ipcalc" # good calculator and has a web version
+brew "ipv6calc"
+brew "ipv6toolkit"
+brew "lft" # advanced traceroute
+brew "mapcidr" # by Project Discovery - tool for subnet ranges
+brew "mtr"
+brew "netaddr"
+brew "netmask"
+brew "nexttrace" # visual route tracking
+brew "range2cidr" # by IPinfo
+brew "sipcalc" # advanced subnet calculator - looks really useful
+brew "subnetcalc"
+brew "tracebox" # tries to detect intermediary in the path
+brew "twoping" # bi-directional ping to determine which direction has packet loss
+brew "whatmask"
+
+# brew "grepcidr" # unsure why this exists
+# brew "ipinfo" # has ipmatch command which might be useful
+# brew "irrtoolset" # deprecated
+# brew "juise" # by Juniper - scripting environment that works outside of Junos
+# brew "mmdbinspect" # looks up IPs or networks in a MaxMind database file
+# brew "prips" # shows IP addresses in a given range
+# brew "rpki-client" # by OpenBSD team
+# brew "scamper" # advanced traceroute
+# brew "trippy" # like mtr

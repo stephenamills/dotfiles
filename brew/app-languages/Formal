@@ -1,0 +1,4 @@
+# Lightweight Formal Methods
+brew "dafny"
+cask "alloy"
+cask "tla-plus-toolbox"

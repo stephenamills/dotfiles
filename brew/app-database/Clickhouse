@@ -1,0 +1,3 @@
+# brew "clickhouse" # column-oriented database
+# brew "clickhouse-odbc" # Official ODBC driver implementation for accessing ClickHouse as a data source
+# brew "clickhouse-sql-parser" # Clickhouse sql parser in pure Go

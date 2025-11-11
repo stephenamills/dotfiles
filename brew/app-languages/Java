@@ -1,0 +1,38 @@
+# brew "ant" # Java build tool
+# brew "ant-contrib" # Collection of tasks for Apache Ant
+# brew "asciidoctorj" # Java wrapper and bindings for Asciidoctor
+# brew "checkstyle" # Check Java source against a coding standard
+# brew "dex2jar" # Tools to work with Android .dex and Java .class files
+# brew "google-java-format" # Reformats Java source code to comply with Google Java Style
+# brew "java-service-wrapper" # Simplify the deployment, launch and monitoring of Java applications
+# brew "jbang" # Tool to create, edit and run self-contained source-only Java programs
+# brew "jenv" # Manage your Java environment
+# brew "jsonschema2pojo" # Generates Java types from JSON Schema (or example JSON)
+# brew "jsvc" # Wrapper to launch Java applications as daemons
+# brew "launch4j" # Cross-platform Java executable wrapper
+# brew "maven" # Java-based project management
+# brew "openjdk" # Development kit for the Java programming language
+# brew "osslsigncode" # OpenSSL based Authenticode signing for PE/MSI/Java CAB files
+# brew "pmd" # Source code analyzer for Java, JavaScript, and more
+# brew "spotbugs" # Tool for Java static analysis
+
+# brew "conduit" # Streams data between data stores. Kafka Connect replacement. No JVM required
+# brew "crash" # Kernel debugging shell for Java that allows gdb-like syntax
+# brew "derby" # Apache Derby is an embedded relational database running on JVM
+# brew "gcviewer" # Java garbage collection visualization tool
+# brew "golo" # Lightweight dynamic language for the JVM
+# brew "gosu" # Pragmatic language for the JVM
+# brew "jadx" # Dex to Java decompiler
+# brew "jasmin" # Assembler for the Java Virtual Machine
+# brew "jhiccup" # Measure pauses and stalls of an app's Java runtime platform
+# brew "jmxtrans" # Tool to connect to JVMs and query their attributes
+# brew "jvm-mon" # Console-based JVM monitoring
+# brew "jvmtop" # Console application for monitoring all running JVMs on a machine
+# brew "kcat" # Generic command-line non-JVM Apache Kafka producer and consumer
+# brew "kotlin" # Statically typed programming language for the JVM
+# brew "leakcanary-shark" # CLI Java memory leak explorer for LeakCanary
+# brew "micronaut" # Modern JVM-based framework for building modular microservices
+# brew "proguard" # Java class file shrinker, optimizer, and obfuscator
+# brew "sjk" # Tools for JVM troubleshooting, monitoring, and profiling
+# brew "spring-loaded" # Java agent to enable class reloading in a running JVM
+# brew "vert.x" # Toolkit for building reactive applications on the JVM

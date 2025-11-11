@@ -1,0 +1,26 @@
+brew "perl" # Highly capable, feature-rich programming language
+
+# brew "carton" # Perl module dependency manager (aka Bundler for Perl)
+# brew "chcase" # Perl file-renaming script
+# brew "clean" # Search for files matching a regex and delete them
+# brew "cpanminus" # Get, unpack, build, and install modules from CPAN
+# brew "cpansearch" # CPAN module search written in C
+# brew "cpm" # Fast CPAN module installer
+# brew "extract_url" # Perl script to extracts URLs from emails or plain text
+# brew "perl-build" # Perl builder
+# brew "perltidy" # Perl formatter
+# brew "platypus" # Create macOS applications from {Perl,Ruby,sh,Python} scripts
+# brew "pod2man" # Perl documentation generator
+# brew "rename" # Perl-powered file rename script with many helpful built-ins
+# brew "superlu" # Solve large, sparse nonsymmetric systems of equations
+
+# brew "grex" # Command-line tool for generating regular expressions
+# brew "grok" # DRY and RAD for regular expressions and then some
+# brew "melody" # Language that compiles to regular expressions
+# brew "pdfgrep" # Search PDFs for strings matching a regular expression
+# brew "pomsky" # Regular expression language
+# brew "re2c" # Generate C-based recognizers from regular expressions
+# brew "regex-opt" # Perl-compatible regular expression optimizer
+# brew "regex-opt" # Perl-compatible regular expression optimizer
+# brew "regldg" # Regular expression grammar language dictionary generator
+# brew "rgxg" # C library and command-line tool to generate (extended) regular expressions

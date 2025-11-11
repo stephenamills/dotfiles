@@ -1,0 +1,52 @@
+brew "atlantis" # Terraform pull request automation – looks incredibly useful
+brew "atmos"
+brew "aztfexport" # brings your existing Azure resources under the management of Terraform
+brew "cdktf" # cloud development kit
+brew "coder" # creates self-hosted development environments using Terraform and connects to it using Wireguard
+brew "hashicorp/tap/terraform"
+brew "k2tf" # converts Kubernetes YAML to Terraform HCL
+brew "iam-policy-json-to-terraform" # converts an IAM Policy from JSON to Terraform
+brew "infracost" # cost estimates
+brew "pulumi" # not Terraform, but similar enough
+brew "scoutsuite" # really good scanner that uses their sadcloud Terraform project to create and teardown an insecure cloud environment
+brew "terragrunt" # thin wrapper for Terraform for locking state
+brew "terramate" # manages Terraform stacks with change detections and code generations
+brew "tfsec" # static analysis security scanner for Terraform plans
+
+# brew "cf2tf" # Cloudformation templates to Terraform HCL converter
+# brew "hcl2json" # Convert HCL2 to JSON
+# brew "inframap" # Read your tfstate or HCL to generate a graph
+# brew "k2tf" # Kubernetes YAML to Terraform HCL converter
+# brew "kubergrunt" # Collection of commands to fill in the gaps between Terraform, Helm, and Kubectl
+# brew "opentofu" # Drop-in replacement for Terraform. Infrastructure as Code Tool
+# brew "pug" # Drive terraform at terminal velocity
+# brew "tenv" # OpenTofu / Terraform / Terragrunt / Atmos version manager
+# brew "terracognita" # Reads from existing Cloud Providers and generates Terraform code
+# brew "terraform-docs" # Tool to generate documentation from Terraform modules
+# brew "terraform-graph-beautifier" # CLI to beautify `terraform graph` output
+# brew "terraform-inventory" # Go app which generates a dynamic Ansible inventory from a Terraform state file
+# brew "terraform-local" # CLI wrapper to deploy your Terraform applications directly to LocalStack
+# brew "terraform-ls" # Terraform Language Server
+# brew "terraform-lsp" # Language Server Protocol for Terraform
+# brew "terraform-provider-libvirt" # Terraform provisioning with Linux KVM using libvirt
+# brew "terraform-rover" # Terraform Visualizer
+# brew "terraform_landscape" # Improve Terraform's plan output
+# brew "terraformer" # CLI tool to generate terraform files from existing infrastructure
+# brew "terraforming" # Export existing AWS resources to Terraform style (tf, tfstate)
+# brew "terragrunt-atlantis-config" # Generate Atlantis config for Terragrunt projects
+# brew "terrahash" # Create and store a hash of the Terraform modules used by your configuration
+# brew "terrahelp" # Tool providing extra functionality for Terraform
+# brew "terrahub" # Terraform automation and orchestration tool
+# brew "terramaid" # Utility for generating Mermaid diagrams from Terraform configurations
+# brew "terrapin-scanner" # Vulnerability scanner for the Terrapin attack
+# brew "tf-profile" # CLI tool to profile Terraform runs
+# brew "tfautomv" # Generate Terraform moved blocks automatically for painless refactoring
+# brew "tfenv" # Terraform version manager inspired by rbenv
+# brew "tfk8s" # Kubernetes YAML manifests to Terraform HCL converter
+# brew "tflint" # Linter for Terraform files
+# brew "tfmigrate" # Terraform/OpenTofu state migration tool for GitOps
+# brew "tfproviderlint" # Terraform Provider Lint Tool
+# brew "tfschema" # Schema inspector for Terraform/OpenTofu providers
+# brew "tfupdate" # Update version constraints in your Terraform configurations
+# brew "tgenv" # Terragrunt version manager inspired by tfenv
+# brew "yj" # CLI to convert between YAML, TOML, JSON and HCL

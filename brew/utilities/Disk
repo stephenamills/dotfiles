@@ -1,0 +1,6 @@
+brew "dua-cli" # View disk space usage and delete unwanted data, fast
+brew "dust" # More intuitive version of du in rust
+brew "gdu" # Disk usage analyzer with console interface written in Go
+
+# brew "diskonaut" # Terminal visual disk space navigator
+# brew "erdtree" # Multi-threaded file-tree visualizer and disk usage analyzer

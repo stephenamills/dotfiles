@@ -1,0 +1,10 @@
+brew "websocat" # command-line client for WebSockets
+brew "websocketd" # turns any command-line program into a websocket server
+
+# brew "anycable-go" # WebSocket server with action cable protocol
+# brew "condure" # HTTP/WebSocket connection manager
+# brew "nopoll" # open-source C WebSocket toolkit
+# brew "tcpkali" # High performance TCP and WebSocket load generator and sink
+# brew "whistle" # HTTP, HTTP2, HTTPS, Websocket debugging proxy
+# brew "wstunnel" # Tunnel all your traffic over Websocket or HTTP2
+# brew "zurl" # HTTP and WebSocket client worker with ZeroMQ interface

@@ -1,0 +1,45 @@
+# brew "boringtun" # Userspace WireGuard implementation in Rust
+# brew "tailscale" # Easiest, most secure way to use WireGuard and 2FA (Server - also, see the Mac App Store Tailscale client below)
+# brew "wgcf" # Generate WireGuard profile from Cloudflare Warp account
+# brew "wireguard-go" # Userspace Go implementation of WireGuard
+# brew "wireguard-tools" # Tools for the WireGuard secure network tunnel
+
+# brew "ike-scan" # Discover and fingerprint IKE hosts
+# brew "openiked" # IKEv2 daemon - portable version of OpenBSD iked
+
+brew "bore-cli" # Modern, simple TCP tunnel in Rust that exposes local ports to a remote server (only 400 lines of code)
+brew "openconnect" # Client for Palo Alto, Cisco, Juniper, and Fortinet VPNs
+brew "vpn-slice" # Vpnc-script replacement for easy and secure split-tunnel VPN setup
+
+cask "ngrok" # Reverse proxy, secure introspectable tunnels to localhost
+
+# brew "dsvpn" # Dead Simple VPN
+# brew "killswitch" # VPN kill switch for macOS
+# brew "kubevpn" # Offers a Cloud-Native Dev Environment that connects to your K8s cluster network
+# brew "macosvpn" # Create Mac OS VPNs programmatically
+# brew "openfortivpn" # Open Fortinet client for PPP+TLS VPN tunnel services
+# brew "openvpn" # SSL/TLS VPN implementing OSI layer 2 or 3 secure network extension
+# brew "strongswan" # VPN based on IPsec
+# brew "tinc" # Virtual Private Network (VPN) tool
+
+# brew "autossh" # Automatically restart SSH sessions and tunnels
+# brew "chisel-tunnel" # Fast TCP/UDP tunnel over HTTP
+# brew "clash" # Rule-based tunnel in Go
+# brew "cloudflared" # Cloudflare Tunnel client (formerly Argo Tunnel)
+# brew "corkscrew" # Tunnel SSH through HTTP proxies
+# brew "fastd" # Fast and Secure Tunnelling Daemon
+# brew "ghostunnel" # Simple SSL/TLS proxy with mutual authentication
+# brew "gost" # Go Simple Tunnel - a simple tunnel written in golang
+# brew "kcptun" # Stable & Secure Tunnel based on KCP with N:M multiplexing and FEC
+# brew "localtunnel" # Exposes your localhost to the world for easy testing and sharing
+# brew "mihomo" # Another rule-based tunnel in Go, formerly known as ClashMeta
+# brew "openssh" # OpenBSD SSH connectivity tools (SSH tunneling)
+# brew "pgrok" # ngrok alternative - multi-tenant HTTP/TCP reverse tunnel solution
+# brew "proxytunnel" # Create TCP tunnels through HTTPS proxies
+# brew "ptunnel" # Tunnel over ICMP
+# brew "rospo" # Simple, reliable, persistent ssh tunnels with embedded ssh server
+# brew "stunnel" # SSL tunneling program
+# brew "tcptunnel" # TCP port forwarder
+# brew "tunnel" # Expose local servers to the internet securely
+# brew "udptunnel" # Tunnel UDP packets over a TCP connection
+# brew "wstunnel" # Tunnel all your traffic over Websocket or HTTP2

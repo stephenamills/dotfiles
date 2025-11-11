@@ -1,0 +1,10 @@
+brew "nuget" # package manager
+cask "dotnet-sdk" # runtime and compiler of .NET Core
+# brew "paket" # package manager
+
+# brew "astyle" # Source code beautifier for C#
+# brew "cake" # Cross platform build automation system with a C# DSL
+# brew "scriptcs" # Tools to write and execute C#
+# brew "docfx" # Tools for building and publishing API documentation for .NET projects
+# brew "dotnet" # .NET Core - runtime only
+# brew "mono" # Cross platform, open source .NET development framework

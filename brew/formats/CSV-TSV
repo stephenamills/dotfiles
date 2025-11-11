@@ -1,0 +1,36 @@
+# CSV & TSV
+brew "csvlens" # viewer
+brew "tabiew" # viewer that supports SQL queries
+brew "tidy-viewer" # great viewer
+# brew "csvprintf" # formats CSVs from a table into separate lines
+# brew "csview" # viewer
+
+brew "csvkit" # toolkit
+brew "csvtk" # toolkit
+brew "jtbl" # converts JSON to a table
+brew "miller" # like sed, awk, cut, join & sort
+brew "qsv" # xsv replacement with a lot of features and documentation
+brew "xsv" # toolkit, very good though kinda abandoned
+
+brew "dasel" # jq
+brew "sq" # jq
+brew "yq" # jq
+
+brew "csvq" # runs an SQL query on a CSV or Excel file
+brew "dsq" # runs an SQL query on a CSV file
+brew "harelba/q/q" # runs an SQL query on a CSV file
+
+# brew "cqlkit" # CLI tool to export Cassandra query as CSV and JSON format
+# brew "csview" # High performance csv viewer for cli
+# brew "csvprintf" # Command-line utility for parsing CSV files
+# brew "csvtomd" # CSV to Markdown table converter
+# brew "dasel" # JSON, YAML, TOML, XML, and CSV query and modification tool
+# brew "dsq" # CLI tool for running SQL queries against JSON, CSV, Excel, Parquet, and more
+# brew "jtbl" # Convert JSON and JSON Lines to terminal, CSV, HTTP, and markdown tables
+# brew "midicsv" # Convert MIDI audio files to human-readable CSV format
+# brew "psql2csv" # Run a query in psql and output the result as CSV
+# brew "qsv" # Ultra-fast CSV data-wrangling toolkit
+
+brew "json2tsv" # converts JSON to TSV
+# brew "csvtk" # TSV toolkit - listed above
+# brew "json-table" # converts JSON to TSV or CSV

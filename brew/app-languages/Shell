@@ -1,0 +1,117 @@
+# Shell
+brew "argc" # needed to create autocompletions
+brew "carapace" # multi-shell multi-command argument completer
+brew "asdf"
+brew "direnv" # sets/unsets environment variables per-directory
+brew "pure" # pretty, minimal and fast zsh prompt (by Sindre Sorhus)
+brew "zsh" # UNIX shell (command interpreter)
+brew "zsh-autocomplete" # real-time, type-ahead completion for Zsh
+brew "zsh-autopair" # auto-closes and deletes matching delimiters in zsh
+brew "zsh-autosuggestions" # fast/unobtrusive autosuggestions for zsh (like Fish)
+brew "zsh-syntax-highlighting" # syntax highlighting for zsh (like Fish)
+
+brew "chalk-cli" # colorizes teminal text (by Sindre Sorhus)
+brew "shellcheck" # checks a shell script
+brew "shellspec" # unit testing framework
+brew "shelltestrunner" # tests command-line programs
+brew "shfmt" # formats a shell script
+
+# brew "antidote" # Plugin manager for zsh, inspired by antigen and antibody
+# brew "antigen" # Plugin manager for zsh, inspired by oh-my-zsh and vundle
+# brew "atuin" # Improved shell history for zsh, bash, fish and nushell
+# brew "fizsh" # Fish-like front end for ZSH
+# brew "geometry" # Minimal, fully customizable and composable zsh prompt theme
+# brew "hstr" # Bash and zsh history suggest box
+# brew "kube-ps1" # Kubernetes prompt info for bash and zsh
+# brew "liquidprompt" # Adaptive prompt for bash and zsh shells
+# brew "powerlevel10k" # Theme for zsh
+# brew "pure" # Pretty, minimal and fast ZSH prompt
+# brew "purr" # Versatile zsh CLI tool for viewing and searching through Android logcat output
+# brew "shellspec" # BDD unit testing framework for dash, bash, ksh, zsh and all POSIX shells
+# brew "spaceship" # Zsh prompt for Astronauts
+# brew "typewritten" # Minimal zsh prompt
+# brew "zinit" # Flexible and fast Zsh plugin manager
+# brew "zplug" # Next-generation plugin manager for zsh
+# brew "zsh-async" # Perform tasks asynchronously without external tools
+# brew "zsh-fast-syntax-highlighting" # Feature-rich syntax highlighting for Zsh
+# brew "zsh-git-prompt" # Informative git prompt for zsh
+# brew "zsh-history-substring-search" # Zsh port of Fish shell's history search
+# brew "zsh-lovers" # Tips, tricks, and examples for zsh
+# brew "zsh-navigation-tools" # Zsh curses-based tools, e.g. multi-word history searcher
+# brew "zshdb" # Debugger for zsh
+
+# brew "argc" # Helps create autocompletions
+# brew "bash" # Bourne-Again SHell, a UNIX command interpreter
+# brew "bash-preexec" # Preexec and precmd functions for Bash (like Zsh)
+# brew "bash-snippets" # Collection of small bash scripts for heavy terminal users
+# brew "bash_unit" # Bash unit testing enterprise edition framework for professionals
+# brew "bashate" # Code style enforcement for bash programs
+# brew "bashdb" # Bash shell debugger
+# brew "bashunit" # Simple testing library for bash scripts
+# brew "bat-extras" # Bash scripts that integrate bat with various command-line tools
+# brew "bats-core" # Bash Automated Testing System
+# brew "bork" # Bash-Operated Reconciling Kludge
+# brew "checkbashisms" # Checks for bashisms in shell scripts
+# brew "dhall-bash" # Compile Dhall to Bash
+# brew "fff" # Simple file manager written in bash
+# brew "git-secret" # Bash-tool to store private data inside a Git repo
+# brew "goto" # Bash tool for navigation to aliased directories with auto-completion
+# brew "homeshick" # Git dotfiles synchronizer written in bash
+# brew "oil" # Bash-compatible Unix shell with more consistent syntax and semantics
+# brew "oils-for-unix" # Bash-compatible Unix shell with more consistent syntax and semantics
+# brew "xcv" # Cut, copy and paste files with Bash
+
+# brew "aardvark_shell_utils" # Utilities to aid shell scripts or command-line users
+# brew "autoenv" # Per-project, per-directory shell environments
+# brew "bar" # Provide progress bars for shell scripts
+# brew "beakerlib" # Shell-level integration testing library
+# brew "clitest" # command-line tester
+# brew "create-dmg" # Shell script to build fancy DMGs
+# brew "dash" # POSIX-compliant descendant of NetBSD's ash (the Almquist SHell)
+# brew "dehydrated" # LetsEncrypt/acme client implemented as a shell-script
+# brew "desk" # Lightweight workspace manager for the shell
+# brew "dialog" # Display user-friendly message boxes from shell scripts
+# brew "doitlive" # Replay stored shell commands for live presentations
+# brew "dsh" # Dancer's shell, or distributed shell
+# brew "elvish" # Friendly and expressive shell
+# brew "empty" # Lightweight Expect-like PTY tool for shell scripts
+# brew "envv" # Shell-independent handling of environment variables
+# brew "fswatch" # Monitor a directory for changes and run a shell command
+# brew "gitlab-ci-local" # Run gitlab pipelines locally as shell executor or docker executor
+# brew "gum" # Tool for glamorous shell scripts
+# brew "historian" # Command-line utility for managing shell history in a SQLite database
+# brew "jo" # JSON output from a shell
+# brew "kcov" # Code coverage tester for compiled programs, Python, and shell scripts
+# brew "m-cli" # macOS shell scripts
+# brew "mcfly" # Fly through your shell history
+# brew "mdsh" # Markdown shell pre-processor
+# brew "murex" # Bash-like shell designed for greater command-line productivity and safer scripts
+# brew "ngs" # Powerful programming language and shell designed specifically for Ops
+# brew "nushell" # Modern shell for the GitHub era
+# brew "objc-run" # Use Objective-C files for shell script-like tasks
+# brew "parallel" # Shell command parallelization utility
+# brew "posh" # Policy-compliant ordinary shell
+# brew "powerline-go" # Beautiful and useful low-latency prompt for your shell
+# brew "ppss" # Shell script to execute commands in parallel
+# brew "pueue" # Command-line tool for managing long-running shell commands
+# brew "rc" # Implementation of the AT&T Plan 9 shell
+# brew "sampler" # Tool for shell commands execution, visualization and alerting
+# brew "shc" # Shell Script Compiler
+# brew "sheldon" # Fast, configurable, shell plugin manager
+# brew "shell2http" # Executing shell commands via HTTP server
+# brew "shellharden" # Bash syntax highlighter that encourages/fixes variables quoting
+# brew "shellinabox" # Export command-line tools to web based terminal emulator
+# brew "shellshare" # Live Terminal Broadcast
+# brew "shelltestrunner" # Portable command-line tool for testing command-line programs
+# brew "shellz" # Small utility to track and control custom shellz
+# brew "shfmt" # Autoformat shell script source code
+# brew "shunit2" # Unit testing framework for Bourne-based shell scripts
+# brew "spark" # Sparklines for the shell
+# brew "starship" # Cross-shell prompt for astronauts
+# brew "tzdiff" # Displays Timezone differences with localtime in CLI (shell script)
+# brew "wait_on" # Provides shell scripts with access to kqueue(3)
+# brew "webify" # Wrapper for shell commands as web services
+# brew "xonsh" # Python-powered, cross-platform, Unix-gazing shell language and command prompt
+# brew "xxh" # Bring your favorite shell wherever you go through the ssh
+# brew "zx" # tool for writing better scripts
+# Also, ora on npm - elegant terminal progress spinner (by Sindre Sorhus)

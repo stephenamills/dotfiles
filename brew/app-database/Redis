@@ -1,0 +1,12 @@
+# brew "redis" # in-memory key/value store
+# brew "hiredis" # Minimalistic client for Redis
+# brew "iredis" # Terminal Client for Redis with AutoCompletion and Syntax Highlighting
+# brew "juicefs" # Cloud-based, distributed POSIX file system built on top of Redis and S3
+# brew "keydb" # Multithreaded fork of Redis
+# brew "nutcracker" # Proxy for memcached and redis
+# brew "rdb" # Redis RDB parser
+# brew "redis" # Persistent key-value database, with built-in net interface
+# brew "redis-leveldb" # Redis-protocol compatible frontend to leveldb
+# brew "ssdb" # NoSQL database supporting many data structures: Redis alternative
+# brew "webdis" # Redis HTTP interface with JSON output
+# brew "valkey" # High-performance data structure server that primarily serves key/value workloads

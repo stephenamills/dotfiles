@@ -1,0 +1,10 @@
+# brew "cassandra" # column-oriented database
+# brew "cassandra" # Eventually consistent, distributed key-value store
+# brew "cassandra-cpp-driver" # DataStax C/C++ Driver for Apache Cassandra
+# brew "cassandra-reaper" # Management interface for Cassandra
+# brew "ccm" # Create and destroy an Apache Cassandra cluster on localhost
+# brew "cql-proxy" # DataStax cql-proxy enables Cassandra apps to use Astra DB without code changes
+# brew "cqlkit" # CLI tool to export Cassandra query as CSV and JSON format
+# brew "pillar" # Manage migrations for Cassandra data stores
+
+# also, ScyllaDB

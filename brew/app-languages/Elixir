@@ -1,0 +1,8 @@
+# brew "elixir-ls" # Language Server and Debugger for Elixir
+# brew "elixir" # Functional metaprogramming aware language built on Erlang VM
+# brew "elvis" # Erlang Style Reviewer
+# brew "erlang" # Programming language for highly scalable real-time systems
+# brew "proper" # QuickCheck-inspired property-based testing tool for Erlang
+# brew "rebar3" # Erlang build tool
+# brew "syntaxerl" # Syntax checker for Erlang code and config files
+# brew "wrangler" # Refactoring tool for Erlang

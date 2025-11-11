@@ -1,0 +1,12 @@
+# brew "chisel-tunnel" # Fast UDP tunnel over HTTP
+# brew "enet" # Provides a network communication layer on top of UDP
+# brew "iperf" # Tool to measure maximum TCP and UDP bandwidth
+# brew "iperf3" # Update of iperf: measures TCP, UDP, and SCTP bandwidth
+# brew "udp2raw-multiplatform" # Cross-platform version of udp2raw-tunnel client
+# brew "udptunnel" # Tunnel UDP packets over a TCP connection
+
+# brew "dockward" # Port forwarding tool for Docker containers
+# brew "ocproxy" # User-level SOCKS and port forwarding proxy
+# brew "redir" # Port redirector
+# # brew "tcptunnel" # TCP port forwarder
+

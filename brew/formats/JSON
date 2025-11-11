@@ -1,0 +1,93 @@
+brew "check-jsonschema" # checks a JSON Schema using popular Python jsonschema library
+brew "generate-json-schema" # converts a JSON file into a JSON Schema
+brew "json2ts" # converts JSON Schema to TypeScript type declarations
+brew "plank" # by Pinterest - generates model objects from JSON schemas
+brew "quicktype" # converts JSON into a JSON Schema or a JSON or GraphQL schema into code
+brew "yamale" # schema validator
+
+brew "go-jsonnet" # configuration language for defining JSON data (by Google)
+brew "jrsonnet" # template language
+brew "jsonnet-bundler" # package manager for Jsonnet
+
+brew "gojq" # jq
+brew "ijq" # interactive jq
+brew "jaq" # jq clone
+brew "jnv" # interactive jq (popular)
+brew "jq" # lightweight and flexible processor
+brew "jql" # query language
+
+brew "fastgron" # gron, but faster by using SIMD instructions
+brew "gron" # converts a JSON file into lines that are easy to grep
+brew "jc" # structures the output of any command into JSON
+brew "jello" # works well with jc, and is similar to jq
+brew "jid" # interactive jq (popular)
+brew "json5" # important extension to JSON (used in macOS and iOS, Chromium, Webstorm, Next.js etc.)
+brew "jsonlint" # checker
+
+# brew "astgen" # Generate AST in json format for JS/TS
+# brew "cfn-flip" # Convert AWS CloudFormation templates between JSON and YAML formats
+# brew "check-jsonschema" # JSON Schema CLI
+# brew "cjson" # Ultralightweight JSON parser in ANSI C
+# brew "cqlkit" # CLI tool to export Cassandra query as CSV and JSON format
+# brew "dasel" # JSON, YAML, TOML, XML, and CSV query and modification tool
+# brew "dhall-json" # Dhall to JSON compiler and a Dhall to YAML compiler
+# brew "dsq" # CLI tool for running SQL queries against JSON, CSV, Excel, Parquet, and more
+# brew "fblog" # Small command-line JSON log viewer
+# brew "fx" # Terminal JSON viewer
+# brew "generate-json-schema" # Generate a JSON Schema from Sample JSON
+# brew "go-jsonnet" # Go implementation of configuration language for defining JSON data
+# brew "gopass-jsonapi" # Gopass Browser Bindings
+# brew "hcl2json" # Convert HCL2 to JSON
+# brew "iam-policy-json-to-terraform" # Convert a JSON IAM Policy into terraform
+# brew "jc" # Serializes the output of command-line tools to structured JSON output
+# brew "jd" # JSON diff and patch
+# brew "jello" # Filter JSON and JSON Lines data with Python syntax
+# brew "jid" # Json incremental digger
+# brew "jless" # Command-line pager for JSON data
+# brew "jnv" # Interactive JSON filter using jq
+# brew "jo" # JSON output from a shell
+# brew "jp" # Dead simple terminal plots from JSON data
+# brew "jql" # JSON query language CLI tool
+# brew "jrsonnet" # Rust implementation of Jsonnet language
+# brew "jsawk" # Like awk, but for JSON, using JavaScript objects and arrays
+# brew "jshon" # Parse, read, and create JSON from the shell
+# brew "jsmn" # World fastest JSON parser/tokenizer
+# brew "json-c" # JSON parser for C
+# brew "json-fortran" # Fortran 2008 JSON API
+# brew "json-table" # Transform nested JSON data into tabular data in the shell
+# brew "json2ts" # Compile JSONSchema to TypeScript type declarations
+# brew "json2tsv" # JSON to TSV converter
+# brew "json5" # JSON enhanced with usability features
+# brew "json_spirit" # C++ JSON parser/generator
+# brew "jsonlint" # JSON parser and validator with a CLI
+# brew "jsonnet" # Domain specific configuration language for defining JSON data
+# brew "jsonnet-bundler" # Package manager for Jsonnet
+# brew "jsonpp" # Command-line JSON pretty-printer
+# brew "jsonschema" # Implementation of JSON Schema for Python
+# brew "jsonschema2pojo" # Generates Java types from JSON Schema (or example JSON)
+# brew "jtbl" # Convert JSON and JSON Lines to terminal, CSV, HTTP, and markdown tables
+# brew "maxwell" # Reads MySQL binlogs and writes row updates as JSON to Kafka
+# brew "msgpack-tools" # Command-line tools for converting between MessagePack and JSON
+# brew "netlistsvg" # Draws an SVG schematic from a yosys JSON netlist
+# brew "nlohmann-json" # JSON for modern C++
+# brew "oj" # JSON parser and visualization tool
+# brew "oq" # Performant, and portable jq wrapper to support formats other than JSON
+# brew "otree" # Command-line tool to view objects (JSON/YAML/TOML) in TUI tree widget
+# brew "pdf2json" # PDF to JSON and XML converter
+# brew "prettier" # Code formatter for JavaScript, CSS, JSON, GraphQL, Markdown, YAML
+# brew "qjson" # Map JSON to QVariant objects
+# brew "qp" # Command-line (ND)JSON querying
+# brew "quicktype" # Generate types and converters from JSON, Schema, and GraphQL
+# brew "rapidjson" # JSON parser/generator for C++ with SAX and DOM style APIs
+# brew "remarshal" # Convert between TOML, YAML and JSON
+# brew "sbjson" # JSON CLI parser & reformatter based on SBJson v5
+# brew "simdjson" # SIMD-accelerated C++ JSON parser
+# brew "spectral-cli" # JSON/YAML linter and support OpenAPI v3.1/v3.0/v2.0, and AsyncAPI v2.x
+# brew "tanka" # Flexible, reusable and concise configuration for Kubernetes using Jsonnet
+# brew "tippecanoe" # Build vector tilesets from collections of GeoJSON features
+# brew "twarc" # Command-line tool and Python library for archiving Twitter JSON
+# brew "wal2json" # Convert PostgreSQL changesets to JSON format
+# brew "webdis" # Redis HTTP interface with JSON output
+# brew "xidel" # XPath/XQuery 3.0, JSONiq interpreter to extract data from HTML/XML/JSON
+# brew "yj" # CLI to convert between YAML, TOML, JSON and HCL
+# brew "yq" # Process YAML, JSON, XML, CSV and properties documents from the CLI

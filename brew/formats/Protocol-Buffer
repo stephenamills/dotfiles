@@ -1,0 +1,20 @@
+brew "grpcurl" # curl for gRPC
+brew "grpcui" # Postman for gRPC
+# httpyac: sends a gRPC request (see GraphQL section)
+
+brew "buf" # tool and schema registry
+# brew "grpc-swift" # Swift implementation of gRPC
+# brew "protobuf" # compiler
+# brew "protoc-gen-go" # creates Go code
+# brew "protoc-gen-js" # creates JavaScript code
+# brew "protoc-gen-go-grpc" # protoc plugin that generates code for gRPC-Go clients
+# brew "protoc-gen-grpc-web" # protoc plugin that generates code for gRPC-Web clients
+# brew "swift-protobuf" # plugin and runtime library for using protobuf with Swift
+
+brew "ghz" # gRPC benchmarking tool
+# fortio: HTTP and gRPC load testing and visualization tool and server
+# brew "protolint" # linter
+
+# brew "capnp" # alternative to protocol buffers
+# brew "flatcc" # alternative to protocol buffers
+# brew "osm-pbf" # OpenStreetMap file format

@@ -1,0 +1,76 @@
+brew "pipx" # Install a Python package as a command
+brew "python" # Interpreted, interactive, object-oriented programming language
+
+# brew "pipdeptree" # CLI to display dependency tree of the installed Python packages
+# brew "pipgrip" # Lightweight pip dependency resolver
+# brew "pip-tools" # Locking and sync for Pip requirements files
+
+# brew "poetry" # Python package management tool
+
+cask "miniconda" # Minimal installer for conda
+# brew "conda-lock" # Lightweight lockfile for conda environments
+# brew "grayskull" # Recipe generator for Conda
+# brew "rattler-build" # Universal conda package builder
+
+# brew "abi3audit" # Scans Python packages for abi3 violations and inconsistencies
+# brew "austin" # Python frame stack sampler for CPython
+# brew "autopep8" # Automatically formats Python code to conform to the PEP 8 style guide
+# brew "bandit" # Security-oriented static analyser for Python code
+# brew "black" # Python code formatter
+# brew "bpython" # Fancy interface to the Python interpreter
+# brew "certifi" # Mozilla CA bundle for Python
+# brew "cffi" # C Foreign Function Interface for Python
+# brew "cyclonedx-python" # Creates CycloneDX Software Bill of Materials (SBOM) from Python projects
+# brew "cython" # Compiler for writing C extensions for the Python language
+# brew "darglint" # Python docstring argument linter
+# brew "dynaconf" # Configuration Management for Python
+# brew "fades" # Automatically handle virtualenvs for python scripts
+# brew "flake8" # Lint your Python code for style and logical errors
+# brew "flit" # Simplified packaging of Python modules
+# brew "fred" # Fully featured Federal Reserve command-line interface & Python API wrapper
+# brew "fypp" # Python powered Fortran preprocessor
+# brew "hatch" # Modern, extensible Python project management
+# brew "honcho" # Python clone of Foreman, for managing Procfile-based applications
+# brew "ipython" # Interactive computing in Python
+# brew "isort" # Sort Python imports automatically
+# brew "jello" # Filter JSON and JSON Lines data with Python syntax
+# brew "johnnydep" # Display dependency tree of Python distribution
+# brew "jsonschema" # Implementation of JSON Schema for Python
+# brew "kcov" # Code coverage tester for compiled programs, Python, and shell scripts
+# brew "keyring" # Easy way to access the system keyring service from python
+# brew "llgo" # Go compiler based on LLVM which integrates with the C ecosystem and Python
+# brew "maturin" # Build and publish Rust crates as Python packages
+# brew "memray" # Memory profiler for Python applications
+# brew "nox" # Flexible test automation for Python
+# brew "pdm" # Modern Python package and dependency manager supporting the latest PEP standards
+# brew "pip-audit" # Audits Python environments and dependency trees for known vulnerabilities
+# brew "pipenv" # Python dependency management tool
+# brew "platypus" # Create macOS applications from {Perl,Ruby,sh,Python} scripts
+# brew "ptpython" # Advanced Python REPL
+# brew "py-spy" # Sampling profiler for Python programs
+# brew "pycodestyle" # Simple Python style checker in one Python file
+# brew "pydocstyle" # Python docstring style checker
+# brew "pyflow" # Installation and dependency system for Python
+# brew "pyinstaller" # Bundle a Python application and all its dependencies
+# brew "pyinvoke" # Pythonic task management & command execution
+# brew "pylyzer" # Fast static code analyzer & language server for Python
+# brew "pyoxidizer" # Modern Python application packaging and distribution tool
+# brew "python-argcomplete" # Tab completion for Python argparse
+# brew "python-build" # Simple, correct PEP 517 build frontend
+# brew "python-launcher" # Launch your Python interpreter the lazy/smart way
+# brew "python-packaging" # Core utilities for Python packages
+# brew "python-trove-classifiers" # Canonical source for classifiers on PyPI
+# brew "reorder-python-imports" # Rewrites source to reorder python imports
+# brew "ruff" # Extremely fast Python linter, written in Rust
+# brew "rye" # Experimental Package Management Solution for Python
+# brew "safety" # Checks Python dependencies for known vulnerabilities and suggests remediations
+# brew "sigstore" # Codesigning tool for Python packages
+# brew "sip" # Tool to create Python bindings for C and C++ libraries
+# brew "snakeviz" # Web-based viewer for Python profiler output
+# brew "tox" # Generic Python virtualenv management and test command-line tool
+# brew "twine" # publishes a Python package to PyPI
+# brew "uv" # Extremely fast Python package installer and resolver, written in Rust
+# brew "vermin" # Concurrently detect the minimum Python versions needed to run code
+# brew "vulture" # Find dead Python code
+# brew "xonsh" # Python-powered, cross-platform, Unix-gazing shell language and command prompt
+# brew "yapf" # Formatter for python code

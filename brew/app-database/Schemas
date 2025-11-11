@@ -1,0 +1,18 @@
+# brew "atlas" # schema - manages your database schema as code
+# brew "dbmate" # Lightweight, framework-agnostic database migration tool
+# brew "goose" # database migration
+# brew "flyway" # database version control to control migrations
+# brew "geni" # standalone database migration tool
+# brew "golang-migrate" # database migration
+# brew "goose" # command-line interface for database migrations
+# brew "pillar" # manages Cassandra migrations
+# brew "reshape" # Postgres migrations
+# brew "schema-evolution-manager" # Postgres migrations
+# brew "skeema" # declarative pure-SQL schema management for MySQL
+# brew "sql-migrate" # SQL schema migrations
+# brew "postgraphile" # GraphQL schema created by reflection over a PostgreSQL schema
+# brew "reshape" # Easy-to-use, zero-downtime schema migration tool for Postgres
+# brew "schema-evolution-manager" # Manage postgresql database schema migrations
+# brew "skeema" # Declarative pure-SQL schema management for MySQL and MariaDB
+# brew "sqlboiler" # Generate a Go ORM tailored to your database schema
+# Also, see SchemaHero on pkg.go.dev

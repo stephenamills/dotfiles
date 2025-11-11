@@ -1,0 +1,2 @@
+# brew "dynomite" # strongly consistent, key-value store - a Dynamo implementation (by Netflix)
+# brew "dynein" # DynamoDB client

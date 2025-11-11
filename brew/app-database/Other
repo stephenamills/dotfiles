@@ -1,0 +1,49 @@
+# brew "etcd" # replicated BoltDB
+
+# also, LevelDB
+
+
+# also, Porcupine checker on pkg.go.dev, and MIT course 6.5840
+
+# also, Aerospike
+# also, Spanner and CockroachDB
+# also, YugabyteDB
+
+
+# brew "apache-drill" # Schema-free SQL Query Engine for Hadoop, NoSQL and Cloud Storage
+# brew "clangql" # Run a SQL like language to perform queries on C/C++ files
+# brew "cloud-sql-proxy" # Utility for connecting securely to your Cloud SQL instances
+# brew "csvq" # SQL-like query language for csv
+# brew "dbml-cli" # Convert a DBML file to SQL and vice versa
+# brew "dsq" # CLI tool for running SQL queries against JSON, CSV, Excel, Parquet, and more
+# brew "fselect" # Find files with SQL-like queries
+# brew "fsql" # Search through your filesystem with SQL-esque queries
+# brew "google-sql-tool" # Command-line tool for executing common SQL statements
+# brew "gqlplus" # Drop-in replacement for sqlplus, an Oracle SQL client
+# brew "jet" # Type safe SQL builder with code generation and auto query result data mapping
+# brew "octosql" # SQL query tool to analyze data from different file formats and databases
+# brew "packetq" # SQL-like frontend to PCAP files
+# brew "prestodb" # Distributed SQL query engine for big data
+# brew "prqlc" # Simple, powerful, pipelined SQL replacement
+# brew "pspg" # Unix pager optimized for psql
+# brew "psql2csv" # Run a query in psql and output the result as CSV
+# brew "sql-language-server" # Language Server for SQL
+# brew "sql-lint" # SQL linter to do sanity checks on your queries and bring errors back from the DB
+# brew "sql-migrate" # SQL schema migration tool for Go
+# brew "sql-translator" # Manipulate structured data definitions (SQL and more)
+# brew "sqlancer" # Detecting Logic Bugs in DBMS
+# brew "sqlbench" # Measures and compares the execution time of one or more SQL queries
+# brew "sqlc" # Generate type safe Go from SQL
+# brew "sqlcmd" # Microsoft SQL Server command-line interface
+# brew "sqlfluff" # SQL linter and auto-formatter for Humans
+# brew "sqlfmt" # SQL formatter with width-aware output
+# brew "sqlmap" # Penetration testing for SQL injection and database servers
+# brew "sqlpage" # Web application framework, for creation of websites with simple database queries
+# brew "sqlsmith" # Random SQL query generator
+# brew "sqlx-cli" # Command-line utility for SQLx, the Rust SQL toolkit
+# brew "stackql" # SQL interface for arbitrary resources with full CRUD support
+# brew "steampipe" # Use SQL to instantly query your cloud services
+# brew "textql" # Executes SQL across text files
+# brew "trino" # Distributed SQL query engine for big data
+# brew "zfind" # Search for files (even inside tar/zip/7z/rar) using a SQL-WHERE filter
+# brew "zorba" # NoSQL query processor

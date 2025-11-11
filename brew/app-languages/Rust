@@ -1,0 +1,27 @@
+# brew "bacon" # Background rust code check
+# brew "bindgen" # Automatically generates Rust FFI bindings to C (and some C++) libraries
+# brew "c2rust" # Migrate C code to Rust
+# brew "cargo-auditable" # Make production Rust binaries auditable
+# brew "cargo-binstall" # Binary installation for rust projects
+# brew "cargo-binutils" # Cargo subcommands to invoke the LLVM tools shipped with the Rust toolchain
+# brew "cargo-bundle" # Wrap rust executables in OS-specific app bundles
+# brew "cargo-deps" # Cargo subcommand to building dependency graphs of Rust projects
+# brew "cargo-docset" # Cargo subcommand to generate a Dash/Zeal docset for your Rust packages
+# brew "cargo-instruments" # Easily generate Instruments traces for your rust crate
+# brew "cargo-make" # Rust task runner and build tool
+# brew "cargo-nextest" # Next-generation test runner for Rust
+# brew "cargo-outdated" # Cargo subcommand for displaying when Rust dependencies are out of date
+# brew "cargo-release" # Cargo subcommand `release`: everything about releasing a rust crate
+# brew "cbindgen" # Project for generating C bindings from Rust code
+# brew "corrosion" # Easy Rust and C/C++ Integration
+# brew "maturin" # Build and publish Rust crates as Python packages
+# brew "rure" # C API for RUst's REgex engine
+# brew "rust" # Safe, concurrent, practical language
+# brew "rust-analyzer" # Experimental Rust compiler front-end for IDEs
+# brew "rust-parallel" # Run commands in parallel with Rust's Tokio framework
+# brew "rustfmt" # Format Rust code
+# brew "rustls-ffi" # FFI bindings for the rustls TLS library
+# brew "rustup" # Rust toolchain installer
+# brew "uftrace" # Function graph tracer for C/C++/Rust
+# brew "wasm-pack" # Your favorite rust -> wasm workflow tool
+# brew "wasm-tools" # Low level tooling for WebAssembly in Rust

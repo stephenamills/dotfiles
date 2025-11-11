@@ -1,0 +1,575 @@
+#Azure
+# brew "azcopy" # Azure Storage data transfer utility
+# brew "azqr" # Azure quick review
+# brew "aztfexport" # Bring your existing Azure resources under the management of Terraform
+# brew "azure-cli" # Microsoft Azure CLI 2.0
+# brew "azure-storage-cpp" # Microsoft Azure Storage Client Library for C++
+
+# Modern App Hosting Platforms
+brew "convox" # by former Heroku engineers - lacks nixpacks or buildpacks but can deploy Rails to Kubernetes
+brew "doctl" # buildpacks (old)
+brew "nixpacks" # app source + Nix packages + Docker = image
+brew "railway" # nixpacks
+cask "devkinsta" # nixpacks but does not have a cli
+# also, Heroku on npm, has buildpacks - it's in the Npmfile to avoid using a third-party tap
+# also, Northflank on npm, has nixpacks
+
+
+
+## Non-triaged Whatever
+
+# katana
+# Crawling and spidering framework
+# https://github.com/projectdiscovery/katana
+
+# keploy
+# Testing Toolkit creates test-cases and data mocks from API calls, DB queries
+# https://keploy.io
+
+# keptn
+# CLI for keptn.sh, a message-driven control-plane for application delivery
+# https://keptn.sh
+
+# kin
+# Sane PBXProj files
+# https://github.com/Serchinastico/Kin
+
+# kitchen-sync
+# Fast efficiently sync database without dumping & reloading
+# https://github.com/willbryant/kitchen_sync
+
+# ld-find-code-refs
+# Build tool for sending feature flag code references to LaunchDarkly
+# https://github.com/launchdarkly/ld-find-code-refs
+
+# ldapvi
+# Update LDAP entries with a text editor
+# http://www.lichteblau.com/ldapvi/
+
+# ldeep
+# LDAP enumeration utility
+# https://github.com/franc-pentest/ldeep
+
+# leetup
+# Command-line tool to solve Leetcode problems
+# https://github.com/dragfire/leetup
+
+# linkerd
+# Command-line utility to interact with linkerd
+# https://linkerd.io
+
+# liquibase
+# Library for database change tracking
+# https://www.liquibase.org/
+
+# litani
+# Metabuild system
+# https://awslabs.github.io/aws-build-accumulator/
+
+# livekit
+# Scalable, high-performance WebRTC server
+# https://livekit.io
+
+# livekit-cli
+# Command-line interface to LiveKit
+# https://livekit.io
+
+# lldpd
+# Implementation of IEEE 802.1ab (LLDP)
+# https://lldpd.github.io/
+
+# llm
+# Access large language models from the command-line
+# https://llm.datasette.io/
+
+# localtunnel
+# Exposes your localhost to the world for easy testing and sharing
+# https://theboroer.github.io/localtunnel-www/
+
+# lockrun
+# Run cron jobs with overrun protection
+# http://unixwiz.net/tools/lockrun.html
+
+# logcli
+# Run LogQL queries against a Loki server
+# https://grafana.com/loki
+
+# logcheck
+# Mail anomalies in the system logfiles to the administrator
+# https://packages.debian.org/sid/logcheck
+
+# logdy
+# Web based real-time log viewer
+# https://logdy.dev
+
+# logrotate
+# Rotates, compresses, and mails system logs
+# https://github.com/logrotate/logrotate
+
+# logstash
+# Tool for managing events and logs
+# https://www.elastic.co/products/logstash
+
+# loki
+# Horizontally-scalable, highly-available log aggregation system
+# https://grafana.com/loki
+
+# lrzsz
+# Tools for zmodem/xmodem/ymodem file transfer
+# https://www.ohse.de/uwe/software/lrzsz.html
+
+# ls-lint
+# Extremely fast file and directory name linter
+# https://ls-lint.org/
+
+# mailcatcher
+# Catches mail and serves it through a dream
+# https://mailcatcher.me
+
+# mailpit
+# Web and API based SMTP testing
+# https://mailpit.axllent.org/
+
+# mailhog
+# Web and API based SMTP testing tool
+# https://github.com/mailhog/MailHog
+
+# mailsy
+# Quickly generate a temporary email address
+# https://github.com/BalliAsghar/Mailsy
+
+# masscan
+# TCP port scanner, scans entire Internet in under 5 minutes
+# https://github.com/robertdavidgraham/masscan/
+
+# massren
+# Easily rename multiple files using your text editor
+# https://github.com/laurent22/massren
+
+# megacmd
+# Command-line client for mega.co.nz storage service
+# https://github.com/t3rm1n4l/megacmd
+
+# megatools
+# Command-line client for Mega.co.nz
+# https://megatools.megous.com/
+
+# mimalloc
+# Compact general purpose allocator
+# https://github.com/microsoft/mimalloc
+
+# mimirtool
+# CLI for interacting with Grafana Mimir
+# https://grafana.com/docs/mimir/latest/operators-guide/tools/mimirtool/
+
+# minder
+# CLI for interacting with Stacklok's Minder platform
+# https://minder-docs.stacklok.dev
+
+# minio-mc
+# Replacement for ls, cp and other commands for object storage
+# https://github.com/minio/mc
+
+# minisign
+# Sign files & verify signatures. Works with signify in OpenBSD
+# https://jedisct1.github.io/minisign/
+
+# mist-cli
+# Mac command-line tool that automatically downloads macOS Firmwares / Installers
+# https://github.com/ninxsoft/mist-cli
+
+# mkp224o
+# Vanity address generator for tor onion v3 (ed25519) hidden services
+# https://github.com/cathugger/mkp224o
+
+# mlogger
+# Log to syslog from the command-line
+# https://github.com/nbrownus/mlogger
+
+# mlx
+# Array framework for Apple silicon
+# https://github.com/ml-explore/mlx
+
+# mmctl
+# Remote CLI tool for Mattermost server
+# https://github.com/mattermost/mmctl
+
+# modman
+# Module deployment script geared towards Magento development
+# https://github.com/colinmollenhour/modman
+
+# mqttui
+# Subscribe to a MQTT Topic or publish something quickly from the terminal
+# https://github.com/EdJoPaTo/mqttui
+
+# msktutil
+# Active Directory keytab management
+# https://github.com/msktutil/msktutil
+
+# naga-cli
+# Shader translation command-line tool
+# https://github.com/gfx-rs/naga
+
+# nebula
+# Scalable overlay networking tool for connecting computers anywhere
+# https://github.com/slackhq/nebula
+
+# neonctl
+# Neon CLI tool
+# https://neon.tech/docs/reference/neon-cli
+
+# neosync
+# CLI for interfacing with Neosync
+# https://www.neosync.dev/
+
+# net-snmp
+# Implements SNMP v1, v2c, and v3, using IPv4 and IPv6
+# http://www.net-snmp.org/
+
+# netlify-cli
+# Netlify command-line tool
+# https://www.netlify.com/docs/cli
+
+# nfdump
+# Tools to collect and process netflow data on the command-line
+# https://github.com/phaag/nfdump
+
+# ngrep
+# Network grep
+# https://github.com/jpr5/ngrep
+
+# nikto
+# Web server scanner
+# https://cirt.net/nikto2
+
+# node_exporter
+# Prometheus exporter for machine metrics
+# https://prometheus.io/
+
+# noir
+# Attack surface detector that identifies endpoints by static analysis
+# https://github.com/owasp-noir/noir
+
+# nomino
+# Batch rename utility
+# https://github.com/yaa110/nomino
+
+# noti
+# Trigger macOS notifications when a process completes
+# https://github.com/variadico/noti
+
+# notifiers
+# Easy way to send notifications
+# https://pypi.org/project/notifiers/
+
+# notify
+# Stream the output of any CLI and publish it to a variety of supported platforms
+# https://github.com/projectdiscovery/notify
+
+# nsq
+# Realtime distributed messaging platform
+# https://nsq.io/
+
+# ntfy
+# Send push notifications to your phone or desktop via PUT/POST
+# https://ntfy.sh/
+
+# ntopng
+# Next generation version of the original ntop
+# https://www.ntop.org/products/traffic-analysis/ntop/
+
+# nut
+# Network UPS Tools: Support for various power devices
+# https://networkupstools.org/
+
+# octobuild
+# Compiler cache for Unreal Engine
+# https://github.com/octobuild/octobuild
+
+# ohdear-cli
+# Tool to manage your Oh Dear sites
+# https://github.com/ohdearapp/ohdear-cli
+
+# opa
+# Open source, general-purpose policy engine
+# https://www.openpolicyagent.org
+
+# osc
+# Command-line interface to work with an Open Build Service
+# https://openbuildservice.org
+
+# osc-cli
+# Official Outscale CLI providing connectors to Outscale API
+# https://github.com/outscale/osc-cli
+
+# osctrl-cli
+# Fast and efficient osquery management
+# https://osctrl.net
+
+# oslo
+# CLI tool for the OpenSLO spec
+# https://openslo.com/
+
+# packetbeat
+# Lightweight Shipper for Network Data
+# https://www.elastic.co/products/beats/packetbeat
+
+# pawk
+# Python line processor (like AWK)
+# https://github.com/alecthomas/pawk
+
+# percol
+# Interactive grep tool
+# https://github.com/mooz/percol
+
+# percona-xtrabackup
+# Open source hot backup tool for InnoDB and XtraDB databases
+# https://www.percona.com/software/mysql-database/percona-xtrabackup
+
+# phrase-cli
+# Tool to interact with the Phrase API
+# https://phrase.com/
+
+# pocketbase
+# Open source backend for your next project in 1 file
+# https://pocketbase.io/
+
+# principalmapper
+# Quickly evaluate IAM permissions in AWS
+# https://github.com/nccgroup/PMapper
+
+# promptfoo
+# Test your LLM app locally
+# https://promptfoo.dev/
+
+# promtail
+# Log agent for Loki
+# https://grafana.com/loki
+
+# prowler
+# Tool for cloud security assessments, audits, incident response, and more
+# https://prowler.com/
+
+# psgrep
+# Shortcut for the 'ps aux | grep' idiom
+# https://github.com/jvz/psgrep
+
+# pulsarctl
+# CLI for Apache Pulsar written in Go
+# https://streamnative.io/
+
+# pwncat
+# Netcat with FW/IDS/IPS evasion, self-inject-, bind- and reverse shell
+# https://pwncat.org
+
+# rack
+# CLI for Rackspace
+# https://github.com/rackspace/rack
+
+# rancher-cli
+# Unified tool to manage your Rancher server
+# https://github.com/rancher/cli
+
+# rancid
+# Really Awesome New Cisco confIg Differ
+# https://www.shrubbery.net/rancid/
+
+# ratchet
+# Tool for securing CI/CD workflows with version pinning
+# https://github.com/sethvargo/ratchet
+
+# rbtools
+# CLI and API for working with code and document reviews on Review Board
+# https://www.reviewboard.org/downloads/rbtools/
+
+# rbw
+# Unofficial Bitwarden CLI client
+# https://github.com/doy/rbw
+
+# react-native-cli
+# Tools for creating native apps for Android and iOS
+# https://facebook.github.io/react-native/
+
+# recon-ng
+# Web Reconnaissance Framework
+# https://github.com/lanmaster53/recon-ng
+
+# rem
+# Command-line tool to access OSX Reminders.app database
+# https://github.com/kykim/rem
+
+# rhit
+# Nginx log explorer
+# https://dystroy.org/rhit/
+
+# rocksdb
+# Embeddable, persistent key-value store for fast storage
+# https://rocksdb.org/
+
+# rojo
+# Professional grade Roblox development tools
+# https://rojo.space/
+
+# rome
+# Carthage cache for S3, Minio, Ceph, Google Storage, Artifactory and many others
+# https://github.com/tmspzz/Rome
+
+# rpm
+# Standard unix software packaging tool
+# https://rpm.org/
+
+# rpm2cpio
+# Tool to convert RPM package to CPIO archive
+# https://svnweb.freebsd.org/ports/head/archivers/rpm2cpio/
+
+# rpmspectool
+# Utility for handling RPM spec files
+# https://github.com/nphilipp/rpmspectool
+
+# ruler
+# Tool to abuse Exchange services (#email)
+# https://github.com/sensepost/ruler
+
+# run
+# Easily manage and invoke small scripts and wrappers
+# https://github.com/TekWizely/run
+
+# salt-lint
+# Check for best practices in SaltStack
+# https://github.com/warpnet/salt-lint
+
+# sbom-tool
+# Scalable and enterprise ready tool to create SBOMs for any variety of artifacts
+# https://github.com/microsoft/sbom-tool
+
+# scalingo
+# CLI for working with Scalingo's PaaS
+# https://doc.scalingo.com/cli
+
+# scorecard
+# Security health metrics for Open Source
+# https://github.com/ossf/scorecard
+
+# scw
+# Command-line Interface for Scaleway
+# https://github.com/scaleway/scaleway-cli
+
+# seam
+# This utility lets you control Seam IoT resources
+# https://github.com/seamapi/seam-cli
+
+# selenium-server
+# Browser automation for testing purposes
+# https://www.selenium.dev/
+
+# semgrep
+# Easily detect and prevent bugs and anti-patterns in your codebase
+# https://semgrep.dev
+
+# serverless
+# Build applications with serverless architectures
+# https://www.serverless.com/
+
+# service-weaver
+# Programming framework for writing and deploying cloud applications #gke #google cloud
+# https://serviceweaver.dev/
+
+# sgr
+# Command-line client for Splitgraph, a version control system for data
+# https://www.splitgraph.com/docs/sgr-advanced/getting-started/introduction
+
+# sh4d0wup
+# Signing-key abuse and update exploitation framework
+# https://github.com/kpcyrd/sh4d0wup
+
+# shub
+# Scrapinghub command-line client
+# https://shub.readthedocs.io/en/latest/
+
+# silicon
+# Create beautiful image of your source code
+# https://github.com/Aloxaf/silicon/
+
+# smap
+# Drop-in replacement for Nmap powered by shodan.io
+# https://github.com/s0md3v/Smap
+
+# sn0int
+# Semi-automatic OSINT framework and package manager
+# https://github.com/kpcyrd/sn0int
+
+# snyk-cli
+# Scans and monitors projects for security vulnerabilities
+# https://snyk.io
+
+# solarus
+# Action-RPG game engine
+# https://www.solarus-games.org/
+
+# sonar-scanner
+# Launcher to analyze a project with SonarQube
+# https://docs.sonarqube.org/latest/analysis/scan/sonarscanner/
+
+# sonarqube
+# Manage code quality
+# https://www.sonarsource.com/products/sonarqube/
+
+# spoof-mac
+# Spoof your MAC address in macOS
+# https://github.com/feross/SpoofMAC
+
+# suricata
+# Network IDS, IPS, and security monitoring engine
+# https://suricata.io
+
+# tbls
+# CI-Friendly tool for document a database
+# https://github.com/k1LoW/tbls
+
+# temporal
+# Command-line interface for running and interacting with Temporal Server and UI
+# https://temporal.io/
+
+# tetra
+# Tetragon CLI to observe, manage and troubleshoot Tetragon instances
+# https://github.com/cilium/tetragon
+
+# textract
+# Extract text from various different types of files
+# https://textract.readthedocs.io/
+
+# thanos
+# Highly available Prometheus setup with long term storage capabilities
+# https://thanos.io
+
+# theharvester
+# Gather materials from public sources (for pen testers)
+# https://www.edge-security.com/theharvester.php
+
+# tm
+# TriggerMesh CLI to work with knative objects
+# https://triggermesh.com
+
+# tmt
+# Test Management Tool
+# https://tmt.readthedocs.io
+
+# touca
+# Open source tool for regression testing complex software workflows
+# https://github.com/trytouca/trytouca/tree/main/sdk/python
+
+# toxiproxy
+# TCP proxy to simulate network & system conditions for chaos & resiliency testing
+# https://github.com/shopify/toxiproxy
+
+# traildb
+# Blazingly-fast database for log-structured data
+# https://traildb.io/
+
+# travis
+# Command-line client for Travis CI
+# https://github.com/travis-ci/travis.rb/
+
+# tremor-runtime
+# Early-stage event processing system for unstructured data
+# https://www.tremor.rs/

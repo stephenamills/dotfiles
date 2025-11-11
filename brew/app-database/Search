@@ -1,0 +1,50 @@
+# brew "meilisearch" # the winner - ultra relevant, instant and typo-tolerant, and has sample projects and 45k stars
+
+# also, elasticsearch
+# brew "solr" # search platform from the Lucene project
+# brew "sonic" # fast, lightweight & schema-less search backend
+# also, swirl # supports retrieval (RAG), currently from Microsoft 365 or Postgres
+
+# brew "ack" # Search tool like grep, but optimized for programmers
+# brew "ast-grep" # Code searching, linting, rewriting
+# brew "aws-es-proxy" # Small proxy between HTTP client and AWS Elasticsearch
+# brew "carrot2" # Search results clustering engine
+# brew "clean" # Search for files matching a regex and delete them
+# brew "clucene" # C++ port of Lucene: high-performance, full-featured text search engine
+# brew "codequery" # Code-understanding, code-browsing or code-search tool
+# brew "dasht" # Search API docs offline, in your terminal or browser
+# brew "faiss" # Efficient similarity search and clustering of dense vectors
+# brew "filebeat" # File harvester to ship log files to Elasticsearch or Logstash
+# brew "fsql" # Search through your filesystem with SQL-esque queries
+# brew "groonga" # Fulltext search engine and column store
+# brew "gsar" # General Search And Replace on files
+# brew "hyperestraier" # Full-text search system for communities
+# brew "mairix" # Email index and search tool
+# brew "manticoresearch" # text search engine
+# brew "mysql-search-replace" # Database search and replace script
+# brew "notmuch" # Thread-based email index, search, and tagging
+# brew "omega" # Packaged search engine for websites, built on top of Xapian
+# brew "opensearch" # Open source distributed and RESTful search engine
+# brew "opensearch-dashboards" # Open source visualization dashboards for OpenSearch
+# brew "pazpar2" # Metasearching middleware webservice
+# brew "pdfgrep" # Search PDFs for strings matching a regular expression
+# brew "pgvector" # Open-source vector similarity search for Postgres
+# brew "ripgrep" # Search tool like grep and The Silver Searcher
+# brew "s-search" # Web search from the terminal
+# brew "sad" # CLI search and replace | Space Age seD
+# brew "serpl" # Simple terminal UI for search and replace
+# brew "sgrep" # Search SGML, XML, and HTML
+# brew "sphinx" # Full-text search engine
+# brew "the_platinum_searcher" # Multi-platform code-search similar to ack and ag
+# brew "the_silver_searcher" # Code-search similar to ack
+# brew "tinysearch" # Tiny, full-text search engine for static websites built with Rust and Wasm
+# brew "tokyo-dystopia" # Lightweight full-text search system
+# brew "tracker" # Library and daemon that is an efficient search engine and triplestore
+# brew "ucg" # Tool for searching large bodies of source code (like grep)
+# brew "ugrep" # Ultra fast grep with query UI, fuzzy search, archive search, and more
+# brew "weggli" # Fast and robust semantic search tool for C and C++ codebases
+# brew "zfind" # Search for files (even inside tar/zip/7z/rar) using an SQL-WHERE filter
+# brew "zinclabs/tap/zincsearch" # must tap zinclabs/tap first
+# also, tantivy
+# also, toshi
+# also, typesense

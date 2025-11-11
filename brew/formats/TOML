@@ -1,0 +1,6 @@
+# dasel # TOML query and modification tool
+# dhall-toml: Convert between Dhall and Toml
+# remarshal: Convert between TOML, YAML and JSON
+# taplo: TOML toolkit written in Rust
+# brew "toml2json" # CLI tool for converting TOML to JSON
+# yj: CLI to convert between YAML, TOML, JSON and HCL

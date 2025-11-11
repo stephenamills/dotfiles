@@ -1,0 +1,39 @@
+# brew "citus" # replicated Postgres
+# brew "postgresql" # row-oriented database
+# brew "apgdiff" # Another PostgreSQL diff tool
+# brew "check_postgres" # Monitor Postgres databases
+# brew "dexter" # Automatic indexer for Postgres
+# brew "doltgres" # Dolt for Postgres
+# brew "ephemeralpg" # Run tests on an isolated, temporary Postgres database
+# brew "greenmask" # PostgreSQL dump and obfuscation tool
+# brew "imposm3" # Imports OpenStreetMap data into PostgreSQL/PostGIS databases
+# brew "osm2pgsql" # OpenStreetMap data to PostgreSQL converter
+# brew "pex" # Package manager for PostgreSQL
+# brew "pg_cron" # Run periodic jobs in PostgreSQL
+# brew "pg_partman" # Partition management extension for PostgreSQL
+# brew "pg_top" # Monitor PostgreSQL processes
+# brew "pgbadger" # Log analyzer for PostgreSQL
+# brew "pgbouncer" # Lightweight connection pooler for PostgreSQL
+# brew "pgcli" # CLI for Postgres with auto-completion and syntax highlighting
+# brew "pgdbf" # Converter of XBase/FoxPro tables to PostgreSQL
+# brew "pgformatter" # PostgreSQL syntax beautifier
+# brew "pgloader" # Data loading tool for PostgreSQL
+# brew "pgpool-ii" # PostgreSQL connection pool server
+# brew "pgroonga" # PostgreSQL plugin to use Groonga as index
+# brew "pgrouting" # Provides geospatial routing for PostGIS/PostgreSQL database
+# brew "pgsync" # Sync Postgres data between databases
+# brew "pgtoolkit" # Tools for PostgreSQL maintenance
+# brew "pgtune" # Tuning wizard for postgresql.conf
+# brew "pgvector" # Open-source vector similarity search for Postgres
+# brew "pgweb" # Web-based PostgreSQL database browser
+# brew "pgxnclient" # Command-line client for the PostgreSQL Extension Network
+# brew "postgis" # Adds support for geographic objects to PostgreSQL
+# brew "postgrest" # Serves a fully RESTful API from any existing PostgreSQL database
+# brew "prestd" # Simplify and accelerate development on any Postgres application, existing or new
+# brew "psqlodbc" # Official PostgreSQL ODBC driver
+# brew "schema-evolution-manager" # Manage Postgresql database schema migrations
+# brew "stolon" # Cloud native PostgreSQL manager for high availability
+# brew "temporal_tables" # Temporal Tables PostgreSQL Extension
+# brew "tile38" #  geolocation data store, spatial index, and realtime geofence - their landing page animation is very good
+# brew "tsung" # Load testing for HTTP, PostgreSQL, Jabber, and others
+# brew "wal2json" # Convert PostgreSQL changesets to JSON format

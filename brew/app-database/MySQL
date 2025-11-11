@@ -1,0 +1,20 @@
+# brew "mysql" # row-oriented database
+# brew "vitess" # replicated MySQL
+
+# brew "automysqlbackup" # Automate MySQL backups
+# brew "db-vcs" # Version control for MySQL databases
+# brew "dbdeployer" # Tool to deploy sandboxed MySQL database servers
+# brew "dolphie" # Feature-rich top tool for monitoring MySQL
+# brew "dumpling" # Creating SQL dump from a MySQL-compatible database
+# brew "innotop" # Top clone for MySQL
+# brew "maxwell" # Reads MySQL binlogs and writes row updates as JSON to Kafka
+# brew "mycli" # CLI for MySQL with auto-completion and syntax highlighting
+# brew "mydumper" # How a MySQL DBA & support engineer would imagine 'mysqldump'
+# brew "mysql-client" # Open source relational database management system
+# brew "mysql-connector-c++" # MySQL database connector for C++ applications
+# brew "mysql-search-replace" # Database search and replace script in PHP
+# brew "mysqltuner" # Increase performance and stability of a MySQL installation
+# brew "mytop" # Top-like query monitor for MySQL
+# brew "percona-toolkit" # Command-line tools for MySQL and system tasks
+# brew "phpmyadmin" # Web interface for MySQL and MariaDB
+# brew "skeema" # Declarative pure-SQL schema management for MySQL

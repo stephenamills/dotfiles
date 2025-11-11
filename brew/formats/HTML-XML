@@ -1,0 +1,42 @@
+brew "cascadia" # HTML selector
+brew "htmlq" # HTML selector
+brew "pup" # HTML selector
+
+brew "basex" # XPath
+brew "xidel" # XPath
+brew "xqilla" # XPath
+brew "xmlstarlet" # XPath
+
+brew "hq" # jq for HTML
+brew "python-yq" # jq for XML (see YAML section)
+brew "yq" # jq for XML (see YAML section)
+brew "xq" # jq for XML
+# dasel: XML query and modification tool
+# html-xml-utils: Tools for manipulating HTML and XML files
+
+brew "monolith" # saves complete web pages as a single HTML file
+
+# brew "xmlsectool" # for SAML - Check schema and signature of an XML document
+
+# dashing: Generate Dash documentation from HTML files
+# markdown: converts Markdown to HTML
+
+# castxml: C-family Abstract Syntax Tree XML Output
+# htmldoc: Converts HTML to PDF
+# htmltest: HTML validator written in Go
+# literate-git: Render hierarchical Git repositories into HTML
+# man2html: Convert nroff man pages to HTML
+# marp-cli: Easily convert Marp Markdown files into static HTML/CSS, PDF, PPT and images
+# mhonarc: Mail-to-HTML converter
+# monolith: CLI tool for saving complete web pages as a single HTML file
+# pdf2json: converts PDF to XML
+# pdftohtml: converts a PDF file to HTML
+# sgrep: Search SGML, XML, and HTML
+# tidy-html5: Granddaddy of HTML tools, with support for modern standards
+# tree: Display directories as trees (with optional color/HTML output)
+# weasyprint: Convert HTML to PDF
+# weasyprint: Converts HTML to PDF
+# xctesthtmlreport: Xcode-like HTML report for Unit and UI Tests
+# xml2: Makes XML and HTML more amenable to classic UNIX text tools
+# xmlto: Converts XML to another format (based on XSL or other tools)
+# xmltoman: XML to manpage converter

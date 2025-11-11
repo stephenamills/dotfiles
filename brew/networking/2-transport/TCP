@@ -1,0 +1,52 @@
+# brew "bore-cli" # Modern, simple TCP tunnel in Rust that exposes local ports to a remote server
+# brew "chisel-tunnel" # Fast TCP tunnel over HTTP
+# brew "dns2tcp" # TCP over DNS tunnel
+# brew "flowgrind" # TCP measurement tool, similar to iperf or netperf
+# brew "haproxy" # Reliable, high performance TCP/HTTP load balancer
+# brew "ip_relay" # TCP traffic shaping relay application
+# brew "iperf" # Tool to measure maximum TCP and UDP bandwidth
+# brew "iperf3" # Update of iperf: measures TCP, UDP, and SCTP bandwidth
+# brew "ipsumdump" # Summarizes TCP/IP dump files into a self-describing ASCII format
+# brew "miruo" # Pretty-print TCP session monitor/analyzer
+# brew "nuttcp" # Network performance measurement tool
+# brew "pgrok" # ngrok alternative, multi-tenant HTTP/TCP reverse tunnel
+# brew "rinetd" # Internet TCP redirection server
+# brew "shadowsocks-rust" # Rust port of Shadowsocks
+# brew "speedbump" # TCP proxy for simulating variable, yet predictable network latency
+# brew "stone" # TCP/IP packet repeater in the application layer
+# brew "tcpdump" # Command-line packet analyzer
+# brew "tcpflow" # TCP/IP packet demultiplexer
+# brew "tcpkali" # High performance TCP and WebSocket load generator and sink
+# brew "tcpreplay" # Replay saved tcpdump files at arbitrary speeds
+# brew "tcpsplit" # Break a packet trace into some number of sub-traces
+# brew "tcpstat" # Active TCP connections monitoring tool
+# brew "tcptrace" # Analyze tcpdump output
+# brew "tcptraceroute" # Traceroute implementation using TCP packets
+# brew "tor" # Anonymizing overlay network for TCP
+# brew "toxiproxy" # TCP proxy to simulate network & system conditions for chaos & resiliency testing
+# brew "tproxy" # CLI tool to proxy and analyze TCP connections
+# brew "tuntox" # Tunnel TCP connections over the Tox protocol
+# brew "ucspi-tcp" # Tools for building TCP client-server applications
+# brew "udptunnel" # Tunnel UDP packets over a TCP connection
+# brew "yconalyzer" # TCP traffic analyzer
+
+# brew "dockward" # Port forwarding tool for Docker containers
+# brew "ocproxy" # User-level SOCKS and port forwarding proxy
+# brew "redir" # Port redirector
+# # brew "tcptunnel" # TCP port forwarder
+
+brew "rustscan" # Scan 65k ports in 3 seconds
+
+# brew "masscan" # TCP port scanner, scans entire Internet in under 5 minutes
+# brew "naabu" # Fast port scanner
+# brew "nmap" # Port scanning utility for large networks
+# brew "synscan" # Asynchronous half-open TCP portscanner
+# brew "zmap" # Network scanner for Internet-wide network studies
+
+brew "netcat" # Utility for managing network connections
+brew "nmap" # Ncat - Your general-purpose network connector
+brew "pwncat" # Netcat with FW/IDS/IPS evasion, self-inject-, bind- and reverse shell
+brew "rustcat" # Modern port listener and reverse shell
+brew "socat" # Netcat on steroids
+brew "tcping" # TCP connect to the given IP/port combo
+brew "websocat" # Command-line client for WebSockets

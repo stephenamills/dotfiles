@@ -1,0 +1,54 @@
+brew "dnsrobocert" # manages a Let's Encrypt SSL certificate using a DNS challenge
+
+brew "checkdmarc" # Command-line parser for SPF and DMARC DNS records
+brew "parsedmarc" # DMARC report analyzer and visualizer
+
+brew "bind" # has dig client
+brew "dog" # client
+brew "doggo" # client
+# brew "hickory-dns" # Rust based DNS client, server, and resolver
+
+brew "bbot" # Scanner
+brew "csprecon" # Discover new target domains using Content Security Policy
+brew "dnsgen" # Generates DNS names from existing domain names
+brew "dnstracer" # traces a chain of DNS servers to the source
+brew "dnsviz" # Tools for analyzing and visualizing DNS and DNSSEC behavior
+brew "dnsx" # DNS query toolkit
+brew "dnsmap" # Passive DNS network mapper (a.k.a. subdomains bruteforcer)
+brew "dug" # Global DNS propagation checker that gives pretty output
+brew "findomain" # Cross-platform subdomain enumerator
+brew "nuclei" # HTTP/DNS scanner configurable via YAML templates
+brew "scilla" # DNS, subdomain, port, directory enumeration tool
+brew "shuffledns" # Enumerate subdomains using active bruteforce & resolve subdomains with wildcards
+brew "subfinder" # Subdomain discovery tool
+brew "urlfinder" # Extracting URLs and subdomains from JS files on a website
+brew "whois" # Lookup tool for domain names and other internet resources
+brew "wtfis" # Passive hostname, domain, and IP lookup tool
+
+# brew "adns" # C/C++ resolver library and DNS resolver utilities
+# brew "airshare" # content sharing over local network using multicast DNS
+# brew "cjdns" # Advanced mesh routing system with cryptographic addressing
+# brew "coredns" # DNS server that chains plugins
+# brew "ddclient" # Update dynamic DNS entries
+# brew "ddns-go" # Simple and easy-to-use DDNS
+# brew "djbdns" # D.J. Bernstein's DNS tools
+# brew "dnscontrol" # Synchronize your DNS to multiple providers from a simple DSL
+# brew "dnsdist" # Highly DNS-, DoS- and abuse-aware loadbalancer
+# brew "dnsmasq" # Lightweight DNS forwarder and DHCP server
+# brew "dnsperf" # Measure DNS performance by simulating network conditions
+# brew "dnstop" # Console tool to analyze DNS traffic
+# brew "dnstwist" # Test domains for typo squatting, phishing and corporate espionage
+# brew "fpdns" # Fingerprint DNS server versions
+# brew "getdns" # Modern asynchronous DNS API
+# brew "gobuster" # Directory/file & DNS busting tool written in Go
+# brew "hesiod" # Library for the simple string lookup service built on top of DNS
+# brew "hostdb" # Generate DNS zones and DHCP configuration from hostlist.txt
+# brew "inadyn" # Dynamic DNS client with IPv4, IPv6, and SSL/TLS support
+# brew "iodine" # Tunnel IPv4 traffic through a DNS server
+# brew "jdnssec-tools" # Java command-line tools for DNSSEC
+# brew "launchdns" # Mini DNS server designed solely to route queries to localhost
+# brew "lexicon" # Manipulate DNS records on various DNS providers in a standardized way
+# brew "massdns" # High-performance DNS stub resolver
+# brew "mergelog" # Merges httpd logs from web servers behind round-robin DNS
+# brew "nextdns" # CLI for NextDNS's DNS-over-HTTPS (DoH)
+# brew "uncover" # Tool to discover exposed hosts on the internet using multiple search engines

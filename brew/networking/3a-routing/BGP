@@ -1,0 +1,5 @@
+brew "asn"
+brew "asnmap"
+brew "asroute"
+brew "bgpq4" # generates router prefix lists and queries routing databases (IRRs)
+brew "bgpstream"

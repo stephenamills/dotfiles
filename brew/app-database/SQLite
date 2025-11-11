@@ -1,0 +1,11 @@
+# brew "rqlite" # replicated SQLite (good documentation, in Go)
+# brew "sqlite" # row-oriented database (client)
+# brew "dbhash" # Computes the SHA1 hash of schema and content of a SQLite database
+# brew "libspatialite" # Adds spatial SQL capabilities to SQLite
+# brew "litecli" # CLI for SQLite Databases with auto-completion and syntax highlighting
+# brew "sqlcipher" # SQLite extension providing 256-bit AES encryption
+# brew "sqldiff" # Displays the differences between SQLite databases
+# brew "sqlite-analyzer" # Analyze how space is allocated inside an SQLite file
+# brew "sqlite-utils" # CLI utility for manipulating SQLite databases
+# brew "sqliteodbc" # ODBC driver for SQLite
+# brew "virtualpg" # Loadable dynamic extension for SQLite and SpatiaLite

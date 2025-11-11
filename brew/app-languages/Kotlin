@@ -1,0 +1,9 @@
+# brew "detekt" # Static code analysis for Kotlin
+# brew "gradle" # Open-source build automation tool based on the Groovy and Kotlin DSL
+# brew "kdoctor" # Environment diagnostics for Kotlin Multiplatform Mobile app development
+# brew "ki" # Kotlin Language Interactive Shell
+# brew "kotlin" # Statically typed programming language for the JVM
+# brew "kotlin-language-server" # Intelligent Kotlin support for any editor/IDE using the Language Server Protocol
+# brew "ktfmt" # Kotlin code formatter
+# brew "ktlint" # Anti-bikeshedding Kotlin linter with built-in formatter
+# brew "xcode-kotlin" # Kotlin Native Xcode Plugin

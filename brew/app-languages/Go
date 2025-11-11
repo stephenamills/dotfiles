@@ -1,0 +1,62 @@
+brew "go"
+brew "goreleaser" # publishes on Homebrew
+brew "nfpm" # creates a Debian or Red Hat package
+
+# brew "counterfeiter" # Tool for generating self-contained, type-safe test doubles in go
+# brew "cxgo" # Transpiling C to Go
+# brew "cyclonedx-gomod" # Creates CycloneDX Software Bill of Materials (SBOM) from Go modules
+# brew "delve" # Debugger for the Go programming language
+# brew "garble" # Obfuscate Go builds
+# brew "gdm" # Go Dependency Manager (gdm)
+# brew "glide" # Simplified Go project management, dependency management, and vendoring
+# brew "go" # Open source programming language to build simple/reliable/efficient software
+# brew "go-bindata" # Small utility that generates Go code from any file
+# brew "go-boring" # Go programming language with BoringCrypto
+# brew "go-critic" # Opinionated Go source code linter
+# brew "go-feature-flag-relay-proxy" # Stand alone server to run GO Feature Flag
+# brew "go-size-analyzer" # Analyzing the dependencies in compiled Golang binaries
+# brew "go-statik" # Embed files into a Go executable
+# brew "go-task" # Task is a task runner/build tool that aims to be simpler and easier to use
+# brew "gofumpt" # Stricter gofmt
+# brew "gokart" # Static code analysis for securing Go code
+# brew "gokey" # Simple vaultless password manager in Go
+# brew "golangci-lint" # Fast linters runner for Go
+# brew "golines" # Golang formatter that fixes long lines
+# brew "gomodifytags" # Go tool to modify struct field tags
+# brew "gomplate" # Command-line Golang template processor
+# brew "goproxy" # Global proxy for Go modules
+# brew "gops" # Tool to list and diagnose Go processes currently running on your system
+# brew "goreleaser" # Deliver Go binaries as fast and easily as possible
+# brew "goreman" # Foreman clone written in Go
+# brew "goresym" # Go symbol recovery tool
+# brew "gosec" # Golang security checker
+# brew "gotags" # Tag generator for Go, compatible with ctags
+# brew "gotests" # Automatically generate Go test boilerplate from your source code
+# brew "gotestsum" # Human friendly `go test` runner
+# brew "gotify" # Command-line interface for pushing messages to gotify/server
+# brew "govulncheck" # Database client and tools for the Go vulnerability database
+# brew "gowsdl" # WSDL2Go code generation as well as its SOAP proxy
+# brew "gox" # Go cross compile tool
+# brew "gpm" # Barebones dependency manager for Go
+# brew "gx-go" # Tool to use with the gx package manager for packages written in go
+# brew "hotbuild" # Cross platform hot compilation tool for go
+# brew "llgo" # Go compiler based on LLVM integrate with the C ecosystem and Python
+# brew "lunchy-go" # Friendly wrapper for launchctl
+# brew "mockery" # Mock code autogenerator for Golang
+# brew "packr" # Easy way to embed static files into Go binaries
+# brew "pkg-config-wrapper" # Easier way to include C code in your Go program
+# brew "pkger" # Embed static files in Go binaries (replacement for gobuffalo/packr)
+# brew "redress" # Tool for analyzing stripped Go binaries compiled with the Go compiler
+# brew "regula" # Checks infrastructure as code templates using Open Policy Agent/Rego
+# brew "revive" # Fast, configurable, extensible, flexible, and beautiful linter for Go
+# brew "richgo" # Enrich `go test` outputs with text decorations
+# brew "risor" # Fast and flexible scripting for Go developers and DevOps
+# brew "spdx-sbom-generator" # Support CI generation of SBOMs via golang tooling
+# brew "sqlboiler" # Generate a Go ORM tailored to your database schema
+# brew "sqlc" # Generate type safe Go from SQL
+# brew "staticcheck" # State of the art linter for the Go programming language
+# brew "stuffbin" # Compress and embed static files and assets into Go binaries
+# brew "tengo" # Fast script language for Go
+# brew "tygo" # Generate Typescript types from Golang source code
+# brew "vulsio-gost" # Local CVE tracker & notification system
+# brew "yaegi" # Yet another elegant Go interpreter

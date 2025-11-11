@@ -1,0 +1,2 @@
+brew "hashicorp/tap/nomad"
+brew "levant" # templating and deployment tool for jobs

@@ -1,0 +1,144 @@
+# Kubernetes
+
+brew "kubernetes-cli" # Kubernetes command-line interface
+brew "openshift-cli" # OpenShift command-line interface tools
+brew "rancher-cli" # Unified tool to manage your Rancher server
+
+brew "ctlptl" # Run Kubernetes locally
+brew "k3d" # Run Kubernetes locally (in Docker)
+brew "kind" # Run Kubernetes locally (in Docker)
+brew "minikube" # Run Kubernetes locally
+
+brew "colima" # Run Kubernetes locally
+brew "rke" # Run Kubernetes locally
+
+brew "k3sup" # Run Kubernetes locally or remotely
+brew "kwok" # Kubernetes Without Kubelet - Simulate thousands of nodes and clusters
+
+# cask "docker" # Docker Desktop - run containers in a Linux virtual machine
+# cask "podman-desktop" # Run containers in a Linux virtual machine
+# cask "rancher" # Run Kubernetes locally (Rancher Desktop)
+
+# brew "direnv" # Load/unload environment variables based on $PWD (has a script for Kubernetes contexts)
+# brew "kubectx" # Switch between kubectl contexts and namespaces
+
+brew "clusterawsadm" # Bootstrap the Cluster API Provider for AWS - commands for the virtual machine image (AMI), cluster (EKS), and access policies (IAM)
+brew "clusterctl" # Provision, operate, and upgrade Kubernetes servers using the Cluster API
+
+brew "uffizzi" # # Self-serve developer platforms in minutes, not months with k8s virtual clusters - Rails app apparently used by Spotify with or for Backstage
+brew "vespa-cli" # Has a guide to deploy machine learning to Kubernetes (by Yahoo)
+
+# brew "argo" # Get stuff done with container-native workflows for Kubernetes
+# brew "argocd-autopilot" # Opinionated way of installing Argo CD and managing GitOps repositories
+# brew "argocd-vault-plugin" # Argo CD plugin to retrieve secrets from Secret Management tools
+# brew "argocd" # GitOps Continuous Delivery for Kubernetes
+# brew "arkade" # Open source Kubernetes marketplace
+# brew "aws-iam-authenticator" # Use AWS IAM credentials to authenticate to Kubernetes
+# brew "bpftop" # Dynamic real-time view of running eBPF programs
+# brew "cdk8s" # Define k8s native apps and abstractions using object-oriented programming
+# brew "chaoskube" # Periodically kills random pods in your Kubernetes cluster
+# brew "chart-testing" # Testing and linting Helm charts
+# brew "cilium-cli" # CLI to install, manage & troubleshoot Kubernetes clusters running Cilium
+# brew "click" # Command-line interactive controller for Kubernetes
+# brew "cmctl" # Manage TLS certificates in Kubernetes via cert-manager
+# brew "confd" # Manage application configuration files using templates and data from etcd or Consul
+# brew "conftest" # Test your configuration files using Open Policy Agent
+# brew "consul-backinator" # Consul backup and restoration application
+# brew "cri-tools" # Create, start, inspect, stop, and delete containers using the Kubelet Container Runtime Interface (CRI) Protobuf API
+# brew "cyctl" # Customizable UI for Kubernetes workloads
+# brew "datree" # CLI tool to run policies against Kubernetes manifests YAML files or Helm charts
+# brew "devspace" # CLI helps develop/deploy/debug apps with Docker and k8s
+# brew "envconsul" # Launch process with environment variables from Consul and Vault
+# brew "epinio" # CLI for Epinio, the Application Development Engine for Kubernetes
+# brew "fleet-cli" # Manage large fleets of Kubernetes clusters
+# brew "fluxctl" # Command-line tool to access Weave Flux, the Kubernetes GitOps operator
+# brew "gator" # CLI Utility for Open Policy Agent Gatekeeper
+# brew "glasskube" # Missing Package Manager for Kubernetes
+# brew "hashicorp/tap/consul-template" # template rendering and notifications with Consul
+# brew "hashicorp/tap/consul" # tool for service discovery, monitoring and configuration
+# brew "helm-docs" # Tool for automatically generating markdown documentation for helm charts
+# brew "helm-ls" # Language server for Helm
+# brew "helm" # Kubernetes package manager
+# brew "helmfile" # Deploy Kubernetes Helm Charts
+# brew "helmify" # Create Helm chart from Kubernetes yaml
+# brew "helmsman" # Helm Charts as Code tool
+# brew "hubble" # Network, Service & Security Observability for Kubernetes using eBPF
+# brew "ingress2gateway" # Convert Kubernetes Ingress resources to Kubernetes Gateway API resources
+# brew "istioctl" # Istio configuration tool
+# brew "k2tf" # Kubernetes YAML to Terraform HCL converter
+# brew "k8sgpt" # Scanning your k8s clusters, diagnosing, and triaging issues in simple English
+# brew "k9s" # Kubernetes terminal UI
+# brew "karmadactl" # CLI for Karmada control plane
+# brew "kconf" # CLI for managing multiple kubeconfigs
+# brew "kn" # Command-line interface for managing Knative Serving and Eventing resources
+# brew "ko" # Build and deploy Go applications on Kubernetes
+# brew "kompose" # Tool to move from `docker-compose` to Kubernetes
+# brew "kops" # Production Grade K8s Installation, Upgrades, and Management
+# brew "kor" # CLI tool to discover unused Kubernetes resources
+# brew "krew" # Package manager for kubectl
+# brew "ksync" # Sync files between your local system and a kubernetes cluster
+# brew "kt-connect" # Toolkit for integrating with kubernetes dev environment more efficiently
+# brew "ktmpl" # Parameterized templates for Kubernetes manifests
+# brew "kube-linter" # Static analysis tool for Kubernetes YAML files and Helm charts
+# brew "kube-ps1" # Kubernetes prompt info for bash and zsh
+# brew "kube-score" # Kubernetes object analysis recommendations for improved reliability and security
+# brew "kubeaudit" # Helps audit your Kubernetes clusters against common security controls
+# brew "kubebuilder" # SDK for building Kubernetes APIs using CRDs
+# brew "kubecfg" # Manage complex enterprise Kubernetes environments as code
+# brew "kubecm" # KubeConfig Manager
+# brew "kubecolor" # Colorize your kubectl output
+# brew "kubeconform" # FAST Kubernetes manifests validator, with support for Custom Resources!
+# brew "kubectl-cnpg" # CloudNativePG plugin for kubectl
+# brew "kubectl-rook-ceph" # Rook plugin for Ceph management
+# brew "kubefirst" # GitOps Infrastructure & Application Delivery Platform for kubernetes
+# brew "kubehound" # Tool for building Kubernetes attack paths
+# brew "kubekey" # Installer for Kubernetes and / or KubeSphere, and related cloud-native add-ons
+# brew "kubelogin" # OpenID Connect authentication plugin for kubectl
+# brew "kubent" # Easily check your clusters for use of deprecated APIs
+# brew "kubergrunt" # Collection of commands to fill in the gaps between Terraform, Helm, and Kubectl
+# brew "kubescape" # Kubernetes testing according to Hardening Guidance by NSA and CISA
+# brew "kubeseal" # Kubernetes controller and tool for one-way encrypted Secrets
+# brew "kubesess" # Manage multiple kubernetes cluster at the same time
+# brew "kubeshark" # API Traffic Analyzer providing real-time visibility into Kubernetes network
+# brew "kubespy" # Tools for observing Kubernetes resources in realtime
+# brew "kubetail" # Web dashboard for viewing Kubernetes container logs simultaneously
+# brew "kubetui" # TUI tool for monitoring and exploration of Kubernetes resources
+# brew "kubeval" # Validate Kubernetes configuration files, supports multiple Kubernetes versions
+# brew "kubevela" # Application Platform based on Kubernetes and Open Application Model
+# brew "kubevious" # Detects and prevents Kubernetes misconfigurations and violations
+# brew "kubevpn" # Offers a Cloud-Native Dev Environment that connects to your K8s cluster network
+# brew "kubie" # Much more powerful alternative to kubectx and kubens
+# brew "kustomize" # Template-free customization of Kubernetes YAML manifests
+# brew "kustomizer" # Package manager for distributing Kubernetes configuration as OCI artifacts
+# brew "kuttl" # Kubernetes Test Tool
+# brew "kwctl" # CLI tool for the Kubewarden policy engine for Kubernetes
+# brew "kyverno" # Kubernetes Native Policy Management
+# brew "liqoctl" # Is a CLI tool to install and manage Liqo-enabled clusters
+# brew "litmusctl" # Command-line interface for interacting with LitmusChaos
+# brew "minio" # High Performance, Kubernetes Native Object Storage
+# brew "naml" # Convert Kubernetes YAML to Golang
+# brew "ocm" # CLI for the Red Hat OpenShift Cluster Manager
+# brew "octant" # Kubernetes introspection tool for developers
+# brew "odo-dev" # Developer-focused CLI for Kubernetes and OpenShift
+# brew "okteto" # Build better apps by developing and testing code directly in Kubernetes
+# brew "opa" # Open source, general-purpose policy engine
+# brew "operator-sdk" # SDK for building Kubernetes applications
+# brew "pixie" # Observability tool for Kubernetes applications
+# brew "pluto" # CLI tool to help discover deprecated apiVersions in Kubernetes
+# brew "popeye" # Kubernetes cluster resource sanitizer
+# brew "regula" # Checks infrastructure as code templates using Open Policy Agent/Rego
+# brew "rosa-cli" # RedHat OpenShift Service on AWS command-line interface
+# brew "skaffold" # Easy and Repeatable Kubernetes Development
+# brew "sonobuoy" # Kubernetes component that generates reports on cluster conformance
+# brew "stern" # Tail multiple Kubernetes pods & their containers
+# brew "talhelper" # Configuration helper for talos clusters
+# brew "tanka" # Flexible, reusable and concise configuration for Kubernetes using Jsonnet
+# brew "tektoncd-cli" # CLI for interacting with TektonCD
+# brew "testkube" # Kubernetes-native framework for test definition and execution
+# brew "tfk8s" # Kubernetes YAML manifests to Terraform HCL converter
+# brew "tilt" # Define your dev environment as code. For microservice apps on Kubernetes
+# brew "tm" # TriggerMesh CLI to work with knative objects
+# brew "vcluster" # Creates fully functional virtual k8s cluster inside host k8s cluster's namespace
+# brew "velero" # Disaster recovery for Kubernetes resources and persistent volumes
+# brew "virtctl" # Allows for using more advanced kubevirt features
+# brew "werf" # Consistent delivery tool for Kubernetes

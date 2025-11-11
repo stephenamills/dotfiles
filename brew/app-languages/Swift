@@ -1,0 +1,63 @@
+brew "carthage" # package manager
+brew "cocoapods" # package manager
+brew "mint" # package manager
+
+# brew "grpc-swift" # Swift language implementation of gRPC
+# brew "mint" # Dependency manager that installs and runs Swift command-line tool packages
+# brew "mockolo" # Efficient Mock Generator for Swift
+# brew "mogenerator" # Generate Objective-C & Swift classes from your Core Data model
+# brew "needle" # Compile-time safe Swift dependency injection framework with real code
+# brew "rswift" # Get strong typed, autocompleted resources like images, fonts and segues
+# brew "sourcery" # Meta-programming for Swift, stop writing boilerplate code
+# brew "swift" # High-performance system programming language
+# brew "swift-format" # Formatting technology for Swift source code
+# brew "swift-outdated" # Check for outdated Swift package manager dependencies
+# brew "swift-protobuf" # Plugin and runtime library for using protobuf with Swift
+# brew "swift-sh" # Scripting with easy zero-conf dependency imports
+# brew "swiftdraw" # Convert SVG into PDF, PNG, JPEG or SF Symbol
+# brew "swiftformat" # Formatting tool for reformatting Swift code
+# brew "swiftgen" # Swift code generator for assets, storyboards, Localizable.strings, etc.
+# brew "swiftlint" # Tool to enforce Swift style and conventions
+# brew "swiftplantuml" # Generate UML class diagrams from Swift sources
+# brew "swimat" # Command-line tool to help format Swift code
+# brew "tailor" # Cross-platform static analyzer and linter for Swift
+
+# brew "ios-class-guard" # Objective-C obfuscator for Mach-O executables
+# brew "libobjc2" # Objective-C runtime library intended for use with Clang
+# brew "objc-run" # Use Objective-C files for shell script-like tasks
+# brew "objfw" # Portable, lightweight framework for the Objective-C language
+# brew "runcocoa" # Tools to run Cocoa/Objective-C and C code from the command-line
+
+# brew "configen" # Configuration file code generator for use in Xcode projects
+# brew "create-dmg" # Create a good-looking DMG for your macOS app in seconds (by Sindre Sorhus)
+# brew "nef" # Steroids for Xcode Playgrounds
+# brew "objc-codegenutils" # Three small tools to help work with XCode
+# brew "unxip" # Fast Xcode unarchiver
+# brew "xcbeautify" # Little beautifier tool for xcodebuild
+# brew "xcdiff" # Tool to diff xcodeproj files
+# brew "xcenv" # Xcode version manager
+# brew "xcinfo" # Tool to get information about and install available Xcode versions
+# brew "xclogparser" # Tool to parse the SLF serialization format used by Xcode
+# brew "xcode-build-server" # Build server protocol implementation for integrating Xcode with sourcekit-lsp
+# brew "xcode-kotlin" # Kotlin Native Xcode Plugin
+# brew "xcodegen" # Generate your Xcode project from a spec file and your folder structure
+# brew "xcodes" # Best command-line tool to install and switch between multiple versions of Xcode
+# brew "xcproj" # Manipulate Xcode project files
+# brew "xcprojectlint" # Xcode project linter
+# brew "xctesthtmlreport" # Xcode-like HTML report for Unit and UI Tests
+
+# brew "aws-amplify" # Build full-stack web and mobile apps in hours. Easy to start, easy to scale
+# brew "bluepill" # Testing tool for iOS that runs UI tests using multiple simulators
+# brew "chisel" # Collection of LLDB commands to assist debugging iOS apps
+# brew "fastlane" # Easiest way to build and release mobile apps
+# brew "flank" # Massively parallel Android and iOS test runner for Firebase Test Lab
+# brew "ideviceinstaller" # Tool for managing apps on iOS devices
+# brew "ifuse" # FUSE module for iOS devices
+# brew "ios-deploy" # Install and debug iPhone apps from the command-line
+# brew "ios-sim" # Command-line application launcher for the iOS Simulator
+# brew "ios-webkit-debug-proxy" # DevTools proxy for iOS devices
+# brew "ipsw" # Research tool for iOS & macOS devices
+# brew "kdoctor" # Environment diagnostics for Kotlin Multiplatform Mobile app development
+# brew "licenseplist" # License list generator of all your dependencies for iOS applications
+# brew "mobiledevice" # CLI for Apple's Private (Closed) Mobile Device Framework
+# brew "react-native-cli" # Tools for creating native apps for Android and iOS

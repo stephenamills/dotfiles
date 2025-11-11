@@ -19,7 +19,7 @@ Lastly, run the commands below to install:
 - The Swift packages in the `Swiftfile`
 
 ```shell
-brew bundle install --no-lock
+brew bundle install --file=<(cat brew/**/*(.))
 
 xargs -n 1 dotnet tool install -g < Dotnetfile
 xargs -n 1 go install < Gofile

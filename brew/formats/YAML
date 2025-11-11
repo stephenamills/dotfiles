@@ -1,0 +1,34 @@
+brew "shyaml" # retrieves values
+brew "yamllint" # checker
+brew "yh" # highlighter
+brew "yj" # converts to JSON or TOML or HCL
+brew "yq" # jq for YAML
+
+# brew "action-validator" # Tool to validate GitHub Action and Workflow YAML files
+# brew "ahoy" # Creates self documenting CLI programs from commands in YAML files
+# brew "cfn-flip" # Convert AWS CloudFormation templates between JSON and YAML formats
+# brew "dasel" # JSON, YAML, TOML, XML, and CSV query and modification tool
+# brew "datree" # run policies against Kubernetes manifests YAML files or Helm charts
+# brew "dhall-json" # Dhall to JSON compiler and a Dhall to YAML compiler
+# brew "dhall-yaml" # Convert between Dhall and YAML
+# brew "helmify" # Create Helm chart from Kubernetes yaml
+# brew "jenkins-job-builder" # Configure Jenkins jobs with YAML files stored in Git
+# brew "k2tf" # Kubernetes YAML to Terraform HCL converter
+# brew "kube-linter" # Static analysis tool for Kubernetes YAML files and Helm charts
+# brew "kustomize" # Template-free customization of Kubernetes YAML manifests
+# brew "naml" # Convert Kubernetes YAML to Golang
+# brew "nuclei" # HTTP/DNS scanner configurable via YAML templates
+# brew "otree" # View objects (JSON/YAML/TOML) in TUI tree widget
+# brew "python-yq" # YAML and XML processor that wraps jq
+# brew "pyyaml" # YAML framework for Python
+# brew "remarshal" # Convert between TOML, YAML and JSON
+# brew "shyaml" # Command-line YAML parser
+# brew "spectral-cli" # JSON/YAML linter for OpenAPI and AsyncAPI
+# brew "syck" # Extension for reading and writing YAML
+# brew "tfk8s" # Kubernetes YAML manifests to Terraform HCL converter
+# brew "yamale" # Schema and validator for YAML
+# brew "yaml-cpp" # C++ YAML parser and emitter for YAML 1.2 spec
+# brew "yamllint" # Linter for YAML files
+# brew "yh" # YAML syntax highlighter to bring colours where only jq could
+# brew "yj" # Convert between YAML, TOML, JSON and HCL
+# brew "yq" # Process YAML, JSON, XML, CSV and properties documents from the CLI

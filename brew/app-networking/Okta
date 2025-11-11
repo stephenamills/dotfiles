@@ -1,0 +1,7 @@
+brew "okta-aws-cli" # Okta authentication for awscli
+brew "okta-awscli" # Okta authentication for awscli, don't know why there are two of these with slightly different names
+# brew "gimme-aws-creds" # CLI to retrieve AWS credentials from Okta
+# brew "lasso" # Library for Liberty Alliance and SAML protocols
+# brew "opensaml" # Library for Security Assertion Markup Language
+# brew "saml2aws" # Login and retrieve AWS temporary credentials using a SAML IDP
+# brew "xmlsectool" # for SAML - Check schema and signature of an XML document

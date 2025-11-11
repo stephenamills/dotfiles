@@ -1,0 +1,8 @@
+brew "cloudflared" # Cloudflare Tunnel client (formerly Argo Tunnel)
+brew "flarectl" # CLI application for interacting with a Cloudflare account
+brew "wgcf" # Generate WireGuard profile from Cloudflare Warp account
+# brew "cfssl" # CloudFlare's PKI toolkit
+# brew "cloudflare-cli4" # CLI for Cloudflare API v4
+# brew "cloudflare-quiche" # Savoury implementation of the QUIC transport protocol and HTTP/3
+# brew "cloudflare-wrangler2" # CLI tool for Cloudflare Workers
+# brew "river" # Reverse proxy application, based on the pingora library from Cloudflare

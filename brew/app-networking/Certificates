@@ -1,0 +1,95 @@
+brew "certbot" # tool to obtain certs from Let's Encrypt and autoenable HTTPS
+brew "dehydrated" # Let's Encrypt/ACME client implemented as a shell-script
+brew "dnsrobocert" # manages Let's Encrypt SSL certificates based on DNS challenges
+brew "lego" # Let's Encrypt client and ACME library
+
+brew "amass"
+brew "badkeys" # finds common vulnerabilities in a public key
+brew "ccheck" # certificate expiration checker
+brew "certgraph" # crawls the graph of certificate Alternate Names and their website also links to huge crt.sh database
+brew "certigo" # by Square - examines and validates certificates
+brew "certstrap" # by Square - tools to bootstrap CAs, certificate requests, and signed certificates
+brew "certsync"
+brew "cfssl" # by Cloudflare - PKI/TLS toolkit
+brew "easy-rsa" # builds and manages a PKI CA
+brew "fetch-crl" # downloads a certificate revocation list from a remote server
+brew "gimmecert" # quickly issues server and client certificates using a locally-generated CA
+brew "gnutls"
+brew "minica" # simple certificate authority
+brew "openssl"
+brew "tlsx" # scans for TLS vulnerabilities
+brew "xpipe" # splits input and feeds it to another command - has use cases for certificates and more
+brew "zlint" # certificate checker, see also zcertificate and zschema
+
+# brew "ca-certificates" # Mozilla CA certificate store
+# brew "ccheck" # Check X509 certificate expiration from the command-line, with TAP output
+# brew "certbot" # Tool to obtain certs from Let's Encrypt and autoenable HTTPS
+# brew "certgraph" # Crawl the graph of certificate Alternate Names
+# brew "certifi" # Mozilla CA bundle for Python
+# brew "certigo" # Utility to examine and validate certificates in a variety of formats
+# brew "certstrap" # Tools to bootstrap CAs, certificate requests, and signed certificates
+# brew "certsync" # Dump NTDS with golden certificates and UnPAC the hash
+# brew "cmctl" # Command-line tool to manage cert-manager
+# brew "dnsrobocert" # Manage Let's Encrypt SSL certificates based on DNS challenges
+# brew "fetch-crl" # Retrieve certificate revocation lists (CRLs)
+# brew "gimmecert" # Quickly issue X.509 server and client certificates using locally-generated CA
+# brew "minica" # Small, simple certificate authority
+# brew "mkcert" # Simple tool to make locally trusted development certificates
+# brew "ory-hydra" # OpenID Certified OAuth 2.0 Server and OpenID Connect Provider
+# brew "pivit" # Sign and verify data using hardware (Yubikey) backed x509 certificates (PIV)
+# brew "redwax-tool" # Universal certificate conversion tool
+# brew "signmykey" # Automated SSH Certificate Authority
+# brew "sslmate" # Buy SSL certs from the command-line
+# brew "step" # Crypto and x509 Swiss-Army-Knife
+# brew "zlint" # X.509 Certificate Linter focused on Web PKI standards and requirements
+
+# brew "cfssl" # CloudFlare's PKI toolkit
+# brew "dnsrobocert" # Manage Let's Encrypt SSL certificates based on DNS challenges
+# brew "libretls" # Libtls for OpenSSL
+# brew "mp3gain" # Lossless mp3 normalizer with statistical analysis
+# brew "openssl@3" # Cryptography and SSL/TLS Toolkit
+# brew "osslsigncode" # OpenSSL based Authenticode signing for PE/MSI/Java CAB files
+# brew "progressline" # Track commands progress in a compact one-line format
+# brew "sng" # Enable lossless editing of PNGs via a textual representation
+# brew "sslh" # Forward connections based on first data packet sent by client
+# brew "ssllabs-scan" # This tool is a command-line client for the SSL Labs APIs
+# brew "sslmate" # Buy SSL certs from the command-line
+# brew "sslsplit" # Man-in-the-middle attacks against SSL encrypted network connections
+# brew "sslyze" # SSL scanner
+# brew "sstp-client" # SSTP (Microsoft's Remote Access Solution for PPP over SSL) client
+# brew "stunnel" # SSL tunneling program
+# brew "tta" # Lossless audio codec
+# brew "wavpack" # Hybrid lossless audio compression
+# brew "webp" # Image format providing lossless and lossy compression for web images
+# brew "wolfssl" # Embedded SSL Library written in C
+# brew "zlib" # General-purpose lossless data-compression library
+
+# brew "fizz" # C++14 implementation of the TLS-1.3 standard
+# brew "ghostunnel" # Simple SSL/TLS proxy with mutual authentication
+# brew "gnutls" # GNU Transport Layer Security (TLS) Library
+# brew "libressl" # Version of the SSL/TLS protocol forked from OpenSSL
+# brew "openfortivpn" # Open Fortinet client for PPP+TLS VPN tunnel services
+# brew "openvpn" # SSL/TLS VPN implementing OSI layer 2 or 3 secure network extension
+# brew "overtls" # Simple proxy tunnel for bypassing the GFW
+# brew "quictls" # TLS/SSL and crypto library with QUIC APIs
+# brew "rustls-ffi" # FFI bindings for the rustls TLS library
+# brew "s2n" # Implementation of the TLS/SSL protocols
+# brew "ssldump" # SSLv3/TLS network protocol analyzer
+# brew "sslscan" # Test SSL/TLS enabled services to discover supported cipher suites
+# brew "testssl" # Tool which checks for the support of TLS/SSL ciphers and flaws
+# brew "tlsx" # Fast and configurable TLS grabber focused on TLS based data collection
+
+# brew "jsign" # signs a Windows executable, installer, or script, using a key from cloud services or other sources
+
+# brew "cosign" # Container Signing
+# brew "gitsign" # Keyless Git signing using Sigstore
+# brew "jsign" # Tool for signing Windows executable files, installers and scripts
+# brew "ldid-procursus" # Put real or fake signatures in a Mach-O binary
+# brew "osslsigncode" # OpenSSL based Authenticode signing for PE/MSI/Java CAB files
+# brew "pius" # PGP individual UID signer
+# brew "pivit" # Sign and verify data using hardware (Yubikey) backed x509 certificates (PIV)
+# brew "sh4d0wup" # Signing-key abuse and update exploitation framework
+# brew "signify-osx" # Cryptographically sign and verify files
+# brew "sigstore" # Codesigning tool for Python packages
+# brew "smimesign" # S/MIME signing utility for use with Git
+# brew "xmlsectool" # Check schema validity and signature of an XML document

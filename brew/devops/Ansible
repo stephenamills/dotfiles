@@ -1,0 +1,14 @@
+# Ansible
+brew "ansible" # Automate deployment, configuration, and upgrading
+brew "ansible-builder" # Tool for building Ansible Execution Environments (Containers)
+brew "ansible-cmdb" # Generate a static HTML overview page from Ansible facts
+brew "ansible-creator" # Scaffold Ansible content
+brew "ansible-lint" # Check Ansible playbooks for practices and behavior
+brew "molecule" # Test an Ansible role
+brew "terraform-inventory" # Convert a Terraform state file to a dynamic Ansible inventory
+
+brew "djhtml" # indents Jinja templates
+brew "jinja2-cli" # jinja2
+
+# Also, Chef, Puppet, and SaltStack
+# Also, Nornir on PyPI

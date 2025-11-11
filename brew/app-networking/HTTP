@@ -1,0 +1,179 @@
+# HTTP API
+brew "autorest" # by Microsoft - converts an OpenAPI specification to client code
+brew "fern-api" # converts a Fern or OpenAPI specification to client code
+brew "tygo" # converts a Go JSON API to TypeScript type declarations for use in the frontend
+brew "wiremock-standalone"
+
+# brew "create-api" # converts an OpenAPI specification to Swift client code
+# brew "mockserver" # Mock HTTP server and proxy
+# brew "moto" # Mock AWS services
+# brew "stripe-mock" # Mock HTTP server that responds like the real Stripe API
+# brew "swagger2markup" # converts an OpenAPI specification to Markdown
+# brew "wiremock-standalone" # Simulator for HTTP-based APIs
+
+# brew "autorest" # OpenAPI Specification code generator
+# brew "create-api" # Delightful code generator for OpenAPI specs
+# brew "kiota" # OpenAPI based HTTP Client code generator
+# brew "openapi-generator" # Generate clients, server & docs from an OpenAPI spec (v2, v3)
+# brew "spectral-cli" # JSON/YAML linter and support OpenAPI v3.1/v3.0/v2.0, and AsyncAPI v2.x
+# brew "swagger-codegen" # Generate clients, server stubs, and docs from an OpenAPI spec
+# brew "swagger2markup-cli" # Swagger to AsciiDoc or Markdown converter
+
+# brew "apibuilder-cli" # Command-line interface to generate clients for api builder
+# brew "apify-cli" # Apify command-line interface
+# brew "asyncapi" # All in one CLI for all AsyncAPI tools
+# brew "bic" # C interpreter and API explorer
+# brew "create-api" # Delightful code generator for OpenAPI specs
+# brew "dasht" # Search API docs offline, in your terminal or browser
+# brew "docfx" # Tools for building and publishing API documentation for .NET projects
+# brew "drafter" # Native C/C++ API Blueprint Parser
+# brew "fern-api" # Stripe-level SDKs and Docs for your API
+# brew "glooctl" # Envoy-Powered API Gateway
+# brew "hoverfly" # API simulations for development and testing
+# brew "jsdoc3" # API documentation generator for JavaScript
+# brew "keploy" # Testing Toolkit creates test-cases and data mocks from API calls, DB queries
+# brew "krakend" # Ultra-High performance API Gateway built in Go
+# brew "openapi-generator" # Generate clients, server & docs from an OpenAPI spec (v2, v3)
+# brew "roapi" # Full-fledged APIs for static datasets without writing a single line of code
+# brew "spectral-cli" # JSON/YAML linter that supports OpenAPI 3 and AsyncAPI 2
+# brew "stepci" # API Testing and Monitoring made simple
+# brew "swagger-codegen" # Generate clients, server stubs, and docs from an OpenAPI spec
+
+brew "curl" # multi-protocol client
+brew "curlie" # power of curl, ease of use of httpie
+brew "h2c" # converts an HTTP request to curl – also has a web version
+brew "httpie" # user-friendly curl replacement
+brew "httping"
+brew "hurl" # tests an HTTP request with plain text and curl
+brew "newman" # runs Postman collections
+brew "muffet" # checks for broken links
+brew "webify" # turns a shell command into a web service
+cask "postman"
+cask "rapidapi" # can generate client code
+# brew "awscurl" # Curl like simplicity to access AWS resources
+# brew "httpstat" # Curl statistics made simple
+# brew "k6" # by Grafana - popular load testing tool
+# brew "resty" # shell script wrapper for curl – abandoned 7 years ago and conflicts with nss package
+# brew "wcurl" # Wrapper around curl to easily download files
+
+# brew "ain" # HTTP API client for the terminal
+# brew "algernon" # Pure Go web server with Lua, Markdown, HTTP/2 and template support
+# brew "ali" # Generate HTTP load and plot the results in real-time
+# brew "apib" # HTTP performance-testing tool
+# brew "arjun" # HTTP parameter discovery suite
+# brew "autocannon" # Fast HTTP/1.1 benchmarking tool written in Node.js
+# brew "aws-es-proxy" # Small proxy between HTTP client and AWS Elasticsearch
+# brew "bozohttpd" # Small and secure http version 1.1 server
+# brew "caddy" # Powerful, enterprise-ready, open source web server with automatic HTTPS
+# brew "cassowary" # Modern cross-platform HTTP load-testing tool written in Go
+# brew "certbot" # Tool to obtain certs from Let's Encrypt and autoenable HTTPS
+# brew "chisel-tunnel" # Fast TCP/UDP tunnel over HTTP
+# brew "cloudflare-quiche" # Savoury implementation of the QUIC transport protocol and HTTP/3
+# brew "condure" # HTTP/WebSocket connection manager
+# brew "connect" # Provides SOCKS and HTTPS proxy support to SSH
+# brew "corkscrew" # Tunnel SSH through HTTP proxies
+# brew "cpp-httplib" # C++ header-only HTTP/HTTPS server and client library
+# brew "curl" # Get a file from an HTTP, HTTPS or FTP server
+# brew "curlie" # Power of curl, ease of use of httpie
+# brew "darkhttpd" # Small static webserver without CGI
+# brew "davix" # Library and tools for advanced file I/O with HTTP-based protocols
+# brew "drill" # HTTP load testing application written in Rust
+# brew "fabio" # Zero-conf load balancing HTTP(S) router
+# brew "forbidden" # Bypass 4xx HTTP response status codes and more
+# brew "fortio" # HTTP and gRPC load testing and visualization tool and server
+# brew "gor" # Real-time HTTP traffic replay tool written in Go
+# brew "h2o" # HTTP server with support for HTTP/1.x and HTTP/2
+# brew "h2spec" # Conformance testing tool for HTTP/2 implementation
+# brew "haproxy" # Reliable, high performance TCP/HTTP load balancer
+# brew "haproxy@2.8" # Reliable, high performance TCP/HTTP load balancer
+# brew "hey" # HTTP load generator, ApacheBench (ab) replacement
+# brew "http-parser" # HTTP request/response parser for c
+# brew "http-prompt" # Interactive command-line HTTP client with autocomplete and syntax highlighting
+# brew "http-server" # Simple zero-configuration command-line HTTP server
+# brew "http_load" # Test throughput of a web server by running parallel fetches
+# brew "httpd" # Apache HTTP server
+# brew "httpdiff" # Compare two HTTP(S) responses
+# brew "httperf" # Tool for measuring webserver performance
+# brew "httpflow" # Packet capture and analysis utility similar to tcpdump for HTTP
+# brew "httpie" # User-friendly cURL replacement (command-line HTTP client)
+# brew "httping" # Ping-like tool for HTTP requests
+# brew "httpry" # Packet sniffer for displaying and logging HTTP traffic
+# brew "httpstat" # Curl statistics made simple
+# brew "httpx" # Fast and multi-purpose HTTP toolkit
+# brew "httpyac" # Quickly and easily send REST, SOAP, GraphQL and gRPC requests
+# brew "hurl" # Run and Test HTTP Requests with plain text and curl
+# brew "hz" # Golang HTTP framework for microservices
+# brew "jtbl" # Convert JSON and JSON Lines to terminal, CSV, HTTP, and markdown tables
+# brew "kiota" # OpenAPI based HTTP Client code generator
+# brew "lighttpd" # Small memory footprint, flexible web-server
+# brew "mergelog" # Merges httpd logs from web servers behind round-robin DNS
+# brew "mighttpd2" # HTTP server
+# brew "mockserver" # Mock HTTP server and proxy
+# brew "neon" # HTTP and WebDAV client library with a C interface
+# brew "nextdns" # CLI for NextDNS's DNS-over-HTTPS (DoH)
+# brew "nghttp2" # HTTP/2 C Library
+# brew "nginx" # HTTP(S) server and reverse proxy, and IMAP/POP3 proxy server
+# brew "nuclei" # HTTP/DNS scanner configurable via YAML templates
+# brew "oha" # HTTP load generator, inspired by rakyll/hey with tui animation
+# brew "pgrok" # Poor man's ngrok, multi-tenant HTTP/TCP reverse tunnel solution
+# brew "plow" # High-performance and real-time metrics displaying HTTP benchmarking tool
+# brew "proxify" # Portable proxy for capturing, manipulating, and replaying HTTP/HTTPS traffic
+# brew "proxygen" # Collection of C++ HTTP libraries
+# brew "proxytunnel" # Create TCP tunnels through HTTPS proxies
+# brew "python-requests" # Python HTTP for Humans
+# brew "python-urllib3" # HTTP library with thread-safe connection pooling, file post, and more
+# brew "req" # Simple and opinionated HTTP scripting language
+# brew "scm-manager" # Manage Git, Mercurial, and Subversion repos over HTTP
+# brew "serve" # Static http server anywhere you need one
+# brew "sftpgo" # Fully featured SFTP server with optional HTTP/S, FTP/S and WebDAV support
+# brew "shell2http" # Executing shell commands via HTTP server
+# brew "siege" # HTTP regression testing and benchmarking utility
+# brew "slowhttptest" # Simulates application layer denial of service attacks
+# brew "sproxy" # HTTP proxy server collecting URLs in a 'siege-friendly' manner
+# brew "squid" # Advanced proxy caching server for HTTP, HTTPS, FTP, and Gopher
+# brew "ssh3" # Faster and richer secure shell using HTTP/3
+# brew "stripe-mock" # Mock HTTP server that responds like the real Stripe API
+# brew "tinyproxy" # HTTP/HTTPS proxy for POSIX systems
+# brew "trafficserver" # HTTP/1.1 and HTTP/2 compliant caching proxy server
+# brew "tsung" # Load testing for HTTP, PostgreSQL, Jabber, and others
+# brew "ulfius" # HTTP Framework for REST Applications in C
+# brew "varnish" # High-performance HTTP accelerator
+# brew "vegeta" # HTTP load testing tool and library
+# brew "wbox" # HTTP testing tool and configuration-less HTTP server
+# brew "webdis" # Redis HTTP interface with JSON output
+# brew "webfs" # HTTP server for purely static content
+# brew "weighttp" # Webserver benchmarking tool that supports multithreading
+# brew "whistle" # HTTP, HTTP2, HTTPS, Websocket debugging proxy
+# brew "wiremock-standalone" # Simulator for HTTP-based APIs
+# brew "wrk" # HTTP benchmarking tool
+# brew "wstunnel" # Tunnel all your traffic over Websocket or HTTP2
+# brew "xh" # Friendly and fast tool for sending HTTP requests
+# brew "xmlrpc-c" # Lightweight RPC library (based on XML and HTTP)
+# brew "zurl" # HTTP and WebSocket client worker with ZeroMQ interface
+
+# brew "apidoc" # RESTful web API Documentation Generator
+# brew "autorest" # Swagger (OpenAPI) Specification code generator
+# brew "autorestic" # High level CLI utility for restic
+# brew "luajit-openresty" # OpenResty's Branch of LuaJIT 2
+# brew "mongo-orchestration" # REST API to manage MongoDB configurations on a single host
+# brew "postgrest" # Serves a fully RESTful API from any existing PostgreSQL database
+# brew "resty" # Command-line REST client that can be used in pipelines
+
+# brew "brpc" # Better RPC framework
+# brew "goctl" # Generates server-side and client-side code for web and RPC services
+# brew "ice" # Comprehensive RPC framework
+# brew "jsonrpc-glib" # GNOME library to communicate with JSON-RPC based peers
+# brew "kitex" # Golang RPC framework for microservices
+# brew "libjson-rpc-cpp" # C++ framework for json-rpc
+# brew "libtirpc" # Port of Sun's Transport-Independent RPC library to Linux
+# brew "rpcgen" # Protocol Compiler
+# brew "xmlrpc-c" # Lightweight RPC library (based on XML and HTTP)
+
+# brew "gowsdl" # WSDL2Go code generation as well as its SOAP proxy
+# brew "gsoap" # SOAP stub and skeleton compiler for C and C++
+
+
+
+brew "apprise" # very useful for sending notifications and triggering webhooks to popular notification services
+brew "webhook" # lightweight incoming webhook server
+

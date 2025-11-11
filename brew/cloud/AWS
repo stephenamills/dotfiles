@@ -1,0 +1,117 @@
+brew "amazon-ecs-cli"
+brew "awscli"
+brew "aws-shell"
+brew "ec2-ami-tools"
+brew "copilot" # Fargate and Container Service (ECS)
+
+brew "cloudformation-cli" # creates and manages CloudFormation extensions
+brew "cloudformation-guard" # audits CloudFormation templates, Kubernetes configurations, and Terraform plans
+
+brew "athenacli"
+brew "aws-auth"
+brew "aws-cdk"
+brew "aws-console"
+brew "aws-google-auth"
+brew "aws-iam-authenticator"
+brew "aws-keychain"
+brew "aws-nuke"
+brew "aws-rotate-key"
+brew "aws-sso-cli"
+brew "aws-vault"
+brew "awscli-local" # LocalStack
+brew "awscurl"
+brew "awslogs"
+brew "awsume"
+brew "awsweeper"
+brew "cf2tf" # converts CloudFormation templates to Terraform HCL
+brew "cfn-flip" # converts CloudFormation templates to JSON or YAML
+brew "cfn-format"
+brew "cfn-lint"
+brew "cfripper" # audits CloudFormation templates
+brew "chamber" # manages secrets in AWS SSM Parameter Store
+brew "cli53"
+brew "cloudiscovery" # abandoned but may still work
+brew "cloudfox" # penetration testing tool
+brew "cloudsplaining" # audits access policies (IAM) and generates a web report/worksheet
+brew "s3cmd" # client
+# brew "credstash" # manages credentials in KMS
+# brew "iamy" # imports and exports access policies (IAM)
+# brew "parliament" # by Duo - checks access policies (IAM)
+
+# brew "goofys" # Filey-System interface to Amazon S3
+# brew "juicefs" # Cloud-based, distributed POSIX file system built on top of Redis and S3
+# brew "rome" # Carthage cache for S3, Minio, Ceph, Google Storage, Artifactory and many others
+# brew "s3-backer" # FUSE-based single file backing store via Amazon S3
+# brew "s3cmd" # Command-line tool for the Amazon S3 service
+# brew "s3fs" # FUSE-based file system backed by Amazon S3
+# brew "s3ql" # POSIX-compliant FUSE filesystem using object store as block storage
+# brew "s3scanner" # Scan for misconfigured S3 buckets across S3-compatible APIs
+# brew "s4cmd" # Super S3 command-line tool
+
+# brew "amazon-ecs-cli" # CLI for Amazon ECS to manage clusters and tasks for development
+# brew "athenacli" # CLI tool for AWS Athena service
+# brew "aws-amplify" # Build full-stack web and mobile apps in hours. (on npm)
+# brew "aws-auth" # Allows you to programmatically authenticate into AWS accounts through IAM roles
+# brew "aws-cdk" # AWS Cloud Development Kit - framework for defining AWS infra as code
+# brew "aws-console" # Command-line to use AWS CLI credentials to launch the AWS console in a browser
+# brew "aws-elasticbeanstalk" # Client for Amazon Elastic Beanstalk web service
+# brew "aws-es-proxy" # Small proxy between HTTP client and AWS Elasticsearch
+# brew "aws-google-auth" # Acquire AWS credentials using Google Apps
+# brew "aws-iam-authenticator" # Use AWS IAM credentials to authenticate to Kubernetes
+# brew "aws-keychain" # Uses macOS keychain for storage of AWS credentials
+# brew "aws-nuke" # Nuke a whole AWS account and delete all its resources
+# brew "aws-rotate-key" # Easily rotate your AWS access key
+# brew "aws-sam-cli" # CLI tool to build, test, debug, and deploy Serverless applications using AWS SAM
+# brew "aws-sdk-cpp" # AWS SDK for C++
+# brew "aws-shell" # Integrated shell for working with the AWS CLI
+# brew "aws-sso-cli" # Securely manage AWS API credentials using AWS SSO
+# brew "aws-sso-util" # Smooth out the rough edges of AWS SSO (temporarily, until AWS makes it better)
+# brew "aws-vault" # Securely store and access AWS credentials in development environments
+# brew "aws2-wrap" # Script to export current AWS SSO credentials or run a sub-process with them
+# brew "awscli-local" # Thin wrapper around the `aws` command-line interface for use with LocalStack
+# brew "awscli" # Official Amazon AWS command-line interface
+# brew "awscurl" # Curl like simplicity to access AWS resources
+# brew "awsdac" # CLI tool for drawing AWS architecture
+# brew "awslogs" # Simple command-line tool to read AWS CloudWatch logs
+# brew "awsume" # Utility for easily assuming AWS IAM roles from the command-line
+# brew "awsweeper" # CLI tool for cleaning your AWS account
+# brew "basti" # Securely connect to RDS, Elasticache, and other AWS resources in VPCs
+# brew "cfn-flip" # Convert AWS CloudFormation templates between JSON and YAML formats
+# brew "cfn-format" # Command-line tool for formatting AWS CloudFormation templates
+# brew "chamber" # CLI for managing secrets through AWS SSM Parameter Store
+# brew "clamz" # Download MP3 files from Amazon's music store
+# brew "claws-mail" # User-friendly, lightweight, and fast email client
+# brew "cli53" # Command-line tool for Amazon Route 53
+# brew "cloud-watch" # Amazon CloudWatch command-line Tool
+# brew "cloudsplaining" # AWS IAM Security Assessment tool
+# brew "clusterawsadm" # Home for bootstrapping, AMI, EKS, and other helpers in Cluster API Provider AWS
+# brew "copilot" # CLI tool for Amazon ECS and AWS Fargate
+# brew "docker-credential-helper-ecr" # Docker Credential Helper for Amazon ECR
+# brew "ec2-ami-tools" # Amazon EC2 AMI Tools (helps bundle Amazon Machine Images)
+# brew "ecs-deploy" # CLI tool to simplify Amazon ECS deployments, rollbacks & scaling
+# brew "eksctl" # Simple command-line tool for creating clusters on Amazon EKS
+# brew "gimme-aws-creds" # CLI to retrieve AWS credentials from Okta
+# brew "git-remote-codecommit" # Git Remote Helper to interact with AWS CodeCommit
+# brew "iamy" # AWS IAM import and export tool
+# brew "localstack" # Fully functional local AWS cloud stack
+# brew "moto" # Mock AWS services
+# brew "msc-generator" # Draws signalling charts from textual description
+# brew "netlistsvg" # Draws an SVG schematic from a yosys JSON netlist
+# brew "okta-aws-cli" # Okta federated identity for AWS CLI
+# brew "okta-awscli" # Okta authentication for awscli
+# brew "parliament" # AWS IAM linting library
+# brew "policy_sentry" # Generate locked-down AWS IAM Policies
+# brew "principalmapper" # Quickly evaluate IAM permissions in AWS
+# brew "rain" # Command-line tool for working with AWS CloudFormation
+# brew "rds-command-line-tools" # Amazon RDS command-line toolkit
+# brew "rosa-cli" # RedHat OpenShift Service on AWS (ROSA) command-line interface
+# brew "s3scanner" # Scans for misconfigured S3 buckets across S3-compatible APIs
+# brew "saml2aws" # Login and retrieve AWS temporary credentials using a SAML IDP
+# brew "sceptre" # Build better AWS infrastructure
+# brew "sha3sum" # Keccak, SHA-3, SHAKE, and RawSHAKE checksum utilities
+# brew "shush" # Encrypt and decrypt secrets using the AWS Key Management Service
+# brew "sqsmover" # AWS SQS Message mover
+# brew "terraforming" # Export existing AWS resources to Terraform style (tf, tfstate)
+# brew "testssl" # Tool which checks for the support of TLS/SSL ciphers and flaws
+# brew "trailscraper" # Tool to get valuable information out of AWS CloudTrail
+# brew "yatas" # Tool to audit AWS/GCP infrastructure for misconfiguration or security issues

@@ -1,0 +1,10 @@
+brew "composer" # Dependency Manager for PHP
+brew "php" # General-purpose scripting language
+
+# brew "php-code-sniffer" # Check coding standards in PHP, JavaScript and CSS
+# brew "php-cs-fixer" # Tool to automatically fix PHP coding standards issues
+# brew "phpmd" # PHP Mess Detector
+# brew "phpstan" # PHP Static Analysis Tool
+# brew "pickle" # PHP Extension installer
+# brew "psalm" # PHP Static Analysis Tool
+# brew "psysh" # Runtime developer console, interactive debugger and REPL for PHP

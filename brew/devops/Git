@@ -1,0 +1,263 @@
+brew "gitless" # better interface (by Daniel Jackson squad at MIT)
+brew "jj" # better interface (Google employee side project)
+brew "sapling" # better interface (by Facebook)
+brew "sugarjar" # better interface like sapling
+cask "gitbutler" # better interface (by Scott Chacon)
+
+brew "bit-git" # better interface
+brew "git-branchless" # better interface
+brew "git-town" # better interface supporting several branch strategies
+
+brew "GitJournal/tap/git-auto-sync" # automatically syncs a repo
+brew "gitup" # syncs a repo
+brew "git-sync" # automatically syncs a repo
+brew "git-workspace" # syncs multiple repos
+brew "git-xargs" # commits changes or pull requests to multiple repos
+brew "gitwatch" # watches a file or folder and commits changes
+
+brew "blackbox" # encrypts and stores secrets in Git
+brew "commitizen"
+brew "convco"
+brew "gibo" # .gitignore generator
+brew "git"
+brew "gitleaks" # secrets audit
+brew "lefthook" # hook manager
+brew "ugit" # tries to undo a git command
+
+brew "g2" # interface to aid learning
+brew "git-absorb" # incorporates uncommitted changes into relevant past commits, using automatic decision making, simplifying history management without manual rebasing
+brew "git-appraise" # by Google - code review system
+brew "git-delete-merged-branches" # deletes a merged branch, keeping the repo clean
+brew "git-delta" # superb upgrade to git blame and also for diff etc.
+brew "git-filter-repo" # rewrites repository history
+brew "git-flow" # branching model popularized in a blog post
+brew "git-flow-avh" # another git-flow
+brew "git-fixup" # alias for git commit --fixup <ref>
+brew "git-imerge" # incremental merge of two branches
+brew "git-integration" # integration branches, whatever
+brew "git-machete" # simplifies merges/rebases/push/pulls in the presence of multiple branches
+brew "git-mediate" # resolves merge conflicts
+brew "git-octopus" # continuous merge workflow for CI pipelines
+brew "git-remote-codecommit" # simple method to push to and pull from AWS CodeCommit
+brew "git-subrepo" # submodule alternative
+brew "git-vendor" # creates a vendored dependency (as the Go community does)
+brew "git-when-merged" # finds where a commit was merged
+
+# brew "aicommits" # Writes your git commit messages for you with AI
+# brew "cmt" # Write consistent git commit messages based on a custom template
+# brew "cocogitto" # Conventional Commits toolbox
+# brew "commitizen" # Defines a standard way of committing rules and communicating it
+# brew "commitlint" # Lint commit messages according to a commit convention
+# brew "czg" # Interactive Commitizen CLI that generate standardized commit messages
+# brew "dependabot" # Automated dependency updates for GitHub and GitLab
+# brew "dura" # Backs up your work automatically via Git commits
+# brew "fetch" # Download assets from a commit, branch, or tag of GitHub repositories
+# brew "git-absorb" # Automatic git commit --fixup
+# brew "git-fixup" # Alias for git commit --fixup <ref>
+# brew "git-game" # Game for git to guess who made which commit
+# brew "git-hound" # Git plugin that prevents sensitive data from being committed
+# brew "git-now" # Light, temporary commits for git
+# brew "git-remote-codecommit" # Git Remote Helper to interact with AWS CodeCommit
+# brew "git-secrets" # Prevents you from committing sensitive information to a git repo
+# brew "git-when-merged" # Find where a commit was merged in git
+# brew "gitlint" # Linting for your git commit messages
+# brew "gitmoji" # Interactive command-line tool for using emoji in commit messages
+# brew "gitwatch" # Watch a file or folder and automatically commit changes to a git repo easily
+# brew "kommit" # More detailed commit messages without committing!
+# brew "lucky-commit" # Customize your git commit hashes!
+# brew "multi-git-status" # Show uncommitted, untracked and unpushed changes for multiple Git repos
+# brew "pre-commit" # Framework for managing multi-language pre-commit hooks
+# brew "ripsecrets" # Prevent committing secret keys into your source code
+# brew "spr" # Submit pull requests for individual, amendable, rebaseable commits to GitHub
+# brew "squealer" # Scans Git repositories or filesystems for secrets in commit histories
+# brew "stgit" # Manage Git commits as a stack of patches
+
+# brew "changie" # Automated changelog tool for preparing releases
+# brew "convco" # Conventional commits, changelog, versioning, validation
+# brew "git-cliff" # Highly customizable changelog generator
+
+# brew "apgdiff" # Another PostgreSQL diff tool
+# brew "bazel-diff" # Performs Bazel Target Diffing between two revisions in Git
+# brew "colordiff" # Color-highlighted diff(1) output
+# brew "container-diff" # Diff your Docker containers
+# brew "diff-so-fancy" # Good-lookin' diffs with diff-highlight and more
+# brew "diffoci" # Diff for Docker and OCI container images
+# brew "diffoscope" # In-depth comparison of files, archives, and directories
+# brew "diffr" # LCS based diff highlighting tool to ease code review from your terminal
+# brew "diffstat" # Produce graph of changes introduced by a diff file
+# brew "difftastic" # Diff that understands syntax
+# brew "diffutils" # File comparison utilities
+# brew "dwdiff" # Diff that operates at the word level
+# brew "excel-compare" # tool (and API) for diffing Excel Workbooks
+# brew "git-delta" # Syntax-highlighting pager for git and diff output
+# brew "git-split-diffs" # Syntax highlighted side-by-side diffs in your terminal
+# brew "gpatch" # Apply a diff file to an original
+# brew "httpdiff" # Compare two HTTP(S) responses
+# brew "icdiff" # Improved colored diff
+# brew "imgdiff" # Pixel-by-pixel image difference tool
+# brew "jd" # JSON diff and patch
+# brew "nbdime" # Jupyter Notebook Diff and Merge tools
+# brew "numdiff" # Putative files comparison tool
+# brew "perceptualdiff" # Perceptual image comparison tool
+# brew "pkgdiff" # Tool for analyzing changes in software packages (e.g. RPM, DEB, TAR.GZ)
+# brew "rancid" # Cisco config differ
+# brew "riff" # Diff filter highlighting which line parts have changed
+# brew "spaceman-diff" # Diff images from the command-line
+# brew "sqldiff" # Displays the differences between SQLite databases
+# brew "uutils-diffutils" # diffutils
+# brew "wdiff" # Display word differences between text files
+# brew "xcdiff" # Tool to diff xcodeproj files
+# brew "ydiff" # View colored diff with side by side and auto pager support
+# brew "zet" # CLI utility to find the union, intersection, and set difference of files
+
+# brew "all-repos" # Clone all your repositories and apply sweeping changes
+# brew "argocd-autopilot" # Opinionated way of installing Argo CD and managing GitOps repositories
+# brew "argocd" # GitOps Continuous Delivery for Kubernetes
+# brew "bash-git-prompt" # Informative, fancy bash prompt for Git users
+# brew "bat" # Clone of cat(1) with syntax highlighting and Git integration
+# brew "bfg" # Remove large files or passwords from Git history like git-filter-branch
+# brew "bit-git" # Bit is a modern Git CLI
+# brew "blackbox" # Safely store secrets in Git/Mercurial/Subversion
+# brew "braid" # Simple tool to help track vendor branches in a Git repository
+# brew "cargo-generate" # Use pre-existing git repositories as templates
+# brew "cgit" # Hyperfast web frontend for Git repositories written in C
+# brew "cig" # CLI app for checking the state of your git repositories
+# brew "dolt" # Git for Data
+# brew "dstask" # Git-powered personal task tracker
+# brew "dvc" # Git for data science projects
+# brew "fluxctl" # Command-line tool to access Weave Flux, the Kubernetes GitOps operator
+# brew "forgit" # Interactive git commands in the terminal
+# brew "g2" # Friendly git client
+# brew "gfold" # Help keep track of your Git repositories, written in Rust
+# brew "ghorg" # Quickly clone an entire org's or user's repositories into one directory
+# brew "ghq" # Remote repository management made easy
+# brew "gickup" # Backup all your repositories with ease
+# brew "git-annex-remote-rclone" # Use rclone supported cloud storage with git-annex
+# brew "git-annex" # Manage files with git without checking in file contents
+# brew "git-appraise" # Distributed code review system for Git repos
+# brew "git-archive-all" # Archive a project and its submodules
+# brew "git-big-picture" # Visualization tool for Git repositories
+# brew "git-branchless" # High-velocity, monorepo-scale workflow for Git
+# brew "git-bug" # Distributed, offline-first bug tracker embedded in git, with bridges
+# brew "git-cinnabar" # Git remote helper to interact with mercurial repositories
+# brew "git-codereview" # Tool for working with Gerrit code reviews
+# brew "git-cola" # Highly caffeinated git GUI
+# brew "git-credential-libsecret" # Git helper for accessing credentials via libsecret
+# brew "git-credential-oauth" # Git credential helper that authenticates in browser using OAuth
+# brew "git-crypt" # Enable transparent encryption/decryption of files in a git repo
+# brew "git-delete-merged-branches" # Command-line tool to delete merged Git branches
+# brew "git-extras" # Small git utilities
+# brew "git-filter-repo" # Quickly rewrite git repository history
+# brew "git-flow-avh" # AVH edition of git-flow
+# brew "git-flow" # Extensions to follow Vincent Driessen's branching model
+# brew "git-fresh" # Utility to keep git repos fresh
+# brew "git-ftp" # Git-powered FTP client
+# brew "git-gerrit" # Gerrit code review helper scripts
+# brew "git-grab" # Clone a git repository into a standard location organised by domain and path
+# brew "git-gui" # Tcl/Tk UI for the git revision control system
+# brew "git-hooks-go" # Git hooks manager
+# brew "git-if" # Glulx interpreter that is optimized for speed
+# brew "git-imerge" # Incremental merge for git
+# brew "git-integration" # Manage git integration branches
+# brew "git-interactive-rebase-tool" # Native sequence editor for Git interactive rebase
+# brew "git-lfs" # Git extension for versioning large files
+# brew "git-machete" # Git repository organizer & rebase workflow automation tool
+# brew "git-mediate" # Utility to help resolve merge conflicts
+# brew "git-multipush" # Push a branch to multiple remotes in one command
+# brew "git-number" # Use numbers for dealing with files in git
+# brew "git-octopus" # Continuous merge workflow
+# brew "git-plus" # Git utilities: git multi, git relation, git old-branches, git recent
+# brew "git-quick-stats" # Simple and efficient way to access statistics in git
+# brew "git-recent" # See your latest local git branches, formatted real fancy
+# brew "git-remote-gcrypt" # GPG-encrypted git remotes
+# brew "git-remote-hg" # Transparent bidirectional bridge between Git and Mercurial
+# brew "git-review" # Submit git branches to gerrit for review
+# brew "git-revise" # Rebase alternative for easy & efficient in-memory rebases and fixups
+# brew "git-secret" # Bash-tool to store the private data inside a git repo
+# brew "git-series" # Track changes to a patch series over time
+# brew "git-sizer" # Compute various size metrics for a Git repository
+# brew "git-ssh" # Proxy for serving git repositories over SSH
+# brew "git-standup" # Git extension to generate reports for standup meetings
+# brew "git-subrepo" # Git Submodule Alternative
+# brew "git-svn-abandon" # History-preserving svn-to-git migration
+# brew "git-svn" # Bidirectional operation between a Subversion repository and Git
+# brew "git-sync" # Clones a git repository and keeps it synchronized with the upstream
+# brew "git-test" # Run tests on each distinct tree in a revision list
+# brew "git-tools" # Assorted git-related scripts and tools
+# brew "git-town" # High-level command-line interface for Git
+# brew "git-tracker" # Integrate Pivotal Tracker into your Git workflow
+# brew "git-trim" # Trim your git remote tracking branches that are merged or gone
+# brew "git-url-sub" # Recursively substitute remote URLs for multiple repos
+# brew "git-vendor" # Command for managing git vendored dependencies
+# brew "git-workspace" # Sync personal and work git repositories from multiple providers
+# brew "git" # Distributed revision control system
+# brew "gitbatch" # Manage your git repositories in one place
+# brew "gitbucket" # Git platform powered by Scala offering
+# brew "gitea" # Painless self-hosted all-in-one software development service
+# brew "gitfs" # Version controlled file system
+# brew "gitg" # GNOME GUI client to view git repositories
+# brew "gitlab-ci-local" # Run gitlab pipelines locally as shell executor or docker executor
+# brew "gitlab-gem" # Ruby client and CLI for GitLab API
+# brew "gitlab-runner" # Official GitLab CI runner
+# brew "gitleaks" # Audit git repos for secrets
+# brew "gitless" # Simplified version control system on top of git
+# brew "gitoxide" # Idiomatic, lean, fast & safe pure Rust implementation of Git
+# brew "gitql" # Git query language
+# brew "gitsign" # Keyless Git signing using Sigstore
+# brew "gitter-cli" # Extremely simple Gitter client for terminals
+# brew "gittuf" # Security layer for Git repositories
+# brew "gitu" # TUI Git client inspired by Magit
+# brew "gitui" # Blazing fast terminal-ui for git written in rust
+# brew "gitup" # Update multiple git repositories at once
+# brew "gitversion" # Easy semantic versioning for projects using Git
+# brew "glab" # Open-source GitLab command-line tool
+# brew "gql" # Perform queries on .git files
+# brew "grokmirror" # Framework to smartly mirror git repositories
+# brew "gws" # Manage workspaces composed of git repositories
+# brew "hg-fast-export" # Fast Mercurial to Git converter
+# brew "homeshick" # Git dotfiles synchronizer written in bash
+# brew "jenkins-job-builder" # Configure Jenkins jobs with YAML files stored in Git
+# brew "karn" # Manage multiple Git identities
+# brew "kubefirst" # GitOps Infrastructure & Application Delivery Platform for kubernetes
+# brew "lab" # Git wrapper for GitLab
+# brew "lazygit" # Simple terminal UI for git commands
+# brew "lefthook" # Fast and powerful Git hooks manager for any type of projects
+# brew "legit" # Command-line interface for Git, optimized for workflow simplicity
+# brew "literate-git" # Render hierarchical git repositories into HTML
+# brew "mergiraf" # Syntax-aware Git merge driver
+# brew "microplane" # CLI tool to make git changes across many repos
+# brew "modgit" # Tool for git repo deploy with filters. Used for magento development
+# brew "moon" # Task runner and repo management tool for the web ecosystem
+# brew "moz-git-tools" # Tools for working with Git at Mozilla
+# brew "mr" # Multiple Repository management tool
+# brew "mu-repo" # Tool to work with multiple git repositories
+# brew "noseyparker" # Finds secrets and sensitive information in textual data and Git history
+# brew "onefetch" # Command-line Git information tool
+# brew "paket" # Dependency manager for .NET with support for NuGet and Git repositories
+# brew "pass-git-helper" # Git credential helper interfacing with pass
+# brew "pit" # Project manager from hell (integrates with Git)
+# brew "prs" # Secure, fast & convenient password manager CLI with GPG & git sync
+# brew "pygitup" # Nicer 'git pull'
+# brew "repo" # Repository tool for Android development
+# brew "reposurgeon" # Edit version-control repository history
+# brew "sagittarius-scheme" # Free Scheme implementation supporting R6RS and R7RS
+# brew "scm-manager" # Manage Git, Mercurial, and Subversion repos over HTTP
+# brew "scmpuff" # Adds numbered shortcuts for common git commands
+# brew "semtag" # Semantic tagging script for git
+# brew "shallow-backup" # Git-integrated backup tool for macOS and Linux devs
+# brew "smimesign" # S/MIME signing utility for use with Git
+# brew "tartufo" # Searches through git repositories for high entropy strings and secrets
+# brew "tea" # Command-line tool to interact with Gitea servers
+# brew "tfmigrate" # Terraform/OpenTofu state migration tool for GitOps
+# brew "thefuck" # Programmatically correct mistyped console commands
+# brew "tig" # Text interface for Git repositories
+# brew "topgit" # Git patch queue manager
+# brew "transcrypt" # Configure transparent encryption of files in a Git repo
+# brew "trivy" # Vulnerability scanner for container images, file systems, and Git repos
+# brew "ugit" # Undo git commands. Your damage control git buddy
+# brew "ungit" # Easiest way to use Git. On any platform. Anywhere
+# brew "vcsh" # Config manager based on git - also manages subrepos
+# brew "willgit" # William's miscellaneous git tools
+
+
+

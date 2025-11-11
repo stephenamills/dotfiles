@@ -1,0 +1,9 @@
+brew "ruby" # Powerful, clean, object-oriented scripting language
+
+# brew "brew-gem" # Install RubyGems as Homebrew formulae
+# brew "platypus" # Create macOS applications from {Perl,Ruby,sh,Python} scripts
+# brew "rbspy" # Sampling profiler for Ruby
+# brew "rubyfmt" # Ruby autoformatter
+# brew "solargraph" # Ruby language server
+# # also, rubocop on Rubygems
+# # also, rufo on Rubygems

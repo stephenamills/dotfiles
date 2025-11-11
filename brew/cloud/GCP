@@ -1,0 +1,20 @@
+brew "firebase-cli" # toolkit
+brew "fuego-firestore" # client for Firestore database
+cask "google-cloud-sdk" # toolkit
+
+brew "apib" # api tool
+brew "berglas" # manages secrets
+brew "bigquery-emulator" # emulates a BigQuery server on your local machinebrew
+brew "cloud-nuke" # deletes all cloud resources
+brew "cloud-sql-proxy"
+brew "cloudlist"
+brew "cloudprober" # sends monitoring probes and integrates with Prometheus and Grafana
+brew "lexido" # uses Gemini's free (?) API
+
+brew "c7n" # audit (very useful)
+brew "checkov" # audit
+brew "cliam" # IAM permissions enumerator
+brew "yatas" # audits for misconfiguration or security issues
+
+# brew "gcsfuse" # mounts Google Cloud Storage as a file system
+# brew "rome" # Carthage cache for Google Storage

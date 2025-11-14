@@ -172,8 +172,5 @@ cask "rapidapi" # can generate client code
 # brew "gowsdl" # WSDL2Go code generation as well as its SOAP proxy
 # brew "gsoap" # SOAP stub and skeleton compiler for C and C++
 
-
-
 brew "apprise" # very useful for sending notifications and triggering webhooks to popular notification services
 brew "webhook" # lightweight incoming webhook server
-

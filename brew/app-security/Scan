@@ -1,0 +1,11 @@
+# brew "arjun" # hidden parameter discovery
+# brew "authz0" # tests authorization
+# brew "dalfox" # XSS scanner
+# brew "ffuf" # fast web fuzzer
+# brew "flawz" # browses security vulnerabilities (CVEs)
+
+brew "exploitdb" # Database of public exploits and corresponding vulnerable software
+brew "flawz" # terminal browser for security vulnerabilities (CVEs)
+brew "osv-scanner" # Vulnerability scanner which uses the OSV database (by Google)
+brew "vulsio-gost" # local CVE tracker & notification system
+brew "vunnel" # Tool for collecting vulnerability data from various sources

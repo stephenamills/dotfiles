@@ -1,4 +1,5 @@
-brew "llvm" # Compiler infrastructure for C/C++ and Rust
+# brew "llvm" # Compiler infrastructure for C/C++ and Rust
+
 # brew "bear" # Generate compilation database for clang tooling
 # brew "cargo-binutils" # Cargo subcommands to invoke the LLVM tools shipped with the Rust toolchain
 # brew "cargo-llvm-cov" # Cargo subcommand to easily use LLVM source-based code coverage
@@ -265,3 +266,12 @@ brew "llvm" # Compiler infrastructure for C/C++ and Rust
 # brew "remake" # GNU Make with improved error handling, tracing, and a debugger
 # brew "scons" # Substitute for classic 'make' tool with autoconf/automake functionality
 # brew "smake" # Portable make program with automake features
+
+# brew "cargo-depgraph" # Creates dependency graphs for cargo projects
+# brew "certgraph" # Crawl the graph of certificate Alternate Names
+# brew "cflow" # Generate call graphs from C code
+# brew "diffstat" # Produce graph of changes introduced by a diff file
+# brew "makefile2graph" # Create a graph of dependencies from GNU-Make
+# brew "ngt" # Neighborhood graph and tree for indexing high-dimensional data
+# brew "scotch" # Package for graph partitioning, graph clustering, and sparse matrix ordering
+# brew "uftrace" # Function graph tracer for C/C++/Rust

@@ -16,5 +16,7 @@ brew "checkov" # audit
 brew "cliam" # IAM permissions enumerator
 brew "yatas" # audits for misconfiguration or security issues
 
+# brew "fake-gcs-server" # Emulator for Google Cloud Storage API
 # brew "gcsfuse" # mounts Google Cloud Storage as a file system
 # brew "rome" # Carthage cache for Google Storage
+# brew "terratag" # CLI to automate tagging for AWS, Azure & GCP resources in Terraform

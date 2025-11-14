@@ -35,3 +35,8 @@ brew "hub" # older command-line tool
 # brew "actionlint" # Static checker for GitHub Actions workflow files
 # brew "actions-batch" # Time-sharing supercomputer built on GitHub Actions
 # brew "gabo" # Generates GitHub Actions boilerplate
+
+# Hugging Face
+# brew "huggingface-cli"
+# brew "cortexso" # ollama-like, drop-in local alternative to the OpenAI stack
+# brew "ollama" # downloads and runs a language model

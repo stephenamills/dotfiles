@@ -1,3 +1,10 @@
+# I put the taps here because I assume this file will be loaded first by the zsh glob
+tap "GitJournal/tap"
+tap "harelba/q"
+tap "hashicorp/tap"
+tap "replicate/tap"
+tap "supabase/tap"
+
 # brew "cassandra" # column-oriented database
 # brew "cassandra" # Eventually consistent, distributed key-value store
 # brew "cassandra-cpp-driver" # DataStax C/C++ Driver for Apache Cassandra

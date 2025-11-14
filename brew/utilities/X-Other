@@ -1,0 +1,152 @@
+# Utilities
+
+brew "bat"
+brew "dasht" # searches offline documentation aggregated by Dash
+brew "fcp" # faster cp
+brew "grex" # regex generator
+brew "maclaunch" # Manage your macOS startup items
+brew "progressline" # track commands progress in a compact one-line format
+brew "s-search" # searches the web, also has a web interface
+brew "tailspin" # colorizes log files
+brew "tal"
+brew "tldr"
+brew "uni" # search unicode and emoji database
+brew "usage" # specification for CLIs
+brew "wcurl"
+# brew "par" # Paragraph reflow for email
+
+# brew "govulncheck" # Database client and tools for the Go vulnerability database
+# brew "pip-audit" # Audits Python environments and dependency trees for known vulnerabilities
+
+# cask "raycast" # searches DevDocs - commented out because the app manages its own updates like Google Chrome
+# brew "fastmod" # Fast partial replacement for the codemod tool
+# brew "flamegraph" # by Brendan Gregg - stack trace visualizer
+# brew "gat" # cat alternative in Go
+# brew "hck" # cut alternative that supports regex delimiters
+# brew "invoice" # generates pretty, professional invoices
+# brew "just" # runs project-specific commands, like Make
+# brew "nq" # Unix command-line queue utility
+# brew "sampler" # Tool for shell commands execution, visualization and alerting
+# brew "titlecase" # capitalizes titles
+# brew "tuc" # cut replacement
+# brew "watchman" # by Facebook - watches files and triggers actions
+
+# Everything else
+brew "angle-grinder" # log analysis tool
+brew "anycable-go"
+brew "apibuilder-cli"
+brew "apify-cli" # something about web scraping
+brew "appwrite"
+brew "artillery"
+brew "ast-grep"
+brew "buildpulse-test-reporter"
+brew "dark-mode" # toggles dark mode
+brew "fabric"
+brew "fclones"
+brew "feroxbuster"
+brew "flyctl"
+brew "flyscrape" # command-line web scraper
+brew "graphviz"
+brew "hasura-cli"
+brew "hcloud" # Hetzner Cloud
+brew "linode-cli"
+brew "mas"
+brew "md5deep"
+brew "netlify-cli"
+brew "oci-cli"
+brew "pocketbase"
+brew "replicate/tap/replicate" # runs machine learning models in their cloud
+brew "robot-framework" # automation testing
+brew "stripe-cli"
+brew "supabase/tap/supabase"
+brew "webpod" # deploys JavaScript apps to DigitalOcean, Linode, Vultr, GCP, AWS, or Azure
+brew "xurls" # extracts urls from text - could be very useful
+brew "vercel-cli"
+brew "vultr"
+brew "yorkie" # some app or whatever that uses conflict-free replicated data types instead of raft
+brew "yt-dlp"
+
+# Spark
+# brew "flintrock" # launches a Spark cluster
+
+# More
+
+# brew "auth0" # must tap auth0/auth0-cli
+# brew "openfga" # nice open-source website - flexible authorization/permission engine
+
+# Salesforce
+# brew "sf" # Command-line toolkit for Salesforce development
+
+# Scraping
+brew "pipet" # Swiss-army tool for scraping and extracting data
+
+# tap "ddev/ddev"
+# tap "encoredev/tap"
+# tap "swiftbrew/tap"
+# tap "xo/xo"
+# brew "apachetop"
+# brew "bfs" # the GitHub page has a nice neutral tone terminal background
+# brew "bpftop" # for Linux only but useful
+# brew "brev" # cringe marketing but saving it here anyway
+# brew "c2rust"
+# brew "caddy" # check this out for simpler server use cases than traefik
+# brew "cadence-workflow" # Uber's workflow engine
+# brew "calicoctl"
+# brew "capnp" # apparently Cloudflare workers use this
+# brew "cariddi" # does not look useful I just like go command line tools
+# brew "ccm" # cassandra
+# brew "chatblade" # I just like the ffmpeg example
+# brew "checkmake"
+# brew "chezmoi"
+# brew "chisel-tunnel" not useful but it's in go
+# brew "chrome-cli"
+# brew "cilium-cli"
+# brew "cookiecutter" # scaffolds some Python projects
+# brew "conduit" # Kafka Connect replacement, no JVM required
+# brew "concurrencykit" # this is a C library, not a tool, but the data structures are interesting
+# brew "cppinsights" # C++ web compiler
+# brew "crane" # by Google - container registry tool with bad marketing
+# brew "create-dmg"
+# brew "crock" # send files to a friend
+# brew "cromwell" # bioinformatics data engineering and workflows
+# brew "crowdin" # tool to manage translation/localization projects on Crowdin
+# brew "cubejs-cli" # some data pipeline thing, dunno, it has 17k stars
+# brew "dashing" # generates Dash documentation from HTML files
+# brew "denominator" # old abandoned Java code by Netflix but shows how to run a Java command without -jar
+# brew "djl-serving" # Java is terrible but maybe this is educational for serving an ML model
+# brew "eatmemory" # stress test
+# brew "encoredev/tap/encore" # some kind of backend hosting platform
+# brew "ffind" # friendlier find
+# brew "forcecli" # command-line interface to Force.com
+# brew "go-task" # alternative to make
+# brew "historian" # manages bash history in a SQLite database
+# brew "hr" # horizontal rule
+# brew "mage" # alternative to make that works on all platforms because it relies on Go functions instead of shell scripts
+# brew "metabase" # business intelligence report server
+# brew "tunnel" # ngrok alternative
+# brew "telnet" # needed for eve-ng or gns3
+# brew "tippecanoe" # creates pretty map vector tileset visualizations from GeoJSON, FlatGeobuf, or CSV
+# brew "tinysearch" # sort of a website search backend but doesn't have any autocomplete functionality, so kind of useless
+# brew "tty-share" # share your terminal with no tools needed on the remote side
+# brew "typedb" # database focused on its type system - it mostly just has good marketing and documentation
+# brew "typical" # data serialization and interchange with Rust algebraic data types
+# brew "typst" # Markup-based typesetting system for math and science
+# brew "tz" # time zone tool
+# brew "uncover" # show exposed hosts on the internet using search engines
+# brew "uv" # fast Python package installer
+# brew "virtualhost.sh" # old but maybe useful to learn from
+# brew "vivid" # has interesting filetypes database in YAML
+# brew "voldemort" # by LinkedIn - database with decent documentation
+# brew "vulsio-gost" # vulnerability tracker
+# brew "vunnel" # collects vulnerability data
+# brew "weasyprint" # HTML to PDF
+# brew "whisperkit-cli" # runs OpenAI Whisper speech recongition models on macOS and iOS
+# brew "wtfis"
+# brew xeol # container scanner but not popular
+# brew "xh" # yet another httpie alternative
+# brew "xpdf" # PDF tool but not on GitHub
+# brew "x264"
+# brew "x265"
+# brew "xo/xo/usql"
+# brew "vsce" # tool for packaging and publishing a Visual Studio Code extension
+# brew "youplot"

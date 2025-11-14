@@ -1,0 +1,94 @@
+# Align
+brew "align" # Text column alignment filter
+# also, the column command is useful for this
+
+# Awk
+# brew "bioawk" # AWK modified for biological data
+# brew "choose-rust" # Human-friendly and fast alternative to cut and (sometimes) awk
+# brew "gawk" # GNU awk utility
+# brew "goawk" # POSIX-compliant AWK interpreter
+# brew "jsawk" # Like awk, but for JSON, using JavaScript objects and arrays
+# brew "mawk" # Interpreter for the AWK Programming Language
+# brew "miller" # Like sed, awk, cut, join & sort for name-indexed data such as CSV
+# brew "pawk" # Python line processor (like AWK)
+# brew "rargs" # Util like xargs + awk with pattern matching support
+
+# Cut
+brew "fex" # field extraction tool
+# brew "choose-rust" # Human-friendly and fast alternative to cut and (sometimes) awk
+# brew "pk" # Field extractor
+
+# Diff
+brew "difftastic" # super high-quality diff tool
+
+# brew "apgdiff" # Another PostgreSQL diff tool
+# brew "bazel-diff" # Performs Bazel Target Diffing between two revisions in Git
+# brew "biodiff" # Hex diff viewer using alignment algorithms from biology
+# brew "bsdiff" # Generate and apply patches to binary files
+# brew "cargo-public-api" # List and diff the public API of Rust library crates
+# brew "cern-ndiff" # Numerical diff tool
+# brew "colordiff" # Color-highlighted diff(1) output
+# brew "container-diff" # Diff your Docker containers
+# brew "dhex" # Ncurses based advanced hex editor featuring diff mode and more
+# brew "diff-pdf" # Visually compare two PDF files
+# brew "diff-so-fancy" # Good-lookin' diffs with diff-highlight and more
+# brew "diffoci" # Diff for Docker and OCI container images
+# brew "diffoscope" # In-depth comparison of files, archives, and directories
+# brew "diffr" # LCS based diff highlighting tool to ease code review from your terminal
+# brew "diffstat" # Produce graph of changes introduced by a diff file
+# brew "diffutils" # File comparison utilities
+# brew "dwdiff" # Diff that operates at the word level
+# brew "dyff" # Diff tool for YAML files, and sometimes JSON
+# brew "excel-compare" # Command-line tool (and API) for diffing Excel Workbooks
+# brew "fmdiff" # Use FileMerge as a diff command for Subversion and Mercurial
+# brew "git-delta" # Syntax-highlighting pager for git and diff output
+# brew "git-split-diffs" # Syntax highlighted side-by-side diffs in your terminal
+# brew "gpatch" # Apply a diff file to an original
+# brew "httpdiff" # Compare two HTTP(S) responses
+# brew "icdiff" # Improved colored diff
+# brew "imgdiff" # Pixel-by-pixel image difference tool
+# brew "jd" # JSON diff and patch
+# brew "libxdiff" # Implements diff functions for binary and text files
+# brew "malbolge" # Deliberately difficult to program esoteric programming language
+# brew "malcontent" # Supply Chain Attack Detection, via context differential analysis and YARA
+# brew "nbdime" # Jupyter Notebook Diff and Merge tools
+# brew "ndiff" # Virtual package provided by nmap
+# brew "numdiff" # Putative files comparison tool
+# brew "nvimpager" # Use NeoVim as a pager to view manpages, diffs, etc.
+# brew "oasdiff" # OpenAPI Diff and Breaking Changes
+# brew "openapi-diff" # Utility for comparing two OpenAPI specifications
+# brew "pdf-diff" # Tool for visualizing differences between two pdf files
+# brew "perceptualdiff" # Perceptual image comparison tool
+# brew "pg-schema-diff" # Diff Postgres schemas and generating SQL migrations
+# brew "pkgdiff" # Tool for analyzing changes in software packages (e.g. RPM, DEB, TAR.GZ)
+# brew "podiff" # Compare textual information in two PO files
+# brew "rancid" # Really Awesome New Cisco confIg Differ
+# brew "riff" # Diff filter highlighting which line parts have changed
+# brew "spaceman-diff" # Diff images from the command-line
+# brew "sqldiff" # Displays the differences between SQLite databases
+# brew "tkdiff" # Graphical side by side diff utility
+# brew "uutils-diffutils" # Cross-platform Rust rewrite of the GNU diffutils
+# brew "vbindiff" # Visual Binary Diff
+# brew "xcdiff" # Tool to diff xcodeproj files
+# brew "ydiff" # View colored diff with side by side and auto pager support
+# brew "zet" # CLI utility to find the union, intersection, and set difference of files
+
+# Sed
+brew "sd" # Intuitive find & replace
+brew "trurl" # URL parsing and manipulation - tr for URLs (by cURL team)
+# brew "cf" # Filter to replace numeric timestamps with a formatted date time
+# brew "comby" # Sed replacement, matches syntax instead of using a regex
+# brew "detox" # Utility to replace problematic characters in filenames
+# brew "f2" # Batch renaming tool
+# brew "gnu-sed" # GNU implementation of the stream editor
+# brew "gsar" # General Search And Replace on files
+# brew "minised" # Smaller sed implementation
+# brew "mysql-search-replace" # Database search and replace script in PHP
+# brew "rpl" # Text replacement utility
+# brew "sad" # CLI search and replace | Space Age sed
+# brew "serpl" # Simple terminal UI for search and replace
+# brew "ssed" # Super sed stream editor
+
+# Xargs
+brew "rargs" # Util like xargs + awk with pattern matching support
+brew "xe" # Simple xargs and apply replacement

@@ -1,0 +1,5 @@
+brew "cowsay" # Configurable talking characters in ASCII art
+brew "hello" # Hello world program
+brew "lolcat" # Rainbows and unicorns in your console!
+brew "nyancat" # Renders an animated, color, ANSI-text loop of the Poptart Cat
+brew "ponysay" # Cowsay but with ponies

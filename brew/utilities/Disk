@@ -1,6 +1,50 @@
+# Cleanup
 brew "dua-cli" # View disk space usage and delete unwanted data, fast
 brew "dust" # More intuitive version of du in rust
 brew "gdu" # Disk usage analyzer with console interface written in Go
 
 # brew "diskonaut" # Terminal visual disk space navigator
 # brew "erdtree" # Multi-threaded file-tree visualizer and disk usage analyzer
+
+# Find
+brew "as-tree" # Print a list of paths as a tree of paths
+brew "tree" # Display directories as trees
+
+# brew "bfs" # Breadth-first version of find
+# brew "fd" # Simple, fast and user-friendly alternative to find
+# brew "ffind" # Friendlier find
+# brew "findutils" # Collection of GNU find, xargs, and locate
+# brew "fselect" # Find files with SQL-like queries
+# brew "fuzzy-find" # Fuzzy filename finder matching across directories as well as files
+# brew "fzf" # Command-line fuzzy finder written in Go
+# brew "sk" # Fuzzy Finder in rust!
+# brew "uutils-findutils" # Cross-platform Rust rewrite of the GNU findutils
+# brew "zf" # Command-line fuzzy finder that prioritizes matches on filenames
+# brew "zfind" # Search for files (even inside tar/zip/7z/rar) using a SQL-WHERE filter
+
+# brew "broot" # New way to see and navigate directory trees
+# brew "dep-tree" # Tool for visualizing dependencies between files and enforcing dependency rules
+# brew "johnnydep" # Display dependency tree of Python distribution
+# brew "ngt" # Neighborhood graph and tree for indexing high-dimensional data
+# brew "pip-audit" # Audits Python environments and dependency trees for known vulnerabilities
+# brew "pipdeptree" # CLI to display dependency tree of the installed Python packages
+# brew "pstree" # Show ps output as a tree
+# brew "tre-command" # Tree command, improved
+
+# Rename
+# brew "rename" # renames files
+
+# Watch
+brew "viddy" # Modern watch command
+brew "watch" # Run a program periodically, showing its output
+
+# brew "cargo-watch" # Watches over your Cargo project's source
+# brew "direnv" # Load/unload environment variables based on $PWD (is also able to watch files)
+# brew "dwatch" # Watch programs and perform actions based on a configuration file
+# brew "fsevent_watch" # macOS FSEvents client
+# brew "fswatch" # Monitor a directory for changes and run a shell command
+# brew "hwatch" # Modern alternative to the watch command
+# brew "urlwatch" # Get notified when a webpage changes
+# brew "visionmedia-watch" # Periodically executes the given command
+# brew "watchexec" # Execute commands when watched files change
+# brew "watchman" # Watch files and take action when they change

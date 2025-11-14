@@ -1,0 +1,12 @@
+brew "httpyac" # sends a REST, SOAP, GraphQL or gRPC request
+
+# brew "graphql-inspector" # Validate schema, get schema change notifications, validate operations, and more
+# brew "graphqlviz" # visualizes a GraphQL Server schema
+# brew "graphqxl" # language for creating a server-side schema
+# brew "postgraphile" # creates a GraphQL schema by doing reflection over a PostgreSQL schema (whatever that means)
+# brew "quicktype" # Generate types and converters from GraphQL (see JSON Schema section in JSON file)
+
+# brew "graphql-cli" # Tools
+# brew "graphqurl" # Curl for GraphQL with autocomplete, subscriptions and GraphiQL
+# brew "hasura-cli" # client for Hasura GraphQL Engine
+# brew "quicktype" # Generate types and converters from JSON, Schema, and GraphQL

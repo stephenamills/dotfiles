@@ -1,0 +1,8 @@
+# Packer
+brew "hashicorp/tap/packer"
+
+# Ignition
+brew "butane" # by Red Hat - converts a Butane YAML desired system configuration into a Ignition JSON configuration, both schema-validated
+brew "xorriso" # creates or edits an ISO filesystem image, useful with cloud-init which is an Ignition alternative
+
+# brew "coreos-ct" # conflicts with chart-testing - converts Flatcar Container Linux config to Ignition config

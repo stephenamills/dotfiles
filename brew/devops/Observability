@@ -1,0 +1,7 @@
+# Observability
+# brew "chronograf" # monitoring and visualization UI for the Telegraf, InfluxDB, Chronograf, Kapacitor (TICK) stack
+# brew "cortex" # long-term storage for Prometheus
+# brew "netdata" # super popular, 68k stars - useful tables and dashboards and diagnoses infrastructure problems with metrics, visualizations & alarms
+# brew "pint" # by Cloudflare - Prometheus rule linter/validator
+# brew "sigma-cli" # based on pySigma - Sigma rules for relevant log events
+# brew "sloth" # creates Prometheus SLOs

@@ -2,13 +2,11 @@
 
 # also, LevelDB
 
-
 # also, Porcupine checker on pkg.go.dev, and MIT course 6.5840
 
 # also, Aerospike
 # also, Spanner and CockroachDB
 # also, YugabyteDB
-
 
 # brew "apache-drill" # Schema-free SQL Query Engine for Hadoop, NoSQL and Cloud Storage
 # brew "clangql" # Run a SQL like language to perform queries on C/C++ files

@@ -3,7 +3,15 @@
 # brew "azqr" # Azure quick review
 # brew "aztfexport" # Bring your existing Azure resources under the management of Terraform
 # brew "azure-cli" # Microsoft Azure CLI 2.0
-# brew "azure-storage-cpp" # Microsoft Azure Storage Client Library for C++
+# brew "azurehound" # Azure Data Exporter for BloodHound
+# brew "kafkactl-azure-plugin" # Azure Plugin for kafkactl
+# brew "terratag" # CLI to automate tagging for AWS, Azure & GCP resources in Terraform
+
+# Backblaze
+brew "b2-tools"
+
+# Contentful
+brew "contentful-cli"
 
 # Modern App Hosting Platforms
 brew "convox" # by former Heroku engineers - lacks nixpacks or buildpacks but can deploy Rails to Kubernetes
@@ -14,7 +22,11 @@ cask "devkinsta" # nixpacks but does not have a cli
 # also, Heroku on npm, has buildpacks - it's in the Npmfile to avoid using a third-party tap
 # also, Northflank on npm, has nixpacks
 
-
+# Wordpress
+brew "easyengine" # command-line control panel to manage Wordpress sites
+brew "sail" # provisions and deploys to DigitalOcean
+brew "wp-cli"
+brew "wpscan"
 
 ## Non-triaged Whatever
 

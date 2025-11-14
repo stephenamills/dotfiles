@@ -1,4 +1,11 @@
+brew "chiko" # Ultimate Beauty gRPC Client for your Terminal
+brew "grpcurl" # curl for gRPC
+brew "grpcui" # Postman for gRPC
+brew "httpyac" # sends a gRPC request (see GraphQL section)
+
 brew "buf" # tool and schema registry
+# brew "grpc" # RPC library and framework
+# brew "grpc-swift" # Swift implementation of gRPC
 
 # brew "protobuf" # compiler
 # brew "protoc-gen-go" # creates Go code
@@ -7,7 +14,8 @@ brew "buf" # tool and schema registry
 # brew "protoc-gen-grpc-web" # protoc plugin that generates code for gRPC-Web clients
 # brew "swift-protobuf" # plugin and runtime library for using protobuf with Swift
 
-# brew "api-linter" # Linter for APIs defined in protocol buffers
+# brew "ghz" # gRPC benchmarking tool
+# fortio: HTTP and gRPC load testing and visualization tool and server
 # brew "protolint" # linter
 
 # brew "capnp" # alternative to protocol buffers

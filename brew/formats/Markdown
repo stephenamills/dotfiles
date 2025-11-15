@@ -1,12 +1,14 @@
 brew "glow" # renders markdown
 brew "runme" # DevOps notebooks built with Markdown
 
+# brew "csvtomd" # CSV to Markdown table converter
+# brew "github-markdown-toc" # Easy TOC creation for GitHub README.md (in go)
+
+
 # brew "cmark" # Strongly specified, highly compatible implementation of Markdown
 # brew "cmark-gfm" # C implementation of GitHub Flavored Markdown
-# brew "csvtomd" # CSV to Markdown table converter
 # brew "discount" # C implementation of Markdown
 # brew "gemgen" # Command-line tool for converting Commonmark Markdown to Gemtext
-# brew "github-markdown-toc" # Easy TOC creation for GitHub README.md (in go)
 # brew "grip" # GitHub Markdown previewer
 # brew "helm-docs" # Tool for automatically generating markdown documentation for helm charts
 # brew "hoedown" # Secure Markdown processing (a revived fork of Sundown)
@@ -32,3 +34,64 @@ brew "runme" # DevOps notebooks built with Markdown
 
 # brew "go-md2man" # Converts markdown into roff (man pages)
 # brew "ronn-ng" # Build man pages from Markdown
+
+brew "backlog-md" # Markdown‑native Task Manager & Kanban visualizer for any Git repository
+brew "cbfmt" # Format codeblocks inside markdown and org documents
+brew "deck" # Creates slide deck using Markdown and Google Slides
+brew "docmd" # Minimal Markdown documentation generator
+brew "evernote2md" # Convert Evernote .enex file to Markdown
+brew "feishu2md" # Convert feishu/larksuite documents to markdown
+brew "gemgen" # Command-line tool for converting Commonmark Markdown to Gemtext
+brew "github-markdown-toc" # Easy TOC creation for GitHub README.md (in go)
+brew "glow" # Render markdown on the CLI
+brew "go-md2man" # Converts markdown into roff (man pages)
+brew "grip" # GitHub Markdown previewer
+brew "gtree" # Generate directory trees and directories using Markdown or programmatically
+brew "helm-docs" # Tool for automatically generating markdown documentation for helm charts
+brew "hoedown" # Secure Markdown processing (a revived fork of Sundown)
+brew "html2markdown" # Convert HTML to Markdown
+brew "inlyne" # GPU powered yet browserless tool to help you quickly view markdown files
+brew "jtbl" # Convert JSON and JSON Lines to terminal, CSV, HTTP, and markdown tables
+brew "jupytext" # Jupyter notebooks as Markdown documents, Julia, Python or R scripts
+brew "lowdown" # Simple markdown translator
+brew "ltex-ls" # LSP for LanguageTool with support for Latex, Markdown and Others
+brew "mandown" # Man-page inspired Markdown viewer
+brew "mark" # Sync your markdown files with Confluence pages
+brew "markdown" # Text-to-HTML conversion tool
+brew "markdown-oxide" # Personal Knowledge Management System for the LSP
+brew "markdown-toc" # Generate a markdown TOC (table of contents) with Remarkable
+brew "markdownlint-cli" # CLI for Node.js style checker and lint tool for Markdown files
+brew "markdownlint-cli2" # Fast, flexible, config-based cli for linting Markdown/CommonMark files
+brew "marked" # Markdown parser and compiler built for speed
+brew "marksman" # Language Server Protocol for Markdown
+brew "marmite" # Static Site Generator for Blogs using Markdown
+brew "marp-cli" # Easily convert Marp Markdown files into static HTML/CSS, PDF, PPT and images
+brew "mask" # CLI task runner defined by a simple markdown file
+brew "mcat" # Terminal image, video, directory, and Markdown viewer
+brew "md2pdf" # CLI utility that generates PDF from Markdown
+brew "md4c" # C Markdown parser. Fast. SAX-like interface
+brew "mdbook" # Create modern online books from Markdown files
+brew "mdcat" # Show markdown documents on text terminals
+brew "mdformat" # CommonMark compliant Markdown formatter
+brew "mdless" # Provides a formatted and highlighted view of Markdown files in Terminal
+brew "mdp" # Command-line based markdown presentation tool
+brew "mdq" # Like jq but for Markdown
+brew "mdserve" # Fast markdown preview server with live reload and theme support
+brew "mdsh" # Markdown shell pre-processor
+brew "mdt" # Command-line markdown todo list manager
+brew "mdv" # Styled terminal markdown viewer
+brew "mkdocs" # Project documentation with Markdown
+brew "mmark" # Powerful markdown processor in Go geared towards the IETF
+brew "multimarkdown" # Turn marked-up plain text into well-formatted documents
+brew "pandemics" # Converts your markdown document in a simplified framework
+brew "peg-markdown" # Markdown implementation based on a PEG grammar
+brew "pelican" # Static site generator that supports Markdown and reST syntax
+brew "prettier" # Code formatter for JavaScript, CSS, JSON, GraphQL, Markdown, YAML
+brew "python-markdown" # Python implementation of Markdown
+brew "reveal-md" # Get beautiful reveal.js presentations from your Markdown files
+brew "ronn-ng" # Build man pages from Markdown
+brew "rumdl" # Markdown Linter and Formatter written in Rust
+brew "smu" # Simple markup with markdown-like syntax
+brew "sourcedocs" # Generate Markdown files from inline source code documentation
+brew "swagger2markup-cli" # Swagger to AsciiDoc or Markdown converter
+brew "xc" # Markdown defined task runner

@@ -1,0 +1,66 @@
+brew "ffmpeg" # Play, record, convert, and stream audio and video
+
+# brew "ffmate" # FFmpeg automation layer
+# brew "video-compare" # Split screen video comparison tool using FFmpeg and SDL2
+
+# DASH and HLS
+# brew "bento4" # Full-featured MP4 format and MPEG DASH library and tools
+# brew "dash-mpd-cli" # Download media content from a DASH-MPEG or DASH-WebM MPD manifest
+# brew "vsd" # Download video streams over HTTP, DASH (.mpd), and HLS (.m3u8)
+
+# Downloaders
+# brew "animdl" # Anime downloader and streamer
+# brew "gamdl" # Python CLI app for downloading Apple Music songs, music videos and post videos
+# brew "icloudpd" # Tool to download photos from iCloud
+# brew "instaloader" # Download media from Instagram
+# brew "instalooter" # Download any picture or video associated from an Instagram profile
+# brew "ipatool" # CLI tool for searching and downloading app packages from the iOS App Store
+# brew "lgogdownloader" # Unofficial downloader for GOG.com games
+# brew "lux" # Fast and simple video downloader
+# brew "mist-cli" # Mac command-line tool that automatically downloads macOS Firmwares / Installers
+# brew "movgrab" # Downloader for youtube, dailymotion, and other video websites
+# brew "msdl" # Downloader for various streaming protocols
+# brew "plowshare" # Download/upload tool for popular file sharing websites
+# brew "pytr" # Use TradeRepublic in terminal and mass download all documents
+# brew "rtmpdump" # Tool for downloading RTMP streaming media
+# brew "sacad" # Automatic cover art downloader
+# brew "scdl" # Command-line tool to download music from SoundCloud
+# brew "streamlink" # CLI for extracting streams from various websites to a video player
+# brew "streamrip" # Scriptable music downloader for Qobuz, Tidal, SoundCloud, and Deezer
+# brew "telegram-downloader" # Telegram Messenger downloader/tools written in Golang
+# brew "yewtube" # Terminal based YouTube player and downloader
+# brew "ykdl" # Video downloader that focus on China mainland video sites
+# brew "yle-dl" # Download Yle videos from the command-line
+# brew "youtube-dl" # Download YouTube videos from the command-line
+# brew "youtubedr" # Download Youtube Video in Golang
+# brew "yt-dlp" # Feature-rich command-line audio/video downloader
+
+# Scrapers
+# brew "anubis" # Protect resources from scraper bots
+# brew "flyscrape" # Standalone and scriptable web scraper
+# brew "pipet" # Swiss-army tool for web scraping, made for hackers
+# brew "scrapy" # Web crawling & scraping framework
+# brew "shub" # Scrapinghub command-line client
+# brew "you-get" # Dumb downloader that scrapes the web
+
+# Video tools
+# brew "backgroundremover" # Remove background from images and video using AI
+# brew "dvr-scan" # Extract scenes with motion from videos
+# brew "frei0r" # Minimalistic plugin API for video effects
+# brew "fx-upscale" # Metal-powered video upscaling
+# brew "handbrake" # Open-source video transcoder available for Linux, Mac, and Windows
+# brew "imagesnap" # Tool to capture still images from an iSight or other video source
+# brew "kvazaar" # Ultravideo HEVC encoder
+# brew "manim" # Animation engine for explanatory math videos
+# brew "mcat" # Terminal image, video, directory, and Markdown viewer
+# brew "media-info" # Unified display of technical and tag data for audio/video
+# brew "mjpegtools" # Record and playback videos and perform simple edits
+# brew "mlt" # Author, manage, and run multitrack audio/video compositions
+# brew "mp4v2" # Read, create, and modify MP4 files
+# brew "termrec" # Record videos of terminal output
+# brew "timg" # Terminal image and video viewer
+# brew "vapoursynth" # Video processing framework with simplicity in mind
+# brew "vcs" # Creates video contact sheets (previews) of videos
+# brew "vhs" # Your CLI home video recorder
+# brew "video-compare" # Split screen video comparison tool using FFmpeg and SDL2
+# brew "videoalchemy" # Toolkit expanding video processing capabilities

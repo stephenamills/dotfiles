@@ -1,0 +1,38 @@
+brew "angle-grinder" # Slice and dice log files on the command-line
+brew "humanlog" # Logs for humans to read
+brew "lnav" # Curses-based tool for viewing and analyzing log files
+brew "logdy" # Web based real-time log viewer
+brew "tailspin" # Log file highlighter
+
+# brew "clog" # Colorized pattern-matching log tail utility
+# brew "gonzo" # Log analysis TUI
+# brew "grc" # Colorize logfiles and command output
+# brew "hl" # Fast and powerful log viewer and processor
+# brew "kubetail" # Logging tool for Kubernetes with a real-time web dashboard
+# brew "lazyjournal" # TUI for logs from journalctl, file system, Docker, Podman and Kubernetes pods
+# brew "nerdlog" # TUI log viewer with timeline histogram and no central server
+
+# brew "apachetop" # Top-like display of Apache log
+# brew "awslogs" # Simple command-line tool to read AWS CloudWatch logs
+# brew "fail2ban" # Scan log files and ban IPs showing malicious signs
+# brew "fblog" # Small command-line JSON log viewer
+# brew "goaccess" # Log analyzer and interactive viewer for the Apache Webserver
+# brew "httpry" # Packet sniffer for displaying and logging HTTP traffic
+# brew "jlog" # Pure C message queue with subscribers and publishers for logs
+# brew "logcheck" # Mail anomalies in the system logfiles to the administrator
+# brew "logcli" # Run LogQL queries against a Loki server
+# brew "logrotate" # Rotates, compresses, and mails system logs
+# brew "logstalgia" # Web server access log visualizer with retro style
+# brew "logswan" # Fast Web log analyzer using probabilistic data structures
+# brew "mergelog" # Merges httpd logs from web servers behind round-robin DNS
+# brew "mlogger" # Log to syslog from the command-line
+# brew "pgbadger" # Log analyzer for PostgreSQL
+# brew "rhit" # Nginx log explorer
+
+# brew "filebeat" # File harvester to ship log files to Elasticsearch or Logstash
+# brew "fluent-bit" # Fast and Lightweight Logs and Metrics processor
+# brew "flume" # Hadoop-based distributed log collection and aggregation
+# brew "grafana-agent" # Exporter for Prometheus Metrics, Loki Logs, and Tempo Traces
+# brew "logstash" # Tool for managing events and logs
+# brew "loki" # Horizontally-scalable, highly-available log aggregation system
+# brew "promtail" # Log agent for Loki

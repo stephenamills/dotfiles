@@ -1,4 +1,4 @@
-# Cleanup
+# Cleaner
 brew "dua-cli" # View disk space usage and delete unwanted data, fast
 brew "dust" # More intuitive version of du in rust
 brew "gdu" # Disk usage analyzer with console interface written in Go
@@ -43,6 +43,7 @@ brew "watch" # Run a program periodically, showing its output
 # brew "dwatch" # Watch programs and perform actions based on a configuration file
 # brew "fsevent_watch" # macOS FSEvents client
 # brew "fswatch" # Monitor a directory for changes and run a shell command
+# brew "gaze" # Execute commands for you
 # brew "hwatch" # Modern alternative to the watch command
 # brew "urlwatch" # Get notified when a webpage changes
 # brew "visionmedia-watch" # Periodically executes the given command

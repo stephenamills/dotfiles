@@ -3,37 +3,37 @@
 
 # If the `brew` command exists
 if type brew &>/dev/null; then
-  # Read in the files installed by Homebrew
+	# Read in the files installed by Homebrew
 
-  # asdf version manager
-  source $(brew --prefix)/opt/asdf/libexec/asdf.sh
+	# asdf version manager
+	source $(brew --prefix)/opt/asdf/libexec/asdf.sh
 
-  # direnv (automatically loads/unloads environment variables)
-  eval "$(direnv hook zsh)"
+	# direnv (automatically loads/unloads environment variables)
+	eval "$(direnv hook zsh)"
 
-  # zsh-autocomplete extension (automatically displays completions for commands in real-time)
-  source $(brew --prefix)/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+	# zsh-autocomplete extension (automatically displays completions for commands in real-time)
+	source $(brew --prefix)/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 
-  # zsh-autopair extension (automatically inserts matching brackets, quotes, etc.)
-  source $(brew --prefix)/share/zsh-autopair/autopair.zsh
+	# zsh-autopair extension (automatically inserts matching brackets, quotes, etc.)
+	source $(brew --prefix)/share/zsh-autopair/autopair.zsh
 
-  # zsh-autosuggestions extension (suggests previously typed command lines from history)
-  source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+	# zsh-autosuggestions extension (suggests previously typed command lines from history)
+	source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
-  # zsh pure extension (aesthetically pleasing terminal prompt)
-  autoload promptinit
-  promptinit
-  prompt pure
+	# zsh pure extension (aesthetically pleasing terminal prompt)
+	autoload promptinit
+	promptinit
+	prompt pure
 
-  # zsh-syntax-highlighting extension (syntax highlighting in real-time while typing)
-  source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+	# zsh-syntax-highlighting extension (syntax highlighting in real-time while typing)
+	source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
 
 # You must manually create a link from the .argc folder in this repo to $HOME/.argc or this will fail
 if [ -d "$HOME/.argc" ]; then
-  # Store the name of each completion shell script in an array
-  argc_scripts=($(ls -p -1 "$ARGC_COMPLETIONS_ROOT/completions" | sed -n 's/\.sh$//p'))
-  source <(argc --argc-completions zsh $argc_scripts)
+	# Store the name of each completion shell script in an array
+	argc_scripts=($(ls -p -1 "$ARGC_COMPLETIONS_ROOT/completions" | sed -n 's/\.sh$//p'))
+	source <(argc --argc-completions zsh $argc_scripts)
 fi
 
 # The following obscure line customizes colors of the text in the zsh autocompletion menu using zstyle's pattern matching syntax:
@@ -54,18 +54,18 @@ alias man='/usr/bin/man 2>/dev/null'
 
 # Open a Homebrew package in your browser
 bh() {
-  brew home $@
+	brew home $@
 }
 
 # Open a Rust package in a browser
 cb() {
-  open "https://crates.io/crates/${1}"
+	open "https://crates.io/crates/${1}"
 }
 
 # Delete a line from the zsh history file
 del() {
-  # Delete the line by its line number
-  sed -i '' $1d ~/.zsh_history
+	# Delete the line by its line number
+	sed -i '' $1d ~/.zsh_history
 }
 
 # Example usage:
@@ -73,147 +73,152 @@ del() {
 
 # Load the Google Cloud SDK – it's too bloated to load everytime the shell starts
 gcloud() {
-  # Check if Google Cloud SDK is installed
-  if [ -d "$(brew --prefix)/share/google-cloud-sdk" ]; then
-    # Source the SDK components
-    source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"
-    source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
+	# Check if Google Cloud SDK is installed
+	if [ -d "$(brew --prefix)/share/google-cloud-sdk" ]; then
+		# Source the SDK components
+		source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"
+		source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
 
-    # Remove the function definition after it's called once
-    unset -f gcloud
+		# Remove the function definition after it's called once
+		unset -f gcloud
 
-    # Proceed with the original gcloud command
-    command gcloud "$@"
-  else
-    echo "Google Cloud SDK is not installed."
-  fi
+		# Proceed with the original gcloud command
+		command gcloud "$@"
+	else
+		echo "Google Cloud SDK is not installed."
+	fi
 }
 
 # Open GitHub files in a browser
 # Usage: ghcb <repo1> <file_path1> <repo2> <file_path2> ...
 ghcb() {
-  while [ "$#" -gt 0 ]; do
-    repo=$1
-    file_path=$2
+	while [ "$#" -gt 0 ]; do
+		repo=$1
+		file_path=$2
 
-    # Determine default branch (main or master)
-    default_branch="main"
-    if curl --head --silent --fail "https://github.com/$repo/tree/master" >/dev/null; then
-      default_branch="master"
-    fi
+		# Determine default branch (main or master)
+		default_branch="main"
+		if curl --head --silent --fail "https://github.com/$repo/tree/master" >/dev/null; then
+			default_branch="master"
+		fi
 
-    # Construct URL to the file on GitHub
-    url="https://github.com/$repo/blob/$default_branch/$file_path"
+		# Construct URL to the file on GitHub
+		url="https://github.com/$repo/blob/$default_branch/$file_path"
 
-    # Shift to the next pair of arguments
-    shift 2
+		# Shift to the next pair of arguments
+		shift 2
 
-    echo "$url"
+		echo "$url"
 
-  done | xargs -n 1 -P 8 open
+	done | xargs -n 1 -P 8 open
 }
 
 ghgv() {
-  gh gist view $@
+	gh gist view $@
 }
 
 ghge() {
-  gh gist edit $@
+	gh gist edit $@
 }
 
 # Open GitHub issues in a browser
 # Usage: ghib <owner/repo> <issue1> <issue2> ...
 ghib() {
-  repo=$1
+	repo=$1
 
-  shift # This shifts the positional parameters down by one, which deletes the first argument in $@
-  for issue in "$@"; do
-    # Remove preceding '#' if it exists and construct the URL
-    clean_issue=${issue#\#}
-    echo "https://github.com/$repo/issues/$clean_issue"
-  done | xargs -n 1 -P 8 open
+	shift # This shifts the positional parameters down by one, which deletes the first argument in $@
+	for issue in "$@"; do
+		# Remove preceding '#' if it exists and construct the URL
+		clean_issue=${issue#\#}
+		echo "https://github.com/$repo/issues/$clean_issue"
+	done | xargs -n 1 -P 8 open
 }
 
 # Open a GitHub repository in the browser
 ghrb() {
-  xargs -n 1 -P 8 hub browse <<<$@
+	xargs -n 1 -P 8 hub browse <<<$@
 }
 
 # Clone a GitHub repo
 ghrc() {
-  gh repo clone $@
+	gh repo clone $@
 }
 
 # Search GitHub code
 ghsc() {
-  gh search code $@
+	gh search code $@
 }
 
 # Search GitHub issues
 ghsi() {
-  gh search issues $@
+	gh search issues $@
 }
 
 # Search for GitHub issues matching the search terms, and open them all in a browser
 # Usage: ghissueb <owner/repo> <search terms>
 ghsib() {
-  repo=$1
+	repo=$1
 
-  # Shift the positional parameters down by one, which deletes the first argument in $@
-  shift
-  gh search issues -R $repo $@ | awk '{ print $2 }' | xargs -P 8 -I {} gh issue view -R $repo {} -w
+	# Shift the positional parameters down by one, which deletes the first argument in $@
+	shift
+	gh search issues -R $repo $@ | awk '{ print $2 }' | xargs -P 8 -I {} gh issue view -R $repo {} -w
 }
 
 # Search GitHub pull requests
 ghspr() {
-  gh search prs $@
+	gh search prs $@
 }
 
 # Search for GitHub repos
 ghsr() {
-  gh search repos $@
+	gh search repos $@
 }
 
 # Search for GitHub repos and open each result in a browser
 ghsrb() {
-  gh search repos $@ | awk '{print $1}' | xargs -n 1 -P 8 hub browse
+	gh search repos $@ | awk '{print $1}' | xargs -n 1 -P 8 hub browse
 }
 
 # Open the website of a Git repo
 gito() {
-  git-open $@
+	git-open $@
 }
 
 # Update local Git repos
 gu() {
-  gitup -c -t 2
+	gitup -c -t 2
 }
 alias gitu=gu
 
 # Install .pkg files
 ins() {
-  for pkg in "$@"; do
-    sudo installer -pkg "$pkg" -target /
-  done
+	for pkg in "$@"; do
+		sudo installer -pkg "$pkg" -target /
+	done
+}
+
+# Convert man page to plain text for a given command
+mdoc() {
+	man $1 | col -b >~/Downloads/$1.txt
 }
 
 # List an npm package's dependencies
 npmdeps() {
-  npm view $1 dependencies
+	npm view $1 dependencies
 }
 
 # Order files in the current directory by their name
 ord() {
-  counter=1
-  for file in $(ls | sort); do
-    new_file_name=$(printf "%02d-%s" "$counter" "${file#*-}")
-    mv "$file" "$new_file_name"
-    ((counter++))
-  done
+	counter=1
+	for file in $(ls | sort); do
+		new_file_name=$(printf "%02d-%s" "$counter" "${file#*-}")
+		mv "$file" "$new_file_name"
+		((counter++))
+	done
 }
 
 # Sign a macOS app bundle
 prep() {
-  sudo xattr -r -d com.apple.quarantine "$1"
-  sudo codesign --force --deep --sign - "$1"
+	sudo xattr -r -d com.apple.quarantine "$1"
+	sudo codesign --force --deep --sign - "$1"
 }

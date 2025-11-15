@@ -1,8 +1,11 @@
 # Align
 brew "align" # Text column alignment filter
+
+# brew "tal" # Align line endings if they match
 # also, the column command is useful for this
 
 # Awk
+# brew "awk" # Text processing scripting language
 # brew "bioawk" # AWK modified for biological data
 # brew "choose-rust" # Human-friendly and fast alternative to cut and (sometimes) awk
 # brew "gawk" # GNU awk utility
@@ -13,10 +16,21 @@ brew "align" # Text column alignment filter
 # brew "pawk" # Python line processor (like AWK)
 # brew "rargs" # Util like xargs + awk with pattern matching support
 
+# Cat
+brew "bat" # cat but with syntax highlighting
+brew "ccat" # cat but with syntax highlighting
+brew "gat" # cat but with syntax highlighting
+
 # Cut
 brew "fex" # field extraction tool
-# brew "choose-rust" # Human-friendly and fast alternative to cut and (sometimes) awk
-# brew "pk" # Field extractor
+
+brew "choose-rust" # Human-friendly and fast alternative to cut and (sometimes) awk
+brew "pk" # Field extractor
+
+# brew "gauge" # Test automation tool that supports executable documentation
+# brew "hck" # Sharp cut(1) clone
+# brew "miller" # Like sed, awk, cut, join & sort for name-indexed data such as CSV
+# brew "tuc" # Text manipulation and cutting tool
 
 # Diff
 brew "difftastic" # super high-quality diff tool
@@ -73,6 +87,9 @@ brew "difftastic" # super high-quality diff tool
 # brew "ydiff" # View colored diff with side by side and auto pager support
 # brew "zet" # CLI utility to find the union, intersection, and set difference of files
 
+# Join
+brew "miller" # Like sed, awk, cut, join & sort for name-indexed data such as CSV
+
 # Sed
 brew "sd" # Intuitive find & replace
 brew "trurl" # URL parsing and manipulation - tr for URLs (by cURL team)
@@ -82,6 +99,7 @@ brew "trurl" # URL parsing and manipulation - tr for URLs (by cURL team)
 # brew "f2" # Batch renaming tool
 # brew "gnu-sed" # GNU implementation of the stream editor
 # brew "gsar" # General Search And Replace on files
+# brew "miller" # Like sed, awk, cut, join & sort for name-indexed data such as CSV
 # brew "minised" # Smaller sed implementation
 # brew "mysql-search-replace" # Database search and replace script in PHP
 # brew "rpl" # Text replacement utility

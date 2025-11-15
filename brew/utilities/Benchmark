@@ -2,6 +2,10 @@ brew "fio" # I/O benchmark and stress test
 brew "hyperfine" # Command-line benchmarking tool
 brew "sysbench" # System performance benchmark tool
 
+# brew "cargo-flamegraph" # Easy flamegraphs for Rust projects and everything else
+# brew "flamebearer" # Blazing fast flame graph tool for V8 and Node
+# brew "flamegraph" # by Brendan Gregg - stack trace visualizer
+
 # brew "autocannon" # Fast HTTP/1.1 benchmarking tool written in Node.js
 # brew "bench" # Command-line benchmark tool
 # brew "benchi" # Benchmarking tool for data pipelines

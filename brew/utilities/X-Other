@@ -1,14 +1,9 @@
-# Utilities
-
-brew "bat"
 brew "dasht" # searches offline documentation aggregated by Dash
 brew "fcp" # faster cp
 brew "grex" # regex generator
 brew "maclaunch" # Manage your macOS startup items
 brew "progressline" # track commands progress in a compact one-line format
 brew "s-search" # searches the web, also has a web interface
-brew "tailspin" # colorizes log files
-brew "tal"
 brew "tldr"
 brew "uni" # search unicode and emoji database
 brew "usage" # specification for CLIs
@@ -20,8 +15,6 @@ brew "wcurl"
 
 # cask "raycast" # searches DevDocs - commented out because the app manages its own updates like Google Chrome
 # brew "fastmod" # Fast partial replacement for the codemod tool
-# brew "flamegraph" # by Brendan Gregg - stack trace visualizer
-# brew "gat" # cat alternative in Go
 # brew "hck" # cut alternative that supports regex delimiters
 # brew "invoice" # generates pretty, professional invoices
 # brew "just" # runs project-specific commands, like Make
@@ -32,7 +25,6 @@ brew "wcurl"
 # brew "watchman" # by Facebook - watches files and triggers actions
 
 # Everything else
-brew "angle-grinder" # log analysis tool
 brew "anycable-go"
 brew "apibuilder-cli"
 brew "apify-cli" # something about web scraping

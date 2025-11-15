@@ -24,7 +24,7 @@ brew bundle install --file=<(cat brew/**/*(.))
 xargs -n 1 dotnet tool install -g < Dotnetfile
 xargs -n 1 go install < Gofile
 pnpm install -g $(cat Javascriptfile)
-xargs -n 1 pipx install < Pythonfile
+xargs -n 1 uv tool install < Pythonfile
 cargo-binstall -y $(cat Rustfile)
 mint install $(cat Swiftfile)
 ```

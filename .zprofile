@@ -11,12 +11,12 @@ export GOPATH="$HOME/go"
 export MINT_PATH="$HOME/.mint/bin"
 export JAVA_HOME="$(brew --prefix openjdk)/bin"
 export NODE_PATH="$(brew --prefix node@24)/bin"
-export PIPX_PATH="$HOME/.local/bin"
 export PNPM_HOME="$HOME/Library/pnpm"
 export PYTHON_PATH="$(brew --prefix python)/libexec/bin" # Dynamically expands to the path of whatever the latest version of Python is.
 export RUBY_PATH="$(brew --prefix ruby)/bin"
 export RUBYGEMS_PATH="$($(brew --prefix ruby)/bin/gem env gemdir)/bin" # Use the gem command installed by Homebrew, overriding the old that comes with macOS.
 export RUST_PATH="$HOME/.cargo/bin"
+export UV_PATH="$HOME/.local/bin"
 
 export PATH="$ARGC_COMPLETIONS_PATH:\
 $ARGC_COMPLETIONS_ROOT:\
@@ -26,7 +26,7 @@ $JAVA_HOME:\
 $JETBRAINS_PATH:\
 $MINT_PATH:\
 $NODE_PATH:\
-$PIPX_PATH:\
+$UV_PATH:\
 $PNPM_HOME:\
 $PYTHON_PATH:\
 $RUBY_PATH:\

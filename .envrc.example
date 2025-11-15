@@ -24,6 +24,34 @@
 # Similar to layout python but uses Conda to create a Conda virtual environment named "base" under "/opt/homebrew/Caskroom/miniconda". (https://github.com/direnv/direnv/blob/68978efd9e0051bf9c4db10ac0e50afe0b3e7823/stdlib.sh#L910-L1007).
 # layout anaconda base
 
+# Uv support isn't built-in yet
+# layout_uv() {
+# 	if [[ -d ".venv" ]]; then
+# 		VIRTUAL_ENV="$(pwd)/.venv"
+# 	fi
+
+# 	if [[ -z $VIRTUAL_ENV || ! -d $VIRTUAL_ENV ]]; then
+# 		if [[ ! -f "pyproject.toml" ]]; then
+# 			log_status "No uv project exists. Executing \`uv init\` to create one."
+# 			uv init --no-readme
+# 			rm main.py
+# 			uv venv
+# 		else
+# 			uv sync
+# 		fi
+# 		VIRTUAL_ENV="$(pwd)/.venv"
+# 	fi
+
+# 	if [ -d ".venv/bin" ]; then
+# 		PATH_add .venv/bin
+# 	elif [ -d ".venv/Scripts" ]; then
+# 		PATH_add .venv/Scripts
+# 	fi
+# 	export UV_ACTIVE=1 # or VENV_ACTIVE=1
+# 	export VIRTUAL_ENV
+# }
+# layout uv
+
 # Sets the GEM_HOME environment variable to "$PWD/.direnv/ruby/RUBY_VERSION". (https://github.com/direnv/direnv/blob/68978efd9e0051bf9c4db10ac0e50afe0b3e7823/stdlib.sh#L1071-L1094).
 # layout ruby
 

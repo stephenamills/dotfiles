@@ -1,6 +1,8 @@
 brew "deno" # Run JavaScript code outside of a browser
 brew "node" # Platform built on V8 to build network applications
-brew "node@22" # Run JavaScript code outside of a browser
+brew "node@24" # Run JavaScript code outside of a browser
+
+brew "bun" # Incredibly fast JavaScript runtime, bundler, transpiler and package manager - all in one
 
 # brew "npm-check-updates" # Find newer versions of dependencies than what your package.json allows
 # also, np on npm - a better npm publish (by Sindre Sorhus)

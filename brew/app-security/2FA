@@ -2,15 +2,17 @@ brew "cotp" # TOTP/HOTP authenticator app with import functionality
 brew "duo_unix" # by Duo - two-factor authentication for SSH
 brew "pass-otp" # Pass extension for managing one-time-password tokens
 brew "rsc_2fa" # by Russ Cox - Two-factor authentication on the command-line
-brew "tailscale" # easiest way to use WireGuard and 2FA
 brew "totp-cli" # Authy/Google Authenticator like TOTP CLI tool written in Go
+
 # brew "google-authenticator-libpam" # PAM module for two-factor authentication
 # brew "descope" # Tool for performing common tasks on Descope projects
+# brew "oath-toolkit" # tools for one-time password authentication systems
 
 # brew "age-plugin-yubikey" # Plugin for encrypting files with age and PIV tokens such as YubiKeys
 # brew "pivit" # Sign and verify data using hardware (Yubikey) backed x509 certificates (PIV)
-# brew "stoken" # Tokencode generator compatible with RSA SecurID 128-bit (AES)
 # brew "ykman" # Tool for managing your YubiKey configuration
 # brew "ykpers" # YubiKey personalization library and tool
 # brew "yubico-piv-tool" # Command-line tool for the YubiKey PIV application
 # brew "yubikey-agent" # Seamless ssh-agent for YubiKeys and other PIV tokens
+
+# brew "stoken" # Tokencode generator compatible with RSA SecurID 128-bit (AES)

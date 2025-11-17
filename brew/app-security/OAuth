@@ -1,6 +1,10 @@
-# brew "git-credential-oauth" # Git credential helper that authenticates in browser using OAuth
-# brew "oath-toolkit" # tools for one-time password authentication systems
-# brew "oauth2_proxy" # Reverse proxy for authenticating users via OAuth 2 providers
 # brew "oauth2c" # User-friendly CLI for OAuth2
 # brew "oauth2l" # Simple CLI for interacting with Google oauth tokens
+
+# brew "git-credential-oauth" # Git credential helper that authenticates in browser using OAuth
+# brew "oauth2_proxy" # Reverse proxy for authenticating users via OAuth 2 providers
+
+# brew "dexidp" # OpenID Connect Identity and OAuth 2.0 Provider
+# brew "kubelogin" # OpenID Connect authentication plugin for kubectl
+# brew "opkssh" # Enables SSH to be used with OpenID Connect
 # brew "ory-hydra" # OpenID Certified OAuth 2.0 Server and OpenID Connect Provider

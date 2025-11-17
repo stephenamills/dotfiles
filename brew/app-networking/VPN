@@ -1,5 +1,5 @@
+brew "tailscale" # easiest way to use WireGuard and 2FA
 # brew "boringtun" # Userspace WireGuard implementation in Rust
-# brew "tailscale" # Easiest, most secure way to use WireGuard and 2FA (Server - also, see the Mac App Store Tailscale client below)
 # brew "wgcf" # Generate WireGuard profile from Cloudflare Warp account
 # brew "wireguard-go" # Userspace Go implementation of WireGuard
 # brew "wireguard-tools" # Tools for the WireGuard secure network tunnel

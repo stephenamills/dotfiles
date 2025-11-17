@@ -1,0 +1,2 @@
+brew "jwt-cli" # Super fast CLI tool to decode and encode JWTs built in Rust
+brew "jwt-hack" # JSON Web Token Hack Toolkit

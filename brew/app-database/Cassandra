@@ -2,6 +2,7 @@
 tap "GitJournal/tap"
 tap "harelba/q"
 tap "hashicorp/tap"
+tap "oven-sh/bun"
 tap "replicate/tap"
 tap "supabase/tap"
 

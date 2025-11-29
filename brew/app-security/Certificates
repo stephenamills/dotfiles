@@ -21,6 +21,8 @@ brew "tlsx" # scans for TLS vulnerabilities
 brew "xpipe" # splits input and feeds it to another command - has use cases for certificates and more
 brew "zlint" # certificate checker, see also zcertificate and zschema
 
+brew "sigstore" # Codesigning tool for Python packages
+
 # brew "ca-certificates" # Mozilla CA certificate store
 # brew "ccheck" # Check X509 certificate expiration from the command-line, with TAP output
 # brew "certbot" # Tool to obtain certs from Let's Encrypt and autoenable HTTPS
@@ -90,6 +92,5 @@ brew "zlint" # certificate checker, see also zcertificate and zschema
 # brew "pivit" # Sign and verify data using hardware (Yubikey) backed x509 certificates (PIV)
 # brew "sh4d0wup" # Signing-key abuse and update exploitation framework
 # brew "signify-osx" # Cryptographically sign and verify files
-# brew "sigstore" # Codesigning tool for Python packages
 # brew "smimesign" # S/MIME signing utility for use with Git
 # brew "xmlsectool" # Check schema validity and signature of an XML document

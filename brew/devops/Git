@@ -16,11 +16,13 @@ brew "git-xargs" # commits changes or pull requests to multiple repos
 brew "gitwatch" # watches a file or folder and commits changes
 
 brew "blackbox" # encrypts and stores secrets in Git
+brew "gitsign" # Keyless Git signing using Sigstore
+brew "gitleaks" # secrets audit
+
 brew "commitizen"
 brew "convco"
 brew "gibo" # .gitignore generator
 brew "git"
-brew "gitleaks" # secrets audit
 brew "lefthook" # hook manager
 brew "ugit" # tries to undo a git command
 
@@ -203,7 +205,6 @@ brew "git-when-merged" # finds where a commit was merged
 # brew "gitless" # Simplified version control system on top of git
 # brew "gitoxide" # Idiomatic, lean, fast & safe pure Rust implementation of Git
 # brew "gitql" # Git query language
-# brew "gitsign" # Keyless Git signing using Sigstore
 # brew "gitter-cli" # Extremely simple Gitter client for terminals
 # brew "gittuf" # Security layer for Git repositories
 # brew "gitu" # TUI Git client inspired by Magit

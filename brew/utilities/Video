@@ -67,3 +67,7 @@ brew "ffmpeg" # Play, record, convert, and stream audio and video
 # Casks
 # brew "handbrake-app" # Open-source video transcoder
 # brew "shutter-encoder" # Video, audio and image converter
+
+
+#
+https://github.com/talwrii/ffmpeg-cookbook # A beginner's cookbook for the FFmpeg command-line video and audio editing tool

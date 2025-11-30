@@ -198,7 +198,7 @@ ins() {
 }
 
 # Convert man page to plain text for a given command
-mdoc() {
+manpdf() {
 	man $1 | col -b >~/Downloads/$1.txt
 }
 

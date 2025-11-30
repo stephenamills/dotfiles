@@ -48,7 +48,6 @@ brew "ffmpeg" # Play, record, convert, and stream audio and video
 # brew "dvr-scan" # Extract scenes with motion from videos
 # brew "frei0r" # Minimalistic plugin API for video effects
 # brew "fx-upscale" # Metal-powered video upscaling
-# brew "handbrake" # Open-source video transcoder available for Linux, Mac, and Windows
 # brew "imagesnap" # Tool to capture still images from an iSight or other video source
 # brew "kvazaar" # Ultravideo HEVC encoder
 # brew "manim" # Animation engine for explanatory math videos
@@ -64,3 +63,7 @@ brew "ffmpeg" # Play, record, convert, and stream audio and video
 # brew "vhs" # Your CLI home video recorder
 # brew "video-compare" # Split screen video comparison tool using FFmpeg and SDL2
 # brew "videoalchemy" # Toolkit expanding video processing capabilities
+
+# Casks
+# brew "handbrake-app" # Open-source video transcoder
+# brew "shutter-encoder" # Video, audio and image converter

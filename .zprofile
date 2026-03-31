@@ -1,24 +1,27 @@
 # Add paths for Homebrew
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
-export ARGC_COMPLETIONS_ROOT="$HOME/.argc"
-export ARGC_COMPLETIONS_PATH="$ARGC_COMPLETIONS_ROOT/completions"
-export JETBRAINS_PATH="$HOME/Library/Application Support/JetBrains/Toolbox/scripts"
-export LESSHISTFILE=- # Disable unsolicited creation of a history file by less in the home directory
+export LESSHISTFILE=- # Disable autocreation of less history file
 
-export BUN_INSTALL="$HOME/.bun"
-export DOTNET_PATH="$HOME/.dotnet/tools"
-export GOPATH="$HOME/go"
-export MINT_PATH="$HOME/.mint/bin"
+export ANTIGRAVITY_PATH="/Users/steph/.antigravity/antigravity/bin:$PATH"
+export ARGC_COMPLETIONS_ROOT="/Users/steph/.argc"
+export ARGC_COMPLETIONS_PATH="$ARGC_COMPLETIONS_ROOT/completions"
+export JETBRAINS_PATH="/Users/steph/Library/Application Support/JetBrains/Toolbox/scripts"
+
+export BUN_INSTALL="/Users/steph/.bun"
+export DOTNET_PATH="/Users/steph/.dotnet/tools"
+export GOPATH="/Users/steph/go"
+export MINT_PATH="/Users/steph/.mint/bin"
 export JAVA_HOME="$(brew --prefix openjdk)/bin"
 export NODE_PATH="$(brew --prefix node@24)/bin"
 export PYTHON_PATH="$(brew --prefix python)/libexec/bin" # Dynamically expands to the path of whatever the latest version of Python is
 export RUBY_PATH="$(brew --prefix ruby)/bin"
 export RUBYGEMS_PATH="$($(brew --prefix ruby)/bin/gem env gemdir)/bin" # Causes use of the Homebrew-installed gem command, overriding the old default shipped with macOS
-export RUST_PATH="$HOME/.cargo/bin"
-export UV_PATH="$HOME/.local/bin"
+export RUST_PATH="/Users/steph/.cargo/bin"
+export UV_PATH="/Users/steph/.local/bin"
 
-export PATH="$ARGC_COMPLETIONS_PATH:\
+export PATH="ANTIGRAVITY_PATH:\
+$ARGC_COMPLETIONS_PATH:\
 $ARGC_COMPLETIONS_ROOT:\
 $BUN_INSTALL/bin:\
 $DOTNET_PATH:\

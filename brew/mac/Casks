@@ -5,10 +5,6 @@ cask "microsoft-auto-update"
 cask "replay"
 cask "visual-studio-code"
 
-# App/Package Bundles
-cask "apparency"
-cask "suspicious-package"
-
 # Audio
 cask "fl-studio"
 cask "surge-xt"
@@ -21,3 +17,9 @@ cask "loopback"
 
 # Other
 #cask "inkscape"
+
+# Security
+cask "apparency"
+cask "knockknock"
+cask "lulu"
+cask "suspicious-package"

@@ -20,6 +20,8 @@ cask "loopback"
 
 # Security
 cask "apparency"
+cask "blockblock"
 cask "knockknock"
 cask "lulu"
+cask "netiquette"
 cask "suspicious-package"

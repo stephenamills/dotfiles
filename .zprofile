@@ -7,6 +7,7 @@ export ANTIGRAVITY_PATH="/Users/steph/.antigravity/antigravity/bin:$PATH"
 export ARGC_COMPLETIONS_ROOT="/Users/steph/.argc"
 export ARGC_COMPLETIONS_PATH="$ARGC_COMPLETIONS_ROOT/completions"
 export JETBRAINS_PATH="/Users/steph/Library/Application Support/JetBrains/Toolbox/scripts"
+export LMSTUDIO_PATH="/Users/steph/.lmstudio/bin"
 
 export BUN_INSTALL="/Users/steph/.bun"
 export DOTNET_PATH="/Users/steph/.dotnet/tools"
@@ -28,6 +29,7 @@ $DOTNET_PATH:\
 $GOPATH/bin:\
 $JAVA_HOME:\
 $JETBRAINS_PATH:\
+$LMSTUDIO_PATH:\
 $MINT_PATH:\
 $NODE_PATH:\
 $UV_PATH:\

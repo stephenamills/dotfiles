@@ -15,6 +15,10 @@ cask "loopback"
 # cask "reaper"
 # brew "jack"
 
+# LLMs
+
+cask "vibe-notch"
+
 # Other
 #cask "inkscape"
 

@@ -16,7 +16,6 @@ cask "loopback"
 # brew "jack"
 
 # LLMs
-
 cask "vibe-notch"
 
 # Other

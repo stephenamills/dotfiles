@@ -32,8 +32,7 @@ brew "git-appraise" # by Google - code review system
 brew "git-delete-merged-branches" # deletes a merged branch, keeping the repo clean
 brew "git-delta" # superb upgrade to git blame and also for diff etc.
 brew "git-filter-repo" # rewrites repository history
-brew "git-flow" # branching model popularized in a blog post
-brew "git-flow-avh" # another git-flow
+
 brew "git-fixup" # alias for git commit --fixup <ref>
 brew "git-imerge" # incremental merge of two branches
 brew "git-integration" # integration branches, whatever
@@ -56,6 +55,9 @@ brew "git-when-merged" # finds where a commit was merged
 # brew "fetch" # Download assets from a commit, branch, or tag of GitHub repositories
 # brew "git-absorb" # Automatic git commit --fixup
 # brew "git-fixup" # Alias for git commit --fixup <ref>
+# brew "git-flow" # branching model popularized in a blog post
+# brew "git-flow-avh" # another git-flow
+# brew "git-flow-next" # Modern implementation of the Git-flow branching model
 # brew "git-game" # Game for git to guess who made which commit
 # brew "git-hound" # Git plugin that prevents sensitive data from being committed
 # brew "git-now" # Light, temporary commits for git

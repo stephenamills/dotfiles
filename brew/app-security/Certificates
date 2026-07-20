@@ -3,7 +3,6 @@ brew "dehydrated" # Let's Encrypt/ACME client implemented as a shell-script
 brew "dnsrobocert" # manages Let's Encrypt SSL certificates based on DNS challenges
 brew "lego" # Let's Encrypt client and ACME library
 
-brew "amass"
 brew "badkeys" # finds common vulnerabilities in a public key
 brew "ccheck" # certificate expiration checker
 brew "certgraph" # crawls the graph of certificate Alternate Names and their website also links to huge crt.sh database
@@ -22,6 +21,8 @@ brew "xpipe" # splits input and feeds it to another command - has use cases for 
 brew "zlint" # certificate checker, see also zcertificate and zschema
 
 brew "sigstore" # Codesigning tool for Python packages
+
+# brew "amass" # scan subdomains or something
 
 # brew "ca-certificates" # Mozilla CA certificate store
 # brew "ccheck" # Check X509 certificate expiration from the command-line, with TAP output

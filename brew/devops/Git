@@ -28,7 +28,6 @@ brew "ugit" # tries to undo a git command
 
 brew "g2" # interface to aid learning
 brew "git-absorb" # incorporates uncommitted changes into relevant past commits, using automatic decision making, simplifying history management without manual rebasing
-brew "git-appraise" # by Google - code review system
 brew "git-delete-merged-branches" # deletes a merged branch, keeping the repo clean
 brew "git-delta" # superb upgrade to git blame and also for diff etc.
 brew "git-filter-repo" # rewrites repository history
@@ -39,7 +38,6 @@ brew "git-integration" # integration branches, whatever
 brew "git-machete" # simplifies merges/rebases/push/pulls in the presence of multiple branches
 brew "git-mediate" # resolves merge conflicts
 brew "git-octopus" # continuous merge workflow for CI pipelines
-brew "git-remote-codecommit" # simple method to push to and pull from AWS CodeCommit
 brew "git-subrepo" # submodule alternative
 brew "git-vendor" # creates a vendored dependency (as the Go community does)
 brew "git-when-merged" # finds where a commit was merged
@@ -54,6 +52,7 @@ brew "git-when-merged" # finds where a commit was merged
 # brew "dura" # Backs up your work automatically via Git commits
 # brew "fetch" # Download assets from a commit, branch, or tag of GitHub repositories
 # brew "git-absorb" # Automatic git commit --fixup
+# brew "git-appraise" # by Google - code review system
 # brew "git-fixup" # Alias for git commit --fixup <ref>
 # brew "git-flow" # branching model popularized in a blog post
 # brew "git-flow-avh" # another git-flow

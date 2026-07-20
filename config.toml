@@ -1,0 +1,103 @@
+# ----- Core -----
+model               = "gpt-5.6-sol"
+approval_policy     = "never"
+file_opener         = "vscode"
+
+model_reasoning_effort     = "xhigh"
+model_reasoning_summary    = "auto"
+plan_mode_reasoning_effort = "xhigh"
+
+check_for_update_on_startup = false
+
+# ----- Permissions -----
+# Must stay above the first table header: bare keys bind to the preceding [table].
+default_permissions = "nested-codex"
+
+[agents]
+max_threads = 6
+max_depth = 2
+job_max_runtime_seconds = 1800
+
+[features]
+multi_agent = true
+enable_fanout = true
+
+[features.multi_agent_v2]
+hide_spawn_agent_metadata = false
+tool_namespace = "agents"
+
+[permissions.nested-codex]
+extends = ":workspace"
+
+[permissions.nested-codex.filesystem]
+"~/.codex" = "write"
+"~/.codex/skills" = "write"
+"~/.agents/skills" = "write"
+
+"~/.codex/auth.json" = "read"
+"~/.codex/config.toml" = "read"
+"~/.codex/AGENTS.md" = "read"
+"~/.codex/plugins" = "read"
+"~/.codex/rules" = "read"
+"~/.codex/requirements.toml" = "read"
+
+[permissions.nested-codex.network]
+enabled = true
+
+[permissions.nested-codex.network.domains]
+"chatgpt.com" = "allow"
+"*.chatgpt.com" = "allow"
+"api.openai.com" = "allow"
+"auth.openai.com" = "allow"
+
+[permissions.nested-codex.network.unix_sockets]
+"/Users/steph/.codex/app-server-control/app-server-control.sock" = "allow"
+
+# ----- History & TUI -----
+[history]
+persistence = "save-all"
+max_bytes   = 10_485_760
+
+[tui]
+animations             = true
+notifications          = true
+notification_condition = "unfocused"
+theme                  = "catppuccin-mocha"
+status_line = ["model-with-reasoning", "current-dir", "run-state", "context-remaining", "context-window-size", "five-hour-limit", "used-tokens", "total-input-tokens", "total-output-tokens", "task-progress", "weekly-limit"]
+status_line_use_colors = true
+session_picker_view = "dense"
+
+[tui.model_availability_nux]
+"gpt-5.6-sol" = 3
+
+# ----- Projects -----
+[projects."/Users/steph/Downloads"]
+trust_level = "trusted"
+
+[projects."/Users/steph/projects"]
+trust_level = "trusted"
+
+[projects."/Users/steph/.agents"]
+trust_level = "trusted"
+
+[projects."/private/var/folders"]
+trust_level = "trusted"
+
+# ----- Plugins -----
+
+[plugins]
+"documents@openai-primary-runtime"        = { enabled = true }
+"spreadsheets@openai-primary-runtime"     = { enabled = true }
+"presentations@openai-primary-runtime"    = { enabled = true }
+"pdf@openai-primary-runtime"              = { enabled = true }
+"template-creator@openai-primary-runtime" = { enabled = true }
+"sites@openai-bundled"                    = { enabled = true }
+"visualize@openai-bundled"                = { enabled = true }
+"browser@openai-bundled"                  = { enabled = true }
+
+# ----- MCPs -----
+[mcp_servers.openaiDeveloperDocs]
+  url = "https://developers.openai.com/mcp"
+
+[notice]
+hide_rate_limit_model_nudge = true

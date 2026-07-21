@@ -1,2 +1,7 @@
 .DS_Store
 .vscode
+
+# Generated files inside the versioned agent directory
+.agents/**/__pycache__/
+.agents/**/*.py[cod]
+.agents/**/.DS_Store

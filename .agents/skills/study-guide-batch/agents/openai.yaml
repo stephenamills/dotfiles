@@ -1,0 +1,4 @@
+interface:
+  display_name: "Study Guide Batch"
+  short_description: "Generate study guides in Codex CSV waves"
+  default_prompt: "Use $study-guide-batch to generate all missing configured study guides in Codex-native CSV waves of four, including PDF companions and spreadsheet manuals, and report the installed paths."

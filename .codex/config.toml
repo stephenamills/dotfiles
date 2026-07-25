@@ -1,53 +1,68 @@
 # ----- Core -----
-model               = "gpt-5.6-sol"
-approval_policy     = "never"
-file_opener         = "vscode"
+model           = "gpt-5.6-luna"
+approval_policy = "never"
+file_opener     = "vscode"
 
-model_reasoning_effort     = "xhigh"
+model_reasoning_effort     = "high"
 model_reasoning_summary    = "auto"
 plan_mode_reasoning_effort = "xhigh"
 
 check_for_update_on_startup = false
 
-# ----- Permissions -----
-# Must stay above the first table header: bare keys bind to the preceding [table].
 default_permissions = "nested-codex"
 
-[agents]
-max_threads = 6
-max_depth = 2
-job_max_runtime_seconds = 1800
+notify = [
+  "bash",
+  "-lc",
+  "osascript -e 'display notification \"Task finished\" with title \"Codex\"'; afplay /System/Library/Sounds/Glass.aiff"
+]
 
 [features]
 multi_agent = true
-enable_fanout = true
+prevent_idle_sleep = true
 
 [features.multi_agent_v2]
+enabled = true
 hide_spawn_agent_metadata = false
 tool_namespace = "agents"
+max_concurrent_threads_per_session = 7
 
+# ----- Permissions -----
 [permissions.nested-codex]
+description = "Workspace access plus personal Codex configuration, agent skills, and dotfiles synchronization"
 extends = ":workspace"
 
 [permissions.nested-codex.filesystem]
-"~/.codex" = "write"
-"~/.codex/skills" = "write"
-"~/.agents/skills" = "write"
+# Personal Codex and agent directories
+"~/.codex"           = "write"
+"~/.codex/AGENTS.md" = "write"
+"~/.codex/skills"    = "write"
+"~/.agents"          = "write"
+"~/.agents/skills"   = "write"
 
-"~/.codex/auth.json" = "read"
-"~/.codex/config.toml" = "read"
-"~/.codex/AGENTS.md" = "read"
-"~/.codex/plugins" = "read"
-"~/.codex/rules" = "read"
+# Dotfiles repository and its protected .agents directory
+"/Users/steph/projects/zsh/dotfiles"         = "write"
+"/Users/steph/projects/zsh/dotfiles/.agents" = "write"
+
+
+
+# Other Codex files should be read-only
+"~/.codex/auth.json"         = "read"
+"~/.codex/config.toml"       = "read"
+"~/.codex/plugins"           = "read"
+"~/.codex/rules"             = "read"
 "~/.codex/requirements.toml" = "read"
+
+# I sometimes create Claude skills from Codex
+"/Users/steph/.claude/skills" = "write"
 
 [permissions.nested-codex.network]
 enabled = true
 
 [permissions.nested-codex.network.domains]
-"chatgpt.com" = "allow"
-"*.chatgpt.com" = "allow"
-"api.openai.com" = "allow"
+"chatgpt.com"     = "allow"
+"*.chatgpt.com"   = "allow"
+"api.openai.com"  = "allow"
 "auth.openai.com" = "allow"
 
 [permissions.nested-codex.network.unix_sockets]
@@ -60,15 +75,16 @@ max_bytes   = 10_485_760
 
 [tui]
 animations             = true
-notifications          = true
-notification_condition = "unfocused"
-theme                  = "catppuccin-mocha"
-status_line = ["model-with-reasoning", "current-dir", "run-state", "context-remaining", "context-window-size", "five-hour-limit", "used-tokens", "total-input-tokens", "total-output-tokens", "task-progress", "weekly-limit"]
+#notifications          = true
+#notification_condition = "always"
+#notification_method    = "osc9"
+theme                 = "catppuccin-mocha"
+status_line            = ["model-with-reasoning", "current-dir", "run-state", "approval-mode", "context-remaining", "context-window-size", "five-hour-limit", "used-tokens", "total-input-tokens", "total-output-tokens", "task-progress", "weekly-limit"]
 status_line_use_colors = true
-session_picker_view = "dense"
+session_picker_view    = "dense"
 
 [tui.model_availability_nux]
-"gpt-5.6-sol" = 3
+"gpt-5.6-sol" = 4
 
 # ----- Projects -----
 [projects."/Users/steph/Downloads"]
@@ -81,6 +97,39 @@ trust_level = "trusted"
 trust_level = "trusted"
 
 [projects."/private/var/folders"]
+trust_level = "trusted"
+
+[projects."/Users/steph/Downloads/1 Introduction to Professional Level Trading/.study-guide-batch/dispatch/run-20260723-185955-3e7baad5/wave-001"]
+trust_level = "trusted"
+
+[projects."/Users/steph/Downloads/1 Introduction to Professional Level Trading/.study-guide-batch/dispatch/run-20260723-190350-f5196e7b/wave-001"]
+trust_level = "trusted"
+
+[projects."/Users/steph/Downloads/1 Introduction to Professional Level Trading/.study-guide-batch/dispatch/run-20260723-190607-40f2a60c/wave-001"]
+trust_level = "trusted"
+
+[projects."/Users/steph/Downloads/1 Introduction to Professional Level Trading/.study-guide-batch/dispatch/run-20260723-190607-40f2a60c/wave-002"]
+trust_level = "trusted"
+
+[projects."/Users/steph/Downloads/1 Introduction to Professional Level Trading/.study-guide-batch/dispatch/run-20260723-190607-40f2a60c/wave-003"]
+trust_level = "trusted"
+
+[projects."/Users/steph/Downloads/1 Introduction to Professional Level Trading/.study-guide-batch/dispatch/run-20260723-190607-40f2a60c/wave-004"]
+trust_level = "trusted"
+
+[projects."/Users/steph/Downloads/1 Introduction to Professional Level Trading/.study-guide-batch/dispatch/run-20260723-190607-40f2a60c/wave-005"]
+trust_level = "trusted"
+
+[projects."/Users/steph/Downloads/2 Professional Trading Masterclass"]
+trust_level = "trusted"
+
+[projects."/Users/steph/Downloads/3A Professional Option Trading Masterclass 2.0/.study-guide-batch/dispatch/run-20260723-194125-8bc87a32/wave-001"]
+trust_level = "trusted"
+
+[projects."/Users/steph/Downloads/3A Professional Option Trading Masterclass 2.0/.study-guide-batch/dispatch/run-20260723-194125-8bc87a32/wave-002"]
+trust_level = "trusted"
+
+[projects."/Users/steph/Downloads/3B Professional Option Trading Masterclass 1.0/.study-guide-batch/dispatch/run-20260723-194747-6faa28ad/wave-001"]
 trust_level = "trusted"
 
 # ----- Plugins -----
@@ -97,7 +146,7 @@ trust_level = "trusted"
 
 # ----- MCPs -----
 [mcp_servers.openaiDeveloperDocs]
-  url = "https://developers.openai.com/mcp"
+url = "https://developers.openai.com/mcp"
 
 [notice]
 hide_rate_limit_model_nudge = true

@@ -40,6 +40,7 @@ class BatchTestCase(unittest.TestCase):
                 "FAKE_CODEX_STATE": str(self.root / "fake-state.json"),
                 "FAKE_CODEX_SCENARIO": "success",
                 "FAKE_CODEX_VERSION": "codex-cli fake-1.0",
+                "CODEX_HOME": str(self.root / "codex-home"),
                 "STUDY_GUIDE_BATCH_TESTING": "1",
                 "STUDY_GUIDE_BATCH_BACKOFF_SCALE": "0",
                 "CODEX_THREAD_ID": "must-not-leak",
@@ -63,7 +64,14 @@ class BatchTestCase(unittest.TestCase):
         config: dict[str, object] = {
             "input_roots": ["transcripts"],
             "models": {"generator": "fake-model"},
-            "validators": {"required_headings": [], "require_completion_marker": True},
+            "max_concurrency": 4,
+            "validators": {
+                "required_headings": [],
+                "require_completion_marker": True,
+                "require_mermaid_diagram": True,
+                "validate_mermaid_syntax": False,
+                "validate_mermaid_render": False,
+            },
             "output_root": "outputs",
             "existing_roots": ["outputs"],
             "ecc_mirror": False,
@@ -179,7 +187,7 @@ class PlanningTests(BatchTestCase):
         )
         value = (
             "# Alpha\n\nAccording to the source, this concept matters.\n\n"
-            "```d2\ndirection: right\na -> b\n```\n\n"
+            "```mermaid\nflowchart LR\n  a --> b\n```\n\n"
             f"{batch.COMPLETION_MARKER}\n"
         ).encode()
         path = (
@@ -313,7 +321,7 @@ class PlanningTests(BatchTestCase):
         self.assertEqual(plan["units"][0]["flags"], [])
         valid, category, detail = batch.validate_candidate_bytes(
             (
-                "Complete.\n\n```d2\nsource -> mastery\n```\n\n"
+                "Complete.\n\n```mermaid\nflowchart LR\n  source --> mastery\n```\n\n"
                 f"{batch.COMPLETION_MARKER}\n"
             ).encode(),
             plan["config"]["validators"],
@@ -380,7 +388,7 @@ class PlanningTests(BatchTestCase):
         self.assertIn(f"pdf\t{pdf.relative_to(self.root).as_posix()}", rendered)
         self.assertIn(f"spreadsheet\t{workbook.relative_to(self.root).as_posix()}", rendered)
 
-    def test_workbook_snapshot_contains_formulas_and_spreadsheet_d2_contract(self) -> None:
+    def test_workbook_snapshot_contains_formulas_and_spreadsheet_mermaid_contract(self) -> None:
         transcript = self.add_lesson(3, "Workbook Class")[0]
         workbook = self.add_workbook(3, "Returns Model")
         batch.register_asset_unit(
@@ -398,13 +406,13 @@ class PlanningTests(BatchTestCase):
         with tempfile.TemporaryDirectory(prefix="study-guide-stage-test-") as temporary:
             stage = Path(temporary)
             batch.copy_stage_inputs(self.root, unit, stage)
-            payload = batch.direct_stage_prompt(unit, stage, "D2 diagram 1 is invalid")
+            payload = batch.direct_stage_prompt(unit, stage, "Mermaid diagram 1 is invalid")
         self.assertIn("=A2*2", payload)
         self.assertIn("Formula archetypes", payload)
-        self.assertIn("D2 dependency diagram", payload)
-        self.assertIn("Never emit Mermaid", payload)
+        self.assertIn("Mermaid flowchart", payload)
+        self.assertIn("Never emit D2", payload)
         self.assertIn("REQUIRED CORRECTION FROM THE PREVIOUS ATTEMPT", payload)
-        self.assertIn("D2 diagram 1 is invalid", payload)
+        self.assertIn("Mermaid diagram 1 is invalid", payload)
 
     def test_pdf_stage_contract_requires_direct_exposition_and_equation_walkthroughs(self) -> None:
         transcript = self.add_lesson(2, "Statistics")[0]
@@ -428,51 +436,88 @@ class PlanningTests(BatchTestCase):
         self.assertIn("Evaluate the operations", instruction)
         self.assertIn("render it as one Markdown table", instruction)
 
-    def test_d2_validation_rejects_mermaid_missing_and_invalid_diagrams(self) -> None:
-        validators = batch.DEFAULT_CONFIG["validators"]
+    def test_mermaid_validation_rejects_missing_d2_and_invalid_diagrams(self) -> None:
+        validators = {
+            **batch.DEFAULT_CONFIG["validators"],
+            "validate_mermaid_render": False,
+        }
         missing = f"# Guide\n\nNo diagram.\n\n{batch.COMPLETION_MARKER}\n".encode()
-        valid, _, detail = batch.validate_candidate_bytes(missing, validators)
+        valid, category, detail = batch.validate_candidate_bytes(missing, validators)
         self.assertFalse(valid)
-        self.assertIn("lacks a fenced D2", detail)
+        self.assertEqual(category, "diagram_missing")
+        self.assertIn("lacks a fenced Mermaid", detail)
 
-        mermaid = (
-            "# Guide\n\n```mermaid\na-->b\n```\n\n```d2\na -> b\n```\n\n"
+        d2 = (
+            "# Guide\n\n```d2\na -> b\n```\n\n"
             f"{batch.COMPLETION_MARKER}\n"
         ).encode()
-        valid, _, detail = batch.validate_candidate_bytes(mermaid, validators)
+        valid, category, detail = batch.validate_candidate_bytes(d2, validators)
         self.assertFalse(valid)
-        self.assertIn("contains Mermaid", detail)
+        self.assertEqual(category, "diagram_d2")
+        self.assertIn("prohibited fenced D2", detail)
 
         invalid = (
-            "# Guide\n\n```d2\na: {\n```\n\n"
+            "# Guide\n\n```mermaid\nflowchart LR\n  A -->\n```\n\n"
             f"{batch.COMPLETION_MARKER}\n"
         ).encode()
-        valid, _, detail = batch.validate_candidate_bytes(invalid, validators)
+        valid, category, detail = batch.validate_candidate_bytes(invalid, validators)
         self.assertFalse(valid)
-        self.assertIn("D2 diagram 1 is invalid", detail)
+        self.assertEqual(category, "diagram_invalid")
+        self.assertIn("Mermaid diagram 1 is invalid", detail)
 
-    def test_d2_layout_validation_rejects_a_long_single_lane(self) -> None:
-        tall = (
-            "# Guide\n\n```d2\n"
-            "a: \"Stage A\"\nb: \"Stage B\"\nc: \"Stage C\"\nd: \"Stage D\"\n"
-            "e: \"Stage E\"\nf: \"Stage F\"\ng: \"Stage G\"\nh: \"Stage H\"\n"
-            "a -> b -> c -> d -> e -> f -> g -> h\n"
-            "```\n\n"
-            f"{batch.COMPLETION_MARKER}\n"
-        ).encode()
+    def test_mermaid_render_validation_is_disabled_by_default(self) -> None:
+        self.assertFalse(batch.DEFAULT_CONFIG["validators"]["validate_mermaid_render"])
 
-        valid, category, detail = batch.validate_candidate_bytes(
-            tall, batch.DEFAULT_CONFIG["validators"]
+    @unittest.skipUnless(
+        os.environ.get("STUDY_GUIDE_BATCH_RUN_RENDER_TESTS") == "1",
+        "set STUDY_GUIDE_BATCH_RUN_RENDER_TESTS=1 to run Chromium-backed Mermaid integration tests",
+    )
+    def test_mermaid_parser_and_desktop_render_gate(self) -> None:
+        source = (
+            "flowchart LR\n"
+            '  question["What governs the decision?"] --> input["Input"]\n'
+            '  input --> transform["Transform"]\n'
+            '  transform --> output["Output"]\n'
+            '  output -. "feedback" .-> input\n'
         )
+        syntax_valid, syntax_detail = batch.validate_mermaid_syntax_blocks([source])
+        render_valid, render_detail = batch.validate_mermaid_render_blocks(
+            [source], batch.MERMAID_RENDER_VIEWPORTS
+        )
+        self.assertTrue(syntax_valid, syntax_detail)
+        self.assertTrue(render_valid, render_detail)
+        self.assertIn("1728x1117px", render_detail)
 
+    def test_mermaid_h2_coverage_reports_the_exact_uncovered_section(self) -> None:
+        text = (
+            "# Map\n\n"
+            "## Ordered Chapter Path\n\n"
+            "```mermaid\nflowchart LR\n  A --> B\n```\n\n"
+            "## Architecture and Dependencies\n\nNo diagram yet.\n"
+        )
+        valid, detail = batch.validate_mermaid_h2_coverage(
+            text,
+            ["Ordered Chapter Path", "Architecture and Dependencies"],
+        )
         self.assertFalse(valid)
-        self.assertEqual(category, "diagram_layout")
-        self.assertIn("too tall", detail)
+        self.assertIn("Architecture and Dependencies", detail)
+        self.assertNotIn("Ordered Chapter Path,", detail)
+
+    def test_removed_d2_validator_keys_are_rejected(self) -> None:
+        self.write_config(
+            validators={
+                "required_headings": [],
+                "require_completion_marker": True,
+                "require_d2_diagram": True,
+            }
+        )
+        with self.assertRaisesRegex(batch.BatchError, "removed validator key"):
+            batch.load_config(self.root)
 
     def test_validation_rejects_source_attribution_phrases(self) -> None:
         candidate = (
             "# Guide\n\nThe PDF states the formula.\n\n"
-            "```d2\ninput -> result\n```\n\n"
+            "```mermaid\nflowchart LR\n  input --> result\n```\n\n"
             f"{batch.COMPLETION_MARKER}\n"
         ).encode()
 
@@ -488,7 +533,7 @@ class PlanningTests(BatchTestCase):
         original = (
             "# Guide\n\nKeep this paragraph byte-for-byte — including Unicode.\n\n"
             "The source explains that ATRP normalizes range by price.\n\n"
-            "```d2\ninput -> result\n```\n\n"
+            "```mermaid\nflowchart LR\n  input --> result\n```\n\n"
             f"{batch.COMPLETION_MARKER}\n"
         ).encode()
         replacement = b"ATRP normalizes range by price.\n"
@@ -514,25 +559,33 @@ class PlanningTests(BatchTestCase):
         self.assertTrue(valid)
         self.assertEqual(category, "success")
 
-    def test_diagram_repair_changes_only_the_targeted_d2_source(self) -> None:
+    def test_diagram_repair_changes_only_the_targeted_mermaid_source(self) -> None:
         original = (
             "# Guide\n\nKeep this prose byte-for-byte — including Unicode.\n\n"
-            "```d2\nconcept: {\n  shape: Not a real D2 shape\n}\n```\n\n"
+            "```mermaid\nflowchart LR\n  concept -->\n```\n\n"
             "## Review\n\nKeep this too.\n\n"
             f"{batch.COMPLETION_MARKER}\n"
         ).encode()
+        validators = {
+            **batch.DEFAULT_CONFIG["validators"],
+            "validate_mermaid_render": False,
+        }
         valid, category, detail = batch.validate_candidate_bytes(
-            original, batch.DEFAULT_CONFIG["validators"]
+            original, validators
         )
         self.assertFalse(valid)
         self.assertEqual(category, "diagram_invalid")
-        repaired_source = "concept: Repaired concept\nconcept -> mastery\nmastery: Mastery"
+        repaired_source = (
+            "flowchart LR\n"
+            '  question["What creates mastery?"] --> concept["Repaired concept"]\n'
+            '  concept --> mastery["Mastery"]\n'
+        )
         repaired = batch.apply_diagram_repair(original, category, detail, repaired_source)
 
         old_text = original.decode()
         new_text = repaired.decode()
-        old_match = batch.D2_FENCE.search(old_text)
-        new_match = batch.D2_FENCE.search(new_text)
+        old_match = batch.MERMAID_BLOCK.search(old_text)
+        new_match = batch.MERMAID_BLOCK.search(new_text)
         self.assertIsNotNone(old_match)
         self.assertIsNotNone(new_match)
         assert old_match is not None and new_match is not None
@@ -543,10 +596,36 @@ class PlanningTests(BatchTestCase):
             old_text[old_match.end(1):].encode(), new_text[new_match.end(1):].encode()
         )
         valid, category, _ = batch.validate_candidate_bytes(
-            repaired, batch.DEFAULT_CONFIG["validators"]
+            repaired, validators
         )
         self.assertTrue(valid)
         self.assertEqual(category, "success")
+
+    def test_diagram_repair_converts_only_a_prohibited_d2_fence(self) -> None:
+        original = (
+            "# Guide\n\nPreserve this prose exactly.\n\n"
+            "```d2\ninput -> result\n```\n\n"
+            f"{batch.COMPLETION_MARKER}\n"
+        ).encode()
+        validators = {
+            **batch.DEFAULT_CONFIG["validators"],
+            "validate_mermaid_render": False,
+        }
+        valid, category, detail = batch.validate_candidate_bytes(original, validators)
+        self.assertFalse(valid)
+        self.assertEqual(category, "diagram_d2")
+        repaired = batch.apply_diagram_repair(
+            original,
+            category,
+            detail,
+            'flowchart LR\n  input["Input"] --> result["Result"]',
+        )
+        self.assertIn(b"```mermaid", repaired)
+        self.assertNotIn(b"```d2", repaired)
+        self.assertEqual(
+            batch.D2_FENCE.sub("", original.decode()),
+            batch.MERMAID_BLOCK.sub("", repaired.decode()),
+        )
 
     def test_numbered_letter_parts_with_different_leading_numbers_group(self) -> None:
         first = self.root / "transcripts" / "16. Portfolio Foundations 1a.txt"
@@ -591,10 +670,11 @@ class TurnkeyTests(BatchTestCase):
         original = (
             "# Lesson Study Guide\n\n"
             "## Overview\n\nKeep this prose byte-for-byte — including Unicode.\n\n"
-            "```d2\n"
-            "material: \"Course material\"\nconcepts: \"Key concepts\"\n"
-            "practice: \"Guided practice\"\nmastery: \"Demonstrated mastery\"\n"
-            "material -> concepts -> practice -> mastery\n"
+            "```mermaid\n"
+            "flowchart LR\n"
+            '  material["Course material"] --> concepts["Key concepts"]\n'
+            '  concepts --> practice["Guided practice"]\n'
+            '  practice --> mastery["Demonstrated mastery"]\n'
             "```\n\n"
             "## Review Questions\n\nOld repetitive questions remain here.\n\n"
             "---\n\n## Glossary\n\n**Alpha:** A test definition.\n\n"
@@ -614,7 +694,7 @@ class TurnkeyTests(BatchTestCase):
         self.assertTrue(result["canonical_files_changed"])
         self.assertIsNotNone(result["promotion_id"])
         installed = target.read_text(encoding="utf-8")
-        self.assertIn('direction: right', installed)
+        self.assertIn("flowchart LR", installed)
         self.assertIn("The targeted section was regenerated", installed)
         old_spans = batch.targeted_repair_spans(original, [1], ["Review Questions"])
         new_spans = batch.targeted_repair_spans(installed, [1], ["Review Questions"])
@@ -656,7 +736,7 @@ class TurnkeyTests(BatchTestCase):
         self.assertEqual(result["status"], "completed")
         self.assertEqual([Path(path).resolve() for path in result["output_paths"]], [target.resolve()])
         installed = target.read_text(encoding="utf-8")
-        self.assertIn("```d2", installed)
+        self.assertIn("```mermaid", installed)
         self.assertIn(batch.COMPLETION_MARKER, installed)
 
     def test_generate_all_accepts_model_reasoning_and_verbosity_overrides(self) -> None:
@@ -768,7 +848,7 @@ class TurnkeyTests(BatchTestCase):
             result = batch.generate_all(self.root, args)
 
         self.assertEqual(result["status"], "completed")
-        # Both selected units share one CSV dispatcher wave.
+        # Both selected units share one V2 dispatcher wave.
         self.assertEqual(self.fake_state()["total"], 1)
         self.assertEqual(len(result["output_paths"]), 2)
         store = batch.Store(self.root)
@@ -886,11 +966,16 @@ class ExecutionTests(BatchTestCase):
             self.assertIn("--ignore-rules", argv)
             self.assertIn("--skip-git-repo-check", argv)
             self.assertNotIn("--add-dir", argv)
-            self.assertIn("features.enable_fanout=true", argv)
-            self.assertIn("features.multi_agent_v2.hide_spawn_agent_metadata=false", argv)
-            self.assertIn('features.multi_agent_v2.tool_namespace="agents"', argv)
-            self.assertIn("agents.max_depth=2", argv)
-            self.assertIn("agents.max_threads=6", argv)
+            v2_config = next(arg for arg in argv if arg.startswith("features.multi_agent_v2={"))
+            self.assertIn("--enable", argv)
+            self.assertEqual(argv[argv.index("--enable") + 1], "multi_agent_v2")
+            self.assertIn("max_concurrent_threads_per_session=2", v2_config)
+            self.assertIn("hide_spawn_agent_metadata=false", v2_config)
+            self.assertIn('tool_namespace="agents"', v2_config)
+            self.assertIn("expose_spawn_agent_model_overrides=false", v2_config)
+            self.assertIn("non_code_mode_only=false", v2_config)
+            self.assertNotIn("features.enable_fanout=true", argv)
+            self.assertFalse(any(argument.startswith("agents.max_") for argument in argv))
             self.assertIn('default_permissions=":danger-full-access"', argv)
             self.assertTrue(any(arg.startswith("sqlite_home=") for arg in argv), argv)
             self.assertTrue(
@@ -936,7 +1021,7 @@ class ExecutionTests(BatchTestCase):
                 os.environ["FAKE_CODEX_STATE"] = str(self.root / "fake-state.json")
                 os.environ["FAKE_CODEX_SCENARIO"] = "success"
 
-    def test_invalid_d2_repairs_only_diagram_without_regenerating_guide(self) -> None:
+    def test_prohibited_d2_repairs_only_diagram_without_regenerating_guide(self) -> None:
         self.add_lesson(1, "Alpha")
         os.environ["FAKE_CODEX_SCENARIO"] = "invalid_d2"
         store, _, run_id = self.execute()
@@ -950,9 +1035,18 @@ class ExecutionTests(BatchTestCase):
         ]
         self.assertEqual(attempt_stages, ["generation", "diagram_repair"])
 
-    def test_diagram_layout_repair_retries_an_opposite_overcorrection(self) -> None:
+    def test_invalid_mermaid_repair_retries_a_malformed_first_repair(self) -> None:
+        self.write_config(
+            validators={
+                "required_headings": [],
+                "require_completion_marker": True,
+                "require_mermaid_diagram": True,
+                "validate_mermaid_syntax": True,
+                "validate_mermaid_render": False,
+            }
+        )
         self.add_lesson(1, "Alpha")
-        os.environ["FAKE_CODEX_SCENARIO"] = "layout_retry"
+        os.environ["FAKE_CODEX_SCENARIO"] = "mermaid_retry"
 
         store, _, run_id = self.execute()
 
@@ -1023,7 +1117,9 @@ class ExecutionTests(BatchTestCase):
     def test_invocation_budget_and_parallel_contract(self) -> None:
         self.add_lesson(1, "Alpha")
         self.add_lesson(2, "Beta")
+        self.write_config(max_concurrency=3)
         store, plan, approval = self.approved(max_invocations=1, max_tokens=10000)
+        self.assertEqual(approval["contract"]["workers"], 3)
         run_id = batch.create_approved_run(store, approval)
         batch.run_supervisor(store, run_id)
         run = store.row("SELECT * FROM runs WHERE id = ?", (run_id,))
@@ -1043,7 +1139,7 @@ class ExecutionTests(BatchTestCase):
         with self.assertRaisesRegex(batch.BatchError, "max-concurrency"):
             batch.make_contract(
                 plan,
-                workers=7,
+                workers=33,
                 deadline_hours=1,
                 timeout_minutes=1,
                 max_invocations=10,
@@ -1052,6 +1148,10 @@ class ExecutionTests(BatchTestCase):
             )
         parsed = batch.build_parser().parse_args(["generate-all", "--max-concurrency", "2"])
         self.assertEqual(parsed.max_concurrency, 2)
+        self.assertIsNone(batch.build_parser().parse_args(["generate-all"]).max_concurrency)
+        self.write_config(max_concurrency=33)
+        with self.assertRaisesRegex(batch.BatchError, "max_concurrency"):
+            batch.load_config(self.root)
         with self.assertRaises(SystemExit):
             batch.build_parser().parse_args(["generate-all", "--workers", "2"])
 
@@ -1161,7 +1261,7 @@ class ExecutionTests(BatchTestCase):
         (self.root / batch.CONFIG_NAME).write_text(json.dumps(config), encoding="utf-8")
         self.assertNotEqual(batch.create_plan(self.root)["id"], original_id)
 
-    def test_nine_units_fan_out_as_four_four_one_at_depth_two(self) -> None:
+    def test_nine_units_dispatch_as_four_four_one_v2_waves(self) -> None:
         for number in range(1, 10):
             self.add_lesson(number, f"Lesson {number}")
 
@@ -1170,20 +1270,32 @@ class ExecutionTests(BatchTestCase):
         self.assertEqual(store.row("SELECT status FROM runs WHERE id = ?", (run_id,))["status"], "completed")
         state = self.fake_state()
         self.assertEqual([wave["size"] for wave in state["waves"]], [4, 4, 1])
-        self.assertTrue(all(wave["multi_agent_enabled"] for wave in state["waves"]))
-        self.assertTrue(all(wave["fanout_enabled"] for wave in state["waves"]))
+        self.assertTrue(all(wave["v2_enabled"] for wave in state["waves"]))
+        self.assertTrue(all(wave["v2_thread_limit"] for wave in state["waves"]))
         self.assertTrue(all(wave["v2_spawn_metadata_visible"] for wave in state["waves"]))
         self.assertTrue(all(wave["v2_agents_namespace"] for wave in state["waves"]))
-        self.assertTrue(all(wave["max_depth_two"] for wave in state["waves"]))
+        self.assertTrue(all(wave["v2_no_model_overrides"] for wave in state["waves"]))
+        self.assertTrue(all(wave["v2_direct_tool_access"] for wave in state["waves"]))
+        self.assertTrue(all(wave["legacy_fanout_absent"] for wave in state["waves"]))
+        self.assertTrue(all(wave["legacy_agent_limits_absent"] for wave in state["waves"]))
         self.assertTrue(all(wave["user_config_enabled"] for wave in state["waves"]))
         self.assertTrue(all(wave["legacy_sandbox_absent"] for wave in state["waves"]))
         self.assertTrue(all(wave["nested_sandbox_disabled"] for wave in state["waves"]))
         self.assertEqual(state["workers_total"], 9)
 
-    def test_missing_reports_and_malformed_results_retry_without_legacy_fallback(self) -> None:
+    def test_legacy_user_agent_cap_uses_isolated_config(self) -> None:
+        self.add_lesson(1, "Alpha")
+
+        with mock.patch.object(batch, "legacy_agent_max_threads_configured", return_value=True):
+            store, _, run_id = self.execute()
+
+        self.assertEqual(store.row("SELECT status FROM runs WHERE id = ?", (run_id,))["status"], "completed")
+        self.assertTrue(all("--ignore-user-config" in call["argv"] for call in self.fake_state()["calls"]))
+
+    def test_missing_and_malformed_artifacts_retry_without_legacy_fallback(self) -> None:
         for scenario, first_category in (
-            ("missing_report", "missing_report"),
-            ("malformed_result", "malformed_csv"),
+            ("missing_candidate", "missing_candidate"),
+            ("malformed_artifact", "malformed_artifact"),
         ):
             with self.subTest(scenario=scenario):
                 child = self.root / scenario
@@ -1208,7 +1320,7 @@ class ExecutionTests(BatchTestCase):
                 os.environ["FAKE_CODEX_STATE"] = str(self.root / "fake-state.json")
                 os.environ["FAKE_CODEX_SCENARIO"] = "success"
 
-    def test_csv_capability_unavailable_fails_clearly_without_fallback(self) -> None:
+    def test_v2_capability_unavailable_fails_clearly_without_fallback(self) -> None:
         self.add_lesson(1, "Alpha")
         os.environ["FAKE_CODEX_SCENARIO"] = "capability_unavailable"
 
@@ -1216,7 +1328,7 @@ class ExecutionTests(BatchTestCase):
 
         run = store.row("SELECT * FROM runs WHERE id = ?", (run_id,))
         self.assertEqual(run["status"], "checkpointed")
-        self.assertIn("CSV subagent capability unavailable", run["stop_reason"])
+        self.assertIn("Multi Agent V2 capability unavailable", run["stop_reason"])
         self.assertEqual(self.fake_state()["total"], 1)
         self.assertEqual(self.fake_state()["workers_total"], 0)
 

@@ -1,4 +1,4 @@
 interface:
   display_name: "Study Guide Batch"
-  short_description: "Generate study guides in Codex CSV waves"
-  default_prompt: "Use $study-guide-batch to generate all missing configured study guides in Codex-native CSV waves of four, including PDF companions and spreadsheet manuals, and report the installed paths."
+  short_description: "Generate study guides in Codex Multi Agent V2 waves"
+  default_prompt: "Use $study-guide-batch to generate all missing configured study guides in bounded Codex Multi Agent V2 leaf-worker waves, including PDF companions and spreadsheet manuals, and report the installed paths."

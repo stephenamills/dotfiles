@@ -5,7 +5,7 @@
 - Configuration example
 - Transcript grouping
 - Declarative PDF and spreadsheet units
-- Source extraction and D2 validation
+- Source extraction and Mermaid validation
 - Lifecycle, state, and recovery
 
 ## Configuration example
@@ -18,6 +18,7 @@ Place `study-guide-batch.json` at the course root. Every configured path must re
   "include_globs": ["**/*.txt", "*.txt"],
   "exclude_globs": [],
   "transcript_encoding": "utf-8",
+  "max_concurrency": 6,
   "prompts": {
     "root": "prompts/transcript.md",
     "per_unit": {},
@@ -53,10 +54,9 @@ Place `study-guide-batch.json` at the course root. Every configured path must re
   "validators": {
     "required_headings": [],
     "require_completion_marker": true,
-    "require_d2_diagram": true,
-    "forbid_mermaid": true,
-    "validate_d2_syntax": true,
-    "validate_d2_layout": true
+    "require_mermaid_diagram": true,
+    "validate_mermaid_syntax": true,
+    "validate_mermaid_render": false
   },
   "output_root": "study-guides",
   "candidate_root": ".study-guide-batch/candidates",
@@ -66,7 +66,9 @@ Place `study-guide-batch.json` at the course root. Every configured path must re
 }
 ```
 
-The supervisor defaults to `gpt-5.6-sol`, `xhigh` reasoning, high verbosity, and CSV waves with `max_concurrency = 4`. Advanced runs may use `--max-concurrency` from one through six.
+The supervisor defaults to `gpt-5.6-sol`, `xhigh` reasoning, high verbosity, and six concurrent Multi Agent V2 leaf workers. Set `max_concurrency` to a course-level value from one through 32; `--max-concurrency` is a one-run override.
+
+Concurrency does not define a pedagogical group: each unit remains one independent leaf task. The supervisor drains the selected units in batches no larger than the configured limit so completed artifacts can be validated and resumed independently. For roughly 35–40 normal text transcripts, start with six leaves (seven V2 sessions including the dispatcher); use three for unusually long PDF/workbook work, and increase to eight or 12 only after a representative run is stable. A burst of 28 is supported, but creates 29 concurrent sessions and amplifies account-rate, quota, or systematic-prompt failures without improving per-guide quality.
 
 ## Transcript grouping
 
@@ -90,25 +92,25 @@ Each asset unit requires:
 
 An asset unit's explicit prompt overrides `prompts.per_unit`, followed by `prompts.by_kind`; bundled kind-specific defaults are the final fallback. The legacy `prompts.root` applies to transcript units only.
 
-## Source extraction and D2 validation
+## Source extraction and Mermaid validation
 
 PDF extraction uses `pdftotext` with page boundaries and a deterministic context budget. Spreadsheet extraction uses `openpyxl` to inventory worksheets, formulas, formula archetypes, populated cells, styles, merged ranges, tables, validations, conditional formatting, charts, images, hidden dimensions, widths, freeze panes, and cross-sheet structure. Repeated worksheet layouts are compacted by structural signature.
 
 OOXML workbooks are supported for `.xlsx` and `.xlsm`, including OOXML content with a misleading `.xls` suffix. A genuine legacy BIFF `.xls` requires a separately produced read-only `.xlsx` inspection copy and otherwise blocks before generation.
 
-Every candidate must contain at least one fenced D2 diagram, must contain no Mermaid fence, and must pass the installed D2 parser when `validate_d2_syntax` is enabled. When `validate_d2_layout` is enabled, diagrams with more than six semantic nodes must also fit the supervisor's balanced rendered-footprint limits; excessively tall or wide diagrams enter the existing diagram-only repair path. Spreadsheet unit instructions additionally require a source-grounded dependency diagram.
+Every candidate must contain at least one fenced Mermaid diagram. D2 fences are unconditionally invalid. With `validate_mermaid_syntax` enabled, every block must pass the installed Mermaid 11.14 parser. `validate_mermaid_render` is disabled by default; when explicitly enabled, every block must also render through `mmdc` at a 1728×1117 CSS-pixel desktop viewport, and every SVG must expose a positive responsive `viewBox` without a fixed pixel width. That opt-in check launches Chromium and therefore needs an unsandboxed macOS process. Parser and render failures enter the diagram-only repair path. Spreadsheet unit instructions additionally require a source-grounded Mermaid dependency flowchart.
 
 The supervisor fingerprints original source bytes, prompts, targets, validators, models, and supervisor/Codex versions. Each wave writes isolated, self-contained row inputs with explicit byte budgets. Model processes cannot write source, output, candidate, or archive roots.
 
 ## Lifecycle, state, and recovery
 
-`generate-all` plans, approves conservative budgets, dispatches generation in waves of four, validates exported CSV identity and every reported Markdown artifact, and atomically installs successful candidates. Later waves contain only unresolved units or targeted repairs. Use `--unit` for one configured unit, `--missing-only` for absent canonical targets, or `--candidates-only` to suppress installation.
+`generate-all` plans, approves conservative budgets, dispatches generation in bounded leaf-agent waves, waits for every child to reach a terminal state, validates each isolated Markdown artifact, and atomically installs successful candidates. Later waves contain only unresolved units or targeted repairs. Use `--unit` for one configured unit, `--missing-only` for absent canonical targets, or `--candidates-only` to suppress installation.
 
-`repair-sections` creates a fresh immutable run for one installed unit, regenerates only explicitly selected H2 sections and/or one-based D2 blocks, validates the patched whole guide, and preserves all unselected bytes. Its successful candidate uses the same promotion and rollback journal as ordinary generation.
+`repair-sections` creates a fresh immutable run for one installed unit, regenerates only explicitly selected H2 sections and/or one-based Mermaid blocks, validates the patched whole guide, and preserves all unselected bytes. Its successful candidate uses the same promotion and rollback journal as ordinary generation.
 
-When a targeted run produced valid section replacements but failed diagram layout, `repair-sections --recover-from-run RUN_ID` recovers only the selected sections from the immutable attempt log and routes remaining D2 failures through diagram-only repair. It never installs the failed run's diagram or rewrites unaffected content.
+When a targeted run produced valid section replacements but failed Mermaid parsing or rendering, `repair-sections --recover-from-run RUN_ID` recovers only the selected sections from the immutable attempt log and routes remaining diagram failures through diagram-only repair. It never installs the failed run's diagram or rewrites unaffected content.
 
-Supervisor SQLite state, leases, attempts, events, status reports, candidates, dispatcher inputs, exported CSVs, Codex job SQLite state, and promotion journals live under `.study-guide-batch/`. The supervisor never edits Codex's internal job tables. Resume restarts only interrupted work and never regenerates approved units. Promotion rechecks fingerprints, archives existing targets, and installs candidates atomically. Rollback restores archived targets and returns installed candidates to candidate storage.
+Supervisor SQLite state, leases, attempts, events, status reports, candidates, dispatcher inputs and manifests, isolated Codex thread SQLite state, and promotion journals live under `.study-guide-batch/`. The supervisor never edits Codex's internal state. Resume restarts only interrupted work and never regenerates approved units. Promotion rechecks fingerprints, archives existing targets, and installs candidates atomically. Rollback restores archived targets and returns installed candidates to candidate storage.
 
 `purge-run` is an explicitly destructive lifecycle operation. It refuses a live process owner, any promotion, a shared approval, or a shared plan. Eligible run, candidate, dispatcher, approval, and plan directories are staged before their database rows are deleted in one transaction; a failed transaction restores the staged directories.
 
@@ -117,20 +119,15 @@ Recommended global Codex settings are:
 ```toml
 default_permissions = "nested-codex"
 
-[features]
-multi_agent = true
-enable_fanout = true
-
 [features.multi_agent_v2]
+max_concurrent_threads_per_session = 7
 hide_spawn_agent_metadata = false
 tool_namespace = "agents"
+expose_spawn_agent_model_overrides = false
+non_code_mode_only = false
 
-[agents]
-max_threads = 6
-max_depth = 2
-job_max_runtime_seconds = 1800
 ```
 
-Define the matching `[permissions.nested-codex]` profile in the same global configuration. The supervisor loads user configuration and does not pass `--sandbox` or `--ignore-user-config`. When it detects that it is already running inside a Codex sandbox, it passes the child-only `default_permissions=":danger-full-access"` override to avoid a rejected nested macOS Seatbelt application. The parent TUI remains sandboxed. Do not set this override globally, and do not combine permission profiles with `sandbox_mode` or `[sandbox_workspace_write]`.
+Define the matching `[permissions.nested-codex]` profile in the same global configuration. The supervisor loads user configuration and does not pass the legacy `--sandbox` mode. It uses `--ignore-user-config` only for the isolated dispatcher when it detects the Codex 0.144-incompatible `agents.max_threads` setting. When it detects that it is already running inside a Codex sandbox, it passes the child-only `default_permissions=":danger-full-access"` override to avoid a rejected nested macOS Seatbelt application. The parent TUI remains sandboxed. Do not set this override globally, and do not combine permission profiles with `sandbox_mode` or `[sandbox_workspace_write]`.
 
-`enable_fanout` is the under-development Codex gate for `spawn_agents_on_csv`. The V2 settings keep GPT-5.6 Sol on the `agents` tool namespace with spawn controls visible. The supervisor repeats all three as per-invocation overrides so a dispatcher does not depend on global feature persistence.
+`max_concurrent_threads_per_session` includes the dispatcher, so the example permits six leaf workers plus one root dispatcher. The V2 settings keep GPT-5.6 Sol on the `agents` tool namespace with visible spawn metadata; `wait_agent` is present by default. The supervisor enables V2 with `--enable multi_agent_v2` and repeats the common table settings as per-invocation overrides, so a dispatcher does not depend on global feature persistence. The explicit command-line enable avoids the incompatible `enabled = true` table syntax in the installed 0.144 CLI family. On that version, a user-level `agents.max_threads` still makes V2 reject startup, so the supervisor detects it and starts only the isolated dispatcher with `--ignore-user-config`; authentication continues to use `CODEX_HOME` and the required V2 configuration is passed explicitly. `enable_fanout`, `agents.max_depth`, `agents.max_threads`, and `agents.job_max_runtime_seconds` are legacy CSV/V1 controls and do not configure V2 waves.

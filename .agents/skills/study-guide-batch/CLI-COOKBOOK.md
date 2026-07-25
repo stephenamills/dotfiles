@@ -38,7 +38,7 @@ python3 "$SCRIPT" generate-all --root "$ROOT"
 python3 "$SCRIPT" generate-all --root "$ROOT" --missing-only
 python3 "$SCRIPT" generate-all --root "$ROOT" --unit UNIT_ID
 python3 "$SCRIPT" generate-all --root "$ROOT" --candidates-only
-python3 "$SCRIPT" generate-all --root "$ROOT" --max-concurrency 4
+python3 "$SCRIPT" generate-all --root "$ROOT" --max-concurrency 8
 ```
 
 Override model settings:
@@ -78,9 +78,9 @@ python3 "$SCRIPT" purge-run RUN_ID --root "$ROOT"
 ```bash
 python3 "$SCRIPT" plan --root "$ROOT"
 python3 "$SCRIPT" approve PLAN_ID --root "$ROOT"
-python3 "$SCRIPT" approve PLAN_ID --root "$ROOT" --max-concurrency 4
+python3 "$SCRIPT" approve PLAN_ID --root "$ROOT" --max-concurrency 8
 python3 "$SCRIPT" run APPROVAL_ID --root "$ROOT"
 python3 "$SCRIPT" start APPROVAL_ID --detach --root "$ROOT"
 ```
 
-The supervisor defaults to Codex CSV waves of four workers. `--max-concurrency` accepts one through six. Every generated guide must contain valid D2 and no Mermaid.
+Set `max_concurrency` in `study-guide-batch.json` for the course (six leaf workers by default); `--max-concurrency` is an override and accepts one through 32. Every generated guide must contain parser-valid Mermaid and no D2 fences. `validate_mermaid_render` is disabled by default; if enabled, each diagram must also render as responsive SVG through `mmdc` at a 1728×1117 CSS-pixel desktop viewport.

@@ -4,7 +4,6 @@
 from __future__ import annotations
 
 import fcntl
-import csv
 import json
 import os
 import re
@@ -70,6 +69,17 @@ def argument_value(name: str) -> str | None:
         return None
 
 
+def multi_agent_v2_config() -> str:
+    return next(
+        (
+            argument
+            for argument in sys.argv
+            if argument.startswith("features.multi_agent_v2={")
+        ),
+        "",
+    )
+
+
 def emit(event: dict[str, object]) -> None:
     print(json.dumps(event), flush=True)
 
@@ -100,12 +110,11 @@ def candidate() -> str:
         f"{words}.\n\n"
         "## Key Concepts\n\n"
         f"{words}.\n\n"
-        "```d2\n"
-        "material: Course material\n"
-        "concepts: Key concepts\n"
-        "practice: Guided practice\n"
-        "mastery: Demonstrated mastery\n"
-        "material -> concepts -> practice -> mastery\n"
+        "```mermaid\n"
+        "flowchart LR\n"
+        '  material[\"Course material\"] --> concepts[\"Key concepts\"]\n'
+        '  concepts --> practice[\"Guided practice\"]\n'
+        '  practice --> mastery[\"Demonstrated mastery\"]\n'
         "```\n\n"
         "## Review Questions\n\n"
         "1. What is the central concept? Use the direct explanation above.\n\n"
@@ -113,61 +122,57 @@ def candidate() -> str:
     )
 
 
-def invalid_d2_candidate() -> str:
+def prohibited_d2_candidate() -> str:
     return (
         "# Lesson Study Guide\n\n"
-        "## Overview\n\nA complete-looking candidate with invalid diagram syntax.\n\n"
+        "## Overview\n\nA complete-looking candidate with a prohibited legacy diagram.\n\n"
         "```d2\n"
-        "concept: {\n"
-        "  shape: Not a real D2 shape\n"
-        "}\n"
+        "concept -> mastery\n"
         "```\n\n"
         f"{MARKER}\n"
     )
 
 
-def invalid_layout_candidate() -> str:
+def invalid_mermaid_candidate() -> str:
     return (
-        "# Lesson Study Guide\n\n## Overview\n\nA complete candidate with a tall diagram.\n\n"
-        "```d2\n"
-        "a: \"Stage A\"\nb: \"Stage B\"\nc: \"Stage C\"\nd: \"Stage D\"\n"
-        "e: \"Stage E\"\nf: \"Stage F\"\ng: \"Stage G\"\nh: \"Stage H\"\n"
-        "a -> b -> c -> d -> e -> f -> g -> h\n"
+        "# Lesson Study Guide\n\n## Overview\n\nA complete candidate with invalid Mermaid syntax.\n\n"
+        "```mermaid\n"
+        "flowchart LR\n"
+        "  A -->\n"
         "```\n\n"
         f"{MARKER}\n"
     )
 
 
-def too_wide_d2() -> str:
+def invalid_raw_mermaid() -> str:
     return (
-        "direction: right\n"
-        "a: \"Stage A\"\nb: \"Stage B\"\nc: \"Stage C\"\nd: \"Stage D\"\n"
-        "e: \"Stage E\"\nf: \"Stage F\"\ng: \"Stage G\"\nh: \"Stage H\"\n"
-        "a -> b -> c -> d -> e -> f -> g -> h\n"
+        "flowchart LR\n"
+        "  A -->\n"
     )
 
 
-def repaired_d2() -> str:
+def repaired_mermaid() -> str:
     return (
-        "concept: Repaired concept\n"
-        "practice: Guided practice\n"
-        "mastery: Demonstrated mastery\n"
-        "concept -> practice -> mastery\n"
+        "flowchart LR\n"
+        '  question[\"How is mastery built?\"] --> concept[\"Repaired concept\"]\n'
+        '  concept --> practice[\"Guided practice\"]\n'
+        '  practice --> mastery[\"Demonstrated mastery\"]\n'
+        '  mastery -. \"feedback\" .-> practice\n'
     )
 
 
 def targeted_repair(prompt: str) -> str:
     parts: list[str] = []
-    for kind, key in re.findall(r"<<<STUDY-GUIDE-(D2|SECTION):(.+?)>>>", prompt):
+    for kind, key in re.findall(r"<<<STUDY-GUIDE-(MERMAID|SECTION):(.+?)>>>", prompt):
         parts.append(f"<<<STUDY-GUIDE-{kind}:{key}>>>")
-        if kind == "D2":
+        if kind == "MERMAID":
             parts.extend(
                 [
-                    "direction: right",
-                    "concept: \"Core concept\"",
-                    "practice: \"Guided practice\"",
-                    "mastery: \"Demonstrated mastery\"",
-                    "concept -> practice -> mastery",
+                    "flowchart LR",
+                    '  question["What must be mastered?"] --> concept["Core concept"]',
+                    '  concept --> practice["Guided practice"]',
+                    '  practice --> mastery["Demonstrated mastery"]',
+                    '  mastery -. "review" .-> concept',
                 ]
             )
         else:
@@ -182,11 +187,37 @@ def targeted_repair(prompt: str) -> str:
     return "\n".join(parts) + "\n"
 
 
-def prompt_path(dispatcher_prompt: str, label: str) -> Path:
-    match = re.search(rf"(?m)^- {re.escape(label)}: (.+)$", dispatcher_prompt)
+def dispatch_manifest(dispatcher_prompt: str) -> list[dict[str, object]]:
+    required_instructions = (
+        "`agents.spawn_agent` exactly once",
+        "`fork_turns` to `\"none\"`",
+        "`agents.wait_agent`",
+        "`agents.list_agents`",
+    )
+    missing = [item for item in required_instructions if item not in dispatcher_prompt]
+    if missing or "spawn_agents_on_csv" in dispatcher_prompt:
+        raise RuntimeError(
+            "dispatcher prompt does not use the required V2 protocol: "
+            + ", ".join(missing or ["legacy CSV dispatcher"])
+        )
+    match = re.search(
+        r"BEGIN WAVE MANIFEST\n(.*?)\nEND WAVE MANIFEST",
+        dispatcher_prompt,
+        flags=re.DOTALL,
+    )
     if not match:
-        raise RuntimeError(f"dispatcher prompt lacks {label}")
-    return Path(match.group(1).strip())
+        raise RuntimeError("dispatcher prompt lacks a V2 wave manifest")
+    value = json.loads(match.group(1))
+    if not isinstance(value, list) or not all(isinstance(row, dict) for row in value):
+        raise RuntimeError("V2 wave manifest must be an array of task objects")
+    required = {
+        "task_name", "unit_id", "stage", "attempt", "input_path", "artifact_path",
+        "read_budget_bytes",
+    }
+    for row in value:
+        if set(row) != required:
+            raise RuntimeError(f"V2 wave manifest has unexpected fields: {sorted(row)}")
+    return value
 
 
 def main() -> int:
@@ -197,12 +228,7 @@ def main() -> int:
     total, _ = state_call("dispatcher")
     scenario = os.environ.get("FAKE_CODEX_SCENARIO", "success")
     emit({"type": "thread.started", "thread_id": f"fake-dispatcher-{total}"})
-    emit(
-        {
-            "type": "item.started",
-            "item": {"type": "mcp_tool_call", "name": "spawn_agents_on_csv"},
-        }
-    )
+    emit({"type": "item.started", "item": {"type": "function_call", "name": "agents.spawn_agent"}})
     delay = float(os.environ.get("FAKE_CODEX_DELAY", "0"))
     if delay:
         time.sleep(delay)
@@ -225,7 +251,7 @@ def main() -> int:
         emit({"type": "turn.failed", "error": "operation not permitted"})
         return 1
     if scenario == "capability_unavailable":
-        message = "spawn_agents_on_csv tool unavailable: unknown tool"
+        message = "agents.spawn_agent tool unavailable: unknown tool"
         print(message, file=sys.stderr, flush=True)
         emit({"type": "turn.failed", "error": message})
         return 1
@@ -260,12 +286,8 @@ def main() -> int:
         time.sleep(0.2)
         return 0
 
-    csv_path = prompt_path(dispatcher_prompt, "csv_path")
-    output_csv_path = prompt_path(dispatcher_prompt, "output_csv_path")
-    with csv_path.open("r", encoding="utf-8", newline="") as handle:
-        reader = csv.DictReader(handle)
-        fieldnames = list(reader.fieldnames or [])
-        input_rows = list(reader)
+    input_rows = dispatch_manifest(dispatcher_prompt)
+    v2_config = multi_agent_v2_config()
     state_path = Path(os.environ["FAKE_CODEX_STATE"])
     with state_path.open("r", encoding="utf-8") as handle:
         state = json.load(handle)
@@ -273,15 +295,20 @@ def main() -> int:
         {
             "size": len(input_rows),
             "unit_ids": [row["unit_id"] for row in input_rows],
-            "multi_agent_enabled": "features.multi_agent=true" in sys.argv,
-            "fanout_enabled": "features.enable_fanout=true" in sys.argv,
-            "v2_spawn_metadata_visible": (
-                "features.multi_agent_v2.hide_spawn_agent_metadata=false" in sys.argv
+            "task_names": [row["task_name"] for row in input_rows],
+            "v2_enabled": argument_value("--enable") == "multi_agent_v2",
+            "v2_thread_limit": (
+                f"max_concurrent_threads_per_session={len(input_rows) + 1}" in v2_config
             ),
-            "v2_agents_namespace": (
-                'features.multi_agent_v2.tool_namespace="agents"' in sys.argv
+            "v2_spawn_metadata_visible": "hide_spawn_agent_metadata=false" in v2_config,
+            "v2_agents_namespace": 'tool_namespace="agents"' in v2_config,
+            "v2_no_model_overrides": "expose_spawn_agent_model_overrides=false" in v2_config,
+            "v2_direct_tool_access": "non_code_mode_only=false" in v2_config,
+            "legacy_fanout_absent": "features.enable_fanout=true" not in sys.argv,
+            "legacy_agent_limits_absent": not any(
+                argument.startswith("agents.max_") or argument.startswith("agents.job_max_runtime")
+                for argument in sys.argv
             ),
-            "max_depth_two": "agents.max_depth=2" in sys.argv,
             "user_config_enabled": "--ignore-user-config" not in sys.argv,
             "legacy_sandbox_absent": "--sandbox" not in sys.argv,
             "nested_sandbox_disabled": 'default_permissions=":danger-full-access"' in sys.argv,
@@ -289,73 +316,54 @@ def main() -> int:
     )
     state_path.write_text(json.dumps(state), encoding="utf-8")
 
-    output_rows: list[dict[str, str]] = []
     quota_after = int(os.environ.get("FAKE_CODEX_QUOTA_AFTER", "0"))
+    dispatcher_error: str | None = None
     for row in input_rows:
-        stage = row["stage"]
+        stage = str(row["stage"])
         worker_number, stage_call_number = state_call(stage, row=row)
-        artifact = Path(row["artifact_path"])
-        input_prompt = Path(row["input_path"]).read_text(encoding="utf-8")
-        status = "completed"
-        last_error = ""
-        result: dict[str, str] = {
-            "unit_id": row["unit_id"],
-            "stage": stage,
-            "artifact": str(artifact),
-        }
+        artifact = Path(str(row["artifact_path"]))
+        input_prompt = Path(str(row["input_path"])).read_text(encoding="utf-8")
         if quota_after and worker_number > quota_after:
-            status = "failed"
-            last_error = "account usage limit reached"
+            dispatcher_error = "account usage limit reached"
         elif scenario == "worker_quota":
-            status = "failed"
-            last_error = "account usage limit reached"
+            dispatcher_error = "account usage limit reached"
         elif scenario == "transient" and stage == "generation" and stage_call_number == 1:
-            status = "failed"
-            last_error = "Service unavailable; Retry-After: 1"
-        elif scenario == "missing_report" and stage_call_number == 1:
-            status = "failed"
-            last_error = "worker exited without calling report_agent_job_result exactly once"
+            dispatcher_error = "Service unavailable; Retry-After: 1"
         elif scenario == "missing_candidate" and stage_call_number == 1:
             pass
+        elif scenario == "malformed_artifact" and stage_call_number == 1:
+            artifact.symlink_to(Path(str(row["input_path"])))
         else:
             if scenario == "truncated" and stage_call_number == 1:
                 rendered = "# Short\n\nThis is incomplete.\n"
             elif scenario == "invalid_d2" and stage_call_number == 1:
-                rendered = repaired_d2() if stage == "diagram_repair" else invalid_d2_candidate()
-            elif scenario == "layout_retry":
+                rendered = (
+                    repaired_mermaid()
+                    if stage == "diagram_repair"
+                    else prohibited_d2_candidate()
+                )
+            elif scenario == "mermaid_retry":
                 if stage == "generation":
-                    rendered = invalid_layout_candidate()
+                    rendered = invalid_mermaid_candidate()
                 elif stage == "diagram_repair" and stage_call_number == 1:
-                    rendered = too_wide_d2()
+                    rendered = invalid_raw_mermaid()
                 else:
-                    rendered = repaired_d2()
+                    rendered = repaired_mermaid()
             elif stage == "section_repair":
                 rendered = targeted_repair(input_prompt)
             elif stage in {"diagram_repair", "source_attribution_repair"}:
-                rendered = repaired_d2() if stage == "diagram_repair" else "Teaching is direct and precise.\n"
+                rendered = (
+                    repaired_mermaid()
+                    if stage == "diagram_repair"
+                    else "Teaching is direct and precise.\n"
+                )
             else:
                 rendered = candidate()
             artifact.write_text(rendered, encoding="utf-8")
-        if scenario == "malformed_result" and stage_call_number == 1:
-            result["unit_id"] = "wrong-unit"
-        output_rows.append(
-            {
-                **row,
-                "job_id": f"fake-job-{total}-{worker_number}",
-                "item_id": row["unit_id"],
-                "status": status,
-                "last_error": last_error,
-                "result_json": json.dumps(result),
-            }
-        )
-    output_csv_path.parent.mkdir(parents=True, exist_ok=True)
-    with output_csv_path.open("w", encoding="utf-8", newline="") as handle:
-        writer = csv.DictWriter(
-            handle,
-            fieldnames=[*fieldnames, "job_id", "item_id", "status", "last_error", "result_json"],
-        )
-        writer.writeheader()
-        writer.writerows(output_rows)
+    if dispatcher_error:
+        print(dispatcher_error, file=sys.stderr, flush=True)
+        emit({"type": "turn.failed", "error": dispatcher_error})
+        return 1
     complete()
     return 0
 

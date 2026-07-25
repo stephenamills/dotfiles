@@ -10,4 +10,4 @@ Teach every nontrivial equation. Before or immediately after each formula, expla
 
 Render a page-by-page or section-by-section review as a Markdown table whenever three or more entries repeat the same fields. Use columns such as `Page(s)`, `Main content`, `Meaning`, `How to use it`, and `Completion evidence`; add prose only for exceptional nuance.
 
-Use exactly one H1 and coherent H2–H4 nesting. Include useful fenced D2 diagrams, never Mermaid. At minimum, include a D2 concept-mastery, relationship, calculation-flow, or decision-flow diagram grounded in the supplied material.
+Use exactly one H1 and coherent H2–H4 nesting. Include useful fenced Mermaid diagrams, never D2. At minimum, include a source-grounded `mindmap` for concept mastery, `flowchart` for relationships, calculations, or decisions, or `stateDiagram-v2` for regimes and feedback. Every diagram must show a governing question plus relevant inputs, transformations or decisions, outputs, dependencies, cautions, and feedback where applicable.

@@ -1,6 +1,6 @@
 ---
 name: study-guide-batch
-description: Generate and manage Markdown study guides from local transcripts, PDFs, and Microsoft Excel workbooks through deterministic Codex-native CSV subagent waves. Use when Codex must generate all or missing guides, regenerate one lesson or asset companion, configure PDF companions or spreadsheet study-and-build manuals, resolve unit IDs, inspect status, stop or resume runs, promote candidates, or roll back installed guides. Invoke the bundled supervisor on the user's behalf; do not require the user to operate its CLI.
+description: Generate and manage Markdown study guides from local transcripts, PDFs, and Microsoft Excel workbooks through deterministic Codex Multi Agent V2 subagent waves. Use when Codex must generate all or missing guides, regenerate one lesson or asset companion, configure PDF companions or spreadsheet study-and-build manuals, resolve unit IDs, inspect status, stop or resume runs, promote candidates, or roll back installed guides. Invoke the bundled supervisor on the user's behalf; do not require the user to operate its CLI.
 ---
 
 # Study Guide Batch
@@ -11,13 +11,22 @@ Act as the TUI controller for the bundled supervisor. Translate natural-language
 
 - Resolve `scripts/study_guide_batch.py` relative to this file.
 - Use the supervisor for configuration, planning, generation, installation, recovery, and rollback. Never edit its SQLite state.
-- Let the supervisor launch fresh depth-0 Codex dispatchers with `features.multi_agent=true` and the experimental `features.enable_fanout=true` gate that process generation and repair work through `spawn_agents_on_csv`. For GPT-5.6 Sol V2 sessions, expose spawn metadata and select the `agents` tool namespace per invocation. The default worker concurrency is four; each CSV worker reports exactly one structured result. Use depth two and prohibit worker-spawned agents in the row instruction.
-- Let nested Codex processes load user configuration and do not pass the legacy `--sandbox` mode. When the supervisor itself runs inside a Codex sandbox, it gives the child session the scoped `:danger-full-access` permission override so macOS does not attempt a second Seatbelt sandbox; the parent TUI remains the enforcement boundary. Never set this override globally.
-- Do not bypass, replace, or manually imitate the CSV dispatcher. If the experimental capability is unavailable, report the supervisor's explicit failure and preserve resumable state.
+- Let the supervisor launch fresh depth-0 Codex dispatchers with `--enable multi_agent_v2`. It processes generation and repair work through one leaf `spawn_agent` call per isolated task, then waits for every child to reach a terminal state. Select the `agents` tool namespace per invocation and expose spawn metadata. Course configuration controls the leaf-worker concurrency (six by default); the V2 session limit is one higher because it includes the dispatcher. Leaf workers never spawn agents.
+- Let nested Codex processes load user configuration and do not pass the legacy `--sandbox` mode. On Codex 0.144, if the user configuration still declares legacy `agents.max_threads`, the supervisor uses `--ignore-user-config` for that isolated dispatcher because V2 otherwise refuses to start; authentication still uses `CODEX_HOME` and all required V2 settings are passed explicitly. When the supervisor itself runs inside a Codex sandbox, it gives the nested child session a `:danger-full-access` override so macOS does not apply a second Seatbelt sandbox; the parent TUI remains the enforcement boundary. This affects nested Codex only, not the direct opt-in `mmdc` renderer. Never set this override globally.
+- Do not bypass, replace, or manually imitate the V2 dispatcher. If the V2 capability is unavailable, report the supervisor's explicit failure and preserve resumable state.
 - Run long foreground commands in a persistent terminal session and poll until completion. Relay concise progress.
 - Do not add calibration or independent auditing unless explicitly requested.
 - Infer `--root` from an explicit path or unambiguous course folder.
 - Resolve user-facing lesson numbers, titles, and filenames yourself; never ask the user to supply a unit ID.
+
+### Lifecycle continuity (mandatory)
+
+- When the user asks to finish, resume, continue, or retry an existing batch, inspect `status` and resume that exact `RUN_ID` first. Do not create a replacement plan, approval, or run merely to change timeout, model, concurrency, or selection.
+- Treat a stopped, failed, or exhausted lifecycle as the source of truth for what remains. Preserve its immutable plan, approval, attempts, and candidates; use `resume`, `promote --approved-only`, `repair-diagrams`, `repair-attribution`, or `repair-sections` as appropriate. A failed ownerless run may still use `promote --approved-only`; only units already in `approved` state are installed.
+- Never launch a new full-plan run when the request names a subset or when completed canonical outputs already exist. If a new lifecycle is genuinely required, first explain why the original cannot be resumed and construct a plan whose `unit_overrides.exclude` removes every completed or out-of-scope unit before approval.
+- Never silently regenerate completed guides from scratch. A fresh plan is allowed only after explicit user authorization or when no resumable lifecycle exists; report the exact reason and the affected unit scope before starting it.
+- If a timeout extension is needed, do not substitute a new lifecycle without user confirmation. Prefer resuming the existing run; if the supervisor cannot alter its immutable timeout, report that constraint and ask whether to authorize a new approval.
+- Distinguish the immutable per-model-call timeout from total wave/run wall-clock time: six workers, retries, Mermaid/attribution repairs, and successive waves can make a run last much longer than one call's timeout. Report both values; never describe wave elapsed time as a single worker exceeding its call timeout.
 
 Define the command prefix conceptually as:
 
@@ -43,14 +52,14 @@ Register multiple workbook sources in one spreadsheet unit only when the user or
 
 - **Generate everything configured:** `generate-all --root ROOT`
 - **Generate only absent canonical outputs:** `generate-all --root ROOT --missing-only`
-- **Generate selected units together:** resolve with `list-units`, then use `generate-all --root ROOT --unit UNIT_ID` and repeat `--unit UNIT_ID` for every requested unit; the selected set shares one monitored CSV-wave run
+- **Generate selected units together:** resolve with `list-units`, then use `generate-all --root ROOT --unit UNIT_ID` and repeat `--unit UNIT_ID` for every requested unit; the selected set shares one monitored V2-wave run
 - **Discover unconfigured binary assets:** `list-assets --root ROOT`
 - **Register or replace an asset unit:** `configure-asset` with explicit mapping arguments
 - **Inspect progress:** `status --root ROOT [RUN_ID]`
 - **Stop:** `stop --root ROOT RUN_ID`
 - **Resume:** `resume --root ROOT RUN_ID`
 - **Repair a failed diagram without regenerating the guide:** `repair-diagrams SOURCE_RUN_ID --root ROOT [--unit UNIT_ID]`
-- **Repair prohibited attribution lines in a preserved draft without regenerating the guide:** `repair-attribution SOURCE_RUN_ID --root ROOT [--unit UNIT_ID]`; all flagged lines are rewritten in one structured CSV job and applied atomically while unselected bytes remain unchanged
+- **Repair prohibited attribution lines in a preserved draft without regenerating the guide:** `repair-attribution SOURCE_RUN_ID --root ROOT [--unit UNIT_ID]`; all flagged lines are rewritten in one structured V2 subagent task and applied atomically while unselected bytes remain unchanged
 - **Regenerate selected installed sections or diagrams only:** `repair-sections --root ROOT --unit UNIT_ID [--section HEADING] [--diagram INDEX]`
 - **Recover valid sections from a failed targeted run and repair only remaining diagrams:** add `--recover-from-run RUN_ID` with the selected `--section` headings
 - **Keep candidates without installing:** add `--candidates-only`
@@ -60,17 +69,23 @@ Register multiple workbook sources in one spreadsheet unit only when the user or
 - **Permanently purge one invalid, unpromoted lifecycle:** `purge-run RUN_ID --root ROOT`; use only after the user explicitly identifies the lifecycle as unrecoverable
 
 Use `plan`, `approve`, `run`, or `start` only for advanced lifecycle or budget control.
-Use the default concurrency of four unless the user requests an advanced override. Forward an explicit value with `--max-concurrency N`; supported values are one through six.
+Use `max_concurrency` in `study-guide-batch.json` as the course default. Forward `--max-concurrency N` only as a one-run override; supported values are one through 32.
 
-## D2 diagram contract
+## Mermaid diagram contract
 
-Every generated guide must contain at least one content-supporting fenced `d2` diagram. Mermaid is forbidden. Choose diagrams that materially clarify mastery relationships, causal structure, sequence, dependencies, decisions, build order, or debugging.
+Every generated guide must contain at least one content-supporting fenced `mermaid` diagram. D2 fences are unconditionally invalid. Each diagram must be a compact visual explanation, not a decorative restatement: show the governing question, inputs, transformations or decisions, outputs, dependencies, cautions, and feedback where applicable.
 
-Keep diagrams readable at normal zoom. Prefer balanced landscape layouts, group long flows into labeled phases, and avoid more than five or six nodes in one uninterrupted lane. Split an overview from detailed flows when one compact diagram cannot preserve legibility. Never rely on scaling a multi-page diagram down until its text becomes unreadable. The supervisor validates the rendered D2 footprint and treats an oversized or excessively wide diagram as a diagram-only repair failure.
+Choose the diagram type that matches the relationship:
 
-If a completed draft fails only diagram validation, preserve the draft and regenerate only the failing diagram. Patch only the targeted fenced block (or convert the targeted Mermaid block); never rerun full guide generation for a diagram-only failure. Use `repair-diagrams` to recover an otherwise complete draft from a prior failed run.
+- Use `mindmap` for course architecture and conceptual hierarchy.
+- Use `flowchart` for learning paths, calculations, workbook dependencies, build order, and decisions.
+- Use `stateDiagram-v2` for regimes, monitoring, and feedback cycles.
 
-For spreadsheet manuals, require at least one D2 dependency map connecting relevant inputs, columns or ranges, formula families, intermediate calculations, checks, summaries, and decision outputs. Add cross-sheet, build-order, or debugging diagrams when useful. The supervisor validates D2 presence and syntax before approval.
+Keep labels concise, use branching and multiple relationship layers, and split distinct mechanisms into separate diagrams instead of forcing them into one oversized lane. The supervisor validates syntax through the installed Mermaid 11.14 parser. `validate_mermaid_render` is disabled by default; if explicitly enabled, it also renders through `mmdc` at the 1728×1117 CSS-pixel viewport of a 16-inch MacBook and requires responsive SVG `viewBox` output. Mermaid produces vector SVG, so Retina pixel density does not require a separate high-resolution render.
+
+If a completed draft fails only diagram validation, preserve the draft and regenerate only the failing Mermaid block. Patch only that fenced block; never rerun full guide generation for a diagram-only failure. Use `repair-diagrams` to recover an otherwise complete draft from a prior failed run. `repair-sections --diagram` uses one-based Mermaid-fence indexes.
+
+For spreadsheet manuals, require at least one Mermaid flowchart connecting relevant inputs, columns or ranges, formula families, intermediate calculations, checks, summaries, and decision outputs. Add cross-sheet, build-order, or debugging flowcharts when useful.
 
 ## Exposition and equation pedagogy
 
@@ -87,13 +102,21 @@ When a page-by-page or section-by-section review repeats the same labels for thr
 
 For calculation questions, group candidates by normalized solution family before drafting. Candidates share a family when they solve for the same unknown with the same formula and operator sequence after constants, labels, and signs are normalized. Use one standalone question per family by default and never more than two. A second is justified only by a genuinely different reasoning branch, binding constraint, common sign or unit trap, or material decision interpretation. A changed number, direction, or result sign alone is not distinct. Preserve three or more deliberate contrast scenarios as subparts of one question with one shared formula and a compact table. Preserve distinct dependent steps in a chained calculation, but present the chain as one multi-part case study rather than unrelated questions.
 
+## Depth interpretation
+
+Where the prompts license synthesis, consolidation, or conciseness, those clauses eliminate only genuine verbatim duplication — never depth, coverage, or granularity. When weighing whether to expand or condense a source item, expand. Dense prose within a section is the preferred style; do not split material into additional subsections merely to manufacture structure.
+
+- Create one question per distinct learning objective from every major section. Apply the family-consolidation rules above only to genuinely identical solution families, never to reduce coverage.
+- After drafting, verify every item in the pre-drafting coverage inventory received full expansion — a mention is not coverage — and expand any gaps before completing the guide.
+- Brevity is not a virtue in these deliverables. Treat any impulse to summarize, tighten, or keep a guide focused as a violation unless the material is literally duplicated.
+
 ## Model settings
 
 Preserve the defaults (`gpt-5.6-sol`, `xhigh` reasoning, high verbosity) unless the user specifies overrides. Forward explicit choices with `--model`, `--reasoning-effort`, and `--verbosity`.
 
 The default per-model-call timeout is 20 minutes. Calibration may raise it as high as 30 minutes; advanced lifecycle commands may explicitly override it within the supported 10–30 minute range.
 
-Global Codex configuration should explicitly set `features.multi_agent = true`, `features.enable_fanout = true`, `agents.max_threads = 6`, `agents.max_depth = 2`, and `agents.job_max_runtime_seconds = 1800`. Select the named `nested-codex` permission profile with `default_permissions`; do not also set `sandbox_mode` or `[sandbox_workspace_write]`. The supervisor also applies the fan-out and Sol V2 routing overrides per dispatcher, and applies any nested full-access exception only to its child invocation.
+Global Codex configuration may set `features.multi_agent_v2.max_concurrent_threads_per_session = 7` and `features.multi_agent_v2.tool_namespace = "agents"`. The supervisor enables V2 per dispatcher with `--enable multi_agent_v2`, which is compatible with the installed 0.144 CLI family. If that version inherits `agents.max_threads`, it isolates only the dispatcher from user configuration because V2 otherwise rejects startup. The session limit includes the dispatcher, so use worker concurrency plus one. Select the named `nested-codex` permission profile with `default_permissions`; do not also set `sandbox_mode` or `[sandbox_workspace_write]`. The supervisor applies V2 and routing overrides per dispatcher, and applies any nested full-access exception only to its child invocation.
 
 ## Completion reporting
 
@@ -102,8 +125,9 @@ After generation:
 1. Verify successful command exit and read final status.
 2. Report the run ID and generated/skipped/failed counts.
 3. Report every installed canonical path.
-4. State when candidates-only mode suppressed installation.
-5. On failure, report the exact unit and error while preserving resumable state.
+4. Report informational depth metrics for every generated guide — word count, rendered line count, H3 subsection count, display-math block count (lines beginning `$$`), and question count — for cross-run comparison. These are measurements only, never targets, floors, or pass/fail gates, and must not be fed back into generation.
+5. State when candidates-only mode suppressed installation.
+6. On failure, report the exact unit and error while preserving resumable state.
 
 Existing canonical files are archived for rollback during installation.
 

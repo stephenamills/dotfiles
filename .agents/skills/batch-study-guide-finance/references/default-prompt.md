@@ -8,6 +8,7 @@ Requirements:
 - Synthesize repeated material instead of duplicating it.
 - Explain important concepts in plain language while retaining technical precision.
 - Use descriptive Markdown headings, short paragraphs, and lists only where they improve learning.
+- Number every H2 major section sequentially (`## 1. ...`, `## 2. ...`). Keep H3 headings descriptive and unnumbered except when they enumerate questions, exercises, problems, cases, applications, drills, or checklist items intended for active completion. Avoid decorative nested numbering.
 - Include at least one source-grounded fenced Mermaid diagram that materially clarifies mastery relationships, causal structure, sequence, workflow, or decisions. Never use D2.
 - Make every diagram a compact visual explanation: show the governing question, inputs, transformations or decisions, outputs, dependencies, cautions, and feedback where applicable. Use `mindmap` for conceptual hierarchy, `flowchart` for paths, calculations, dependencies, build order, and decisions, and `stateDiagram-v2` for regimes, monitoring, and feedback. Keep labels concise, branch relationships, and split distinct mechanisms instead of forcing them into one oversized lane.
 - Include an overview, the main concepts and procedures, common errors or cautions found in the source, a complete recap, and review questions with answers.

@@ -122,6 +122,68 @@ def candidate() -> str:
     )
 
 
+def course_map_candidate(prompt: str) -> str:
+    links = re.findall(r"(?m)^- ([^:\n]+): (.+)$", prompt)
+    ordered_links = "\n".join(
+        f"{index}. [{Path(source).stem}](<{destination}>) — integrated chapter {index}."
+        for index, (source, destination) in enumerate(links, 1)
+    )
+    headings = (
+        "Section Thesis and Learning Outcomes",
+        "Ordered Chapter Path",
+        "Architecture and Dependencies",
+        "Chapter-by-Chapter Learning and Mastery",
+        "Integrated Conceptual Derivation",
+        "Quantitative Framework and Worked Examples",
+        "Operating Workflow and Decision Gates",
+        "Cross-Chapter Synthesis",
+        "Misconceptions and Failure Modes",
+        "Cumulative Application",
+        "Mastery Checklist",
+        "Retrieval Questions and Answers",
+        "Spaced Review Plan",
+    )
+    sections: list[str] = ["# Topic Course Map", ""]
+    for heading in headings:
+        sections.extend([f"## {heading}", ""])
+        if heading == "Ordered Chapter Path":
+            sections.extend([ordered_links, ""])
+        elif heading == "Architecture and Dependencies":
+            sections.extend(
+                [
+                    "```mermaid",
+                    "flowchart LR",
+                    '  A["Foundation"] --> B["Integration"]',
+                    '  B --> C["Application"]',
+                    "```",
+                    "",
+                ]
+            )
+        elif heading == "Operating Workflow and Decision Gates":
+            sections.extend(
+                [
+                    "```mermaid",
+                    "flowchart TD",
+                    '  I["Inputs"] --> D{"Checks pass?"}',
+                    '  D -->|Yes| O["Decision"]',
+                    '  D -->|No| R["Review"]',
+                    '  R --> I',
+                    "```",
+                    "",
+                ]
+            )
+        else:
+            sections.extend(
+                [
+                    "The topic is taught with explicit dependencies, practical application, "
+                    "observable mastery evidence, and corrective feedback.",
+                    "",
+                ]
+            )
+    sections.extend([MARKER, ""])
+    return "\n".join(sections)
+
+
 def prohibited_d2_candidate() -> str:
     return (
         "# Lesson Study Guide\n\n"
@@ -358,7 +420,11 @@ def main() -> int:
                     else "Teaching is direct and precise.\n"
                 )
             else:
-                rendered = candidate()
+                rendered = (
+                    course_map_candidate(input_prompt)
+                    if "UNIT_KIND: course_map" in input_prompt
+                    else candidate()
+                )
             artifact.write_text(rendered, encoding="utf-8")
     if dispatcher_error:
         print(dispatcher_error, file=sys.stderr, flush=True)

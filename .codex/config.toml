@@ -1,9 +1,10 @@
 # ----- Core -----
-model           = "gpt-5.6-sol"
-approval_policy = "never"
-file_opener     = "vscode"
+model              = "gpt-5.6-sol"
+approval_policy    = "on-request"
+approvals_reviewer = "auto_review"
+file_opener        = "vscode"
 
-model_reasoning_effort     = "xhigh"
+model_reasoning_effort     = "low"
 model_reasoning_summary    = "auto"
 plan_mode_reasoning_effort = "xhigh"
 
@@ -43,8 +44,6 @@ extends = ":workspace"
 # Dotfiles repository and its protected .agents directory
 "/Users/steph/projects/zsh/dotfiles"         = "write"
 "/Users/steph/projects/zsh/dotfiles/.agents" = "write"
-
-
 
 # Other Codex files should be read-only
 "~/.codex/auth.json"         = "read"
@@ -97,6 +96,9 @@ trust_level = "trusted"
 trust_level = "trusted"
 
 [projects."/private/var/folders"]
+trust_level = "trusted"
+
+[projects."/Users/steph/Downloads/4 Professional Forex Trading Masterclass/.study-guide-batch/dispatch/run-20260725-191412-a3f0c3e8/wave-001"]
 trust_level = "trusted"
 
 # ----- Plugins -----

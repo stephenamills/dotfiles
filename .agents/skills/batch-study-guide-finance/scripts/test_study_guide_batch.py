@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import copy
 import importlib.util
 import json
 import os
@@ -71,9 +72,15 @@ class BatchTestCase(unittest.TestCase):
                 "require_mermaid_diagram": True,
                 "validate_mermaid_syntax": False,
                 "validate_mermaid_render": False,
+                "enforce_heading_numbering": False,
             },
             "output_root": "outputs",
             "existing_roots": ["outputs"],
+            "course_maps": {
+                "enabled": False,
+                "output_folder": "0 Course Maps",
+                "whole_course": {"enabled": False},
+            },
             "ecc_mirror": False,
         }
         config.update(overrides)
@@ -164,6 +171,98 @@ class BatchTestCase(unittest.TestCase):
 
 
 class PlanningTests(BatchTestCase):
+    def test_heading_numbering_keeps_h2_navigation_and_limits_numbered_h3_to_active_work(self) -> None:
+        validators = copy.deepcopy(batch.DEFAULT_CONFIG["validators"])
+        validators.update(
+            {
+                "require_completion_marker": False,
+                "require_mermaid_diagram": False,
+                "validate_mermaid_syntax": False,
+                "validate_mermaid_render": False,
+                "forbid_source_attribution": False,
+                "enforce_heading_numbering": True,
+            }
+        )
+        valid_guide = (
+            "# Guide\n\n"
+            "## 1. Market Architecture\n\n"
+            "### Regime mechanics\n\nTeaching.\n\n"
+            "## 2. Practice Exercises\n\n"
+            "### 1. Diagnose the quote\n\nWork.\n"
+            "### 2. Calculate the return\n\nWork.\n"
+        ).encode()
+        self.assertEqual(
+            batch.validate_candidate_bytes(valid_guide, validators)[0], True
+        )
+
+        unnumbered_h2 = valid_guide.replace(b"## 1. Market Architecture", b"## Market Architecture")
+        valid, category, _ = batch.validate_candidate_bytes(unnumbered_h2, validators)
+        self.assertFalse(valid)
+        self.assertEqual(category, "heading_numbering")
+
+        decorative_h3 = valid_guide.replace(
+            b"### Regime mechanics", b"### 1. Regime mechanics"
+        )
+        valid, category, _ = batch.validate_candidate_bytes(decorative_h3, validators)
+        self.assertFalse(valid)
+        self.assertEqual(category, "heading_numbering")
+
+    def test_course_maps_are_first_class_default_topic_units(self) -> None:
+        first = self.add_lesson(1, "Foundation")[0]
+        second = self.add_lesson(2, "Macro")[0]
+        self.write_config(
+            course_maps={
+                "enabled": True,
+                "output_folder": "0 Course Maps",
+                "whole_course": {"enabled": True},
+            },
+            grouping_overrides=[
+                {
+                    "sources": [first.relative_to(self.root).as_posix()],
+                    "title": "01. Foundation",
+                    "output": "outputs/1 Foundation/01. Foundation - Study Chapter.md",
+                },
+                {
+                    "sources": [second.relative_to(self.root).as_posix()],
+                    "title": "02. Macro",
+                    "output": "outputs/2 Macro/02. Macro - Study Chapter.md",
+                },
+            ],
+        )
+        plan = batch.create_plan(self.root)
+        maps = [unit for unit in plan["units"] if unit["kind"] == "course_map"]
+        self.assertEqual(len(maps), 3)
+        self.assertEqual(
+            [unit["target"] for unit in maps[:2]],
+            [
+                "outputs/0 Course Maps/1 Foundation — Course Map.md",
+                "outputs/0 Course Maps/2 Macro — Course Map.md",
+            ],
+        )
+        self.assertEqual(maps[0]["dependencies"], ["01-foundation"])
+        self.assertEqual(maps[0]["source_types"], {
+            "outputs/1 Foundation/01. Foundation - Study Chapter.md": "markdown"
+        })
+        self.assertIn("default-course-map-prompt.md", maps[0]["prompt_source"])
+        self.assertEqual(
+            maps[2]["dependencies"],
+            ["course-map-1-foundation", "course-map-2-macro"],
+        )
+        self.assertEqual(maps[2]["sources"], [maps[0]["target"], maps[1]["target"]])
+        self.seed_calibration(plan)
+        store = batch.Store(self.root)
+        approval = batch.approve_plan(store, plan, self.approval_args())
+        run_id = batch.create_approved_run(
+            store, approval, selected_unit_ids=["01-foundation"]
+        )
+        selected = store.rows(
+            "SELECT unit_id FROM units WHERE run_id = ? ORDER BY ordinal", (run_id,)
+        )
+        self.assertEqual(
+            [row["unit_id"] for row in selected],
+            ["01-foundation", "course-map-1-foundation", "course-map-whole-course"],
+        )
+
     def test_list_units_prints_exact_generate_all_ids(self) -> None:
         self.add_lesson(1, "Alpha")
         self.add_lesson(2, "Beta", parts=2)
@@ -563,7 +662,7 @@ class PlanningTests(BatchTestCase):
         original = (
             "# Guide\n\nKeep this prose byte-for-byte — including Unicode.\n\n"
             "```mermaid\nflowchart LR\n  concept -->\n```\n\n"
-            "## Review\n\nKeep this too.\n\n"
+            "## 1. Review\n\nKeep this too.\n\n"
             f"{batch.COMPLETION_MARKER}\n"
         ).encode()
         validators = {
@@ -935,6 +1034,93 @@ class TurnkeyTests(BatchTestCase):
 
 
 class ExecutionTests(BatchTestCase):
+    def test_whole_course_map_runs_after_topic_maps_and_uses_only_their_candidates(self) -> None:
+        first = self.add_lesson(1, "Foundation")[0]
+        second = self.add_lesson(2, "Macro")[0]
+        self.write_config(
+            course_maps={
+                "enabled": True,
+                "output_folder": "0 Course Maps",
+                "whole_course": {"enabled": True},
+            },
+            grouping_overrides=[
+                {
+                    "sources": [first.relative_to(self.root).as_posix()],
+                    "title": "01. Foundation",
+                    "output": "outputs/1 Foundation/01. Foundation - Study Chapter.md",
+                },
+                {
+                    "sources": [second.relative_to(self.root).as_posix()],
+                    "title": "02. Macro",
+                    "output": "outputs/2 Macro/02. Macro - Study Chapter.md",
+                },
+            ],
+        )
+        store, plan, run_id = self.execute(max_invocations=20, max_tokens=200000)
+        self.assertEqual(batch.export_status(store, run_id)["status"], "completed")
+        whole = next(unit for unit in plan["units"] if unit["id"] == "course-map-whole-course")
+        topic_maps = [
+            unit for unit in plan["units"]
+            if unit["kind"] == "course_map" and unit["id"] != whole["id"]
+        ]
+        self.assertEqual(whole["sources"], [unit["target"] for unit in topic_maps])
+        self.assertEqual(whole["dependencies"], [unit["id"] for unit in topic_maps])
+        worker_units = [call["unit_id"] for call in self.fake_state()["worker_calls"]]
+        self.assertEqual(worker_units[-1], whole["id"])
+        self.assertTrue(all(worker_units.index(unit["id"]) < len(worker_units) - 1 for unit in topic_maps))
+        whole_row = store.row(
+            "SELECT * FROM units WHERE run_id = ? AND unit_id = ?",
+            (run_id, whole["id"]),
+        )
+        whole_text = Path(whole_row["candidate_path"]).read_text(encoding="utf-8")
+        valid, category, detail = batch.validate_unit_candidate_bytes(
+            whole_text.encode(), plan["config"]["validators"], whole
+        )
+        self.assertTrue(valid, (category, detail))
+
+    def test_course_map_runs_after_approved_guides_and_promotes_atomically(self) -> None:
+        first = self.add_lesson(1, "Foundation")[0]
+        second = self.add_lesson(2, "Regimes")[0]
+        self.write_config(
+            course_maps={
+                "enabled": True,
+                "output_folder": "0 Course Maps",
+                "whole_course": {"enabled": False},
+            },
+            grouping_overrides=[
+                {
+                    "sources": [first.relative_to(self.root).as_posix()],
+                    "title": "01. Foundation",
+                    "output": "outputs/1 Foundation/01. Foundation - Study Chapter.md",
+                },
+                {
+                    "sources": [second.relative_to(self.root).as_posix()],
+                    "title": "02. Regimes",
+                    "output": "outputs/1 Foundation/02. Regimes - Study Chapter.md",
+                },
+            ],
+        )
+        store, plan, run_id = self.execute(max_invocations=12, max_tokens=100000)
+        self.assertEqual(batch.export_status(store, run_id)["status"], "completed")
+        planned_map = next(unit for unit in plan["units"] if unit["kind"] == "course_map")
+        rows = store.rows("SELECT * FROM units WHERE run_id = ? ORDER BY ordinal", (run_id,))
+        self.assertEqual([row["state"] for row in rows], ["approved", "approved", "approved"])
+        worker_units = [call["unit_id"] for call in self.fake_state()["worker_calls"]]
+        self.assertEqual(worker_units[-1], planned_map["id"])
+        map_row = next(row for row in rows if row["unit_id"] == planned_map["id"])
+        map_text = Path(map_row["candidate_path"]).read_text(encoding="utf-8")
+        valid, category, detail = batch.validate_unit_candidate_bytes(
+            map_text.encode(), plan["config"]["validators"], planned_map
+        )
+        self.assertTrue(valid, (category, detail))
+        promotion_id = batch.promote_run(store, run_id)
+        promoted = store.rows(
+            "SELECT target_path FROM promotion_items WHERE promotion_id = ? ORDER BY ordinal",
+            (promotion_id,),
+        )
+        self.assertEqual(len(promoted), 3)
+        self.assertTrue((self.root / planned_map["target"]).is_file())
+
     def test_real_path_calibration_approval_success_isolation_promotion_and_rollback(self) -> None:
         self.add_lesson(1, "Alpha")
         outputs = self.root / "outputs"
@@ -979,7 +1165,11 @@ class ExecutionTests(BatchTestCase):
             self.assertIn('default_permissions=":danger-full-access"', argv)
             self.assertTrue(any(arg.startswith("sqlite_home=") for arg in argv), argv)
             self.assertTrue(
-                any(arg.startswith("skills.config=") and "study-guide-batch" in arg for arg in argv),
+                any(
+                    arg.startswith("skills.config=")
+                    and "batch-study-guide-finance" in arg
+                    for arg in argv
+                ),
                 argv,
             )
             self.assertEqual(call["inherited_markers"], [])
@@ -1043,6 +1233,7 @@ class ExecutionTests(BatchTestCase):
                 "require_mermaid_diagram": True,
                 "validate_mermaid_syntax": True,
                 "validate_mermaid_render": False,
+                "enforce_heading_numbering": False,
             }
         )
         self.add_lesson(1, "Alpha")

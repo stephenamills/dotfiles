@@ -1,9 +1,9 @@
 ---
-name: study-guide-batch
-description: Generate and manage Markdown study guides from local transcripts, PDFs, and Microsoft Excel workbooks through deterministic Codex Multi Agent V2 subagent waves. Use when Codex must generate all or missing guides, regenerate one lesson or asset companion, configure PDF companions or spreadsheet study-and-build manuals, resolve unit IDs, inspect status, stop or resume runs, promote candidates, or roll back installed guides. Invoke the bundled supervisor on the user's behalf; do not require the user to operate its CLI.
+name: batch-study-guide-finance
+description: Generate and manage finance-focused Markdown study guides, quantitative asset companions, workbook manuals, in-depth topic course maps, and whole-course maps from local transcripts, PDFs, and Microsoft Excel workbooks through deterministic Codex Multi Agent V2 subagent waves. Use for finance, trading, economics, accounting, investment, risk, valuation, markets, and related quantitative courses when Codex must generate all or missing guides, synthesize maps, regenerate one lesson or asset companion, configure PDF or spreadsheet units, resolve unit IDs, inspect status, stop or resume runs, promote candidates, or roll back installed guides. Invoke the bundled supervisor on the user's behalf; do not require the user to operate its CLI.
 ---
 
-# Study Guide Batch
+# Batch Study Guide — Finance
 
 Act as the TUI controller for the bundled supervisor. Translate natural-language requests into supervisor operations, execute them, monitor long runs, and report exact canonical paths. Keep the Python CLI internal unless the user requests commands.
 
@@ -71,6 +71,8 @@ Register multiple workbook sources in one spreadsheet unit only when the user or
 Use `plan`, `approve`, `run`, or `start` only for advanced lifecycle or budget control.
 Use `max_concurrency` in `study-guide-batch.json` as the course default. Forward `--max-concurrency N` only as a one-run override; supported values are one through 32.
 
+Course maps are first-class units and are enabled by default. The supervisor groups planned guide targets by their parent topic folder under `output_root`, generates the guide units first, generates one in-depth map per topic from the approved guide candidates, and finally generates one in-depth whole-course map using only the approved topic-map candidates. Selecting a guide also selects its topic map and the whole-course map. Use `course_maps.enabled: false` only when the user explicitly opts out of all maps; use `course_maps.whole_course.enabled: false` only when the user explicitly opts out of the final synthesis. Read [references/configuration.md](references/configuration.md) for topic discovery, output naming, prompt overrides, and dependency behavior.
+
 ## Mermaid diagram contract
 
 Every generated guide must contain at least one content-supporting fenced `mermaid` diagram. D2 fences are unconditionally invalid. Each diagram must be a compact visual explanation, not a decorative restatement: show the governing question, inputs, transformations or decisions, outputs, dependencies, cautions, and feedback where applicable.
@@ -79,7 +81,6 @@ Choose the diagram type that matches the relationship:
 
 - Use `mindmap` for course architecture and conceptual hierarchy.
 - Use `flowchart` for learning paths, calculations, workbook dependencies, build order, and decisions.
-- Use `stateDiagram-v2` for regimes, monitoring, and feedback cycles.
 
 Keep labels concise, use branching and multiple relationship layers, and split distinct mechanisms into separate diagrams instead of forcing them into one oversized lane. The supervisor validates syntax through the installed Mermaid 11.14 parser. `validate_mermaid_render` is disabled by default; if explicitly enabled, it also renders through `mmdc` at the 1728×1117 CSS-pixel viewport of a 16-inch MacBook and requires responsive SVG `viewBox` output. Mermaid produces vector SVG, so Retina pixel density does not require a separate high-resolution render.
 
@@ -100,6 +101,12 @@ For every nontrivial equation, teach the calculation rather than merely displayi
 
 When a page-by-page or section-by-section review repeats the same labels for three or more entries, use a Markdown table with one row per page or page range. Keep prose outside the table only for nuance that cannot be expressed clearly in columns.
 
+### Heading hierarchy
+
+Number every H2 major section sequentially with Arabic numerals, such as `## 1. Market Structure` and `## 2. Quantitative Framework`. H2 numbering exposes the document’s major conceptual route and gives the learner stable navigation landmarks.
+
+Keep H3 headings descriptive and unnumbered in ordinary exposition. Avoid nested numbering merely because a heading is subordinate; repeated numeric prefixes create visual noise and make long technical guides harder to scan. Number H3 headings only when the headings themselves enumerate work the learner should complete or check in order, including questions, exercises, calculation problems, drills, cases, applications, assessments, or checklist steps. Use the same principle for equivalent active-learning sequences even when their label differs.
+
 For calculation questions, group candidates by normalized solution family before drafting. Candidates share a family when they solve for the same unknown with the same formula and operator sequence after constants, labels, and signs are normalized. Use one standalone question per family by default and never more than two. A second is justified only by a genuinely different reasoning branch, binding constraint, common sign or unit trap, or material decision interpretation. A changed number, direction, or result sign alone is not distinct. Preserve three or more deliberate contrast scenarios as subparts of one question with one shared formula and a compact table. Preserve distinct dependent steps in a chained calculation, but present the chain as one multi-part case study rather than unrelated questions.
 
 ## Depth interpretation
@@ -109,6 +116,28 @@ Where the prompts license synthesis, consolidation, or conciseness, those clause
 - Create one question per distinct learning objective from every major section. Apply the family-consolidation rules above only to genuinely identical solution families, never to reduce coverage.
 - After drafting, verify every item in the pre-drafting coverage inventory received full expansion — a mention is not coverage — and expand any gaps before completing the guide.
 - Brevity is not a virtue in these deliverables. Treat any impulse to summarize, tighten, or keep a guide focused as a violation unless the material is literally duplicated.
+
+## In-depth course map contract
+
+A topic course map is a teaching synthesis derived from the complete set of study chapters for that topic. The final whole-course map is a higher-order teaching synthesis derived only from the complete set of topic course maps, never directly from transcripts, PDFs, workbooks, or study chapters. Neither kind is a short directory, link list, reading checklist, or collection of one-paragraph summaries. Let the supervisor generate topic maps from approved study-guide candidates in the second dependency phase, then generate the whole-course map from approved topic-map candidates in the third phase of the same run. Installed dependencies are used when a map is selected independently. Generate independent topic maps concurrently when model and concurrency settings allow.
+
+Use established in-depth course maps in adjacent courses as structural references when available. Preserve the subject matter and terminology of the mapped chapters; do not copy unrelated content from an exemplar. Each topic map must fully develop:
+
+1. **Section thesis and learning outcomes:** state the unifying problem, the intellectual progression, and observable end-state capabilities.
+2. **Ordered chapter path:** link every corresponding study chapter with correct relative Markdown links and explain why each chapter precedes or prepares the next.
+3. **Architecture and dependencies:** derive how concepts, inputs, calculations, decisions, and feedback loops connect across chapters. Include at least one substantive Mermaid architecture diagram.
+4. **Chapter-by-chapter learning and mastery:** use a detailed table covering every chapter, its role, core learning, dependencies, practical application, and observable mastery evidence.
+5. **Integrated conceptual derivation:** reteach the topic across chapter boundaries. Fully expand mechanisms, causal chains, distinctions, assumptions, and interactions; do not merely mention them.
+6. **Equations and quantitative reasoning:** include every important formula needed to connect the topic. Define all symbols and operators and provide worked numerical examples under the exposition-and-equation contract whenever calculation is part of the material.
+7. **Operating workflow and decision gates:** turn the topic into a repeatable process with inputs, transformations, checks, actions, cautions, and recalculation or review triggers. Include a Mermaid flowchart or state diagram when it materially clarifies the process.
+8. **Cross-chapter synthesis:** show how conclusions change when multiple concepts interact, including conflicts, conditional branches, and trade-offs.
+9. **Misconceptions and failure modes:** diagnose plausible errors, explain why they fail, and state the corrective reasoning or control.
+10. **Cumulative application:** provide at least one integrated case, analysis sequence, build, or decision exercise that requires several chapters together.
+11. **Mastery and review system:** include an observable mastery checklist, retrieval questions with answers or answer guidance, and a spaced review plan that revisits dependencies rather than rereading passively.
+
+Depth must scale with the chapter set. A one-chapter topic can still require a substantial course map when that chapter is broad; a many-chapter topic requires proportionally broader integration and explicit coverage of every chapter. Word count is informational rather than a target, but a map that can be mistaken for an index has failed the contract. Before completion, inventory the major learning objectives in every mapped chapter and confirm that each received full instructional treatment somewhere in the map.
+
+Keep course-map prose in direct instructional voice and apply the same attribution, Mermaid, equation, coverage, and anti-concision rules used for study guides. Verify every local link. Report course-map paths and informational depth metrics alongside guide outputs when maps are part of the request.
 
 ## Model settings
 

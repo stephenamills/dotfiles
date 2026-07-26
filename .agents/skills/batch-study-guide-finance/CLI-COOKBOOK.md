@@ -3,7 +3,7 @@
 Use this reference only when copy-ready terminal commands are requested. Replace `ROOT` with the course root and `SCRIPT` with the installed skill script.
 
 ```bash
-SCRIPT="$HOME/.agents/skills/study-guide-batch/scripts/study_guide_batch.py"
+SCRIPT="$HOME/.agents/skills/batch-study-guide-finance/scripts/study_guide_batch.py"
 ROOT="/path/to/course"
 ```
 

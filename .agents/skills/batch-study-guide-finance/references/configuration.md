@@ -5,6 +5,7 @@
 - Configuration example
 - Transcript grouping
 - Declarative PDF and spreadsheet units
+- Automatic topic course-map units
 - Source extraction and Mermaid validation
 - Lifecycle, state, and recovery
 
@@ -25,7 +26,8 @@ Place `study-guide-batch.json` at the course root. Every configured path must re
     "by_kind": {
       "transcript": null,
       "pdf": "prompts/pdf-companion.md",
-      "spreadsheet": "prompts/workbook-manual.md"
+      "spreadsheet": "prompts/workbook-manual.md",
+      "course_map": null
     }
   },
   "asset_units": [
@@ -48,6 +50,10 @@ Place `study-guide-batch.json` at the course root. Every configured path must re
       "prompt": "prompts/workbook-manual.md"
     }
   ],
+  "course_maps": {
+    "enabled": true,
+    "output_folder": "0 Course Maps"
+  },
   "grouping_overrides": [],
   "unit_overrides": {},
   "approved_unit_flags": [],
@@ -56,7 +62,8 @@ Place `study-guide-batch.json` at the course root. Every configured path must re
     "require_completion_marker": true,
     "require_mermaid_diagram": true,
     "validate_mermaid_syntax": true,
-    "validate_mermaid_render": false
+    "validate_mermaid_render": false,
+    "enforce_heading_numbering": true
   },
   "output_root": "study-guides",
   "candidate_root": ".study-guide-batch/candidates",
@@ -67,6 +74,8 @@ Place `study-guide-batch.json` at the course root. Every configured path must re
 ```
 
 The supervisor defaults to `gpt-5.6-sol`, `xhigh` reasoning, high verbosity, and six concurrent Multi Agent V2 leaf workers. Set `max_concurrency` to a course-level value from one through 32; `--max-concurrency` is a one-run override.
+
+`validators.enforce_heading_numbering` defaults to `true`. It requires sequentially numbered H2 major sections and rejects numbered H3 headings outside active learner-work sections such as questions, exercises, problems, drills, cases, applications, assessments, and checklists.
 
 Concurrency does not define a pedagogical group: each unit remains one independent leaf task. The supervisor drains the selected units in batches no larger than the configured limit so completed artifacts can be validated and resumed independently. For roughly 35–40 normal text transcripts, start with six leaves (seven V2 sessions including the dispatcher); use three for unusually long PDF/workbook work, and increase to eight or 12 only after a representative run is stable. A burst of 28 is supported, but creates 29 concurrent sessions and amplifies account-rate, quota, or systematic-prompt failures without improving per-guide quality.
 
@@ -92,6 +101,48 @@ Each asset unit requires:
 
 An asset unit's explicit prompt overrides `prompts.per_unit`, followed by `prompts.by_kind`; bundled kind-specific defaults are the final fallback. The legacy `prompts.root` applies to transcript units only.
 
+## Automatic topic course-map units
+
+`course_maps.enabled` defaults to `true`. After planning transcript, PDF, and spreadsheet units, the supervisor groups their canonical targets by the target’s immediate parent folder under `output_root`. Each parent folder is treated as one major topic and receives a native `course_map` unit. `course_maps.whole_course.enabled` also defaults to `true` and adds one final `course_map` unit whose only sources and dependencies are the topic course maps. A flat output root already represents one whole course, so its single topic map is the final map. Default targets are:
+
+```text
+<output_root>/<course_maps.output_folder>/<topic folder name> — Course Map.md
+<output_root>/<course_maps.output_folder>/0 <course name> — Complete Course Map.md
+```
+
+Each topic-map unit depends on every planned study guide in its topic. The whole-course unit depends on every topic-map unit and has no direct study-guide or original-asset sources. Generation occurs in three dependency phases within the same immutable run:
+
+1. Study-guide units generate and validate in concurrent V2 waves.
+2. Course-map units read the approved candidate bytes from phase one, generate concurrently by topic, and pass course-map-specific structure, Mermaid, and relative-link validation.
+3. The whole-course unit reads only the approved topic-map candidate bytes from phase two and passes the same in-depth structure, Mermaid, and complete relative-link validation.
+
+Promotion remains atomic across both phases. Existing course maps are archived with the other canonical outputs and restored by the same rollback journal.
+
+Selecting a study-guide unit with `--unit` automatically selects its corresponding topic course map and the whole-course map. `--missing-only` includes missing maps as well as missing guides. Selecting a course-map unit alone is allowed when all of its dependencies are already installed. Disable automatic maps only with an explicit course-level override:
+
+```json
+{
+  "course_maps": {
+    "enabled": false,
+    "output_folder": "0 Course Maps"
+  }
+}
+```
+
+To keep topic maps while explicitly suppressing only the final synthesis:
+
+```json
+{
+  "course_maps": {
+    "whole_course": {
+      "enabled": false
+    }
+  }
+}
+```
+
+Use `unit_overrides` with the generated `course-map-...` unit ID to customize a map title, prompt, target, or exclusion. `prompts.by_kind.course_map` supplies a course-specific map prompt; otherwise the bundled in-depth prompt is used.
+
 ## Source extraction and Mermaid validation
 
 PDF extraction uses `pdftotext` with page boundaries and a deterministic context budget. Spreadsheet extraction uses `openpyxl` to inventory worksheets, formulas, formula archetypes, populated cells, styles, merged ranges, tables, validations, conditional formatting, charts, images, hidden dimensions, widths, freeze panes, and cross-sheet structure. Repeated worksheet layouts are compacted by structural signature.
@@ -100,7 +151,7 @@ OOXML workbooks are supported for `.xlsx` and `.xlsm`, including OOXML content w
 
 Every candidate must contain at least one fenced Mermaid diagram. D2 fences are unconditionally invalid. With `validate_mermaid_syntax` enabled, every block must pass the installed Mermaid 11.14 parser. `validate_mermaid_render` is disabled by default; when explicitly enabled, every block must also render through `mmdc` at a 1728×1117 CSS-pixel desktop viewport, and every SVG must expose a positive responsive `viewBox` without a fixed pixel width. That opt-in check launches Chromium and therefore needs an unsandboxed macOS process. Parser and render failures enter the diagram-only repair path. Spreadsheet unit instructions additionally require a source-grounded Mermaid dependency flowchart.
 
-The supervisor fingerprints original source bytes, prompts, targets, validators, models, and supervisor/Codex versions. Each wave writes isolated, self-contained row inputs with explicit byte budgets. Model processes cannot write source, output, candidate, or archive roots.
+The supervisor fingerprints original source bytes, prompts, targets, dependency identities, validators, models, and supervisor/Codex versions. Each wave writes isolated, self-contained row inputs with explicit byte budgets. Model processes cannot write source, output, candidate, or archive roots. Course-map validation additionally requires the full structural contract, at least two valid Mermaid diagrams, and a resolvable relative link to every dependent study chapter.
 
 ## Lifecycle, state, and recovery
 

@@ -2,7 +2,7 @@
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
 export LESSHISTFILE=- # Disable autocreation of less history file
-export VISUAL="code --wait"
+export VISUAL="open -e -W -t"
 
 export ANTIGRAVITY_PATH="/Users/steph/.antigravity/antigravity/bin:$PATH"
 export ARGC_COMPLETIONS_ROOT="/Users/steph/.argc"

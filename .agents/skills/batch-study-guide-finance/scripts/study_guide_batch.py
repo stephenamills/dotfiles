@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate and safely promote transcript, PDF, and workbook study-guide batches."""
+"""Generate and safely promote study-guide and topic-course-map batches."""
 
 from __future__ import annotations
 
@@ -16,6 +16,7 @@ from io import BytesIO
 import json
 import math
 import os
+import posixpath
 import queue
 import re
 import selectors
@@ -37,7 +38,7 @@ from pathlib import Path
 from typing import Any, Iterable, Iterator, Sequence
 
 
-SUPERVISOR_VERSION = "6.0.0"
+SUPERVISOR_VERSION = "7.2.0"
 DEFAULT_TIMEOUT_MINUTES = 20.0
 # Six leaves is a pragmatic starting point for a course-sized batch. This is
 # intentionally a course setting, not a baked-in V2 limitation: larger bursts
@@ -54,9 +55,10 @@ SKILL_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_PROMPT_PATH = SKILL_ROOT / "references" / "default-prompt.md"
 DEFAULT_PDF_PROMPT_PATH = SKILL_ROOT / "references" / "default-pdf-prompt.md"
 DEFAULT_SPREADSHEET_PROMPT_PATH = SKILL_ROOT / "references" / "default-spreadsheet-prompt.md"
+DEFAULT_COURSE_MAP_PROMPT_PATH = SKILL_ROOT / "references" / "default-course-map-prompt.md"
 VALID_REASONING_EFFORTS = {"none", "low", "medium", "high", "xhigh", "max"}
 VALID_VERBOSITY_LEVELS = {"low", "medium", "high"}
-UNIT_KINDS = {"transcript", "pdf", "spreadsheet"}
+UNIT_KINDS = {"transcript", "pdf", "spreadsheet", "course_map"}
 PDF_EXTENSIONS = {".pdf"}
 SPREADSHEET_EXTENSIONS = {".xlsx", ".xlsm", ".xls"}
 MERMAID_PARSER_VERSION = "11.14.0"
@@ -75,10 +77,24 @@ DEFAULT_CONFIG: dict[str, Any] = {
     "prompts": {
         "root": None,
         "per_unit": {},
-        "by_kind": {"transcript": None, "pdf": None, "spreadsheet": None},
+        "by_kind": {
+            "transcript": None,
+            "pdf": None,
+            "spreadsheet": None,
+            "course_map": None,
+        },
     },
     "grouping_overrides": [],
     "asset_units": [],
+    "course_maps": {
+        "enabled": True,
+        "output_folder": "0 Course Maps",
+        "whole_course": {
+            "enabled": True,
+            "title": None,
+            "output": None,
+        },
+    },
     "unit_overrides": {},
     "approved_unit_flags": [],
     "validators": {
@@ -88,6 +104,7 @@ DEFAULT_CONFIG: dict[str, Any] = {
         "validate_mermaid_syntax": True,
         "validate_mermaid_render": False,
         "forbid_source_attribution": True,
+        "enforce_heading_numbering": True,
     },
     "output_root": "study-guides",
     "candidate_root": ".study-guide-batch/candidates",
@@ -266,6 +283,27 @@ def validate_config(root: Path, config: dict[str, Any]) -> None:
         raise BatchError("input_roots must be a non-empty list")
     if not isinstance(config.get("asset_units", []), list):
         raise BatchError("asset_units must be a list")
+    course_maps = config.get("course_maps", {})
+    if not isinstance(course_maps, dict):
+        raise BatchError("course_maps must be an object")
+    if not isinstance(course_maps.get("enabled"), bool):
+        raise BatchError("course_maps.enabled must be true or false")
+    if not isinstance(course_maps.get("output_folder"), str) or not course_maps["output_folder"].strip():
+        raise BatchError("course_maps.output_folder must be a non-empty relative path")
+    course_map_root = Path(course_maps["output_folder"])
+    if course_map_root.is_absolute() or ".." in course_map_root.parts:
+        raise BatchError("course_maps.output_folder must remain within output_root")
+    whole_course = course_maps.get("whole_course", {})
+    if not isinstance(whole_course, dict):
+        raise BatchError("course_maps.whole_course must be an object")
+    if not isinstance(whole_course.get("enabled"), bool):
+        raise BatchError("course_maps.whole_course.enabled must be true or false")
+    for key in ("title", "output"):
+        value = whole_course.get(key)
+        if value is not None and (not isinstance(value, str) or not value.strip()):
+            raise BatchError(f"course_maps.whole_course.{key} must be null or a non-empty string")
+    if whole_course.get("output") is not None:
+        path_within(root, whole_course["output"], "course_maps.whole_course.output")
     for key in ("output_root", "candidate_root", "archive_root"):
         path_within(root, config[key], key)
     for key in ("generator",):
@@ -294,6 +332,7 @@ def validate_config(root: Path, config: dict[str, Any]) -> None:
         "validate_mermaid_syntax",
         "validate_mermaid_render",
         "forbid_source_attribution",
+        "enforce_heading_numbering",
     ):
         if not isinstance(validators.get(key), bool):
             raise BatchError(f"validators.{key} must be true or false")
@@ -495,6 +534,7 @@ def prompt_selection(
             "transcript": DEFAULT_PROMPT_PATH,
             "pdf": DEFAULT_PDF_PROMPT_PATH,
             "spreadsheet": DEFAULT_SPREADSHEET_PROMPT_PATH,
+            "course_map": DEFAULT_COURSE_MAP_PROMPT_PATH,
         }
         selected = defaults[kind].resolve()
         source = f"bundled {kind} default"
@@ -794,8 +834,173 @@ def build_units(root: Path, config: dict[str, Any]) -> tuple[list[dict[str, Any]
                 "predecessors": [relative_to_root(root, path) for path in predecessors],
                 "target": target_rel,
                 "target_hash": target_hash,
+                "dependencies": [],
             }
         )
+
+    if config.get("course_maps", {}).get("enabled", True) and units:
+        output_root = path_within(root, config["output_root"], "output root")
+        map_root = (
+            output_root / config["course_maps"].get("output_folder", "0 Course Maps")
+        ).resolve()
+        topic_units: dict[str, list[dict[str, Any]]] = defaultdict(list)
+        for unit in units:
+            target = (root / unit["target"]).resolve()
+            parent = target.parent
+            with contextlib.suppress(ValueError):
+                parent.relative_to(map_root)
+                continue
+            try:
+                topic_key = parent.relative_to(output_root).as_posix()
+            except ValueError:
+                blockers.append(
+                    f"{unit['id']} target is outside output_root and cannot be assigned a default course map"
+                )
+                continue
+            topic_units[topic_key].append(unit)
+
+        next_ordinal = max((unit["ordinal"] for unit in units), default=0) + 1
+        topic_map_units: list[dict[str, Any]] = []
+        for topic_key in sorted(topic_units, key=natural_key):
+            dependencies = sorted(topic_units[topic_key], key=lambda item: item["ordinal"])
+            topic_title = root.name if topic_key == "." else Path(topic_key).name
+            clean_title = re.sub(r"[/:\\]", " - ", normalize_title(topic_title)).strip()
+            base_id = f"course-map-{slug(topic_key if topic_key != '.' else root.name)}"
+            unit_id = base_id
+            suffix = 2
+            while unit_id in used_ids:
+                unit_id = f"{base_id}-{suffix}"
+                suffix += 1
+            used_ids.add(unit_id)
+            unit_override = config.get("unit_overrides", {}).get(unit_id, {})
+            if unit_override.get("exclude"):
+                continue
+            title = unit_override.get("title", topic_title)
+            prompt_override = unit_override.get("prompt")
+            prompt_text, prompt_source, prompt_blockers = prompt_selection(
+                root, config, unit_id, "course_map", prompt_override
+            )
+            blockers.extend(f"{unit_id}: {message}" for message in prompt_blockers)
+            explicit_output = unit_override.get("output")
+            if explicit_output:
+                target = path_within(root, explicit_output, f"output for {unit_id}")
+            else:
+                target = (map_root / f"{clean_title} — Course Map.md").resolve()
+            target_rel = relative_to_root(root, target)
+            targets.setdefault(target_rel.lower(), []).append(unit_id)
+            source_rels = [dependency["target"] for dependency in dependencies]
+            dependency_hashes = {
+                dependency["target"]: sha256_json(
+                    {
+                        "id": dependency["id"],
+                        "source_hashes": dependency["source_hashes"],
+                        "prompt_hash": dependency["prompt_hash"],
+                        "target": dependency["target"],
+                        "target_hash": dependency["target_hash"],
+                    }
+                )
+                for dependency in dependencies
+            }
+            source_words = 0
+            for dependency in dependencies:
+                dependency_target = root / dependency["target"]
+                if dependency_target.is_file():
+                    source_words += word_count(
+                        dependency_target.read_text(encoding="utf-8", errors="replace")
+                    )
+                else:
+                    source_words += dependency["source_words"]
+            topic_map_unit = {
+                    "id": unit_id,
+                    "ordinal": next_ordinal,
+                    "kind": "course_map",
+                    "title": title,
+                    "sources": source_rels,
+                    "asset_sources": [],
+                    "transcript_sources": [],
+                    "source_types": {rel: "markdown" for rel in source_rels},
+                    "source_hashes": dependency_hashes,
+                    "source_words": source_words,
+                    "flags": [],
+                    "prompt_text": prompt_text,
+                    "prompt_source": prompt_source,
+                    "prompt_hash": sha256_bytes((prompt_text or "").encode("utf-8")),
+                    "predecessors": [],
+                    "target": target_rel,
+                    "target_hash": sha256_file(target) if target.is_file() else None,
+                    "dependencies": [dependency["id"] for dependency in dependencies],
+                }
+            units.append(topic_map_unit)
+            topic_map_units.append(topic_map_unit)
+            next_ordinal += 1
+
+        whole_course = config["course_maps"].get("whole_course", {})
+        if whole_course.get("enabled") and len(topic_map_units) > 1:
+            dependencies = sorted(topic_map_units, key=lambda item: item["ordinal"])
+            unit_id = "course-map-whole-course"
+            unit_override = config.get("unit_overrides", {}).get(unit_id, {})
+            if not unit_override.get("exclude"):
+                title = (
+                    unit_override.get("title")
+                    or whole_course.get("title")
+                    or f"{root.name} — Complete Course"
+                )
+                prompt_override = unit_override.get("prompt")
+                prompt_text, prompt_source, prompt_blockers = prompt_selection(
+                    root, config, unit_id, "course_map", prompt_override
+                )
+                blockers.extend(f"{unit_id}: {message}" for message in prompt_blockers)
+                explicit_output = unit_override.get("output") or whole_course.get("output")
+                if explicit_output:
+                    target = path_within(root, explicit_output, f"output for {unit_id}")
+                else:
+                    clean_title = re.sub(r"[/:\\]", " - ", normalize_title(root.name)).strip()
+                    target = (map_root / f"0 {clean_title} — Complete Course Map.md").resolve()
+                target_rel = relative_to_root(root, target)
+                targets.setdefault(target_rel.lower(), []).append(unit_id)
+                source_rels = [dependency["target"] for dependency in dependencies]
+                dependency_hashes = {
+                    dependency["target"]: sha256_json(
+                        {
+                            "id": dependency["id"],
+                            "source_hashes": dependency["source_hashes"],
+                            "prompt_hash": dependency["prompt_hash"],
+                            "target": dependency["target"],
+                            "target_hash": dependency["target_hash"],
+                        }
+                    )
+                    for dependency in dependencies
+                }
+                source_words = sum(
+                    word_count((root / dependency["target"]).read_text(
+                        encoding="utf-8", errors="replace"
+                    ))
+                    if (root / dependency["target"]).is_file()
+                    else dependency["source_words"]
+                    for dependency in dependencies
+                )
+                units.append(
+                    {
+                        "id": unit_id,
+                        "ordinal": next_ordinal,
+                        "kind": "course_map",
+                        "title": title,
+                        "sources": source_rels,
+                        "asset_sources": [],
+                        "transcript_sources": [],
+                        "source_types": {rel: "markdown" for rel in source_rels},
+                        "source_hashes": dependency_hashes,
+                        "source_words": source_words,
+                        "flags": [],
+                        "prompt_text": prompt_text,
+                        "prompt_source": prompt_source,
+                        "prompt_hash": sha256_bytes((prompt_text or "").encode("utf-8")),
+                        "predecessors": [],
+                        "target": target_rel,
+                        "target_hash": sha256_file(target) if target.is_file() else None,
+                        "dependencies": [dependency["id"] for dependency in dependencies],
+                    }
+                )
     for target, ids in targets.items():
         if len(ids) > 1:
             blockers.append(f"target collision for {target}: {', '.join(ids)}")
@@ -823,11 +1028,13 @@ def mapping_hash(units: list[dict[str, Any]], config: dict[str, Any]) -> str:
                 "prompt_hash": unit["prompt_hash"],
                 "target": unit["target"],
                 "target_hash": unit["target_hash"],
+                "dependencies": unit.get("dependencies", []),
             }
             for unit in units
         ],
         "grouping_overrides": config.get("grouping_overrides", []),
         "asset_units": config.get("asset_units", []),
+        "course_maps": config.get("course_maps", {}),
         "unit_overrides": config.get("unit_overrides", {}),
         "validators": config["validators"],
         "models": config["models"],
@@ -1097,7 +1304,7 @@ def render_plan_report(path: Path, plan: dict[str, Any]) -> None:
         f"Status: **{plan['status']}**",
         f"Root: `{plan['root']}`",
         f"Mapping hash: `{plan['mapping_hash']}`",
-        f"Logical lessons: {len(plan['units'])}",
+        f"Logical units: {len(plan['units'])}",
         "",
     ]
     if plan["blockers"]:
@@ -1130,7 +1337,8 @@ def percentile(values: list[float], fraction: float) -> float:
 def representative_units(units: list[dict[str, Any]]) -> list[dict[str, Any]]:
     if not units:
         return []
-    ordered = sorted(units, key=lambda unit: (unit["source_words"], unit["id"]))
+    study_units = [unit for unit in units if unit.get("kind") != "course_map"] or units
+    ordered = sorted(study_units, key=lambda unit: (unit["source_words"], unit["id"]))
     indexes = [0, len(ordered) // 2, len(ordered) - 1]
     selected: list[dict[str, Any]] = []
     seen: set[str] = set()
@@ -1151,6 +1359,16 @@ def current_prompt_hash(unit: dict[str, Any]) -> str:
 
 
 def current_unit_material(root: Path, unit: dict[str, Any]) -> dict[str, Any]:
+    if unit.get("kind") == "course_map":
+        target = root / unit["target"]
+        return {
+            # Course-map sources are immutable dependency fingerprints. Their
+            # bytes may come from approved candidates in the same run, before
+            # canonical promotion, so they cannot be re-hashed from root here.
+            "source_hashes": unit["source_hashes"],
+            "prompt_hash": current_prompt_hash(unit),
+            "target_hash": sha256_file(target) if target.is_file() else None,
+        }
     source_hashes: dict[str, str] = {}
     for source in unit["sources"]:
         path = root / source
@@ -1181,6 +1399,7 @@ def unit_fingerprint(
             "prompt_hash": unit["prompt_hash"],
             "target": unit["target"],
             "target_hash": unit["target_hash"],
+            "dependencies": unit.get("dependencies", []),
             "validators": validators,
             "models": models,
             "model_reasoning_effort": model_reasoning_effort,
@@ -1597,8 +1816,8 @@ def legacy_agent_max_threads_configured() -> bool:
 def disabled_worker_skill_args() -> list[str]:
     """Keep isolated workers from recursively invoking this supervisor skill."""
     candidates = [
-        Path.home() / ".agents" / "skills" / "study-guide-batch",
-        Path.home() / ".codex" / "skills" / "study-guide-batch",
+        Path.home() / ".agents" / "skills" / "batch-study-guide-finance",
+        Path.home() / ".codex" / "skills" / "batch-study-guide-finance",
     ]
     disabled = [path for path in candidates if (path / "SKILL.md").is_file()]
     if not disabled:
@@ -1816,6 +2035,8 @@ def extracted_source_text(path: Path, kind: str, max_chars: int, encoding: str) 
         return extract_pdf_text(path, max_chars)
     if kind == "spreadsheet":
         return extract_workbook_text(path, max_chars)
+    if kind == "markdown":
+        return path.read_text(encoding=encoding)
     raise BatchError(f"Unsupported source kind for staging: {kind}")
 
 
@@ -1823,6 +2044,7 @@ def copy_stage_inputs(
     root: Path,
     unit: dict[str, Any],
     stage_dir: Path,
+    source_overrides: dict[str, bytes] | None = None,
 ) -> None:
     source_dir = stage_dir / "sources"
     source_dir.mkdir(parents=True, exist_ok=True)
@@ -1832,15 +2054,22 @@ def copy_stage_inputs(
     for index, relative in enumerate(unit["sources"], 1):
         source = root / relative
         destination = source_dir / f"{index:03d}-{Path(relative).name}"
-        shutil.copyfile(source, destination)
+        override = (source_overrides or {}).get(relative)
+        if override is None:
+            shutil.copyfile(source, destination)
+        else:
+            destination.write_bytes(override)
         destination.chmod(0o444)
         kind = unit.get("source_types", {}).get(relative) or source_kind(source)
-        extracted = extracted_source_text(
-            source,
-            kind,
-            asset_char_budget,
-            "utf-8",
-        )
+        if override is None:
+            extracted = extracted_source_text(
+                source,
+                kind,
+                asset_char_budget,
+                "utf-8",
+            )
+        else:
+            extracted = override.decode("utf-8")
         content_path = source_dir / f"{index:03d}-{Path(relative).stem}-extracted.md"
         content_path.write_text(extracted, encoding="utf-8")
         content_path.chmod(0o444)
@@ -1884,7 +2113,27 @@ def stage_instruction(unit: dict[str, Any]) -> str:
         "Use one standalone calculation question per family by default and never more than two. A second requires a genuinely different reasoning branch, binding constraint, common sign or unit trap, or material decision interpretation; changed numbers, direction, or result sign alone do not qualify.",
         "Preserve three or more deliberate contrast scenarios as subparts of one question with one shared formula and a compact table. Preserve distinct dependent steps, but present them as one connected multi-part case study.",
     ]
-    if kind == "spreadsheet":
+    if kind == "course_map":
+        if unit.get("id") == "course-map-whole-course":
+            common.extend(
+                [
+                    "This unit is the in-depth whole-course map. Use only the complete ordered set of supplied topic course maps as source material. Do not infer from, request, or reach back to transcripts, PDFs, workbooks, or study chapters.",
+                    "Reteach and integrate the entire course across topic boundaries; never produce a directory, link index, reading checklist, or collection of topic-map summaries.",
+                    "Include at least two substantive Mermaid diagrams: one for whole-course architecture and one for the end-to-end operating workflow, decision system, regime cycle, or feedback process.",
+                    "Cover every supplied topic map in the ordered path and detailed mastery table, then synthesize their mechanisms, equations, dependencies, conflicts, applications, and failure modes across the full course.",
+                    "Include a cumulative whole-course application, observable mastery checklist, answered retrieval questions, and an active-recall spaced review plan.",
+                ]
+            )
+        else:
+            common.extend(
+                [
+                    "This unit is an in-depth topic course map derived from the complete ordered set of supplied study chapters. It must reteach and integrate the topic; it must never become a directory, link index, reading checklist, or collection of chapter summaries.",
+                    "Include at least two substantive Mermaid diagrams: one for topic architecture and one for an operating workflow, decision system, regime cycle, or feedback process.",
+                    "Cover every supplied chapter in the ordered path and detailed mastery table, then synthesize their mechanisms, equations, dependencies, conflicts, applications, and failure modes across chapter boundaries.",
+                    "Include a cumulative multi-chapter application, observable mastery checklist, answered retrieval questions, and an active-recall spaced review plan.",
+                ]
+            )
+    elif kind == "spreadsheet":
         common.extend(
             [
                 "For this spreadsheet manual, include at least one Mermaid flowchart that shows how source inputs, columns or ranges, formula families, intermediate calculations, checks, and decision outputs relate.",
@@ -1902,7 +2151,7 @@ def stage_instruction(unit: dict[str, Any]) -> str:
                 "Treat any attribution-heavy prose or under-explained equations in a previous canonical guide as defects to correct, not style to preserve.",
             ]
         )
-    else:
+    elif kind == "transcript":
         common.append(
         "For this transcript guide, prefer Mermaid mindmaps for concept mastery, flowcharts for causal chains, workflows, and decisions, or state diagrams for regimes and feedback grounded in the lesson."
         )
@@ -1913,6 +2162,8 @@ def stage_instruction(unit: dict[str, Any]) -> str:
     )
     common.extend(
         [
+            "Number every H2 major section sequentially with Arabic numerals (`## 1. ...`, `## 2. ...`). H2 numbering is the document's primary navigation and must not skip or repeat numbers.",
+            "Keep H3 headings descriptive and unnumbered by default. Number H3 headings only when they enumerate items the learner is meant to work through in order, such as questions, exercises, problems, drills, cases, applications, or checklist steps. Do not create decorative nested section numbering.",
             "Your final response is written directly to candidate.md by the supervisor. Return only the complete guide Markdown; do not return a completion report or path.",
             "This direct candidate output supersedes any repository-specific filename, output-folder, or chat-response directive in the governing prompt.",
             "Draft candidate.md in one complete pass and prioritize source-grounded depth.",
@@ -1930,6 +2181,21 @@ def direct_stage_prompt(unit: dict[str, Any], stage_dir: Path, correction: str |
         "\n===== GOVERNING PROMPT (instructions) =====\n",
         (stage_dir / "prompt.md").read_text(encoding="utf-8"),
     ]
+    if unit.get("kind") == "course_map":
+        map_parent = Path(unit["target"]).parent.as_posix()
+        link_lines = [
+            f"- {source}: {posixpath.relpath(source, map_parent)}"
+            for source in unit["sources"]
+        ]
+        sections.extend(
+            [
+                "\n===== REQUIRED COURSE-MAP LINK CONTRACT =====\n",
+                f"Course-map output: {unit['target']}\n",
+                "Use these exact relative destinations in Markdown links, wrapping destinations containing spaces in angle brackets:\n",
+                "\n".join(link_lines),
+                "\n",
+            ]
+        )
     if correction:
         sections.extend(
             [
@@ -2302,10 +2568,108 @@ def validate_candidate_bytes(value: bytes, validators: dict[str, Any]) -> tuple[
                 category = "diagram_invalid"
             return False, category, mermaid_detail
     for heading in validators.get("required_headings", []):
-        if not re.search(rf"(?m)^{re.escape(str(heading).rstrip())}\s*$", text):
+        expected = str(heading).rstrip()
+        if expected.startswith("## "):
+            pattern = rf"(?m)^##\s+(?:\d+\.\s+)?{re.escape(expected[3:])}\s*$"
+        else:
+            pattern = rf"(?m)^{re.escape(expected)}\s*$"
+        if not re.search(pattern, text):
             return False, "truncated", f"candidate.md lacks required heading: {heading}"
+    if validators.get("enforce_heading_numbering", True):
+        h2_number = 0
+        active_h2 = ""
+        active_sequence = re.compile(
+            r"\b(?:question|exercise|problem|practice|drill|checklist|activity|"
+            r"assessment|retrieval|case|application|worked example)s?\b",
+            re.I,
+        )
+        numbered_h3 = re.compile(r"^\d+(?:\.\d+)*[.)]?\s+")
+        for line in text.splitlines():
+            h2 = re.match(r"^##(?!#)\s+(.+?)\s*$", line)
+            if h2:
+                h2_number += 1
+                match = re.match(r"^(\d+)\.\s+(.+)$", h2.group(1))
+                if not match:
+                    return False, "heading_numbering", (
+                        f"H2 heading must be numbered sequentially: {line}"
+                    )
+                if int(match.group(1)) != h2_number:
+                    return False, "heading_numbering", (
+                        f"H2 heading {line!r} must begin with {h2_number}."
+                    )
+                active_h2 = match.group(2)
+                continue
+            h3 = re.match(r"^###(?!#)\s+(.+?)\s*$", line)
+            if h3 and numbered_h3.match(h3.group(1)):
+                if not active_sequence.search(active_h2):
+                    return False, "heading_numbering", (
+                        "numbered H3 headings are reserved for learner-work sequences "
+                        f"such as questions, exercises, cases, or checklists: {line}"
+                    )
     return True, "success", (
         f"validated candidate ({count} words, {len(mermaid_blocks)} Mermaid diagram(s); informational only)"
+    )
+
+
+COURSE_MAP_REQUIRED_SECTIONS = (
+    ("thesis and outcomes", r"Section Thesis and Learning Outcomes"),
+    ("ordered learning path", r"Ordered (?:Chapter|Learning|Revision).{0,30}Path"),
+    ("architecture", r"(?:Architecture|Dependency|Examination Architecture)"),
+    (
+        "chapter mastery coverage",
+        r"(?:Chapter-by-Chapter Learning and Mastery|Topic and Competency Revision Matrix)",
+    ),
+    (
+        "integrated derivation",
+        r"(?:Integrated .{0,60}(?:Derivation|Driver Model)|Pacing Concepts and Equations|"
+        r"Important Equations|Integrated Derivations)",
+    ),
+    ("workflow or decision gates", r"(?:Workflow|Decision Gates)"),
+    ("cross-chapter synthesis", r"(?:Cross-Chapter Synthesis|Complete Synthesis)"),
+    ("misconceptions and failure modes", r"(?:Misconceptions|Failure Modes)"),
+    ("cumulative application", r"(?:Cumulative|Mock-Examination Case)"),
+    ("mastery checklist", r"(?:Mastery Checklist|Revision and Mastery Checklist)"),
+    ("retrieval questions and answers", r"Retrieval Questions (?:and|with) Answers"),
+    ("spaced review plan", r"Spaced Review Plan"),
+)
+
+
+def markdown_local_link_targets(text: str, target_parent: str) -> set[str]:
+    resolved: set[str] = set()
+    for match in re.finditer(r"\[[^\]]+\]\((?:<([^>]+)>|([^)\\s]+))\)", text):
+        destination = (match.group(1) or match.group(2) or "").split("#", 1)[0]
+        if not destination or re.match(r"^[a-z]+://", destination, re.I):
+            continue
+        resolved.add(posixpath.normpath(posixpath.join(target_parent, destination)))
+    return resolved
+
+
+def validate_unit_candidate_bytes(
+    value: bytes,
+    validators: dict[str, Any],
+    unit: dict[str, Any],
+) -> tuple[bool, str, str]:
+    valid, category, detail = validate_candidate_bytes(value, validators)
+    if not valid or unit.get("kind") != "course_map":
+        return valid, category, detail
+    text = value.decode("utf-8")
+    h2_text = "\n".join(re.findall(r"(?m)^##\s+(.+?)\s*$", text))
+    for label, pattern in COURSE_MAP_REQUIRED_SECTIONS:
+        if not re.search(pattern, h2_text, re.I):
+            return False, "course_map_structure", f"course map lacks required section: {label}"
+    mermaid_count = len(MERMAID_BLOCK.findall(text))
+    if mermaid_count < 2:
+        return False, "course_map_structure", "course map requires at least two Mermaid diagrams"
+    target_parent = Path(unit["target"]).parent.as_posix()
+    linked = markdown_local_link_targets(text, target_parent)
+    missing = [source for source in unit["sources"] if posixpath.normpath(source) not in linked]
+    if missing:
+        return False, "course_map_links", (
+            "course map lacks valid relative links to: " + ", ".join(missing)
+        )
+    return True, "success", (
+        f"validated in-depth course map ({word_count(text.replace(COMPLETION_MARKER, ''))} words, "
+        f"{mermaid_count} Mermaid diagram(s), {len(unit['sources'])} chapter link(s); informational only)"
     )
 
 
@@ -2933,6 +3297,34 @@ class Supervisor:
         self.verbose = verbose
         self._output_lock = threading.Lock()
 
+    def course_map_source_overrides(self, unit: dict[str, Any]) -> dict[str, bytes]:
+        if unit.get("kind") != "course_map":
+            return {}
+        overrides: dict[str, bytes] = {}
+        for dependency_id, source in zip(unit.get("dependencies", []), unit["sources"]):
+            row = self.store.row(
+                "SELECT state, candidate_path, candidate_hash FROM units "
+                "WHERE run_id = ? AND unit_id = ?",
+                (self.run_id, dependency_id),
+            )
+            if row is not None:
+                if row["state"] != "approved":
+                    raise BatchError(
+                        f"course-map dependency {dependency_id} is not approved ({row['state']})"
+                    )
+                candidate = Path(row["candidate_path"] or "")
+                if not candidate.is_file() or sha256_file(candidate) != row["candidate_hash"]:
+                    raise StaleInput(f"course-map dependency candidate changed: {dependency_id}")
+                overrides[source] = candidate.read_bytes()
+                continue
+            canonical = self.root / source
+            if not canonical.is_file():
+                raise StaleInput(
+                    f"course-map dependency is neither selected nor installed: {dependency_id}"
+                )
+            overrides[source] = canonical.read_bytes()
+        return overrides
+
     def progress(self, message: str) -> None:
         if not self.verbose:
             return
@@ -3152,7 +3544,12 @@ supervisor enforces a {max_runtime}-second ceiling for the complete wave.
                 task_dir = wave_dir / "tasks" / f"{ordinal:02d}-{task.unit['id']}"
                 task_dir.mkdir(parents=True)
                 if task.prompt is None:
-                    copy_stage_inputs(self.root, task.unit, task_dir)
+                    copy_stage_inputs(
+                        self.root,
+                        task.unit,
+                        task_dir,
+                        self.course_map_source_overrides(task.unit),
+                    )
                     prompt = direct_stage_prompt(task.unit, task_dir, task.correction)
                 else:
                     prompt = task.prompt
@@ -3985,6 +4382,11 @@ supervisor enforces a {max_runtime}-second ceiling for the complete wave.
 
     def _approve_work(self, work: GenerationWork, value: bytes) -> None:
         unit_id = work.unit["id"]
+        valid, category, detail = validate_unit_candidate_bytes(
+            value, self.contract["validators"], work.unit
+        )
+        if not valid:
+            raise BatchError(f"{category}: {detail}")
         self.set_unit(
             unit_id,
             "validating",
@@ -4023,8 +4425,8 @@ supervisor enforces a {max_runtime}-second ceiling for the complete wave.
                 stage=work.stage,
                 stage_try=work.stage_try,
                 correction=work.correction,
-                validator=lambda candidate: validate_candidate_bytes(
-                    candidate, self.contract["validators"]
+                validator=lambda candidate: validate_unit_candidate_bytes(
+                    candidate, self.contract["validators"], work.unit
                 ),
             )
         if work.stage == "diagram_repair":
@@ -4074,6 +4476,9 @@ supervisor enforces a {max_runtime}-second ceiling for the complete wave.
             "timeout",
             "section_repair_invalid",
             "attribution_repair_invalid",
+            "course_map_structure",
+            "course_map_links",
+            "heading_numbering",
         }
         if work.stage == "diagram_repair":
             malformed_categories.update({"diagram_invalid", "diagram_render"})
@@ -4228,6 +4633,67 @@ supervisor enforces a {max_runtime}-second ceiling for the complete wave.
             "SELECT * FROM units WHERE run_id = ? AND state = 'ready' ORDER BY ordinal",
             (self.run_id,),
         )
+        regular_rows = [
+            row for row in rows
+            if self.units[row["unit_id"]].get("kind") != "course_map"
+        ]
+        course_map_rows = [
+            row for row in rows
+            if self.units[row["unit_id"]].get("kind") == "course_map"
+        ]
+        self._process_generation_rows(regular_rows)
+        if self.local_stop.is_set() or self.stop_reason():
+            return
+        pending_course_maps = list(course_map_rows)
+        while pending_course_maps and not self.local_stop.is_set() and not self.stop_reason():
+            ready_course_maps: list[sqlite3.Row] = []
+            deferred_course_maps: list[sqlite3.Row] = []
+            for row in pending_course_maps:
+                unit = self.units[row["unit_id"]]
+                failed_dependencies: list[str] = []
+                waiting_dependencies: list[str] = []
+                for dependency_id in unit.get("dependencies", []):
+                    dependency_row = self.store.row(
+                        "SELECT state FROM units WHERE run_id = ? AND unit_id = ?",
+                        (self.run_id, dependency_id),
+                    )
+                    if dependency_row is None or dependency_row["state"] == "approved":
+                        continue
+                    if dependency_row["state"] in {"failed", "blocked"}:
+                        failed_dependencies.append(f"{dependency_id} ({dependency_row['state']})")
+                    else:
+                        waiting_dependencies.append(dependency_id)
+                if failed_dependencies:
+                    self.set_unit(
+                        row["unit_id"],
+                        "blocked",
+                        detail="course-map dependencies were not approved: "
+                        + ", ".join(failed_dependencies),
+                        completed_at=now_iso(),
+                        lease_owner=None,
+                        lease_until=None,
+                        heartbeat_at=now_iso(),
+                    )
+                elif waiting_dependencies:
+                    deferred_course_maps.append(row)
+                else:
+                    ready_course_maps.append(row)
+            if not ready_course_maps:
+                for row in deferred_course_maps:
+                    self.set_unit(
+                        row["unit_id"],
+                        "blocked",
+                        detail="course-map dependency cycle or unavailable dependency",
+                        completed_at=now_iso(),
+                        lease_owner=None,
+                        lease_until=None,
+                        heartbeat_at=now_iso(),
+                    )
+                break
+            self._process_generation_rows(ready_course_maps)
+            pending_course_maps = deferred_course_maps
+
+    def _process_generation_rows(self, rows: Sequence[sqlite3.Row]) -> None:
         pending: list[GenerationWork] = []
         for row in rows:
             unit = self.units[row["unit_id"]]
@@ -5319,6 +5785,13 @@ def create_approved_run(
     selected_units = None
     if selected_unit_ids is not None:
         requested = set(selected_unit_ids)
+        # A generated study chapter changes the teaching material for its
+        # major topic, so include the corresponding course map by default.
+        for unit in plan["units"]:
+            if unit.get("kind") == "course_map" and requested.intersection(
+                unit.get("dependencies", [])
+            ):
+                requested.add(unit["id"])
         selected_units = [unit for unit in plan["units"] if unit["id"] in requested]
         missing = requested - {unit["id"] for unit in selected_units}
         if missing:
@@ -5961,7 +6434,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     plan_parser = subparsers.add_parser(
         "plan",
-        help="Discover and map transcript, PDF, and workbook units without model calls",
+        help="Discover study-guide assets and native topic course-map units without model calls",
     )
     add_common_root(plan_parser)
 

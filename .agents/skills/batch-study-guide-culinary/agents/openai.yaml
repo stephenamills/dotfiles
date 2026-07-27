@@ -1,0 +1,4 @@
+interface:
+  display_name: "Batch Study Guide — Culinary"
+  short_description: "Generate transcript-grounded culinary guides"
+  default_prompt: "Use $batch-study-guide-culinary to plan or manage transcript-only culinary study guides and course maps."

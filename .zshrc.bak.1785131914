@@ -219,9 +219,3 @@ prep() {
 	sudo xattr -r -d com.apple.quarantine "$1"
 	sudo codesign --force --deep --sign - "$1"
 }
-
-# >>> grok installer >>>
-export PATH="$HOME/.grok/bin:$PATH"
-fpath=(~/.grok/completions/zsh $fpath)
-autoload -Uz compinit && compinit -C
-# <<< grok installer <<<

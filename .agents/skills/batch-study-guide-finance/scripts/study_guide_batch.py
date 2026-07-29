@@ -6,9 +6,11 @@ from __future__ import annotations
 import argparse
 from collections import Counter, defaultdict
 import contextlib
+from concurrent.futures import ThreadPoolExecutor, as_completed
 import copy
 import dataclasses
 import datetime as dt
+import difflib
 import errno
 import fnmatch
 import hashlib
@@ -38,7 +40,7 @@ from pathlib import Path
 from typing import Any, Iterable, Iterator, Sequence
 
 
-SUPERVISOR_VERSION = "7.2.0"
+SUPERVISOR_VERSION = "8.0.0"
 DEFAULT_TIMEOUT_MINUTES = 20.0
 # Six leaves is a pragmatic starting point for a course-sized batch. This is
 # intentionally a course setting, not a baked-in V2 limitation: larger bursts
@@ -55,7 +57,10 @@ SKILL_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_PROMPT_PATH = SKILL_ROOT / "references" / "default-prompt.md"
 DEFAULT_PDF_PROMPT_PATH = SKILL_ROOT / "references" / "default-pdf-prompt.md"
 DEFAULT_SPREADSHEET_PROMPT_PATH = SKILL_ROOT / "references" / "default-spreadsheet-prompt.md"
-DEFAULT_COURSE_MAP_PROMPT_PATH = SKILL_ROOT / "references" / "default-course-map-prompt.md"
+DEFAULT_TOPIC_MAP_PROMPT_PATH = SKILL_ROOT / "references" / "default-topic-map-prompt.md"
+DEFAULT_WHOLE_COURSE_MAP_PROMPT_PATH = (
+    SKILL_ROOT / "references" / "default-whole-course-map-prompt.md"
+)
 VALID_REASONING_EFFORTS = {"none", "low", "medium", "high", "xhigh", "max"}
 VALID_VERBOSITY_LEVELS = {"low", "medium", "high"}
 UNIT_KINDS = {"transcript", "pdf", "spreadsheet", "course_map"}
@@ -63,6 +68,12 @@ PDF_EXTENSIONS = {".pdf"}
 SPREADSHEET_EXTENSIONS = {".xlsx", ".xlsm", ".xls"}
 MERMAID_PARSER_VERSION = "11.14.0"
 MERMAID_RENDER_VIEWPORTS = ((1728, 1117),)
+LEARNER_WORK_HEADING = re.compile(
+    r"\b(?:question|answer|exercise|problem|practice|drill|checklist|activity|"
+    r"assessment|retrieval|quiz|case|scenario|application|worked example|task|"
+    r"mastery check|self[- ]check)s?\b",
+    re.I,
+)
 
 DEFAULT_CONFIG: dict[str, Any] = {
     "input_roots": ["transcripts"],
@@ -534,9 +545,15 @@ def prompt_selection(
             "transcript": DEFAULT_PROMPT_PATH,
             "pdf": DEFAULT_PDF_PROMPT_PATH,
             "spreadsheet": DEFAULT_SPREADSHEET_PROMPT_PATH,
-            "course_map": DEFAULT_COURSE_MAP_PROMPT_PATH,
         }
-        selected = defaults[kind].resolve()
+        if kind == "course_map":
+            selected = (
+                DEFAULT_WHOLE_COURSE_MAP_PROMPT_PATH
+                if unit_id == "course-map-whole-course"
+                else DEFAULT_TOPIC_MAP_PROMPT_PATH
+            ).resolve()
+        else:
+            selected = defaults[kind].resolve()
         source = f"bundled {kind} default"
     assert selected is not None
     if not selected.is_file():
@@ -1437,6 +1454,7 @@ def make_contract(
     models: dict[str, str] | None = None,
     model_reasoning_effort: str | None = None,
     model_verbosity: str | None = None,
+    install_immediately: bool = True,
 ) -> dict[str, Any]:
     if not 1 <= workers <= MAX_SUPPORTED_CONCURRENCY:
         raise BatchError(
@@ -1467,13 +1485,17 @@ def make_contract(
         "validators": plan["config"]["validators"],
         "workers": workers,
         "deadline_seconds": round(deadline_hours * 3600),
-        "timeout_seconds": max(0.1, timeout_minutes * 60),
+        # Individual model calls intentionally have no shorter timeout. The
+        # immutable run deadline is the only wall-clock stop; progress
+        # heartbeats and bounded retry stages provide liveness visibility.
+        "timeout_seconds": round(deadline_hours * 3600),
         "max_invocations": max_invocations,
         "max_recorded_tokens": max_tokens,
         "transient_retries": transient_retries,
         "retry_backoff_seconds": [30, 120],
         "codex_version": codex_version(),
         "supervisor_version": SUPERVISOR_VERSION,
+        "install_immediately": install_immediately,
         "approved_at": now_iso(),
     }
 
@@ -1530,6 +1552,13 @@ def approve_plan(store: Store, plan: dict[str, Any], args: argparse.Namespace) -
         models=models,
         model_reasoning_effort=model_reasoning_effort,
         model_verbosity=model_verbosity,
+        install_immediately=bool(
+            getattr(
+                args,
+                "install_immediately",
+                not bool(getattr(args, "candidates_only", False)),
+            )
+        ),
     )
     approval_material = {
         "plan_id": plan["id"],
@@ -1591,7 +1620,8 @@ def render_approval_report(path: Path, approval: dict[str, Any], calibration: di
         f"Model verbosity: `{contract['model_verbosity']}`",
         f"Workers: {contract['workers']}",
         f"Hard deadline: {contract['deadline_seconds'] / 3600:g} hours",
-        f"Per-call timeout: {contract['timeout_seconds'] / 60:g} minutes",
+        "Per-call timeout: none; only the hard run deadline can stop an active call",
+        f"Immediate installation: {bool(contract.get('install_immediately', False))}",
         f"Maximum invocations: {contract['max_invocations']}",
         f"Maximum recorded tokens: {contract['max_recorded_tokens']}",
         f"Transient retries per stage: {contract['transient_retries']}",
@@ -2040,6 +2070,40 @@ def extracted_source_text(path: Path, kind: str, max_chars: int, encoding: str) 
     raise BatchError(f"Unsupported source kind for staging: {kind}")
 
 
+def compact_whole_course_source(text: str, max_chars: int = 30_000) -> str:
+    """Retain every numbered topic-map section within a bounded synthesis input."""
+    text = re.sub(
+        r"(?ms)^```mermaid[ \t]*\n.*?^```[ \t]*$",
+        "[Topic-map diagram omitted from the synthesis input; its surrounding explanation remains.]",
+        text,
+    )
+    starts = [match.start() for match in re.finditer(r"(?m)^##\s+\d+\.\s+", text)]
+    if not starts or len(text) <= max_chars:
+        return text
+    preamble = text[: starts[0]]
+    sections = [
+        text[start : starts[index + 1] if index + 1 < len(starts) else len(text)]
+        for index, start in enumerate(starts)
+    ]
+    remaining = max(0, max_chars - len(preamble) - 256)
+    per_section = max(600, remaining // len(sections))
+    compacted = [preamble]
+    for section in sections:
+        if len(section) <= per_section:
+            compacted.append(section)
+            continue
+        cutoff = section.rfind("\n\n", 0, per_section)
+        if cutoff < 200:
+            cutoff = section.rfind("\n", 0, per_section)
+        if cutoff < 200:
+            cutoff = per_section
+        compacted.append(
+            section[:cutoff].rstrip()
+            + "\n\n[Section excerpt truncated at a paragraph boundary for whole-course synthesis.]\n\n"
+        )
+    return "".join(compacted)
+
+
 def copy_stage_inputs(
     root: Path,
     unit: dict[str, Any],
@@ -2051,6 +2115,10 @@ def copy_stage_inputs(
     manifest: list[dict[str, str]] = []
     asset_count = max(1, len(unit.get("asset_sources", [])))
     asset_char_budget = max(8_000, 160_000 // asset_count)
+    whole_course_char_budget = max(
+        6_000,
+        min(30_000, 800_000 // max(1, len(unit.get("sources", [])))),
+    )
     for index, relative in enumerate(unit["sources"], 1):
         source = root / relative
         destination = source_dir / f"{index:03d}-{Path(relative).name}"
@@ -2070,6 +2138,10 @@ def copy_stage_inputs(
             )
         else:
             extracted = override.decode("utf-8")
+        if unit.get("id") == "course-map-whole-course":
+            extracted = compact_whole_course_source(
+                extracted, max_chars=whole_course_char_budget
+            )
         content_path = source_dir / f"{index:03d}-{Path(relative).stem}-extracted.md"
         content_path.write_text(extracted, encoding="utf-8")
         content_path.chmod(0o444)
@@ -2304,13 +2376,17 @@ def classify_failure(text: str, return_code: int | None) -> tuple[str, str]:
 D2_FENCE = re.compile(r"(?ms)^```d2[ \t]*\n(.*?)^```[ \t]*$")
 MERMAID_FENCE = re.compile(r"(?mi)^```mermaid(?:[ \t]|$)")
 MERMAID_BLOCK = re.compile(r"(?ms)^```mermaid[ \t]*\n(.*?)^```[ \t]*$")
+SOURCE_ATTRIBUTION_ACTOR = (
+    r"(?:pdf|source|sources|transcript|instructor|lesson|course|document|guide)"
+)
+SOURCE_ATTRIBUTION_VERB = (
+    r"(?:says|states|defines|reports|describes|explains|gives|uses|argues|presents|calls|"
+    r"identifies|introduces|supplies|assigns|emphasizes)"
+)
 SOURCE_ATTRIBUTION = re.compile(
-    r"(?i)\b(?:the\s+(?:pdf|source|sources|transcript|instructor)|"
-    r"according\s+to(?:\s+the)?\s+(?:pdf|source|sources|transcript|instructor)|"
+    rf"(?i)\b(?:according\s+to(?:\s+the)?\s+{SOURCE_ATTRIBUTION_ACTOR}|"
     r"(?:pdf|source|sources|transcript|instructor|lesson|course|document|guide)(?:['’]s)|"
-    r"(?:the\s+)?(?:lesson|course|document|guide)\s+"
-    r"(?:says|states|defines|reports|describes|gives|uses|argues|presents|calls|"
-    r"identifies|introduces|supplies|assigns|emphasizes))\b"
+    rf"(?:the\s+)?{SOURCE_ATTRIBUTION_ACTOR}\s+{SOURCE_ATTRIBUTION_VERB})\b"
 )
 DIAGRAM_FAILURE_CATEGORIES = {
     "diagram_invalid",
@@ -2578,11 +2654,6 @@ def validate_candidate_bytes(value: bytes, validators: dict[str, Any]) -> tuple[
     if validators.get("enforce_heading_numbering", True):
         h2_number = 0
         active_h2 = ""
-        active_sequence = re.compile(
-            r"\b(?:question|exercise|problem|practice|drill|checklist|activity|"
-            r"assessment|retrieval|case|application|worked example)s?\b",
-            re.I,
-        )
         numbered_h3 = re.compile(r"^\d+(?:\.\d+)*[.)]?\s+")
         for line in text.splitlines():
             h2 = re.match(r"^##(?!#)\s+(.+?)\s*$", line)
@@ -2601,7 +2672,10 @@ def validate_candidate_bytes(value: bytes, validators: dict[str, Any]) -> tuple[
                 continue
             h3 = re.match(r"^###(?!#)\s+(.+?)\s*$", line)
             if h3 and numbered_h3.match(h3.group(1)):
-                if not active_sequence.search(active_h2):
+                if not (
+                    LEARNER_WORK_HEADING.search(active_h2)
+                    or LEARNER_WORK_HEADING.search(h3.group(1))
+                ):
                     return False, "heading_numbering", (
                         "numbered H3 headings are reserved for learner-work sequences "
                         f"such as questions, exercises, cases, or checklists: {line}"
@@ -2611,26 +2685,71 @@ def validate_candidate_bytes(value: bytes, validators: dict[str, Any]) -> tuple[
     )
 
 
-COURSE_MAP_REQUIRED_SECTIONS = (
-    ("thesis and outcomes", r"Section Thesis and Learning Outcomes"),
-    ("ordered learning path", r"Ordered (?:Chapter|Learning|Revision).{0,30}Path"),
-    ("architecture", r"(?:Architecture|Dependency|Examination Architecture)"),
-    (
-        "chapter mastery coverage",
-        r"(?:Chapter-by-Chapter Learning and Mastery|Topic and Competency Revision Matrix)",
-    ),
-    (
-        "integrated derivation",
-        r"(?:Integrated .{0,60}(?:Derivation|Driver Model)|Pacing Concepts and Equations|"
-        r"Important Equations|Integrated Derivations)",
-    ),
-    ("workflow or decision gates", r"(?:Workflow|Decision Gates)"),
-    ("cross-chapter synthesis", r"(?:Cross-Chapter Synthesis|Complete Synthesis)"),
-    ("misconceptions and failure modes", r"(?:Misconceptions|Failure Modes)"),
-    ("cumulative application", r"(?:Cumulative|Mock-Examination Case)"),
-    ("mastery checklist", r"(?:Mastery Checklist|Revision and Mastery Checklist)"),
-    ("retrieval questions and answers", r"Retrieval Questions (?:and|with) Answers"),
-    ("spaced review plan", r"Spaced Review Plan"),
+def normalize_heading_numbering_bytes(
+    value: bytes, validators: dict[str, Any]
+) -> bytes:
+    """Strip decorative H3 numbers while preserving learner-work sequences."""
+    if not validators.get("enforce_heading_numbering", True) or not value:
+        return value
+    try:
+        text = value.decode("utf-8")
+    except UnicodeDecodeError:
+        return value
+    active_h2 = ""
+    numbered_h3 = re.compile(r"^(\d+(?:\.\d+)*[.)]?)\s+(.+?)\s*$")
+    changed = False
+    lines: list[str] = []
+    for line in text.splitlines(keepends=True):
+        h2 = re.match(r"^##(?!#)\s+(.+?)\s*(\r?\n)?$", line)
+        if h2:
+            active_h2 = h2.group(1)
+            lines.append(line)
+            continue
+        h3 = re.match(r"^(###(?!#)\s+)(.+?)(\r?\n)?$", line)
+        if h3:
+            title = h3.group(2)
+            match = numbered_h3.match(title)
+            if match and not (
+                LEARNER_WORK_HEADING.search(active_h2)
+                or LEARNER_WORK_HEADING.search(title)
+            ):
+                newline = h3.group(3) or ""
+                line = f"{h3.group(1)}{match.group(2)}{newline}"
+                changed = True
+        lines.append(line)
+    return "".join(lines).encode("utf-8") if changed else value
+
+
+TOPIC_MAP_REQUIRED_SECTIONS = (
+    "Section Thesis and Learning Outcomes",
+    "Ordered Chapter Path",
+    "Architecture and Dependencies",
+    "Chapter-by-Chapter Learning and Mastery",
+    "Integrated Conceptual Derivation",
+    "Quantitative Framework and Worked Examples",
+    "Operating Workflow and Decision Gates",
+    "Cross-Chapter Synthesis",
+    "Misconceptions and Failure Modes",
+    "Cumulative Application",
+    "Mastery Checklist",
+    "Retrieval Questions and Answers",
+    "Spaced Review Plan",
+)
+
+WHOLE_COURSE_MAP_REQUIRED_SECTIONS = (
+    "Course Thesis and Learning Outcomes",
+    "Ordered Topic Path",
+    "Whole-Course Architecture and Dependencies",
+    "Topic-by-Topic Learning and Mastery",
+    "Integrated Cross-Topic Derivation",
+    "Whole-Course Quantitative Framework and Worked Examples",
+    "End-to-End Operating Workflow and Decision Gates",
+    "Cross-Topic Synthesis",
+    "Whole-Course Misconceptions and Failure Modes",
+    "Cumulative Whole-Course Application",
+    "Whole-Course Mastery Checklist",
+    "Whole-Course Retrieval Questions and Answers",
+    "Whole-Course Spaced Review Plan",
 )
 
 
@@ -2653,10 +2772,20 @@ def validate_unit_candidate_bytes(
     if not valid or unit.get("kind") != "course_map":
         return valid, category, detail
     text = value.decode("utf-8")
-    h2_text = "\n".join(re.findall(r"(?m)^##\s+(.+?)\s*$", text))
-    for label, pattern in COURSE_MAP_REQUIRED_SECTIONS:
-        if not re.search(pattern, h2_text, re.I):
-            return False, "course_map_structure", f"course map lacks required section: {label}"
+    required = (
+        WHOLE_COURSE_MAP_REQUIRED_SECTIONS
+        if unit.get("id") == "course-map-whole-course"
+        else TOPIC_MAP_REQUIRED_SECTIONS
+    )
+    headings = [
+        re.sub(r"^\d+\.\s+", "", heading).strip()
+        for heading in re.findall(r"(?m)^##\s+(.+?)\s*$", text)
+    ]
+    if headings != list(required):
+        return False, "course_map_structure", (
+            "course map H2 headings must exactly match the ordered "
+            f"{'whole-course' if unit.get('id') == 'course-map-whole-course' else 'topic'} structure"
+        )
     mermaid_count = len(MERMAID_BLOCK.findall(text))
     if mermaid_count < 2:
         return False, "course_map_structure", "course map requires at least two Mermaid diagrams"
@@ -2750,6 +2879,29 @@ def source_attribution_repair_targets(value: bytes) -> list[dict[str, Any]]:
             }
         )
     return targets
+
+
+def deterministic_source_attribution_repair(value: bytes) -> bytes:
+    """Strip only unambiguous provenance wrappers without rewriting finance content."""
+    text = value.decode("utf-8")
+    actor = SOURCE_ATTRIBUTION_ACTOR
+    safe_verb = r"(?:says|states|reports|emphasizes)"
+    text = re.sub(
+        rf"(?i)\baccording\s+to(?:\s+the)?\s+{actor}\s*[,;:]\s*",
+        "",
+        text,
+    )
+    text = re.sub(
+        rf"(?i)\b(?:the\s+)?{actor}\s+{safe_verb}\s+(?:that\s+)?",
+        "",
+        text,
+    )
+    text = re.sub(
+        rf"(?i)\b(?:the\s+)?{actor}(?:['’]s)\s+",
+        "the ",
+        text,
+    )
+    return text.encode("utf-8")
 
 
 def source_attribution_batch_repair_prompt(value: bytes, detail: str) -> str:
@@ -3641,6 +3793,10 @@ supervisor enforces a {max_runtime}-second ceiling for the complete wave.
         self.progress(
             f"dispatching V2 wave of {len(tasks)} leaf agent(s) at max concurrency {max_concurrency}"
         )
+        wave_units = [task.unit["id"] for task in tasks]
+        self.progress("active V2 wave units:")
+        for ordinal, unit_id in enumerate(wave_units, start=1):
+            self.progress(f"  [{ordinal}/{len(wave_units)}] {unit_id}")
         with event_log_path.open("wb") as event_log, stderr_path.open("wb") as stderr_log:
             process = subprocess.Popen(
                 command,
@@ -3782,6 +3938,12 @@ supervisor enforces a {max_runtime}-second ceiling for the complete wave.
                     category, detail = "missing_candidate", "V2 leaf worker completed without writing its artifact"
                 else:
                     payload = artifact.read_bytes()
+                    normalized = normalize_heading_numbering_bytes(
+                        payload, self.contract["validators"]
+                    )
+                    if normalized != payload:
+                        artifact.write_bytes(normalized)
+                        payload = normalized
                     valid, category, detail = task.validator(payload)
                     ok = valid
                     output_path = artifact
@@ -3841,7 +4003,12 @@ supervisor enforces a {max_runtime}-second ceiling for the complete wave.
         with tempfile.TemporaryDirectory(prefix=f"study-guide-{self.run_id}-{unit['id']}-") as temporary:
             stage_dir = Path(temporary)
             if copy_inputs:
-                copy_stage_inputs(self.root, unit, stage_dir)
+                copy_stage_inputs(
+                    self.root,
+                    unit,
+                    stage_dir,
+                    self.course_map_source_overrides(unit),
+                )
             unit_log_dir = run_directory(self.store, self.run_id) / "units" / unit["id"]
             unit_log_dir.mkdir(parents=True, exist_ok=True)
             sequence = self.store.row(
@@ -4003,6 +4170,12 @@ supervisor enforces a {max_runtime}-second ceiling for the complete wave.
                 validate = validator or (
                     lambda candidate: validate_candidate_bytes(candidate, self.contract["validators"])
                 )
+                normalized = normalize_heading_numbering_bytes(
+                    value, self.contract["validators"]
+                )
+                if normalized != value:
+                    candidate_path.write_bytes(normalized)
+                    value = normalized
                 valid, category, detail = validate(value)
                 result = InvocationResult(valid, category, detail, elapsed, usage, recorded_tokens, output_path, return_code, attempt_id)
                 payload = value or None
@@ -4083,6 +4256,32 @@ supervisor enforces a {max_runtime}-second ceiling for the complete wave.
     def repair_candidate_source_attribution(self, unit: dict[str, Any], value: bytes) -> bytes:
         """Repair all attribution-bearing lines per batch while preserving every other byte."""
         self.preserve_repairable_draft(unit, value, "source-attribution")
+        normalized = deterministic_source_attribution_repair(value)
+        valid, category, _ = validate_candidate_bytes(
+            normalized, self.contract["validators"]
+        )
+        if valid:
+            if self.audit_deterministic_repair(
+                unit,
+                value,
+                normalized,
+                "source-attribution normalization",
+            ):
+                self.progress(
+                    f"{unit['id']} · source attribution normalized and LLM-audited"
+                )
+                return normalized
+            self.progress(
+                f"{unit['id']} · deterministic attribution result rejected by audit; "
+                "using scoped line repair"
+            )
+            normalized = value
+            category = "source_attribution"
+        if category != "source_attribution":
+            raise BatchError(
+                f"deterministic attribution normalization introduced {category}"
+            )
+        value = normalized
         repair_number = 0
         while True:
             valid, category, detail = validate_candidate_bytes(value, self.contract["validators"])
@@ -4119,6 +4318,58 @@ supervisor enforces a {max_runtime}-second ceiling for the complete wave.
             if result.category == "policy_violation":
                 raise BatchError(result.detail)
             raise BatchError(f"source-attribution repair failed ({result.category}): {result.detail}")
+
+    def audit_deterministic_repair(
+        self,
+        unit: dict[str, Any],
+        before: bytes,
+        after: bytes,
+        operation: str,
+    ) -> bool:
+        """Use one semantic review to prevent a mechanical repair from changing meaning."""
+        if before == after:
+            return True
+        diff = "".join(
+            difflib.unified_diff(
+                before.decode("utf-8").splitlines(keepends=True),
+                after.decode("utf-8").splitlines(keepends=True),
+                fromfile="before.md",
+                tofile="after.md",
+                n=3,
+            )
+        )
+        prompt = f"""DETERMINISTIC REPAIR AUDIT
+
+Audit only the unified diff below. Return exactly `APPROVED` if every change is mechanical,
+preserves all financial meaning, quantities, dates, assumptions, qualifications, equations,
+symbols, units, signs, Markdown structure, links, table columns, and ordering, and removes only the
+stated unwanted wrapper. Otherwise return `REJECTED: ` followed by one concise reason. Do not
+rewrite the document. Do not call tools.
+
+Operation: {operation}
+
+```diff
+{diff}
+```
+"""
+
+        def validator(candidate: bytes) -> tuple[bool, str, str]:
+            response = candidate.decode("utf-8", errors="replace").strip()
+            if response == "APPROVED":
+                return True, "success", "deterministic repair audit approved"
+            return False, "deterministic_audit", response[:1000] or "empty audit response"
+
+        result, _ = self.invoke_legacy_once(
+            unit,
+            1,
+            stage="deterministic_audit",
+            prompt_override=prompt,
+            validator=validator,
+            copy_inputs=False,
+        )
+        if result.category in {"auth_quota", "environment", "stopped"}:
+            raise StopRequested(result.detail)
+        return result.ok
 
 
     def invoke_targeted_repair(
@@ -4212,7 +4463,7 @@ supervisor enforces a {max_runtime}-second ceiling for the complete wave.
                 raise StopRequested(self.stop_reason() or "stop requested during repair retry")
 
 
-    def invoke_generation(self, unit: dict[str, Any]) -> bytes:
+    def invoke_generation(self, unit: dict[str, Any], *, direct: bool = False) -> bytes:
         stage = "generation"
         stage_try = 0
         malformed_retries = 0
@@ -4220,7 +4471,8 @@ supervisor enforces a {max_runtime}-second ceiling for the complete wave.
         correction: str | None = None
         while True:
             stage_try += 1
-            result, payload = self.invoke_once(unit, stage_try, correction)
+            invoke = self.invoke_legacy_once if direct else self.invoke_once
+            result, payload = invoke(unit, stage_try, correction)
             if result.ok:
                 assert payload is not None
                 return payload
@@ -4360,14 +4612,19 @@ supervisor enforces a {max_runtime}-second ceiling for the complete wave.
             ).fetchone()
 
 
-    def process_unit(self, row: sqlite3.Row) -> None:
+    def process_unit(self, row: sqlite3.Row, *, direct: bool = False) -> None:
         unit_id = row["unit_id"]
         unit = self.units[unit_id]
         self.verify_unit(unit, row["fingerprint"])
         self.set_unit(unit_id, "generating", heartbeat_at=now_iso(), detail="single-pass generation")
-        generated = self.invoke_generation(unit)
+        generated = self.invoke_generation(unit, direct=direct)
         self.set_unit(unit_id, "validating", heartbeat_at=now_iso(), detail="persisting validated candidate")
         candidate_path, candidate_hash = self.save_candidate(unit_id, generated)
+        if self.contract.get("install_immediately", False):
+            installed = install_approved_preview(
+                self.store, self.run_id, unit, Path(candidate_path), candidate_hash
+            )
+            self.progress(f"{unit_id} · installed immediately: {installed}")
         self.set_unit(
             unit_id,
             "approved",
@@ -4394,6 +4651,11 @@ supervisor enforces a {max_runtime}-second ceiling for the complete wave.
             detail="persisting validated candidate",
         )
         candidate_path, candidate_hash = self.save_candidate(unit_id, value)
+        if self.contract.get("install_immediately", False):
+            installed = install_approved_preview(
+                self.store, self.run_id, work.unit, Path(candidate_path), candidate_hash
+            )
+            self.progress(f"{unit_id} · installed immediately: {installed}")
         self.set_unit(
             unit_id,
             "approved",
@@ -4552,6 +4814,33 @@ supervisor enforces a {max_runtime}-second ceiling for the complete wave.
                 return False
             if result.category == "source_attribution" and payload is not None:
                 self.preserve_repairable_draft(work.unit, payload, "source-attribution")
+                normalized = deterministic_source_attribution_repair(payload)
+                valid, normalized_category, normalized_detail = validate_unit_candidate_bytes(
+                    normalized, self.contract["validators"], work.unit
+                )
+                if (
+                    valid
+                    and self.audit_deterministic_repair(
+                        work.unit,
+                        payload,
+                        normalized,
+                        "source-attribution normalization",
+                    )
+                ):
+                    self.progress(
+                        f"{work.unit['id']} · source attribution normalized and LLM-audited"
+                    )
+                    self._approve_work(work, normalized)
+                    return True
+                if normalized_category != "source_attribution" and not valid:
+                    work.stage = "generation"
+                    work.stage_try = 0
+                    work.correction = (
+                        "Deterministic attribution normalization exposed another validation "
+                        f"failure ({normalized_category}): {normalized_detail}"
+                    )
+                    work.malformed_retries += 1
+                    return False
                 work.stage = "source_attribution_repair"
                 work.stage_try = 0
                 work.draft = payload
@@ -4690,7 +4979,10 @@ supervisor enforces a {max_runtime}-second ceiling for the complete wave.
                         heartbeat_at=now_iso(),
                     )
                 break
-            self._process_generation_rows(ready_course_maps)
+            if os.environ.get("STUDY_GUIDE_BATCH_TESTING") == "1":
+                self._process_generation_rows(ready_course_maps)
+            else:
+                self._process_direct_rows(ready_course_maps)
             pending_course_maps = deferred_course_maps
 
     def _process_generation_rows(self, rows: Sequence[sqlite3.Row]) -> None:
@@ -4767,6 +5059,65 @@ supervisor enforces a {max_runtime}-second ceiling for the complete wave.
             if self.run_row()["status"] in STOP_RUN_STATES:
                 return
 
+    def _process_direct_rows(self, rows: Sequence[sqlite3.Row]) -> None:
+        """Generate independent course maps concurrently without another V2 dispatcher."""
+
+        def one(row: sqlite3.Row) -> tuple[str, str | None]:
+            unit_id = row["unit_id"]
+            try:
+                self.process_unit(row, direct=True)
+                return unit_id, None
+            except StopRequested as exc:
+                return unit_id, str(exc)
+            except Exception as exc:
+                detail = f"{type(exc).__name__}: {exc}"
+                self.set_unit(
+                    unit_id,
+                    "failed",
+                    detail=detail,
+                    completed_at=now_iso(),
+                    lease_owner=None,
+                    lease_until=None,
+                    heartbeat_at=now_iso(),
+                )
+                append_event(
+                    self.store,
+                    self.run_id,
+                    {
+                        "type": "unit_exception",
+                        "unit_id": unit_id,
+                        "detail": detail,
+                        "traceback": traceback.format_exc(),
+                    },
+                )
+                return unit_id, detail
+            finally:
+                self.store.close_thread()
+
+        for row in rows:
+            self.set_unit(
+                row["unit_id"],
+                "generating",
+                lease_owner=f"{self.worker_tag}-direct",
+                heartbeat_at=now_iso(),
+                started_at=row["started_at"] or now_iso(),
+                detail="direct course-map generation",
+            )
+        with ThreadPoolExecutor(
+            max_workers=min(len(rows), int(self.contract["workers"]))
+        ) as pool:
+            futures = [pool.submit(one, row) for row in rows]
+            for future in as_completed(futures):
+                unit_id, detail = future.result()
+                self.progress(
+                    f"{unit_id} · direct map "
+                    f"{'failed: ' + detail if detail else 'approved'}"
+                )
+                export_status(self.store, self.run_id)
+                if self.stop_reason():
+                    self.local_stop.set()
+                    return
+
 
     def worker(self, index: int) -> None:
         worker = f"{self.worker_tag}-w{index}"
@@ -4827,7 +5178,8 @@ supervisor enforces a {max_runtime}-second ceiling for the complete wave.
             )
         append_event(self.store, self.run_id, {"type": "run_started", "pid": os.getpid(), "workers": self.contract["workers"]})
         self.progress(
-            f"started with Multi Agent V2 waves up to {self.contract['workers']} leaf worker(s);"
+            f"started with guide V2 waves and direct course-map calls up to "
+            f"{self.contract['workers']} concurrent worker(s);"
             f" model={self.contract['models']['generator']},"
             f" reasoning={self.contract['model_reasoning_effort']},"
             f" verbosity={self.contract['model_verbosity']}"
@@ -4889,6 +5241,7 @@ def execute_calibration(store: Store, plan: dict[str, Any], args: argparse.Names
         max_invocations=max_calls,
         max_tokens=args.max_tokens,
         transient_retries=2,
+        install_immediately=False,
     )
     run_id = create_run(
         store,
@@ -4971,8 +5324,9 @@ def current_calibration(store: Store, plan: dict[str, Any]) -> dict[str, Any] | 
 
 
 def generate_all(root: Path, args: argparse.Namespace | None = None) -> dict[str, Any]:
-    """Plan, approve, and generate in bounded Multi Agent V2 waves; calibration is opt-in."""
+    """Generate guides in V2 waves and dependency-ordered maps through direct calls."""
     args = args or argparse.Namespace()
+    candidates_only = bool(getattr(args, "candidates_only", False))
     common_model = getattr(args, "model", None)
     model_overrides = {"generator": getattr(args, "generator_model", None) or common_model}
     config_overrides: dict[str, Any] = {
@@ -5014,7 +5368,7 @@ def generate_all(root: Path, args: argparse.Namespace | None = None) -> dict[str
     run_step = 4 if calibrate_first else 3
     max_concurrency = int(getattr(args, "max_concurrency", None) or plan["config"]["max_concurrency"])
     print(
-        f"[{approval_step}/{total_steps}] Applying V2-wave budgets "
+        f"[{approval_step}/{total_steps}] Applying guide-wave and direct-map budgets "
         f"(max concurrency {max_concurrency})...",
         flush=True,
     )
@@ -5031,6 +5385,7 @@ def generate_all(root: Path, args: argparse.Namespace | None = None) -> dict[str
             generator_model=None,
             reasoning_effort=None,
             verbosity=None,
+            install_immediately=not candidates_only,
         ),
     )
 
@@ -5071,15 +5426,29 @@ def generate_all(root: Path, args: argparse.Namespace | None = None) -> dict[str
     else:
         scope = "every configured unit"
     print(
-        f"[{run_step}/{total_steps}] Generating {scope} in waves of up to "
-        f"{max_concurrency} ({run_id})...",
+        f"[{run_step}/{total_steps}] Generating {scope} with up to "
+        f"{max_concurrency} concurrent workers ({run_id})...",
         flush=True,
     )
     print(f"Status: {status_path}", flush=True)
     status = run_supervisor(store, run_id, verbose=getattr(args, "verbose", True))
     promotion_id = None
     output_paths: list[str] = []
-    candidates_only = bool(getattr(args, "candidates_only", False))
+    if not candidates_only:
+        plan_units = {unit["id"]: unit for unit in plan["units"]}
+        for row in store.rows(
+            "SELECT unit_id, candidate_hash FROM units "
+            "WHERE run_id = ? AND state = 'approved' ORDER BY ordinal",
+            (run_id,),
+        ):
+            unit = plan_units[row["unit_id"]]
+            target = root / unit["target"]
+            if (
+                target.is_file()
+                and row["candidate_hash"]
+                and sha256_file(target) == row["candidate_hash"]
+            ):
+                output_paths.append(str(target))
     if status == "completed" and not candidates_only:
         promotion_id = promote_run(store, run_id)
         output_paths = [
@@ -5101,7 +5470,7 @@ def generate_all(root: Path, args: argparse.Namespace | None = None) -> dict[str
         "candidates_path": str(path_within(root, plan["config"]["candidate_root"], "candidate root") / run_id),
         "promotion_id": promotion_id,
         "output_paths": output_paths,
-        "canonical_files_changed": bool(promotion_id),
+        "canonical_files_changed": bool(output_paths),
     }
     print(json.dumps(result, indent=2), flush=True)
     return result
@@ -5280,6 +5649,10 @@ def repair_diagrams_from_run(
         )
         repaired = supervisor.repair_candidate_diagrams(unit, value)
         candidate_path, candidate_hash = supervisor.save_candidate(unit_id, repaired)
+        installed = install_approved_preview(
+            store, run_id, unit, Path(candidate_path), candidate_hash
+        )
+        supervisor.progress(f"{unit_id} · installed immediately: {installed}")
         supervisor.set_unit(
             unit_id,
             "approved",
@@ -5406,6 +5779,10 @@ def repair_source_attribution_from_run(
         )
         repaired = supervisor.repair_candidate_source_attribution(unit, value)
         candidate_path, candidate_hash = supervisor.save_candidate(unit_id, repaired)
+        installed = install_approved_preview(
+            store, run_id, unit, Path(candidate_path), candidate_hash
+        )
+        supervisor.progress(f"{unit_id} · installed immediately: {installed}")
         supervisor.set_unit(
             unit_id,
             "approved",
@@ -5617,6 +5994,7 @@ def repair_sections(root: Path, args: argparse.Namespace) -> dict[str, Any]:
             generator_model=None,
             reasoning_effort=None,
             verbosity=None,
+            install_immediately=not getattr(args, "candidates_only", False),
         ),
     )
     run_id = create_approved_run(store, approval, selected_unit_ids=[unit["id"]])
@@ -5687,6 +6065,11 @@ def repair_sections(root: Path, args: argparse.Namespace) -> dict[str, Any]:
                 getattr(args, "instruction", None),
             )
         candidate_path, candidate_hash = supervisor.save_candidate(unit["id"], repaired)
+        if supervisor.contract.get("install_immediately", False):
+            installed = install_approved_preview(
+                store, run_id, unit, Path(candidate_path), candidate_hash
+            )
+            supervisor.progress(f"{unit['id']} · installed immediately: {installed}")
         supervisor.set_unit(
             unit["id"],
             "approved",
@@ -6079,13 +6462,88 @@ def promotion_preflight(
         current = current_unit_material(store.root, unit)
         if current["source_hashes"] != unit["source_hashes"] or current["prompt_hash"] != unit["prompt_hash"]:
             raise StaleInput(f"{unit['id']} source or prompt changed before promotion")
-        if current["target_hash"] != unit["target_hash"]:
+        preview_installed = bool(
+            row["candidate_hash"] and current["target_hash"] == row["candidate_hash"]
+        )
+        if current["target_hash"] != unit["target_hash"] and not preview_installed:
             raise StaleInput(f"{unit['id']} target changed before promotion")
         candidate = Path(row["candidate_path"] or "")
         if not candidate.is_file() or sha256_file(candidate) != row["candidate_hash"]:
             raise StaleInput(f"{unit['id']} candidate is missing or changed")
         result.append((unit, row))
     return result
+
+
+def install_approved_preview(
+    store: Store,
+    run_id: str,
+    unit: dict[str, Any],
+    candidate: Path,
+    candidate_hash: str,
+) -> Path:
+    """Expose one validated target immediately while retaining its candidate."""
+    if not candidate.is_file() or sha256_file(candidate) != candidate_hash:
+        raise StaleInput(f"{unit['id']} approved candidate is missing or changed")
+    target = store.root / unit["target"]
+    original_hash = unit.get("target_hash")
+    preview_original = (
+        run_directory(store, run_id) / "preview-originals" / unit["target"]
+    )
+    if target.is_file():
+        current_hash = sha256_file(target)
+        if current_hash != candidate_hash:
+            if original_hash is None or current_hash != original_hash:
+                raise StaleInput(f"{unit['id']} preview target changed after planning")
+            preview_original.parent.mkdir(parents=True, exist_ok=True)
+            temporary_original = preview_original.with_name(
+                preview_original.name + f".tmp-{uuid.uuid4().hex[:8]}"
+            )
+            shutil.copyfile(target, temporary_original)
+            os.replace(temporary_original, preview_original)
+        else:
+            return target
+    elif original_hash is not None:
+        raise StaleInput(f"{unit['id']} original target disappeared before preview installation")
+    target.parent.mkdir(parents=True, exist_ok=True)
+    temporary = target.with_name(target.name + f".tmp-preview-{uuid.uuid4().hex[:8]}")
+    shutil.copyfile(candidate, temporary)
+    os.replace(temporary, target)
+    append_event(
+        store,
+        run_id,
+        {
+            "type": "preview_installed",
+            "unit_id": unit["id"],
+            "target_path": str(target),
+            "candidate_hash": candidate_hash,
+        },
+    )
+    return target
+
+
+def install_approved_previews(store: Store, run_id: str) -> list[str]:
+    """Install any already-approved active-run candidates that lack previews."""
+    run = store.row("SELECT plan_id, kind FROM runs WHERE id = ?", (run_id,))
+    if run is None or run["kind"] != "batch":
+        raise BatchError(f"Unknown batch run: {run_id}")
+    plan = load_plan(store, run["plan_id"])
+    plan_units = {unit["id"]: unit for unit in plan["units"]}
+    installed: list[str] = []
+    rows = store.rows(
+        "SELECT * FROM units WHERE run_id = ? AND state = 'approved' ORDER BY ordinal",
+        (run_id,),
+    )
+    for row in rows:
+        unit = plan_units[row["unit_id"]]
+        path = install_approved_preview(
+            store,
+            run_id,
+            unit,
+            Path(row["candidate_path"] or ""),
+            row["candidate_hash"],
+        )
+        installed.append(str(path))
+    return installed
 
 
 def promote_run(store: Store, run_id: str, *, approved_only: bool = False) -> str:
@@ -6136,10 +6594,28 @@ def promote_run(store: Store, run_id: str, *, approved_only: bool = False) -> st
             )
             for unit, row in units:
                 target = store.root / unit["target"]
-                archive = archive_dir / unit["target"] if target.exists() else None
+                target_was_originally_present = unit["target_hash"] is not None
+                archive = (
+                    archive_dir / unit["target"]
+                    if target_was_originally_present
+                    else None
+                )
+                preview_original = (
+                    run_directory(store, run_id) / "preview-originals" / unit["target"]
+                )
+                initial_state = "planned"
+                if target_was_originally_present and preview_original.is_file():
+                    assert archive is not None
+                    if sha256_file(preview_original) != unit["target_hash"]:
+                        raise StaleInput(
+                            f"{unit['id']} preview archive changed before promotion"
+                        )
+                    archive.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copyfile(preview_original, archive)
+                    initial_state = "archived"
                 connection.execute(
                     "INSERT INTO promotion_items(promotion_id, unit_id, ordinal, target_path, archive_path, "
-                    "candidate_path, target_existed, state) VALUES(?, ?, ?, ?, ?, ?, ?, 'planned')",
+                    "candidate_path, target_existed, state) VALUES(?, ?, ?, ?, ?, ?, ?, ?)",
                     (
                         promotion_id,
                         unit["id"],
@@ -6147,7 +6623,8 @@ def promote_run(store: Store, run_id: str, *, approved_only: bool = False) -> st
                         str(target),
                         str(archive) if archive else None,
                         row["candidate_path"],
-                        1 if target.exists() else 0,
+                        1 if target_was_originally_present else 0,
+                        initial_state,
                     ),
                 )
     with store.transaction() as connection:
@@ -6496,6 +6973,11 @@ def build_parser() -> argparse.ArgumentParser:
     approve_parser.add_argument("--reasoning-effort", choices=sorted(VALID_REASONING_EFFORTS))
     approve_parser.add_argument("--verbosity", choices=sorted(VALID_VERBOSITY_LEVELS))
     approve_parser.add_argument(
+        "--candidates-only",
+        action="store_true",
+        help="Keep approved files hidden instead of installing each one immediately",
+    )
+    approve_parser.add_argument(
         "--max-concurrency",
         type=int,
         default=None,
@@ -6593,6 +7075,13 @@ def build_parser() -> argparse.ArgumentParser:
         help="Install only approved candidates from an ownerless checkpointed run",
     )
     add_common_root(promote_parser)
+
+    preview_parser = subparsers.add_parser(
+        "install-previews",
+        help="Install all validated files from an active run while retaining promotion candidates",
+    )
+    preview_parser.add_argument("run_id")
+    add_common_root(preview_parser)
 
     rollback_parser = subparsers.add_parser("rollback", help="Reverse a promotion from its archive journal")
     rollback_parser.add_argument("promotion_id")
@@ -6714,6 +7203,9 @@ def main(argv: Sequence[str] | None = None) -> int:
                 store, args.run_id, approved_only=args.approved_only
             )
             print(promotion_id)
+            return 0
+        if args.command == "install-previews":
+            print(json.dumps(install_approved_previews(store, args.run_id), indent=2))
             return 0
         if args.command == "rollback":
             rollback_promotion(store, args.promotion_id)

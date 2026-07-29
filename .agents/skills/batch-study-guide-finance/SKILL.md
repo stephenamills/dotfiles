@@ -1,6 +1,6 @@
 ---
 name: batch-study-guide-finance
-description: Generate and manage finance-focused Markdown study guides, quantitative asset companions, workbook manuals, in-depth topic course maps, and whole-course maps from local transcripts, PDFs, and Microsoft Excel workbooks through deterministic Codex Multi Agent V2 subagent waves. Use for finance, trading, economics, accounting, investment, risk, valuation, markets, and related quantitative courses when Codex must generate all or missing guides, synthesize maps, regenerate one lesson or asset companion, configure PDF or spreadsheet units, resolve unit IDs, inspect status, stop or resume runs, promote candidates, or roll back installed guides. Invoke the bundled supervisor on the user's behalf; do not require the user to operate its CLI.
+description: Generate and manage finance-focused Markdown study guides, quantitative asset companions, workbook manuals, in-depth topic course maps, and whole-course maps from local transcripts, PDFs, and Microsoft Excel workbooks through deterministic validation, Codex Multi Agent V2 guide waves, and direct concurrent map synthesis. Use for finance, trading, economics, accounting, investment, risk, valuation, markets, and related quantitative courses when Codex must generate all or missing guides, install each validated file immediately, synthesize maps, regenerate one lesson or asset companion, configure PDF or spreadsheet units, resolve unit IDs, inspect status, stop or resume runs, promote candidates, or roll back installed guides. Invoke the bundled supervisor on the user's behalf; do not require the user to operate its CLI.
 ---
 
 # Batch Study Guide — Finance
@@ -11,22 +11,21 @@ Act as the TUI controller for the bundled supervisor. Translate natural-language
 
 - Resolve `scripts/study_guide_batch.py` relative to this file.
 - Use the supervisor for configuration, planning, generation, installation, recovery, and rollback. Never edit its SQLite state.
-- Let the supervisor launch fresh depth-0 Codex dispatchers with `--enable multi_agent_v2`. It processes generation and repair work through one leaf `spawn_agent` call per isolated task, then waits for every child to reach a terminal state. Select the `agents` tool namespace per invocation and expose spawn metadata. Course configuration controls the leaf-worker concurrency (six by default); the V2 session limit is one higher because it includes the dispatcher. Leaf workers never spawn agents.
+- Let the supervisor launch fresh depth-0 Codex dispatchers with `--enable multi_agent_v2` for transcript, PDF, and workbook guide waves. It uses one leaf `spawn_agent` call per isolated task and waits for every child to reach a terminal state. Independent topic maps use direct concurrent Codex invocations after their guide dependencies are approved; the whole-course map runs only after its topic maps are approved. Course configuration controls both paths (six workers by default). V2 leaf workers never spawn agents.
 - Let nested Codex processes load user configuration and do not pass the legacy `--sandbox` mode. On Codex 0.144, if the user configuration still declares legacy `agents.max_threads`, the supervisor uses `--ignore-user-config` for that isolated dispatcher because V2 otherwise refuses to start; authentication still uses `CODEX_HOME` and all required V2 settings are passed explicitly. When the supervisor itself runs inside a Codex sandbox, it gives the nested child session a `:danger-full-access` override so macOS does not apply a second Seatbelt sandbox; the parent TUI remains the enforcement boundary. This affects nested Codex only, not the direct opt-in `mmdc` renderer. Never set this override globally.
-- Do not bypass, replace, or manually imitate the V2 dispatcher. If the V2 capability is unavailable, report the supervisor's explicit failure and preserve resumable state.
+- Do not bypass, replace, or manually imitate either supervisor execution path. If V2 is unavailable for guide waves, report the explicit failure and preserve resumable state.
 - Run long foreground commands in a persistent terminal session and poll until completion. Relay concise progress.
-- Do not add calibration or independent auditing unless explicitly requested.
+- Do not add calibration or broad post-hoc auditing unless explicitly requested. The built-in semantic audit of deterministic text repair is mandatory and is not an optional review phase.
 - Infer `--root` from an explicit path or unambiguous course folder.
 - Resolve user-facing lesson numbers, titles, and filenames yourself; never ask the user to supply a unit ID.
 
 ### Lifecycle continuity (mandatory)
 
-- When the user asks to finish, resume, continue, or retry an existing batch, inspect `status` and resume that exact `RUN_ID` first. Do not create a replacement plan, approval, or run merely to change timeout, model, concurrency, or selection.
-- Treat a stopped, failed, or exhausted lifecycle as the source of truth for what remains. Preserve its immutable plan, approval, attempts, and candidates; use `resume`, `promote --approved-only`, `repair-diagrams`, `repair-attribution`, or `repair-sections` as appropriate. A failed ownerless run may still use `promote --approved-only`; only units already in `approved` state are installed.
+- When the user asks to finish, resume, continue, or retry an existing batch, inspect `status` and resume that exact `RUN_ID` first. Do not create a replacement plan, approval, or run merely to change the model, concurrency, or selection.
+- Treat a stopped, failed, or exhausted lifecycle as the source of truth for what remains. Preserve its immutable plan, approval, attempts, and candidates; use `resume`, `install-previews`, `promote --approved-only`, `repair-diagrams`, `repair-attribution`, or `repair-sections` as appropriate. A failed ownerless run may finalize only its approved units; legacy or candidates-only runs require explicit preview installation first.
 - Never launch a new full-plan run when the request names a subset or when completed canonical outputs already exist. If a new lifecycle is genuinely required, first explain why the original cannot be resumed and construct a plan whose `unit_overrides.exclude` removes every completed or out-of-scope unit before approval.
 - Never silently regenerate completed guides from scratch. A fresh plan is allowed only after explicit user authorization or when no resumable lifecycle exists; report the exact reason and the affected unit scope before starting it.
-- If a timeout extension is needed, do not substitute a new lifecycle without user confirmation. Prefer resuming the existing run; if the supervisor cannot alter its immutable timeout, report that constraint and ask whether to authorize a new approval.
-- Distinguish the immutable per-model-call timeout from total wave/run wall-clock time: six workers, retries, Mermaid/attribution repairs, and successive waves can make a run last much longer than one call's timeout. Report both values; never describe wave elapsed time as a single worker exceeding its call timeout.
+- Individual model calls have no shorter timeout. Only the immutable global run deadline can stop active work; progress heartbeats, named wave rosters, and bounded retries provide liveness without killing a healthy long call.
 
 Define the command prefix conceptually as:
 
@@ -59,11 +58,12 @@ Register multiple workbook sources in one spreadsheet unit only when the user or
 - **Stop:** `stop --root ROOT RUN_ID`
 - **Resume:** `resume --root ROOT RUN_ID`
 - **Repair a failed diagram without regenerating the guide:** `repair-diagrams SOURCE_RUN_ID --root ROOT [--unit UNIT_ID]`
-- **Repair prohibited attribution lines in a preserved draft without regenerating the guide:** `repair-attribution SOURCE_RUN_ID --root ROOT [--unit UNIT_ID]`; all flagged lines are rewritten in one structured V2 subagent task and applied atomically while unselected bytes remain unchanged
+- **Repair prohibited attribution lines in a preserved draft without regenerating the guide:** `repair-attribution SOURCE_RUN_ID --root ROOT [--unit UNIT_ID]`; safe wrappers are removed deterministically, the exact diff receives a semantic LLM audit, and rejected or ambiguous changes fall back to one scoped structured repair while unselected bytes remain unchanged
 - **Regenerate selected installed sections or diagrams only:** `repair-sections --root ROOT --unit UNIT_ID [--section HEADING] [--diagram INDEX]`
 - **Recover valid sections from a failed targeted run and repair only remaining diagrams:** add `--recover-from-run RUN_ID` with the selected `--section` headings
 - **Keep candidates without installing:** add `--candidates-only`
-- **Install candidates:** `promote RUN_ID --root ROOT`
+- **Expose approved files from an older active run:** `install-previews RUN_ID --root ROOT`
+- **Finalize installation and rollback journals:** `promote RUN_ID --root ROOT`
 - **Install preserved approved candidates from an exhausted checkpoint without touching unresolved units:** `promote RUN_ID --root ROOT --approved-only`
 - **Undo installation:** `rollback PROMOTION_ID --root ROOT`
 - **Permanently purge one invalid, unpromoted lifecycle:** `purge-run RUN_ID --root ROOT`; use only after the user explicitly identifies the lifecycle as unrecoverable
@@ -71,7 +71,7 @@ Register multiple workbook sources in one spreadsheet unit only when the user or
 Use `plan`, `approve`, `run`, or `start` only for advanced lifecycle or budget control.
 Use `max_concurrency` in `study-guide-batch.json` as the course default. Forward `--max-concurrency N` only as a one-run override; supported values are one through 32.
 
-Course maps are first-class units and are enabled by default. The supervisor groups planned guide targets by their parent topic folder under `output_root`, generates the guide units first, generates one in-depth map per topic from the approved guide candidates, and finally generates one in-depth whole-course map using only the approved topic-map candidates. Selecting a guide also selects its topic map and the whole-course map. Use `course_maps.enabled: false` only when the user explicitly opts out of all maps; use `course_maps.whole_course.enabled: false` only when the user explicitly opts out of the final synthesis. Read [references/configuration.md](references/configuration.md) for topic discovery, output naming, prompt overrides, and dependency behavior.
+Course maps are first-class units and are enabled by default. The supervisor groups planned guide targets by their parent topic folder under `output_root`, generates guide units first, generates independent topic maps concurrently from approved guide candidates, and finally generates one whole-course map using only approved topic-map candidates. Topic and whole-course maps have separate exact 13-section contracts. Whole-course source staging retains every numbered section while compacting each topic map to a bounded paragraph-preserving excerpt. Selecting a guide also selects its topic map and the whole-course map. Use `course_maps.enabled: false` only when the user explicitly opts out of all maps; use `course_maps.whole_course.enabled: false` only when the user explicitly opts out of the final synthesis. Read [references/configuration.md](references/configuration.md) for topic discovery, output naming, prompt overrides, and dependency behavior.
 
 ## Mermaid diagram contract
 
@@ -107,6 +107,8 @@ Number every H2 major section sequentially with Arabic numerals, such as `## 1. 
 
 Keep H3 headings descriptive and unnumbered in ordinary exposition. Avoid nested numbering merely because a heading is subordinate; repeated numeric prefixes create visual noise and make long technical guides harder to scan. Number H3 headings only when the headings themselves enumerate work the learner should complete or check in order, including questions, exercises, calculation problems, drills, cases, applications, assessments, or checklist steps. Use the same principle for equivalent active-learning sequences even when their label differs.
 
+The supervisor strips decorative numeric prefixes from ordinary H3 headings deterministically before validation while preserving numbered learner-work headings. It never changes H2 numbering mechanically.
+
 For calculation questions, group candidates by normalized solution family before drafting. Candidates share a family when they solve for the same unknown with the same formula and operator sequence after constants, labels, and signs are normalized. Use one standalone question per family by default and never more than two. A second is justified only by a genuinely different reasoning branch, binding constraint, common sign or unit trap, or material decision interpretation. A changed number, direction, or result sign alone is not distinct. Preserve three or more deliberate contrast scenarios as subparts of one question with one shared formula and a compact table. Preserve distinct dependent steps in a chained calculation, but present the chain as one multi-part case study rather than unrelated questions.
 
 ## Depth interpretation
@@ -119,7 +121,9 @@ Where the prompts license synthesis, consolidation, or conciseness, those clause
 
 ## In-depth course map contract
 
-A topic course map is a teaching synthesis derived from the complete set of study chapters for that topic. The final whole-course map is a higher-order teaching synthesis derived only from the complete set of topic course maps, never directly from transcripts, PDFs, workbooks, or study chapters. Neither kind is a short directory, link list, reading checklist, or collection of one-paragraph summaries. Let the supervisor generate topic maps from approved study-guide candidates in the second dependency phase, then generate the whole-course map from approved topic-map candidates in the third phase of the same run. Installed dependencies are used when a map is selected independently. Generate independent topic maps concurrently when model and concurrency settings allow.
+A topic course map is a teaching synthesis derived from the complete set of study guides for that topic. The final whole-course map is a higher-order teaching synthesis derived only from the complete set of topic course maps, never directly from transcripts, PDFs, workbooks, or study guides. Neither kind is a short directory, link list, reading checklist, or collection of one-paragraph summaries. Let the supervisor generate topic maps directly and concurrently from approved guide candidates in the second dependency phase, then generate the whole-course map from approved topic-map candidates in the third phase of the same run. Installed dependencies are used when a map is selected independently.
+
+Require the exact ordered 13-section structures bundled separately for topic and whole-course maps. Reject missing, renamed, reordered, or extra H2 sections, fewer than two substantive Mermaid diagrams, or a missing direct-dependency link.
 
 Use established in-depth course maps in adjacent courses as structural references when available. Preserve the subject matter and terminology of the mapped chapters; do not copy unrelated content from an exemplar. Each topic map must fully develop:
 
@@ -143,7 +147,7 @@ Keep course-map prose in direct instructional voice and apply the same attributi
 
 Preserve the defaults (`gpt-5.6-sol`, `xhigh` reasoning, high verbosity) unless the user specifies overrides. Forward explicit choices with `--model`, `--reasoning-effort`, and `--verbosity`.
 
-The default per-model-call timeout is 20 minutes. Calibration may raise it as high as 30 minutes; advanced lifecycle commands may explicitly override it within the supported 10–30 minute range.
+Do not impose a per-model-call timeout. The immutable global run deadline is the only wall-clock ceiling, and an interrupted deadline checkpoint remains resumable.
 
 Global Codex configuration may set `features.multi_agent_v2.max_concurrent_threads_per_session = 7` and `features.multi_agent_v2.tool_namespace = "agents"`. The supervisor enables V2 per dispatcher with `--enable multi_agent_v2`, which is compatible with the installed 0.144 CLI family. If that version inherits `agents.max_threads`, it isolates only the dispatcher from user configuration because V2 otherwise rejects startup. The session limit includes the dispatcher, so use worker concurrency plus one. Select the named `nested-codex` permission profile with `default_permissions`; do not also set `sandbox_mode` or `[sandbox_workspace_write]`. The supervisor applies V2 and routing overrides per dispatcher, and applies any nested full-access exception only to its child invocation.
 
@@ -153,19 +157,19 @@ After generation:
 
 1. Verify successful command exit and read final status.
 2. Report the run ID and generated/skipped/failed counts.
-3. Report every installed canonical path.
+3. Report every installed canonical path, including files installed before the overall run finished.
 4. Report informational depth metrics for every generated guide — word count, rendered line count, H3 subsection count, display-math block count (lines beginning `$$`), and question count — for cross-run comparison. These are measurements only, never targets, floors, or pass/fail gates, and must not be fed back into generation.
 5. State when candidates-only mode suppressed installation.
 6. On failure, report the exact unit and error while preserving resumable state.
 
-Existing canonical files are archived for rollback during installation.
+Every deterministically validated file is copied to its canonical path immediately while its candidate remains intact. If a canonical file already existed, preserve its original bytes under the run’s `preview-originals` area. Final promotion turns those originals into the rollback archive and reconciles the retained candidates without regenerating content. `--candidates-only` is the sole ordinary-generation opt-out.
 
 ## Safety invariants
 
 - Treat plans and approvals as immutable after any source, prompt, mapping, target, validator, model, Codex version, or supervisor version change.
 - Keep dispatchers and workers in isolated run staging directories; never grant them writable canonical directories. Preserve Codex's per-run job SQLite state without editing its internal tables.
 - Stop on authentication, credit, quota, or usage exhaustion.
-- Treat ordinary generation as authorization to install successful outputs.
+- Treat ordinary generation as authorization to install each successful output immediately, regardless of whether it is a transcript guide, PDF companion, workbook manual, topic map, or whole-course map.
 - Preserve retired review prompts under `archive/audit-prompts/`; never inject them into generation.
 
 Consult [CLI-COOKBOOK.md](CLI-COOKBOOK.md) only when the user asks for copy-ready terminal commands.

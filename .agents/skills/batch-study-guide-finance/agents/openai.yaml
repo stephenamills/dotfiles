@@ -1,4 +1,4 @@
 interface:
   display_name: "Batch Study Guide — Finance"
-  short_description: "Generate finance guides and course maps"
-  default_prompt: "Use $batch-study-guide-finance to generate all missing finance study guides, one in-depth map per major topic, and a final whole-course map sourced only from those topic maps, then report the installed paths."
+  short_description: "Generate and install finance guides and maps"
+  default_prompt: "Use $batch-study-guide-finance to generate all missing finance guides and dependency-ordered course maps, installing every validated file immediately and reporting each canonical path."

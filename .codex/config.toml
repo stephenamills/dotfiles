@@ -1,5 +1,5 @@
 # ----- Core -----
-model              = "gpt-5.6-sol"
+model              = "gpt-5.6-luna"
 approval_policy    = "on-request"
 approvals_reviewer = "auto_review"
 file_opener        = "vscode"
@@ -10,13 +10,9 @@ plan_mode_reasoning_effort = "xhigh"
 
 check_for_update_on_startup = false
 
-default_permissions = "nested-codex"
+# default_permissions = "nested-codex"
 
-notify = [
-  "bash",
-  "-lc",
-  "osascript -e 'display notification \"Task finished\" with title \"Codex\"'; afplay /System/Library/Sounds/Glass.aiff"
-]
+notify = ["/Users/steph/.codex/notify-ntfy.sh"]
 
 [features]
 multi_agent = true
@@ -96,9 +92,6 @@ trust_level = "trusted"
 trust_level = "trusted"
 
 [projects."/private/var/folders"]
-trust_level = "trusted"
-
-[projects."/Users/steph/Downloads/4 Professional Forex Trading Masterclass/.study-guide-batch/dispatch/run-20260725-191412-a3f0c3e8/wave-001"]
 trust_level = "trusted"
 
 # ----- Plugins -----

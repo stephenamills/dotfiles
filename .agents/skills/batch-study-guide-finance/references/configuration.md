@@ -7,6 +7,7 @@
 - Declarative PDF and spreadsheet units
 - Automatic topic course-map units
 - Source extraction and Mermaid validation
+- Deterministic text repair and semantic audit
 - Lifecycle, state, and recovery
 
 ## Configuration example
@@ -73,7 +74,7 @@ Place `study-guide-batch.json` at the course root. Every configured path must re
 }
 ```
 
-The supervisor defaults to `gpt-5.6-sol`, `xhigh` reasoning, high verbosity, and six concurrent Multi Agent V2 leaf workers. Set `max_concurrency` to a course-level value from one through 32; `--max-concurrency` is a one-run override.
+The supervisor defaults to `gpt-5.6-sol`, `xhigh` reasoning, high verbosity, and six concurrent workers. Set `max_concurrency` to a course-level value from one through 32; `--max-concurrency` is a one-run override. Transcript, PDF, and workbook guides use Multi Agent V2 leaf waves. Independent topic maps use direct concurrent model calls under the same limit. Individual calls have no shorter timeout; only the immutable global run deadline can stop active work.
 
 `validators.enforce_heading_numbering` defaults to `true`. It requires sequentially numbered H2 major sections and rejects numbered H3 headings outside active learner-work sections such as questions, exercises, problems, drills, cases, applications, assessments, and checklists.
 
@@ -113,10 +114,10 @@ An asset unit's explicit prompt overrides `prompts.per_unit`, followed by `promp
 Each topic-map unit depends on every planned study guide in its topic. The whole-course unit depends on every topic-map unit and has no direct study-guide or original-asset sources. Generation occurs in three dependency phases within the same immutable run:
 
 1. Study-guide units generate and validate in concurrent V2 waves.
-2. Course-map units read the approved candidate bytes from phase one, generate concurrently by topic, and pass course-map-specific structure, Mermaid, and relative-link validation.
-3. The whole-course unit reads only the approved topic-map candidate bytes from phase two and passes the same in-depth structure, Mermaid, and complete relative-link validation.
+2. Course-map units read approved candidate bytes from phase one, generate through direct concurrent model calls, and pass topic-map-specific structure, Mermaid, and relative-link validation.
+3. The whole-course unit reads only approved topic-map candidate bytes from phase two and passes its separate structure, Mermaid, and complete relative-link validation.
 
-Promotion remains atomic across both phases. Existing course maps are archived with the other canonical outputs and restored by the same rollback journal.
+Each validated dependency is installed immediately while its candidate is retained. Final promotion reconciles those previews into one rollback journal. Existing course maps are archived and restored by that same journal.
 
 Selecting a study-guide unit with `--unit` automatically selects its corresponding topic course map and the whole-course map. `--missing-only` includes missing maps as well as missing guides. Selecting a course-map unit alone is allowed when all of its dependencies are already installed. Disable automatic maps only with an explicit course-level override:
 
@@ -141,7 +142,7 @@ To keep topic maps while explicitly suppressing only the final synthesis:
 }
 ```
 
-Use `unit_overrides` with the generated `course-map-...` unit ID to customize a map title, prompt, target, or exclusion. `prompts.by_kind.course_map` supplies a course-specific map prompt; otherwise the bundled in-depth prompt is used.
+Use `unit_overrides` with the generated `course-map-...` unit ID to customize a map title, prompt, target, or exclusion. `prompts.by_kind.course_map` supplies a course-specific map prompt. Otherwise topic maps use `default-topic-map-prompt.md` and the complete-course unit uses `default-whole-course-map-prompt.md`.
 
 ## Source extraction and Mermaid validation
 
@@ -151,17 +152,25 @@ OOXML workbooks are supported for `.xlsx` and `.xlsm`, including OOXML content w
 
 Every candidate must contain at least one fenced Mermaid diagram. D2 fences are unconditionally invalid. With `validate_mermaid_syntax` enabled, every block must pass the installed Mermaid 11.14 parser. `validate_mermaid_render` is disabled by default; when explicitly enabled, every block must also render through `mmdc` at a 1728×1117 CSS-pixel desktop viewport, and every SVG must expose a positive responsive `viewBox` without a fixed pixel width. That opt-in check launches Chromium and therefore needs an unsandboxed macOS process. Parser and render failures enter the diagram-only repair path. Spreadsheet unit instructions additionally require a source-grounded Mermaid dependency flowchart.
 
-The supervisor fingerprints original source bytes, prompts, targets, dependency identities, validators, models, and supervisor/Codex versions. Each wave writes isolated, self-contained row inputs with explicit byte budgets. Model processes cannot write source, output, candidate, or archive roots. Course-map validation additionally requires the full structural contract, at least two valid Mermaid diagrams, and a resolvable relative link to every dependent study chapter.
+The supervisor fingerprints original source bytes, prompts, targets, dependency identities, validators, models, and supervisor/Codex versions. Each invocation receives isolated, self-contained inputs with explicit byte budgets. Model processes cannot write source, output, candidate, or archive roots. Topic and whole-course maps have separate exact ordered 13-section contracts. Both require at least two valid Mermaid diagrams and a resolvable relative link to every direct dependency. Whole-course staging removes repeated diagram source and retains every numbered section from every topic map within a dynamic per-source character budget.
+
+## Deterministic text repair and semantic audit
+
+Validation is deterministic wherever correctness can be established mechanically: UTF-8 and completion-marker integrity, closed fences, source-attribution patterns, exact map headings, dependency links, Mermaid parsing, H2 sequencing, and H3 numbering rules.
+
+Before a model retry, decorative numeric prefixes are stripped only from ordinary H3 headings. Numbered questions, answers, exercises, calculations, cases, applications, assessments, and checklist steps remain numbered. H2 headings are never mechanically renumbered.
+
+Clear provenance wrappers such as “according to the transcript” or “the document states that” are removed deterministically without rewriting the remaining financial statement. The supervisor then sends only the unified diff to an LLM semantic audit. Approval requires preservation of financial meaning, quantities, dates, assumptions, qualifications, equations, symbols, units, signs, Markdown structure, links, table columns, and ordering. If the audit rejects the change—or the wrapper is ambiguous—the original draft remains authoritative and only the flagged lines enter a scoped structured LLM repair.
 
 ## Lifecycle, state, and recovery
 
-`generate-all` plans, approves conservative budgets, dispatches generation in bounded leaf-agent waves, waits for every child to reach a terminal state, validates each isolated Markdown artifact, and atomically installs successful candidates. Later waves contain only unresolved units or targeted repairs. Use `--unit` for one configured unit, `--missing-only` for absent canonical targets, or `--candidates-only` to suppress installation.
+`generate-all` plans, approves conservative budgets, dispatches guide generation in bounded leaf-agent waves, generates maps through dependency-ordered direct calls, and validates every isolated Markdown artifact. Immediately after one file validates, the supervisor copies it to its canonical target and keeps the candidate intact. It does not wait for the wave, phase, or run to finish. Use `--unit` for one configured unit, `--missing-only` for absent canonical targets, or `--candidates-only` as the explicit opt-out from all canonical installation.
 
 `repair-sections` creates a fresh immutable run for one installed unit, regenerates only explicitly selected H2 sections and/or one-based Mermaid blocks, validates the patched whole guide, and preserves all unselected bytes. Its successful candidate uses the same promotion and rollback journal as ordinary generation.
 
 When a targeted run produced valid section replacements but failed Mermaid parsing or rendering, `repair-sections --recover-from-run RUN_ID` recovers only the selected sections from the immutable attempt log and routes remaining diagram failures through diagram-only repair. It never installs the failed run's diagram or rewrites unaffected content.
 
-Supervisor SQLite state, leases, attempts, events, status reports, candidates, dispatcher inputs and manifests, isolated Codex thread SQLite state, and promotion journals live under `.study-guide-batch/`. The supervisor never edits Codex's internal state. Resume restarts only interrupted work and never regenerates approved units. Promotion rechecks fingerprints, archives existing targets, and installs candidates atomically. Rollback restores archived targets and returns installed candidates to candidate storage.
+Supervisor SQLite state, leases, attempts, events, status reports, candidates, dispatcher inputs and manifests, isolated Codex thread SQLite state, preview originals, and promotion journals live under `.study-guide-batch/`. The supervisor never edits Codex's internal state. Resume restarts only interrupted work and never regenerates approved units. `install-previews` exposes approved candidates from legacy or active runs. Final promotion rechecks fingerprints, moves preserved original targets into the rollback archive, reconciles retained candidates, and completes the journal. Rollback restores archived targets and returns installed candidates to candidate storage.
 
 `purge-run` is an explicitly destructive lifecycle operation. It refuses a live process owner, any promotion, a shared approval, or a shared plan. Eligible run, candidate, dispatcher, approval, and plan directories are staged before their database rows are deleted in one transaction; a failed transaction restores the staged directories.
 
@@ -181,4 +190,4 @@ non_code_mode_only = false
 
 Define the matching `[permissions.nested-codex]` profile in the same global configuration. The supervisor loads user configuration and does not pass the legacy `--sandbox` mode. It uses `--ignore-user-config` only for the isolated dispatcher when it detects the Codex 0.144-incompatible `agents.max_threads` setting. When it detects that it is already running inside a Codex sandbox, it passes the child-only `default_permissions=":danger-full-access"` override to avoid a rejected nested macOS Seatbelt application. The parent TUI remains sandboxed. Do not set this override globally, and do not combine permission profiles with `sandbox_mode` or `[sandbox_workspace_write]`.
 
-`max_concurrent_threads_per_session` includes the dispatcher, so the example permits six leaf workers plus one root dispatcher. The V2 settings keep GPT-5.6 Sol on the `agents` tool namespace with visible spawn metadata; `wait_agent` is present by default. The supervisor enables V2 with `--enable multi_agent_v2` and repeats the common table settings as per-invocation overrides, so a dispatcher does not depend on global feature persistence. The explicit command-line enable avoids the incompatible `enabled = true` table syntax in the installed 0.144 CLI family. On that version, a user-level `agents.max_threads` still makes V2 reject startup, so the supervisor detects it and starts only the isolated dispatcher with `--ignore-user-config`; authentication continues to use `CODEX_HOME` and the required V2 configuration is passed explicitly. `enable_fanout`, `agents.max_depth`, `agents.max_threads`, and `agents.job_max_runtime_seconds` are legacy CSV/V1 controls and do not configure V2 waves.
+`max_concurrent_threads_per_session` includes the dispatcher, so the example permits six guide leaf workers plus one root dispatcher. The V2 settings keep GPT-5.6 Sol on the `agents` tool namespace with visible spawn metadata; `wait_agent` is present by default. Direct course-map calls do not consume V2 leaf slots but remain bounded by `max_concurrency`. The supervisor enables V2 with `--enable multi_agent_v2` and repeats the common table settings as per-invocation overrides, so a dispatcher does not depend on global feature persistence. The explicit command-line enable avoids the incompatible `enabled = true` table syntax in the installed 0.144 CLI family. On that version, a user-level `agents.max_threads` still makes V2 reject startup, so the supervisor detects it and starts only the isolated dispatcher with `--ignore-user-config`; authentication continues to use `CODEX_HOME` and the required V2 configuration is passed explicitly. `enable_fanout`, `agents.max_depth`, `agents.max_threads`, and `agents.job_max_runtime_seconds` are legacy CSV/V1 controls and do not configure V2 waves.

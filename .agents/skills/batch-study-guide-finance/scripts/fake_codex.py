@@ -128,27 +128,60 @@ def course_map_candidate(prompt: str) -> str:
         f"{index}. [{Path(source).stem}](<{destination}>) — integrated chapter {index}."
         for index, (source, destination) in enumerate(links, 1)
     )
+    whole_course = "UNIT_ID: course-map-whole-course" in prompt
     headings = (
-        "Section Thesis and Learning Outcomes",
-        "Ordered Chapter Path",
-        "Architecture and Dependencies",
-        "Chapter-by-Chapter Learning and Mastery",
-        "Integrated Conceptual Derivation",
-        "Quantitative Framework and Worked Examples",
-        "Operating Workflow and Decision Gates",
-        "Cross-Chapter Synthesis",
-        "Misconceptions and Failure Modes",
-        "Cumulative Application",
-        "Mastery Checklist",
-        "Retrieval Questions and Answers",
-        "Spaced Review Plan",
+        (
+            "Course Thesis and Learning Outcomes",
+            "Ordered Topic Path",
+            "Whole-Course Architecture and Dependencies",
+            "Topic-by-Topic Learning and Mastery",
+            "Integrated Cross-Topic Derivation",
+            "Whole-Course Quantitative Framework and Worked Examples",
+            "End-to-End Operating Workflow and Decision Gates",
+            "Cross-Topic Synthesis",
+            "Whole-Course Misconceptions and Failure Modes",
+            "Cumulative Whole-Course Application",
+            "Whole-Course Mastery Checklist",
+            "Whole-Course Retrieval Questions and Answers",
+            "Whole-Course Spaced Review Plan",
+        )
+        if whole_course
+        else (
+            "Section Thesis and Learning Outcomes",
+            "Ordered Chapter Path",
+            "Architecture and Dependencies",
+            "Chapter-by-Chapter Learning and Mastery",
+            "Integrated Conceptual Derivation",
+            "Quantitative Framework and Worked Examples",
+            "Operating Workflow and Decision Gates",
+            "Cross-Chapter Synthesis",
+            "Misconceptions and Failure Modes",
+            "Cumulative Application",
+            "Mastery Checklist",
+            "Retrieval Questions and Answers",
+            "Spaced Review Plan",
+        )
     )
-    sections: list[str] = ["# Topic Course Map", ""]
+    ordered_heading = "Ordered Topic Path" if whole_course else "Ordered Chapter Path"
+    architecture_heading = (
+        "Whole-Course Architecture and Dependencies"
+        if whole_course
+        else "Architecture and Dependencies"
+    )
+    workflow_heading = (
+        "End-to-End Operating Workflow and Decision Gates"
+        if whole_course
+        else "Operating Workflow and Decision Gates"
+    )
+    sections: list[str] = [
+        "# Complete Course Map" if whole_course else "# Topic Course Map",
+        "",
+    ]
     for heading in headings:
         sections.extend([f"## {heading}", ""])
-        if heading == "Ordered Chapter Path":
+        if heading == ordered_heading:
             sections.extend([ordered_links, ""])
-        elif heading == "Architecture and Dependencies":
+        elif heading == architecture_heading:
             sections.extend(
                 [
                     "```mermaid",
@@ -159,7 +192,7 @@ def course_map_candidate(prompt: str) -> str:
                     "",
                 ]
             )
-        elif heading == "Operating Workflow and Decision Gates":
+        elif heading == workflow_heading:
             sections.extend(
                 [
                     "```mermaid",

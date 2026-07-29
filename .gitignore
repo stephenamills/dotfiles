@@ -1,5 +1,6 @@
 .DS_Store
 .vscode
+.codex/ntfy-topic
 
 # Generated files inside the versioned agent directory
 .agents/**/__pycache__/

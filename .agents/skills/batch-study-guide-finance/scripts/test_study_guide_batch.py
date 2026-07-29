@@ -148,6 +148,7 @@ class BatchTestCase(unittest.TestCase):
             "generator_model": None,
             "reasoning_effort": None,
             "verbosity": None,
+            "install_immediately": False,
         }
         values.update(overrides)
         return argparse.Namespace(**values)
@@ -207,6 +208,67 @@ class PlanningTests(BatchTestCase):
         self.assertFalse(valid)
         self.assertEqual(category, "heading_numbering")
 
+    def test_heading_normalizer_strips_only_decorative_h3_numbers(self) -> None:
+        validators = copy.deepcopy(batch.DEFAULT_CONFIG["validators"])
+        validators.update(
+            {
+                "require_completion_marker": False,
+                "require_mermaid_diagram": False,
+                "validate_mermaid_syntax": False,
+                "validate_mermaid_render": False,
+                "forbid_source_attribution": False,
+                "enforce_heading_numbering": True,
+            }
+        )
+        source = (
+            "# Guide\n\n"
+            "## 1. Market Structure\n\n"
+            "### 1. Regime mechanics\n\nTeaching.\n\n"
+            "## 2. Practice Questions\n\n"
+            "### 1. Diagnose the quote\n\nWork.\n"
+            "### 2. Checklist for review\n\nWork.\n"
+        ).encode()
+        normalized = batch.normalize_heading_numbering_bytes(source, validators)
+        self.assertIn(b"### Regime mechanics", normalized)
+        self.assertIn(b"### 1. Diagnose the quote", normalized)
+        self.assertIn(b"### 2. Checklist for review", normalized)
+        self.assertTrue(batch.validate_candidate_bytes(normalized, validators)[0])
+
+    def test_source_attribution_repair_is_mechanical_and_avoids_false_positives(self) -> None:
+        self.assertIsNone(
+            batch.SOURCE_ATTRIBUTION.search(
+                "Diversification changes the source of portfolio risk."
+            )
+        )
+        source = (
+            "According to the transcript, duration rises when maturity extends.\n"
+            "The course states that convexity refines the estimate.\n"
+            "The guide's sequence ends with interpretation.\n"
+        ).encode()
+        repaired = batch.deterministic_source_attribution_repair(source).decode()
+        self.assertEqual(
+            repaired,
+            (
+                "duration rises when maturity extends.\n"
+                "convexity refines the estimate.\n"
+                "the sequence ends with interpretation.\n"
+            ),
+        )
+        self.assertIsNone(batch.SOURCE_ATTRIBUTION.search(repaired))
+
+    def test_whole_course_compaction_retains_every_numbered_section(self) -> None:
+        source = "# Topic Map\n\n" + "".join(
+            f"## {index}. Section {index}\n\n"
+            + (f"Detail {index}. " * 500)
+            + "\n\n"
+            for index in range(1, 14)
+        )
+        compacted = batch.compact_whole_course_source(source, max_chars=12_000)
+        self.assertLessEqual(len(compacted), 13_000)
+        for index in range(1, 14):
+            self.assertIn(f"## {index}. Section {index}", compacted)
+            self.assertIn(f"Detail {index}.", compacted)
+
     def test_course_maps_are_first_class_default_topic_units(self) -> None:
         first = self.add_lesson(1, "Foundation")[0]
         second = self.add_lesson(2, "Macro")[0]
@@ -243,12 +305,15 @@ class PlanningTests(BatchTestCase):
         self.assertEqual(maps[0]["source_types"], {
             "outputs/1 Foundation/01. Foundation - Study Chapter.md": "markdown"
         })
-        self.assertIn("default-course-map-prompt.md", maps[0]["prompt_source"])
+        self.assertIn("default-topic-map-prompt.md", maps[0]["prompt_source"])
         self.assertEqual(
             maps[2]["dependencies"],
             ["course-map-1-foundation", "course-map-2-macro"],
         )
         self.assertEqual(maps[2]["sources"], [maps[0]["target"], maps[1]["target"]])
+        self.assertIn(
+            "default-whole-course-map-prompt.md", maps[2]["prompt_source"]
+        )
         self.seed_calibration(plan)
         store = batch.Store(self.root)
         approval = batch.approve_plan(store, plan, self.approval_args())
@@ -883,6 +948,18 @@ class TurnkeyTests(BatchTestCase):
         store = batch.Store(self.root)
         kinds = [row["kind"] for row in store.rows("SELECT kind FROM runs ORDER BY created_at")]
         self.assertEqual(kinds, ["batch"])
+        run = store.row("SELECT contract_json FROM runs WHERE id = ?", (result["run_id"],))
+        self.assertTrue(json.loads(run["contract_json"])["install_immediately"])
+        events = [
+            json.loads(line)
+            for line in (
+                batch.run_directory(store, result["run_id"]) / "events.jsonl"
+            ).read_text(encoding="utf-8").splitlines()
+        ]
+        self.assertEqual(
+            [event["unit_id"] for event in events if event["type"] == "preview_installed"],
+            ["01-alpha"],
+        )
 
     def test_generate_all_calibrate_first_reuses_matching_completed_calibration(self) -> None:
         self.add_lesson(1, "Alpha")
@@ -1034,6 +1111,163 @@ class TurnkeyTests(BatchTestCase):
 
 
 class ExecutionTests(BatchTestCase):
+    def test_approved_unit_is_installed_before_the_run_finishes(self) -> None:
+        self.add_lesson(1, "Alpha")
+        self.add_lesson(2, "Beta")
+        store, plan, approval = self.approved(install_immediately=True)
+        run_id = batch.create_approved_run(store, approval)
+        supervisor = batch.Supervisor(store, run_id, plan, verbose=False)
+        row = store.row(
+            "SELECT * FROM units WHERE run_id = ? ORDER BY ordinal LIMIT 1",
+            (run_id,),
+        )
+        assert row is not None
+        unit = next(item for item in plan["units"] if item["id"] == row["unit_id"])
+        value = (
+            "# Finance Study Guide\n\n"
+            "## Overview\n\nDirect teaching.\n\n"
+            "```mermaid\nflowchart LR\n  A[\"Input\"] --> B[\"Decision\"]\n```\n\n"
+            f"{batch.COMPLETION_MARKER}\n"
+        ).encode()
+        with mock.patch.object(supervisor, "invoke_generation", return_value=value):
+            supervisor.process_unit(row)
+
+        target = self.root / unit["target"]
+        candidate = (
+            self.root
+            / plan["config"]["candidate_root"]
+            / run_id
+            / unit["id"]
+            / "candidate.md"
+        )
+        self.assertTrue(target.is_file())
+        self.assertTrue(candidate.is_file())
+        self.assertEqual(target.read_bytes(), candidate.read_bytes())
+        self.assertIsNone(
+            store.row("SELECT id FROM promotions WHERE run_id = ?", (run_id,))
+        )
+        remaining = store.rows(
+            "SELECT state FROM units WHERE run_id = ? ORDER BY ordinal", (run_id,)
+        )
+        self.assertEqual([item["state"] for item in remaining], ["approved", "ready"])
+
+    def test_direct_course_map_scheduler_marks_every_call_as_direct(self) -> None:
+        first = self.add_lesson(1, "Foundation")[0]
+        second = self.add_lesson(2, "Macro")[0]
+        self.write_config(
+            course_maps={
+                "enabled": True,
+                "output_folder": "0 Course Maps",
+                "whole_course": {"enabled": True},
+            },
+            grouping_overrides=[
+                {
+                    "sources": [first.relative_to(self.root).as_posix()],
+                    "title": "01. Foundation",
+                    "output": "outputs/1 Foundation/01. Foundation - Study Chapter.md",
+                },
+                {
+                    "sources": [second.relative_to(self.root).as_posix()],
+                    "title": "02. Macro",
+                    "output": "outputs/2 Macro/02. Macro - Study Chapter.md",
+                },
+            ],
+        )
+        store, plan, approval = self.approved()
+        run_id = batch.create_approved_run(store, approval)
+        supervisor = batch.Supervisor(store, run_id, plan, verbose=False)
+        rows = store.rows(
+            "SELECT * FROM units WHERE run_id = ? AND unit_id LIKE 'course-map-%' "
+            "AND unit_id != 'course-map-whole-course' ORDER BY ordinal",
+            (run_id,),
+        )
+        seen: list[tuple[str, bool]] = []
+
+        def approve_without_model(row: object, *, direct: bool = False) -> None:
+            seen.append((row["unit_id"], direct))
+            supervisor.set_unit(
+                row["unit_id"],
+                "approved",
+                completed_at=batch.now_iso(),
+                lease_owner=None,
+                lease_until=None,
+                heartbeat_at=batch.now_iso(),
+            )
+
+        with mock.patch.object(
+            supervisor, "process_unit", side_effect=approve_without_model
+        ):
+            supervisor._process_direct_rows(rows)
+
+        self.assertEqual(
+            seen,
+            [
+                ("course-map-1-foundation", True),
+                ("course-map-2-macro", True),
+            ],
+        )
+
+    def test_deterministic_attribution_repair_requires_llm_audit_and_falls_back_safely(self) -> None:
+        self.add_lesson(1, "Alpha")
+        store, plan, approval = self.approved()
+        run_id = batch.create_approved_run(store, approval)
+        supervisor = batch.Supervisor(store, run_id, plan, verbose=False)
+        unit = plan["units"][0]
+        draft = (
+            "# Finance Study Guide\n\n"
+            "## Overview\n\n"
+            "According to the transcript, duration rises when maturity extends.\n\n"
+            "```mermaid\nflowchart LR\n  A[\"Input\"] --> B[\"Decision\"]\n```\n\n"
+            f"{batch.COMPLETION_MARKER}\n"
+        ).encode()
+
+        with mock.patch.object(
+            supervisor, "audit_deterministic_repair", return_value=True
+        ) as audit:
+            repaired = supervisor.repair_candidate_source_attribution(unit, draft)
+        audit.assert_called_once()
+        self.assertIn(b"duration rises when maturity extends.", repaired)
+        self.assertIsNone(
+            batch.SOURCE_ATTRIBUTION.search(repaired.decode("utf-8"))
+        )
+
+        replacement = json.dumps(
+            {
+                "replacements": [
+                    {
+                        "index": 1,
+                        "replacement": "Duration rises when maturity extends.",
+                    }
+                ]
+            }
+        ).encode()
+        result = batch.InvocationResult(
+            True,
+            "success",
+            "scoped repair approved",
+            0.0,
+            {},
+            0,
+            None,
+            0,
+            1,
+        )
+        with (
+            mock.patch.object(
+                supervisor, "audit_deterministic_repair", return_value=False
+            ) as rejected_audit,
+            mock.patch.object(
+                supervisor, "invoke_once", return_value=(result, replacement)
+            ) as scoped_repair,
+        ):
+            repaired = supervisor.repair_candidate_source_attribution(unit, draft)
+        rejected_audit.assert_called_once()
+        scoped_repair.assert_called_once()
+        self.assertIn(b"Duration rises when maturity extends.", repaired)
+        self.assertIsNone(
+            batch.SOURCE_ATTRIBUTION.search(repaired.decode("utf-8"))
+        )
+
     def test_whole_course_map_runs_after_topic_maps_and_uses_only_their_candidates(self) -> None:
         first = self.add_lesson(1, "Foundation")[0]
         second = self.add_lesson(2, "Macro")[0]
@@ -1246,15 +1480,22 @@ class ExecutionTests(BatchTestCase):
         self.assertEqual(state["stages"]["generation"], 1)
         self.assertEqual(state["stages"]["diagram_repair"], 2)
 
-    def test_timeout_kills_descendant_and_policy_activity_fails(self) -> None:
+    def test_global_deadline_kills_descendant_and_policy_activity_fails(self) -> None:
         self.add_lesson(1, "Alpha")
         pid_file = self.root / "descendant.pid"
         heartbeat_file = self.root / "descendant-heartbeat.txt"
         os.environ["FAKE_CODEX_SCENARIO"] = "timeout"
         os.environ["FAKE_CODEX_DESCENDANT_PID"] = str(pid_file)
         os.environ["FAKE_CODEX_DESCENDANT_HEARTBEAT"] = str(heartbeat_file)
-        store, _, run_id = self.execute(timeout_minutes=0.005, transient_retries=0)
-        self.assertEqual(store.row("SELECT status FROM runs WHERE id = ?", (run_id,))["status"], "failed")
+        store, _, run_id = self.execute(
+            deadline_hours=0.0003,
+            timeout_minutes=0.005,
+            transient_retries=0,
+        )
+        self.assertEqual(
+            store.row("SELECT status FROM runs WHERE id = ?", (run_id,))["status"],
+            "checkpointed",
+        )
         self.assertTrue(pid_file.is_file())
         self.assertTrue(heartbeat_file.is_file())
         heartbeat = heartbeat_file.read_text(encoding="utf-8")

@@ -41,6 +41,9 @@ python3 "$SCRIPT" generate-all --root "$ROOT" --candidates-only
 python3 "$SCRIPT" generate-all --root "$ROOT" --max-concurrency 8
 ```
 
+Ordinary generation installs each validated guide or map immediately while retaining its hidden
+candidate for final promotion and rollback. `--candidates-only` is the explicit opt-out.
+
 Override model settings:
 
 ```bash
@@ -63,6 +66,7 @@ python3 "$SCRIPT" plan --root "$ROOT"
 python3 "$SCRIPT" status RUN_ID --root "$ROOT"
 python3 "$SCRIPT" stop RUN_ID --root "$ROOT"
 python3 "$SCRIPT" resume RUN_ID --root "$ROOT"
+python3 "$SCRIPT" install-previews RUN_ID --root "$ROOT"
 python3 "$SCRIPT" promote RUN_ID --root "$ROOT"
 python3 "$SCRIPT" rollback PROMOTION_ID --root "$ROOT"
 ```
@@ -79,6 +83,7 @@ python3 "$SCRIPT" purge-run RUN_ID --root "$ROOT"
 python3 "$SCRIPT" plan --root "$ROOT"
 python3 "$SCRIPT" approve PLAN_ID --root "$ROOT"
 python3 "$SCRIPT" approve PLAN_ID --root "$ROOT" --max-concurrency 8
+python3 "$SCRIPT" approve PLAN_ID --root "$ROOT" --candidates-only
 python3 "$SCRIPT" run APPROVAL_ID --root "$ROOT"
 python3 "$SCRIPT" start APPROVAL_ID --detach --root "$ROOT"
 ```

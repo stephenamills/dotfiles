@@ -1,12 +1,10 @@
 #!/usr/bin/env python3
 """Safely transcribe course media in place with WhisperKit CLI.
 
-Every resolved course root is read-only except for its top-level
-``transcripts/`` directory. Inputs can be explicit course roots or, with
-``--discover-course-roots``, higher-level library roots whose course boundaries
-are resolved during preflight. A complete preflight succeeds before live work
-can create output directories, process-owned ``.part`` files, or absent
-``.txt`` transcripts.
+Every supplied course root is read-only except for its top-level
+``transcripts/`` directory. A complete preflight succeeds before live work can
+create output directories, process-owned ``.part`` files, or absent ``.txt``
+transcripts.
 
 This is a simplified derivative of ``bulk_transcribe_network_whisperkit.py``.
 Its intentionally fixed M5 Pro configuration is:
@@ -27,9 +25,9 @@ import argparse
 import ctypes
 from dataclasses import dataclass
 import errno
+from enum import Enum
 import os
 from pathlib import Path
-import re
 import secrets
 import shutil
 import stat
@@ -98,50 +96,11 @@ VIDEO_EXTENSIONS = frozenset(
 )
 MEDIA_EXTENSIONS = AUDIO_EXTENSIONS | VIDEO_EXTENSIONS
 RENAME_EXCL = 0x00000004
-MODULE_PREFIX_RE = re.compile(
-    r"""(?ix)
-    ^\s*
-    (?:
-        (?:\[\s*)?(?:\d{1,3}|[ivxlcdm]{1,8})\s*
-        (?:\]\s*|[._)\]-]\s*|\s+)
-        |
-        (?:appendix|bonus|chapter|conclusion|day|disc|disk|exercise|
-           final|getting\ started|intro(?:duction)?|lesson|module|overview|
-           part|section|unit|week|welcome)\b
-    )
-    """
-)
-STRONG_MODULE_PREFIX_RE = re.compile(
-    r"""(?ix)
-    ^\s*
-    (?:
-        (?:\[\s*)?(?:\d{1,3}|[ivxlcdm]{1,8})\s*
-        (?:\]\s*|[._)\]-]\s*)
-        |
-        (?:appendix|bonus|chapter|conclusion|day|disc|disk|exercise|
-           final|getting\ started|intro(?:duction)?|lesson|module|overview|
-           part|section|unit|week|welcome)\b
-    )
-    """
-)
-GENERIC_MEDIA_DIRECTORY_NAMES = frozenset(
-    {
-        "course content",
-        "course videos",
-        "lectures",
-        "lessons",
-        "training",
-        "video",
-        "videos",
-    }
-)
 
 
 @dataclass(frozen=True)
 class Course:
     root: Path
-    discovery_reason: str = "explicit input"
-    review_reason: str | None = None
 
     @property
     def transcript_root(self) -> Path:
@@ -158,6 +117,36 @@ class MediaIdentity:
     inode: int
     size: int
     modified_ns: int
+
+
+@dataclass(frozen=True)
+class FileIdentity:
+    device: int
+    inode: int
+
+
+class InstallStatus(Enum):
+    INSTALLED = "installed"
+    SKIPPED = "skipped"
+    FAILED = "failed"
+
+
+@dataclass(frozen=True)
+class InstallResult:
+    status: InstallStatus
+    detail: str | None = None
+
+    @classmethod
+    def installed(cls) -> InstallResult:
+        return cls(InstallStatus.INSTALLED)
+
+    @classmethod
+    def skipped(cls, detail: str) -> InstallResult:
+        return cls(InstallStatus.SKIPPED, detail)
+
+    @classmethod
+    def failed(cls, detail: str) -> InstallResult:
+        return cls(InstallStatus.FAILED, detail)
 
 
 @dataclass
@@ -191,13 +180,10 @@ class CourseSummary:
 
 @dataclass
 class Preflight:
-    input_roots: list[Path]
     courses: list[Course]
     items: list[WorkItem]
     programs: Programs
     work_total: int
-    discovered_course_roots: bool
-    inference_notes: list[str]
 
 
 class PreflightError(Exception):
@@ -280,7 +266,7 @@ def non_negative_int(value: str) -> int:
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description=(
-            "Recursively transcribe course media into each resolved course "
+            "Recursively transcribe course media into each supplied course "
             "root's top-level transcripts directory."
         )
     )
@@ -296,18 +282,10 @@ def build_parser() -> argparse.ArgumentParser:
         help="process at most N missing transcripts across all course roots",
     )
     parser.add_argument(
-        "--discover-course-roots",
-        action="store_true",
-        help=(
-            "treat positional paths as higher-level library roots and infer "
-            "non-overlapping course roots during preflight"
-        ),
-    )
-    parser.add_argument(
         "roots",
         nargs="+",
         metavar="ROOT",
-        help="one or more explicit course roots or higher-level library roots",
+        help="one or more course-root directories",
     )
     return parser
 
@@ -347,242 +325,6 @@ def validate_input_roots(raw_roots: list[str]) -> list[Path]:
     if errors:
         raise PreflightError(errors)
     return roots
-
-
-def module_directory_signal(name: str) -> bool:
-    normalized = unicodedata.normalize("NFC", name).strip().casefold()
-    return (
-        normalized in GENERIC_MEDIA_DIRECTORY_NAMES
-        or MODULE_PREFIX_RE.match(normalized) is not None
-    )
-
-
-def strong_module_directory_signal(name: str) -> bool:
-    normalized = unicodedata.normalize("NFC", name).strip().casefold()
-    return (
-        normalized in GENERIC_MEDIA_DIRECTORY_NAMES
-        or STRONG_MODULE_PREFIX_RE.match(normalized) is not None
-    )
-
-
-def directory_children_form_course(children: list[Path]) -> bool:
-    if not children:
-        return False
-    if len(children) == 1:
-        return strong_module_directory_signal(children[0].name)
-    signaled = sum(module_directory_signal(child.name) for child in children)
-    return signaled >= 2 and signaled * 2 >= len(children)
-
-
-def scan_media_layout(
-    input_root: Path,
-) -> tuple[set[Path], dict[Path, list[Path]], list[str]]:
-    """Return direct-media directories and traversed child directories."""
-
-    direct_media: set[Path] = set()
-    children: dict[Path, list[Path]] = {}
-    errors: list[str] = []
-
-    def onerror(error: OSError) -> None:
-        errors.append(
-            f"course-root discovery failed at {error.filename or input_root}: "
-            f"{error.strerror or error}"
-        )
-
-    try:
-        for directory, dirnames, filenames in os.walk(
-            input_root, topdown=True, followlinks=False, onerror=onerror
-        ):
-            directory_path = Path(directory)
-            safe_dirnames: list[str] = []
-            child_paths: list[Path] = []
-            for name in dirnames:
-                if name.casefold() == "transcripts":
-                    continue
-                child = directory_path / name
-                try:
-                    child_stat = child.lstat()
-                except OSError as exc:
-                    errors.append(
-                        f"could not inspect directory during course-root "
-                        f"discovery {child}: {exc}"
-                    )
-                    continue
-                if stat.S_ISLNK(child_stat.st_mode):
-                    continue
-                if not stat.S_ISDIR(child_stat.st_mode):
-                    continue
-                safe_dirnames.append(name)
-                child_paths.append(child)
-            dirnames[:] = safe_dirnames
-            children[directory_path] = child_paths
-
-            for filename in filenames:
-                media = directory_path / filename
-                if media.suffix.casefold() not in MEDIA_EXTENSIONS:
-                    continue
-                try:
-                    media_stat = media.lstat()
-                except OSError as exc:
-                    errors.append(
-                        f"could not inspect media candidate during course-root "
-                        f"discovery {media}: {exc}"
-                    )
-                    continue
-                if stat.S_ISLNK(media_stat.st_mode):
-                    continue
-                if stat.S_ISREG(media_stat.st_mode):
-                    direct_media.add(directory_path)
-    except (OSError, RuntimeError) as exc:
-        errors.append(f"course-root discovery failed at {input_root}: {exc}")
-
-    return direct_media, children, errors
-
-
-def infer_course_roots(
-    input_root: Path,
-) -> tuple[list[Course], list[str], list[str]]:
-    direct_media, traversed_children, errors = scan_media_layout(input_root)
-    if errors:
-        return [], [], errors
-
-    contains_media: set[Path] = set()
-    for directory in direct_media:
-        current = directory
-        while True:
-            contains_media.add(current)
-            if current == input_root:
-                break
-            try:
-                current = current.parent
-            except RuntimeError as exc:
-                errors.append(
-                    f"could not resolve media ancestry below {input_root}: {exc}"
-                )
-                break
-            if not current.is_relative_to(input_root):
-                errors.append(
-                    f"media directory escapes input root during discovery: "
-                    f"{directory}"
-                )
-                break
-    if errors:
-        return [], [], errors
-
-    inferred: list[Course] = []
-    notes: list[str] = []
-
-    def add_inferred_course(
-        directory: Path, reason: str, singleton_chain: list[Path]
-    ) -> None:
-        review_reason: str | None = None
-        if singleton_chain:
-            chain = " -> ".join(
-                path.relative_to(input_root).as_posix()
-                for path in (*singleton_chain, directory)
-            )
-            review_reason = (
-                "a single-child chain does not prove which level is the "
-                f"course boundary: {chain}"
-            )
-        inferred.append(
-            Course(
-                directory,
-                discovery_reason=reason,
-                review_reason=review_reason,
-            )
-        )
-
-    def visit(directory: Path, singleton_chain: list[Path]) -> None:
-        media_children = [
-            child
-            for child in traversed_children.get(directory, [])
-            if child in contains_media
-        ]
-        media_children.sort(
-            key=lambda path: (
-                unicodedata.normalize("NFC", path.name).casefold(),
-                path.name,
-            )
-        )
-        if directory in direct_media:
-            add_inferred_course(
-                directory,
-                reason="contains media directly",
-                singleton_chain=singleton_chain,
-            )
-            return
-        if directory_children_form_course(media_children):
-            child_examples = ", ".join(child.name for child in media_children[:4])
-            if len(media_children) > 4:
-                child_examples += f", … (+{len(media_children) - 4})"
-            add_inferred_course(
-                directory,
-                reason=f"module layout: {child_examples}",
-                singleton_chain=singleton_chain,
-            )
-            return
-        if media_children:
-            relative = (
-                "."
-                if directory == input_root
-                else directory.relative_to(input_root).as_posix()
-            )
-            child_examples = ", ".join(child.name for child in media_children[:6])
-            if len(media_children) > 6:
-                child_examples += f", … (+{len(media_children) - 6})"
-            notes.append(
-                f"GROUP {relative}: descended into {len(media_children)} "
-                f"media-bearing children [{child_examples}]"
-            )
-        next_chain = (
-            [*singleton_chain, directory]
-            if len(media_children) == 1
-            else []
-        )
-        for child in media_children:
-            visit(child, next_chain)
-
-    visit(input_root, [])
-    if not inferred:
-        errors.append(f"no course media found below library root: {input_root}")
-        return [], notes, errors
-
-    inferred.sort(
-        key=lambda course: (
-            unicodedata.normalize("NFC", course.root.as_posix()).casefold(),
-            course.root.as_posix(),
-        )
-    )
-    return inferred, notes, []
-
-
-def resolve_courses(
-    raw_roots: list[str], discover_course_roots: bool
-) -> tuple[list[Path], list[Course], list[str]]:
-    input_roots = validate_input_roots(raw_roots)
-    if not discover_course_roots:
-        return input_roots, [Course(root) for root in input_roots], []
-
-    courses: list[Course] = []
-    notes: list[str] = []
-    errors: list[str] = []
-    for input_root in input_roots:
-        inferred, input_notes, inference_errors = infer_course_roots(input_root)
-        courses.extend(inferred)
-        notes.extend(f"{input_root}: {note}" for note in input_notes)
-        errors.extend(inference_errors)
-
-    for index, first in enumerate(courses):
-        for second in courses[index + 1 :]:
-            if path_overlap(first.root, second.root):
-                errors.append(
-                    f"inferred course roots overlap: {first.root} and "
-                    f"{second.root}"
-                )
-    if errors:
-        raise PreflightError(errors)
-    return input_roots, courses, notes
 
 
 def resolve_program(name: str, label: str) -> tuple[str | None, str | None]:
@@ -732,11 +474,8 @@ def collision_key(item: WorkItem) -> str:
 def perform_preflight(
     raw_roots: list[str],
     limit: int | None,
-    discover_course_roots: bool = False,
 ) -> Preflight:
-    input_roots, courses, inference_notes = resolve_courses(
-        raw_roots, discover_course_roots
-    )
+    courses = [Course(root) for root in validate_input_roots(raw_roots)]
     errors: list[str] = []
 
     whisperkit, whisperkit_error = resolve_program("whisperkit-cli", "WhisperKit CLI")
@@ -786,13 +525,10 @@ def perform_preflight(
             work_total += 1
 
     return Preflight(
-        input_roots=input_roots,
         courses=courses,
         items=all_items,
         programs=Programs(whisperkit=whisperkit, ffmpeg=ffmpeg),
         work_total=work_total,
-        discovered_course_roots=discover_course_roots,
-        inference_notes=inference_notes,
     )
 
 
@@ -825,37 +561,17 @@ def summary_for_course(preflight: Preflight, course: Course) -> CourseSummary:
 
 def print_preflight(preflight: Preflight, dry_run: bool) -> None:
     action = "WOULD" if dry_run else "READY"
-    if preflight.discovered_course_roots:
-        print(
-            f"Inferred course roots: inputs={len(preflight.input_roots)} "
-            f"courses={len(preflight.courses)}",
-            flush=True,
-        )
-        review_count = sum(
-            course.review_reason is not None for course in preflight.courses
-        )
-        print(
-            f"Inference review: required={review_count}",
-            flush=True,
-        )
-        print("Inference grouping evidence:", flush=True)
-        for note in preflight.inference_notes:
-            print(f"  {note}", flush=True)
-        for input_root in preflight.input_roots:
-            print(f"Library root: {input_root}", flush=True)
-            for course in preflight.courses:
-                if course.root.is_relative_to(input_root):
-                    print(
-                        f"  Course root: {course.root} "
-                        f"[{course.discovery_reason}]",
-                        flush=True,
-                    )
-                    if course.review_reason:
-                        print(
-                            f"    REVIEW: {course.review_reason}",
-                            flush=True,
-                        )
     for course in preflight.courses:
+        summary = summary_for_course(preflight, course)
+        if not dry_run:
+            print(
+                f"PREFLIGHT course={course.root} "
+                f"discovered={summary.discovered} skipped={summary.skipped} "
+                f"ready={summary.would_transcribe} limited={summary.limited}",
+                flush=True,
+            )
+            continue
+
         print(f"Course: {course.root}", flush=True)
         course_items = [item for item in preflight.items if item.course == course]
         total = len(course_items)
@@ -863,7 +579,8 @@ def print_preflight(preflight: Preflight, dry_run: bool) -> None:
             prefix = f"[{course.name} {index}/{total}]"
             if item.existing:
                 print(
-                    f"{prefix} SKIP existing transcripts/{item.relative_output}",
+                    f"{prefix} SKIP existing {item.relative_media} -> "
+                    f"transcripts/{item.relative_output}",
                     flush=True,
                 )
             elif item.selected:
@@ -878,7 +595,6 @@ def print_preflight(preflight: Preflight, dry_run: bool) -> None:
                     f"transcripts/{item.relative_output}",
                     flush=True,
                 )
-        summary = summary_for_course(preflight, course)
         print(
             f"Preflight summary [{course.name}]: "
             f"discovered={summary.discovered} skipped={summary.skipped} "
@@ -1047,7 +763,7 @@ def run_whisperkit(audio_path: Path, executable: str) -> tuple[str | None, str |
 def exclusive_rename(
     directory_fd: int, source_name: str, destination_name: str
 ) -> bool:
-    """Use macOS RENAME_EXCL; return False when a hard-link fallback is needed."""
+    """Use macOS RENAME_EXCL; return False when it is unsupported."""
 
     if sys.platform != "darwin":
         return False
@@ -1081,9 +797,132 @@ def exclusive_rename(
     raise OSError(error_number, os.strerror(error_number), destination_name)
 
 
-def install_transcript(
-    parent_fd: int, destination_name: str, transcript: str
+def transcript_payload(transcript: str) -> bytes:
+    payload = transcript.encode("utf-8")
+    if payload and not payload.endswith(b"\n"):
+        payload += b"\n"
+    return payload
+
+
+def write_payload_and_sync(file_descriptor: int, payload: bytes) -> None:
+    """Write, flush, fsync, and close a descriptor, preserving the first error."""
+
+    try:
+        output = os.fdopen(file_descriptor, "wb", closefd=True)
+    except BaseException:
+        try:
+            os.close(file_descriptor)
+        except OSError:
+            pass
+        raise
+
+    operation_error: BaseException | None = None
+    try:
+        written = output.write(payload)
+        if written != len(payload):
+            raise OSError(
+                errno.EIO,
+                f"short transcript write: wrote {written} of {len(payload)} bytes",
+            )
+        output.flush()
+        os.fsync(output.fileno())
+    except BaseException as exc:
+        operation_error = exc
+
+    try:
+        output.close()
+    except BaseException as exc:
+        if operation_error is None:
+            operation_error = exc
+        elif hasattr(operation_error, "add_note"):
+            operation_error.add_note(f"closing the transcript also failed: {exc}")
+
+    if operation_error is not None:
+        raise operation_error
+
+
+def unlink_part(parent_fd: int, part_name: str) -> str | None:
+    try:
+        os.unlink(part_name, dir_fd=parent_fd)
+    except FileNotFoundError:
+        return None
+    except OSError as exc:
+        return f"could not remove process-owned part file {part_name}: {exc}"
+    return None
+
+
+def cleanup_created_destination(
+    parent_fd: int,
+    destination_name: str,
+    destination_path: Path,
+    created_identity: FileIdentity | None,
 ) -> str | None:
+    """Remove only the destination inode created by this process."""
+
+    if created_identity is None:
+        return (
+            "could not prove the partial destination's filesystem identity; "
+            f"left untouched for manual review: {destination_path}"
+        )
+    try:
+        current_stat = os.stat(
+            destination_name,
+            dir_fd=parent_fd,
+            follow_symlinks=False,
+        )
+    except FileNotFoundError:
+        return None
+    except OSError as exc:
+        return (
+            "could not inspect the partial destination before cleanup "
+            f"({exc}); left untouched for manual review: {destination_path}"
+        )
+
+    current_identity = FileIdentity(current_stat.st_dev, current_stat.st_ino)
+    if (
+        not stat.S_ISREG(current_stat.st_mode)
+        or current_identity != created_identity
+    ):
+        return (
+            "the partial destination's filesystem identity could not be "
+            f"verified; left untouched for manual review: {destination_path}"
+        )
+    try:
+        os.unlink(destination_name, dir_fd=parent_fd)
+    except OSError as exc:
+        return (
+            f"could not remove the verified partial destination ({exc}); "
+            f"left for manual review: {destination_path}"
+        )
+    return None
+
+
+def failure_with_cleanup(
+    operation: str,
+    error: BaseException,
+    cleanup_error: str | None,
+) -> InstallResult:
+    detail = f"{operation}: {error}"
+    if cleanup_error:
+        detail = f"{detail}; {cleanup_error}"
+    return InstallResult.failed(detail)
+
+
+def add_cleanup_note(error: BaseException, cleanup_error: str | None) -> None:
+    if cleanup_error and hasattr(error, "add_note"):
+        error.add_note(cleanup_error)
+
+
+def install_transcript(
+    parent_fd: int,
+    destination_name: str,
+    transcript: str,
+    *,
+    destination_path: Path | None = None,
+) -> InstallResult:
+    if destination_path is None:
+        destination_path = Path(destination_name)
+    payload = transcript_payload(transcript)
     part_name = (
         f".{destination_name}.{os.getpid()}.{secrets.token_hex(8)}.part"
     )
@@ -1093,44 +932,146 @@ def install_transcript(
     if hasattr(os, "O_NOFOLLOW"):
         open_flags |= os.O_NOFOLLOW
 
-    part_created = False
     try:
         part_fd = os.open(part_name, open_flags, 0o600, dir_fd=parent_fd)
-        part_created = True
-        with os.fdopen(part_fd, "w", encoding="utf-8", newline="") as part_file:
-            if transcript:
-                part_file.write(transcript)
-                if not transcript.endswith("\n"):
-                    part_file.write("\n")
-            part_file.flush()
-            os.fsync(part_file.fileno())
-
-        if not exclusive_rename(parent_fd, part_name, destination_name):
-            os.link(
-                part_name,
-                destination_name,
-                src_dir_fd=parent_fd,
-                dst_dir_fd=parent_fd,
-                follow_symlinks=False,
-            )
-            os.unlink(part_name, dir_fd=parent_fd)
-        part_created = False
-        return None
-    except FileExistsError:
-        return "destination appeared after preflight; existing path was not changed"
     except OSError as exc:
-        return f"could not install transcript atomically: {exc}"
-    finally:
-        if part_created:
-            try:
-                os.unlink(part_name, dir_fd=parent_fd)
-            except OSError:
-                pass
+        return InstallResult.failed(
+            f"could not create process-owned part file {part_name}: {exc}"
+        )
+
+    try:
+        write_payload_and_sync(part_fd, payload)
+    except BaseException as exc:
+        cleanup_error = unlink_part(parent_fd, part_name)
+        if isinstance(exc, Exception):
+            return failure_with_cleanup(
+                "could not write and sync process-owned part file",
+                exc,
+                cleanup_error,
+            )
+        add_cleanup_note(exc, cleanup_error)
+        raise
+
+    try:
+        renamed = exclusive_rename(parent_fd, part_name, destination_name)
+    except FileExistsError:
+        cleanup_error = unlink_part(parent_fd, part_name)
+        if cleanup_error:
+            return InstallResult.failed(cleanup_error)
+        return InstallResult.skipped(
+            "destination appeared during exclusive rename; "
+            "existing path was not changed"
+        )
+    except BaseException as exc:
+        cleanup_error = unlink_part(parent_fd, part_name)
+        if isinstance(exc, Exception):
+            return failure_with_cleanup(
+                "exclusive transcript rename failed",
+                exc,
+                cleanup_error,
+            )
+        add_cleanup_note(exc, cleanup_error)
+        raise
+
+    if renamed:
+        return InstallResult.installed()
+
+    part_cleanup_error = unlink_part(parent_fd, part_name)
+    if part_cleanup_error:
+        return InstallResult.failed(part_cleanup_error)
+
+    try:
+        destination_fd = os.open(
+            destination_name,
+            open_flags,
+            0o600,
+            dir_fd=parent_fd,
+        )
+    except FileExistsError:
+        return InstallResult.skipped(
+            "destination appeared during exclusive creation; "
+            "existing path was not changed"
+        )
+    except OSError as exc:
+        return InstallResult.failed(
+            f"could not exclusively create transcript destination: {exc}"
+        )
+
+    try:
+        destination_stat = os.fstat(destination_fd)
+    except BaseException as exc:
+        try:
+            os.close(destination_fd)
+        except OSError as close_error:
+            if hasattr(exc, "add_note"):
+                exc.add_note(
+                    f"closing the unverified destination also failed: {close_error}"
+                )
+        cleanup_error = cleanup_created_destination(
+            parent_fd,
+            destination_name,
+            destination_path,
+            None,
+        )
+        if isinstance(exc, Exception):
+            return failure_with_cleanup(
+                "could not inspect the newly created transcript destination",
+                exc,
+                cleanup_error,
+            )
+        add_cleanup_note(exc, cleanup_error)
+        raise
+
+    created_identity = FileIdentity(
+        destination_stat.st_dev,
+        destination_stat.st_ino,
+    )
+    if not stat.S_ISREG(destination_stat.st_mode):
+        error = OSError(
+            errno.EINVAL,
+            "exclusive transcript destination is not a regular file",
+        )
+        try:
+            os.close(destination_fd)
+        except OSError as close_error:
+            if hasattr(error, "add_note"):
+                error.add_note(
+                    f"closing the invalid destination also failed: {close_error}"
+                )
+        return failure_with_cleanup(
+            "could not validate the newly created transcript destination",
+            error,
+            cleanup_created_destination(
+                parent_fd,
+                destination_name,
+                destination_path,
+                created_identity,
+            ),
+        )
+
+    try:
+        write_payload_and_sync(destination_fd, payload)
+    except BaseException as exc:
+        cleanup_error = cleanup_created_destination(
+            parent_fd,
+            destination_name,
+            destination_path,
+            created_identity,
+        )
+        if isinstance(exc, Exception):
+            return failure_with_cleanup(
+                "could not write, sync, and close transcript destination",
+                exc,
+                cleanup_error,
+            )
+        add_cleanup_note(exc, cleanup_error)
+        raise
+    return InstallResult.installed()
 
 
 def transcribe_item(
     item: WorkItem, programs: Programs, parent_fd: int
-) -> str | None:
+) -> InstallResult:
     if item.input_kind == "direct":
         transcript, error = run_whisperkit(item.media, programs.whisperkit)
     else:
@@ -1141,14 +1082,23 @@ def transcribe_item(
                 wav_path = Path(temporary) / "audio.wav"
                 error = extract_audio(item.media, wav_path, programs.ffmpeg)
                 if error:
-                    return f"audio extraction failed: {error}"
+                    return InstallResult.failed(
+                        f"audio extraction failed: {error}"
+                    )
                 transcript, error = run_whisperkit(wav_path, programs.whisperkit)
         except OSError as exc:
-            return f"could not create temporary audio workspace: {exc}"
+            return InstallResult.failed(
+                f"could not create temporary audio workspace: {exc}"
+            )
     if error:
-        return error
+        return InstallResult.failed(error)
     assert transcript is not None
-    return install_transcript(parent_fd, item.relative_output.name, transcript)
+    return install_transcript(
+        parent_fd,
+        item.relative_output.name,
+        transcript,
+        destination_path=item.course.transcript_root / item.relative_output,
+    )
 
 
 def combine_summaries(summaries: dict[Path, CourseSummary]) -> CourseSummary:
@@ -1221,18 +1171,27 @@ def run_live(preflight: Preflight, title: ProcessTitle | None) -> int:
                 )
                 continue
             summary.attempted += 1
-            error = transcribe_item(item, preflight.programs, parent_fd)
+            result = transcribe_item(item, preflight.programs, parent_fd)
         except OSError as exc:
-            error = f"unsafe output path or directory creation failed: {exc}"
+            result = InstallResult.failed(
+                f"unsafe output path or directory creation failed: {exc}"
+            )
         finally:
             if parent_fd is not None:
                 os.close(parent_fd)
 
-        if error:
+        if result.status is InstallStatus.FAILED:
             summary.failed += 1
             print(
-                f"{prefix} FAIL {item.relative_media}: {error}",
+                f"{prefix} FAIL {item.relative_media}: {result.detail}",
                 file=sys.stderr,
+                flush=True,
+            )
+        elif result.status is InstallStatus.SKIPPED:
+            summary.skipped += 1
+            print(
+                f"{prefix} SKIP destination now exists "
+                f"transcripts/{item.relative_output}: {result.detail}",
                 flush=True,
             )
         else:
@@ -1274,17 +1233,18 @@ def main(argv: Iterator[str] | None = None) -> int:
     title = ProcessTitle.capture()
     parser = build_parser()
     args = parser.parse_args(argv)
+    print(
+        f"PREFLIGHT scanning roots={len(args.roots)} "
+        f"limit={args.limit if args.limit is not None else 'none'}",
+        flush=True,
+    )
     set_title(title, "batch-transcribe-courses preflight")
     try:
-        preflight = perform_preflight(
-            args.roots,
-            args.limit,
-            discover_course_roots=args.discover_course_roots,
-        )
+        preflight = perform_preflight(args.roots, args.limit)
     except PreflightError as exc:
         set_title(title, "batch-transcribe-courses preflight-failed")
         for error in exc.errors:
-            print(f"error: {error}", file=sys.stderr)
+            print(f"error: {error}", file=sys.stderr, flush=True)
         return 2
 
     print_settings()
@@ -1304,34 +1264,8 @@ def main(argv: Iterator[str] | None = None) -> int:
             f"limited={combined.limited} failed=0",
             flush=True,
         )
-        review_courses = [
-            course for course in preflight.courses if course.review_reason
-        ]
-        if review_courses:
-            print(
-                "error: inferred course boundaries require LLM review; "
-                "inspect the marked subtrees and rerun with the complete "
-                "corrected course-root list in explicit mode",
-                file=sys.stderr,
-                flush=True,
-            )
-            set_title(title, "batch-transcribe-courses review-required")
-            return 2
         set_title(title, "batch-transcribe-courses preflight-complete")
         return 0
-    review_courses = [
-        course for course in preflight.courses if course.review_reason
-    ]
-    if review_courses:
-        print(
-            "error: live discovery is blocked because inferred course "
-            "boundaries require LLM review; run the dry-run, inspect the "
-            "marked subtrees, and rerun with explicit course roots",
-            file=sys.stderr,
-            flush=True,
-        )
-        set_title(title, "batch-transcribe-courses review-required")
-        return 2
     return run_live(preflight, title)
 
 

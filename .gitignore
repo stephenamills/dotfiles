@@ -7,3 +7,10 @@
 .agents/**/*.py[cod]
 .agents/**/.DS_Store
 .agents/skills/study-guide-batch/archive/
+
+# Local agent runtime state and path-bearing logs
+.agents/state/
+.agents/**/state/
+.agents/**/logs/
+.agents/**/*.log
+batch-transcribe-courses-review-*.txt

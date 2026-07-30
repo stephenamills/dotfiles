@@ -6,6 +6,7 @@ from __future__ import annotations
 from contextlib import redirect_stderr, redirect_stdout
 import errno
 import io
+import json
 import os
 from pathlib import Path
 import tempfile
@@ -39,12 +40,19 @@ class InstallerTests(unittest.TestCase):
         self,
         transcript: str,
         destination_name: str = "lesson.txt",
+        *,
+        overwrite: bool = False,
+        overwrite_empty: bool = False,
+        expected_snapshot: subject.TranscriptSnapshot | None = None,
     ) -> subject.InstallResult:
         return subject.install_transcript(
             self.parent_fd,
             destination_name,
             transcript,
             destination_path=self.directory / destination_name,
+            overwrite=overwrite,
+            overwrite_empty=overwrite_empty,
+            expected_snapshot=expected_snapshot,
         )
 
     def part_names(self) -> list[str]:
@@ -359,7 +367,6 @@ class InstallerTests(unittest.TestCase):
             ("plain", b"plain\n"),
             ("already\n", b"already\n"),
             ("two\n\n", b"two\n\n"),
-            ("", b""),
             ("雪 café", "雪 café\n".encode("utf-8")),
         )
         with mock.patch.object(subject, "exclusive_rename", return_value=False):
@@ -373,6 +380,906 @@ class InstallerTests(unittest.TestCase):
                     )
                     self.assertEqual((self.directory / name).read_bytes(), expected)
         self.assertEqual(self.part_names(), [])
+
+    def test_empty_transcript_is_rejected_without_creating_destination(self) -> None:
+        result = self.install(" \n ")
+
+        self.assertIs(result.status, subject.InstallStatus.FAILED)
+        self.assertFalse((self.directory / "lesson.txt").exists())
+        self.assertIn("empty transcript", result.detail or "")
+
+    def test_overwrite_atomically_replaces_existing_regular_file(self) -> None:
+        destination = self.directory / "lesson.txt"
+        destination.write_bytes(b"SENTINEL")
+
+        result = self.install("replacement", overwrite=True)
+
+        self.assertIs(result.status, subject.InstallStatus.INSTALLED)
+        self.assertEqual(destination.read_bytes(), b"replacement\n")
+        self.assertEqual(self.part_names(), [])
+
+    def test_overwrite_failure_preserves_existing_file(self) -> None:
+        destination = self.directory / "lesson.txt"
+        destination.write_bytes(b"SENTINEL")
+
+        with mock.patch.object(
+            subject.os,
+            "replace",
+            side_effect=OSError(errno.EIO, "injected replace failure"),
+        ):
+            result = self.install("replacement", overwrite=True)
+
+        self.assertIs(result.status, subject.InstallStatus.FAILED)
+        self.assertEqual(destination.read_bytes(), b"SENTINEL")
+        self.assertEqual(self.part_names(), [])
+
+    def test_overwrite_empty_replaces_only_zero_byte_destination(self) -> None:
+        destination = self.directory / "lesson.txt"
+        destination.write_bytes(b"")
+
+        result = self.install("replacement", overwrite_empty=True)
+
+        self.assertIs(result.status, subject.InstallStatus.INSTALLED)
+        self.assertEqual(destination.read_bytes(), b"replacement\n")
+        self.assertEqual(self.part_names(), [])
+
+    def test_overwrite_empty_preserves_destination_that_became_nonempty(
+        self,
+    ) -> None:
+        destination = self.directory / "lesson.txt"
+        destination.write_bytes(b"FINISHED")
+
+        result = self.install("replacement", overwrite_empty=True)
+
+        self.assertIs(result.status, subject.InstallStatus.SKIPPED)
+        self.assertEqual(destination.read_bytes(), b"FINISHED")
+        self.assertEqual(self.part_names(), [])
+
+    def test_timestamp_upgrade_atomically_replaces_unchanged_destination(
+        self,
+    ) -> None:
+        destination = self.directory / "lesson.txt"
+        destination.write_bytes(b"plain transcript")
+        _payload, snapshot = subject.read_regular_file_snapshot(destination)
+
+        result = self.install(
+            "[00:00:00]\nreplacement",
+            expected_snapshot=snapshot,
+        )
+
+        self.assertIs(result.status, subject.InstallStatus.INSTALLED)
+        self.assertEqual(
+            destination.read_bytes(),
+            b"[00:00:00]\nreplacement\n",
+        )
+        self.assertEqual(self.part_names(), [])
+
+    def test_timestamp_upgrade_preserves_concurrently_changed_destination(
+        self,
+    ) -> None:
+        destination = self.directory / "lesson.txt"
+        destination.write_bytes(b"plain transcript")
+        _payload, snapshot = subject.read_regular_file_snapshot(destination)
+        destination.write_bytes(b"[00:00:00]\nconcurrent replacement\n")
+
+        result = self.install(
+            "[00:00:00]\nstale replacement",
+            expected_snapshot=snapshot,
+        )
+
+        self.assertIs(result.status, subject.InstallStatus.SKIPPED)
+        self.assertEqual(
+            destination.read_bytes(),
+            b"[00:00:00]\nconcurrent replacement\n",
+        )
+        self.assertIn("changed after preflight", result.detail or "")
+        self.assertEqual(self.part_names(), [])
+
+    def test_timestamp_upgrade_detects_path_swap_after_content_check(
+        self,
+    ) -> None:
+        destination = self.directory / "lesson.txt"
+        archived = self.directory / "lesson-old.txt"
+        destination.write_bytes(b"plain transcript")
+        _payload, snapshot = subject.read_regular_file_snapshot(destination)
+        real_read = subject.read_regular_file_snapshot
+
+        def swap_after_read(
+            path: str | Path,
+            *,
+            dir_fd: int | None = None,
+        ) -> tuple[bytes, subject.TranscriptSnapshot]:
+            result = real_read(path, dir_fd=dir_fd)
+            os.replace(
+                destination.name,
+                archived.name,
+                src_dir_fd=self.parent_fd,
+                dst_dir_fd=self.parent_fd,
+            )
+            destination.write_bytes(b"[00:00:00]\nconcurrent replacement\n")
+            return result
+
+        with mock.patch.object(
+            subject,
+            "read_regular_file_snapshot",
+            side_effect=swap_after_read,
+        ):
+            result = self.install(
+                "[00:00:00]\nstale replacement",
+                expected_snapshot=snapshot,
+            )
+
+        self.assertIs(result.status, subject.InstallStatus.SKIPPED)
+        self.assertEqual(
+            destination.read_bytes(),
+            b"[00:00:00]\nconcurrent replacement\n",
+        )
+        self.assertIn("changed after verification", result.detail or "")
+        self.assertEqual(self.part_names(), [])
+
+    def test_empty_timestamp_upgrade_result_preserves_old_bytes(self) -> None:
+        destination = self.directory / "lesson.txt"
+        destination.write_bytes(b"plain transcript")
+        _payload, snapshot = subject.read_regular_file_snapshot(destination)
+
+        result = self.install(" \n", expected_snapshot=snapshot)
+
+        self.assertIs(result.status, subject.InstallStatus.FAILED)
+        self.assertEqual(destination.read_bytes(), b"plain transcript")
+        self.assertEqual(self.part_names(), [])
+
+    def test_failed_timestamp_upgrade_replace_preserves_old_bytes(self) -> None:
+        destination = self.directory / "lesson.txt"
+        destination.write_bytes(b"plain transcript")
+        _payload, snapshot = subject.read_regular_file_snapshot(destination)
+
+        with mock.patch.object(
+            subject.os,
+            "replace",
+            side_effect=OSError(errno.EIO, "injected replace failure"),
+        ):
+            result = self.install(
+                "[00:00:00]\nreplacement",
+                expected_snapshot=snapshot,
+            )
+
+        self.assertIs(result.status, subject.InstallStatus.FAILED)
+        self.assertEqual(destination.read_bytes(), b"plain transcript")
+        self.assertEqual(self.part_names(), [])
+
+
+class WhisperKitDirectTests(unittest.TestCase):
+    def test_language_paths_use_native_whisper_codes(self) -> None:
+        expected = {
+            "Chinese (Cantonese)": "yue",
+            "French": "fr",
+            "Greek": "el",
+            "Latin": "la",
+            "Russian": "ru",
+            "Spanish": "es",
+            "Thai": "th",
+        }
+
+        for language, code in expected.items():
+            with self.subTest(language=language):
+                course = subject.Course(
+                    Path("/tmp/transcription-fixtures/Language") / language / "Course"
+                )
+                effective = subject.effective_options_for_course(
+                    subject.TranscriptionOptions(),
+                    course,
+                )
+                self.assertEqual(effective.language, code)
+
+    def test_explicit_language_override_and_auto_are_preserved(self) -> None:
+        course = subject.Course(
+            Path("/tmp/transcription-fixtures/Language/Spanish/Course")
+        )
+
+        explicit = subject.effective_options_for_course(
+            subject.TranscriptionOptions(language="fr"),
+            course,
+        )
+        automatic = subject.effective_options_for_course(
+            subject.TranscriptionOptions(language=None),
+            course,
+        )
+
+        self.assertEqual(explicit.language, "fr")
+        self.assertIsNone(automatic.language)
+
+    def test_direct_command_preserves_settings_and_timestamp_mode(self) -> None:
+        options = subject.TranscriptionOptions(
+            language="fr",
+            timestamps=True,
+        )
+        command = subject.whisperkit_transcribe_command(
+            "/bin/whisperkit-cli",
+            Path("/audio.wav"),
+            options,
+            Path("/reports"),
+        )
+
+        self.assertEqual(command[:2], ["/bin/whisperkit-cli", "transcribe"])
+        for option, value in (
+            ("--audio-path", "/audio.wav"),
+            ("--model", subject.MODEL),
+            ("--language", "fr"),
+            ("--task", "transcribe"),
+            ("--chunking-strategy", subject.CHUNKING_STRATEGY),
+            (
+                "--audio-encoder-compute-units",
+                subject.AUDIO_ENCODER_COMPUTE_UNITS,
+            ),
+            (
+                "--text-decoder-compute-units",
+                subject.TEXT_DECODER_COMPUTE_UNITS,
+            ),
+            ("--concurrent-worker-count", str(subject.CONCURRENT_WORKERS)),
+            ("--report-path", "/reports"),
+        ):
+            self.assertEqual(command[command.index(option) + 1], value)
+        self.assertIn("--report", command)
+        self.assertIn("--skip-special-tokens", command)
+        self.assertNotIn("--without-timestamps", command)
+
+    def test_auto_language_is_omitted_and_plain_mode_disables_timestamps(
+        self,
+    ) -> None:
+        options = subject.TranscriptionOptions(language=None)
+        command = subject.whisperkit_transcribe_command(
+            "whisperkit-cli",
+            Path("/audio.wav"),
+            options,
+            Path("/reports"),
+        )
+
+        self.assertNotIn("--language", command)
+        self.assertIn("--skip-special-tokens", command)
+        self.assertIn("--without-timestamps", command)
+        self.assertNotIn("--report", command)
+
+    def test_timeout_kills_owned_child_then_retry_succeeds(self) -> None:
+        timed_out = mock.Mock()
+        timed_out.returncode = None
+        timed_out.communicate.side_effect = [
+            subject.subprocess.TimeoutExpired(["whisperkit-cli"], 1),
+            ("", ""),
+        ]
+        succeeded = mock.Mock()
+        succeeded.returncode = 0
+        succeeded.communicate.return_value = ("  recovered transcript  \n", "")
+        errors = FlushRecordingStream()
+
+        with (
+            tempfile.TemporaryDirectory() as temporary,
+            redirect_stderr(errors),
+            mock.patch.object(
+                subject.subprocess,
+                "Popen",
+                side_effect=[timed_out, succeeded],
+            ) as popen,
+            mock.patch.object(subject, "terminate_owned_child") as terminate,
+        ):
+            directory = Path(temporary)
+            review_log = subject.ReviewLog(directory / "review.txt")
+            transcript, error = subject.run_whisperkit_direct(
+                "whisperkit-cli",
+                Path("/audio.wav"),
+                subject.TranscriptionOptions(timeout_seconds=1, retries=1),
+                directory,
+                review_log,
+                Path("/source/lesson.mp4"),
+            )
+            review_text = review_log.path.read_text(encoding="utf-8")
+
+        self.assertEqual(transcript, "recovered transcript")
+        self.assertIsNone(error)
+        terminate.assert_called_once_with(timed_out)
+        self.assertEqual(popen.call_count, 2)
+        self.assertTrue(popen.call_args.kwargs["start_new_session"])
+        self.assertIn("WHISPERKIT RETRY", errors.getvalue())
+        self.assertIn("WHISPERKIT TIMEOUT", review_text)
+        self.assertIn("/source/lesson.mp4", review_text)
+
+    def test_ffmpeg_timeout_kills_owned_child(self) -> None:
+        process = mock.Mock()
+        process.communicate.side_effect = [
+            subject.subprocess.TimeoutExpired(["ffmpeg"], 1),
+            ("", ""),
+        ]
+        with (
+            tempfile.TemporaryDirectory() as temporary,
+            mock.patch.object(
+                subject.subprocess,
+                "Popen",
+                return_value=process,
+            ),
+            mock.patch.object(subject, "terminate_owned_child") as terminate,
+        ):
+            directory = Path(temporary)
+            error = subject.extract_audio(
+                directory / "lesson.mp4",
+                directory / "audio.wav",
+                "ffmpeg",
+                timeout_seconds=1,
+            )
+
+        terminate.assert_called_once_with(process)
+        self.assertIn("timed out after 1 seconds", error or "")
+
+    def test_empty_results_are_retried_then_fail(self) -> None:
+        processes = []
+        for _ in range(2):
+            process = mock.Mock()
+            process.returncode = 0
+            process.communicate.return_value = (" \n", "")
+            processes.append(process)
+
+        with tempfile.TemporaryDirectory() as temporary, mock.patch.object(
+            subject.subprocess,
+            "Popen",
+            side_effect=processes,
+        ):
+            transcript, error = subject.run_whisperkit_direct(
+                "whisperkit-cli",
+                Path("/audio.wav"),
+                subject.TranscriptionOptions(retries=1),
+                Path(temporary),
+            )
+
+        self.assertIsNone(transcript)
+        self.assertIn("no usable transcript", error or "")
+        self.assertIn("attempts=2", error or "")
+
+    def test_timestamp_report_is_rendered_for_tutorial_cross_reference(
+        self,
+    ) -> None:
+        process = mock.Mock()
+        process.returncode = 0
+        process.communicate.return_value = ("plain text", "")
+
+        def start(command: list[str], **_kwargs: object) -> mock.Mock:
+            report_path = Path(command[command.index("--report-path") + 1])
+            (report_path / "lesson.json").write_text(
+                json.dumps(
+                    {
+                        "segments": [
+                            {
+                                "start": 1.25,
+                                "end": 3.5,
+                                "text": " First step ",
+                            },
+                            {
+                                "start": 125.0,
+                                "end": 130.125,
+                                "text": "Second step",
+                            },
+                        ]
+                    }
+                ),
+                encoding="utf-8",
+            )
+            return process
+
+        with tempfile.TemporaryDirectory() as temporary, mock.patch.object(
+            subject.subprocess,
+            "Popen",
+            side_effect=start,
+        ):
+            transcript, error = subject.run_whisperkit_direct(
+                "whisperkit-cli",
+                Path("/lesson.wav"),
+                subject.TranscriptionOptions(timestamps=True, retries=0),
+                Path(temporary),
+            )
+
+        self.assertIsNone(error)
+        self.assertEqual(
+            transcript,
+            "[00:00:00]\nFirst step\n\n"
+            "[00:02:00]\nSecond step",
+        )
+
+    def test_zero_timestamp_interval_emits_every_segment_range(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            report = Path(temporary) / "lesson.json"
+            report.write_text(
+                json.dumps(
+                    {
+                        "segments": [
+                            {
+                                "start": 1.25,
+                                "end": 3.5,
+                                "text": "Step",
+                            }
+                        ]
+                    }
+                ),
+                encoding="utf-8",
+            )
+            transcript, error = subject.timestamped_transcript(
+                report,
+                interval_seconds=0,
+            )
+
+        self.assertIsNone(error)
+        self.assertEqual(
+            transcript,
+            "[00:00:01.250 --> 00:00:03.500] Step",
+        )
+
+    def test_direct_item_installs_with_overwrite_setting(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            media = root / "lesson.wav"
+            media.write_bytes(b"audio")
+            course = subject.Course(root)
+            item = subject.WorkItem(
+                course=course,
+                media=media,
+                relative_media=Path("lesson.wav"),
+                relative_output=Path("lesson.txt"),
+                identity=subject.identity_from_stat(media.stat()),
+                input_kind="direct",
+                selected=True,
+            )
+            parent_fd = os.open(root, os.O_RDONLY | os.O_DIRECTORY)
+            try:
+                with (
+                    mock.patch.object(
+                        subject,
+                        "run_whisperkit_direct",
+                        return_value=("transcript", None),
+                    ) as direct,
+                    mock.patch.object(
+                        subject,
+                        "install_transcript",
+                        return_value=subject.InstallResult.installed(),
+                    ) as install,
+                ):
+                    options = subject.TranscriptionOptions(overwrite=True)
+                    result = subject.transcribe_item(
+                        item,
+                        subject.Programs("whisperkit-cli", "ffmpeg"),
+                        parent_fd,
+                        options,
+                    )
+            finally:
+                os.close(parent_fd)
+
+        self.assertIs(result.status, subject.InstallStatus.INSTALLED)
+        self.assertEqual(direct.call_args.args[0], "whisperkit-cli")
+        self.assertEqual(direct.call_args.args[1], media)
+        install.assert_called_once_with(
+            parent_fd,
+            "lesson.txt",
+            "transcript",
+            destination_path=root / "transcripts" / "lesson.txt",
+            overwrite=True,
+            overwrite_empty=False,
+            expected_snapshot=None,
+        )
+
+
+class TimestampUpgradeTests(unittest.TestCase):
+    OPTIONS = subject.TranscriptionOptions(
+        timestamps=True,
+        upgrade_timestamps=True,
+    )
+
+    def test_timestamp_upgrade_classifier(self) -> None:
+        cases = {
+            "empty": (b"", True),
+            "whitespace": (" \n\t\u2003".encode(), True),
+            "plain": (b"ordinary transcript", True),
+            "periodic": (b"[00:00:00]\nTranscript", False),
+            "periodic-later-interval": (b"[12:34:56]\nTranscript", False),
+            "exact-segment": (
+                b"[00:00:01.250 --> 00:00:03.500] Transcript",
+                False,
+            ),
+            "legacy-token": (
+                b"[00:00:00]\nTranscript <|0.00|> <|en|>",
+                True,
+            ),
+            "malformed-leading-marker": (b"[00:00:00]Transcript", True),
+            "leading-whitespace": (b" [00:00:00]\nTranscript", True),
+            "invalid-utf8": (b"[00:00:00]\n\xff", True),
+        }
+
+        for name, (payload, expected) in cases.items():
+            with self.subTest(name=name):
+                self.assertIs(
+                    subject.transcript_needs_timestamp_upgrade(payload),
+                    expected,
+                )
+
+    def make_migration_course(
+        self,
+        base: Path,
+    ) -> tuple[Path, dict[str, bytes | None]]:
+        course_root = base / "Course"
+        transcripts = course_root / "transcripts"
+        transcripts.mkdir(parents=True)
+        destinations: dict[str, bytes | None] = {
+            "empty": b"",
+            "exact": b"[00:00:01.250 --> 00:00:03.500] Finished",
+            "legacy": b"[00:00:00]\nText <|endoftext|>",
+            "missing": None,
+            "periodic": b"[00:01:00]\nFinished",
+            "plain": b"Plain transcript",
+            "whitespace": b" \n\t",
+        }
+        for stem, payload in destinations.items():
+            (course_root / f"{stem}.mp4").write_bytes(b"media")
+            if payload is not None:
+                (transcripts / f"{stem}.txt").write_bytes(payload)
+        return course_root, destinations
+
+    def preflight(
+        self,
+        course_root: Path,
+        limit: int | None = None,
+    ) -> subject.Preflight:
+        with mock.patch.object(
+            subject,
+            "resolve_program",
+            return_value=("/bin/true", None),
+        ):
+            return subject.perform_preflight(
+                [str(course_root)],
+                limit=limit,
+                options=self.OPTIONS,
+            )
+
+    def test_preflight_selects_only_missing_and_upgrade_needed_transcripts(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            course_root, _destinations = self.make_migration_course(
+                Path(temporary)
+            )
+            preflight = self.preflight(course_root)
+
+        selected = {
+            item.relative_media.stem
+            for item in preflight.items
+            if item.selected
+        }
+        self.assertEqual(
+            selected,
+            {"empty", "legacy", "missing", "plain", "whitespace"},
+        )
+        self.assertEqual(preflight.work_total, 5)
+        clean = {
+            item.relative_media.stem
+            for item in preflight.items
+            if item.existing and not item.timestamp_upgrade_needed
+        }
+        self.assertEqual(clean, {"exact", "periodic"})
+        for item in preflight.items:
+            if item.existing:
+                self.assertIsNotNone(item.transcript_snapshot)
+
+    def test_upgrade_limit_and_summary_distinguish_clean_skips(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            course_root, _destinations = self.make_migration_course(
+                Path(temporary)
+            )
+            preflight = self.preflight(course_root, limit=2)
+            summary = subject.summary_for_course(
+                preflight,
+                preflight.courses[0],
+            )
+            output = FlushRecordingStream()
+            with redirect_stdout(output):
+                subject.print_preflight(preflight, dry_run=True)
+
+        self.assertEqual(
+            {
+                item.relative_media.stem
+                for item in preflight.items
+                if item.selected
+            },
+            {"empty", "legacy"},
+        )
+        self.assertEqual(summary.discovered, 7)
+        self.assertEqual(summary.would_transcribe, 2)
+        self.assertEqual(summary.limited, 3)
+        self.assertEqual(summary.skipped, 2)
+        self.assertIn(
+            "would_transcribe=2 limited=3",
+            output.getvalue(),
+        )
+        self.assertEqual(output.getvalue().count(" LIMIT "), 3)
+
+    def test_upgrade_mode_is_mutually_exclusive_and_enables_timestamps(
+        self,
+    ) -> None:
+        parser = subject.build_parser()
+        parsed = parser.parse_args(["--upgrade-timestamps", "/course"])
+        options = subject.options_from_args(parsed)
+
+        self.assertTrue(options.upgrade_timestamps)
+        self.assertTrue(options.timestamps)
+        settings = FlushRecordingStream()
+        with redirect_stdout(settings):
+            subject.print_settings(options)
+        self.assertIn("timestamps=120s", settings.getvalue())
+        self.assertIn("overwrite=timestamp-upgrade", settings.getvalue())
+        for conflict in ("--overwrite", "--overwrite-empty"):
+            with (
+                self.subTest(conflict=conflict),
+                redirect_stderr(io.StringIO()),
+                self.assertRaises(SystemExit) as raised,
+            ):
+                parser.parse_args(
+                    ["--upgrade-timestamps", conflict, "/course"]
+                )
+            self.assertEqual(raised.exception.code, 2)
+
+    def test_dry_run_and_live_use_upgrade_timestamp_label(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            course_root = Path(temporary) / "Course"
+            transcripts = course_root / "transcripts"
+            transcripts.mkdir(parents=True)
+            media = course_root / "lesson.mp4"
+            media.write_bytes(b"media")
+            (transcripts / "lesson.txt").write_text(
+                "plain transcript",
+                encoding="utf-8",
+            )
+            preflight = self.preflight(course_root)
+            dry_output = FlushRecordingStream()
+            live_output = FlushRecordingStream()
+
+            with redirect_stdout(dry_output):
+                subject.print_preflight(preflight, dry_run=True)
+            with (
+                redirect_stdout(live_output),
+                mock.patch.object(
+                    subject,
+                    "transcribe_item",
+                    return_value=subject.InstallResult.installed(),
+                ),
+            ):
+                result = subject.run_live(preflight, title=None)
+
+        self.assertEqual(result, 0)
+        self.assertIn("UPGRADE-TIMESTAMPS", dry_output.getvalue())
+        self.assertIn("UPGRADE-TIMESTAMPS", live_output.getvalue())
+        self.assertIn(
+            "attempted=1 succeeded=1 skipped=0 limited=0 failed=0",
+            live_output.getvalue(),
+        )
+
+    def test_rescanning_current_course_skips_already_upgraded_file(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            course_root = Path(temporary) / "Course"
+            transcripts = course_root / "transcripts"
+            transcripts.mkdir(parents=True)
+            (course_root / "lesson.mp4").write_bytes(b"media")
+            destination = transcripts / "lesson.txt"
+            destination.write_text("plain transcript", encoding="utf-8")
+
+            before = self.preflight(course_root)
+            destination.write_text(
+                "[00:00:00]\nupgraded transcript\n",
+                encoding="utf-8",
+            )
+            resumed = self.preflight(course_root)
+
+        self.assertEqual(before.work_total, 1)
+        self.assertTrue(before.items[0].selected)
+        self.assertEqual(resumed.work_total, 0)
+        self.assertFalse(resumed.items[0].selected)
+        self.assertFalse(resumed.items[0].timestamp_upgrade_needed)
+
+    def test_transcribe_item_passes_preflight_snapshot_to_installer(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            course_root = Path(temporary) / "Course"
+            transcripts = course_root / "transcripts"
+            transcripts.mkdir(parents=True)
+            media = course_root / "lesson.wav"
+            media.write_bytes(b"audio")
+            destination = transcripts / "lesson.txt"
+            destination.write_text("plain transcript", encoding="utf-8")
+            preflight = self.preflight(course_root)
+            item = preflight.items[0]
+            parent_fd = os.open(
+                transcripts,
+                os.O_RDONLY | os.O_DIRECTORY,
+            )
+            try:
+                with (
+                    mock.patch.object(
+                        subject,
+                        "run_whisperkit_direct",
+                        return_value=("[00:00:00]\nreplacement", None),
+                    ),
+                    mock.patch.object(
+                        subject,
+                        "install_transcript",
+                        return_value=subject.InstallResult.installed(),
+                    ) as install,
+                ):
+                    result = subject.transcribe_item(
+                        item,
+                        preflight.programs,
+                        parent_fd,
+                        self.OPTIONS,
+                    )
+            finally:
+                os.close(parent_fd)
+
+        self.assertIs(result.status, subject.InstallStatus.INSTALLED)
+        install.assert_called_once_with(
+            parent_fd,
+            "lesson.txt",
+            "[00:00:00]\nreplacement",
+            destination_path=(
+                item.course.transcript_root / item.relative_output
+            ),
+            overwrite=False,
+            overwrite_empty=False,
+            expected_snapshot=item.transcript_snapshot,
+        )
+
+    def test_plain_upgrade_result_is_rejected_before_replacement(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            course_root = Path(temporary) / "Course"
+            transcripts = course_root / "transcripts"
+            transcripts.mkdir(parents=True)
+            (course_root / "lesson.wav").write_bytes(b"audio")
+            destination = transcripts / "lesson.txt"
+            destination.write_text("old plain transcript", encoding="utf-8")
+            preflight = self.preflight(course_root)
+            parent_fd = os.open(
+                transcripts,
+                os.O_RDONLY | os.O_DIRECTORY,
+            )
+            try:
+                with mock.patch.object(
+                    subject,
+                    "run_whisperkit_direct",
+                    return_value=("new but still plain", None),
+                ):
+                    result = subject.transcribe_item(
+                        preflight.items[0],
+                        preflight.programs,
+                        parent_fd,
+                        self.OPTIONS,
+                    )
+            finally:
+                os.close(parent_fd)
+            remaining = destination.read_text(encoding="utf-8")
+
+        self.assertIs(result.status, subject.InstallStatus.FAILED)
+        self.assertIn("no clean leading timestamp", result.detail or "")
+        self.assertEqual(remaining, "old plain transcript")
+
+
+class ResumeCheckpointTests(unittest.TestCase):
+    def test_checkpoint_round_trip_and_completion_are_atomic(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            directory = Path(temporary)
+            roots = ["/courses/One", "/courses/Two"]
+            options = subject.TranscriptionOptions(
+                language="es",
+                timestamps=True,
+                timestamp_interval_seconds=90,
+                timeout_seconds=77,
+                retries=3,
+                overwrite=True,
+            )
+            checkpoint = subject.ResumeCheckpoint.create(
+                roots,
+                ["/authors/Author"],
+                "author-roots",
+                next_index=1,
+                directory=directory,
+                options=options,
+            )
+
+            loaded = subject.ResumeCheckpoint.load(checkpoint.path)
+            self.assertEqual(loaded.course_roots, roots)
+            self.assertEqual(loaded.next_index, 1)
+            self.assertEqual(loaded.current_course, "/courses/Two")
+            self.assertEqual(loaded.status, "active")
+            self.assertEqual(loaded.options, options)
+
+            loaded.set_cursor(2, "complete")
+            completed = subject.ResumeCheckpoint.load(checkpoint.path)
+
+            self.assertEqual(completed.next_index, 2)
+            self.assertIsNone(completed.current_course)
+            self.assertEqual(completed.status, "complete")
+            self.assertEqual(
+                list(directory.glob("*.part")),
+                [],
+            )
+
+    def test_checkpoint_persists_timestamp_upgrade_mode(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            options = subject.TranscriptionOptions(
+                timestamps=True,
+                timestamp_interval_seconds=60,
+                upgrade_timestamps=True,
+            )
+            checkpoint = subject.ResumeCheckpoint.create(
+                ["/courses/One"],
+                ["/authors/Author"],
+                "author-roots",
+                directory=Path(temporary),
+                options=options,
+            )
+
+            loaded = subject.ResumeCheckpoint.load(checkpoint.path)
+
+        self.assertEqual(loaded.options, options)
+        self.assertTrue(loaded.options.timestamps)
+        self.assertTrue(loaded.options.upgrade_timestamps)
+
+    def test_checkpoint_without_upgrade_field_remains_compatible(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            checkpoint = subject.ResumeCheckpoint.create(
+                ["/courses/One"],
+                ["/courses/One"],
+                "course-roots",
+                directory=Path(temporary),
+            )
+            payload = json.loads(
+                checkpoint.path.read_text(encoding="utf-8")
+            )
+            payload["transcription_options"].pop("upgrade_timestamps")
+            checkpoint.path.write_text(
+                json.dumps(payload),
+                encoding="utf-8",
+            )
+
+            loaded = subject.ResumeCheckpoint.load(checkpoint.path)
+
+        self.assertFalse(loaded.options.upgrade_timestamps)
+        self.assertFalse(loaded.options.timestamps)
+
+    def test_resume_course_index_selects_exact_course(self) -> None:
+        roots = [
+            "/courses/Before",
+            "/courses/Example Course",
+            "/courses/After",
+        ]
+
+        index = subject.resume_course_index(
+            roots,
+            "/courses/Example Course",
+        )
+
+        self.assertEqual(index, 1)
+
+    def test_prior_author_command_is_parsed_as_data(self) -> None:
+        command = (
+            "python3 ~/.agents/skills/batch-transcribe-courses/scripts/"
+            "transcribe_courses.py \\\n"
+            "  --author-roots --skip-preflight --limit 7 -- \\\n"
+            "  '/tmp/transcription-fixtures/Music/Example Author/First Course' "
+            "'/tmp/transcription-fixtures/Music/Example Author/Second Course **'"
+        )
+
+        recovered = subject.recover_author_invocation(command)
+
+        self.assertEqual(recovered.limit, 7)
+        self.assertEqual(
+            recovered.roots,
+            [
+                "/tmp/transcription-fixtures/Music/Example Author/First Course",
+                "/tmp/transcription-fixtures/Music/Example Author/Second Course **",
+            ],
+        )
 
 
 class OutputContractTests(unittest.TestCase):
@@ -400,12 +1307,14 @@ class OutputContractTests(unittest.TestCase):
         self,
         course: subject.Course,
         items: list[subject.WorkItem],
+        options: subject.TranscriptionOptions = subject.TranscriptionOptions(),
     ) -> subject.Preflight:
         return subject.Preflight(
             courses=[course],
             items=items,
             programs=subject.Programs("whisperkit-cli", "ffmpeg"),
             work_total=sum(item.selected for item in items),
+            options=options,
         )
 
     def test_dry_run_prints_course_root_and_every_mapping(self) -> None:
@@ -432,6 +1341,7 @@ class OutputContractTests(unittest.TestCase):
                 f"{source} -> transcripts/{destination}",
                 rendered,
             )
+        self.assertIn(" WOULD (direct) ready.mp3", rendered)
         self.assertGreater(output.flush_count, 0)
 
     def test_each_argument_is_used_directly_as_a_course_root(self) -> None:
@@ -473,6 +1383,202 @@ class OutputContractTests(unittest.TestCase):
                 ),
                 (resolved_second, Path("Intro.m4a"), Path("Intro.txt")),
             ],
+        )
+
+    def test_overwrite_selects_existing_transcripts_without_deleting_first(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            course_root = Path(temporary) / "Course"
+            transcripts = course_root / "transcripts"
+            transcripts.mkdir(parents=True)
+            (course_root / "lesson.mp4").write_bytes(b"media")
+            destination = transcripts / "lesson.txt"
+            destination.write_bytes(b"SENTINEL")
+            with mock.patch.object(
+                subject,
+                "resolve_program",
+                return_value=("/bin/true", None),
+            ):
+                normal = subject.perform_preflight(
+                    [str(course_root)],
+                    limit=None,
+                )
+                overwrite = subject.perform_preflight(
+                    [str(course_root)],
+                    limit=None,
+                    options=subject.TranscriptionOptions(overwrite=True),
+                )
+            remaining_bytes = destination.read_bytes()
+
+        self.assertFalse(normal.items[0].selected)
+        self.assertEqual(normal.work_total, 0)
+        self.assertTrue(overwrite.items[0].selected)
+        self.assertEqual(overwrite.work_total, 1)
+        self.assertEqual(remaining_bytes, b"SENTINEL")
+
+    def test_overwrite_empty_selects_missing_and_zero_byte_only(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            course_root = Path(temporary) / "Course"
+            transcripts = course_root / "transcripts"
+            transcripts.mkdir(parents=True)
+            for name in ("empty.mp4", "finished.mp4", "missing.mp4"):
+                (course_root / name).write_bytes(b"media")
+            (transcripts / "empty.txt").write_bytes(b"")
+            (transcripts / "finished.txt").write_bytes(b"FINISHED")
+            with mock.patch.object(
+                subject,
+                "resolve_program",
+                return_value=("/bin/true", None),
+            ):
+                preflight = subject.perform_preflight(
+                    [str(course_root)],
+                    limit=None,
+                    options=subject.TranscriptionOptions(
+                        overwrite_empty=True
+                    ),
+                )
+
+        selected = {
+            item.relative_media.name
+            for item in preflight.items
+            if item.selected
+        }
+        self.assertEqual(selected, {"empty.mp4", "missing.mp4"})
+        finished = next(
+            item
+            for item in preflight.items
+            if item.relative_media.name == "finished.mp4"
+        )
+        self.assertTrue(finished.existing)
+        self.assertFalse(finished.existing_empty)
+        self.assertFalse(finished.selected)
+
+    def test_author_roots_expand_exactly_one_directory_level(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary)
+            first_author = base / "First Author"
+            second_author = base / "Second Author"
+            alpha = first_author / "Alpha Course"
+            zulu = first_author / "zulu Course"
+            bravo = second_author / "Bravo Course"
+            (alpha / "Module One").mkdir(parents=True)
+            zulu.mkdir(parents=True)
+            bravo.mkdir(parents=True)
+            (first_author / "cover.jpg").write_bytes(b"not a course")
+            (alpha / "Module One" / "Lesson.mp4").write_bytes(b"media")
+            review_log = subject.ReviewLog(base / "review.txt")
+
+            expanded = subject.expand_author_roots(
+                [str(first_author), str(second_author)],
+                review_log,
+            )
+
+        self.assertEqual(
+            expanded,
+            [
+                str(alpha.resolve()),
+                str(zulu.resolve()),
+                str(bravo.resolve()),
+            ],
+        )
+        self.assertNotIn(str((alpha / "Module One").resolve()), expanded)
+        self.assertEqual(review_log.issue_count, 0)
+        self.assertFalse(review_log.path.exists())
+
+    def test_empty_author_root_is_logged_while_valid_author_continues(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary)
+            empty_author = base / "Empty Author"
+            missing_author = base / "Missing Author"
+            valid_author = base / "Valid Author"
+            course = valid_author / "Course"
+            empty_author.mkdir()
+            course.mkdir(parents=True)
+            (empty_author / "README.txt").write_text("not a course")
+            review_log = subject.ReviewLog(base / "review.txt")
+
+            expanded = subject.expand_author_roots(
+                [str(empty_author), str(missing_author), str(valid_author)],
+                review_log,
+            )
+            review_text = review_log.path.read_text(encoding="utf-8")
+
+        self.assertEqual(expanded, [str(course.resolve())])
+        self.assertEqual(review_log.issue_count, 2)
+        self.assertIn("Manual Review", review_text)
+        self.assertIn(str(empty_author.resolve()), review_text)
+        self.assertIn("contains no immediate course directories", review_text)
+        self.assertIn(str(missing_author), review_text)
+        self.assertIn("invalid input root", review_text)
+
+    def test_direct_cli_unsupported_audio_container_uses_ffmpeg(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            course_root = Path(temporary) / "Course"
+            course_root.mkdir()
+            (course_root / "direct.mp3").write_bytes(b"media")
+            (course_root / "convert.aac").write_bytes(b"media")
+
+            with mock.patch.object(
+                subject,
+                "resolve_program",
+                return_value=("/bin/true", None),
+            ):
+                preflight = subject.perform_preflight(
+                    [str(course_root)],
+                    limit=None,
+                )
+
+        self.assertEqual(
+            {
+                item.relative_media.name: item.input_kind
+                for item in preflight.items
+            },
+            {
+                "convert.aac": "ffmpeg",
+                "direct.mp3": "direct",
+            },
+        )
+
+    def test_music_tree_discovers_only_video_containers(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            course_root = (
+                Path(temporary) / "videos" / "Music" / "Author" / "Course"
+            )
+            nested = course_root / "Samples"
+            nested.mkdir(parents=True)
+            (course_root / "lesson.mp4").write_bytes(b"video")
+            (course_root / "song.mp3").write_bytes(b"audio")
+            (nested / "instrument.wav").write_bytes(b"audio")
+            (nested / "preview.m4a").write_bytes(b"audio")
+
+            items, errors = subject.discover_media(
+                subject.Course(course_root.resolve())
+            )
+
+        self.assertEqual(errors, [])
+        self.assertEqual(
+            [item.relative_media.as_posix() for item in items],
+            ["lesson.mp4"],
+        )
+
+    def test_non_music_tree_still_discovers_audio_and_video(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            course_root = (
+                Path(temporary) / "videos" / "Finance" / "Author" / "Course"
+            )
+            course_root.mkdir(parents=True)
+            (course_root / "lesson.mp4").write_bytes(b"video")
+            (course_root / "lecture.mp3").write_bytes(b"audio")
+
+            items, errors = subject.discover_media(
+                subject.Course(course_root.resolve())
+            )
+
+        self.assertEqual(errors, [])
+        self.assertEqual(
+            [item.relative_media.name for item in items],
+            ["lecture.mp3", "lesson.mp4"],
         )
 
     def test_discovery_mode_option_is_not_supported(self) -> None:
@@ -535,6 +1641,515 @@ class OutputContractTests(unittest.TestCase):
         self.assertEqual(return_code, 0)
         self.assertEqual(output.getvalue().splitlines()[0].split()[0], "PREFLIGHT")
 
+    def test_skip_preflight_processes_roots_one_at_a_time(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary)
+            first_root = base / "Course One"
+            second_root = base / "Course Two"
+            first_root.mkdir()
+            second_root.mkdir()
+            first = subject.Preflight(
+                courses=[subject.Course(first_root.resolve())],
+                items=[],
+                programs=subject.Programs("whisperkit-cli", "ffmpeg"),
+                work_total=2,
+            )
+            second = subject.Preflight(
+                courses=[subject.Course(second_root.resolve())],
+                items=[],
+                programs=subject.Programs("whisperkit-cli", "ffmpeg"),
+                work_total=1,
+            )
+            calls: list[tuple[str, str, int | None]] = []
+
+            def preflight_one(
+                roots: list[str],
+                limit: int | None,
+                _options: subject.TranscriptionOptions,
+            ) -> subject.Preflight:
+                name = Path(roots[0]).name
+                calls.append(("scan", name, limit))
+                return first if name == first_root.name else second
+
+            def run_one(
+                preflight: subject.Preflight,
+                _title: subject.ProcessTitle | None,
+                _review_log: subject.ReviewLog | None,
+            ) -> int:
+                calls.append(
+                    ("run", preflight.courses[0].name, preflight.work_total)
+                )
+                return 0
+
+            output = FlushRecordingStream()
+            with (
+                redirect_stdout(output),
+                mock.patch.object(subject, "print_settings"),
+                mock.patch.object(
+                    subject,
+                    "perform_preflight",
+                    side_effect=preflight_one,
+                ),
+                mock.patch.object(subject, "print_preflight"),
+                mock.patch.object(subject, "run_live", side_effect=run_one),
+            ):
+                return_code = subject.run_fast_start(
+                    [str(first_root), str(second_root)],
+                    limit=3,
+                    title=None,
+                )
+
+        self.assertEqual(return_code, 0)
+        self.assertEqual(
+            calls,
+            [
+                ("scan", "Course One", 3),
+                ("run", "Course One", 2),
+                ("scan", "Course Two", 1),
+                ("run", "Course Two", 1),
+            ],
+        )
+        self.assertLess(
+            output.getvalue().index("course="),
+            output.getvalue().index("Fast-start summary:"),
+        )
+
+    def test_interruption_checkpoint_stays_on_interrupted_course(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary)
+            first_root = base / "Course One"
+            second_root = base / "Course Two"
+            first_root.mkdir()
+            second_root.mkdir()
+            roots = [str(first_root), str(second_root)]
+            checkpoint = subject.ResumeCheckpoint.create(
+                roots,
+                roots,
+                "course-roots",
+                directory=base / "state",
+            )
+            first = subject.Preflight(
+                courses=[subject.Course(first_root)],
+                items=[],
+                programs=subject.Programs("whisperkit-cli", "ffmpeg"),
+                work_total=0,
+            )
+
+            with (
+                redirect_stdout(FlushRecordingStream()),
+                mock.patch.object(subject, "print_settings"),
+                mock.patch.object(
+                    subject,
+                    "perform_preflight",
+                    side_effect=[first, KeyboardInterrupt()],
+                ),
+                mock.patch.object(subject, "print_preflight"),
+                mock.patch.object(subject, "run_live", return_value=0),
+                self.assertRaises(KeyboardInterrupt),
+            ):
+                subject.run_fast_start(
+                    roots,
+                    limit=None,
+                    title=None,
+                    checkpoint=checkpoint,
+                    roots_prevalidated=True,
+                )
+
+            resumed = subject.ResumeCheckpoint.load(checkpoint.path)
+
+        self.assertEqual(resumed.next_index, 1)
+        self.assertEqual(resumed.current_course, str(second_root))
+        self.assertEqual(resumed.status, "active")
+
+    def test_skip_preflight_continues_after_course_scan_failure(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary)
+            first_root = base / "Course One"
+            second_root = base / "Course Two"
+            first_root.mkdir()
+            second_root.mkdir()
+            second = subject.Preflight(
+                courses=[subject.Course(second_root.resolve())],
+                items=[],
+                programs=subject.Programs("whisperkit-cli", "ffmpeg"),
+                work_total=1,
+            )
+            errors = FlushRecordingStream()
+
+            with (
+                redirect_stdout(FlushRecordingStream()),
+                redirect_stderr(errors),
+                mock.patch.object(subject, "print_settings"),
+                mock.patch.object(
+                    subject,
+                    "perform_preflight",
+                    side_effect=[
+                        subject.PreflightError(["injected scan failure"]),
+                        second,
+                    ],
+                ),
+                mock.patch.object(subject, "print_preflight"),
+                mock.patch.object(subject, "run_live", return_value=0) as run_live,
+            ):
+                return_code = subject.run_fast_start(
+                    [str(first_root), str(second_root)],
+                    limit=None,
+                    title=None,
+                    review_log=subject.ReviewLog(base / "review.txt"),
+                )
+            review_text = (base / "review.txt").read_text(encoding="utf-8")
+
+        self.assertEqual(return_code, 2)
+        self.assertIn("injected scan failure", errors.getvalue())
+        self.assertIn(
+            "injected scan failure",
+            review_text,
+        )
+        run_live.assert_called_once_with(second, None, mock.ANY)
+
+    def test_main_skip_preflight_uses_fast_start_path(self) -> None:
+        output = FlushRecordingStream()
+        checkpoint = mock.Mock(spec=subject.ResumeCheckpoint)
+        checkpoint.path = Path("/state/resume.json")
+        with (
+            redirect_stdout(output),
+            mock.patch.object(subject.ProcessTitle, "capture", return_value=None),
+            mock.patch.object(
+                subject,
+                "validate_fast_start_roots",
+                return_value=[Path("/course")],
+            ),
+            mock.patch.object(
+                subject.ResumeCheckpoint,
+                "create",
+                return_value=checkpoint,
+            ),
+            mock.patch.object(subject, "run_fast_start", return_value=0) as fast,
+            mock.patch.object(subject, "perform_preflight") as global_preflight,
+        ):
+            return_code = subject.main(
+                ["--skip-preflight", "--limit", "10", "/course"]
+        )
+
+        self.assertEqual(return_code, 0)
+        fast.assert_called_once_with(
+            ["/course"],
+            10,
+            None,
+            options=subject.TranscriptionOptions(),
+            review_log=mock.ANY,
+            checkpoint=checkpoint,
+            start_index=0,
+            roots_prevalidated=True,
+        )
+        global_preflight.assert_not_called()
+        self.assertIn("FAST START roots=1 start=1 limit=10", output.getvalue())
+
+    def test_main_persists_upgrade_mode_in_fast_start_checkpoint(self) -> None:
+        output = FlushRecordingStream()
+        checkpoint = mock.Mock(spec=subject.ResumeCheckpoint)
+        checkpoint.path = Path("/state/resume.json")
+        expected_options = subject.TranscriptionOptions(
+            timestamps=True,
+            timestamp_interval_seconds=60,
+            upgrade_timestamps=True,
+        )
+        with (
+            redirect_stdout(output),
+            mock.patch.object(subject.ProcessTitle, "capture", return_value=None),
+            mock.patch.object(
+                subject,
+                "validate_fast_start_roots",
+                return_value=[Path("/course")],
+            ),
+            mock.patch.object(
+                subject.ResumeCheckpoint,
+                "create",
+                return_value=checkpoint,
+            ) as create,
+            mock.patch.object(subject, "run_fast_start", return_value=0) as fast,
+        ):
+            return_code = subject.main(
+                [
+                    "--skip-preflight",
+                    "--upgrade-timestamps",
+                    "--timestamp-interval",
+                    "60",
+                    "/course",
+                ]
+            )
+
+        self.assertEqual(return_code, 0)
+        create.assert_called_once_with(
+            ["/course"],
+            ["/course"],
+            "course-roots",
+            next_index=0,
+            options=expected_options,
+        )
+        fast.assert_called_once_with(
+            ["/course"],
+            None,
+            None,
+            options=expected_options,
+            review_log=mock.ANY,
+            checkpoint=checkpoint,
+            start_index=0,
+            roots_prevalidated=True,
+        )
+
+    def test_main_resume_uses_saved_cursor_without_expanding_or_validating(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary)
+            roots = [
+                "/courses/Completed",
+                "/courses/Interrupted",
+                "/courses/Later",
+            ]
+            checkpoint = subject.ResumeCheckpoint.create(
+                roots,
+                ["/authors/Author"],
+                "author-roots",
+                next_index=1,
+                directory=base,
+            )
+            output = FlushRecordingStream()
+
+            with (
+                redirect_stdout(output),
+                mock.patch.object(
+                    subject.ProcessTitle,
+                    "capture",
+                    return_value=None,
+                ),
+                mock.patch.object(subject, "run_fast_start", return_value=0) as fast,
+                mock.patch.object(subject, "expand_author_roots") as expand,
+                mock.patch.object(subject, "validate_fast_start_roots") as validate,
+            ):
+                return_code = subject.main(
+                    ["--resume", str(checkpoint.path)]
+                )
+
+        self.assertEqual(return_code, 0)
+        fast.assert_called_once_with(
+            roots,
+            None,
+            None,
+            options=subject.TranscriptionOptions(),
+            review_log=mock.ANY,
+            checkpoint=mock.ANY,
+            start_index=1,
+            roots_prevalidated=True,
+        )
+        expand.assert_not_called()
+        validate.assert_not_called()
+        self.assertIn(
+            "next=2/3 course=/courses/Interrupted",
+            output.getvalue(),
+        )
+
+    def test_main_resume_from_starts_checkpoint_at_exact_expanded_course(
+        self,
+    ) -> None:
+        output = FlushRecordingStream()
+        expanded = [
+            "/author/Before",
+            "/author/Example Course",
+            "/author/After",
+        ]
+        checkpoint = mock.Mock(spec=subject.ResumeCheckpoint)
+        checkpoint.path = Path("/state/resume.json")
+
+        with (
+            redirect_stdout(output),
+            mock.patch.object(subject.ProcessTitle, "capture", return_value=None),
+            mock.patch.object(
+                subject,
+                "expand_author_roots",
+                return_value=expanded,
+            ),
+            mock.patch.object(
+                subject.ResumeCheckpoint,
+                "create",
+                return_value=checkpoint,
+            ) as create,
+            mock.patch.object(subject, "run_fast_start", return_value=0) as fast,
+        ):
+            return_code = subject.main(
+                [
+                    "--author-roots",
+                    "--skip-preflight",
+                    "--resume-from",
+                    "/author/Example Course",
+                    "/author",
+                ]
+            )
+
+        self.assertEqual(return_code, 0)
+        create.assert_called_once_with(
+            expanded,
+            ["/author"],
+            "author-roots",
+            next_index=1,
+            options=subject.TranscriptionOptions(),
+        )
+        fast.assert_called_once_with(
+            expanded,
+            None,
+            None,
+            options=subject.TranscriptionOptions(),
+            review_log=mock.ANY,
+            checkpoint=checkpoint,
+            start_index=1,
+            roots_prevalidated=True,
+        )
+        self.assertIn("start=2/3", output.getvalue())
+
+    def test_main_resume_from_command_recovers_roots_without_eval(self) -> None:
+        command = (
+            "python3 ~/.agents/skills/batch-transcribe-courses/scripts/"
+            "transcribe_courses.py --author-roots --skip-preflight -- "
+            "'/author/Groove3' '/author/Later'"
+        )
+        expanded = [
+            "/author/Groove3/Before",
+            "/author/Groove3/Current",
+            "/author/Groove3/After",
+            "/author/Later/Course",
+        ]
+        checkpoint = mock.Mock(spec=subject.ResumeCheckpoint)
+        checkpoint.path = Path("/state/resume.json")
+
+        with (
+            redirect_stdout(FlushRecordingStream()),
+            mock.patch.object(subject.ProcessTitle, "capture", return_value=None),
+            mock.patch.object(subject.sys, "stdin", io.StringIO(command)),
+            mock.patch.object(
+                subject,
+                "expand_author_roots",
+                return_value=expanded,
+            ) as expand,
+            mock.patch.object(
+                subject.ResumeCheckpoint,
+                "create",
+                return_value=checkpoint,
+            ) as create,
+            mock.patch.object(subject, "run_fast_start", return_value=0) as fast,
+        ):
+            return_code = subject.main(
+                [
+                    "--resume-from-command",
+                    "/author/Groove3/Current",
+                ]
+            )
+
+        self.assertEqual(return_code, 0)
+        expand.assert_called_once_with(
+            ["/author/Groove3", "/author/Later"],
+            mock.ANY,
+        )
+        create.assert_called_once_with(
+            expanded,
+            ["/author/Groove3", "/author/Later"],
+            "author-roots",
+            next_index=1,
+            options=subject.TranscriptionOptions(),
+        )
+        fast.assert_called_once_with(
+            expanded,
+            None,
+            None,
+            options=subject.TranscriptionOptions(),
+            review_log=mock.ANY,
+            checkpoint=checkpoint,
+            start_index=1,
+            roots_prevalidated=True,
+        )
+
+    def test_main_author_roots_routes_expanded_courses_to_fast_start(self) -> None:
+        output = FlushRecordingStream()
+        expanded = ["/author/Course One", "/author/Course Two"]
+        checkpoint = mock.Mock(spec=subject.ResumeCheckpoint)
+        checkpoint.path = Path("/state/resume.json")
+        with (
+            redirect_stdout(output),
+            mock.patch.object(subject.ProcessTitle, "capture", return_value=None),
+            mock.patch.object(
+                subject,
+                "expand_author_roots",
+                return_value=expanded,
+            ) as expand,
+            mock.patch.object(
+                subject.ResumeCheckpoint,
+                "create",
+                return_value=checkpoint,
+            ),
+            mock.patch.object(subject, "run_fast_start", return_value=0) as fast,
+            mock.patch.object(subject, "perform_preflight") as global_preflight,
+        ):
+            return_code = subject.main(
+                [
+                    "--author-roots",
+                    "--skip-preflight",
+                    "--limit",
+                    "10",
+                    "/author",
+                ]
+        )
+
+        self.assertEqual(return_code, 0)
+        expand.assert_called_once_with(["/author"], mock.ANY)
+        fast.assert_called_once_with(
+            expanded,
+            10,
+            None,
+            options=subject.TranscriptionOptions(),
+            review_log=mock.ANY,
+            checkpoint=checkpoint,
+            start_index=0,
+            roots_prevalidated=True,
+        )
+        global_preflight.assert_not_called()
+        self.assertIn(
+            "AUTHOR ROOTS expanded authors=1 courses=2",
+            output.getvalue(),
+        )
+        self.assertIn(
+            "FAST START roots=2 start=1 limit=10",
+            output.getvalue(),
+        )
+
+    def test_main_no_valid_author_roots_does_not_scan_courses(self) -> None:
+        errors = FlushRecordingStream()
+        with (
+            redirect_stdout(FlushRecordingStream()),
+            redirect_stderr(errors),
+            mock.patch.object(subject.ProcessTitle, "capture", return_value=None),
+            mock.patch.object(
+                subject,
+                "expand_author_roots",
+                return_value=[],
+            ),
+            mock.patch.object(subject, "perform_preflight") as preflight,
+        ):
+            return_code = subject.main(["--author-roots", "/author"])
+
+        self.assertEqual(return_code, 2)
+        self.assertIn("no course roots were found", errors.getvalue())
+        preflight.assert_not_called()
+
+    def test_skip_preflight_cannot_be_combined_with_dry_run(self) -> None:
+        errors = FlushRecordingStream()
+        with (
+            redirect_stderr(errors),
+            mock.patch.object(subject.ProcessTitle, "capture", return_value=None),
+            self.assertRaises(SystemExit) as raised,
+        ):
+            subject.main(["--skip-preflight", "--dry-run", "/course"])
+
+        self.assertEqual(raised.exception.code, 2)
+        self.assertIn("cannot be combined", errors.getvalue())
+
     def test_race_skip_is_successful_and_counted_separately(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             course = subject.Course(Path(temporary))
@@ -568,7 +2183,10 @@ class OutputContractTests(unittest.TestCase):
                     ],
                 ),
             ):
-                return_code = subject.run_live(preflight, title=None)
+                return_code = subject.run_live(
+                    preflight,
+                    title=None,
+                )
 
         self.assertEqual(return_code, 0)
         self.assertEqual(errors.getvalue(), "")
@@ -614,7 +2232,10 @@ class OutputContractTests(unittest.TestCase):
                     return_value=subject.InstallResult.failed("injected failure"),
                 ),
             ):
-                return_code = subject.run_live(preflight, title=None)
+                return_code = subject.run_live(
+                    preflight,
+                    title=None,
+                )
 
         self.assertEqual(return_code, 1)
         self.assertIn("FAIL failed.mp3: injected failure", errors.getvalue())

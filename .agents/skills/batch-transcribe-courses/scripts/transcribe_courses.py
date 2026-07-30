@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Safely transcribe course media in place with WhisperKit CLI.
+"""Safely transcribe course media with direct WhisperKit CLI child processes.
 
 Every supplied course root is read-only except for its top-level
 ``transcripts/`` directory. A complete preflight succeeds before live work can
@@ -10,47 +10,76 @@ This is a simplified derivative of ``bulk_transcribe_network_whisperkit.py``.
 Its intentionally fixed M5 Pro configuration is:
 
 * model: ``large-v3-v20240930_turbo``
-* language/task: English transcription
+* task: native-language transcription (with recognized Language-tree codes)
 * chunking: VAD
 * audio encoder: CPU + Neural Engine
 * text decoder: CPU + GPU
 * mel spectrogram: WhisperKit's CPU + GPU default
 * concurrent VAD workers: 64
 * word timestamps: disabled
+
+Each selected file gets one owned ``whisperkit-cli transcribe`` child. The
+child has a timeout, is terminated as a process group if it hangs, and can be
+retried without stopping the batch. Video and uncommon audio containers first
+require one ffmpeg conversion subprocess.
 """
 
 from __future__ import annotations
 
 import argparse
 import ctypes
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 import errno
 from enum import Enum
+import hashlib
+import json
 import os
 from pathlib import Path
+import re
 import secrets
+import signal
+import shlex
 import shutil
 import stat
 import subprocess
 import sys
 import tempfile
+import time
 from typing import Iterator
 import unicodedata
 
 
 MODEL = "large-v3-v20240930_turbo"
-LANGUAGE = "en"
+DEFAULT_LANGUAGE = "en"
+LANGUAGE_PATH_CODES = {
+    "chinese (cantonese)": "yue",
+    "french": "fr",
+    "greek": "el",
+    "latin": "la",
+    "russian": "ru",
+    "spanish": "es",
+    "thai": "th",
+}
 CHUNKING_STRATEGY = "vad"
 AUDIO_ENCODER_COMPUTE_UNITS = "cpuAndNeuralEngine"
 TEXT_DECODER_COMPUTE_UNITS = "cpuAndGPU"
 CONCURRENT_WORKERS = 64
+DEFAULT_TRANSCRIBE_TIMEOUT_SECONDS = 600
+DEFAULT_TRANSCRIBE_RETRIES = 1
+DEFAULT_TIMESTAMP_INTERVAL_SECONDS = 120
+CHILD_TERMINATE_GRACE_SECONDS = 10
+LEGACY_WHISPER_TOKEN_PATTERN = re.compile(r"<\|[^|\r\n]*\|>")
+TIMESTAMP_CLOCK_PATTERN = r"\d{2,}:[0-5]\d:[0-5]\d"
+LEADING_TIMESTAMP_PATTERN = re.compile(
+    rf"\A(?:\ufeff)?\[(?:"
+    rf"{TIMESTAMP_CLOCK_PATTERN}|"
+    rf"{TIMESTAMP_CLOCK_PATTERN}\.\d{{3}} --> "
+    rf"{TIMESTAMP_CLOCK_PATTERN}\.\d{{3}}"
+    rf")\](?=\s|\Z)"
+)
 
 DIRECT_AUDIO_EXTENSIONS = frozenset(
     {
-        ".aac",
-        ".aif",
-        ".aiff",
-        ".caf",
         ".flac",
         ".m4a",
         ".mp3",
@@ -59,9 +88,13 @@ DIRECT_AUDIO_EXTENSIONS = frozenset(
 )
 AUDIO_EXTENSIONS = DIRECT_AUDIO_EXTENSIONS | frozenset(
     {
+        ".aac",
         ".ac3",
+        ".aif",
+        ".aiff",
         ".amr",
         ".ape",
+        ".caf",
         ".mka",
         ".ogg",
         ".opus",
@@ -96,6 +129,7 @@ VIDEO_EXTENSIONS = frozenset(
 )
 MEDIA_EXTENSIONS = AUDIO_EXTENSIONS | VIDEO_EXTENSIONS
 RENAME_EXCL = 0x00000004
+RESUME_STATE_VERSION = 1
 
 
 @dataclass(frozen=True)
@@ -123,6 +157,16 @@ class MediaIdentity:
 class FileIdentity:
     device: int
     inode: int
+
+
+@dataclass(frozen=True)
+class TranscriptSnapshot:
+    device: int
+    inode: int
+    size: int
+    modified_ns: int
+    changed_ns: int
+    sha256: str
 
 
 class InstallStatus(Enum):
@@ -158,6 +202,9 @@ class WorkItem:
     identity: MediaIdentity
     input_kind: str
     existing: bool = False
+    existing_empty: bool = False
+    timestamp_upgrade_needed: bool = False
+    transcript_snapshot: TranscriptSnapshot | None = None
     selected: bool = False
 
 
@@ -165,6 +212,18 @@ class WorkItem:
 class Programs:
     whisperkit: str
     ffmpeg: str
+
+
+@dataclass(frozen=True)
+class TranscriptionOptions:
+    language: str | None = DEFAULT_LANGUAGE
+    timestamps: bool = False
+    timestamp_interval_seconds: int = DEFAULT_TIMESTAMP_INTERVAL_SECONDS
+    timeout_seconds: int = DEFAULT_TRANSCRIBE_TIMEOUT_SECONDS
+    retries: int = DEFAULT_TRANSCRIBE_RETRIES
+    overwrite: bool = False
+    overwrite_empty: bool = False
+    upgrade_timestamps: bool = False
 
 
 @dataclass
@@ -184,6 +243,13 @@ class Preflight:
     items: list[WorkItem]
     programs: Programs
     work_total: int
+    options: TranscriptionOptions = TranscriptionOptions()
+
+
+@dataclass(frozen=True)
+class RecoveredInvocation:
+    roots: list[str]
+    limit: int | None
 
 
 class PreflightError(Exception):
@@ -192,6 +258,383 @@ class PreflightError(Exception):
     def __init__(self, errors: list[str]):
         super().__init__("\n".join(errors))
         self.errors = errors
+
+
+class ResumeStateError(Exception):
+    """A local resume checkpoint could not be created, read, or updated."""
+
+
+@dataclass
+class ReviewLog:
+    """Lazily write hierarchy exceptions for later manual handling."""
+
+    path: Path
+    issue_count: int = 0
+
+    @classmethod
+    def for_current_run(cls) -> ReviewLog:
+        timestamp = time.strftime("%Y%m%d-%H%M%S")
+        filename = (
+            f"batch-transcribe-courses-review-{timestamp}-{os.getpid()}.txt"
+        )
+        return cls(Path.cwd() / filename)
+
+    def record(self, category: str, path: str | Path, reason: str) -> None:
+        issue_number = self.issue_count + 1
+        first_issue = self.issue_count == 0
+        mode = "x" if first_issue else "a"
+        try:
+            with self.path.open(mode, encoding="utf-8", newline="\n") as output:
+                if first_issue:
+                    output.write(
+                        "Batch Transcribe Courses - Manual Review\n"
+                        f"Created: {time.strftime('%Y-%m-%d %H:%M:%S %Z')}\n"
+                        "These paths or runtime events may need follow-up; "
+                        "valid work continued.\n\n"
+                    )
+                output.write(
+                    f"[{issue_number}] {category}\n"
+                    f"Path: {path}\n"
+                    f"Reason: {reason}\n\n"
+                )
+                output.flush()
+                os.fsync(output.fileno())
+        except OSError as exc:
+            print(
+                f"warning: could not write review log {self.path}: {exc}",
+                file=sys.stderr,
+                flush=True,
+            )
+            print(
+                f"REVIEW {category} path={path}: {reason}",
+                file=sys.stderr,
+                flush=True,
+            )
+        else:
+            if first_issue:
+                print(f"REVIEW LOG path={self.path}", flush=True)
+        self.issue_count = issue_number
+
+    def print_summary(self) -> None:
+        if self.issue_count:
+            print(
+                f"Review summary: issues={self.issue_count} log={self.path}",
+                flush=True,
+            )
+
+
+def resume_state_directory() -> Path:
+    return Path.home() / ".agents" / "state" / "batch-transcribe-courses"
+
+
+def atomic_write_json(path: Path, payload: dict[str, object]) -> None:
+    try:
+        path.parent.mkdir(parents=True, exist_ok=True)
+    except OSError as exc:
+        raise ResumeStateError(
+            f"could not create resume-state directory {path.parent}: {exc}"
+        ) from exc
+
+    part = path.with_name(
+        f".{path.name}.{os.getpid()}.{secrets.token_hex(4)}.part"
+    )
+    flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW
+    try:
+        descriptor = os.open(part, flags, 0o600)
+        try:
+            with os.fdopen(
+                descriptor,
+                "w",
+                encoding="utf-8",
+                newline="\n",
+            ) as output:
+                json.dump(
+                    payload,
+                    output,
+                    ensure_ascii=False,
+                    indent=2,
+                    sort_keys=True,
+                )
+                output.write("\n")
+                output.flush()
+                os.fsync(output.fileno())
+        except BaseException:
+            try:
+                os.close(descriptor)
+            except OSError:
+                pass
+            raise
+        os.replace(part, path)
+        directory_fd = os.open(path.parent, os.O_RDONLY | os.O_DIRECTORY)
+        try:
+            os.fsync(directory_fd)
+        finally:
+            os.close(directory_fd)
+    except BaseException as exc:
+        try:
+            part.unlink()
+        except FileNotFoundError:
+            pass
+        except OSError:
+            pass
+        if isinstance(exc, (KeyboardInterrupt, SystemExit)):
+            raise
+        raise ResumeStateError(
+            f"could not atomically update resume state {path}: {exc}"
+        ) from exc
+
+
+@dataclass
+class ResumeCheckpoint:
+    path: Path
+    course_roots: list[str]
+    source_roots: list[str]
+    source_mode: str
+    next_index: int
+    status: str
+    created_at: str
+    updated_at: str
+    current_course: str | None = None
+    options: TranscriptionOptions = TranscriptionOptions()
+
+    @classmethod
+    def create(
+        cls,
+        course_roots: list[str],
+        source_roots: list[str],
+        source_mode: str,
+        next_index: int = 0,
+        directory: Path | None = None,
+        options: TranscriptionOptions = TranscriptionOptions(),
+    ) -> ResumeCheckpoint:
+        if not course_roots:
+            raise ResumeStateError("cannot create resume state without courses")
+        if next_index < 0 or next_index >= len(course_roots):
+            raise ResumeStateError(
+                f"resume start index {next_index} is outside "
+                f"{len(course_roots)} courses"
+            )
+        timestamp = time.strftime("%Y%m%d-%H%M%S")
+        state_directory = directory or resume_state_directory()
+        path = state_directory / (
+            f"resume-{timestamp}-{os.getpid()}-{secrets.token_hex(4)}.json"
+        )
+        now = time.strftime("%Y-%m-%dT%H:%M:%S%z")
+        checkpoint = cls(
+            path=path,
+            course_roots=list(course_roots),
+            source_roots=list(source_roots),
+            source_mode=source_mode,
+            next_index=next_index,
+            status="active",
+            created_at=now,
+            updated_at=now,
+            current_course=course_roots[next_index],
+            options=options,
+        )
+        checkpoint.save()
+        return checkpoint
+
+    @classmethod
+    def load(cls, raw_path: str | Path) -> ResumeCheckpoint:
+        path = Path(raw_path).expanduser()
+        try:
+            descriptor = os.open(path, os.O_RDONLY | os.O_NOFOLLOW)
+            try:
+                file_stat = os.fstat(descriptor)
+                if not stat.S_ISREG(file_stat.st_mode):
+                    raise ResumeStateError(
+                        f"resume state is not a regular file: {path}"
+                    )
+                with os.fdopen(descriptor, "r", encoding="utf-8") as source:
+                    descriptor = -1
+                    payload = json.load(source)
+            finally:
+                if descriptor >= 0:
+                    os.close(descriptor)
+        except ResumeStateError:
+            raise
+        except (OSError, UnicodeError, json.JSONDecodeError) as exc:
+            raise ResumeStateError(
+                f"could not read resume state {path}: {exc}"
+            ) from exc
+
+        if not isinstance(payload, dict):
+            raise ResumeStateError(f"invalid resume state object: {path}")
+        if payload.get("version") != RESUME_STATE_VERSION:
+            raise ResumeStateError(
+                f"unsupported resume state version in {path}: "
+                f"{payload.get('version')!r}"
+            )
+        course_roots = payload.get("course_roots")
+        source_roots = payload.get("source_roots")
+        source_mode = payload.get("source_mode")
+        next_index = payload.get("next_index")
+        status_value = payload.get("status")
+        created_at = payload.get("created_at")
+        updated_at = payload.get("updated_at")
+        current_course = payload.get("current_course")
+        raw_options = payload.get("transcription_options", {})
+        if (
+            not isinstance(course_roots, list)
+            or not course_roots
+            or not all(
+                isinstance(root, str) and root
+                for root in course_roots
+            )
+            or not isinstance(source_roots, list)
+            or not all(
+                isinstance(root, str) and root
+                for root in source_roots
+            )
+            or source_mode not in {"author-roots", "course-roots"}
+            or not isinstance(next_index, int)
+            or isinstance(next_index, bool)
+            or next_index < 0
+            or next_index > len(course_roots)
+            or status_value not in {
+                "active",
+                "interrupted",
+                "paused",
+                "complete",
+            }
+            or not isinstance(created_at, str)
+            or not isinstance(updated_at, str)
+            or (
+                current_course is not None
+                and not isinstance(current_course, str)
+            )
+            or not isinstance(raw_options, dict)
+        ):
+            raise ResumeStateError(f"invalid resume state fields: {path}")
+        language = raw_options.get("language", DEFAULT_LANGUAGE)
+        timestamps = raw_options.get("timestamps", False)
+        timestamp_interval_seconds = raw_options.get(
+            "timestamp_interval_seconds",
+            DEFAULT_TIMESTAMP_INTERVAL_SECONDS,
+        )
+        timeout_seconds = raw_options.get(
+            "timeout_seconds",
+            DEFAULT_TRANSCRIBE_TIMEOUT_SECONDS,
+        )
+        retries = raw_options.get("retries", DEFAULT_TRANSCRIBE_RETRIES)
+        overwrite = raw_options.get("overwrite", False)
+        overwrite_empty = raw_options.get("overwrite_empty", False)
+        upgrade_timestamps = raw_options.get("upgrade_timestamps", False)
+        if (
+            language is not None
+            and (not isinstance(language, str) or not language)
+        ) or (
+            not isinstance(timestamps, bool)
+            or not isinstance(timestamp_interval_seconds, int)
+            or isinstance(timestamp_interval_seconds, bool)
+            or timestamp_interval_seconds < 0
+            or not isinstance(timeout_seconds, int)
+            or isinstance(timeout_seconds, bool)
+            or timeout_seconds <= 0
+            or not isinstance(retries, int)
+            or isinstance(retries, bool)
+            or retries < 0
+            or not isinstance(overwrite, bool)
+            or not isinstance(overwrite_empty, bool)
+            or not isinstance(upgrade_timestamps, bool)
+            or sum(
+                (overwrite, overwrite_empty, upgrade_timestamps)
+            )
+            > 1
+            or (upgrade_timestamps and not timestamps)
+        ):
+            raise ResumeStateError(
+                f"invalid transcription options in resume state: {path}"
+            )
+        if status_value == "complete" and next_index != len(course_roots):
+            raise ResumeStateError(
+                f"completed resume state has an unfinished cursor: {path}"
+            )
+        if status_value != "complete" and next_index >= len(course_roots):
+            raise ResumeStateError(
+                f"active resume state has no remaining course: {path}"
+            )
+        return cls(
+            path=path.resolve(),
+            course_roots=course_roots,
+            source_roots=source_roots,
+            source_mode=source_mode,
+            next_index=next_index,
+            status=status_value,
+            created_at=created_at,
+            updated_at=updated_at,
+            current_course=current_course,
+            options=TranscriptionOptions(
+                language=language,
+                timestamps=timestamps,
+                timestamp_interval_seconds=timestamp_interval_seconds,
+                timeout_seconds=timeout_seconds,
+                retries=retries,
+                overwrite=overwrite,
+                overwrite_empty=overwrite_empty,
+                upgrade_timestamps=upgrade_timestamps,
+            ),
+        )
+
+    def save(self) -> None:
+        self.updated_at = time.strftime("%Y-%m-%dT%H:%M:%S%z")
+        atomic_write_json(
+            self.path,
+            {
+                "version": RESUME_STATE_VERSION,
+                "status": self.status,
+                "source_mode": self.source_mode,
+                "source_roots": self.source_roots,
+                "course_roots": self.course_roots,
+                "next_index": self.next_index,
+                "current_course": self.current_course,
+                "created_at": self.created_at,
+                "updated_at": self.updated_at,
+                "transcription_options": {
+                    "language": self.options.language,
+                    "timestamps": self.options.timestamps,
+                    "timestamp_interval_seconds": (
+                        self.options.timestamp_interval_seconds
+                    ),
+                    "timeout_seconds": self.options.timeout_seconds,
+                    "retries": self.options.retries,
+                    "overwrite": self.options.overwrite,
+                    "overwrite_empty": self.options.overwrite_empty,
+                    "upgrade_timestamps": (
+                        self.options.upgrade_timestamps
+                    ),
+                },
+            },
+        )
+
+    def set_cursor(self, next_index: int, status_value: str) -> None:
+        if next_index < 0 or next_index > len(self.course_roots):
+            raise ResumeStateError(
+                f"resume cursor {next_index} is outside "
+                f"{len(self.course_roots)} courses"
+            )
+        if status_value == "complete" and next_index != len(self.course_roots):
+            raise ResumeStateError(
+                "resume state can be complete only after its final course"
+            )
+        self.next_index = next_index
+        self.status = status_value
+        self.current_course = (
+            self.course_roots[next_index]
+            if next_index < len(self.course_roots)
+            else None
+        )
+        self.save()
+
+    def print_command(self) -> None:
+        command = [
+            "python3",
+            str(Path(__file__)),
+            "--resume",
+            str(self.path),
+        ]
+        print(f"RESUME COMMAND: {shlex.join(command)}", flush=True)
 
 
 class ProcessTitle:
@@ -263,11 +706,18 @@ def non_negative_int(value: str) -> int:
     return parsed
 
 
+def positive_int(value: str) -> int:
+    parsed = non_negative_int(value)
+    if parsed == 0:
+        raise argparse.ArgumentTypeError("must be a positive integer")
+    return parsed
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description=(
-            "Recursively transcribe course media into each supplied course "
-            "root's top-level transcripts directory."
+            "Recursively transcribe media into each course root's top-level "
+            "transcripts directory."
         )
     )
     parser.add_argument(
@@ -279,43 +729,174 @@ def build_parser() -> argparse.ArgumentParser:
         "--limit",
         type=non_negative_int,
         metavar="N",
-        help="process at most N missing transcripts across all course roots",
+        help="process at most N selected transcripts across all course roots",
+    )
+    overwrite_group = parser.add_mutually_exclusive_group()
+    overwrite_group.add_argument(
+        "--overwrite",
+        action="store_true",
+        help=(
+            "retranscribe selected media and atomically replace existing "
+            "regular transcript files after a complete nonempty result"
+        ),
+    )
+    overwrite_group.add_argument(
+        "--overwrite-empty",
+        action="store_true",
+        help=(
+            "retranscribe missing media and replace only existing regular "
+            "transcript files whose size is exactly zero bytes"
+        ),
+    )
+    overwrite_group.add_argument(
+        "--upgrade-timestamps",
+        action="store_true",
+        help=(
+            "enable timestamps and retranscribe only missing, empty, plain, "
+            "or legacy-token transcripts; keep clean timestamped files"
+        ),
+    )
+    parser.add_argument(
+        "--language",
+        default=DEFAULT_LANGUAGE,
+        metavar="CODE",
+        help=(
+            "spoken-language code passed to WhisperKit; default en also "
+            "infers the supported Language/<name> path conventions; use "
+            "'auto' for WhisperKit detection"
+        ),
+    )
+    parser.add_argument(
+        "--timestamps",
+        action="store_true",
+        help="write periodic timestamp markers into each transcript",
+    )
+    parser.add_argument(
+        "--timestamp-interval",
+        type=non_negative_int,
+        default=DEFAULT_TIMESTAMP_INTERVAL_SECONDS,
+        metavar="SECONDS",
+        help=(
+            "seconds between timestamp blocks; 0 emits every WhisperKit "
+            f"segment (default: {DEFAULT_TIMESTAMP_INTERVAL_SECONDS})"
+        ),
+    )
+    parser.add_argument(
+        "--transcribe-timeout",
+        type=positive_int,
+        default=DEFAULT_TRANSCRIBE_TIMEOUT_SECONDS,
+        metavar="SECONDS",
+        help=(
+            "terminate a hung WhisperKit child after this many seconds "
+            f"(default: {DEFAULT_TRANSCRIBE_TIMEOUT_SECONDS})"
+        ),
+    )
+    parser.add_argument(
+        "--transcribe-retries",
+        type=non_negative_int,
+        default=DEFAULT_TRANSCRIBE_RETRIES,
+        metavar="N",
+        help=(
+            "retry a failed, timed-out, or empty WhisperKit result N times "
+            f"(default: {DEFAULT_TRANSCRIBE_RETRIES})"
+        ),
+    )
+    parser.add_argument(
+        "--skip-preflight",
+        action="store_true",
+        help=(
+            "skip the all-roots preflight and scan/process one course root "
+            "at a time"
+        ),
+    )
+    parser.add_argument(
+        "--author-roots",
+        action="store_true",
+        help=(
+            "treat every supplied root as an author directory whose immediate "
+            "child directories are course roots"
+        ),
+    )
+    parser.add_argument(
+        "--resume",
+        metavar="STATE",
+        help=(
+            "resume a prior fast-start run from its local checkpoint; do not "
+            "supply roots"
+        ),
+    )
+    parser.add_argument(
+        "--resume-from",
+        metavar="COURSE_ROOT",
+        help=(
+            "start a new fast-start checkpoint at this course while retaining "
+            "all subsequent supplied roots"
+        ),
+    )
+    parser.add_argument(
+        "--resume-from-command",
+        metavar="COURSE_ROOT",
+        help=(
+            "read one prior author-root invocation from stdin as data and "
+            "resume it at this course"
+        ),
     )
     parser.add_argument(
         "roots",
-        nargs="+",
+        nargs="*",
         metavar="ROOT",
-        help="one or more course-root directories",
+        help="one or more course roots, or author roots with --author-roots",
     )
     return parser
+
+
+def options_from_args(args: argparse.Namespace) -> TranscriptionOptions:
+    raw_language = args.language.strip()
+    if not raw_language:
+        raise ValueError("--language must not be empty")
+    language = None if raw_language.casefold() == "auto" else raw_language
+    return TranscriptionOptions(
+        language=language,
+        timestamps=args.timestamps or args.upgrade_timestamps,
+        timestamp_interval_seconds=args.timestamp_interval,
+        timeout_seconds=args.transcribe_timeout,
+        retries=args.transcribe_retries,
+        overwrite=args.overwrite,
+        overwrite_empty=args.overwrite_empty,
+        upgrade_timestamps=args.upgrade_timestamps,
+    )
 
 
 def path_overlap(first: Path, second: Path) -> bool:
     return first == second or first.is_relative_to(second) or second.is_relative_to(first)
 
 
+def resolve_input_root(raw: str) -> tuple[Path | None, str | None]:
+    try:
+        root = Path(raw).expanduser().resolve(strict=True)
+    except (OSError, RuntimeError, ValueError) as exc:
+        return None, f"invalid input root {raw!r}: {exc}"
+    try:
+        root_stat = root.stat()
+    except OSError as exc:
+        return None, f"could not inspect input root {root}: {exc}"
+    if not stat.S_ISDIR(root_stat.st_mode):
+        return None, f"input root is not a directory: {root}"
+    if not root.name:
+        return None, f"input root must not be a filesystem root: {root}"
+    return root, None
+
+
 def validate_input_roots(raw_roots: list[str]) -> list[Path]:
     roots: list[Path] = []
     errors: list[str] = []
     for raw in raw_roots:
-        try:
-            root = Path(raw).expanduser().resolve(strict=True)
-        except (OSError, RuntimeError, ValueError) as exc:
-            errors.append(f"invalid input root {raw!r}: {exc}")
-            continue
-        try:
-            root_stat = root.stat()
-        except OSError as exc:
-            errors.append(f"could not inspect input root {root}: {exc}")
-            continue
-        if not stat.S_ISDIR(root_stat.st_mode):
-            errors.append(f"input root is not a directory: {root}")
-            continue
-        if not root.name:
-            errors.append(f"input root must not be a filesystem root: {root}")
-            continue
-        roots.append(root)
-
+        root, error = resolve_input_root(raw)
+        if error:
+            errors.append(error)
+        else:
+            assert root is not None
+            roots.append(root)
     for index, first in enumerate(roots):
         for second in roots[index + 1 :]:
             if path_overlap(first, second):
@@ -325,6 +906,167 @@ def validate_input_roots(raw_roots: list[str]) -> list[Path]:
     if errors:
         raise PreflightError(errors)
     return roots
+
+
+def author_course_sort_key(path: Path) -> tuple[str, str]:
+    normalized = unicodedata.normalize("NFC", path.name)
+    return normalized.casefold(), path.name
+
+
+def lexical_path_key(raw_path: str | Path) -> str:
+    expanded = os.path.expanduser(os.fspath(raw_path))
+    return os.path.normpath(os.path.abspath(expanded))
+
+
+def resume_course_index(course_roots: list[str], raw_course: str) -> int:
+    target = lexical_path_key(raw_course)
+    for index, course_root in enumerate(course_roots):
+        if lexical_path_key(course_root) == target:
+            return index
+    raise ResumeStateError(
+        f"resume course is not present in the expanded course list: {raw_course}"
+    )
+
+
+def recover_author_invocation(command_text: str) -> RecoveredInvocation:
+    command_text = command_text.replace("\\\r\n", "").replace("\\\n", "")
+    try:
+        tokens = shlex.split(command_text, posix=True)
+    except ValueError as exc:
+        raise ResumeStateError(
+            f"could not parse prior shell command: {exc}"
+        ) from exc
+    script_indices = [
+        index
+        for index, token in enumerate(tokens)
+        if Path(token).name == "transcribe_courses.py"
+    ]
+    if len(script_indices) != 1:
+        raise ResumeStateError(
+            "stdin must contain exactly one transcribe_courses.py invocation"
+        )
+    invocation = tokens[script_indices[0] + 1 :]
+    try:
+        delimiter = invocation.index("--")
+    except ValueError as exc:
+        raise ResumeStateError(
+            "prior invocation has no '--' root delimiter"
+        ) from exc
+
+    options = invocation[:delimiter]
+    roots = invocation[delimiter + 1 :]
+    if not roots:
+        raise ResumeStateError("prior invocation contains no roots")
+    if any("\0" in root for root in roots):
+        raise ResumeStateError("prior invocation contains an invalid root")
+
+    author_roots = False
+    skip_preflight = False
+    limit: int | None = None
+    option_index = 0
+    while option_index < len(options):
+        option = options[option_index]
+        if option == "--author-roots":
+            author_roots = True
+        elif option == "--skip-preflight":
+            skip_preflight = True
+        elif option == "--limit":
+            option_index += 1
+            if option_index >= len(options):
+                raise ResumeStateError(
+                    "prior invocation has --limit without a value"
+                )
+            try:
+                limit = non_negative_int(options[option_index])
+            except argparse.ArgumentTypeError as exc:
+                raise ResumeStateError(
+                    f"invalid prior --limit value: {options[option_index]!r}"
+                ) from exc
+        elif option.startswith("--limit="):
+            try:
+                limit = non_negative_int(option.partition("=")[2])
+            except argparse.ArgumentTypeError as exc:
+                raise ResumeStateError(
+                    f"invalid prior --limit option: {option!r}"
+                ) from exc
+        else:
+            raise ResumeStateError(
+                f"unsupported option in prior invocation: {option!r}"
+            )
+        option_index += 1
+
+    if not author_roots or not skip_preflight:
+        raise ResumeStateError(
+            "prior invocation must use --author-roots and --skip-preflight"
+        )
+    return RecoveredInvocation(roots=roots, limit=limit)
+
+
+def expand_author_roots(
+    raw_roots: list[str],
+    review_log: ReviewLog,
+) -> list[str]:
+    """Expand each author root to its immediate child directories only."""
+
+    author_roots: list[Path] = []
+    course_roots: list[Path] = []
+
+    for raw in raw_roots:
+        author_root, error = resolve_input_root(raw)
+        if error:
+            review_log.record("AUTHOR ROOT", raw, error)
+            continue
+        assert author_root is not None
+        overlapping = next(
+            (
+                accepted
+                for accepted in author_roots
+                if path_overlap(author_root, accepted)
+            ),
+            None,
+        )
+        if overlapping is not None:
+            review_log.record(
+                "AUTHOR ROOT",
+                author_root,
+                f"overlaps earlier author root {overlapping}",
+            )
+            continue
+        author_roots.append(author_root)
+
+    for author_root in author_roots:
+        children: list[Path] = []
+        try:
+            with os.scandir(author_root) as entries:
+                for entry in entries:
+                    try:
+                        if entry.is_dir(follow_symlinks=True):
+                            children.append(Path(entry.path))
+                    except OSError as exc:
+                        review_log.record(
+                            "AUTHOR ROOT CHILD",
+                            entry.path,
+                            f"could not inspect child of {author_root}: {exc}",
+                        )
+        except OSError as exc:
+            review_log.record(
+                "AUTHOR ROOT",
+                author_root,
+                f"could not list directory: {exc}",
+            )
+            continue
+
+        children.sort(key=author_course_sort_key)
+        if not children:
+            review_log.record(
+                "AUTHOR ROOT",
+                author_root,
+                "contains no immediate course directories",
+            )
+            continue
+        course_roots.extend(children)
+
+    return [str(course_root) for course_root in course_roots]
 
 
 def resolve_program(name: str, label: str) -> tuple[str | None, str | None]:
@@ -349,9 +1091,41 @@ def identity_from_stat(file_stat: os.stat_result) -> MediaIdentity:
     )
 
 
+def is_music_tree(path: Path) -> bool:
+    return any(part.casefold() == "music" for part in path.parts)
+
+
+def language_code_from_course_path(path: Path) -> str | None:
+    parts = path.parts
+    for index, component in enumerate(parts[:-1]):
+        if component.casefold() != "language":
+            continue
+        language_name = unicodedata.normalize(
+            "NFC",
+            parts[index + 1],
+        ).casefold()
+        return LANGUAGE_PATH_CODES.get(language_name)
+    return None
+
+
+def effective_options_for_course(
+    options: TranscriptionOptions,
+    course: Course,
+) -> TranscriptionOptions:
+    if options.language != DEFAULT_LANGUAGE:
+        return options
+    inferred = language_code_from_course_path(course.root)
+    if inferred is None:
+        return options
+    return replace(options, language=inferred)
+
+
 def discover_media(course: Course) -> tuple[list[WorkItem], list[str]]:
     items: list[WorkItem] = []
     errors: list[str] = []
+    allowed_extensions = (
+        VIDEO_EXTENSIONS if is_music_tree(course.root) else MEDIA_EXTENSIONS
+    )
 
     def onerror(error: OSError) -> None:
         errors.append(
@@ -371,7 +1145,7 @@ def discover_media(course: Course) -> tuple[list[WorkItem], list[str]]:
 
             for filename in filenames:
                 media = directory_path / filename
-                if media.suffix.casefold() not in MEDIA_EXTENSIONS:
+                if media.suffix.casefold() not in allowed_extensions:
                     continue
                 try:
                     media_stat = media.lstat()
@@ -430,6 +1204,82 @@ def lstat_or_missing(path: Path) -> os.stat_result | None:
         return None
 
 
+def read_regular_file_snapshot(
+    path: str | Path,
+    *,
+    dir_fd: int | None = None,
+) -> tuple[bytes, TranscriptSnapshot]:
+    flags = os.O_RDONLY
+    if hasattr(os, "O_CLOEXEC"):
+        flags |= os.O_CLOEXEC
+    if hasattr(os, "O_NOFOLLOW"):
+        flags |= os.O_NOFOLLOW
+    descriptor = os.open(path, flags, dir_fd=dir_fd)
+    try:
+        before = os.fstat(descriptor)
+        if not stat.S_ISREG(before.st_mode):
+            raise OSError(
+                errno.EINVAL,
+                f"transcript destination is not a regular file: {path}",
+            )
+        chunks: list[bytes] = []
+        digest = hashlib.sha256()
+        while True:
+            chunk = os.read(descriptor, 1024 * 1024)
+            if not chunk:
+                break
+            chunks.append(chunk)
+            digest.update(chunk)
+        after = os.fstat(descriptor)
+        before_identity = (
+            before.st_dev,
+            before.st_ino,
+            before.st_size,
+            before.st_mtime_ns,
+            before.st_ctime_ns,
+        )
+        after_identity = (
+            after.st_dev,
+            after.st_ino,
+            after.st_size,
+            after.st_mtime_ns,
+            after.st_ctime_ns,
+        )
+        if before_identity != after_identity:
+            raise OSError(
+                errno.EAGAIN,
+                f"transcript destination changed while being read: {path}",
+            )
+        payload = b"".join(chunks)
+        if len(payload) != after.st_size:
+            raise OSError(
+                errno.EAGAIN,
+                f"transcript destination size changed while being read: {path}",
+            )
+        return payload, TranscriptSnapshot(
+            device=after.st_dev,
+            inode=after.st_ino,
+            size=after.st_size,
+            modified_ns=after.st_mtime_ns,
+            changed_ns=after.st_ctime_ns,
+            sha256=digest.hexdigest(),
+        )
+    finally:
+        os.close(descriptor)
+
+
+def transcript_needs_timestamp_upgrade(payload: bytes) -> bool:
+    try:
+        transcript = payload.decode("utf-8")
+    except UnicodeDecodeError:
+        return True
+    if not transcript.strip():
+        return True
+    if LEGACY_WHISPER_TOKEN_PATTERN.search(transcript):
+        return True
+    return LEADING_TIMESTAMP_PATTERN.match(transcript) is None
+
+
 def validate_transcript_root(course: Course) -> list[str]:
     try:
         root_stat = lstat_or_missing(course.transcript_root)
@@ -444,26 +1294,53 @@ def validate_transcript_root(course: Course) -> list[str]:
     return []
 
 
-def inspect_output(item: WorkItem) -> tuple[bool, str | None]:
+def inspect_output(item: WorkItem) -> tuple[bool, bool, str | None]:
     current = item.course.transcript_root
     for component in item.relative_output.parent.parts:
         current = current / component
         try:
             parent_stat = lstat_or_missing(current)
         except OSError as exc:
-            return False, f"could not inspect output parent {current}: {exc}"
+            return False, False, f"could not inspect output parent {current}: {exc}"
         if parent_stat is None:
-            return False, None
+            return False, False, None
         if stat.S_ISLNK(parent_stat.st_mode):
-            return False, f"output parent must not be a symlink: {current}"
+            return (
+                False,
+                False,
+                f"output parent must not be a symlink: {current}",
+            )
         if not stat.S_ISDIR(parent_stat.st_mode):
-            return False, f"output parent is not a directory: {current}"
+            return (
+                False,
+                False,
+                f"output parent is not a directory: {current}",
+            )
 
     destination = item.course.transcript_root / item.relative_output
     try:
-        return lstat_or_missing(destination) is not None, None
+        destination_stat = lstat_or_missing(destination)
     except OSError as exc:
-        return False, f"could not inspect transcript destination {destination}: {exc}"
+        return (
+            False,
+            False,
+            f"could not inspect transcript destination {destination}: {exc}",
+        )
+    if destination_stat is None:
+        return False, False, None
+    if stat.S_ISLNK(destination_stat.st_mode):
+        return (
+            False,
+            False,
+            f"transcript destination must not be a symlink: {destination}",
+        )
+    if not stat.S_ISREG(destination_stat.st_mode):
+        return (
+            False,
+            False,
+            f"transcript destination is not a regular file: {destination}",
+        )
+    return True, destination_stat.st_size == 0, None
 
 
 def collision_key(item: WorkItem) -> str:
@@ -474,6 +1351,7 @@ def collision_key(item: WorkItem) -> str:
 def perform_preflight(
     raw_roots: list[str],
     limit: int | None,
+    options: TranscriptionOptions = TranscriptionOptions(),
 ) -> Preflight:
     courses = [Course(root) for root in validate_input_roots(raw_roots)]
     errors: list[str] = []
@@ -506,10 +1384,35 @@ def perform_preflight(
                 )
 
         for item in items:
-            exists, output_error = inspect_output(item)
+            exists, empty, output_error = inspect_output(item)
             item.existing = exists
+            item.existing_empty = empty
             if output_error:
                 errors.append(output_error)
+                continue
+            if not options.upgrade_timestamps:
+                continue
+            if not exists:
+                item.timestamp_upgrade_needed = True
+                continue
+            destination = course.transcript_root / item.relative_output
+            try:
+                payload, snapshot = read_regular_file_snapshot(destination)
+            except FileNotFoundError:
+                item.existing = False
+                item.existing_empty = False
+                item.timestamp_upgrade_needed = True
+            except OSError as exc:
+                errors.append(
+                    "could not inspect transcript contents for timestamp "
+                    f"upgrade {destination}: {exc}"
+                )
+            else:
+                item.existing_empty = snapshot.size == 0
+                item.timestamp_upgrade_needed = (
+                    transcript_needs_timestamp_upgrade(payload)
+                )
+                item.transcript_snapshot = snapshot
 
     if errors:
         raise PreflightError(errors)
@@ -518,7 +1421,7 @@ def perform_preflight(
 
     work_total = 0
     for item in all_items:
-        if item.existing:
+        if not item_is_eligible(item, options):
             continue
         if limit is None or work_total < limit:
             item.selected = True
@@ -529,17 +1432,71 @@ def perform_preflight(
         items=all_items,
         programs=Programs(whisperkit=whisperkit, ffmpeg=ffmpeg),
         work_total=work_total,
+        options=options,
     )
 
 
-def print_settings() -> None:
+def item_is_eligible(
+    item: WorkItem,
+    options: TranscriptionOptions,
+) -> bool:
+    if not item.existing:
+        return True
+    if options.overwrite:
+        return True
+    if options.overwrite_empty and item.existing_empty:
+        return True
+    return options.upgrade_timestamps and item.timestamp_upgrade_needed
+
+
+def item_can_replace_existing(
+    item: WorkItem,
+    options: TranscriptionOptions,
+) -> bool:
+    if options.overwrite:
+        return True
+    if options.overwrite_empty and item.existing_empty:
+        return True
+    return (
+        options.upgrade_timestamps
+        and item.existing
+        and item.timestamp_upgrade_needed
+        and item.transcript_snapshot is not None
+    )
+
+
+def print_settings(options: TranscriptionOptions = TranscriptionOptions()) -> None:
+    language = options.language or "auto"
+    overwrite = (
+        "all"
+        if options.overwrite
+        else "empty-only"
+        if options.overwrite_empty
+        else "timestamp-upgrade"
+        if options.upgrade_timestamps
+        else "off"
+    )
+    timestamp_mode = (
+        (
+            "segment"
+            if options.timestamp_interval_seconds == 0
+            else f"{options.timestamp_interval_seconds}s"
+        )
+        if options.timestamps
+        else "off"
+    )
     print(
         "WhisperKit settings: "
-        f"model={MODEL} language={LANGUAGE} task=transcribe "
+        f"model={MODEL} language={language}/recognized-paths task=transcribe "
+        "backend=direct-cli "
         f"chunking={CHUNKING_STRATEGY} input=direct-common-audio/ffmpeg-other "
+        "music-trees=video-only "
         f"compute=encoder:{AUDIO_ENCODER_COMPUTE_UNITS}/"
         f"decoder:{TEXT_DECODER_COMPUTE_UNITS}/mel:cpuAndGPU "
-        f"workers={CONCURRENT_WORKERS} word_timestamps=off",
+        f"workers={CONCURRENT_WORKERS} "
+        f"timestamps={timestamp_mode} "
+        f"timeout={options.timeout_seconds}s retries={options.retries} "
+        f"overwrite={overwrite}",
         flush=True,
     )
 
@@ -550,12 +1507,12 @@ def summary_for_course(preflight: Preflight, course: Course) -> CourseSummary:
         if item.course != course:
             continue
         summary.discovered += 1
-        if item.existing:
-            summary.skipped += 1
-        elif item.selected:
+        if item.selected:
             summary.would_transcribe += 1
-        else:
+        elif item_is_eligible(item, preflight.options):
             summary.limited += 1
+        else:
+            summary.skipped += 1
     return summary
 
 
@@ -564,8 +1521,13 @@ def print_preflight(preflight: Preflight, dry_run: bool) -> None:
     for course in preflight.courses:
         summary = summary_for_course(preflight, course)
         if not dry_run:
+            language = (
+                effective_options_for_course(preflight.options, course).language
+                or "auto"
+            )
             print(
                 f"PREFLIGHT course={course.root} "
+                f"language={language} "
                 f"discovered={summary.discovered} skipped={summary.skipped} "
                 f"ready={summary.would_transcribe} limited={summary.limited}",
                 flush=True,
@@ -577,10 +1539,30 @@ def print_preflight(preflight: Preflight, dry_run: bool) -> None:
         total = len(course_items)
         for index, item in enumerate(course_items, start=1):
             prefix = f"[{course.name} {index}/{total}]"
-            if item.existing:
+            if (
+                item.selected
+                and item.existing
+                and preflight.options.upgrade_timestamps
+            ):
                 print(
-                    f"{prefix} SKIP existing {item.relative_media} -> "
-                    f"transcripts/{item.relative_output}",
+                    f"{prefix} UPGRADE-TIMESTAMPS ({item.input_kind}) "
+                    f"{item.relative_media} -> transcripts/{item.relative_output}",
+                    flush=True,
+                )
+            elif (
+                item.selected
+                and item.existing_empty
+                and preflight.options.overwrite_empty
+            ):
+                print(
+                    f"{prefix} REPAIR-EMPTY ({item.input_kind}) "
+                    f"{item.relative_media} -> transcripts/{item.relative_output}",
+                    flush=True,
+                )
+            elif item.selected and item.existing:
+                print(
+                    f"{prefix} OVERWRITE ({item.input_kind}) "
+                    f"{item.relative_media} -> transcripts/{item.relative_output}",
                     flush=True,
                 )
             elif item.selected:
@@ -589,12 +1571,20 @@ def print_preflight(preflight: Preflight, dry_run: bool) -> None:
                     f"{item.relative_media} -> transcripts/{item.relative_output}",
                     flush=True,
                 )
-            else:
+            elif item_is_eligible(item, preflight.options):
                 print(
                     f"{prefix} LIMIT {item.relative_media} -> "
                     f"transcripts/{item.relative_output}",
                     flush=True,
                 )
+            elif item.existing:
+                print(
+                    f"{prefix} SKIP existing {item.relative_media} -> "
+                    f"transcripts/{item.relative_output}",
+                    flush=True,
+                )
+            else:
+                raise AssertionError("ineligible missing transcript")
         print(
             f"Preflight summary [{course.name}]: "
             f"discovered={summary.discovered} skipped={summary.skipped} "
@@ -661,7 +1651,13 @@ def short_process_error(
     return f"exit {returncode}: {detail}" if detail else f"exit {returncode}"
 
 
-def extract_audio(media: Path, wav_path: Path, ffmpeg: str) -> str | None:
+def extract_audio(
+    media: Path,
+    wav_path: Path,
+    ffmpeg: str,
+    timeout_seconds: int = DEFAULT_TRANSCRIBE_TIMEOUT_SECONDS,
+    review_log: ReviewLog | None = None,
+) -> str | None:
     command = [
         ffmpeg,
         "-nostdin",
@@ -683,20 +1679,37 @@ def extract_audio(media: Path, wav_path: Path, ffmpeg: str) -> str | None:
         str(wav_path),
     ]
     try:
-        process = subprocess.run(
+        process = subprocess.Popen(
             command,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             text=True,
             encoding="utf-8",
             errors="replace",
-            check=False,
+            start_new_session=True,
         )
     except OSError as exc:
         return f"could not run ffmpeg: {exc}"
+    try:
+        stdout, stderr = process.communicate(timeout=timeout_seconds)
+    except subprocess.TimeoutExpired:
+        terminate_owned_child(process)
+        process.communicate()
+        detail = (
+            f"ffmpeg timed out after {timeout_seconds} seconds and was "
+            "terminated"
+        )
+        if review_log is not None:
+            review_log.record("FFMPEG TIMEOUT", media, detail)
+        return detail
+    except KeyboardInterrupt:
+        terminate_owned_child(process)
+        raise
     if process.returncode != 0:
         return short_process_error(
-            process.returncode, stderr=process.stderr, stdout=process.stdout
+            process.returncode,
+            stderr=stderr,
+            stdout=stdout,
         )
     try:
         if not wav_path.is_file() or wav_path.stat().st_size == 0:
@@ -706,16 +1719,19 @@ def extract_audio(media: Path, wav_path: Path, ffmpeg: str) -> str | None:
     return None
 
 
-def whisperkit_command(audio_path: Path, executable: str) -> list[str]:
-    return [
+def whisperkit_transcribe_command(
+    executable: str,
+    audio_path: Path,
+    options: TranscriptionOptions,
+    report_directory: Path,
+) -> list[str]:
+    command = [
         executable,
         "transcribe",
         "--audio-path",
         str(audio_path),
         "--model",
         MODEL,
-        "--language",
-        LANGUAGE,
         "--task",
         "transcribe",
         "--chunking-strategy",
@@ -726,38 +1742,221 @@ def whisperkit_command(audio_path: Path, executable: str) -> list[str]:
         TEXT_DECODER_COMPUTE_UNITS,
         "--concurrent-worker-count",
         str(CONCURRENT_WORKERS),
-        "--without-timestamps",
+        "--skip-special-tokens",
     ]
+    if options.language is not None:
+        command.extend(("--language", options.language))
+    if options.timestamps:
+        command.extend(("--report", "--report-path", str(report_directory)))
+    else:
+        command.append("--without-timestamps")
+    return command
 
 
-def run_whisperkit(audio_path: Path, executable: str) -> tuple[str | None, str | None]:
+def terminate_owned_child(process: subprocess.Popen[str]) -> None:
+    """Terminate the process group created for one WhisperKit invocation."""
+
+    if process.poll() is not None:
+        return
     try:
-        process = subprocess.run(
-            whisperkit_command(audio_path, executable),
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            text=True,
-            encoding="utf-8",
-            errors="replace",
-            check=False,
-        )
-    except OSError as exc:
-        return None, f"could not run WhisperKit CLI: {exc}"
-    if process.returncode != 0:
-        return None, short_process_error(
-            process.returncode, stderr=process.stderr, stdout=process.stdout
-        )
+        os.killpg(process.pid, signal.SIGTERM)
+    except ProcessLookupError:
+        return
+    except OSError:
+        process.terminate()
+    try:
+        process.wait(timeout=CHILD_TERMINATE_GRACE_SECONDS)
+        return
+    except subprocess.TimeoutExpired:
+        pass
+    try:
+        os.killpg(process.pid, signal.SIGKILL)
+    except ProcessLookupError:
+        return
+    except OSError:
+        process.kill()
+    process.wait()
 
-    transcript = process.stdout.strip()
-    if transcript == "Transcription failed" or any(
-        line.startswith("Error when transcribing ")
-        for line in transcript.splitlines()
+
+def format_transcript_timestamp(raw_seconds: object) -> str:
+    if not isinstance(raw_seconds, (int, float)) or isinstance(
+        raw_seconds,
+        bool,
     ):
-        detail = transcript
-        if process.stderr.strip():
-            detail = f"{detail}\n{process.stderr.strip()}"
-        return None, detail[-1200:]
+        raise ValueError(f"invalid timestamp value: {raw_seconds!r}")
+    seconds = max(0.0, float(raw_seconds))
+    milliseconds = int(round(seconds * 1000))
+    hours, remainder = divmod(milliseconds, 3_600_000)
+    minutes, remainder = divmod(remainder, 60_000)
+    whole_seconds, milliseconds = divmod(remainder, 1000)
+    return (
+        f"{hours:02d}:{minutes:02d}:{whole_seconds:02d}."
+        f"{milliseconds:03d}"
+    )
+
+
+def format_timestamp_marker(seconds: int) -> str:
+    hours, remainder = divmod(seconds, 3600)
+    minutes, whole_seconds = divmod(remainder, 60)
+    return f"{hours:02d}:{minutes:02d}:{whole_seconds:02d}"
+
+
+def timestamped_transcript(
+    report_path: Path,
+    interval_seconds: int = DEFAULT_TIMESTAMP_INTERVAL_SECONDS,
+) -> tuple[str | None, str | None]:
+    if interval_seconds < 0:
+        return None, "timestamp interval must be non-negative"
+    try:
+        with report_path.open("r", encoding="utf-8") as report:
+            payload = json.load(report)
+    except (OSError, UnicodeError, json.JSONDecodeError) as exc:
+        return None, f"could not read WhisperKit timestamp report: {exc}"
+    segments = payload.get("segments") if isinstance(payload, dict) else None
+    if not isinstance(segments, list):
+        return None, "WhisperKit timestamp report contains no segment list"
+
+    parsed_segments: list[tuple[float, float, str]] = []
+    try:
+        for segment in segments:
+            if not isinstance(segment, dict):
+                raise ValueError("segment is not an object")
+            text = segment.get("text")
+            if not isinstance(text, str):
+                raise ValueError("segment text is missing")
+            text = text.strip()
+            if not text:
+                continue
+            raw_start = segment.get("start")
+            raw_end = segment.get("end")
+            if (
+                isinstance(raw_start, bool)
+                or not isinstance(raw_start, (int, float))
+                or isinstance(raw_end, bool)
+                or not isinstance(raw_end, (int, float))
+            ):
+                raise ValueError("segment timestamp is missing")
+            start = float(raw_start)
+            end = float(raw_end)
+            parsed_segments.append((max(0.0, start), max(0.0, end), text))
+    except ValueError as exc:
+        return None, f"invalid WhisperKit timestamp report: {exc}"
+
+    if interval_seconds == 0:
+        transcript = "\n".join(
+            f"[{format_transcript_timestamp(start)} --> "
+            f"{format_transcript_timestamp(end)}] {text}"
+            for start, end, text in parsed_segments
+        )
+    else:
+        buckets: dict[int, list[str]] = {}
+        for start, _end, text in parsed_segments:
+            bucket = int(start // interval_seconds) * interval_seconds
+            buckets.setdefault(bucket, []).append(text)
+        transcript = "\n\n".join(
+            f"[{format_timestamp_marker(bucket)}]\n{' '.join(buckets[bucket])}"
+            for bucket in sorted(buckets)
+        )
+    if not transcript.strip():
+        return None, "WhisperKit produced an empty timestamped transcript"
     return transcript, None
+
+
+def run_whisperkit_direct(
+    executable: str,
+    audio_path: Path,
+    options: TranscriptionOptions,
+    workspace: Path,
+    review_log: ReviewLog | None = None,
+    source_path: Path | None = None,
+) -> tuple[str | None, str | None]:
+    """Run, time out, and retry one owned WhisperKit CLI child."""
+
+    last_error = "WhisperKit did not run"
+    attempts = options.retries + 1
+    for attempt in range(1, attempts + 1):
+        report_directory = workspace / f"report-{attempt}"
+        try:
+            report_directory.mkdir()
+        except OSError as exc:
+            return None, f"could not create WhisperKit report directory: {exc}"
+        command = whisperkit_transcribe_command(
+            executable,
+            audio_path,
+            options,
+            report_directory,
+        )
+        try:
+            process = subprocess.Popen(
+                command,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True,
+                encoding="utf-8",
+                errors="replace",
+                start_new_session=True,
+            )
+        except OSError as exc:
+            last_error = f"could not start WhisperKit CLI: {exc}"
+        else:
+            try:
+                stdout, stderr = process.communicate(
+                    timeout=options.timeout_seconds
+                )
+            except subprocess.TimeoutExpired:
+                terminate_owned_child(process)
+                stdout, stderr = process.communicate()
+                last_error = (
+                    "WhisperKit CLI timed out after "
+                    f"{options.timeout_seconds} seconds and was terminated"
+                )
+                if review_log is not None:
+                    review_log.record(
+                        "WHISPERKIT TIMEOUT",
+                        source_path or audio_path,
+                        f"{last_error}; attempt={attempt}/{attempts}",
+                    )
+            except KeyboardInterrupt:
+                terminate_owned_child(process)
+                raise
+            else:
+                if process.returncode != 0:
+                    last_error = short_process_error(
+                        process.returncode,
+                        stderr=stderr,
+                        stdout=stdout,
+                    )
+                elif options.timestamps:
+                    report_path = report_directory / f"{audio_path.stem}.json"
+                    transcript, report_error = timestamped_transcript(
+                        report_path,
+                        options.timestamp_interval_seconds,
+                    )
+                    if report_error is None:
+                        assert transcript is not None
+                        return transcript, None
+                    last_error = report_error
+                else:
+                    transcript = stdout.strip()
+                    if (
+                        not transcript
+                        or transcript == "Transcription failed"
+                        or transcript.startswith("Error when transcribing ")
+                    ):
+                        last_error = (
+                            "WhisperKit CLI produced no usable transcript"
+                        )
+                    else:
+                        return transcript, None
+
+        if attempt < attempts:
+            print(
+                f"WHISPERKIT RETRY next={attempt + 1}/{attempts}: "
+                f"{last_error}",
+                file=sys.stderr,
+                flush=True,
+            )
+    return None, f"{last_error}; attempts={attempts}"
 
 
 def exclusive_rename(
@@ -919,9 +2118,16 @@ def install_transcript(
     transcript: str,
     *,
     destination_path: Path | None = None,
+    overwrite: bool = False,
+    overwrite_empty: bool = False,
+    expected_snapshot: TranscriptSnapshot | None = None,
 ) -> InstallResult:
     if destination_path is None:
         destination_path = Path(destination_name)
+    if not transcript.strip():
+        return InstallResult.failed(
+            "WhisperKit produced an empty transcript; destination was not changed"
+        )
     payload = transcript_payload(transcript)
     part_name = (
         f".{destination_name}.{os.getpid()}.{secrets.token_hex(8)}.part"
@@ -951,6 +2157,136 @@ def install_transcript(
             )
         add_cleanup_note(exc, cleanup_error)
         raise
+
+    if overwrite or overwrite_empty or expected_snapshot is not None:
+        if expected_snapshot is not None:
+            try:
+                _payload, current_snapshot = read_regular_file_snapshot(
+                    destination_name,
+                    dir_fd=parent_fd,
+                )
+            except OSError as exc:
+                cleanup_error = unlink_part(parent_fd, part_name)
+                detail = (
+                    "timestamp-upgrade destination could not be verified "
+                    "unchanged; existing path was not changed: "
+                    f"{destination_path} ({exc})"
+                )
+                if cleanup_error:
+                    return InstallResult.failed(f"{detail}; {cleanup_error}")
+                return InstallResult.skipped(detail)
+            if current_snapshot != expected_snapshot:
+                cleanup_error = unlink_part(parent_fd, part_name)
+                detail = (
+                    "timestamp-upgrade destination changed after preflight; "
+                    f"existing bytes were not changed: {destination_path}"
+                )
+                if cleanup_error:
+                    return InstallResult.failed(f"{detail}; {cleanup_error}")
+                return InstallResult.skipped(detail)
+            try:
+                destination_stat = os.stat(
+                    destination_name,
+                    dir_fd=parent_fd,
+                    follow_symlinks=False,
+                )
+            except OSError as exc:
+                cleanup_error = unlink_part(parent_fd, part_name)
+                detail = (
+                    "timestamp-upgrade destination changed after verification; "
+                    f"existing path was not changed: {destination_path} ({exc})"
+                )
+                if cleanup_error:
+                    return InstallResult.failed(f"{detail}; {cleanup_error}")
+                return InstallResult.skipped(detail)
+            current_path_identity = (
+                destination_stat.st_dev,
+                destination_stat.st_ino,
+                destination_stat.st_size,
+                destination_stat.st_mtime_ns,
+                destination_stat.st_ctime_ns,
+            )
+            expected_path_identity = (
+                expected_snapshot.device,
+                expected_snapshot.inode,
+                expected_snapshot.size,
+                expected_snapshot.modified_ns,
+                expected_snapshot.changed_ns,
+            )
+            if (
+                not stat.S_ISREG(destination_stat.st_mode)
+                or current_path_identity != expected_path_identity
+            ):
+                cleanup_error = unlink_part(parent_fd, part_name)
+                detail = (
+                    "timestamp-upgrade destination changed after verification; "
+                    f"existing bytes were not changed: {destination_path}"
+                )
+                if cleanup_error:
+                    return InstallResult.failed(f"{detail}; {cleanup_error}")
+                return InstallResult.skipped(detail)
+        else:
+            try:
+                destination_stat = os.stat(
+                    destination_name,
+                    dir_fd=parent_fd,
+                    follow_symlinks=False,
+                )
+            except FileNotFoundError:
+                destination_stat = None
+            except BaseException as exc:
+                cleanup_error = unlink_part(parent_fd, part_name)
+                if isinstance(exc, Exception):
+                    return failure_with_cleanup(
+                        "could not inspect overwrite destination",
+                        exc,
+                        cleanup_error,
+                    )
+                add_cleanup_note(exc, cleanup_error)
+                raise
+            if destination_stat is not None and not stat.S_ISREG(
+                destination_stat.st_mode
+            ):
+                cleanup_error = unlink_part(parent_fd, part_name)
+                detail = (
+                    "overwrite destination is not a regular file; existing "
+                    f"path was not changed: {destination_path}"
+                )
+                if cleanup_error:
+                    detail = f"{detail}; {cleanup_error}"
+                return InstallResult.failed(detail)
+            if (
+                overwrite_empty
+                and destination_stat is not None
+                and destination_stat.st_size != 0
+            ):
+                cleanup_error = unlink_part(parent_fd, part_name)
+                detail = (
+                    "destination is no longer empty; existing bytes were not "
+                    f"changed: {destination_path}"
+                )
+                if cleanup_error:
+                    return InstallResult.failed(f"{detail}; {cleanup_error}")
+                return InstallResult.skipped(detail)
+        try:
+            os.replace(
+                part_name,
+                destination_name,
+                src_dir_fd=parent_fd,
+                dst_dir_fd=parent_fd,
+            )
+        except BaseException as exc:
+            cleanup_error = unlink_part(parent_fd, part_name)
+            if isinstance(exc, Exception):
+                return failure_with_cleanup(
+                    "atomic transcript overwrite failed; existing path was "
+                    "not changed",
+                    exc,
+                    cleanup_error,
+                )
+            add_cleanup_note(exc, cleanup_error)
+            raise
+        return InstallResult.installed()
 
     try:
         renamed = exclusive_rename(parent_fd, part_name, destination_name)
@@ -1070,34 +2406,74 @@ def install_transcript(
 
 
 def transcribe_item(
-    item: WorkItem, programs: Programs, parent_fd: int
+    item: WorkItem,
+    programs: Programs,
+    parent_fd: int,
+    options: TranscriptionOptions,
+    review_log: ReviewLog | None = None,
 ) -> InstallResult:
-    if item.input_kind == "direct":
-        transcript, error = run_whisperkit(item.media, programs.whisperkit)
-    else:
-        try:
-            with tempfile.TemporaryDirectory(
-                prefix="batch-transcribe-courses-"
-            ) as temporary:
+    effective_options = effective_options_for_course(options, item.course)
+    try:
+        with tempfile.TemporaryDirectory(
+            prefix="batch-transcribe-courses-"
+        ) as temporary:
+            workspace = Path(temporary)
+            audio_path = item.media
+            if item.input_kind != "direct":
                 wav_path = Path(temporary) / "audio.wav"
-                error = extract_audio(item.media, wav_path, programs.ffmpeg)
+                error = extract_audio(
+                    item.media,
+                    wav_path,
+                    programs.ffmpeg,
+                    effective_options.timeout_seconds,
+                    review_log,
+                )
                 if error:
                     return InstallResult.failed(
                         f"audio extraction failed: {error}"
                     )
-                transcript, error = run_whisperkit(wav_path, programs.whisperkit)
-        except OSError as exc:
-            return InstallResult.failed(
-                f"could not create temporary audio workspace: {exc}"
+                audio_path = wav_path
+            transcript, error = run_whisperkit_direct(
+                programs.whisperkit,
+                audio_path,
+                effective_options,
+                workspace,
+                review_log,
+                item.media,
             )
+    except OSError as exc:
+        return InstallResult.failed(
+            f"could not create temporary audio workspace: {exc}"
+        )
     if error:
         return InstallResult.failed(error)
     assert transcript is not None
+    if (
+        options.upgrade_timestamps
+        and transcript_needs_timestamp_upgrade(transcript.encode("utf-8"))
+    ):
+        return InstallResult.failed(
+            "WhisperKit produced no clean leading timestamp marker; "
+            "destination was not changed"
+        )
     return install_transcript(
         parent_fd,
         item.relative_output.name,
         transcript,
         destination_path=item.course.transcript_root / item.relative_output,
+        overwrite=options.overwrite,
+        overwrite_empty=(
+            options.overwrite_empty and item.existing_empty
+        ),
+        expected_snapshot=(
+            item.transcript_snapshot
+            if (
+                options.upgrade_timestamps
+                and item.existing
+                and item.timestamp_upgrade_needed
+            )
+            else None
+        ),
     )
 
 
@@ -1114,7 +2490,11 @@ def combine_summaries(summaries: dict[Path, CourseSummary]) -> CourseSummary:
     return combined
 
 
-def run_live(preflight: Preflight, title: ProcessTitle | None) -> int:
+def run_live(
+    preflight: Preflight,
+    title: ProcessTitle | None,
+    review_log: ReviewLog | None = None,
+) -> int:
     summaries = {
         course.root: CourseSummary(
             discovered=sum(
@@ -1127,11 +2507,11 @@ def run_live(preflight: Preflight, title: ProcessTitle | None) -> int:
 
     for item in preflight.items:
         summary = summaries[item.course.root]
-        if item.existing:
-            summary.skipped += 1
-            continue
         if not item.selected:
-            summary.limited += 1
+            if item_is_eligible(item, preflight.options):
+                summary.limited += 1
+            else:
+                summary.skipped += 1
             continue
 
         selected_index += 1
@@ -1143,8 +2523,17 @@ def run_live(preflight: Preflight, title: ProcessTitle | None) -> int:
         prefix = (
             f"[{item.course.name} {selected_index}/{preflight.work_total}]"
         )
+        if item.existing and preflight.options.upgrade_timestamps:
+            action = "UPGRADE-TIMESTAMPS"
+        elif item.existing_empty and preflight.options.overwrite_empty:
+            action = "REPAIR-EMPTY"
+        elif item.existing:
+            action = "OVERWRITE"
+        else:
+            action = "TRANSCRIBE"
         print(
-            f"{prefix} TRANSCRIBE ({item.input_kind}) {item.relative_media} -> "
+            f"{prefix} {action} "
+            f"({item.input_kind}) {item.relative_media} -> "
             f"transcripts/{item.relative_output}",
             flush=True,
         )
@@ -1152,6 +2541,12 @@ def run_live(preflight: Preflight, title: ProcessTitle | None) -> int:
         source_error = revalidate_media(item)
         if source_error:
             summary.failed += 1
+            if review_log is not None:
+                review_log.record(
+                    "SOURCE CHANGED",
+                    item.media,
+                    source_error,
+                )
             print(
                 f"{prefix} FAIL {item.relative_media}: {source_error}",
                 file=sys.stderr,
@@ -1162,7 +2557,10 @@ def run_live(preflight: Preflight, title: ProcessTitle | None) -> int:
         parent_fd: int | None = None
         try:
             parent_fd = open_safe_output_parent(item)
-            if destination_exists(parent_fd, item.relative_output.name):
+            if (
+                not item_can_replace_existing(item, preflight.options)
+                and destination_exists(parent_fd, item.relative_output.name)
+            ):
                 summary.skipped += 1
                 print(
                     f"{prefix} SKIP destination now exists "
@@ -1171,7 +2569,13 @@ def run_live(preflight: Preflight, title: ProcessTitle | None) -> int:
                 )
                 continue
             summary.attempted += 1
-            result = transcribe_item(item, preflight.programs, parent_fd)
+            result = transcribe_item(
+                item,
+                preflight.programs,
+                parent_fd,
+                preflight.options,
+                review_log,
+            )
         except OSError as exc:
             result = InstallResult.failed(
                 f"unsafe output path or directory creation failed: {exc}"
@@ -1182,6 +2586,12 @@ def run_live(preflight: Preflight, title: ProcessTitle | None) -> int:
 
         if result.status is InstallStatus.FAILED:
             summary.failed += 1
+            if review_log is not None:
+                review_log.record(
+                    "TRANSCRIPTION FAILURE",
+                    item.media,
+                    result.detail or "unknown failure",
+                )
             print(
                 f"{prefix} FAIL {item.relative_media}: {result.detail}",
                 file=sys.stderr,
@@ -1229,25 +2639,410 @@ def run_live(preflight: Preflight, title: ProcessTitle | None) -> int:
     return 0
 
 
+def run_live_direct(
+    preflight: Preflight,
+    title: ProcessTitle | None,
+    review_log: ReviewLog | None = None,
+) -> int:
+    return run_live(preflight, title, review_log)
+
+
+def validate_fast_start_roots(
+    raw_roots: list[str],
+    review_log: ReviewLog | None,
+) -> list[Path]:
+    """Keep valid roots and report invalid or overlapping roots."""
+
+    roots: list[Path] = []
+    for raw in raw_roots:
+        root, error = resolve_input_root(raw)
+        if error:
+            if review_log is None:
+                raise PreflightError([error])
+            review_log.record("COURSE ROOT", raw, error)
+            continue
+        assert root is not None
+        overlapping = next(
+            (accepted for accepted in roots if path_overlap(root, accepted)),
+            None,
+        )
+        if overlapping is not None:
+            reason = f"overlaps earlier course root {overlapping}"
+            if review_log is None:
+                raise PreflightError(
+                    [f"input roots overlap: {overlapping} and {root}"]
+                )
+            review_log.record("COURSE ROOT", root, reason)
+            continue
+        roots.append(root)
+    return roots
+
+
+def run_fast_start(
+    raw_roots: list[str],
+    limit: int | None,
+    title: ProcessTitle | None,
+    options: TranscriptionOptions = TranscriptionOptions(),
+    review_log: ReviewLog | None = None,
+    checkpoint: ResumeCheckpoint | None = None,
+    start_index: int = 0,
+    roots_prevalidated: bool = False,
+) -> int:
+    """Scan and process one explicit course root at a time."""
+
+    if roots_prevalidated:
+        roots = [Path(raw_root) for raw_root in raw_roots]
+    else:
+        try:
+            roots = validate_fast_start_roots(raw_roots, review_log)
+        except PreflightError as exc:
+            set_title(title, "batch-transcribe-courses validation-failed")
+            for error in exc.errors:
+                print(f"error: {error}", file=sys.stderr, flush=True)
+            return 2
+    if not roots:
+        set_title(title, "batch-transcribe-courses no-valid-roots")
+        print("error: no valid course roots to process", file=sys.stderr, flush=True)
+        return 2
+    if start_index < 0 or start_index >= len(roots):
+        set_title(title, "batch-transcribe-courses invalid-resume-cursor")
+        print(
+            f"error: resume cursor {start_index} is outside "
+            f"{len(roots)} course roots",
+            file=sys.stderr,
+            flush=True,
+        )
+        return 2
+
+    print_settings(options)
+    remaining = limit
+    processed = 0
+    preflight_failures = 0
+    transcription_failures = 0
+
+    for root_index in range(start_index, len(roots)):
+        root = roots[root_index]
+        display_index = root_index + 1
+        if remaining == 0:
+            if checkpoint is not None:
+                checkpoint.set_cursor(root_index, "paused")
+            break
+        if checkpoint is not None:
+            checkpoint.set_cursor(root_index, "active")
+        print(
+            f"SCAN [{display_index}/{len(roots)}] course={root}",
+            flush=True,
+        )
+        set_title(
+            title,
+            f"batch-transcribe-courses scan "
+            f"[{display_index}/{len(roots)}] {root.name}",
+        )
+        try:
+            preflight = perform_preflight(
+                [str(root)],
+                remaining,
+                options,
+            )
+        except PreflightError as exc:
+            preflight_failures += 1
+            for error in exc.errors:
+                if review_log is not None:
+                    review_log.record("COURSE PREFLIGHT", root, error)
+                print(
+                    f"FAIL course={root}: {error}",
+                    file=sys.stderr,
+                    flush=True,
+                )
+            if checkpoint is not None:
+                checkpoint.set_cursor(
+                    root_index + 1,
+                    (
+                        "complete"
+                        if root_index + 1 == len(roots)
+                        else "active"
+                    ),
+                )
+            continue
+
+        print_preflight(preflight, dry_run=False)
+        course_was_limited = any(
+            item_is_eligible(item, options) and not item.selected
+            for item in preflight.items
+        )
+        result = run_live(preflight, title, review_log)
+        processed += 1
+        if result:
+            transcription_failures += 1
+        if remaining is not None:
+            remaining -= preflight.work_total
+        if checkpoint is not None:
+            if course_was_limited:
+                checkpoint.set_cursor(root_index, "paused")
+            else:
+                checkpoint.set_cursor(
+                    root_index + 1,
+                    (
+                        "complete"
+                        if root_index + 1 == len(roots)
+                        else "active"
+                    ),
+                )
+    print(
+        f"Fast-start summary: roots={len(roots)} processed={processed} "
+        f"preflight_failed={preflight_failures} "
+        f"transcription_failed={transcription_failures}",
+        flush=True,
+    )
+    if preflight_failures:
+        return 2
+    if transcription_failures:
+        return 1
+    return 0
+
+
 def main(argv: Iterator[str] | None = None) -> int:
     title = ProcessTitle.capture()
     parser = build_parser()
     args = parser.parse_args(argv)
+    try:
+        options = options_from_args(args)
+    except ValueError as exc:
+        parser.error(str(exc))
+    if args.resume_from_command:
+        if (
+            args.roots
+            or args.resume
+            or args.resume_from
+            or args.author_roots
+            or args.skip_preflight
+            or args.dry_run
+        ):
+            parser.error(
+                "--resume-from-command accepts only COURSE_ROOT and "
+                "optional --limit"
+            )
+        try:
+            recovered = recover_author_invocation(sys.stdin.read())
+        except ResumeStateError as exc:
+            print(f"error: {exc}", file=sys.stderr, flush=True)
+            return 2
+        args.roots = recovered.roots
+        args.author_roots = True
+        args.skip_preflight = True
+        args.resume_from = args.resume_from_command
+        if args.limit is None:
+            args.limit = recovered.limit
+    if args.skip_preflight and args.dry_run:
+        parser.error("--skip-preflight cannot be combined with --dry-run")
+    if args.resume_from and not args.skip_preflight:
+        parser.error("--resume-from requires --skip-preflight")
+    if args.resume and (
+        args.roots
+        or args.author_roots
+        or args.skip_preflight
+        or args.dry_run
+        or args.resume_from
+        or args.resume_from_command
+        or options != TranscriptionOptions()
+    ):
+        parser.error(
+            "--resume accepts only its state path and optional --limit"
+        )
+    if not args.resume and not args.roots:
+        parser.error("at least one ROOT is required unless --resume is used")
+
+    review_log = ReviewLog.for_current_run()
+    if args.resume:
+        try:
+            checkpoint = ResumeCheckpoint.load(args.resume)
+        except ResumeStateError as exc:
+            print(f"error: {exc}", file=sys.stderr, flush=True)
+            return 2
+        if checkpoint.status == "complete":
+            print(
+                f"RESUME complete state={checkpoint.path} "
+                f"courses={len(checkpoint.course_roots)}",
+                flush=True,
+            )
+            return 0
+        print(
+            f"RESUME state={checkpoint.path} "
+            f"next={checkpoint.next_index + 1}/"
+            f"{len(checkpoint.course_roots)} "
+            f"course={checkpoint.current_course}",
+            flush=True,
+        )
+        try:
+            result = run_fast_start(
+                checkpoint.course_roots,
+                args.limit,
+                title,
+                options=checkpoint.options,
+                review_log=review_log,
+                checkpoint=checkpoint,
+                start_index=checkpoint.next_index,
+                roots_prevalidated=True,
+            )
+        except KeyboardInterrupt:
+            try:
+                checkpoint.set_cursor(
+                    checkpoint.next_index,
+                    "interrupted",
+                )
+            except ResumeStateError as exc:
+                print(f"RESUME FAIL: {exc}", file=sys.stderr, flush=True)
+            print(
+                f"INTERRUPTED resume={checkpoint.path}",
+                file=sys.stderr,
+                flush=True,
+            )
+            checkpoint.print_command()
+            review_log.print_summary()
+            return 130
+        except ResumeStateError as exc:
+            print(f"RESUME FAIL: {exc}", file=sys.stderr, flush=True)
+            review_log.print_summary()
+            return 2
+        checkpoint.print_command()
+        review_log.print_summary()
+        return result
+
+    roots = args.roots
+    if args.author_roots:
+        print(
+            f"AUTHOR ROOTS expanding roots={len(roots)}",
+            flush=True,
+        )
+        set_title(title, "batch-transcribe-courses expanding-author-roots")
+        roots = expand_author_roots(roots, review_log)
+        print(
+            f"AUTHOR ROOTS expanded authors={len(args.roots)} "
+            f"courses={len(roots)} review={review_log.issue_count}",
+            flush=True,
+        )
+        if not roots:
+            set_title(title, "batch-transcribe-courses no-valid-author-roots")
+            print(
+                "error: no course roots were found beneath the supplied "
+                "author roots",
+                file=sys.stderr,
+                flush=True,
+            )
+            review_log.print_summary()
+            return 2
+
+    if args.skip_preflight:
+        roots_prevalidated = args.author_roots
+        if not roots_prevalidated:
+            try:
+                validated_roots = validate_fast_start_roots(
+                    roots,
+                    review_log,
+                )
+            except PreflightError as exc:
+                for error in exc.errors:
+                    print(f"error: {error}", file=sys.stderr, flush=True)
+                review_log.print_summary()
+                return 2
+            roots = [str(root) for root in validated_roots]
+            roots_prevalidated = True
+            if not roots:
+                print(
+                    "error: no valid course roots to process",
+                    file=sys.stderr,
+                    flush=True,
+                )
+                review_log.print_summary()
+                return 2
+        start_index = 0
+        if args.resume_from:
+            try:
+                start_index = resume_course_index(roots, args.resume_from)
+            except ResumeStateError as exc:
+                print(f"error: {exc}", file=sys.stderr, flush=True)
+                review_log.print_summary()
+                return 2
+        try:
+            checkpoint = ResumeCheckpoint.create(
+                roots,
+                args.roots,
+                (
+                    "author-roots"
+                    if args.author_roots
+                    else "course-roots"
+                ),
+                next_index=start_index,
+                options=options,
+            )
+        except ResumeStateError as exc:
+            print(f"error: {exc}", file=sys.stderr, flush=True)
+            review_log.print_summary()
+            return 2
+        print(
+            f"RESUME STATE path={checkpoint.path} "
+            f"start={start_index + 1}/{len(roots)}",
+            flush=True,
+        )
+        checkpoint.print_command()
+        print(
+            f"FAST START roots={len(roots)} "
+            f"start={start_index + 1} "
+            f"limit={args.limit if args.limit is not None else 'none'}",
+            flush=True,
+        )
+        try:
+            result = run_fast_start(
+                roots,
+                args.limit,
+                title,
+                options=options,
+                review_log=review_log,
+                checkpoint=checkpoint,
+                start_index=start_index,
+                roots_prevalidated=roots_prevalidated,
+            )
+        except KeyboardInterrupt:
+            try:
+                checkpoint.set_cursor(
+                    checkpoint.next_index,
+                    "interrupted",
+                )
+            except ResumeStateError as exc:
+                print(f"RESUME FAIL: {exc}", file=sys.stderr, flush=True)
+            print(
+                f"INTERRUPTED resume={checkpoint.path}",
+                file=sys.stderr,
+                flush=True,
+            )
+            checkpoint.print_command()
+            review_log.print_summary()
+            return 130
+        except ResumeStateError as exc:
+            print(f"RESUME FAIL: {exc}", file=sys.stderr, flush=True)
+            review_log.print_summary()
+            return 2
+        checkpoint.print_command()
+        review_log.print_summary()
+        return result
+
     print(
-        f"PREFLIGHT scanning roots={len(args.roots)} "
+        f"PREFLIGHT scanning roots={len(roots)} "
         f"limit={args.limit if args.limit is not None else 'none'}",
         flush=True,
     )
     set_title(title, "batch-transcribe-courses preflight")
     try:
-        preflight = perform_preflight(args.roots, args.limit)
+        preflight = perform_preflight(roots, args.limit, options)
     except PreflightError as exc:
         set_title(title, "batch-transcribe-courses preflight-failed")
         for error in exc.errors:
+            review_log.record("PREFLIGHT", "supplied roots", error)
             print(f"error: {error}", file=sys.stderr, flush=True)
+        review_log.print_summary()
         return 2
 
-    print_settings()
+    print_settings(options)
     print_preflight(preflight, args.dry_run)
     if args.dry_run:
         combined = CourseSummary()
@@ -1265,8 +3060,11 @@ def main(argv: Iterator[str] | None = None) -> int:
             flush=True,
         )
         set_title(title, "batch-transcribe-courses preflight-complete")
+        review_log.print_summary()
         return 0
-    return run_live(preflight, title)
+    result = run_live_direct(preflight, title, review_log)
+    review_log.print_summary()
+    return result
 
 
 if __name__ == "__main__":

@@ -1,5 +1,6 @@
 [alias]
-	p = "!f() { git add . && git commit -m \"$*\" && git push; }; f"
+	p = "!f() { git commit -m \"$*\" && git push; }; f"
+	dp = "!f() { git -C \"$HOME/projects/zsh/dotfiles\" p \"$@\"; }; f"
 
 [core]
 	editor = code --wait

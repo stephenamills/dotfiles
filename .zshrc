@@ -59,6 +59,36 @@ cb() {
 	open "https://crates.io/crates/${1}"
 }
 
+# Copy a Claude Code plan to the clipboard
+# Usage: cplan     (newest plan)
+#        cplan 2   (second-newest, 3 for third, and so on)
+#        cplan -p  (pick one from a list with fzf)
+cplan() {
+	# Glob qualifiers: . = plain files, N = don't error when empty, om = newest first
+	local plans=(~/.claude/plans/*.md(.Nom))
+
+	if (($#plans == 0)); then
+		echo "No plans found in ~/.claude/plans" >&2
+		return 1
+	fi
+
+	local plan
+	if [[ $1 == -p ]]; then
+		# Show only the file name in the list, but return the full path
+		plan=$(print -l $plans | fzf --delimiter=/ --with-nth=-1 --preview='cat {}' --preview-window=right,70%) || return 1
+	else
+		plan=$plans[${1:-1}]
+	fi
+
+	if [[ ! -f $plan ]]; then
+		echo "No plan at position ${1:-1} (only $#plans available)" >&2
+		return 1
+	fi
+
+	pbcopy <"$plan"
+	echo "Copied ${plan:t} ($(wc -l <"$plan" | tr -d ' ') lines)"
+}
+
 # Delete a line from the zsh history file
 del() {
 	# Delete the line by its line number

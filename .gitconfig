@@ -1,5 +1,5 @@
 [alias]
-	p = "!f() { git commit -m \"$*\" && git push; }; f"
+	p = "!f() { git commit -a -m \"$*\" && git push; }; f"
 	dp = "!f() { git -C \"$HOME/projects/zsh/dotfiles\" p \"$@\"; }; f"
 
 [core]

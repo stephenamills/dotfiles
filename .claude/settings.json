@@ -7,6 +7,18 @@
   },
   "model": "opus",
   "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "ExitPlanMode",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/copy-plan-to-clipboard.sh",
+            "statusMessage": "Copying plan to clipboard"
+          }
+        ]
+      }
+    ],
     "Stop": [
       {
         "hooks": [

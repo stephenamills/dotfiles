@@ -1,6 +1,6 @@
 ---
 name: batch-transcribe-courses
-description: Recursively transcribe media inside explicit course roots or the immediate course-directory children of explicit author roots with WhisperKit, writing mirrored .txt files beneath each course root's top-level transcripts directory. Use for course-folder or author-folder transcription, previews, missing transcripts, selective timestamp upgrades, and resumable batch runs involving audio or video files.
+description: Recursively transcribe media inside explicit course roots, the immediate course children of author roots, or topic roots containing authors and courses with WhisperKit, writing mirrored .txt files beneath each course root's top-level transcripts directory. Use for course-, author-, or topic-folder transcription, previews, missing transcripts, selective timestamp upgrades, Ω-category exclusion, and resumable batch runs involving audio or video files.
 ---
 
 # Batch Transcribe Courses
@@ -9,15 +9,19 @@ Pass course roots directly to the bundled script:
 
 ```bash
 python3 ~/.agents/skills/batch-transcribe-courses/scripts/transcribe_courses.py \
-  [--author-roots] [--dry-run | --skip-preflight] \
+  [--author-roots | --topic-roots] [--dry-run | --skip-preflight] \
   [--resume-from COURSE_ROOT] [--limit N] \
   [--overwrite | --overwrite-empty | --upgrade-timestamps] \
   [--language CODE] [--timestamps] [--timestamp-interval SECONDS] \
-  [--transcribe-timeout SECONDS] [--transcribe-retries N] -- \
+  [--transcribe-timeout SECONDS] [--transcribe-retries N] \
+  [--extract-timeout SECONDS] [--extract-retries N] [--log-file PATH] -- \
   ROOT [ROOT ...]
 
 python3 ~/.agents/skills/batch-transcribe-courses/scripts/transcribe_courses.py \
   --resume STATE [--limit N]
+
+python3 ~/.agents/skills/batch-transcribe-courses/scripts/transcribe_courses.py \
+  --retry-failed STATE
 
 fc -ln -1 | python3 \
   ~/.agents/skills/batch-transcribe-courses/scripts/transcribe_courses.py \
@@ -27,28 +31,44 @@ python3 ~/.agents/skills/batch-transcribe-courses/scripts/transcribe_courses.py 
   --author-roots --skip-preflight \
   --upgrade-timestamps --timestamp-interval 120 -- \
   AUTHOR_ROOT [...]
+
+python3 ~/.agents/skills/batch-transcribe-courses/scripts/transcribe_courses.py \
+  --topic-roots --skip-preflight \
+  --upgrade-timestamps --timestamp-interval 120 -- \
+  TOPIC_ROOT [...]
 ```
 
-Without `--author-roots`, treat each argument as one course root. With
-`--author-roots`, treat every argument as an author root and use each immediate
-child directory as one course root. List only that single directory level;
-never recursively infer course boundaries. Preserve author-root argument order
-and sort the course roots within each author. Use a separate default-mode
-invocation for exceptional course roots that are not beneath an author root.
+Without `--author-roots` or `--topic-roots`, treat each argument as one course
+root. With `--author-roots`, treat every argument as an author root and use each
+immediate child directory as one course root. If an author has no child
+directories but contains media directly, promote that author directory to a
+flat course root. List only that single directory level; never recursively infer
+course boundaries. Preserve author-root argument order and sort the course
+roots within each author. Use a separate default-mode invocation for
+exceptional course roots that are not beneath an author root.
 
-Do not abort an author-root run because one supplied author is missing,
-unreadable, overlapping, or has no immediate course directories. Skip that
-author and continue with every valid one. Write each exception to a uniquely
-named `batch-transcribe-courses-review-*.txt` file in the current working
-directory, print its path immediately, and print its issue count at the end.
-Also append course validation and per-course preflight failures encountered
-during `--skip-preflight`. Use the report to process exceptional paths manually
-in a later default-mode invocation. If no valid course roots remain, report the
+With `--topic-roots`, expand each supplied root through exactly two directory
+levels: immediate author roots, then their immediate course roots. Preserve
+topic-root argument order and sort authors within each topic and courses within
+each author. Ignore every directory whose normalized name starts with `Ω` and
+never descend into it. Apply that exclusion at the topic, author, and all
+recursive course-media levels, including after checkpoint resume. Promote a
+topic or author directory with no child directories and direct media to a flat
+course root. Genuinely empty directories are informational and do not increase
+the review issue count; non-media files remain actionable review items.
+
+Do not abort an author- or topic-root run because one supplied root or expanded
+author is missing, unreadable, overlapping, or empty. Skip it and continue with
+every valid one. Write each exception to a uniquely named
+the run's state-directory `.review.txt` file,
+print its path immediately, and print its issue count at the end. Also append
+course validation and per-course preflight failures encountered during
+`--skip-preflight`. Use the report to process exceptional paths manually in a
+later explicit-root invocation. If no valid course roots remain, report the
 file and exit without starting WhisperKit.
 
-Never pass a broader library, category, or NAS root in either mode. Ask for
-course-root or author-root paths if the user has not supplied the appropriate
-level.
+Never pass a broader library or NAS root. Ask for course-, author-, or
+topic-root paths if the user has not supplied the appropriate level.
 
 The script recursively maps media within each course:
 
@@ -69,27 +89,31 @@ the live command with the same roots and optional limit, omitting only
 For a large root list, use `--skip-preflight` to avoid scanning every course
 before transcription begins. It validates the supplied root paths once, then
 scans and processes one course at a time. In author-root mode it first performs
-the one-level directory expansion, not a recursive media scan. Do not combine
-`--skip-preflight` with `--dry-run`.
+the one-level directory expansion; in topic-root mode it performs the fixed
+two-level expansion. Neither hierarchy expansion scans media recursively. Do
+not combine `--skip-preflight` with `--dry-run`.
 
-Every fast-start run atomically writes a local checkpoint beneath
+Every fast-start run atomically writes a local v2 checkpoint beneath
 `~/.agents/state/batch-transcribe-courses/` and immediately prints its exact
 `--resume STATE` command. The checkpoint stores the expanded ordered course
-list, transcription options, and the current course cursor. Advance the cursor
-only after traversing a whole course. On interruption, resume at that course;
-existing transcript files skip completed media within it, and no earlier course
-roots are expanded, validated, or scanned. Keep completed checkpoint files as
-run records.
+list, transcription options, the current course cursor, and `failed_courses`.
+Advance the cursor only after traversing a whole course. A full cursor with
+failures is `complete-with-failures`; use `--retry-failed STATE` to create a
+fresh checkpoint containing only those courses. v1 checkpoints load unchanged
+and are saved as v2 on their next update. On interruption, resume at that
+course; existing transcript files skip completed media within it, and no
+earlier course roots are expanded, validated, or scanned. Keep completed
+checkpoint files as run records.
 
 For a run started before checkpoint support, add
 `--resume-from COURSE_ROOT` to its original `--skip-preflight` invocation.
-This performs the author expansion once, starts at that exact expanded course,
-and creates the normal checkpoint for subsequent short resumes. If the full
-author-root command is still the immediately preceding zsh history entry, pipe
-`fc -ln -1` to `--resume-from-command COURSE_ROOT` instead. The script strictly
-parses that command as argument data and never evaluates or executes history
-text. Do not infer progress from shell history or terminal output when a
-checkpoint exists.
+This performs the author or topic expansion once, starts at that exact expanded
+course, and creates the normal checkpoint for subsequent short resumes. If the
+full hierarchy command is still the immediately preceding zsh history entry,
+pipe `fc -ln -1` to `--resume-from-command COURSE_ROOT` instead. The script
+strictly parses that command as argument data and never evaluates or executes
+history text. Do not infer progress from shell history or terminal output when
+a checkpoint exists.
 
 Existing transcripts are skipped by default. `--overwrite` deliberately selects
 them again. The old regular file remains in place while WhisperKit runs; only a
@@ -151,7 +175,14 @@ those bounds with `--transcribe-timeout SECONDS` and `--transcribe-retries N`.
 A failed, timed-out, or empty result is never installed; after its retries it
 is reported as `FAIL`, and the batch proceeds to the next file. Keep live
 output visible and attached. ffmpeg conversion remains a per-file subprocess
-where required and uses the same timeout so a corrupt or disconnected input
-cannot block the batch forever. Record every WhisperKit or ffmpeg timeout and
-every final transcription failure, including the source path and attempt
-details, in the run's flushed `batch-transcribe-courses-review-*.txt` file.
+where required, uses an independent size-aware timeout (override with
+`--extract-timeout`), retries with a corrupt-frame-tolerant mono downmix, and
+defaults to one extraction retry (`--extract-retries N`). A vanished `/Volumes`
+mount is probed with `statvfs` plus `scandir`, waited on with bounded backoff,
+and never advances the checkpoint cursor until the course can be retried.
+
+Each run writes one consolidated flushed log at
+`~/.agents/state/batch-transcribe-courses/logs/run-*.log` (or `--log-file PATH`)
+and its actionable companion `run-*.review.txt`. The log includes invocation,
+resolved dependencies, every scan/success/skip/failure/retry/timeout/volume
+event, course summaries, totals, exit reason, and resume/retry commands.

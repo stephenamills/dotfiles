@@ -1225,6 +1225,20 @@ class ResumeCheckpointTests(unittest.TestCase):
         self.assertTrue(loaded.options.timestamps)
         self.assertTrue(loaded.options.upgrade_timestamps)
 
+    def test_checkpoint_round_trips_topic_root_source_mode(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            checkpoint = subject.ResumeCheckpoint.create(
+                ["/topics/Example Topic/Author/Course"],
+                ["/topics/Example Topic"],
+                "topic-roots",
+                directory=Path(temporary),
+            )
+
+            loaded = subject.ResumeCheckpoint.load(checkpoint.path)
+
+        self.assertEqual(loaded.source_mode, "topic-roots")
+        self.assertEqual(loaded.source_roots, ["/topics/Example Topic"])
+
     def test_checkpoint_without_upgrade_field_remains_compatible(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             checkpoint = subject.ResumeCheckpoint.create(
@@ -1280,6 +1294,23 @@ class ResumeCheckpointTests(unittest.TestCase):
                 "/tmp/transcription-fixtures/Music/Example Author/Second Course **",
             ],
         )
+        self.assertEqual(recovered.source_mode, "author-roots")
+
+    def test_prior_topic_command_is_parsed_as_data(self) -> None:
+        command = (
+            "python3 ~/.agents/skills/batch-transcribe-courses/scripts/"
+            "transcribe_courses.py --topic-roots --skip-preflight --limit=4 "
+            "-- '/tmp/transcription-fixtures/Example Topic'"
+        )
+
+        recovered = subject.recover_author_invocation(command)
+
+        self.assertEqual(recovered.limit, 4)
+        self.assertEqual(
+            recovered.roots,
+            ["/tmp/transcription-fixtures/Example Topic"],
+        )
+        self.assertEqual(recovered.source_mode, "topic-roots")
 
 
 class OutputContractTests(unittest.TestCase):
@@ -1512,6 +1543,124 @@ class OutputContractTests(unittest.TestCase):
         self.assertIn(str(missing_author), review_text)
         self.assertIn("invalid input root", review_text)
 
+    def test_topic_roots_expand_authors_then_courses_and_ignore_omega(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary)
+            architecture = base / "Architecture"
+            construction = base / "Construction"
+            architecture_course = (
+                architecture / "Architect" / "Course One"
+            )
+            alpha_course = (
+                construction / "alpha Author" / "Alpha Course"
+            )
+            zulu_course = (
+                construction / "alpha Author" / "zulu Course"
+            )
+            bravo_course = (
+                construction / "Zulu Author" / "Bravo Course"
+            )
+            for path in (
+                architecture_course,
+                alpha_course / "Module",
+                zulu_course,
+                bravo_course,
+                construction / "Ω - Hands On" / "Ignored" / "Course",
+                construction / "Ω - Urban Design" / "Ignored" / "Course",
+                construction / "Ω Books" / "Ignored" / "Course",
+                construction / "Ω More" / "Ignored" / "Course",
+                construction
+                / "alpha Author"
+                / "Ω Private Courses"
+                / "Ignored Course",
+            ):
+                path.mkdir(parents=True)
+            (alpha_course / "Module" / "Lesson.mp4").write_bytes(b"media")
+            (construction / "cover.jpg").write_bytes(b"not an author")
+            review_log = subject.ReviewLog(base / "review.txt")
+
+            expanded = subject.expand_topic_roots(
+                [str(architecture), str(construction)],
+                review_log,
+            )
+
+        self.assertEqual(
+            expanded,
+            [
+                str(architecture_course.resolve()),
+                str(alpha_course.resolve()),
+                str(zulu_course.resolve()),
+                str(bravo_course.resolve()),
+            ],
+        )
+        self.assertNotIn(str((alpha_course / "Module").resolve()), expanded)
+        self.assertEqual(review_log.issue_count, 0)
+        self.assertFalse(review_log.path.exists())
+
+    def test_topic_mode_prunes_omega_media_directories_recursively(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            course_root = Path(temporary) / "Course"
+            normal_module = course_root / "Module"
+            omega_top = course_root / "Ω Private"
+            omega_nested = normal_module / "Ω Hidden"
+            omega_top.mkdir(parents=True)
+            omega_nested.mkdir(parents=True)
+            (course_root / "intro.mp4").write_bytes(b"media")
+            (normal_module / "lesson.mp4").write_bytes(b"media")
+            (omega_top / "secret.mp4").write_bytes(b"media")
+            (omega_nested / "secret.mp4").write_bytes(b"media")
+
+            topic_items, topic_errors = subject.discover_media(
+                subject.Course(
+                    course_root.resolve(),
+                    ignore_omega_directories=True,
+                )
+            )
+            normal_items, normal_errors = subject.discover_media(
+                subject.Course(course_root.resolve())
+            )
+
+        self.assertEqual(topic_errors, [])
+        self.assertEqual(normal_errors, [])
+        self.assertEqual(
+            [item.relative_media.as_posix() for item in topic_items],
+            ["intro.mp4", "Module/lesson.mp4"],
+        )
+        self.assertEqual(len(normal_items), 4)
+
+    def test_empty_and_missing_topic_roots_are_logged_while_valid_continues(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary)
+            empty_topic = base / "Empty Topic"
+            missing_topic = base / "Missing Topic"
+            valid_topic = base / "Valid Topic"
+            course = valid_topic / "Author" / "Course"
+            (empty_topic / "Ω Books" / "Ignored").mkdir(parents=True)
+            course.mkdir(parents=True)
+            review_log = subject.ReviewLog(base / "review.txt")
+
+            expanded = subject.expand_topic_roots(
+                [str(empty_topic), str(missing_topic), str(valid_topic)],
+                review_log,
+            )
+            review_text = review_log.path.read_text(encoding="utf-8")
+
+        self.assertEqual(expanded, [str(course.resolve())])
+        self.assertEqual(review_log.issue_count, 2)
+        self.assertIn(str(empty_topic.resolve()), review_text)
+        self.assertIn(
+            "contains no immediate author directories after Ω exclusions",
+            review_text,
+        )
+        self.assertIn(str(missing_topic), review_text)
+        self.assertIn("invalid input root", review_text)
+
     def test_direct_cli_unsupported_audio_container_uses_ffmpeg(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             course_root = Path(temporary) / "Course"
@@ -1666,7 +1815,10 @@ class OutputContractTests(unittest.TestCase):
                 roots: list[str],
                 limit: int | None,
                 _options: subject.TranscriptionOptions,
+                *,
+                ignore_omega_directories: bool = False,
             ) -> subject.Preflight:
+                self.assertFalse(ignore_omega_directories)
                 name = Path(roots[0]).name
                 calls.append(("scan", name, limit))
                 return first if name == first_root.name else second
@@ -1712,6 +1864,51 @@ class OutputContractTests(unittest.TestCase):
         self.assertLess(
             output.getvalue().index("course="),
             output.getvalue().index("Fast-start summary:"),
+        )
+
+    def test_fast_start_passes_topic_omega_exclusion_to_each_course(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary) / "Course"
+            root.mkdir()
+            preflight = subject.Preflight(
+                courses=[
+                    subject.Course(
+                        root,
+                        ignore_omega_directories=True,
+                    )
+                ],
+                items=[],
+                programs=subject.Programs("whisperkit-cli", "ffmpeg"),
+                work_total=0,
+            )
+
+            with (
+                redirect_stdout(FlushRecordingStream()),
+                mock.patch.object(subject, "print_settings"),
+                mock.patch.object(
+                    subject,
+                    "perform_preflight",
+                    return_value=preflight,
+                ) as perform,
+                mock.patch.object(subject, "print_preflight"),
+                mock.patch.object(subject, "run_live", return_value=0),
+            ):
+                return_code = subject.run_fast_start(
+                    [str(root)],
+                    limit=None,
+                    title=None,
+                    roots_prevalidated=True,
+                    ignore_omega_directories=True,
+                )
+
+        self.assertEqual(return_code, 0)
+        perform.assert_called_once_with(
+            [str(root)],
+            None,
+            subject.TranscriptionOptions(),
+            ignore_omega_directories=True,
         )
 
     def test_interruption_checkpoint_stays_on_interrupted_course(self) -> None:
@@ -1841,6 +2038,7 @@ class OutputContractTests(unittest.TestCase):
             checkpoint=checkpoint,
             start_index=0,
             roots_prevalidated=True,
+            ignore_omega_directories=False,
         )
         global_preflight.assert_not_called()
         self.assertIn("FAST START roots=1 start=1 limit=10", output.getvalue())
@@ -1896,6 +2094,7 @@ class OutputContractTests(unittest.TestCase):
             checkpoint=checkpoint,
             start_index=0,
             roots_prevalidated=True,
+            ignore_omega_directories=False,
         )
 
     def test_main_resume_uses_saved_cursor_without_expanding_or_validating(self) -> None:
@@ -1940,6 +2139,7 @@ class OutputContractTests(unittest.TestCase):
             checkpoint=mock.ANY,
             start_index=1,
             roots_prevalidated=True,
+            ignore_omega_directories=False,
         )
         expand.assert_not_called()
         validate.assert_not_called()
@@ -2002,6 +2202,7 @@ class OutputContractTests(unittest.TestCase):
             checkpoint=checkpoint,
             start_index=1,
             roots_prevalidated=True,
+            ignore_omega_directories=False,
         )
         self.assertIn("start=2/3", output.getvalue())
 
@@ -2064,6 +2265,70 @@ class OutputContractTests(unittest.TestCase):
             checkpoint=checkpoint,
             start_index=1,
             roots_prevalidated=True,
+            ignore_omega_directories=False,
+        )
+
+    def test_main_resume_from_topic_command_preserves_omega_exclusion(
+        self,
+    ) -> None:
+        command = (
+            "python3 ~/.agents/skills/batch-transcribe-courses/scripts/"
+            "transcribe_courses.py --topic-roots --skip-preflight -- "
+            "'/topics/Example Topic'"
+        )
+        expanded = [
+            "/topics/Example Topic/Author/Before",
+            "/topics/Example Topic/Author/Current",
+            "/topics/Example Topic/Author/After",
+        ]
+        checkpoint = mock.Mock(spec=subject.ResumeCheckpoint)
+        checkpoint.path = Path("/state/resume.json")
+
+        with (
+            redirect_stdout(FlushRecordingStream()),
+            mock.patch.object(subject.ProcessTitle, "capture", return_value=None),
+            mock.patch.object(subject.sys, "stdin", io.StringIO(command)),
+            mock.patch.object(
+                subject,
+                "expand_topic_roots",
+                return_value=expanded,
+            ) as expand,
+            mock.patch.object(
+                subject.ResumeCheckpoint,
+                "create",
+                return_value=checkpoint,
+            ) as create,
+            mock.patch.object(subject, "run_fast_start", return_value=0) as fast,
+        ):
+            return_code = subject.main(
+                [
+                    "--resume-from-command",
+                    "/topics/Example Topic/Author/Current",
+                ]
+            )
+
+        self.assertEqual(return_code, 0)
+        expand.assert_called_once_with(
+            ["/topics/Example Topic"],
+            mock.ANY,
+        )
+        create.assert_called_once_with(
+            expanded,
+            ["/topics/Example Topic"],
+            "topic-roots",
+            next_index=1,
+            options=subject.TranscriptionOptions(),
+        )
+        fast.assert_called_once_with(
+            expanded,
+            None,
+            None,
+            options=subject.TranscriptionOptions(),
+            review_log=mock.ANY,
+            checkpoint=checkpoint,
+            start_index=1,
+            roots_prevalidated=True,
+            ignore_omega_directories=True,
         )
 
     def test_main_author_roots_routes_expanded_courses_to_fast_start(self) -> None:
@@ -2108,6 +2373,7 @@ class OutputContractTests(unittest.TestCase):
             checkpoint=checkpoint,
             start_index=0,
             roots_prevalidated=True,
+            ignore_omega_directories=False,
         )
         global_preflight.assert_not_called()
         self.assertIn(
@@ -2117,6 +2383,149 @@ class OutputContractTests(unittest.TestCase):
         self.assertIn(
             "FAST START roots=2 start=1 limit=10",
             output.getvalue(),
+        )
+
+    def test_main_topic_roots_routes_expanded_courses_to_fast_start(self) -> None:
+        output = FlushRecordingStream()
+        expanded = [
+            "/topic/Author One/Course One",
+            "/topic/Author Two/Course Two",
+        ]
+        checkpoint = mock.Mock(spec=subject.ResumeCheckpoint)
+        checkpoint.path = Path("/state/resume.json")
+        with (
+            redirect_stdout(output),
+            mock.patch.object(subject.ProcessTitle, "capture", return_value=None),
+            mock.patch.object(
+                subject,
+                "expand_topic_roots",
+                return_value=expanded,
+            ) as expand,
+            mock.patch.object(
+                subject.ResumeCheckpoint,
+                "create",
+                return_value=checkpoint,
+            ) as create,
+            mock.patch.object(subject, "run_fast_start", return_value=0) as fast,
+            mock.patch.object(subject, "perform_preflight") as global_preflight,
+        ):
+            return_code = subject.main(
+                [
+                    "--topic-roots",
+                    "--skip-preflight",
+                    "--limit",
+                    "10",
+                    "/topic",
+                ]
+            )
+
+        self.assertEqual(return_code, 0)
+        expand.assert_called_once_with(["/topic"], mock.ANY)
+        create.assert_called_once_with(
+            expanded,
+            ["/topic"],
+            "topic-roots",
+            next_index=0,
+            options=subject.TranscriptionOptions(),
+        )
+        fast.assert_called_once_with(
+            expanded,
+            10,
+            None,
+            options=subject.TranscriptionOptions(),
+            review_log=mock.ANY,
+            checkpoint=checkpoint,
+            start_index=0,
+            roots_prevalidated=True,
+            ignore_omega_directories=True,
+        )
+        global_preflight.assert_not_called()
+        self.assertIn(
+            "TOPIC ROOTS expanded topics=1 courses=2",
+            output.getvalue(),
+        )
+
+    def test_topic_resume_keeps_recursive_omega_exclusion(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            roots = ["/topic/Author/Course"]
+            checkpoint = subject.ResumeCheckpoint.create(
+                roots,
+                ["/topic"],
+                "topic-roots",
+                directory=Path(temporary),
+            )
+
+            with (
+                redirect_stdout(FlushRecordingStream()),
+                mock.patch.object(
+                    subject.ProcessTitle,
+                    "capture",
+                    return_value=None,
+                ),
+                mock.patch.object(
+                    subject,
+                    "run_fast_start",
+                    return_value=0,
+                ) as fast,
+                mock.patch.object(subject, "expand_topic_roots") as expand,
+                mock.patch.object(subject, "validate_fast_start_roots") as validate,
+            ):
+                return_code = subject.main(
+                    ["--resume", str(checkpoint.path)]
+                )
+
+        self.assertEqual(return_code, 0)
+        fast.assert_called_once_with(
+            roots,
+            None,
+            None,
+            options=subject.TranscriptionOptions(),
+            review_log=mock.ANY,
+            checkpoint=mock.ANY,
+            start_index=0,
+            roots_prevalidated=True,
+            ignore_omega_directories=True,
+        )
+        expand.assert_not_called()
+        validate.assert_not_called()
+
+    def test_topic_roots_full_preflight_keeps_omega_exclusion(self) -> None:
+        expanded = ["/topic/Author/Course"]
+        preflight = subject.Preflight(
+            courses=[
+                subject.Course(
+                    Path(expanded[0]),
+                    ignore_omega_directories=True,
+                )
+            ],
+            items=[],
+            programs=subject.Programs("whisperkit-cli", "ffmpeg"),
+            work_total=0,
+        )
+        with (
+            redirect_stdout(FlushRecordingStream()),
+            mock.patch.object(subject.ProcessTitle, "capture", return_value=None),
+            mock.patch.object(
+                subject,
+                "expand_topic_roots",
+                return_value=expanded,
+            ),
+            mock.patch.object(
+                subject,
+                "perform_preflight",
+                return_value=preflight,
+            ) as perform,
+        ):
+            return_code = subject.main(
+                ["--topic-roots", "--dry-run", "/topic"]
+            )
+
+        self.assertEqual(return_code, 0)
+        perform.assert_called_once_with(
+            expanded,
+            None,
+            subject.TranscriptionOptions(),
+            ignore_omega_directories=True,
         )
 
     def test_main_no_valid_author_roots_does_not_scan_courses(self) -> None:
@@ -2137,6 +2546,39 @@ class OutputContractTests(unittest.TestCase):
         self.assertEqual(return_code, 2)
         self.assertIn("no course roots were found", errors.getvalue())
         preflight.assert_not_called()
+
+    def test_main_no_valid_topic_roots_does_not_scan_courses(self) -> None:
+        errors = FlushRecordingStream()
+        with (
+            redirect_stdout(FlushRecordingStream()),
+            redirect_stderr(errors),
+            mock.patch.object(subject.ProcessTitle, "capture", return_value=None),
+            mock.patch.object(
+                subject,
+                "expand_topic_roots",
+                return_value=[],
+            ),
+            mock.patch.object(subject, "perform_preflight") as preflight,
+        ):
+            return_code = subject.main(["--topic-roots", "/topic"])
+
+        self.assertEqual(return_code, 2)
+        self.assertIn("no course roots were found", errors.getvalue())
+        preflight.assert_not_called()
+
+    def test_topic_and_author_root_modes_are_mutually_exclusive(self) -> None:
+        errors = FlushRecordingStream()
+        with (
+            redirect_stderr(errors),
+            mock.patch.object(subject.ProcessTitle, "capture", return_value=None),
+            self.assertRaises(SystemExit) as raised,
+        ):
+            subject.main(
+                ["--topic-roots", "--author-roots", "/library"]
+            )
+
+        self.assertEqual(raised.exception.code, 2)
+        self.assertIn("not allowed with argument", errors.getvalue())
 
     def test_skip_preflight_cannot_be_combined_with_dry_run(self) -> None:
         errors = FlushRecordingStream()

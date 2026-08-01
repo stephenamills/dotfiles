@@ -28,7 +28,7 @@ from __future__ import annotations
 
 import argparse
 import ctypes
-from dataclasses import dataclass, replace
+from dataclasses import dataclass, field, replace
 import errno
 from enum import Enum
 import hashlib
@@ -38,6 +38,7 @@ from pathlib import Path
 import re
 import secrets
 import signal
+import selectors
 import shlex
 import shutil
 import stat
@@ -66,6 +67,7 @@ TEXT_DECODER_COMPUTE_UNITS = "cpuAndGPU"
 CONCURRENT_WORKERS = 64
 DEFAULT_TRANSCRIBE_TIMEOUT_SECONDS = 600
 DEFAULT_TRANSCRIBE_RETRIES = 1
+DEFAULT_EXTRACT_RETRIES = 1
 DEFAULT_TIMESTAMP_INTERVAL_SECONDS = 120
 CHILD_TERMINATE_GRACE_SECONDS = 10
 LEGACY_WHISPER_TOKEN_PATTERN = re.compile(r"<\|[^|\r\n]*\|>")
@@ -129,12 +131,19 @@ VIDEO_EXTENSIONS = frozenset(
 )
 MEDIA_EXTENSIONS = AUDIO_EXTENSIONS | VIDEO_EXTENSIONS
 RENAME_EXCL = 0x00000004
-RESUME_STATE_VERSION = 1
+RESUME_STATE_VERSION = 2
+
+# The active run log is intentionally process-local.  Keeping it out of the
+# public function signatures preserves the small API used by older callers and
+# tests while allowing main() to tee structured events to one file.
+_ACTIVE_RUN_LOG: "RunLog | None" = None
+_ACTIVE_RUN_ID: str | None = None
 
 
 @dataclass(frozen=True)
 class Course:
     root: Path
+    ignore_omega_directories: bool = False
 
     @property
     def transcript_root(self) -> Path:
@@ -221,6 +230,8 @@ class TranscriptionOptions:
     timestamp_interval_seconds: int = DEFAULT_TIMESTAMP_INTERVAL_SECONDS
     timeout_seconds: int = DEFAULT_TRANSCRIBE_TIMEOUT_SECONDS
     retries: int = DEFAULT_TRANSCRIBE_RETRIES
+    extract_timeout_seconds: int | None = None
+    extract_retries: int = DEFAULT_EXTRACT_RETRIES
     overwrite: bool = False
     overwrite_empty: bool = False
     upgrade_timestamps: bool = False
@@ -250,6 +261,7 @@ class Preflight:
 class RecoveredInvocation:
     roots: list[str]
     limit: int | None
+    source_mode: str = "author-roots"
 
 
 class PreflightError(Exception):
@@ -264,25 +276,271 @@ class ResumeStateError(Exception):
     """A local resume checkpoint could not be created, read, or updated."""
 
 
+class VolumeUnavailable(Exception):
+    """The filesystem containing a course disappeared and did not recover."""
+
+    def __init__(self, volume_root: Path, detail: str | None = None):
+        self.volume_root = volume_root
+        message = detail or f"volume unavailable: {volume_root}"
+        super().__init__(message)
+
+
+def volume_root_for(path: Path) -> Path:
+    """Return the longest mounted-volume prefix for *path*.
+
+    SMB paths on macOS conventionally live beneath ``/Volumes/<name>``.  For
+    ordinary paths, walk upwards to the nearest mount point so a transient
+    filesystem failure is still checked at the right boundary.
+    """
+
+    try:
+        resolved = Path(path).expanduser().resolve(strict=False)
+    except (OSError, RuntimeError, ValueError, TypeError):
+        resolved = Path(path).expanduser()
+    parts = resolved.parts
+    if len(parts) >= 3 and parts[0] == os.sep and parts[1] == "Volumes":
+        return Path(os.sep) / "Volumes" / parts[2]
+    candidate = resolved
+    while candidate.parent != candidate:
+        try:
+            if os.path.ismount(candidate):
+                return candidate
+        except OSError:
+            pass
+        candidate = candidate.parent
+    return Path(resolved.anchor or os.sep)
+
+
+def volume_is_live(root: Path) -> bool:
+    """Probe a volume rather than trusting a stale directory entry."""
+
+    try:
+        os.statvfs(root)
+        with os.scandir(root) as entries:
+            # A single directory entry forces the kernel/SMB client to answer
+            # a real request while keeping the probe cheap on large shares.
+            next(entries, None)
+        return True
+    except (OSError, RuntimeError, ValueError):
+        return False
+
+
+def _record_run_event(kind: str, message: str, *, issue: bool = False) -> None:
+    if _ACTIVE_RUN_LOG is not None:
+        _ACTIVE_RUN_LOG.event(kind, message, issue=issue)
+
+
+def wait_for_volume(
+    root: Path,
+    review_log: "ReviewLog | None" = None,
+    log: "RunLog | None" = None,
+    *,
+    timeout: int = 600,
+) -> bool:
+    """Wait for a vanished volume with bounded exponential backoff."""
+
+    started = time.monotonic()
+    delay = 5
+    attempt = 1
+    if log is not None:
+        log.event("VOLUME LOST", f"root={root} attempt={attempt}", issue=True)
+    else:
+        _record_run_event("VOLUME LOST", f"root={root} attempt={attempt}", issue=True)
+    while True:
+        if volume_is_live(root):
+            detail = f"root={root} attempt={attempt}"
+            if log is not None:
+                log.event("VOLUME RESTORED", detail)
+            else:
+                _record_run_event("VOLUME RESTORED", detail)
+            return True
+        elapsed = time.monotonic() - started
+        if elapsed >= timeout:
+            detail = f"root={root} timeout={timeout}s"
+            if review_log is not None:
+                review_log.record("VOLUME UNAVAILABLE", root, detail)
+            if log is not None:
+                log.event("VOLUME LOST", detail, issue=True)
+            else:
+                _record_run_event("VOLUME LOST", detail, issue=True)
+            return False
+        if log is not None:
+            log.event(
+                "RETRY",
+                f"volume root={root} attempt={attempt + 1} wait={delay}s",
+            )
+        else:
+            _record_run_event(
+                "RETRY",
+                f"volume root={root} attempt={attempt + 1} wait={delay}s",
+            )
+        time.sleep(min(delay, max(0, timeout - elapsed)))
+        delay = min(delay * 2, 120)
+        attempt += 1
+
+
+@dataclass
+class RunLog:
+    """One flushed audit stream for a run, with lightweight event totals."""
+
+    path: Path
+    review_path: Path
+    handle: object | None = None
+    counts: dict[str, int] = field(default_factory=dict)
+    started_at: str = field(default_factory=lambda: time.strftime("%Y-%m-%d %H:%M:%S %Z"))
+
+    def __del__(self) -> None:
+        global _ACTIVE_RUN_LOG
+        handle = getattr(self, "handle", None)
+        if handle is not None:
+            try:
+                handle.close()
+            except Exception:
+                pass
+        if _ACTIVE_RUN_LOG is self:
+            _ACTIVE_RUN_LOG = None
+
+    @classmethod
+    def for_current_run(
+        cls,
+        *,
+        argv: list[str] | None = None,
+        options: TranscriptionOptions | None = None,
+        source_mode: str = "course-roots",
+        course_count: int | None = None,
+        checkpoint_path: Path | None = None,
+        log_file: str | Path | None = None,
+        run_id: str | None = None,
+    ) -> "RunLog":
+        global _ACTIVE_RUN_ID
+        if run_id is None:
+            timestamp = time.strftime("%Y%m%d-%H%M%S")
+            run_id = f"{timestamp}-{os.getpid()}-{secrets.token_hex(4)}"
+        _ACTIVE_RUN_ID = run_id
+        directory = resume_state_directory() / "logs"
+        directory.mkdir(parents=True, exist_ok=True)
+        path = Path(log_file).expanduser() if log_file else directory / f"run-{run_id}.log"
+        review_path = directory / f"run-{run_id}.review.txt"
+        review_path.parent.mkdir(parents=True, exist_ok=True)
+        review_path.touch(exist_ok=True)
+        result = cls(path=path, review_path=review_path)
+        result._open()
+        result.header(
+            argv=argv or sys.argv,
+            options=options,
+            source_mode=source_mode,
+            course_count=course_count,
+            checkpoint_path=checkpoint_path,
+        )
+        global _ACTIVE_RUN_LOG
+        _ACTIVE_RUN_LOG = result
+        return result
+
+    def _open(self) -> None:
+        self.path.parent.mkdir(parents=True, exist_ok=True)
+        self.handle = self.path.open("a", encoding="utf-8", newline="\n")
+
+    def _write(self, line: str, *, sync: bool = False) -> None:
+        if self.handle is None:
+            self._open()
+        assert self.handle is not None
+        self.handle.write(line.rstrip("\n") + "\n")
+        self.handle.flush()
+        if sync:
+            try:
+                os.fsync(self.handle.fileno())
+            except OSError:
+                pass
+
+    def header(
+        self,
+        *,
+        argv: list[str],
+        options: TranscriptionOptions | None,
+        source_mode: str,
+        course_count: int | None,
+        checkpoint_path: Path | None,
+    ) -> None:
+        self._write("Batch Transcribe Courses - Run Log")
+        self._write(f"Invocation: {shlex.join(argv)}")
+        self._write(f"Start: {self.started_at}")
+        self._write(f"Source mode: {source_mode}")
+        self._write(f"Course count: {course_count if course_count is not None else 'unknown'}")
+        self._write(f"Checkpoint: {checkpoint_path or 'pending'}")
+        if options is not None:
+            self._write(f"Transcription options: {options!r}")
+        self._write(f"whisperkit-cli: {shutil.which('whisperkit-cli') or 'unresolved'}")
+        self._write(f"ffmpeg: {shutil.which('ffmpeg') or 'unresolved'}")
+
+    def event(self, kind: str, message: str, *, issue: bool = False) -> None:
+        self.counts[kind] = self.counts.get(kind, 0) + 1
+        self._write(f"{kind} {message}", sync=issue)
+
+    def footer(
+        self,
+        exit_code: int,
+        reason: str,
+        *,
+        checkpoint_path: Path | None = None,
+        retry_failed_command: str | None = None,
+        issue_count: int | None = None,
+    ) -> None:
+        totals = " ".join(
+            f"{name.lower()}={count}" for name, count in sorted(self.counts.items())
+        ) or "none"
+        self._write(f"Totals: {totals}")
+        if issue_count is not None:
+            self._write(f"Issue count: {issue_count}")
+        self._write(f"Exit code: {exit_code} reason={reason}")
+        if checkpoint_path is not None:
+            resume = ["python3", str(Path(__file__)), "--resume", str(checkpoint_path)]
+            self._write(f"Resume command: {shlex.join(resume)}")
+        if retry_failed_command:
+            self._write(f"Retry-failed command: {retry_failed_command}")
+        self._write(f"Review log: {self.review_path}")
+        if self.handle is not None:
+            self.handle.close()
+            self.handle = None
+        global _ACTIVE_RUN_LOG
+        if _ACTIVE_RUN_LOG is self:
+            _ACTIVE_RUN_LOG = None
+
+
 @dataclass
 class ReviewLog:
     """Lazily write hierarchy exceptions for later manual handling."""
 
     path: Path
     issue_count: int = 0
+    run_log: RunLog | None = None
+
+    def __post_init__(self) -> None:
+        self.path = Path(self.path)
 
     @classmethod
-    def for_current_run(cls) -> ReviewLog:
+    def for_current_run(cls, run_log: RunLog | None = None) -> ReviewLog:
+        if run_log is not None:
+            return cls(run_log.review_path, run_log=run_log)
         timestamp = time.strftime("%Y%m%d-%H%M%S")
-        filename = (
-            f"batch-transcribe-courses-review-{timestamp}-{os.getpid()}.txt"
-        )
-        return cls(Path.cwd() / filename)
+        filename = f"batch-transcribe-courses-review-{timestamp}-{os.getpid()}.txt"
+        return cls(resume_state_directory() / filename)
+
+    def info(self, category: str, path: str | Path, detail: str) -> None:
+        """Write informational hierarchy notes without increasing issue_count."""
+        try:
+            self.path.parent.mkdir(parents=True, exist_ok=True)
+            with self.path.open("a", encoding="utf-8", newline="\n") as output:
+                output.write(f"[INFO] {category}\nPath: {path}\nReason: {detail}\n\n")
+                output.flush()
+        except OSError:
+            pass
+        if self.run_log is not None:
+            self.run_log.event(category, f"path={path} reason={detail}")
 
     def record(self, category: str, path: str | Path, reason: str) -> None:
         issue_number = self.issue_count + 1
         first_issue = self.issue_count == 0
-        mode = "x" if first_issue else "a"
+        mode = "x" if first_issue and not self.path.exists() else "w" if first_issue else "a"
         try:
             with self.path.open(mode, encoding="utf-8", newline="\n") as output:
                 if first_issue:
@@ -313,6 +571,12 @@ class ReviewLog:
         else:
             if first_issue:
                 print(f"REVIEW LOG path={self.path}", flush=True)
+        if self.run_log is not None:
+            self.run_log.event(
+                category,
+                f"path={path} reason={reason}",
+                issue=True,
+            )
         self.issue_count = issue_number
 
     def print_summary(self) -> None:
@@ -396,6 +660,7 @@ class ResumeCheckpoint:
     updated_at: str
     current_course: str | None = None
     options: TranscriptionOptions = TranscriptionOptions()
+    failed_courses: list[str] = field(default_factory=list)
 
     @classmethod
     def create(
@@ -416,9 +681,10 @@ class ResumeCheckpoint:
             )
         timestamp = time.strftime("%Y%m%d-%H%M%S")
         state_directory = directory or resume_state_directory()
-        path = state_directory / (
-            f"resume-{timestamp}-{os.getpid()}-{secrets.token_hex(4)}.json"
-        )
+        run_suffix = _ACTIVE_RUN_ID if _ACTIVE_RUN_LOG is not None else None
+        if run_suffix is None:
+            run_suffix = f"{timestamp}-{os.getpid()}-{secrets.token_hex(4)}"
+        path = state_directory / f"resume-{run_suffix}.json"
         now = time.strftime("%Y-%m-%dT%H:%M:%S%z")
         checkpoint = cls(
             path=path,
@@ -431,6 +697,7 @@ class ResumeCheckpoint:
             updated_at=now,
             current_course=course_roots[next_index],
             options=options,
+            failed_courses=[],
         )
         checkpoint.save()
         return checkpoint
@@ -461,10 +728,11 @@ class ResumeCheckpoint:
 
         if not isinstance(payload, dict):
             raise ResumeStateError(f"invalid resume state object: {path}")
-        if payload.get("version") != RESUME_STATE_VERSION:
+        version = payload.get("version")
+        if version not in {1, RESUME_STATE_VERSION}:
             raise ResumeStateError(
                 f"unsupported resume state version in {path}: "
-                f"{payload.get('version')!r}"
+                f"{version!r}"
             )
         course_roots = payload.get("course_roots")
         source_roots = payload.get("source_roots")
@@ -474,6 +742,7 @@ class ResumeCheckpoint:
         created_at = payload.get("created_at")
         updated_at = payload.get("updated_at")
         current_course = payload.get("current_course")
+        failed_courses = payload.get("failed_courses", [])
         raw_options = payload.get("transcription_options", {})
         if (
             not isinstance(course_roots, list)
@@ -487,7 +756,11 @@ class ResumeCheckpoint:
                 isinstance(root, str) and root
                 for root in source_roots
             )
-            or source_mode not in {"author-roots", "course-roots"}
+            or source_mode not in {
+                "topic-roots",
+                "author-roots",
+                "course-roots",
+            }
             or not isinstance(next_index, int)
             or isinstance(next_index, bool)
             or next_index < 0
@@ -497,6 +770,7 @@ class ResumeCheckpoint:
                 "interrupted",
                 "paused",
                 "complete",
+                "complete-with-failures",
             }
             or not isinstance(created_at, str)
             or not isinstance(updated_at, str)
@@ -505,6 +779,8 @@ class ResumeCheckpoint:
                 and not isinstance(current_course, str)
             )
             or not isinstance(raw_options, dict)
+            or not isinstance(failed_courses, list)
+            or not all(isinstance(course, str) and course for course in failed_courses)
         ):
             raise ResumeStateError(f"invalid resume state fields: {path}")
         language = raw_options.get("language", DEFAULT_LANGUAGE)
@@ -521,6 +797,8 @@ class ResumeCheckpoint:
         overwrite = raw_options.get("overwrite", False)
         overwrite_empty = raw_options.get("overwrite_empty", False)
         upgrade_timestamps = raw_options.get("upgrade_timestamps", False)
+        extract_timeout_seconds = raw_options.get("extract_timeout_seconds")
+        extract_retries = raw_options.get("extract_retries", DEFAULT_EXTRACT_RETRIES)
         if (
             language is not None
             and (not isinstance(language, str) or not language)
@@ -535,6 +813,17 @@ class ResumeCheckpoint:
             or not isinstance(retries, int)
             or isinstance(retries, bool)
             or retries < 0
+            or (
+                extract_timeout_seconds is not None
+                and (
+                    not isinstance(extract_timeout_seconds, int)
+                    or isinstance(extract_timeout_seconds, bool)
+                    or extract_timeout_seconds <= 0
+                )
+            )
+            or not isinstance(extract_retries, int)
+            or isinstance(extract_retries, bool)
+            or extract_retries < 0
             or not isinstance(overwrite, bool)
             or not isinstance(overwrite_empty, bool)
             or not isinstance(upgrade_timestamps, bool)
@@ -551,7 +840,11 @@ class ResumeCheckpoint:
             raise ResumeStateError(
                 f"completed resume state has an unfinished cursor: {path}"
             )
-        if status_value != "complete" and next_index >= len(course_roots):
+        if status_value == "complete-with-failures" and next_index != len(course_roots):
+            raise ResumeStateError(
+                f"failed-complete resume state has an unfinished cursor: {path}"
+            )
+        if status_value not in {"complete", "complete-with-failures"} and next_index >= len(course_roots):
             raise ResumeStateError(
                 f"active resume state has no remaining course: {path}"
             )
@@ -571,10 +864,13 @@ class ResumeCheckpoint:
                 timestamp_interval_seconds=timestamp_interval_seconds,
                 timeout_seconds=timeout_seconds,
                 retries=retries,
+                extract_timeout_seconds=raw_options.get("extract_timeout_seconds"),
+                extract_retries=raw_options.get("extract_retries", DEFAULT_EXTRACT_RETRIES),
                 overwrite=overwrite,
                 overwrite_empty=overwrite_empty,
                 upgrade_timestamps=upgrade_timestamps,
             ),
+            failed_courses=list(dict.fromkeys(failed_courses)),
         )
 
     def save(self) -> None:
@@ -591,6 +887,7 @@ class ResumeCheckpoint:
                 "current_course": self.current_course,
                 "created_at": self.created_at,
                 "updated_at": self.updated_at,
+                "failed_courses": self.failed_courses,
                 "transcription_options": {
                     "language": self.options.language,
                     "timestamps": self.options.timestamps,
@@ -599,6 +896,8 @@ class ResumeCheckpoint:
                     ),
                     "timeout_seconds": self.options.timeout_seconds,
                     "retries": self.options.retries,
+                    "extract_timeout_seconds": self.options.extract_timeout_seconds,
+                    "extract_retries": self.options.extract_retries,
                     "overwrite": self.options.overwrite,
                     "overwrite_empty": self.options.overwrite_empty,
                     "upgrade_timestamps": (
@@ -614,7 +913,7 @@ class ResumeCheckpoint:
                 f"resume cursor {next_index} is outside "
                 f"{len(self.course_roots)} courses"
             )
-        if status_value == "complete" and next_index != len(self.course_roots):
+        if status_value in {"complete", "complete-with-failures"} and next_index != len(self.course_roots):
             raise ResumeStateError(
                 "resume state can be complete only after its final course"
             )
@@ -626,6 +925,15 @@ class ResumeCheckpoint:
             else None
         )
         self.save()
+
+    def record_failed_course(self, root: str | Path) -> None:
+        value = str(root)
+        if value not in self.failed_courses:
+            self.failed_courses.append(value)
+        self.save()
+
+    def final_status(self) -> str:
+        return "complete-with-failures" if self.failed_courses else "complete"
 
     def print_command(self) -> None:
         command = [
@@ -688,6 +996,14 @@ class ProcessTitle:
 def set_title(title: ProcessTitle | None, text: str) -> None:
     if title is not None:
         title.set(text)
+
+
+def retry_failed_command(checkpoint: ResumeCheckpoint | None) -> str | None:
+    if checkpoint is None or not getattr(checkpoint, "failed_courses", []):
+        return None
+    return shlex.join(
+        ["python3", str(Path(__file__)), "--retry-failed", str(checkpoint.path)]
+    )
 
 
 def course_progress_label(course: Course) -> str:
@@ -802,6 +1118,28 @@ def build_parser() -> argparse.ArgumentParser:
         ),
     )
     parser.add_argument(
+        "--extract-timeout",
+        type=positive_int,
+        default=None,
+        metavar="SECONDS",
+        help=(
+            "ffmpeg extraction timeout; default is max(1800, 600 + "
+            "file-size/250000)"
+        ),
+    )
+    parser.add_argument(
+        "--extract-retries",
+        type=non_negative_int,
+        default=DEFAULT_EXTRACT_RETRIES,
+        metavar="N",
+        help=f"retry ffmpeg extraction N times (default: {DEFAULT_EXTRACT_RETRIES})",
+    )
+    parser.add_argument(
+        "--log-file",
+        metavar="PATH",
+        help="write the consolidated run log to PATH",
+    )
+    parser.add_argument(
         "--skip-preflight",
         action="store_true",
         help=(
@@ -809,12 +1147,22 @@ def build_parser() -> argparse.ArgumentParser:
             "at a time"
         ),
     )
-    parser.add_argument(
+    hierarchy_group = parser.add_mutually_exclusive_group()
+    hierarchy_group.add_argument(
         "--author-roots",
         action="store_true",
         help=(
             "treat every supplied root as an author directory whose immediate "
             "child directories are course roots"
+        ),
+    )
+    hierarchy_group.add_argument(
+        "--topic-roots",
+        action="store_true",
+        help=(
+            "treat every supplied root as a topic directory containing "
+            "immediate authors whose immediate children are course roots; "
+            "ignore directories beginning with Ω"
         ),
     )
     parser.add_argument(
@@ -824,6 +1172,11 @@ def build_parser() -> argparse.ArgumentParser:
             "resume a prior fast-start run from its local checkpoint; do not "
             "supply roots"
         ),
+    )
+    parser.add_argument(
+        "--retry-failed",
+        metavar="STATE",
+        help="retry the failed_courses recorded in a completed checkpoint",
     )
     parser.add_argument(
         "--resume-from",
@@ -837,15 +1190,18 @@ def build_parser() -> argparse.ArgumentParser:
         "--resume-from-command",
         metavar="COURSE_ROOT",
         help=(
-            "read one prior author-root invocation from stdin as data and "
-            "resume it at this course"
+            "read one prior author- or topic-root invocation from stdin as "
+            "data and resume it at this course"
         ),
     )
     parser.add_argument(
         "roots",
         nargs="*",
         metavar="ROOT",
-        help="one or more course roots, or author roots with --author-roots",
+        help=(
+            "one or more course roots, author roots with --author-roots, "
+            "or topic roots with --topic-roots"
+        ),
     )
     return parser
 
@@ -861,6 +1217,8 @@ def options_from_args(args: argparse.Namespace) -> TranscriptionOptions:
         timestamp_interval_seconds=args.timestamp_interval,
         timeout_seconds=args.transcribe_timeout,
         retries=args.transcribe_retries,
+        extract_timeout_seconds=args.extract_timeout,
+        extract_retries=args.extract_retries,
         overwrite=args.overwrite,
         overwrite_empty=args.overwrite_empty,
         upgrade_timestamps=args.upgrade_timestamps,
@@ -887,6 +1245,15 @@ def resolve_input_root(raw: str) -> tuple[Path | None, str | None]:
     return root, None
 
 
+def _recover_volume_or_raise(path: Path, review_log: ReviewLog | None) -> None:
+    volume = volume_root_for(path)
+    if volume_is_live(volume):
+        return
+    if wait_for_volume(volume, review_log, _ACTIVE_RUN_LOG):
+        return
+    raise VolumeUnavailable(volume)
+
+
 def validate_input_roots(raw_roots: list[str]) -> list[Path]:
     roots: list[Path] = []
     errors: list[str] = []
@@ -911,6 +1278,48 @@ def validate_input_roots(raw_roots: list[str]) -> list[Path]:
 def author_course_sort_key(path: Path) -> tuple[str, str]:
     normalized = unicodedata.normalize("NFC", path.name)
     return normalized.casefold(), path.name
+
+
+def direct_media_files(root: Path) -> list[Path]:
+    """Return regular media files directly beneath a hierarchy directory."""
+    allowed = VIDEO_EXTENSIONS if is_music_tree(root) else MEDIA_EXTENSIONS
+    media: list[Path] = []
+    try:
+        with os.scandir(root) as entries:
+            for entry in entries:
+                try:
+                    if (
+                        entry.is_file(follow_symlinks=False)
+                        and Path(entry.name).suffix.casefold() in allowed
+                    ):
+                        media.append(Path(entry.path))
+                except OSError:
+                    continue
+    except OSError:
+        return []
+    return media
+
+
+def _safe_scandir(root: Path) -> list[os.DirEntry[str]]:
+    try:
+        with os.scandir(root) as entries:
+            return list(entries)
+    except OSError:
+        return []
+
+
+def has_direct_files(root: Path) -> bool:
+    for entry in _safe_scandir(root):
+        try:
+            if entry.is_file(follow_symlinks=False):
+                return True
+        except OSError:
+            continue
+    return False
+
+
+def is_omega_directory_name(name: str) -> bool:
+    return unicodedata.normalize("NFC", name).startswith("Ω")
 
 
 def lexical_path_key(raw_path: str | Path) -> str:
@@ -960,14 +1369,24 @@ def recover_author_invocation(command_text: str) -> RecoveredInvocation:
     if any("\0" in root for root in roots):
         raise ResumeStateError("prior invocation contains an invalid root")
 
-    author_roots = False
+    source_mode: str | None = None
     skip_preflight = False
     limit: int | None = None
     option_index = 0
     while option_index < len(options):
         option = options[option_index]
         if option == "--author-roots":
-            author_roots = True
+            if source_mode is not None:
+                raise ResumeStateError(
+                    "prior invocation contains multiple hierarchy modes"
+                )
+            source_mode = "author-roots"
+        elif option == "--topic-roots":
+            if source_mode is not None:
+                raise ResumeStateError(
+                    "prior invocation contains multiple hierarchy modes"
+                )
+            source_mode = "topic-roots"
         elif option == "--skip-preflight":
             skip_preflight = True
         elif option == "--limit":
@@ -995,11 +1414,16 @@ def recover_author_invocation(command_text: str) -> RecoveredInvocation:
             )
         option_index += 1
 
-    if not author_roots or not skip_preflight:
+    if source_mode is None or not skip_preflight:
         raise ResumeStateError(
-            "prior invocation must use --author-roots and --skip-preflight"
+            "prior invocation must use --author-roots or --topic-roots "
+            "together with --skip-preflight"
         )
-    return RecoveredInvocation(roots=roots, limit=limit)
+    return RecoveredInvocation(
+        roots=roots,
+        limit=limit,
+        source_mode=source_mode,
+    )
 
 
 def expand_author_roots(
@@ -1058,13 +1482,164 @@ def expand_author_roots(
 
         children.sort(key=author_course_sort_key)
         if not children:
-            review_log.record(
-                "AUTHOR ROOT",
-                author_root,
-                "contains no immediate course directories",
-            )
+            media = direct_media_files(author_root)
+            if media:
+                course_roots.append(author_root)
+                review_log.info(
+                    "FLAT COURSE ROOT",
+                    author_root,
+                    f"promoted directory containing {len(media)} media file(s)",
+                )
+            elif has_direct_files(author_root):
+                review_log.record(
+                    "AUTHOR ROOT",
+                    author_root,
+                    "contains no immediate course directories (non-media files only)",
+                )
+            else:
+                review_log.info(
+                    "AUTHOR ROOT EMPTY",
+                    author_root,
+                    "contains no immediate course directories",
+                )
             continue
         course_roots.extend(children)
+
+    return [str(course_root) for course_root in course_roots]
+
+
+def expand_topic_roots(
+    raw_roots: list[str],
+    review_log: ReviewLog,
+) -> list[str]:
+    """Expand topic roots through immediate authors to immediate courses."""
+
+    topic_roots: list[Path] = []
+    course_roots: list[Path] = []
+
+    for raw in raw_roots:
+        topic_root, error = resolve_input_root(raw)
+        if error:
+            review_log.record("TOPIC ROOT", raw, error)
+            continue
+        assert topic_root is not None
+        overlapping = next(
+            (
+                accepted
+                for accepted in topic_roots
+                if path_overlap(topic_root, accepted)
+            ),
+            None,
+        )
+        if overlapping is not None:
+            review_log.record(
+                "TOPIC ROOT",
+                topic_root,
+                f"overlaps earlier topic root {overlapping}",
+            )
+            continue
+        topic_roots.append(topic_root)
+
+    for topic_root in topic_roots:
+        author_roots: list[Path] = []
+        try:
+            with os.scandir(topic_root) as entries:
+                for entry in entries:
+                    if is_omega_directory_name(entry.name):
+                        continue
+                    try:
+                        if entry.is_dir(follow_symlinks=True):
+                            author_roots.append(Path(entry.path))
+                    except OSError as exc:
+                        review_log.record(
+                            "TOPIC ROOT CHILD",
+                            entry.path,
+                            f"could not inspect child of {topic_root}: {exc}",
+                        )
+        except OSError as exc:
+            review_log.record(
+                "TOPIC ROOT",
+                topic_root,
+                f"could not list directory: {exc}",
+            )
+            continue
+
+        author_roots.sort(key=author_course_sort_key)
+        if not author_roots:
+            media = direct_media_files(topic_root)
+            if media:
+                course_roots.append(topic_root)
+                review_log.info(
+                    "FLAT COURSE ROOT",
+                    topic_root,
+                    f"promoted directory containing {len(media)} media file(s)",
+                )
+            elif _safe_scandir(topic_root):
+                # There are entries, but all are excluded/otherwise not
+                # hierarchy roots.  Keep this actionable; a truly empty
+                # directory is informational and has no issue count.
+                review_log.record(
+                    "TOPIC ROOT",
+                    topic_root,
+                    "contains no immediate author directories after Ω exclusions",
+                )
+            else:
+                review_log.info(
+                    "TOPIC ROOT EMPTY",
+                    topic_root,
+                    "contains no immediate author directories after Ω exclusions",
+                )
+            continue
+
+        for author_root in author_roots:
+            children: list[Path] = []
+            try:
+                with os.scandir(author_root) as entries:
+                    for entry in entries:
+                        if is_omega_directory_name(entry.name):
+                            continue
+                        try:
+                            if entry.is_dir(follow_symlinks=True):
+                                children.append(Path(entry.path))
+                        except OSError as exc:
+                            review_log.record(
+                                "TOPIC AUTHOR CHILD",
+                                entry.path,
+                                "could not inspect child of "
+                                f"{author_root}: {exc}",
+                            )
+            except OSError as exc:
+                review_log.record(
+                    "TOPIC AUTHOR ROOT",
+                    author_root,
+                    f"could not list directory: {exc}",
+                )
+                continue
+
+            children.sort(key=author_course_sort_key)
+            if not children:
+                media = direct_media_files(author_root)
+                if media:
+                    course_roots.append(author_root)
+                    review_log.info(
+                        "FLAT COURSE ROOT",
+                        author_root,
+                        f"promoted directory containing {len(media)} media file(s)",
+                    )
+                elif has_direct_files(author_root):
+                    review_log.record(
+                        "TOPIC AUTHOR ROOT",
+                        author_root,
+                        "contains no immediate course directories (non-media files only)",
+                    )
+                else:
+                    review_log.info(
+                        "TOPIC AUTHOR ROOT EMPTY",
+                        author_root,
+                        "contains no immediate course directories after Ω exclusions",
+                    )
+                continue
+            course_roots.extend(children)
 
     return [str(course_root) for course_root in course_roots]
 
@@ -1138,6 +1713,12 @@ def discover_media(course: Course) -> tuple[list[WorkItem], list[str]]:
             course.root, topdown=True, followlinks=False, onerror=onerror
         ):
             directory_path = Path(directory)
+            if course.ignore_omega_directories:
+                dirnames[:] = [
+                    name
+                    for name in dirnames
+                    if not is_omega_directory_name(name)
+                ]
             if directory_path == course.root:
                 dirnames[:] = [
                     name for name in dirnames if name.casefold() != "transcripts"
@@ -1352,8 +1933,15 @@ def perform_preflight(
     raw_roots: list[str],
     limit: int | None,
     options: TranscriptionOptions = TranscriptionOptions(),
+    ignore_omega_directories: bool = False,
 ) -> Preflight:
-    courses = [Course(root) for root in validate_input_roots(raw_roots)]
+    courses = [
+        Course(
+            root,
+            ignore_omega_directories=ignore_omega_directories,
+        )
+        for root in validate_input_roots(raw_roots)
+    ]
     errors: list[str] = []
 
     whisperkit, whisperkit_error = resolve_program("whisperkit-cli", "WhisperKit CLI")
@@ -1620,6 +2208,27 @@ def open_safe_output_parent(item: WorkItem) -> int:
         raise
 
 
+def open_safe_output_root(course: Course) -> int:
+    """Create and open one course's top-level transcripts directory."""
+    flags = os.O_RDONLY | os.O_DIRECTORY
+    if hasattr(os, "O_CLOEXEC"):
+        flags |= os.O_CLOEXEC
+    if hasattr(os, "O_NOFOLLOW"):
+        flags |= os.O_NOFOLLOW
+    current_fd = os.open(course.root, flags)
+    try:
+        try:
+            os.mkdir("transcripts", mode=0o755, dir_fd=current_fd)
+        except FileExistsError:
+            pass
+        next_fd = os.open("transcripts", flags, dir_fd=current_fd)
+        os.close(current_fd)
+        return next_fd
+    except BaseException:
+        os.close(current_fd)
+        raise
+
+
 def destination_exists(parent_fd: int, name: str) -> bool:
     try:
         os.stat(name, dir_fd=parent_fd, follow_symlinks=False)
@@ -1643,12 +2252,92 @@ def revalidate_media(item: WorkItem) -> str | None:
 
 
 def short_process_error(
-    returncode: int, stderr: str, stdout: str = "", limit: int = 1200
+    returncode: int, stderr: str, stdout: str = "", limit: int = 300
 ) -> str:
     detail = stderr.strip() or stdout.strip()
-    if len(detail) > limit:
-        detail = detail[-limit:]
+    lines = detail.splitlines()
+    compact: list[str] = []
+    index = 0
+    while index < len(lines):
+        line = lines[index].strip()
+        end = index + 1
+        while end < len(lines) and lines[end].strip() == line:
+            end += 1
+        compact.append(line if end == index + 1 else f"{line} ... ×{end - index}")
+        index = end
+    if len(compact) > 8:
+        compact = compact[:2] + ["..."] + compact[-6:]
+    detail = "\n".join(compact)
+    detail_limit = max(0, limit - len(f"exit {returncode}: "))
+    if len(detail) > detail_limit:
+        # Preserve the beginning and end, which are generally the useful
+        # decoder diagnosis and final exit context.
+        head = min(120, detail_limit // 2)
+        tail = max(0, detail_limit - head - 5)
+        detail = detail[:head].rstrip() + " ... " + (detail[-tail:].lstrip() if tail else "")
     return f"exit {returncode}: {detail}" if detail else f"exit {returncode}"
+
+
+def communicate_with_progress(
+    process: subprocess.Popen[str],
+    timeout_seconds: int,
+) -> tuple[str, str]:
+    """Collect ffmpeg output while timing out only after no progress.
+
+    Mocked children and platforms without selectable text pipes retain the
+    ordinary ``communicate`` path used by the unit tests.
+    """
+    stdout_pipe = process.stdout
+    stderr_pipe = process.stderr
+    if stdout_pipe is None or stderr_pipe is None:
+        return process.communicate(timeout=timeout_seconds)
+    try:
+        stdout_fd = stdout_pipe.fileno()
+        stderr_fd = stderr_pipe.fileno()
+    except (AttributeError, OSError, ValueError, TypeError):
+        return process.communicate(timeout=timeout_seconds)
+    if not isinstance(stdout_fd, int) or not isinstance(stderr_fd, int):
+        return process.communicate(timeout=timeout_seconds)
+    selector = selectors.DefaultSelector()
+    buffers: dict[int, list[bytes]] = {stdout_fd: [], stderr_fd: []}
+    try:
+        selector.register(stdout_pipe, selectors.EVENT_READ)
+        selector.register(stderr_pipe, selectors.EVENT_READ)
+    except (OSError, ValueError):
+        selector.close()
+        return process.communicate(timeout=timeout_seconds)
+    last_progress = time.monotonic()
+    try:
+        while selector.get_map():
+            if process.poll() is not None:
+                wait_timeout = 0.05
+            else:
+                wait_timeout = 0.5
+            ready = selector.select(wait_timeout)
+            if not ready and time.monotonic() - last_progress >= timeout_seconds:
+                raise subprocess.TimeoutExpired("ffmpeg", timeout_seconds)
+            for key, _mask in ready:
+                try:
+                    chunk = os.read(key.fileobj.fileno(), 64 * 1024)
+                except OSError:
+                    chunk = b""
+                if chunk:
+                    buffers[key.fileobj.fileno()].append(chunk)
+                    last_progress = time.monotonic()
+                else:
+                    try:
+                        selector.unregister(key.fileobj)
+                    except Exception:
+                        pass
+            if process.poll() is not None and not ready:
+                break
+        process.wait(timeout=1)
+    finally:
+        selector.close()
+    return (
+        b"".join(buffers[stdout_fd]).decode("utf-8", "replace"),
+        b"".join(buffers[stderr_fd]).decode("utf-8", "replace"),
+    )
 
 
 def extract_audio(
@@ -1657,66 +2346,95 @@ def extract_audio(
     ffmpeg: str,
     timeout_seconds: int = DEFAULT_TRANSCRIBE_TIMEOUT_SECONDS,
     review_log: ReviewLog | None = None,
+    extract_retries: int = 0,
 ) -> str | None:
-    command = [
-        ffmpeg,
-        "-nostdin",
-        "-hide_banner",
-        "-loglevel",
-        "error",
-        "-i",
-        str(media),
-        "-map",
-        "0:a:0",
-        "-vn",
-        "-ac",
-        "1",
-        "-ar",
-        "16000",
-        "-c:a",
-        "pcm_s16le",
-        "-n",
-        str(wav_path),
+    filters = [
+        "aformat=channel_layouts=mono,aresample=16000",
+        "pan=mono|c0=c0",
     ]
-    try:
-        process = subprocess.Popen(
-            command,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            text=True,
-            encoding="utf-8",
-            errors="replace",
-            start_new_session=True,
-        )
-    except OSError as exc:
-        return f"could not run ffmpeg: {exc}"
-    try:
-        stdout, stderr = process.communicate(timeout=timeout_seconds)
-    except subprocess.TimeoutExpired:
-        terminate_owned_child(process)
-        process.communicate()
-        detail = (
-            f"ffmpeg timed out after {timeout_seconds} seconds and was "
-            "terminated"
-        )
-        if review_log is not None:
-            review_log.record("FFMPEG TIMEOUT", media, detail)
-        return detail
-    except KeyboardInterrupt:
-        terminate_owned_child(process)
-        raise
-    if process.returncode != 0:
-        return short_process_error(
-            process.returncode,
-            stderr=stderr,
-            stdout=stdout,
-        )
-    try:
-        if not wav_path.is_file() or wav_path.stat().st_size == 0:
-            return "ffmpeg produced no audio"
-    except OSError as exc:
-        return f"could not inspect extracted audio: {exc}"
-    return None
+    last_error: str | None = None
+    attempts = max(0, extract_retries) + 1
+    for attempt in range(1, attempts + 1):
+        for filter_expression in filters:
+            command = [
+                ffmpeg,
+                "-nostdin",
+                "-hide_banner",
+                "-loglevel",
+                "error",
+                "-fflags",
+                "+discardcorrupt",
+                "-err_detect",
+                "ignore_err",
+                "-i",
+                str(media),
+                "-map",
+                "0:a:0?",
+                "-vn",
+                "-af",
+                filter_expression,
+                "-ar",
+                "16000",
+                "-c:a",
+                "pcm_s16le",
+                "-progress",
+                "pipe:1",
+                "-n",
+                str(wav_path),
+            ]
+            try:
+                process = subprocess.Popen(
+                    command,
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE,
+                    text=True,
+                    encoding="utf-8",
+                    errors="replace",
+                    start_new_session=True,
+                )
+            except OSError as exc:
+                return f"could not run ffmpeg: {exc}"
+            try:
+                stdout, stderr = communicate_with_progress(process, timeout_seconds)
+            except subprocess.TimeoutExpired:
+                terminate_owned_child(process)
+                process.communicate()
+                last_error = (
+                    f"ffmpeg timed out after {timeout_seconds} seconds and was terminated"
+                )
+                if review_log is not None:
+                    review_log.record("FFMPEG TIMEOUT", media, f"{last_error}; attempt={attempt}/{attempts}")
+                _record_run_event("TIMEOUT", f"ffmpeg={media} attempt={attempt}/{attempts}", issue=True)
+                break
+            except KeyboardInterrupt:
+                terminate_owned_child(process)
+                raise
+            if process.returncode != 0:
+                if stderr and _ACTIVE_RUN_LOG is not None:
+                    _ACTIVE_RUN_LOG.event(
+                        "FFMPEG STDERR",
+                        f"media={media} {stderr.strip().replace(chr(10), r'\\n')}",
+                    )
+                last_error = short_process_error(process.returncode, stderr=stderr, stdout=stdout)
+                try:
+                    if wav_path.exists():
+                        wav_path.unlink()
+                except OSError:
+                    pass
+                continue
+            try:
+                if not wav_path.is_file() or wav_path.stat().st_size == 0:
+                    last_error = "ffmpeg produced no audio"
+                    continue
+            except OSError as exc:
+                last_error = f"could not inspect extracted audio: {exc}"
+                continue
+            return None
+        if attempt < attempts:
+            _record_run_event("RETRY", f"ffmpeg={media} next={attempt + 1}/{attempts}")
+            if review_log is not None:
+                review_log.info("FFMPEG RETRY", media, f"next attempt={attempt + 1}/{attempts}")
+    return last_error or "ffmpeg extraction failed"
 
 
 def whisperkit_transcribe_command(
@@ -1920,6 +2638,11 @@ def run_whisperkit_direct(
                 terminate_owned_child(process)
                 raise
             else:
+                if stderr and _ACTIVE_RUN_LOG is not None:
+                    _ACTIVE_RUN_LOG.event(
+                        "WHISPERKIT STDERR",
+                        f"source={source_path or audio_path} {stderr.strip().replace(chr(10), r'\\n')}",
+                    )
                 if process.returncode != 0:
                     last_error = short_process_error(
                         process.returncode,
@@ -2421,12 +3144,20 @@ def transcribe_item(
             audio_path = item.media
             if item.input_kind != "direct":
                 wav_path = Path(temporary) / "audio.wav"
+                try:
+                    media_size = item.media.stat().st_size
+                except OSError:
+                    media_size = 0
+                extract_timeout = effective_options.extract_timeout_seconds
+                if extract_timeout is None:
+                    extract_timeout = max(1800, 600 + media_size // 250_000)
                 error = extract_audio(
                     item.media,
                     wav_path,
                     programs.ffmpeg,
-                    effective_options.timeout_seconds,
+                    extract_timeout,
                     review_log,
+                    effective_options.extract_retries,
                 )
                 if error:
                     return InstallResult.failed(
@@ -2503,10 +3234,40 @@ def run_live(
         )
         for course in preflight.courses
     }
+    course_output_failures: set[Path] = set()
+    # Establish each course's output root once.  A permission or mount error
+    # is therefore one course-level event, never one event per media item.
+    for course in preflight.courses:
+        try:
+            output_fd = open_safe_output_root(course)
+        except OSError as exc:
+            volume = volume_root_for(course.root)
+            if not volume_is_live(volume):
+                if wait_for_volume(volume, review_log, _ACTIVE_RUN_LOG):
+                    try:
+                        output_fd = open_safe_output_root(course)
+                    except OSError as retry_exc:
+                        raise VolumeUnavailable(volume, str(retry_exc)) from retry_exc
+                else:
+                    raise VolumeUnavailable(volume, str(exc)) from exc
+            else:
+                output_fd = None
+            if output_fd is None:
+                course_output_failures.add(course.root)
+                summaries[course.root].failed += 1
+                detail = f"could not create course output root: {exc}"
+                if review_log is not None:
+                    review_log.record("COURSE OUTPUT ROOT", course.root, detail)
+                _record_run_event("FAIL", f"course={course.root} {detail}", issue=True)
+        else:
+            os.close(output_fd)
+            _record_run_event("SCAN", f"course={course.root} output-root=ready")
     selected_index = 0
 
     for item in preflight.items:
         summary = summaries[item.course.root]
+        if item.course.root in course_output_failures:
+            continue
         if not item.selected:
             if item_is_eligible(item, preflight.options):
                 summary.limited += 1
@@ -2540,49 +3301,75 @@ def run_live(
 
         source_error = revalidate_media(item)
         if source_error:
-            summary.failed += 1
-            if review_log is not None:
-                review_log.record(
-                    "SOURCE CHANGED",
-                    item.media,
-                    source_error,
-                )
-            print(
-                f"{prefix} FAIL {item.relative_media}: {source_error}",
-                file=sys.stderr,
-                flush=True,
-            )
-            continue
-
-        parent_fd: int | None = None
-        try:
-            parent_fd = open_safe_output_parent(item)
-            if (
-                not item_can_replace_existing(item, preflight.options)
-                and destination_exists(parent_fd, item.relative_output.name)
-            ):
-                summary.skipped += 1
+            volume = volume_root_for(item.media)
+            if not volume_is_live(volume):
+                if not wait_for_volume(volume, review_log, _ACTIVE_RUN_LOG):
+                    raise VolumeUnavailable(volume, source_error)
+                source_error = revalidate_media(item)
+                if source_error is None:
+                    _record_run_event("RETRY", f"source={item.media} after volume restore")
+            if source_error is None:
+                pass
+            else:
+                summary.failed += 1
+                if review_log is not None:
+                    review_log.record(
+                        "SOURCE CHANGED",
+                        item.media,
+                        source_error,
+                    )
+                _record_run_event("FAIL", f"source={item.media} reason={source_error}", issue=True)
                 print(
-                    f"{prefix} SKIP destination now exists "
-                    f"transcripts/{item.relative_output}",
+                    f"{prefix} FAIL {item.relative_media}: {source_error}",
+                    file=sys.stderr,
                     flush=True,
                 )
                 continue
-            summary.attempted += 1
-            result = transcribe_item(
-                item,
-                preflight.programs,
-                parent_fd,
-                preflight.options,
-                review_log,
-            )
-        except OSError as exc:
-            result = InstallResult.failed(
-                f"unsafe output path or directory creation failed: {exc}"
-            )
-        finally:
-            if parent_fd is not None:
-                os.close(parent_fd)
+
+        parent_fd: int | None = None
+        result: InstallResult | None = None
+        for output_attempt in range(2):
+            try:
+                parent_fd = open_safe_output_parent(item)
+                if (
+                    not item_can_replace_existing(item, preflight.options)
+                    and destination_exists(parent_fd, item.relative_output.name)
+                ):
+                    summary.skipped += 1
+                    print(
+                        f"{prefix} SKIP destination now exists "
+                        f"transcripts/{item.relative_output}",
+                        flush=True,
+                    )
+                    result = InstallResult.skipped("destination now exists")
+                    break
+                summary.attempted += 1
+                result = transcribe_item(
+                    item,
+                    preflight.programs,
+                    parent_fd,
+                    preflight.options,
+                    review_log,
+                )
+                break
+            except OSError as exc:
+                volume = volume_root_for(item.media)
+                if output_attempt == 0 and not volume_is_live(volume):
+                    if wait_for_volume(volume, review_log, _ACTIVE_RUN_LOG):
+                        _record_run_event("RETRY", f"item={item.media} after volume restore")
+                        continue
+                    raise VolumeUnavailable(volume, str(exc)) from exc
+                if not volume_is_live(volume):
+                    raise VolumeUnavailable(volume, str(exc)) from exc
+                result = InstallResult.failed(
+                    f"unsafe output path or directory creation failed: {exc}"
+                )
+                break
+            finally:
+                if parent_fd is not None:
+                    os.close(parent_fd)
+                    parent_fd = None
+        assert result is not None
 
         if result.status is InstallStatus.FAILED:
             summary.failed += 1
@@ -2597,6 +3384,11 @@ def run_live(
                 file=sys.stderr,
                 flush=True,
             )
+            _record_run_event(
+                "FAIL",
+                f"item={item.media} reason={result.detail or 'unknown failure'}",
+                issue=True,
+            )
         elif result.status is InstallStatus.SKIPPED:
             summary.skipped += 1
             print(
@@ -2604,12 +3396,14 @@ def run_live(
                 f"transcripts/{item.relative_output}: {result.detail}",
                 flush=True,
             )
+            _record_run_event("SKIP", f"item={item.media} reason={result.detail or 'race'}")
         else:
             summary.succeeded += 1
             print(
                 f"{prefix} OK transcripts/{item.relative_output}",
                 flush=True,
             )
+            _record_run_event("OK", f"item={item.media} output=transcripts/{item.relative_output}")
 
     for course in preflight.courses:
         summary = summaries[course.root]
@@ -2620,6 +3414,11 @@ def run_live(
             f"failed={summary.failed}",
             flush=True,
         )
+        _record_run_event(
+            "COURSE SUMMARY",
+            f"course={course.root} discovered={summary.discovered} attempted={summary.attempted} "
+            f"succeeded={summary.succeeded} skipped={summary.skipped} limited={summary.limited} failed={summary.failed}",
+        )
     combined = combine_summaries(summaries)
     print(
         f"Combined summary: courses={len(preflight.courses)} "
@@ -2627,6 +3426,11 @@ def run_live(
         f"succeeded={combined.succeeded} skipped={combined.skipped} "
         f"limited={combined.limited} failed={combined.failed}",
         flush=True,
+    )
+    _record_run_event(
+        "SUMMARY",
+        f"courses={len(preflight.courses)} discovered={combined.discovered} attempted={combined.attempted} "
+        f"succeeded={combined.succeeded} skipped={combined.skipped} limited={combined.limited} failed={combined.failed}",
     )
     if combined.failed:
         set_title(title, f"batch-transcribe-courses failed={combined.failed}")
@@ -2687,6 +3491,7 @@ def run_fast_start(
     checkpoint: ResumeCheckpoint | None = None,
     start_index: int = 0,
     roots_prevalidated: bool = False,
+    ignore_omega_directories: bool = False,
 ) -> int:
     """Scan and process one explicit course root at a time."""
 
@@ -2720,7 +3525,8 @@ def run_fast_start(
     preflight_failures = 0
     transcription_failures = 0
 
-    for root_index in range(start_index, len(roots)):
+    root_index = start_index
+    while root_index < len(roots):
         root = roots[root_index]
         display_index = root_index + 1
         if remaining == 0:
@@ -2733,6 +3539,7 @@ def run_fast_start(
             f"SCAN [{display_index}/{len(roots)}] course={root}",
             flush=True,
         )
+        _record_run_event("SCAN", f"course={root} index={display_index}/{len(roots)}")
         set_title(
             title,
             f"batch-transcribe-courses scan "
@@ -2743,9 +3550,19 @@ def run_fast_start(
                 [str(root)],
                 remaining,
                 options,
+                ignore_omega_directories=ignore_omega_directories,
             )
         except PreflightError as exc:
+            volume = volume_root_for(root)
+            if not volume_is_live(volume):
+                if wait_for_volume(volume, review_log, _ACTIVE_RUN_LOG):
+                    # The same cursor is deliberately retried after a mount
+                    # recovery; no course is discarded while the share is down.
+                    continue
+                raise VolumeUnavailable(volume, str(exc)) from exc
             preflight_failures += 1
+            if checkpoint is not None:
+                checkpoint.record_failed_course(str(root))
             for error in exc.errors:
                 if review_log is not None:
                     review_log.record("COURSE PREFLIGHT", root, error)
@@ -2757,12 +3574,9 @@ def run_fast_start(
             if checkpoint is not None:
                 checkpoint.set_cursor(
                     root_index + 1,
-                    (
-                        "complete"
-                        if root_index + 1 == len(roots)
-                        else "active"
-                    ),
+                    "active" if root_index + 1 < len(roots) else checkpoint.final_status(),
                 )
+            root_index += 1
             continue
 
         print_preflight(preflight, dry_run=False)
@@ -2774,6 +3588,8 @@ def run_fast_start(
         processed += 1
         if result:
             transcription_failures += 1
+            if checkpoint is not None:
+                checkpoint.record_failed_course(str(root))
         if remaining is not None:
             remaining -= preflight.work_total
         if checkpoint is not None:
@@ -2782,12 +3598,15 @@ def run_fast_start(
             else:
                 checkpoint.set_cursor(
                     root_index + 1,
-                    (
-                        "complete"
-                        if root_index + 1 == len(roots)
-                        else "active"
-                    ),
+                    "active"
+                    if root_index + 1 < len(roots)
+                    else checkpoint.final_status(),
                 )
+        _record_run_event(
+            "COURSE SUMMARY",
+            f"course={root} result={'failed' if result else 'ok'}",
+        )
+        root_index += 1
     print(
         f"Fast-start summary: roots={len(roots)} processed={processed} "
         f"preflight_failed={preflight_failures} "
@@ -2804,7 +3623,8 @@ def run_fast_start(
 def main(argv: Iterator[str] | None = None) -> int:
     title = ProcessTitle.capture()
     parser = build_parser()
-    args = parser.parse_args(argv)
+    raw_argv = list(argv) if argv is not None else None
+    args = parser.parse_args(raw_argv)
     try:
         options = options_from_args(args)
     except ValueError as exc:
@@ -2815,6 +3635,7 @@ def main(argv: Iterator[str] | None = None) -> int:
             or args.resume
             or args.resume_from
             or args.author_roots
+            or args.topic_roots
             or args.skip_preflight
             or args.dry_run
         ):
@@ -2828,18 +3649,31 @@ def main(argv: Iterator[str] | None = None) -> int:
             print(f"error: {exc}", file=sys.stderr, flush=True)
             return 2
         args.roots = recovered.roots
-        args.author_roots = True
+        args.author_roots = recovered.source_mode == "author-roots"
+        args.topic_roots = recovered.source_mode == "topic-roots"
         args.skip_preflight = True
         args.resume_from = args.resume_from_command
         if args.limit is None:
             args.limit = recovered.limit
     if args.skip_preflight and args.dry_run:
         parser.error("--skip-preflight cannot be combined with --dry-run")
+    if args.retry_failed and (
+        args.resume
+        or args.roots
+        or args.author_roots
+        or args.topic_roots
+        or args.skip_preflight
+        or args.dry_run
+        or args.resume_from
+        or args.resume_from_command
+    ):
+        parser.error("--retry-failed accepts only its state path and --log-file")
     if args.resume_from and not args.skip_preflight:
         parser.error("--resume-from requires --skip-preflight")
     if args.resume and (
         args.roots
         or args.author_roots
+        or args.topic_roots
         or args.skip_preflight
         or args.dry_run
         or args.resume_from
@@ -2849,23 +3683,111 @@ def main(argv: Iterator[str] | None = None) -> int:
         parser.error(
             "--resume accepts only its state path and optional --limit"
         )
-    if not args.resume and not args.roots:
+    if not args.resume and not args.retry_failed and not args.roots:
         parser.error("at least one ROOT is required unless --resume is used")
 
-    review_log = ReviewLog.for_current_run()
+    run_log = RunLog.for_current_run(
+        argv=list(sys.argv if raw_argv is None else [str(Path(__file__)), *raw_argv]),
+        options=options,
+        source_mode=(
+            "retry-failed"
+            if args.retry_failed
+            else "topic-roots"
+            if args.topic_roots
+            else "author-roots"
+            if args.author_roots
+            else "resume"
+            if args.resume
+            else "course-roots"
+        ),
+        course_count=len(args.roots) if args.roots else None,
+        log_file=args.log_file,
+    )
+    global _ACTIVE_RUN_LOG
+    _ACTIVE_RUN_LOG = run_log
+    review_log = ReviewLog.for_current_run(run_log)
+
+    if args.retry_failed:
+        try:
+            source_checkpoint = ResumeCheckpoint.load(args.retry_failed)
+        except ResumeStateError as exc:
+            print(f"error: {exc}", file=sys.stderr, flush=True)
+            run_log.footer(2, "invalid retry-failed state")
+            return 2
+        if not source_checkpoint.failed_courses:
+            print(
+                "error: resume state contains no failed_courses to retry",
+                file=sys.stderr,
+                flush=True,
+            )
+            run_log.footer(2, "empty failed_courses")
+            return 2
+        run_log._write(f"Expanded course count: {len(source_checkpoint.failed_courses)}")
+        try:
+            checkpoint = ResumeCheckpoint.create(
+                list(source_checkpoint.failed_courses),
+                list(source_checkpoint.source_roots),
+                source_checkpoint.source_mode,
+                options=source_checkpoint.options,
+            )
+        except ResumeStateError as exc:
+            print(f"error: {exc}", file=sys.stderr, flush=True)
+            run_log.footer(2, "could not create retry checkpoint")
+            return 2
+        print(
+            f"RETRY FAILED courses={len(checkpoint.course_roots)} "
+            f"state={checkpoint.path}",
+            flush=True,
+        )
+        checkpoint.print_command()
+        try:
+            result = run_fast_start(
+                checkpoint.course_roots,
+                args.limit,
+                title,
+                options=checkpoint.options,
+                review_log=review_log,
+                checkpoint=checkpoint,
+                start_index=0,
+                roots_prevalidated=True,
+                ignore_omega_directories=(source_checkpoint.source_mode == "topic-roots"),
+            )
+        except VolumeUnavailable as exc:
+            checkpoint.set_cursor(checkpoint.next_index, "interrupted")
+            print(f"VOLUME UNAVAILABLE: {exc}", file=sys.stderr, flush=True)
+            checkpoint.print_command()
+            run_log.footer(75, "volume unavailable", checkpoint_path=checkpoint.path)
+            return 75
+        except KeyboardInterrupt:
+            checkpoint.set_cursor(checkpoint.next_index, "interrupted")
+            checkpoint.print_command()
+            run_log.footer(130, "interrupted", checkpoint_path=checkpoint.path)
+            return 130
+        checkpoint.print_command()
+        review_log.print_summary()
+        run_log.footer(result, "complete" if result == 0 else "course failures", checkpoint_path=checkpoint.path, retry_failed_command=retry_failed_command(checkpoint), issue_count=review_log.issue_count)
+        return result
     if args.resume:
         try:
             checkpoint = ResumeCheckpoint.load(args.resume)
         except ResumeStateError as exc:
             print(f"error: {exc}", file=sys.stderr, flush=True)
             return 2
-        if checkpoint.status == "complete":
+        if checkpoint.status in {"complete", "complete-with-failures"}:
             print(
-                f"RESUME complete state={checkpoint.path} "
+                f"RESUME {checkpoint.status} state={checkpoint.path} "
                 f"courses={len(checkpoint.course_roots)}",
                 flush=True,
             )
+            if checkpoint.failed_courses:
+                print(
+                    "Retry failed courses with --retry-failed "
+                    f"{checkpoint.path}",
+                    flush=True,
+                )
+            run_log.footer(0, checkpoint.status, checkpoint_path=checkpoint.path, retry_failed_command=retry_failed_command(checkpoint), issue_count=review_log.issue_count)
             return 0
+        run_log._write(f"Expanded course count: {len(checkpoint.course_roots)}")
         print(
             f"RESUME state={checkpoint.path} "
             f"next={checkpoint.next_index + 1}/"
@@ -2883,6 +3805,9 @@ def main(argv: Iterator[str] | None = None) -> int:
                 checkpoint=checkpoint,
                 start_index=checkpoint.next_index,
                 roots_prevalidated=True,
+                ignore_omega_directories=(
+                    checkpoint.source_mode == "topic-roots"
+                ),
             )
         except KeyboardInterrupt:
             try:
@@ -2899,17 +3824,53 @@ def main(argv: Iterator[str] | None = None) -> int:
             )
             checkpoint.print_command()
             review_log.print_summary()
+            run_log.footer(130, "interrupted", checkpoint_path=checkpoint.path)
             return 130
+        except VolumeUnavailable as exc:
+            try:
+                checkpoint.set_cursor(checkpoint.next_index, "interrupted")
+            except ResumeStateError as state_exc:
+                print(f"RESUME FAIL: {state_exc}", file=sys.stderr, flush=True)
+            print(f"VOLUME UNAVAILABLE: {exc}", file=sys.stderr, flush=True)
+            checkpoint.print_command()
+            review_log.print_summary()
+            run_log.footer(75, "volume unavailable", checkpoint_path=checkpoint.path)
+            return 75
         except ResumeStateError as exc:
             print(f"RESUME FAIL: {exc}", file=sys.stderr, flush=True)
             review_log.print_summary()
+            run_log.footer(2, "resume state failure", checkpoint_path=checkpoint.path)
             return 2
         checkpoint.print_command()
         review_log.print_summary()
+        run_log.footer(result, "complete" if result == 0 else "course failures", checkpoint_path=checkpoint.path, retry_failed_command=retry_failed_command(checkpoint), issue_count=review_log.issue_count)
         return result
 
     roots = args.roots
-    if args.author_roots:
+    if args.topic_roots:
+        print(
+            f"TOPIC ROOTS expanding roots={len(roots)}",
+            flush=True,
+        )
+        set_title(title, "batch-transcribe-courses expanding-topic-roots")
+        roots = expand_topic_roots(roots, review_log)
+        print(
+            f"TOPIC ROOTS expanded topics={len(args.roots)} "
+            f"courses={len(roots)} review={review_log.issue_count}",
+            flush=True,
+        )
+        if not roots:
+            set_title(title, "batch-transcribe-courses no-valid-topic-roots")
+            print(
+                "error: no course roots were found beneath the supplied "
+                "topic roots",
+                file=sys.stderr,
+                flush=True,
+            )
+            review_log.print_summary()
+            run_log.footer(2, "no valid topic roots", issue_count=review_log.issue_count)
+            return 2
+    elif args.author_roots:
         print(
             f"AUTHOR ROOTS expanding roots={len(roots)}",
             flush=True,
@@ -2930,10 +3891,15 @@ def main(argv: Iterator[str] | None = None) -> int:
                 flush=True,
             )
             review_log.print_summary()
+            run_log.footer(2, "no valid author roots", issue_count=review_log.issue_count)
             return 2
 
+    # Hierarchy expansion happens after the run-log header is opened.  Record
+    # the exact expanded count as a header-adjacent line for auditability.
+    run_log._write(f"Expanded course count: {len(roots)}")
+
     if args.skip_preflight:
-        roots_prevalidated = args.author_roots
+        roots_prevalidated = args.author_roots or args.topic_roots
         if not roots_prevalidated:
             try:
                 validated_roots = validate_fast_start_roots(
@@ -2968,7 +3934,9 @@ def main(argv: Iterator[str] | None = None) -> int:
                 roots,
                 args.roots,
                 (
-                    "author-roots"
+                    "topic-roots"
+                    if args.topic_roots
+                    else "author-roots"
                     if args.author_roots
                     else "course-roots"
                 ),
@@ -3001,6 +3969,7 @@ def main(argv: Iterator[str] | None = None) -> int:
                 checkpoint=checkpoint,
                 start_index=start_index,
                 roots_prevalidated=roots_prevalidated,
+                ignore_omega_directories=args.topic_roots,
             )
         except KeyboardInterrupt:
             try:
@@ -3017,13 +3986,25 @@ def main(argv: Iterator[str] | None = None) -> int:
             )
             checkpoint.print_command()
             review_log.print_summary()
+            run_log.footer(130, "interrupted", checkpoint_path=checkpoint.path)
             return 130
+        except VolumeUnavailable as exc:
+            try:
+                checkpoint.set_cursor(checkpoint.next_index, "interrupted")
+            except ResumeStateError as state_exc:
+                print(f"RESUME FAIL: {state_exc}", file=sys.stderr, flush=True)
+            print(f"VOLUME UNAVAILABLE: {exc}", file=sys.stderr, flush=True)
+            checkpoint.print_command()
+            review_log.print_summary()
+            run_log.footer(75, "volume unavailable", checkpoint_path=checkpoint.path)
+            return 75
         except ResumeStateError as exc:
             print(f"RESUME FAIL: {exc}", file=sys.stderr, flush=True)
             review_log.print_summary()
             return 2
         checkpoint.print_command()
         review_log.print_summary()
+        run_log.footer(result, "complete" if result == 0 else "course failures", checkpoint_path=checkpoint.path, retry_failed_command=retry_failed_command(checkpoint), issue_count=review_log.issue_count)
         return result
 
     print(
@@ -3033,13 +4014,19 @@ def main(argv: Iterator[str] | None = None) -> int:
     )
     set_title(title, "batch-transcribe-courses preflight")
     try:
-        preflight = perform_preflight(roots, args.limit, options)
+        preflight = perform_preflight(
+            roots,
+            args.limit,
+            options,
+            ignore_omega_directories=args.topic_roots,
+        )
     except PreflightError as exc:
         set_title(title, "batch-transcribe-courses preflight-failed")
         for error in exc.errors:
             review_log.record("PREFLIGHT", "supplied roots", error)
             print(f"error: {error}", file=sys.stderr, flush=True)
         review_log.print_summary()
+        run_log.footer(2, "preflight failure", issue_count=review_log.issue_count)
         return 2
 
     print_settings(options)
@@ -3061,9 +4048,11 @@ def main(argv: Iterator[str] | None = None) -> int:
         )
         set_title(title, "batch-transcribe-courses preflight-complete")
         review_log.print_summary()
+        run_log.footer(0, "dry-run complete", issue_count=review_log.issue_count)
         return 0
     result = run_live_direct(preflight, title, review_log)
     review_log.print_summary()
+    run_log.footer(result, "complete" if result == 0 else "course failures", issue_count=review_log.issue_count)
     return result
 
 

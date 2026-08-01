@@ -1,5 +1,5 @@
 # ----- Core -----
-model              = "gpt-5.6-sol"
+model              = "gpt-5.6-luna"
 approval_policy    = "on-request"
 approvals_reviewer = "auto_review"
 file_opener        = "vscode"
@@ -13,6 +13,7 @@ check_for_update_on_startup = false
 default_permissions = "nested-codex"
 
 notify = ["/Users/steph/.codex/notify-ntfy.sh"]
+service_tier = "default"
 
 [features]
 multi_agent = true
@@ -112,8 +113,3 @@ url = "https://developers.openai.com/mcp"
 
 [notice]
 hide_rate_limit_model_nudge = true
-
-[hooks.state]
-
-[hooks.state."/Users/steph/.codex/hooks.json:stop:0:0"]
-trusted_hash = "sha256:740845cd8341e15dc780bc0b703d2949e4f91161a09357889d4f5cff7d8a9e56"

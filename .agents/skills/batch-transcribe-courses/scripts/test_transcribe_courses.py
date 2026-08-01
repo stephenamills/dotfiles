@@ -563,7 +563,9 @@ class WhisperKitDirectTests(unittest.TestCase):
         for language, code in expected.items():
             with self.subTest(language=language):
                 course = subject.Course(
-                    Path("/tmp/transcription-fixtures/Language") / language / "Course"
+                    Path("/tmp/transcription-fixtures/Language")
+                    / language
+                    / "Course"
                 )
                 effective = subject.effective_options_for_course(
                     subject.TranscriptionOptions(),
@@ -1548,48 +1550,48 @@ class OutputContractTests(unittest.TestCase):
     ) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             base = Path(temporary)
-            architecture = base / "Architecture"
-            construction = base / "Construction"
-            architecture_course = (
-                architecture / "Architect" / "Course One"
+            topic_alpha = base / "Topic Alpha"
+            topic_beta = base / "Topic Beta"
+            topic_alpha_course = (
+                topic_alpha / "Author One" / "Course One"
             )
             alpha_course = (
-                construction / "alpha Author" / "Alpha Course"
+                topic_beta / "alpha Author" / "Alpha Course"
             )
             zulu_course = (
-                construction / "alpha Author" / "zulu Course"
+                topic_beta / "alpha Author" / "zulu Course"
             )
             bravo_course = (
-                construction / "Zulu Author" / "Bravo Course"
+                topic_beta / "Zulu Author" / "Bravo Course"
             )
             for path in (
-                architecture_course,
+                topic_alpha_course,
                 alpha_course / "Module",
                 zulu_course,
                 bravo_course,
-                construction / "Ω - Hands On" / "Ignored" / "Course",
-                construction / "Ω - Urban Design" / "Ignored" / "Course",
-                construction / "Ω Books" / "Ignored" / "Course",
-                construction / "Ω More" / "Ignored" / "Course",
-                construction
+                topic_beta / "Ω - Hands On" / "Ignored" / "Course",
+                topic_beta / "Ω - Urban Design" / "Ignored" / "Course",
+                topic_beta / "Ω Books" / "Ignored" / "Course",
+                topic_beta / "Ω More" / "Ignored" / "Course",
+                topic_beta
                 / "alpha Author"
                 / "Ω Private Courses"
                 / "Ignored Course",
             ):
                 path.mkdir(parents=True)
             (alpha_course / "Module" / "Lesson.mp4").write_bytes(b"media")
-            (construction / "cover.jpg").write_bytes(b"not an author")
+            (topic_beta / "cover.jpg").write_bytes(b"not an author")
             review_log = subject.ReviewLog(base / "review.txt")
 
             expanded = subject.expand_topic_roots(
-                [str(architecture), str(construction)],
+                [str(topic_alpha), str(topic_beta)],
                 review_log,
             )
 
         self.assertEqual(
             expanded,
             [
-                str(architecture_course.resolve()),
+                str(topic_alpha_course.resolve()),
                 str(alpha_course.resolve()),
                 str(zulu_course.resolve()),
                 str(bravo_course.resolve()),
@@ -1692,7 +1694,7 @@ class OutputContractTests(unittest.TestCase):
     def test_music_tree_discovers_only_video_containers(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             course_root = (
-                Path(temporary) / "videos" / "Music" / "Author" / "Course"
+                Path(temporary) / "fixture" / "Music" / "Author" / "Course"
             )
             nested = course_root / "Samples"
             nested.mkdir(parents=True)
@@ -1714,7 +1716,7 @@ class OutputContractTests(unittest.TestCase):
     def test_non_music_tree_still_discovers_audio_and_video(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             course_root = (
-                Path(temporary) / "videos" / "Finance" / "Author" / "Course"
+                Path(temporary) / "fixture" / "General" / "Author" / "Course"
             )
             course_root.mkdir(parents=True)
             (course_root / "lesson.mp4").write_bytes(b"video")

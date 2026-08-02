@@ -1,10 +1,10 @@
 # ----- Core -----
-model              = "gpt-5.6-sol"
+model              = "gpt-5.6-luna"
 approval_policy    = "on-request"
 approvals_reviewer = "auto_review"
 file_opener        = "vscode"
 
-model_reasoning_effort     = "xhigh"
+model_reasoning_effort     = "low"
 model_reasoning_summary    = "auto"
 plan_mode_reasoning_effort = "xhigh"
 
@@ -12,7 +12,10 @@ check_for_update_on_startup = false
 
 default_permissions = "nested-codex"
 
-notify = ["/Users/steph/.codex/notify-ntfy.sh"]
+# No top-level `notify`: all notifications now run through the hooks below. The
+# legacy notify payload cannot distinguish a real turn from a subagent's, and it
+# reports an empty last-assistant-message for Plan mode, so plan turns never
+# notified through it.
 service_tier = "default"
 
 [features]
@@ -114,21 +117,25 @@ url = "https://developers.openai.com/mcp"
 [notice]
 hide_rate_limit_model_nudge = true
 
-# Notify remotely as soon as Plan mode pauses for an answer. Normal completion
-# notifications continue to use the top-level `notify` command above.
+# Notification 1 of 3: a question needs an answer. Fires the moment Plan mode
+# (or any turn) pauses on request_user_input.
 [[hooks.PreToolUse]]
 matcher = "^request_user_input$"
 
 [[hooks.PreToolUse.hooks]]
 type = "command"
-command = "/Users/steph/.codex/notify-ntfy.sh --hook"
+command = "python3 /Users/steph/.codex/notify-ntfy.py"
 timeout = 15
 statusMessage = "Sending input-required notification"
 
+# Both Stop handlers run when a root turn finishes. Subagent turns dispatch
+# SubagentStop instead, so neither fires for them.
+#
 # Copy the finished plan to the clipboard the moment Plan mode emits it, before
-# it is accepted or rejected. Codex has no ExitPlanMode tool, so the plan is read
-# out of the turn's final assistant message. Mirrors the Claude Code hook of the
-# same name.
+# it is accepted or rejected. Codex has no ExitPlanMode tool and strips the
+# <proposed_plan> block out of the assistant message, so the plan is read from
+# the Plan item in the session rollout. Mirrors the Claude Code hook of the same
+# name.
 [[hooks.Stop]]
 
 [[hooks.Stop.hooks]]
@@ -137,11 +144,27 @@ command = "python3 /Users/steph/.codex/copy-plan-to-clipboard.py"
 timeout = 10
 statusMessage = "Copying plan to clipboard"
 
+# Notifications 2 and 3: the same turn end reports either "plan ready for
+# review" or "work complete", from the same rollout read.
+[[hooks.Stop.hooks]]
+type = "command"
+command = "python3 /Users/steph/.codex/notify-ntfy.py"
+timeout = 15
+statusMessage = "Sending completion notification"
+
+# trusted_hash is sha256 over the canonical JSON of each hook's normalized
+# identity (event label + matcher + that single handler). Adding a handler does
+# not change its siblings' hashes.
 [hooks.state]
 
 [hooks.state."/Users/steph/.codex/config.toml:pre_tool_use:0:0"]
-trusted_hash = "sha256:430526ebe2cb511665a0c74d71f924905787b70085f0a7153df7959e6f3a3696"
+trusted_hash = "sha256:72ba8cd2c2d860cac0c0e3a37b42c7ac58f575945d1872c1f7dfc7c9814d9366"
+enabled = true
 
 [hooks.state."/Users/steph/.codex/config.toml:stop:0:0"]
 trusted_hash = "sha256:fb9ddf6113e45148788fc1129e5bf54ff34332f335365bd22a79176eeece8df0"
+enabled = true
+
+[hooks.state."/Users/steph/.codex/config.toml:stop:0:1"]
+trusted_hash = "sha256:a4b7fb34cbaf9ea8ce41235c1734ca297310997e345b6ad16c99d5ba077ba1c4"
 enabled = true

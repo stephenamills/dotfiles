@@ -113,3 +113,35 @@ url = "https://developers.openai.com/mcp"
 
 [notice]
 hide_rate_limit_model_nudge = true
+
+# Notify remotely as soon as Plan mode pauses for an answer. Normal completion
+# notifications continue to use the top-level `notify` command above.
+[[hooks.PreToolUse]]
+matcher = "^request_user_input$"
+
+[[hooks.PreToolUse.hooks]]
+type = "command"
+command = "/Users/steph/.codex/notify-ntfy.sh --hook"
+timeout = 15
+statusMessage = "Sending input-required notification"
+
+# Copy the finished plan to the clipboard the moment Plan mode emits it, before
+# it is accepted or rejected. Codex has no ExitPlanMode tool, so the plan is read
+# out of the turn's final assistant message. Mirrors the Claude Code hook of the
+# same name.
+[[hooks.Stop]]
+
+[[hooks.Stop.hooks]]
+type = "command"
+command = "python3 /Users/steph/.codex/copy-plan-to-clipboard.py"
+timeout = 10
+statusMessage = "Copying plan to clipboard"
+
+[hooks.state]
+
+[hooks.state."/Users/steph/.codex/config.toml:pre_tool_use:0:0"]
+trusted_hash = "sha256:430526ebe2cb511665a0c74d71f924905787b70085f0a7153df7959e6f3a3696"
+
+[hooks.state."/Users/steph/.codex/config.toml:stop:0:0"]
+trusted_hash = "sha256:fb9ddf6113e45148788fc1129e5bf54ff34332f335365bd22a79176eeece8df0"
+enabled = true

@@ -17,6 +17,40 @@
             "statusMessage": "Copying plan to clipboard"
           }
         ]
+      },
+      {
+        "matcher": "AskUserQuestion",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/notify-ntfy.sh",
+            "async": true
+          }
+        ]
+      }
+    ],
+    "PermissionRequest": [
+      {
+        "matcher": "ExitPlanMode",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/notify-ntfy.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "matcher": "permission_prompt",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/notify-ntfy.sh",
+            "async": true
+          }
+        ]
       }
     ],
     "Stop": [
@@ -24,7 +58,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "osascript -e 'display notification \"Task finished\" with title \"Claude Code\"'; afplay /System/Library/Sounds/Glass.aiff"
+            "command": "bash ~/.claude/notify-ntfy.sh",
+            "async": true
           }
         ]
       }
@@ -32,10 +67,9 @@
   },
   "statusLine": {
     "type": "command",
-    "command": "bash ~/.claude/statusline-command.sh",
-    "padding": 0
+    "command": "bash ~/.claude/statusline-command.sh"
   },
-  "effortLevel": "xhigh",
+  "effortLevel": "medium",
   "showThinkingSummaries": true,
   "editorMode": "normal"
 }

@@ -1,120 +1,97 @@
 #!/usr/bin/env bash
-# Claude Code statusLine — compact, width-aware, single-subprocess.
+# Claude Code statusLine.
 #
-# Renders:  model (effort) · dir · ctx N% · 5h N% · 7d N%
+# Renders exactly one line:
+#   Opus 5 xhigh · dotfiles · ctx 3% · tok 124k in 118k out 5k · 5h 13% · 7d 4%
 #
-# Width is the whole point of this script's design. Claude Code does not pass
-# the terminal width in its JSON payload, so a status line that renders wider
-# than the terminal wraps to a second line and corrupts the footer layout —
-# most visibly, typed text in question prompts stops echoing. Every segment
-# below is budgeted against the detected width and dropped (or truncated)
-# rather than allowed to wrap.
+# Why it is written this defensively — the statusline renderer splits our
+# output on newlines. A single line is passed to Ink with wrap="truncate", so
+# it can never wrap or disturb the footer. Two or more lines are rendered as a
+# stacked column instead, which pushes the prompt around and is what makes
+# typed text stop echoing in plan mode and question menus. So: never emit a
+# newline (not even a trailing one), never emit an ANSI escape, and never fail
+# in a way that leaks text to stdout.
 #
-# Cost matters too: this runs on a 300ms debounce, so it makes exactly one
-# subprocess call (jq) plus an optional `tput`. Rounding happens inside jq and
-# the directory basename comes from parameter expansion.
+# The width cap is enforced in *bytes*, under LC_ALL=C. Bytes are not display
+# columns — the "·" separator is 2 bytes wide but 1 column, and a directory
+# name may be anything — but in UTF-8 a character never costs fewer bytes than
+# it does columns (2-byte accented chars are 1 column, 3-byte CJK and 4-byte
+# emoji are 2). So a byte count can only ever over-estimate the width, never
+# under-estimate it, which is what makes the cap safe to trust. It errs toward
+# truncating slightly early, which is harmless; the failure that matters would
+# be truncating too late.
 
-input=$(cat)
+export LC_ALL=C
 
-# ---- catppuccin mocha palette (truecolor) ----
-mauve='38;2;203;166;247'
-blue='38;2;137;180;250'
-green='38;2;166;227;161'
-peach='38;2;250;179;135'
-red='38;2;243;139;168'
-subtext='38;2;166;173;200'
+MAX=100
 
-# One jq call, one value per line. Line-based rather than @tsv on purpose:
-# tab is IFS whitespace, so consecutive tabs would collapse and an empty field
-# would shift every later value into the wrong variable.
-{
-  read -r model
-  read -r effort
-  read -r cwd
-  read -r ctx
-  read -r five
-  read -r weekly
-} <<EOF
-$(printf '%s' "$input" | jq -r '
-  def pct: if type == "number" then (round | tostring) else "" end;
-  (.model.display_name // ""),
-  (.effort.level // ""),
-  (.workspace.current_dir // .cwd // ""),
-  (.context_window.remaining_percentage | pct),
-  (.rate_limits.five_hour.used_percentage | pct),
-  (.rate_limits.seven_day.used_percentage | pct)
+line=$(jq -r '
+  # 0-100 number -> "42%". Anything else -> null (segment is dropped).
+  def pct:
+    if type == "number"
+    then ((if . < 0 then 0 elif . > 100 then 100 else . end) | round | tostring) + "%"
+    else null
+    end;
+
+  # Token count -> "812", "12k", "1.2M". Anything else -> "0".
+  def hum:
+    if type == "number" and . >= 0 then
+      if   . < 1000    then (floor | tostring)
+      elif . < 1000000 then ((. / 1000) | round | tostring) + "k"
+      else                  ((. / 100000) | round / 10 | tostring) + "M"
+      end
+    else "0"
+    end;
+
+  def str: if type == "string" then . else "" end;
+  def seg($label; $v): if $v == null then empty else $label + " " + $v end;
+
+  (.context_window // {})                     as $c
+  | ($c.total_input_tokens  | if type == "number" then . else 0 end) as $in
+  | ($c.total_output_tokens | if type == "number" then . else 0 end) as $out
+  # .[0:N] slices by codepoint, so these caps bound the line by construction
+  # and always leave valid UTF-8.
+  | (.model.display_name | str | .[0:14])     as $model
+  # .effort is absent entirely on models without effort levels.
+  | (.effort.level | str)                     as $effort
+  | ((.workspace.current_dir // .cwd | str)
+      | split("/") | map(select(. != "")) | last // "" | .[0:14]) as $dir
+  | [
+      ([$model, $effort] | map(select(. != "")) | join(" ")),
+      $dir,
+      seg("ctx"; $c.used_percentage | pct),
+      "tok " + (($in + $out) | hum)
+        + " in " + ($in | hum) + " out " + ($out | hum),
+      seg("5h"; .rate_limits.five_hour.used_percentage  | pct),
+      seg("7d"; .rate_limits.seven_day.used_percentage | pct)
+    ]
+  | map(select(. != ""))
+  | join(" · ")
 ' 2>/dev/null)
-EOF
 
-dir=${cwd##*/}
+# Belt and braces: drop anything that could move the cursor or add a line.
+# Under LC_ALL=C this is exactly 0x00-0x1F and 0x7F, which covers both stray
+# newlines and the ESC that would begin an escape sequence. Bytes >= 0x80 are
+# untouched, so the "·" separators and non-ASCII directory names survive.
+line=${line//[[:cntrl:]]/}
 
-# ---- assemble segments as parallel plain/colored arrays ----
-# Width is measured on the plain text; the ANSI escapes never enter the count.
-plains=()
-colors=()
-
-add() {
-  # add <color> <text>
-  local color=$1 text=$2 buf
-  [ -n "$text" ] || return 0
-  printf -v buf '\033[%sm%s\033[0m' "$color" "$text"
-  plains+=("$text")
-  colors+=("$buf")
-}
-
-if [ -n "$effort" ]; then
-  add "$mauve" "${model:+$model ($effort)}"
-else
-  add "$mauve" "$model"
-fi
-add "$blue" "$dir"
-add "$green" "${ctx:+ctx ${ctx}%}"
-add "$peach" "${five:+5h ${five}%}"
-add "$red" "${weekly:+7d ${weekly}%}"
-
-# ---- width budget ----
-# COLUMNS first (cheap, and set by most shells), then tput against the
-# controlling terminal, then a conservative 80. Anything non-numeric or
-# absurdly small is treated as "unknown".
-sane() { case $1 in '' | *[!0-9]*) return 1 ;; esac; [ "$1" -ge 20 ]; }
-
-cols=${COLUMNS:-}
-if ! sane "$cols"; then
-  cols=$(tput cols 2>/dev/null </dev/tty)
-  sane "$cols" || cols=80
-fi
-budget=$((cols - 4))
-
-# Drop segments from the right until the line fits. Separator " · " is three
-# display columns wide (the middle dot is one column, two bytes).
-n=${#plains[@]}
-while [ "$n" -gt 1 ]; do
-  w=0
-  i=0
-  while [ "$i" -lt "$n" ]; do
-    w=$((w + ${#plains[i]}))
-    [ "$i" -gt 0 ] && w=$((w + 3))
-    i=$((i + 1))
-  done
-  [ "$w" -le "$budget" ] && break
-  n=$((n - 1))
-done
-
-# A single segment that still overruns gets hard-truncated rather than wrapped.
-if [ "$n" -eq 1 ] && [ "${#plains[0]}" -gt "$budget" ]; then
-  printf '\033[%sm%s\033[0m' "$mauve" "${plains[0]:0:$budget}"
-  exit 0
+if [ "${#line}" -gt "$MAX" ]; then
+  # The cut is byte-wise, so it can land inside a multi-byte character. The
+  # first *dropped* byte tells us: if it is a continuation byte (0x80-0xBF) we
+  # severed a character, so walk the trailing continuation bytes off and drop
+  # their lead byte too. Otherwise the cut was already on a boundary.
+  next=${line:$MAX:1}
+  line=${line:0:$MAX}
+  case $next in
+    [$'\x80'-$'\xbf'])
+      while [ -n "$line" ]; do
+        last=${line: -1}
+        line=${line%?}
+        case $last in [$'\x80'-$'\xbf']) ;; *) break ;; esac
+      done
+      ;;
+  esac
 fi
 
-out=''
-i=0
-while [ "$i" -lt "$n" ]; do
-  if [ "$i" -gt 0 ]; then
-    printf -v s '\033[%sm · \033[0m' "$subtext"
-    out+=$s
-  fi
-  out+=${colors[i]}
-  i=$((i + 1))
-done
-
-printf '%s' "$out"
+printf '%s' "$line"
+exit 0

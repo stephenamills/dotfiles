@@ -147,7 +147,10 @@
   "workbench.colorTheme": "Visual Studio Light",
   "workbench.editor.closeOnFileDelete": true,
   "workbench.editor.highlightModifiedTabs": true,
-  "workbench.editor.limit.enabled": true,
+  // Off on purpose: terminals live in the editor area
+  // (terminal.integrated.defaultLocation), so they count against this cap and
+  // get evicted when opening files — which fires the confirmOnKill dialog.
+  "workbench.editor.limit.enabled": false,
   "workbench.editor.limit.value": 4,
   "workbench.fontAliasing": "antialiased",
   "workbench.iconTheme": "eq-material-theme-icons",

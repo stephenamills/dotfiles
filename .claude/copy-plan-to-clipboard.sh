@@ -6,7 +6,13 @@
 # Companion to the cplan function in .zshrc, which reaches older plans. This only ever
 # provides the newest one.
 
-payload=$(cat)
+# Never read from the terminal. Hook payloads arrive on a pipe; if this script is
+# ever handed an inherited tty instead, an unbounded read blocks forever and eats
+# the keystrokes typed into the approval prompt behind it. Bail, and bound the read
+# even on a real pipe so a stalled writer cannot hang the hook.
+[ -t 0 ] && exit 0
+payload=""
+IFS= read -r -d '' -t 2 payload
 
 # The runtime supplies the plan inline, despite ExitPlanMode declaring no such parameter
 plan=$(printf '%s' "$payload" | jq -r '.tool_input.plan // empty')

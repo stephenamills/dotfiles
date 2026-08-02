@@ -1,0 +1,185 @@
+#!/bin/sh
+#
+# hnmd -- render a Hacker News story or comment tree as clean Markdown.
+#
+# Usage:
+#   hnmd [--top N] [--depth N] [--no-meta] URL_OR_ITEM_ID
+#
+# Algolia normally trails live Hacker News by roughly a minute, so a brand-new
+# thread may initially look sparse. The official Firebase API is authoritative,
+# but walking its child IDs would require an N+1 series of requests.
+#
+# Hacker News uses a leading ">" as a quote convention rather than semantic
+# markup. Pandoc faithfully escapes it as "\>"; callers may promote those lines
+# to Markdown blockquotes with:
+#   hnmd ID | sed 's/^\([[:space:]]*\)\\>/\1>/'
+#
+set -eu
+
+usage() {
+	cat <<'EOF'
+Usage: hnmd [--top N] [--depth N] [--no-meta] URL_OR_ITEM_ID
+
+Render a Hacker News thread as GitHub-Flavored Markdown.
+
+  --top N      include only the first N top-level comment threads
+  --depth N    include comments through depth N (top-level comments are 1)
+  --no-meta    omit story and comment bylines/timestamps
+  -h, --help   show this help
+EOF
+}
+
+die() {
+	printf 'hnmd: %s\n' "$*" >&2
+	exit 1
+}
+
+nonnegative_integer() {
+	case $1 in
+	'' | *[!0-9]*) return 1 ;;
+	*) return 0 ;;
+	esac
+}
+
+top=null
+depth=null
+meta=true
+item=
+
+while [ "$#" -gt 0 ]; do
+	case $1 in
+	--top | --depth)
+		option=$1
+		[ "$#" -ge 2 ] || die "$option requires a non-negative integer"
+		nonnegative_integer "$2" || die "$option requires a non-negative integer"
+		if [ "$option" = --top ]; then
+			top=$2
+		else
+			depth=$2
+		fi
+		shift 2
+		;;
+	--no-meta)
+		meta=false
+		shift
+		;;
+	-h | --help)
+		usage
+		exit 0
+		;;
+	--)
+		shift
+		[ -z "$item" ] || die 'expected exactly one URL or item id'
+		[ "$#" -gt 0 ] || die 'missing URL or item id'
+		[ "$#" -eq 1 ] || die 'expected exactly one URL or item id'
+		item=$1
+		shift
+		;;
+	-*)
+		die "unknown option: $1"
+		;;
+	*)
+		[ -z "$item" ] || die 'expected exactly one URL or item id'
+		item=$1
+		shift
+		;;
+	esac
+done
+
+[ -n "$item" ] || die 'missing URL or item id'
+
+case $item in
+*id=*)
+	id=${item#*id=}
+	id=${id%%[\&#]*}
+	;;
+*) id=$item ;;
+esac
+
+nonnegative_integer "$id" || die "invalid Hacker News item id: $item"
+
+json_file=$(mktemp "${TMPDIR:-/tmp}/hnmd-json.XXXXXX") || die 'could not create a temporary file'
+html_file=$(mktemp "${TMPDIR:-/tmp}/hnmd-html.XXXXXX") || {
+	rm -f "$json_file"
+	die 'could not create a temporary file'
+}
+cleanup() {
+	rm -f "$json_file" "$html_file"
+}
+trap cleanup 0
+trap 'exit 1' 1 2 15
+
+api_url="https://hn.algolia.com/api/v1/items/$id"
+if ! curl -fsSL -o "$json_file" "$api_url"; then
+	die "could not fetch Hacker News item $id"
+fi
+
+if ! jq -r \
+	--argjson top "$top" \
+	--argjson depth "$depth" \
+	--argjson meta "$meta" \
+	'
+	def html: tostring | @html;
+	def fenced_code: gsub("<pre><code>"; "<pre><code class=\"hnmd-code\">");
+
+	def comment_meta:
+		if $meta then
+			"<p><b>" + ((.author // "[deleted]") | html) +
+			"</b> — " + ((.created_at // "unknown date") | html) + "</p>\n"
+		else
+			""
+		end;
+
+	def node($level):
+		"<li>\n" +
+		comment_meta +
+		((.text // "<p>[deleted]</p>") | fenced_code) + "\n" +
+		(if ($depth == null or $level < $depth) and ((.children // []) | length > 0) then
+			"<ul>\n" + ((.children // []) | map(node($level + 1)) | join("\n")) + "\n</ul>\n"
+		else
+			""
+		end) +
+		"</li>";
+
+	def selected_children:
+		(.children // [])
+		| if $top == null then . else .[0:$top] end
+		| if $depth == 0 then [] else . end;
+
+	def story:
+		"<h1>" + ((.title // ("Hacker News item " + (.id | tostring))) | html) + "</h1>\n" +
+		(if .url then
+			"<p><a href=\"" + (.url | html) + "\">" + (.url | html) + "</a></p>\n"
+		else
+			""
+		end) +
+		(if $meta then
+			"<p>" + ((.points // 0) | html) + " points / " +
+			((.author // "[deleted]") | html) + " / " +
+			((.created_at // "unknown date") | html) + "</p>\n"
+		else
+			""
+		end) +
+		((.text // "") | fenced_code) + "\n" +
+		(if (selected_children | length) > 0 then
+			"<ul>\n" + (selected_children | map(node(1)) | join("\n")) + "\n</ul>\n"
+		else
+			""
+		end);
+
+	def comment:
+		"<h1>Hacker News comment " + (.id | tostring | html) + "</h1>\n" +
+		(if $depth == 0 then "" else "<ul>\n" + node(1) + "\n</ul>\n" end);
+
+	if type != "object" or .id == null then
+		error("unexpected response from Algolia")
+	elif .type == "story" or .title != null then
+		story
+	else
+		comment
+	end
+	' "$json_file" >"$html_file"; then
+	die "could not transform Hacker News item $id"
+fi
+
+pandoc -f html -t gfm-raw_html --wrap=none "$html_file"

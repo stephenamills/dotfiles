@@ -9,7 +9,7 @@ Pass course roots directly to the bundled script:
 
 ```bash
 python3 ~/.agents/skills/batch-transcribe-courses/scripts/transcribe_courses.py \
-  [--author-roots | --topic-roots] [--dry-run | --skip-preflight] \
+  [--author-roots | --topic-roots] [--dry-run | --scan | --skip-preflight] \
   [--resume-from COURSE_ROOT] [--limit N] \
   [--overwrite | --overwrite-empty | --upgrade-timestamps] \
   [--language CODE] [--timestamps] [--timestamp-interval SECONDS] \
@@ -28,12 +28,12 @@ fc -ln -1 | python3 \
   --resume-from-command COURSE_ROOT
 
 python3 ~/.agents/skills/batch-transcribe-courses/scripts/transcribe_courses.py \
-  --author-roots --skip-preflight \
+  --author-roots \
   --upgrade-timestamps --timestamp-interval 120 -- \
   AUTHOR_ROOT [...]
 
 python3 ~/.agents/skills/batch-transcribe-courses/scripts/transcribe_courses.py \
-  --topic-roots --skip-preflight \
+  --topic-roots \
   --upgrade-timestamps --timestamp-interval 120 -- \
   TOPIC_ROOT [...]
 ```
@@ -59,11 +59,13 @@ the review issue count; non-media files remain actionable review items.
 
 Do not abort an author- or topic-root run because one supplied root or expanded
 author is missing, unreadable, overlapping, or empty. Skip it and continue with
-every valid one. Write each exception to a uniquely named
-the run's state-directory `.review.txt` file,
+every valid one. Write each exception to a uniquely named `.review.txt` file in
+the run's state directory,
 print its path immediately, and print its issue count at the end. Also append
-course validation and per-course preflight failures encountered during
-`--skip-preflight`. Use the report to process exceptional paths manually in a
+course validation and streaming course failures encountered during the run.
+Streaming output collisions are recorded there as `OUTPUT COLLISION` entries;
+the colliding item is skipped while the rest of the course continues. Use the
+report to process exceptional paths manually in a
 later explicit-root invocation. If no valid course roots remain, report the
 file and exit without starting WhisperKit.
 
@@ -86,12 +88,18 @@ Use `--dry-run` to preview every mapping. When the user asks to transcribe, run
 the live command with the same roots and optional limit, omitting only
 `--dry-run`. Keep live output visible and attached.
 
-For a large root list, use `--skip-preflight` to avoid scanning every course
-before transcription begins. It validates the supplied root paths once, then
-scans and processes one course at a time. In author-root mode it first performs
-the one-level directory expansion; in topic-root mode it performs the fixed
-two-level expansion. Neither hierarchy expansion scans media recursively. Do
-not combine `--skip-preflight` with `--dry-run`.
+Live runs stream by default: each course is walked and transcribed in one pass,
+so the first eligible file can start before the rest of the course has been
+enumerated. Use `--scan` to opt into the complete per-course preflight used by
+older runs, including accurate discovered/ready/limited counts and fail-closed
+collision detection. `--dry-run` implies the scan path and prints every
+mapping without writing. `--skip-preflight` remains accepted for compatibility
+but is a deprecated no-op; it prints a warning and keeps streaming enabled.
+Streaming item progress intentionally has no denominator (for example,
+`[Season 4 3] TRANSCRIBE`); the course header retains the real batch position.
+In author-root mode the one-level directory expansion still happens first; in
+topic-root mode the fixed two-level expansion still happens first. Neither
+hierarchy expansion scans media recursively.
 
 Every fast-start run atomically writes a local v2 checkpoint beneath
 `~/.agents/state/batch-transcribe-courses/` and immediately prints its exact
@@ -106,7 +114,8 @@ earlier course roots are expanded, validated, or scanned. Keep completed
 checkpoint files as run records.
 
 For a run started before checkpoint support, add
-`--resume-from COURSE_ROOT` to its original `--skip-preflight` invocation.
+`--resume-from COURSE_ROOT` to its original invocation (with or without the
+now-deprecated `--skip-preflight` flag).
 This performs the author or topic expansion once, starts at that exact expanded
 course, and creates the normal checkpoint for subsequent short resumes. If the
 full hierarchy command is still the immediately preceding zsh history entry,
@@ -137,11 +146,11 @@ change an existing interval. The mode is mutually exclusive with
 `--overwrite` and `--overwrite-empty`.
 
 During a timestamp upgrade, keep the old transcript until a complete nonempty
-timestamped `.part` is written and synced. Compare the existing file with its
-per-course preflight snapshot before atomic replacement. If another process
-changes it, preserve the concurrent update and skip replacement. A resumed
-current course rescans its transcript destinations, so files already upgraded
-before interruption are skipped.
+timestamped `.part` is written and synced. Read and compare the existing file
+snapshot immediately before considering that one replacement. If another
+process changes it, preserve the concurrent update and skip replacement. A
+resumed current course rescans its transcript destinations, so files already
+upgraded before interruption are skipped.
 
 Without `--overwrite`, APFS/HFS+ installation is an exclusive atomic rename; on
 SMB it uses exclusive destination creation without overwriting an existing
@@ -183,6 +192,8 @@ and never advances the checkpoint cursor until the course can be retried.
 
 Each run writes one consolidated flushed log at
 `~/.agents/state/batch-transcribe-courses/logs/run-*.log` (or `--log-file PATH`)
-and its actionable companion `run-*.review.txt`. The log includes invocation,
+and its actionable companion `run-*.review.txt`. The review file includes
+runtime categories such as `OUTPUT COLLISION`, destination hazards, source
+changes, and transcription failures. The log includes invocation,
 resolved dependencies, every scan/success/skip/failure/retry/timeout/volume
 event, course summaries, totals, exit reason, and resume/retry commands.

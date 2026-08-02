@@ -1314,6 +1314,194 @@ class ResumeCheckpointTests(unittest.TestCase):
         )
         self.assertEqual(recovered.source_mode, "topic-roots")
 
+    def test_prior_author_command_without_skip_flag_is_parsed(self) -> None:
+        recovered = subject.recover_author_invocation(
+            "python3 transcribe_courses.py --author-roots -- '/tmp/Author'"
+        )
+        self.assertEqual(recovered.roots, ["/tmp/Author"])
+        self.assertEqual(recovered.source_mode, "author-roots")
+
+
+class StreamingTests(unittest.TestCase):
+    def test_stream_course_sorts_and_starts_before_walk_finishes(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary) / "Course"
+            root.mkdir()
+            for name in ("b.mp4", "a.mp4"):
+                (root / name).write_bytes(b"media")
+            walk_events: list[str] = []
+            processed: list[str] = []
+
+            def walk(*_args: object, **_kwargs: object):
+                walk_events.append("yield-first")
+                yield str(root), [], ["b.mp4", "a.mp4"]
+                walk_events.append("walk-finished")
+
+            def transcribe(item: subject.WorkItem, *_args: object) -> subject.InstallResult:
+                processed.append(item.relative_media.name)
+                self.assertEqual(walk_events, ["yield-first"])
+                return subject.InstallResult.installed()
+
+            with (
+                mock.patch.object(subject.os, "walk", side_effect=walk),
+                mock.patch.object(subject, "transcribe_item", side_effect=transcribe),
+                mock.patch.object(subject, "volume_is_live", return_value=True),
+            ):
+                summary, consumed, limited, failed = subject.stream_course(
+                    subject.Course(root),
+                    subject.Programs("whisperkit-cli", "ffmpeg"),
+                    subject.TranscriptionOptions(),
+                    None,
+                    None,
+                    subject.ReviewLog(Path(temporary) / "review.txt"),
+                    "1/1",
+                )
+
+        self.assertEqual(processed, ["a.mp4", "b.mp4"])
+        self.assertEqual(summary.succeeded, 2)
+        self.assertEqual(consumed, 2)
+        self.assertFalse(limited)
+        self.assertFalse(failed)
+        self.assertEqual(walk_events, ["yield-first", "walk-finished"])
+
+    def test_stream_collision_is_reviewed_and_does_not_fail_course(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary) / "Course"
+            root.mkdir()
+            (root / "first.mp4").write_bytes(b"media")
+            (root / "second.mp4").write_bytes(b"media")
+            review = subject.ReviewLog(Path(temporary) / "review.txt")
+            with (
+                mock.patch.object(subject, "collision_key", return_value="same"),
+                mock.patch.object(
+                    subject,
+                    "transcribe_item",
+                    return_value=subject.InstallResult.installed(),
+                ),
+                mock.patch.object(subject, "volume_is_live", return_value=True),
+            ):
+                summary, consumed, limited, failed = subject.stream_course(
+                    subject.Course(root),
+                    subject.Programs("whisperkit-cli", "ffmpeg"),
+                    subject.TranscriptionOptions(),
+                    None,
+                    None,
+                    review,
+                    "1/1",
+                )
+            review_text = review.path.read_text(encoding="utf-8")
+
+        self.assertEqual(summary.discovered, 2)
+        self.assertEqual(summary.skipped, 1)
+        self.assertEqual(consumed, 1)
+        self.assertFalse(limited)
+        self.assertFalse(failed)
+        self.assertEqual(review.issue_count, 1)
+        self.assertIn("OUTPUT COLLISION", review_text)
+
+    def test_stream_missing_mirrored_directory_avoids_destination_stats(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary) / "Course"
+            (root / "Module").mkdir(parents=True)
+            (root / "Module" / "lesson.mp4").write_bytes(b"media")
+            with (
+                mock.patch.object(subject, "destination_exists") as destination,
+                mock.patch.object(
+                    subject,
+                    "process_item",
+                    side_effect=lambda item, _programs, _options, summary, _prefix, _review: setattr(
+                        summary, "succeeded", summary.succeeded + 1
+                    ),
+                ),
+                mock.patch.object(subject, "volume_is_live", return_value=True),
+            ):
+                summary, _consumed, _limited, _failed = subject.stream_course(
+                    subject.Course(root),
+                    subject.Programs("whisperkit-cli", "ffmpeg"),
+                    subject.TranscriptionOptions(),
+                    None,
+                    None,
+                    subject.ReviewLog(Path(temporary) / "review.txt"),
+                    "1/1",
+                )
+
+        destination.assert_not_called()
+        self.assertEqual(summary.succeeded, 1)
+
+    def test_stream_upgrade_reads_only_existing_file_snapshot(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary) / "Course"
+            (root / "Module").mkdir(parents=True)
+            (root / "Module" / "existing.mp4").write_bytes(b"media")
+            (root / "Module" / "missing.mp4").write_bytes(b"media")
+            transcript_dir = root / "transcripts" / "Module"
+            transcript_dir.mkdir(parents=True)
+            (transcript_dir / "existing.txt").write_text(
+                "plain transcript", encoding="utf-8"
+            )
+            original = subject.read_regular_file_snapshot
+            snapshots: list[str] = []
+
+            def snapshot(path: str | Path, *, dir_fd: int | None = None):
+                snapshots.append(os.fspath(path))
+                return original(path, dir_fd=dir_fd)
+
+            with (
+                mock.patch.object(subject, "read_regular_file_snapshot", side_effect=snapshot),
+                mock.patch.object(
+                    subject,
+                    "transcribe_item",
+                    return_value=subject.InstallResult.installed(),
+                ),
+                mock.patch.object(subject, "volume_is_live", return_value=True),
+            ):
+                summary, _consumed, _limited, _failed = subject.stream_course(
+                    subject.Course(root),
+                    subject.Programs("whisperkit-cli", "ffmpeg"),
+                    subject.TranscriptionOptions(
+                        timestamps=True,
+                        upgrade_timestamps=True,
+                    ),
+                    None,
+                    None,
+                    subject.ReviewLog(Path(temporary) / "review.txt"),
+                    "1/1",
+                )
+
+        self.assertEqual(summary.succeeded, 2)
+        self.assertEqual(snapshots, ["existing.txt"])
+
+    def test_stream_limit_stops_walk_and_reports_paused(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary) / "Course"
+            root.mkdir()
+            for name in ("a.mp4", "b.mp4"):
+                (root / name).write_bytes(b"media")
+            with (
+                mock.patch.object(
+                    subject,
+                    "process_item",
+                    side_effect=lambda item, _programs, _options, summary, _prefix, _review: setattr(
+                        summary, "succeeded", summary.succeeded + 1
+                    ),
+                ),
+                mock.patch.object(subject, "volume_is_live", return_value=True),
+            ):
+                summary, consumed, limited, failed = subject.stream_course(
+                    subject.Course(root),
+                    subject.Programs("whisperkit-cli", "ffmpeg"),
+                    subject.TranscriptionOptions(),
+                    1,
+                    None,
+                    subject.ReviewLog(Path(temporary) / "review.txt"),
+                    "1/1",
+                )
+
+        self.assertEqual(summary.discovered, 2)
+        self.assertEqual(consumed, 1)
+        self.assertTrue(limited)
+        self.assertFalse(failed)
+
 
 class OutputContractTests(unittest.TestCase):
     def make_item(
@@ -1819,8 +2007,10 @@ class OutputContractTests(unittest.TestCase):
                 _options: subject.TranscriptionOptions,
                 *,
                 ignore_omega_directories: bool = False,
+                programs: subject.Programs | None = None,
             ) -> subject.Preflight:
                 self.assertFalse(ignore_omega_directories)
+                self.assertIsNotNone(programs)
                 name = Path(roots[0]).name
                 calls.append(("scan", name, limit))
                 return first if name == first_root.name else second
@@ -1844,6 +2034,11 @@ class OutputContractTests(unittest.TestCase):
                     "perform_preflight",
                     side_effect=preflight_one,
                 ),
+                mock.patch.object(
+                    subject,
+                    "resolve_program",
+                    return_value=("/bin/true", None),
+                ),
                 mock.patch.object(subject, "print_preflight"),
                 mock.patch.object(subject, "run_live", side_effect=run_one),
             ):
@@ -1851,6 +2046,7 @@ class OutputContractTests(unittest.TestCase):
                     [str(first_root), str(second_root)],
                     limit=3,
                     title=None,
+                    scan=True,
                 )
 
         self.assertEqual(return_code, 0)
@@ -1894,6 +2090,11 @@ class OutputContractTests(unittest.TestCase):
                     "perform_preflight",
                     return_value=preflight,
                 ) as perform,
+                mock.patch.object(
+                    subject,
+                    "resolve_program",
+                    return_value=("/bin/true", None),
+                ),
                 mock.patch.object(subject, "print_preflight"),
                 mock.patch.object(subject, "run_live", return_value=0),
             ):
@@ -1903,6 +2104,7 @@ class OutputContractTests(unittest.TestCase):
                     title=None,
                     roots_prevalidated=True,
                     ignore_omega_directories=True,
+                    scan=True,
                 )
 
         self.assertEqual(return_code, 0)
@@ -1911,6 +2113,7 @@ class OutputContractTests(unittest.TestCase):
             None,
             subject.TranscriptionOptions(),
             ignore_omega_directories=True,
+            programs=subject.Programs("/bin/true", "/bin/true"),
         )
 
     def test_interruption_checkpoint_stays_on_interrupted_course(self) -> None:
@@ -1942,6 +2145,11 @@ class OutputContractTests(unittest.TestCase):
                     "perform_preflight",
                     side_effect=[first, KeyboardInterrupt()],
                 ),
+                mock.patch.object(
+                    subject,
+                    "resolve_program",
+                    return_value=("/bin/true", None),
+                ),
                 mock.patch.object(subject, "print_preflight"),
                 mock.patch.object(subject, "run_live", return_value=0),
                 self.assertRaises(KeyboardInterrupt),
@@ -1952,6 +2160,7 @@ class OutputContractTests(unittest.TestCase):
                     title=None,
                     checkpoint=checkpoint,
                     roots_prevalidated=True,
+                    scan=True,
                 )
 
             resumed = subject.ResumeCheckpoint.load(checkpoint.path)
@@ -1987,6 +2196,11 @@ class OutputContractTests(unittest.TestCase):
                         second,
                     ],
                 ),
+                mock.patch.object(
+                    subject,
+                    "resolve_program",
+                    return_value=("/bin/true", None),
+                ),
                 mock.patch.object(subject, "print_preflight"),
                 mock.patch.object(subject, "run_live", return_value=0) as run_live,
             ):
@@ -1995,6 +2209,7 @@ class OutputContractTests(unittest.TestCase):
                     limit=None,
                     title=None,
                     review_log=subject.ReviewLog(base / "review.txt"),
+                    scan=True,
                 )
             review_text = (base / "review.txt").read_text(encoding="utf-8")
 
@@ -2041,6 +2256,7 @@ class OutputContractTests(unittest.TestCase):
             start_index=0,
             roots_prevalidated=True,
             ignore_omega_directories=False,
+            scan=False,
         )
         global_preflight.assert_not_called()
         self.assertIn("FAST START roots=1 start=1 limit=10", output.getvalue())
@@ -2097,6 +2313,7 @@ class OutputContractTests(unittest.TestCase):
             start_index=0,
             roots_prevalidated=True,
             ignore_omega_directories=False,
+            scan=False,
         )
 
     def test_main_resume_uses_saved_cursor_without_expanding_or_validating(self) -> None:
@@ -2142,6 +2359,7 @@ class OutputContractTests(unittest.TestCase):
             start_index=1,
             roots_prevalidated=True,
             ignore_omega_directories=False,
+            scan=False,
         )
         expand.assert_not_called()
         validate.assert_not_called()
@@ -2205,6 +2423,7 @@ class OutputContractTests(unittest.TestCase):
             start_index=1,
             roots_prevalidated=True,
             ignore_omega_directories=False,
+            scan=False,
         )
         self.assertIn("start=2/3", output.getvalue())
 
@@ -2268,6 +2487,7 @@ class OutputContractTests(unittest.TestCase):
             start_index=1,
             roots_prevalidated=True,
             ignore_omega_directories=False,
+            scan=False,
         )
 
     def test_main_resume_from_topic_command_preserves_omega_exclusion(
@@ -2331,6 +2551,7 @@ class OutputContractTests(unittest.TestCase):
             start_index=1,
             roots_prevalidated=True,
             ignore_omega_directories=True,
+            scan=False,
         )
 
     def test_main_author_roots_routes_expanded_courses_to_fast_start(self) -> None:
@@ -2376,6 +2597,7 @@ class OutputContractTests(unittest.TestCase):
             start_index=0,
             roots_prevalidated=True,
             ignore_omega_directories=False,
+            scan=False,
         )
         global_preflight.assert_not_called()
         self.assertIn(
@@ -2440,6 +2662,7 @@ class OutputContractTests(unittest.TestCase):
             start_index=0,
             roots_prevalidated=True,
             ignore_omega_directories=True,
+            scan=False,
         )
         global_preflight.assert_not_called()
         self.assertIn(
@@ -2487,6 +2710,7 @@ class OutputContractTests(unittest.TestCase):
             start_index=0,
             roots_prevalidated=True,
             ignore_omega_directories=True,
+            scan=False,
         )
         expand.assert_not_called()
         validate.assert_not_called()

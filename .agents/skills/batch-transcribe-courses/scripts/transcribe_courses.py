@@ -52,6 +52,12 @@ import unicodedata
 
 
 MODEL = "large-v3-v20240930_turbo"
+MODEL_ROOT = Path(
+    os.environ.get("WHISPERKIT_MODEL_ROOT")
+    or Path.home() / "Documents/huggingface/models/argmaxinc/whisperkit-coreml"
+)
+MODEL_PATH = MODEL_ROOT / f"openai_whisper-{MODEL}"
+MODEL_REQUIRED_BUNDLES = ("AudioEncoder.mlmodelc", "TextDecoder.mlmodelc")
 DEFAULT_LANGUAGE = "en"
 LANGUAGE_PATH_CODES = {
     "chinese (cantonese)": "yue",
@@ -490,6 +496,7 @@ class RunLog:
             self._write(f"Transcription options: {options!r}")
         self._write(f"whisperkit-cli: {shutil.which('whisperkit-cli') or 'unresolved'}")
         self._write(f"ffmpeg: {shutil.which('ffmpeg') or 'unresolved'}")
+        self._write(f"model path: {MODEL_PATH}")
 
     def event(self, kind: str, message: str, *, issue: bool = False) -> None:
         self.counts[kind] = self.counts.get(kind, 0) + 1
@@ -1682,6 +1689,29 @@ def resolve_program(name: str, label: str) -> tuple[str | None, str | None]:
     return resolved, None
 
 
+def resolve_model_path() -> tuple[Path | None, str | None]:
+    try:
+        if not MODEL_PATH.is_dir():
+            return None, (
+                f"missing dependency: WhisperKit model directory not found: {MODEL_PATH}; "
+                f"set WHISPERKIT_MODEL_ROOT to the directory containing "
+                f"openai_whisper-{MODEL}"
+            )
+        missing = [
+            bundle
+            for bundle in MODEL_REQUIRED_BUNDLES
+            if not (MODEL_PATH / bundle).exists()
+        ]
+    except OSError as exc:
+        return None, f"could not inspect WhisperKit model directory {MODEL_PATH}: {exc}"
+    if missing:
+        return None, (
+            f"invalid dependency: WhisperKit model directory {MODEL_PATH} is missing "
+            f"{', '.join(missing)}"
+        )
+    return MODEL_PATH, None
+
+
 def identity_from_stat(file_stat: os.stat_result) -> MediaIdentity:
     return MediaIdentity(
         device=file_stat.st_dev,
@@ -1973,10 +2003,13 @@ def perform_preflight(
     if programs is None:
         whisperkit, whisperkit_error = resolve_program("whisperkit-cli", "WhisperKit CLI")
         ffmpeg, ffmpeg_error = resolve_program("ffmpeg", "ffmpeg")
+        _, model_error = resolve_model_path()
         if whisperkit_error:
             errors.append(whisperkit_error)
         if ffmpeg_error:
             errors.append(ffmpeg_error)
+        if model_error:
+            errors.append(model_error)
         if whisperkit is not None and ffmpeg is not None:
             programs = Programs(whisperkit=whisperkit, ffmpeg=ffmpeg)
 
@@ -2479,6 +2512,8 @@ def whisperkit_transcribe_command(
         str(audio_path),
         "--model",
         MODEL,
+        "--model-path",
+        str(MODEL_PATH),
         "--task",
         "transcribe",
         "--chunking-strategy",
@@ -3914,8 +3949,9 @@ def run_fast_start(
 
     whisperkit, whisperkit_error = resolve_program("whisperkit-cli", "WhisperKit CLI")
     ffmpeg, ffmpeg_error = resolve_program("ffmpeg", "ffmpeg")
+    _, model_error = resolve_model_path()
     program_errors = [
-        error for error in (whisperkit_error, ffmpeg_error) if error
+        error for error in (whisperkit_error, ffmpeg_error, model_error) if error
     ]
     if program_errors:
         for error in program_errors:

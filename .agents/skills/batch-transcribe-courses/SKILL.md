@@ -271,4 +271,27 @@ SSD; it reports model load time, per-file time, audio duration, and RTF, and
 repeated `--placement ENCODER:DECODER` flags compare Core ML placements and
 hash each placement's transcripts.
 
-<<VERIFICATION>>
+Live verification on 2026-08-04/05 used Swift 6.3.3/Xcode 26.6 on macOS 26.5.1
+arm64 against Argmax `dcf3a00f0ae4`. The vendored release worker built in about
+22 seconds with the SwiftPM dependency cache warm. The first model load after a
+build took 90.9 seconds because Core ML specializes the Neural Engine model;
+every later load in the same cache state took 0.7-0.8 seconds. That difference
+is the whole point of the persistent worker: a run pays the load once rather
+than once per file.
+
+Worker output was compared against `whisperkit-cli` built from the same
+checkout with identical settings. On a 30-second and a 60-second English
+fixture, plain text and rendered 120-second timestamps were byte-identical in
+both directions (matching SHA-256 and identical segment counts of 6 and 14).
+Matching the CLI's unset `firstTokenLogProbThreshold` rather than the
+`DecodingOptions` default of -1.5 is what makes this hold.
+
+A five-placement sweep on one representative 18m23s lesson, two runs each with
+120-second timestamps, measured 66.2x for `cpuAndNeuralEngine`/`cpuAndGPU`,
+65.5x for `cpuAndNeuralEngine`/`all`, 43.3x for `all`/`all`, 43.2x for
+`cpuAndGPU`/`cpuAndGPU`, and 26.8x for `cpuAndNeuralEngine`/`cpuAndNeuralEngine`.
+Only `cpuAndNeuralEngine`/`all` matched the baseline transcript hash, and it was
+slower. The production placement therefore stays encoder `cpuAndNeuralEngine`,
+decoder `cpuAndGPU`: it is simultaneously the fastest measured placement and
+the byte-identical reference.
+

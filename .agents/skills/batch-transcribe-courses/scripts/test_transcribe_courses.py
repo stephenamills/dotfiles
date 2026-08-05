@@ -5,15 +5,29 @@ from __future__ import annotations
 
 from contextlib import redirect_stderr, redirect_stdout
 import errno
+import hashlib
 import io
 import json
 import os
 from pathlib import Path
+import random
+import subprocess
 import tempfile
+import textwrap
 import unittest
 from unittest import mock
 
 import transcribe_courses as subject
+
+
+def mpeg_transport_stream_bytes(
+    packet_size: int = 188,
+    packet_count: int = 4,
+    sync_offset: int = 0,
+) -> bytes:
+    packet = bytearray(packet_size)
+    packet[sync_offset] = 0x47
+    return bytes(packet) * packet_count
 
 
 class FlushRecordingStream(io.StringIO):
@@ -590,83 +604,101 @@ class WhisperKitDirectTests(unittest.TestCase):
         self.assertEqual(explicit.language, "fr")
         self.assertIsNone(automatic.language)
 
-    def test_direct_command_preserves_settings_and_timestamp_mode(self) -> None:
-        options = subject.TranscriptionOptions(
+    def test_worker_request_carries_language_and_timestamp_mode(self) -> None:
+        worker = mock.Mock()
+        worker.transcribe.return_value = {
+            "type": "result",
+            "text": "text",
+            "segments": [{"start": 0.0, "end": 1.0, "text": "text"}],
+            "duration": 1.0,
+            "processing_time": 0.1,
+        }
+        with tempfile.TemporaryDirectory() as temporary, mock.patch.object(
+            subject, "active_worker", return_value=worker
+        ):
+            subject.run_whisperkit_worker(
+                "/worker",
+                Path("/audio.wav"),
+                subject.TranscriptionOptions(
+                    language="fr",
+                    timestamps=True,
+                    retries=0,
+                    timeout_seconds=123,
+                ),
+                Path(temporary),
+            )
+
+        worker.transcribe.assert_called_once_with(
+            Path("/audio.wav"),
+            123,
             language="fr",
             timestamps=True,
         )
-        command = subject.whisperkit_transcribe_command(
-            "/bin/whisperkit-cli",
-            Path("/audio.wav"),
-            options,
-            Path("/reports"),
-        )
 
-        self.assertEqual(command[:2], ["/bin/whisperkit-cli", "transcribe"])
-        for option, value in (
-            ("--audio-path", "/audio.wav"),
-            ("--model", subject.MODEL),
-            ("--language", "fr"),
-            ("--task", "transcribe"),
-            ("--chunking-strategy", subject.CHUNKING_STRATEGY),
-            (
-                "--audio-encoder-compute-units",
-                subject.AUDIO_ENCODER_COMPUTE_UNITS,
-            ),
-            (
-                "--text-decoder-compute-units",
-                subject.TEXT_DECODER_COMPUTE_UNITS,
-            ),
-            ("--concurrent-worker-count", str(subject.CONCURRENT_WORKERS)),
-            ("--report-path", "/reports"),
-        ):
-            self.assertEqual(command[command.index(option) + 1], value)
-        self.assertIn("--report", command)
-        self.assertIn("--skip-special-tokens", command)
-        self.assertNotIn("--without-timestamps", command)
-
-    def test_auto_language_is_omitted_and_plain_mode_disables_timestamps(
+    def test_auto_language_is_forwarded_as_null_and_plain_mode_disables_timestamps(
         self,
     ) -> None:
-        options = subject.TranscriptionOptions(language=None)
-        command = subject.whisperkit_transcribe_command(
-            "whisperkit-cli",
-            Path("/audio.wav"),
-            options,
-            Path("/reports"),
+        worker = mock.Mock()
+        worker.transcribe.return_value = {
+            "type": "result",
+            "text": "text",
+            "segments": [],
+            "duration": 1.0,
+            "processing_time": 0.1,
+        }
+        with tempfile.TemporaryDirectory() as temporary, mock.patch.object(
+            subject, "active_worker", return_value=worker
+        ):
+            subject.run_whisperkit_worker(
+                "/worker",
+                Path("/audio.wav"),
+                subject.TranscriptionOptions(language=None, retries=0),
+                Path(temporary),
+            )
+
+        self.assertIsNone(worker.transcribe.call_args.kwargs["language"])
+        self.assertFalse(worker.transcribe.call_args.kwargs["timestamps"])
+
+    def test_worker_environment_pins_model_path_and_compute_placement(self) -> None:
+        environment = subject.worker_environment()
+
+        self.assertEqual(
+            environment["WHISPERKIT_WORKER_MODEL_PATH"],
+            str(subject.MODEL_PATH),
+        )
+        self.assertEqual(
+            environment["WHISPERKIT_AUDIO_ENCODER_COMPUTE_UNITS"],
+            subject.AUDIO_ENCODER_COMPUTE_UNITS,
+        )
+        self.assertEqual(
+            environment["WHISPERKIT_TEXT_DECODER_COMPUTE_UNITS"],
+            subject.TEXT_DECODER_COMPUTE_UNITS,
         )
 
-        self.assertNotIn("--language", command)
-        self.assertIn("--skip-special-tokens", command)
-        self.assertIn("--without-timestamps", command)
-        self.assertNotIn("--report", command)
-
-    def test_timeout_kills_owned_child_then_retry_succeeds(self) -> None:
-        timed_out = mock.Mock()
-        timed_out.returncode = None
-        timed_out.communicate.side_effect = [
-            subject.subprocess.TimeoutExpired(["whisperkit-cli"], 1),
-            ("", ""),
+    def test_timeout_restarts_worker_then_retry_succeeds(self) -> None:
+        worker = mock.Mock()
+        worker.transcribe.side_effect = [
+            subject.WorkerRequestTimeout("WhisperKit worker timed out after 1 seconds"),
+            {
+                "type": "result",
+                "text": "  recovered transcript  \n",
+                "segments": [],
+                "duration": 1.0,
+                "processing_time": 0.1,
+            },
         ]
-        succeeded = mock.Mock()
-        succeeded.returncode = 0
-        succeeded.communicate.return_value = ("  recovered transcript  \n", "")
         errors = FlushRecordingStream()
 
         with (
             tempfile.TemporaryDirectory() as temporary,
             redirect_stderr(errors),
-            mock.patch.object(
-                subject.subprocess,
-                "Popen",
-                side_effect=[timed_out, succeeded],
-            ) as popen,
-            mock.patch.object(subject, "terminate_owned_child") as terminate,
+            mock.patch.object(subject, "active_worker", return_value=worker),
+            mock.patch.object(subject, "reset_worker") as reset,
         ):
             directory = Path(temporary)
             review_log = subject.ReviewLog(directory / "review.txt")
-            transcript, error = subject.run_whisperkit_direct(
-                "whisperkit-cli",
+            transcript, error = subject.run_whisperkit_worker(
+                "/worker",
                 Path("/audio.wav"),
                 subject.TranscriptionOptions(timeout_seconds=1, retries=1),
                 directory,
@@ -677,9 +709,7 @@ class WhisperKitDirectTests(unittest.TestCase):
 
         self.assertEqual(transcript, "recovered transcript")
         self.assertIsNone(error)
-        terminate.assert_called_once_with(timed_out)
-        self.assertEqual(popen.call_count, 2)
-        self.assertTrue(popen.call_args.kwargs["start_new_session"])
+        reset.assert_called_once_with("request timeout")
         self.assertIn("WHISPERKIT RETRY", errors.getvalue())
         self.assertIn("WHISPERKIT TIMEOUT", review_text)
         self.assertIn("/source/lesson.mp4", review_text)
@@ -711,66 +741,48 @@ class WhisperKitDirectTests(unittest.TestCase):
         self.assertIn("timed out after 1 seconds", error or "")
 
     def test_empty_results_are_retried_then_fail(self) -> None:
-        processes = []
-        for _ in range(2):
-            process = mock.Mock()
-            process.returncode = 0
-            process.communicate.return_value = (" \n", "")
-            processes.append(process)
+        worker = mock.Mock()
+        worker.transcribe.return_value = {
+            "type": "result",
+            "text": " \n",
+            "segments": [],
+            "duration": 1.0,
+            "processing_time": 0.1,
+        }
 
         with tempfile.TemporaryDirectory() as temporary, mock.patch.object(
-            subject.subprocess,
-            "Popen",
-            side_effect=processes,
+            subject, "active_worker", return_value=worker
         ):
-            transcript, error = subject.run_whisperkit_direct(
-                "whisperkit-cli",
+            transcript, error = subject.run_whisperkit_worker(
+                "/worker",
                 Path("/audio.wav"),
                 subject.TranscriptionOptions(retries=1),
                 Path(temporary),
             )
 
         self.assertIsNone(transcript)
-        self.assertIn("no usable transcript", error or "")
-        self.assertIn("attempts=2", error or "")
+        self.assertIn("empty transcript", error or "")
 
-    def test_timestamp_report_is_rendered_for_tutorial_cross_reference(
+    def test_timestamp_segments_are_rendered_for_tutorial_cross_reference(
         self,
     ) -> None:
-        process = mock.Mock()
-        process.returncode = 0
-        process.communicate.return_value = ("plain text", "")
-
-        def start(command: list[str], **_kwargs: object) -> mock.Mock:
-            report_path = Path(command[command.index("--report-path") + 1])
-            (report_path / "lesson.json").write_text(
-                json.dumps(
-                    {
-                        "segments": [
-                            {
-                                "start": 1.25,
-                                "end": 3.5,
-                                "text": " First step ",
-                            },
-                            {
-                                "start": 125.0,
-                                "end": 130.125,
-                                "text": "Second step",
-                            },
-                        ]
-                    }
-                ),
-                encoding="utf-8",
-            )
-            return process
+        worker = mock.Mock()
+        worker.transcribe.return_value = {
+            "type": "result",
+            "text": "First step Second step",
+            "segments": [
+                {"start": 1.25, "end": 3.5, "text": " First step "},
+                {"start": 125.0, "end": 130.125, "text": "Second step"},
+            ],
+            "duration": 200.0,
+            "processing_time": 4.0,
+        }
 
         with tempfile.TemporaryDirectory() as temporary, mock.patch.object(
-            subject.subprocess,
-            "Popen",
-            side_effect=start,
+            subject, "active_worker", return_value=worker
         ):
-            transcript, error = subject.run_whisperkit_direct(
-                "whisperkit-cli",
+            transcript, error = subject.run_whisperkit_worker(
+                "/worker",
                 Path("/lesson.wav"),
                 subject.TranscriptionOptions(timestamps=True, retries=0),
                 Path(temporary),
@@ -784,32 +796,55 @@ class WhisperKitDirectTests(unittest.TestCase):
         )
 
     def test_zero_timestamp_interval_emits_every_segment_range(self) -> None:
-        with tempfile.TemporaryDirectory() as temporary:
-            report = Path(temporary) / "lesson.json"
-            report.write_text(
-                json.dumps(
-                    {
-                        "segments": [
-                            {
-                                "start": 1.25,
-                                "end": 3.5,
-                                "text": "Step",
-                            }
-                        ]
-                    }
-                ),
-                encoding="utf-8",
-            )
-            transcript, error = subject.timestamped_transcript(
-                report,
-                interval_seconds=0,
-            )
+        transcript, error = subject.timestamped_transcript(
+            [{"start": 1.25, "end": 3.5, "text": "Step"}],
+            interval_seconds=0,
+        )
 
         self.assertIsNone(error)
         self.assertEqual(
             transcript,
             "[00:00:01.250 --> 00:00:03.500] Step",
         )
+
+    def test_malformed_segments_fail_without_producing_a_transcript(self) -> None:
+        for segments in (
+            "not-a-list",
+            [{"start": 0.0, "end": 1.0}],
+            [{"start": None, "end": 1.0, "text": "x"}],
+            [{"start": float("inf"), "end": 1.0, "text": "x"}],
+        ):
+            with self.subTest(segments=segments):
+                transcript, error = subject.timestamped_transcript(segments, 120)
+                self.assertIsNone(transcript)
+                self.assertIn("invalid WhisperKit segments", error or "")
+
+    def test_worker_timing_metrics_record_audio_seconds_and_rtf(self) -> None:
+        worker = mock.Mock()
+        worker.transcribe.return_value = {
+            "type": "result",
+            "text": "text",
+            "segments": [],
+            "duration": 600.0,
+            "processing_time": 12.0,
+        }
+
+        with tempfile.TemporaryDirectory() as temporary, mock.patch.object(
+            subject, "active_worker", return_value=worker
+        ):
+            subject.run_whisperkit_worker(
+                "/worker",
+                Path("/audio.wav"),
+                subject.TranscriptionOptions(retries=0),
+                Path(temporary),
+            )
+            metrics = subject._LAST_ENGINE_METRICS
+
+        self.assertIsNotNone(metrics)
+        assert metrics is not None
+        self.assertEqual(metrics.audio_seconds, 600.0)
+        self.assertGreater(metrics.engine_seconds, 0)
+        self.assertIsNotNone(metrics.rtf)
 
     def test_direct_item_installs_with_overwrite_setting(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
@@ -831,7 +866,7 @@ class WhisperKitDirectTests(unittest.TestCase):
                 with (
                     mock.patch.object(
                         subject,
-                        "run_whisperkit_direct",
+                        "run_whisperkit_worker",
                         return_value=("transcript", None),
                     ) as direct,
                     mock.patch.object(
@@ -843,7 +878,7 @@ class WhisperKitDirectTests(unittest.TestCase):
                     options = subject.TranscriptionOptions(overwrite=True)
                     result = subject.transcribe_item(
                         item,
-                        subject.Programs("whisperkit-cli", "ffmpeg"),
+                        subject.Programs("ffmpeg", "/worker"),
                         parent_fd,
                         options,
                     )
@@ -851,7 +886,7 @@ class WhisperKitDirectTests(unittest.TestCase):
                 os.close(parent_fd)
 
         self.assertIs(result.status, subject.InstallStatus.INSTALLED)
-        self.assertEqual(direct.call_args.args[0], "whisperkit-cli")
+        self.assertEqual(direct.call_args.args[0], "/worker")
         self.assertEqual(direct.call_args.args[1], media)
         install.assert_called_once_with(
             parent_fd,
@@ -1101,7 +1136,7 @@ class TimestampUpgradeTests(unittest.TestCase):
                 with (
                     mock.patch.object(
                         subject,
-                        "run_whisperkit_direct",
+                        "run_whisperkit_worker",
                         return_value=("[00:00:00]\nreplacement", None),
                     ),
                     mock.patch.object(
@@ -1148,7 +1183,7 @@ class TimestampUpgradeTests(unittest.TestCase):
             try:
                 with mock.patch.object(
                     subject,
-                    "run_whisperkit_direct",
+                    "run_whisperkit_worker",
                     return_value=("new but still plain", None),
                 ):
                     result = subject.transcribe_item(
@@ -1323,6 +1358,48 @@ class ResumeCheckpointTests(unittest.TestCase):
 
 
 class StreamingTests(unittest.TestCase):
+    def test_stream_skips_typescript_but_keeps_mpeg_transport_stream(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary) / "Course"
+            root.mkdir()
+            (root / "drizzle.config.ts").write_text(
+                'import { defineConfig } from "drizzle-kit";\n',
+                encoding="utf-8",
+            )
+            (root / "lesson.ts").write_bytes(mpeg_transport_stream_bytes())
+            processed: list[str] = []
+
+            def process(
+                item: subject.WorkItem,
+                _programs: subject.Programs,
+                _options: subject.TranscriptionOptions,
+                summary: subject.CourseSummary,
+                _prefix: str,
+                _review: subject.ReviewLog | None,
+            ) -> None:
+                processed.append(item.relative_media.name)
+                summary.succeeded += 1
+
+            with (
+                mock.patch.object(subject, "process_item", side_effect=process),
+                mock.patch.object(subject, "volume_is_live", return_value=True),
+            ):
+                summary, consumed, limited, failed = subject.stream_course(
+                    subject.Course(root),
+                    subject.Programs("ffmpeg", "/worker"),
+                    subject.TranscriptionOptions(),
+                    None,
+                    None,
+                    subject.ReviewLog(Path(temporary) / "review.txt"),
+                    "1/1",
+                )
+
+        self.assertEqual(processed, ["lesson.ts"])
+        self.assertEqual(summary.discovered, 1)
+        self.assertEqual(consumed, 1)
+        self.assertFalse(limited)
+        self.assertFalse(failed)
+
     def test_stream_course_sorts_and_starts_before_walk_finishes(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary) / "Course"
@@ -1349,7 +1426,7 @@ class StreamingTests(unittest.TestCase):
             ):
                 summary, consumed, limited, failed = subject.stream_course(
                     subject.Course(root),
-                    subject.Programs("whisperkit-cli", "ffmpeg"),
+                    subject.Programs("ffmpeg", "/worker"),
                     subject.TranscriptionOptions(),
                     None,
                     None,
@@ -1382,7 +1459,7 @@ class StreamingTests(unittest.TestCase):
             ):
                 summary, consumed, limited, failed = subject.stream_course(
                     subject.Course(root),
-                    subject.Programs("whisperkit-cli", "ffmpeg"),
+                    subject.Programs("ffmpeg", "/worker"),
                     subject.TranscriptionOptions(),
                     None,
                     None,
@@ -1417,7 +1494,7 @@ class StreamingTests(unittest.TestCase):
             ):
                 summary, _consumed, _limited, _failed = subject.stream_course(
                     subject.Course(root),
-                    subject.Programs("whisperkit-cli", "ffmpeg"),
+                    subject.Programs("ffmpeg", "/worker"),
                     subject.TranscriptionOptions(),
                     None,
                     None,
@@ -1457,7 +1534,7 @@ class StreamingTests(unittest.TestCase):
             ):
                 summary, _consumed, _limited, _failed = subject.stream_course(
                     subject.Course(root),
-                    subject.Programs("whisperkit-cli", "ffmpeg"),
+                    subject.Programs("ffmpeg", "/worker"),
                     subject.TranscriptionOptions(
                         timestamps=True,
                         upgrade_timestamps=True,
@@ -1489,7 +1566,7 @@ class StreamingTests(unittest.TestCase):
             ):
                 summary, consumed, limited, failed = subject.stream_course(
                     subject.Course(root),
-                    subject.Programs("whisperkit-cli", "ffmpeg"),
+                    subject.Programs("ffmpeg", "/worker"),
                     subject.TranscriptionOptions(),
                     1,
                     None,
@@ -1533,7 +1610,7 @@ class OutputContractTests(unittest.TestCase):
         return subject.Preflight(
             courses=[course],
             items=items,
-            programs=subject.Programs("whisperkit-cli", "ffmpeg"),
+            programs=subject.Programs("ffmpeg", "/worker"),
             work_total=sum(item.selected for item in items),
             options=options,
         )
@@ -1879,6 +1956,52 @@ class OutputContractTests(unittest.TestCase):
             },
         )
 
+    def test_ts_discovery_distinguishes_typescript_from_transport_stream(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            course_root = Path(temporary) / "Course"
+            course_root.mkdir()
+            source = course_root / "drizzle.config.ts"
+            source.write_text(
+                'import { config } from "dotenv";\nexport default config;\n',
+                encoding="utf-8",
+            )
+            media = course_root / "lesson.ts"
+            media.write_bytes(mpeg_transport_stream_bytes())
+
+            items, errors = subject.discover_media(subject.Course(course_root))
+            direct = subject.direct_media_files(course_root)
+            source_is_transport_stream = (
+                subject.has_mpeg_transport_stream_signature(source)
+            )
+            media_is_transport_stream = (
+                subject.has_mpeg_transport_stream_signature(media)
+            )
+
+        self.assertEqual(errors, [])
+        self.assertFalse(source_is_transport_stream)
+        self.assertTrue(media_is_transport_stream)
+        self.assertEqual(
+            [item.relative_media.name for item in items],
+            ["lesson.ts"],
+        )
+        self.assertEqual([path.name for path in direct], ["lesson.ts"])
+
+    def test_ts_signature_accepts_common_packet_strides(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            fixtures = {
+                188: mpeg_transport_stream_bytes(188),
+                192: mpeg_transport_stream_bytes(192, sync_offset=4),
+                204: mpeg_transport_stream_bytes(204),
+            }
+            for packet_size, payload in fixtures.items():
+                path = root / f"packet-{packet_size}.ts"
+                path.write_bytes(payload)
+                with self.subTest(packet_size=packet_size):
+                    self.assertTrue(
+                        subject.has_mpeg_transport_stream_signature(path)
+                    )
+
     def test_music_tree_discovers_only_video_containers(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             course_root = (
@@ -1990,13 +2113,13 @@ class OutputContractTests(unittest.TestCase):
             first = subject.Preflight(
                 courses=[subject.Course(first_root.resolve())],
                 items=[],
-                programs=subject.Programs("whisperkit-cli", "ffmpeg"),
+                programs=subject.Programs("ffmpeg", "/worker"),
                 work_total=2,
             )
             second = subject.Preflight(
                 courses=[subject.Course(second_root.resolve())],
                 items=[],
-                programs=subject.Programs("whisperkit-cli", "ffmpeg"),
+                programs=subject.Programs("ffmpeg", "/worker"),
                 work_total=1,
             )
             calls: list[tuple[str, str, int | None]] = []
@@ -2078,7 +2201,7 @@ class OutputContractTests(unittest.TestCase):
                     )
                 ],
                 items=[],
-                programs=subject.Programs("whisperkit-cli", "ffmpeg"),
+                programs=subject.Programs("ffmpeg", "/worker"),
                 work_total=0,
             )
 
@@ -2092,8 +2215,12 @@ class OutputContractTests(unittest.TestCase):
                 ) as perform,
                 mock.patch.object(
                     subject,
-                    "resolve_program",
-                    return_value=("/bin/true", None),
+                    "bootstrap_worker",
+                    return_value=(
+                        subject.Programs("/bin/true", "/bin/true"),
+                        None,
+                        None,
+                    ),
                 ),
                 mock.patch.object(subject, "print_preflight"),
                 mock.patch.object(subject, "run_live", return_value=0),
@@ -2133,7 +2260,7 @@ class OutputContractTests(unittest.TestCase):
             first = subject.Preflight(
                 courses=[subject.Course(first_root)],
                 items=[],
-                programs=subject.Programs("whisperkit-cli", "ffmpeg"),
+                programs=subject.Programs("ffmpeg", "/worker"),
                 work_total=0,
             )
 
@@ -2147,8 +2274,12 @@ class OutputContractTests(unittest.TestCase):
                 ),
                 mock.patch.object(
                     subject,
-                    "resolve_program",
-                    return_value=("/bin/true", None),
+                    "bootstrap_worker",
+                    return_value=(
+                        subject.Programs("/bin/true", "/bin/true"),
+                        None,
+                        None,
+                    ),
                 ),
                 mock.patch.object(subject, "print_preflight"),
                 mock.patch.object(subject, "run_live", return_value=0),
@@ -2179,7 +2310,7 @@ class OutputContractTests(unittest.TestCase):
             second = subject.Preflight(
                 courses=[subject.Course(second_root.resolve())],
                 items=[],
-                programs=subject.Programs("whisperkit-cli", "ffmpeg"),
+                programs=subject.Programs("ffmpeg", "/worker"),
                 work_total=1,
             )
             errors = FlushRecordingStream()
@@ -2725,7 +2856,7 @@ class OutputContractTests(unittest.TestCase):
                 )
             ],
             items=[],
-            programs=subject.Programs("whisperkit-cli", "ffmpeg"),
+            programs=subject.Programs("ffmpeg", "/worker"),
             work_total=0,
         )
         with (
@@ -2912,6 +3043,1088 @@ class OutputContractTests(unittest.TestCase):
             output.getvalue(),
         )
         self.assertGreater(errors.flush_count, 0)
+
+
+class CheckpointMigrationTests(unittest.TestCase):
+    def test_new_checkpoints_are_v4_without_an_engine_field(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            checkpoint = subject.ResumeCheckpoint.create(
+                ["/courses/One"],
+                ["/courses/One"],
+                "course-roots",
+                directory=Path(temporary),
+            )
+            payload = json.loads(checkpoint.path.read_text(encoding="utf-8"))
+            loaded = subject.ResumeCheckpoint.load(checkpoint.path)
+
+        self.assertEqual(payload["version"], 4)
+        self.assertNotIn("engine", payload["transcription_options"])
+        self.assertFalse(loaded.needs_migration)
+        self.assertFalse(hasattr(loaded.options, "engine"))
+
+    def test_v3_parakeet_and_whisperkit_migrate_to_v4_on_demand(self) -> None:
+        for engine in ("parakeet", "whisperkit"):
+            with (
+                self.subTest(engine=engine),
+                tempfile.TemporaryDirectory() as temporary,
+            ):
+                checkpoint = subject.ResumeCheckpoint.create(
+                    ["/courses/One", "/courses/Two"],
+                    ["/courses/One"],
+                    "course-roots",
+                    directory=Path(temporary),
+                )
+                payload = json.loads(checkpoint.path.read_text(encoding="utf-8"))
+                payload["version"] = 3
+                payload["transcription_options"]["engine"] = engine
+                payload["next_index"] = 1
+                payload["current_course"] = "/courses/Two"
+                checkpoint.path.write_text(json.dumps(payload), encoding="utf-8")
+                before = checkpoint.path.read_bytes()
+
+                loaded = subject.ResumeCheckpoint.load(checkpoint.path)
+                self.assertTrue(loaded.needs_migration)
+                self.assertEqual(loaded.loaded_version, 3)
+                # Loading alone must never touch the file.
+                self.assertEqual(checkpoint.path.read_bytes(), before)
+
+                with redirect_stdout(FlushRecordingStream()):
+                    loaded.migrate()
+                rewritten = json.loads(
+                    checkpoint.path.read_text(encoding="utf-8")
+                )
+                self.assertEqual(rewritten["version"], 4)
+                self.assertNotIn("engine", rewritten["transcription_options"])
+                self.assertEqual(rewritten["next_index"], 1)
+                self.assertFalse(loaded.needs_migration)
+
+    def test_v1_and_v2_load_as_whisper_and_migrate_to_v4(self) -> None:
+        for version in (1, 2):
+            with (
+                self.subTest(version=version),
+                tempfile.TemporaryDirectory() as temporary,
+            ):
+                checkpoint = subject.ResumeCheckpoint.create(
+                    ["/courses/One"],
+                    ["/courses/One"],
+                    "course-roots",
+                    directory=Path(temporary),
+                )
+                payload = json.loads(checkpoint.path.read_text(encoding="utf-8"))
+                payload["version"] = version
+                checkpoint.path.write_text(json.dumps(payload), encoding="utf-8")
+
+                loaded = subject.ResumeCheckpoint.load(checkpoint.path)
+                self.assertTrue(loaded.needs_migration)
+                with redirect_stdout(FlushRecordingStream()):
+                    loaded.migrate()
+                rewritten = json.loads(
+                    checkpoint.path.read_text(encoding="utf-8")
+                )
+                self.assertEqual(rewritten["version"], 4)
+
+    def test_unknown_v3_engine_value_remains_fatal(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            checkpoint = subject.ResumeCheckpoint.create(
+                ["/courses/One"],
+                ["/courses/One"],
+                "course-roots",
+                directory=Path(temporary),
+            )
+            payload = json.loads(checkpoint.path.read_text(encoding="utf-8"))
+            payload["version"] = 3
+            payload["transcription_options"]["engine"] = "mystery"
+            checkpoint.path.write_text(json.dumps(payload), encoding="utf-8")
+
+            with self.assertRaises(subject.ResumeStateError):
+                subject.ResumeCheckpoint.load(checkpoint.path)
+
+    def test_unsupported_future_version_remains_fatal(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            checkpoint = subject.ResumeCheckpoint.create(
+                ["/courses/One"],
+                ["/courses/One"],
+                "course-roots",
+                directory=Path(temporary),
+            )
+            payload = json.loads(checkpoint.path.read_text(encoding="utf-8"))
+            payload["version"] = 5
+            checkpoint.path.write_text(json.dumps(payload), encoding="utf-8")
+
+            with self.assertRaises(subject.ResumeStateError):
+                subject.ResumeCheckpoint.load(checkpoint.path)
+
+class TimedRenderingTests(unittest.TestCase):
+    def test_exact_bucket_boundary_silence_and_spanning_phrase(self) -> None:
+        transcript, error = subject.render_timed_transcript(
+            [
+                subject.TimedPhrase(0.0, 1.0, "zero"),
+                subject.TimedPhrase(119.9, 120.2, "spans"),
+                subject.TimedPhrase(120.0, 121.0, "boundary"),
+                subject.TimedPhrase(360.0, 361.0, "after silence"),
+            ],
+            120,
+        )
+
+        self.assertIsNone(error)
+        self.assertEqual(
+            transcript,
+            "[00:00:00]\nzero spans\n\n"
+            "[00:02:00]\nboundary\n\n"
+            "[00:06:00]\nafter silence",
+        )
+        self.assertNotIn("[00:04:00]", transcript or "")
+
+    def test_multi_hour_and_hundred_hour_markers(self) -> None:
+        transcript, error = subject.render_timed_transcript(
+            [
+                subject.TimedPhrase(12_000.0, 12_001.0, "three hours"),
+                subject.TimedPhrase(360_000.0, 360_001.0, "hundred hours"),
+            ],
+            120,
+        )
+
+        self.assertIsNone(error)
+        self.assertIn("[03:20:00]", transcript or "")
+        self.assertIn("[100:00:00]", transcript or "")
+
+
+class WhisperKitWorkerProtocolTests(unittest.TestCase):
+    FAKE_SOURCE = textwrap.dedent(
+        """\
+        #!/usr/bin/env python3
+        import json
+        import os
+        import sys
+        import time
+
+        mode = os.environ.get("FAKE_WORKER_MODE", "success")
+        start_log = os.environ["FAKE_WORKER_START_LOG"]
+        shutdown_log = os.environ["FAKE_WORKER_SHUTDOWN_LOG"]
+        model = os.environ["FAKE_WORKER_MODEL"]
+        revision = os.environ["FAKE_WORKER_REVISION"]
+        with open(start_log, "a", encoding="utf-8") as output:
+            output.write(str(os.getpid()) + "\\n")
+        with open(start_log, encoding="utf-8") as source:
+            start_number = len(source.readlines())
+
+        def emit(frame):
+            sys.stdout.write(json.dumps(frame, separators=(",", ":")) + "\\n")
+            sys.stdout.flush()
+
+        if mode == "stderr_flood":
+            sys.stderr.write("x" * 1000000 + "\\n")
+            sys.stderr.flush()
+        if mode == "bad_revision":
+            revision = "0000000000000000000000000000000000000000"
+        emit({
+            "type": "ready",
+            "engine": "whisperkit",
+            "model": model,
+            "model_path": "/fake/model",
+            "audio_encoder_compute_units": "cpuAndNeuralEngine",
+            "text_decoder_compute_units": "cpuAndGPU",
+            "concurrent_worker_count": 64,
+            "chunking_strategy": "vad",
+            "argmax_revision": revision,
+            "worker_version": "fake",
+            "model_load_seconds": 0.25,
+        })
+        request_number = 0
+        for line in sys.stdin:
+            request = json.loads(line)
+            if request["type"] == "shutdown":
+                with open(shutdown_log, "a", encoding="utf-8") as output:
+                    output.write(str(os.getpid()) + "\\n")
+                break
+            request_number += 1
+            request_id = request["id"]
+            if mode == "echo_request":
+                emit({
+                    "id": request_id,
+                    "type": "result",
+                    "text": json.dumps(
+                        {
+                            "language": request.get("language"),
+                            "timestamps": request.get("timestamps"),
+                            "audio_path": request.get("audio_path"),
+                        },
+                        sort_keys=True,
+                    ),
+                    "segments": [],
+                    "duration": 1.0,
+                    "processing_time": 0.01,
+                })
+                continue
+            if mode in {"crash_once", "stale_once", "invalid_json_once", "timeout_once"} and start_number == 1:
+                if mode == "crash_once":
+                    sys.exit(9)
+                if mode == "stale_once":
+                    emit({"id": "stale", "type": "result", "text": "bad", "duration": 1, "processing_time": 0.1, "segments": []})
+                    continue
+                if mode == "invalid_json_once":
+                    sys.stdout.write("not-json\\n")
+                    sys.stdout.flush()
+                    continue
+                time.sleep(2)
+                continue
+            if mode == "duplicate":
+                frame = {"id": request_id, "type": "result", "text": "Hello world.", "duration": 1, "processing_time": 0.1, "segments": [{"start": 0.0, "end": 0.8, "text": "Hello world."}]}
+                emit(frame)
+                emit(frame)
+                continue
+            if mode == "invalid_audio":
+                emit({"id": request_id, "type": "error", "code": "invalid_audio", "message": "too short", "retriable": False})
+                continue
+            if mode == "model_load":
+                emit({"id": request_id, "type": "error", "code": "model_load_failed", "message": "model vanished", "retriable": True})
+                continue
+            if mode == "processing_retry" and request_number == 1:
+                emit({"id": request_id, "type": "error", "code": "processing_failed", "message": "retry me", "retriable": True})
+                continue
+            emit({
+                "id": request_id,
+                "type": "result",
+                "text": "Hello world.",
+                "segments": [
+                    {"start": 0.0, "end": 0.8, "text": "Hello world."},
+                ],
+                "duration": 1.0,
+                "processing_time": 0.01,
+            })
+        """
+    )
+
+    def setUp(self) -> None:
+        self.temporary = tempfile.TemporaryDirectory()
+        self.directory = Path(self.temporary.name)
+        self.worker = self.directory / "fake-worker"
+        self.worker.write_text(self.FAKE_SOURCE, encoding="utf-8")
+        self.worker.chmod(0o700)
+        self.start_log = self.directory / "starts.txt"
+        self.shutdown_log = self.directory / "shutdowns.txt"
+        self.environment = mock.patch.dict(
+            os.environ,
+            {
+                "FAKE_WORKER_START_LOG": str(self.start_log),
+                "FAKE_WORKER_SHUTDOWN_LOG": str(self.shutdown_log),
+                "FAKE_WORKER_MODEL": subject.MODEL,
+                "FAKE_WORKER_REVISION": subject.ARGMAX_REQUIRED_REVISION,
+            },
+        )
+        self.environment.start()
+
+    def tearDown(self) -> None:
+        subject.shutdown_worker()
+        self.environment.stop()
+        self.temporary.cleanup()
+
+    def run_worker(
+        self,
+        mode: str,
+        *,
+        retries: int = 1,
+        timeout: int = 5,
+        timestamps: bool = True,
+        language: str | None = "en",
+    ) -> tuple[str | None, str | None]:
+        os.environ["FAKE_WORKER_MODE"] = mode
+        return subject.run_whisperkit_worker(
+            str(self.worker),
+            self.directory / "audio.wav",
+            subject.TranscriptionOptions(
+                timestamps=timestamps,
+                retries=retries,
+                timeout_seconds=timeout,
+                language=language,
+            ),
+            self.directory,
+        )
+
+    def start_count(self) -> int:
+        if not self.start_log.exists():
+            return 0
+        return len(self.start_log.read_text(encoding="utf-8").splitlines())
+
+    def test_worker_is_reused_across_files_and_shuts_down_cleanly(self) -> None:
+        first, first_error = self.run_worker("success")
+        second, second_error = self.run_worker("success")
+        subject.shutdown_worker()
+
+        self.assertIsNone(first_error)
+        self.assertIsNone(second_error)
+        self.assertEqual(first, "[00:00:00]\nHello world.")
+        self.assertEqual(second, first)
+        self.assertEqual(self.start_count(), 1)
+        self.assertEqual(
+            len(self.shutdown_log.read_text(encoding="utf-8").splitlines()),
+            1,
+        )
+
+    def test_request_carries_language_timestamps_and_audio_path(self) -> None:
+        transcript, error = self.run_worker(
+            "echo_request",
+            retries=0,
+            timestamps=False,
+            language="fr",
+        )
+
+        self.assertIsNone(error)
+        self.assertEqual(
+            json.loads(transcript or "{}"),
+            {
+                "audio_path": str(self.directory / "audio.wav"),
+                "language": "fr",
+                "timestamps": False,
+            },
+        )
+
+    def test_ready_frame_with_wrong_revision_is_rejected(self) -> None:
+        transcript, error = self.run_worker("bad_revision", retries=0)
+
+        self.assertIsNone(transcript)
+        self.assertIn("invalid WhisperKit ready frame", error or "")
+
+    def test_crash_stale_and_invalid_json_restart_then_succeed(self) -> None:
+        for mode in ("crash_once", "stale_once", "invalid_json_once"):
+            with self.subTest(mode=mode):
+                subject.shutdown_worker()
+                self.start_log.write_text("", encoding="utf-8")
+                transcript, error = self.run_worker(mode, retries=1)
+                self.assertIsNone(error)
+                self.assertIn("Hello world.", transcript or "")
+                self.assertEqual(self.start_count(), 2)
+
+    def test_timeout_restarts_and_successfully_retries(self) -> None:
+        transcript, error = self.run_worker("timeout_once", retries=1, timeout=1)
+        self.assertIsNone(error)
+        self.assertIn("Hello world.", transcript or "")
+        self.assertEqual(self.start_count(), 2)
+
+    def test_stderr_flood_does_not_deadlock_or_corrupt_protocol(self) -> None:
+        transcript, error = self.run_worker("stderr_flood", retries=0)
+        self.assertIsNone(error)
+        self.assertIn("Hello world.", transcript or "")
+
+    def test_permanent_invalid_audio_is_not_retried(self) -> None:
+        transcript, error = self.run_worker("invalid_audio", retries=3)
+        self.assertIsNone(transcript)
+        self.assertEqual(error, "too short")
+        self.assertEqual(self.start_count(), 1)
+
+    def test_retriable_processing_error_uses_exact_attempt_budget(self) -> None:
+        transcript, error = self.run_worker("processing_retry", retries=1)
+        self.assertIsNone(error)
+        self.assertIn("Hello world.", transcript or "")
+        self.assertEqual(self.start_count(), 1)
+
+    def test_mid_run_model_load_failure_retries_only_once(self) -> None:
+        transcript, error = self.run_worker("model_load", retries=4)
+        self.assertIsNone(transcript)
+        self.assertEqual(error, "model vanished")
+        self.assertEqual(self.start_count(), 2)
+
+    def test_duplicate_result_is_rejected(self) -> None:
+        transcript, error = self.run_worker("duplicate", retries=1)
+        self.assertIsNone(transcript)
+        self.assertIn("duplicate response", error or "")
+        self.assertEqual(self.start_count(), 2)
+
+
+class WorkerWiringTests(unittest.TestCase):
+    def test_engine_flag_is_gone_from_the_parser(self) -> None:
+        parser = subject.build_parser()
+        default = subject.options_from_args(parser.parse_args(["/course"]))
+
+        self.assertFalse(hasattr(default, "engine"))
+        with (
+            redirect_stderr(FlushRecordingStream()),
+            self.assertRaises(SystemExit) as raised,
+        ):
+            parser.parse_args(["--engine", "parakeet", "/course"])
+        self.assertEqual(raised.exception.code, 2)
+
+    def test_transcribe_item_routes_through_the_persistent_worker(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            media = root / "lesson.wav"
+            media.write_bytes(b"audio")
+            item = subject.WorkItem(
+                course=subject.Course(root),
+                media=media,
+                relative_media=Path("lesson.wav"),
+                relative_output=Path("lesson.txt"),
+                identity=subject.MediaIdentity(1, 2, 3, 4),
+                input_kind="direct",
+            )
+            parent_fd = os.open(root, os.O_RDONLY | os.O_DIRECTORY)
+            try:
+                with (
+                    mock.patch.object(
+                        subject,
+                        "run_whisperkit_worker",
+                        return_value=("WhisperKit text", None),
+                    ) as worker,
+                    mock.patch.object(
+                        subject,
+                        "install_transcript",
+                        return_value=subject.InstallResult.installed(),
+                    ),
+                ):
+                    result = subject.transcribe_item(
+                        item,
+                        subject.Programs("ffmpeg", "/worker"),
+                        parent_fd,
+                        subject.TranscriptionOptions(),
+                    )
+            finally:
+                os.close(parent_fd)
+
+        self.assertIs(result.status, subject.InstallStatus.INSTALLED)
+        worker.assert_called_once()
+        self.assertEqual(worker.call_args.args[0], "/worker")
+
+    def test_unresolved_worker_fails_without_reaching_the_installer(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            media = root / "lesson.wav"
+            media.write_bytes(b"audio")
+            item = subject.WorkItem(
+                course=subject.Course(root),
+                media=media,
+                relative_media=Path("lesson.wav"),
+                relative_output=Path("lesson.txt"),
+                identity=subject.MediaIdentity(1, 2, 3, 4),
+                input_kind="direct",
+            )
+            parent_fd = os.open(root, os.O_RDONLY | os.O_DIRECTORY)
+            try:
+                with mock.patch.object(subject, "install_transcript") as install:
+                    result = subject.transcribe_item(
+                        item,
+                        subject.Programs("ffmpeg", None),
+                        parent_fd,
+                        subject.TranscriptionOptions(),
+                    )
+            finally:
+                os.close(parent_fd)
+
+        self.assertIs(result.status, subject.InstallStatus.FAILED)
+        self.assertIn("was not resolved", result.detail or "")
+        install.assert_not_called()
+
+    def test_worker_failure_never_reaches_installer(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            media = root / "lesson.wav"
+            media.write_bytes(b"audio")
+            item = subject.WorkItem(
+                course=subject.Course(root),
+                media=media,
+                relative_media=Path("lesson.wav"),
+                relative_output=Path("lesson.txt"),
+                identity=subject.MediaIdentity(1, 2, 3, 4),
+                input_kind="direct",
+            )
+            parent_fd = os.open(root, os.O_RDONLY | os.O_DIRECTORY)
+            try:
+                with (
+                    mock.patch.object(
+                        subject,
+                        "run_whisperkit_worker",
+                        return_value=(None, "invalid response"),
+                    ),
+                    mock.patch.object(subject, "install_transcript") as install,
+                ):
+                    result = subject.transcribe_item(
+                        item,
+                        subject.Programs("ffmpeg", "/worker"),
+                        parent_fd,
+                        subject.TranscriptionOptions(),
+                    )
+            finally:
+                os.close(parent_fd)
+
+        self.assertIs(result.status, subject.InstallStatus.FAILED)
+        self.assertIn("invalid response", result.detail or "")
+        install.assert_not_called()
+
+    def test_non_english_course_is_transcribed_rather_than_failed(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary)
+            spanish = base / "Language" / "Spanish" / "Course"
+            english = base / "English Course"
+            spanish.mkdir(parents=True)
+            english.mkdir()
+            roots = [str(spanish), str(english)]
+            checkpoint = subject.ResumeCheckpoint.create(
+                roots,
+                roots,
+                "course-roots",
+                directory=base / "state",
+            )
+            review = subject.ReviewLog(base / "review.txt")
+            with (
+                mock.patch.object(
+                    subject,
+                    "bootstrap_worker",
+                    return_value=(
+                        subject.Programs("ffmpeg", "/worker"),
+                        None,
+                        None,
+                    ),
+                ),
+                mock.patch.object(
+                    subject,
+                    "stream_course",
+                    return_value=(subject.CourseSummary(), 0, False, False),
+                ) as stream,
+                redirect_stdout(FlushRecordingStream()),
+                redirect_stderr(FlushRecordingStream()),
+            ):
+                result = subject.run_fast_start(
+                    roots,
+                    None,
+                    None,
+                    review_log=review,
+                    checkpoint=checkpoint,
+                    roots_prevalidated=True,
+                )
+
+            loaded = subject.ResumeCheckpoint.load(checkpoint.path)
+
+        self.assertEqual(result, 0)
+        self.assertEqual(loaded.failed_courses, [])
+        self.assertEqual(stream.call_count, 2)
+
+    def test_resume_bootstrap_failure_preserves_checkpoint_bytes(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary)
+            checkpoint = subject.ResumeCheckpoint.create(
+                ["/courses/One"],
+                ["/courses/One"],
+                "course-roots",
+                directory=base / "checkpoints",
+            )
+            # Age the file back to v3 so a successful run would have migrated it.
+            payload = json.loads(checkpoint.path.read_text(encoding="utf-8"))
+            payload["version"] = 3
+            payload["transcription_options"]["engine"] = "parakeet"
+            checkpoint.path.write_text(json.dumps(payload), encoding="utf-8")
+            before = checkpoint.path.read_bytes()
+            before_hash = hashlib.sha256(before).hexdigest()
+            with (
+                mock.patch.object(
+                    subject,
+                    "resume_state_directory",
+                    return_value=base / "state",
+                ),
+                mock.patch.object(
+                    subject,
+                    "prepare_worker_for_live_run",
+                    return_value="injected bootstrap failure",
+                ),
+                redirect_stdout(FlushRecordingStream()),
+                redirect_stderr(FlushRecordingStream()),
+            ):
+                result = subject.main(["--resume", str(checkpoint.path)])
+            after = checkpoint.path.read_bytes()
+            loaded = subject.ResumeCheckpoint.load(checkpoint.path)
+
+        self.assertEqual(result, 2)
+        self.assertEqual(hashlib.sha256(after).hexdigest(), before_hash)
+        self.assertEqual(after, before)
+        self.assertEqual(loaded.loaded_version, 3)
+        self.assertEqual(loaded.next_index, 0)
+        self.assertEqual(loaded.failed_courses, [])
+
+    def test_successful_resume_migrates_a_v3_parakeet_checkpoint(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary)
+            checkpoint = subject.ResumeCheckpoint.create(
+                ["/courses/One"],
+                ["/courses/One"],
+                "course-roots",
+                directory=base / "checkpoints",
+            )
+            payload = json.loads(checkpoint.path.read_text(encoding="utf-8"))
+            payload["version"] = 3
+            payload["transcription_options"]["engine"] = "parakeet"
+            checkpoint.path.write_text(json.dumps(payload), encoding="utf-8")
+
+            with (
+                mock.patch.object(
+                    subject,
+                    "resume_state_directory",
+                    return_value=base / "state",
+                ),
+                mock.patch.object(
+                    subject, "prepare_worker_for_live_run", return_value=None
+                ),
+                mock.patch.object(subject, "run_fast_start", return_value=0),
+                redirect_stdout(FlushRecordingStream()),
+                redirect_stderr(FlushRecordingStream()),
+            ):
+                result = subject.main(["--resume", str(checkpoint.path)])
+            rewritten = json.loads(checkpoint.path.read_text(encoding="utf-8"))
+
+        self.assertEqual(result, 0)
+        self.assertEqual(rewritten["version"], 4)
+        self.assertNotIn("engine", rewritten["transcription_options"])
+
+    def test_new_run_bootstrap_failure_creates_no_checkpoint(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary)
+            course = base / "Course"
+            course.mkdir()
+            state = base / "state"
+            with (
+                mock.patch.object(subject, "resume_state_directory", return_value=state),
+                mock.patch.object(
+                    subject,
+                    "prepare_worker_for_live_run",
+                    return_value="injected bootstrap failure",
+                ),
+                mock.patch.object(
+                    subject.ResumeCheckpoint,
+                    "create",
+                    wraps=subject.ResumeCheckpoint.create,
+                ) as create,
+                redirect_stdout(FlushRecordingStream()),
+                redirect_stderr(FlushRecordingStream()),
+            ):
+                result = subject.main([str(course)])
+            created = list(state.glob("resume-*.json")) if state.exists() else []
+
+        self.assertEqual(result, 2)
+        create.assert_not_called()
+        self.assertEqual(created, [])
+
+    def test_resume_rejects_option_overrides(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary)
+            checkpoint = subject.ResumeCheckpoint.create(
+                ["/courses/One"],
+                ["/courses/One"],
+                "course-roots",
+                directory=base / "checkpoints",
+            )
+            with (
+                mock.patch.object(subject, "resume_state_directory", return_value=base / "state"),
+                mock.patch.object(subject, "prepare_worker_for_live_run", return_value=None),
+                mock.patch.object(subject, "run_fast_start", return_value=0),
+                redirect_stdout(FlushRecordingStream()),
+                redirect_stderr(FlushRecordingStream()),
+            ):
+                result = subject.main(["--resume", str(checkpoint.path)])
+
+            with (
+                redirect_stderr(FlushRecordingStream()),
+                self.assertRaises(SystemExit) as raised,
+            ):
+                subject.main(
+                    ["--resume", str(checkpoint.path), "--language", "fr"]
+                )
+
+        self.assertEqual(result, 0)
+        self.assertEqual(raised.exception.code, 2)
+
+    def test_retry_failed_creates_a_new_checkpoint_only(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary)
+            source = subject.ResumeCheckpoint.create(
+                ["/courses/One"],
+                ["/courses/One"],
+                "course-roots",
+                directory=base / "source",
+            )
+            source.record_failed_course("/courses/One")
+            source.set_cursor(1, source.final_status())
+            source_before = source.path.read_bytes()
+            state = base / "state"
+            with (
+                mock.patch.object(subject, "resume_state_directory", return_value=state),
+                mock.patch.object(subject, "prepare_worker_for_live_run", return_value=None),
+                mock.patch.object(subject, "run_fast_start", return_value=0),
+                redirect_stdout(FlushRecordingStream()),
+                redirect_stderr(FlushRecordingStream()),
+            ):
+                result = subject.main(["--retry-failed", str(source.path)])
+            new_states = list(state.glob("resume-*.json"))
+            source_after = source.path.read_bytes()
+
+        self.assertEqual(result, 0)
+        self.assertEqual(source_after, source_before)
+        self.assertEqual(len(new_states), 1)
+
+    def test_bootstrap_cache_hit_skips_the_build(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            worker = Path(temporary) / "fingerprint" / "whisperkit-worker"
+            worker.parent.mkdir()
+            worker.write_bytes(b"worker")
+            worker.chmod(0o700)
+            frame = {
+                "type": "check",
+                "ready": True,
+                "engine": "whisperkit",
+                "model": subject.MODEL,
+                "model_path": "/model",
+                "audio_encoder_compute_units": "cpuAndNeuralEngine",
+                "text_decoder_compute_units": "cpuAndGPU",
+                "argmax_revision": subject.ARGMAX_REQUIRED_REVISION,
+                "worker_version": "fingerprint",
+            }
+            with (
+                mock.patch.object(subject, "resolve_program", return_value=("/bin/true", None)),
+                mock.patch.object(
+                    subject, "resolve_model_path", return_value=(subject.MODEL_PATH, None)
+                ),
+                mock.patch.object(
+                    subject,
+                    "worker_cache_path",
+                    return_value=(worker, None),
+                ),
+                mock.patch.object(
+                    subject,
+                    "_worker_mode_frame",
+                    return_value=(frame, None),
+                ) as mode,
+                mock.patch.object(subject, "build_whisperkit_worker") as build,
+            ):
+                programs, info, error = subject.bootstrap_worker()
+
+        self.assertIsNone(error)
+        self.assertIsNotNone(programs)
+        self.assertEqual(info.model_path if info else None, Path("/model"))
+        build.assert_not_called()
+        mode.assert_called_once_with(
+            worker,
+            "--check",
+            subject.WORKER_CHECK_TIMEOUT_SECONDS,
+        )
+
+    def test_bootstrap_rejects_a_worker_built_from_another_revision(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            worker = Path(temporary) / "fingerprint" / "whisperkit-worker"
+            worker.parent.mkdir()
+            worker.write_bytes(b"worker")
+            worker.chmod(0o700)
+            frame = {
+                "type": "check",
+                "ready": True,
+                "model": subject.MODEL,
+                "model_path": "/model",
+                "argmax_revision": "0" * 40,
+                "worker_version": "fingerprint",
+            }
+            with (
+                mock.patch.object(subject, "resolve_program", return_value=("/bin/true", None)),
+                mock.patch.object(
+                    subject, "resolve_model_path", return_value=(subject.MODEL_PATH, None)
+                ),
+                mock.patch.object(
+                    subject, "worker_cache_path", return_value=(worker, None)
+                ),
+                mock.patch.object(
+                    subject, "_worker_mode_frame", return_value=(frame, None)
+                ),
+            ):
+                programs, info, error = subject.bootstrap_worker()
+
+        self.assertIsNone(programs)
+        self.assertIsNone(info)
+        self.assertIn("Argmax revision", error or "")
+
+    def test_dry_run_never_builds_the_worker(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            worker = Path(temporary) / "missing-worker"
+            with (
+                mock.patch.object(subject, "resolve_program", return_value=("/bin/true", None)),
+                mock.patch.object(
+                    subject, "resolve_model_path", return_value=(subject.MODEL_PATH, None)
+                ),
+                mock.patch.object(
+                    subject,
+                    "worker_cache_path",
+                    return_value=(worker, None),
+                ),
+                mock.patch.object(subject, "build_whisperkit_worker") as build,
+                mock.patch.object(subject, "_worker_mode_frame") as mode,
+            ):
+                programs, info, error = subject.bootstrap_worker(allow_build=False)
+
+        self.assertIsNone(programs)
+        self.assertIsNone(info)
+        self.assertIn("dry-run will not build", error or "")
+        build.assert_not_called()
+        mode.assert_not_called()
+
+    def test_build_refuses_a_dirty_or_moved_argmax_checkout(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            worker = Path(temporary) / "whisperkit-worker"
+            with mock.patch.object(
+                subject,
+                "verify_argmax_checkout",
+                return_value="Argmax checkout has 3 local modifications",
+            ):
+                error = subject.build_whisperkit_worker(worker)
+
+        self.assertIn("local modifications", error or "")
+        self.assertFalse(worker.exists())
+
+    def test_fingerprint_tracks_the_pinned_revision(self) -> None:
+        first, error = subject.worker_fingerprint()
+        self.assertIsNone(error)
+        with mock.patch.object(subject, "ARGMAX_REQUIRED_REVISION", "f" * 40):
+            second, second_error = subject.worker_fingerprint()
+
+        self.assertIsNone(second_error)
+        self.assertNotEqual(first, second)
+
+    def test_main_finally_shuts_down_worker_on_keyboard_interrupt(self) -> None:
+        worker = mock.Mock()
+        subject._ACTIVE_WORKER = worker
+        with (
+            mock.patch.object(subject, "_main", side_effect=KeyboardInterrupt),
+            self.assertRaises(KeyboardInterrupt),
+        ):
+            subject.main([])
+        worker.shutdown.assert_called_once_with()
+        self.assertIsNone(subject._ACTIVE_WORKER)
+
+
+class SourceRepositoryPruningTests(unittest.TestCase):
+    MANIFESTS = ("package.json", "pyproject.toml", "Cargo.toml", "go.mod", "Package.swift")
+
+    def build_course(self, root: Path, manifest: str) -> None:
+        (root / "Lessons").mkdir(parents=True)
+        (root / "Lessons" / "01 Intro.mp4").write_bytes(b"lesson")
+        bundled = root / "starter-master"
+        (bundled / "public").mkdir(parents=True)
+        (bundled / manifest).write_text("{}", encoding="utf-8")
+        (bundled / "public" / "correct.wav").write_bytes(b"sound")
+        (bundled / "public" / "demo.mp4").write_bytes(b"sound")
+
+    def test_recognized_manifests_prune_the_whole_subtree(self) -> None:
+        for manifest in self.MANIFESTS:
+            with (
+                self.subTest(manifest=manifest),
+                tempfile.TemporaryDirectory() as temporary,
+            ):
+                root = Path(temporary) / "Course"
+                self.build_course(root, manifest)
+                with redirect_stdout(FlushRecordingStream()):
+                    items, errors = subject.discover_media(subject.Course(root))
+
+                self.assertEqual(errors, [])
+                self.assertEqual(
+                    [item.relative_media.as_posix() for item in items],
+                    ["Lessons/01 Intro.mp4"],
+                )
+
+    def test_pruning_is_informational_and_not_a_course_failure(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary) / "Course"
+            self.build_course(root, "package.json")
+            output = FlushRecordingStream()
+            with redirect_stdout(output):
+                _items, errors = subject.discover_media(subject.Course(root))
+
+        self.assertEqual(errors, [])
+        self.assertIn("SOURCE TREE PRUNED", output.getvalue())
+        self.assertIn("starter-master", output.getvalue())
+
+    def test_course_root_manifest_never_prunes_the_course(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary) / "Course"
+            root.mkdir(parents=True)
+            (root / "package.json").write_text("{}", encoding="utf-8")
+            (root / "01 Intro.mp4").write_bytes(b"lesson")
+            with redirect_stdout(FlushRecordingStream()):
+                items, errors = subject.discover_media(subject.Course(root))
+
+        self.assertEqual(errors, [])
+        self.assertEqual(
+            [item.relative_media.as_posix() for item in items],
+            ["01 Intro.mp4"],
+        )
+
+    def test_unrecognized_manifest_leaves_media_discoverable(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary) / "Course"
+            (root / "assets").mkdir(parents=True)
+            (root / "assets" / "notes.txt").write_text("notes", encoding="utf-8")
+            (root / "assets" / "clip.mp4").write_bytes(b"lesson")
+            with redirect_stdout(FlushRecordingStream()):
+                items, _errors = subject.discover_media(subject.Course(root))
+
+        self.assertEqual(
+            [item.relative_media.as_posix() for item in items],
+            ["assets/clip.mp4"],
+        )
+
+    def test_transport_stream_check_still_applies_outside_source_repositories(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary) / "Course"
+            (root / "Lessons").mkdir(parents=True)
+            real = root / "Lessons" / "01 lesson.ts"
+            real.write_bytes(mpeg_transport_stream_bytes())
+            typescript = root / "Lessons" / "helper.ts"
+            typescript.write_text("export const x = 1;\n", encoding="utf-8")
+            with redirect_stdout(FlushRecordingStream()):
+                items, _errors = subject.discover_media(subject.Course(root))
+
+        self.assertEqual(
+            [item.relative_media.as_posix() for item in items],
+            ["Lessons/01 lesson.ts"],
+        )
+
+    def test_transport_streams_inside_source_repositories_are_pruned(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary) / "Course"
+            (root / "app").mkdir(parents=True)
+            (root / "app" / "package.json").write_text("{}", encoding="utf-8")
+            (root / "app" / "sample.ts").write_bytes(mpeg_transport_stream_bytes())
+            (root / "01 Intro.mp4").write_bytes(b"lesson")
+            with redirect_stdout(FlushRecordingStream()):
+                items, _errors = subject.discover_media(subject.Course(root))
+
+        self.assertEqual(
+            [item.relative_media.as_posix() for item in items],
+            ["01 Intro.mp4"],
+        )
+
+
+@unittest.skipUnless(
+    os.environ.get("WHISPERKIT_LIVE_TESTS") == "1",
+    "set WHISPERKIT_LIVE_TESTS=1 for real WhisperKit model tests",
+)
+class WhisperKitLiveTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        programs, info, error = subject.bootstrap_worker()
+        if error or programs is None or info is None:
+            raise AssertionError(f"WhisperKit live bootstrap failed: {error}")
+        cls.programs = programs
+        cls.info = info
+
+    @classmethod
+    def tearDownClass(cls) -> None:
+        subject.shutdown_worker()
+
+    @staticmethod
+    def fixture(name: str) -> Path:
+        raw = os.environ.get(name)
+        if not raw:
+            raise unittest.SkipTest(f"set {name} to a real local audio file")
+        return Path(raw).expanduser().resolve(strict=True)
+
+    @staticmethod
+    def ffprobe_duration(path: Path) -> float:
+        completed = subprocess.run(
+            [
+                "ffprobe",
+                "-v",
+                "error",
+                "-show_entries",
+                "format=duration",
+                "-of",
+                "default=noprint_wrappers=1:nokey=1",
+                str(path),
+            ],
+            check=True,
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+        )
+        return float(completed.stdout.strip())
+
+    def test_real_bootstrap_reports_the_pinned_build(self) -> None:
+        self.assertEqual(self.info.argmax_revision, subject.ARGMAX_REQUIRED_REVISION)
+        self.assertEqual(
+            self.info.audio_encoder_compute_units,
+            subject.AUDIO_ENCODER_COMPUTE_UNITS,
+        )
+        self.assertEqual(
+            self.info.text_decoder_compute_units,
+            subject.TEXT_DECODER_COMPUTE_UNITS,
+        )
+        self.assertTrue(self.info.worker_path.is_file())
+
+    def test_real_model_loads_and_reports_load_time(self) -> None:
+        worker = subject.active_worker(self.programs.worker or "")
+        worker.start()
+        ready = worker.ready or {}
+
+        self.assertEqual(ready.get("model"), subject.MODEL)
+        self.assertEqual(ready.get("chunking_strategy"), subject.CHUNKING_STRATEGY)
+        self.assertEqual(
+            ready.get("concurrent_worker_count"), subject.CONCURRENT_WORKERS
+        )
+        self.assertIsInstance(ready.get("model_load_seconds"), float)
+
+    def test_real_repeated_requests_reuse_one_worker_process(self) -> None:
+        audio = self.fixture("WHISPERKIT_LIVE_SHORT_AUDIO")
+        worker = subject.active_worker(self.programs.worker or "")
+        worker.start()
+        assert worker.process is not None
+        pid = worker.process.pid
+
+        for _ in range(2):
+            frame = worker.transcribe(audio, 600, language="en", timestamps=False)
+            self.assertEqual(frame.get("type"), "result")
+
+        assert worker.process is not None
+        self.assertEqual(worker.process.pid, pid)
+
+    def test_real_short_clip_transcribes_with_markers(self) -> None:
+        audio = self.fixture("WHISPERKIT_LIVE_SHORT_AUDIO")
+        self.assertGreaterEqual(self.ffprobe_duration(audio), 30.0)
+        with tempfile.TemporaryDirectory() as temporary:
+            transcript, error = subject.run_whisperkit_worker(
+                self.programs.worker or "",
+                audio,
+                subject.TranscriptionOptions(
+                    timestamps=True,
+                    retries=0,
+                    timeout_seconds=600,
+                ),
+                Path(temporary),
+            )
+        self.assertIsNone(error)
+        self.assertRegex(transcript or "", subject.LEADING_TIMESTAMP_PATTERN)
+
+    def test_real_multilingual_option_is_accepted(self) -> None:
+        audio = self.fixture("WHISPERKIT_LIVE_SHORT_AUDIO")
+        worker = subject.active_worker(self.programs.worker or "")
+        for language in (None, "en", "es"):
+            with self.subTest(language=language):
+                frame = worker.transcribe(
+                    audio, 600, language=language, timestamps=False
+                )
+                self.assertEqual(frame.get("type"), "result")
+                self.assertIsInstance(frame.get("text"), str)
+
+    def test_real_long_lesson_reports_consistent_duration_and_segments(self) -> None:
+        audio = self.fixture("WHISPERKIT_LIVE_LONG_AUDIO")
+        expected_duration = self.ffprobe_duration(audio)
+        self.assertGreaterEqual(expected_duration, 10 * 60)
+        worker = subject.active_worker(self.programs.worker or "")
+        frame = worker.transcribe(audio, 3600, language="en", timestamps=True)
+        _text, duration, _processing, segments = subject.validate_worker_result(frame)
+        phrases = subject.phrases_from_segments(segments)
+
+        self.assertAlmostEqual(duration, expected_duration, delta=1.0)
+        self.assertGreater(len(phrases), 0)
+        self.assertTrue(
+            all(
+                left.start <= right.start
+                for left, right in zip(phrases, phrases[1:])
+            )
+        )
+        self.assertLessEqual(phrases[-1].end, duration + 1.0)
 
 
 if __name__ == "__main__":

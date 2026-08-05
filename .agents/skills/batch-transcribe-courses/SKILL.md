@@ -1,6 +1,6 @@
 ---
 name: batch-transcribe-courses
-description: Recursively transcribe media inside explicit course roots, the immediate course children of author roots, or topic roots containing authors and courses with WhisperKit, writing mirrored .txt files beneath each course root's top-level transcripts directory. Use for course-, author-, or topic-folder transcription, previews, missing transcripts, selective timestamp upgrades, Ω-category exclusion, and resumable batch runs involving audio or video files.
+description: Recursively transcribe media inside explicit course roots, the immediate course children of author roots, or topic roots containing authors and courses with one persistent WhisperKit worker, writing mirrored .txt files beneath each course root's top-level transcripts directory. Use for course-, author-, or topic-folder transcription, previews, missing transcripts, selective timestamp upgrades, Ω-category exclusion, and resumable batch runs involving audio or video files.
 ---
 
 # Batch Transcribe Courses
@@ -79,6 +79,11 @@ Course/Module/Lesson.mp4
 → Course/transcripts/Module/Lesson.txt
 ```
 
+Because `.ts` is shared by MPEG transport-stream video and TypeScript source,
+discovery accepts that suffix only when the file contains the repeated MPEG
+packet-sync signature. This check applies to streaming, scan/dry-run, and
+author/topic flat-course promotion; ordinary `.ts` source files are ignored.
+
 For a course beneath an exact path component named `Music`, the script
 discovers video-container extensions only. It ignores audio-only files such as
 music, instruments, and samples. Courses outside a `Music` tree retain the
@@ -101,17 +106,27 @@ In author-root mode the one-level directory expansion still happens first; in
 topic-root mode the fixed two-level expansion still happens first. Neither
 hierarchy expansion scans media recursively.
 
-Every fast-start run atomically writes a local v2 checkpoint beneath
+Every fast-start run atomically writes a local v4 checkpoint beneath
 `~/.agents/state/batch-transcribe-courses/` and immediately prints its exact
 `--resume STATE` command. The checkpoint stores the expanded ordered course
-list, transcription options, the current course cursor, and `failed_courses`.
+list, the transcription options, the current course cursor, and
+`failed_courses`.
 Advance the cursor only after traversing a whole course. A full cursor with
 failures is `complete-with-failures`; use `--retry-failed STATE` to create a
-fresh checkpoint containing only those courses. v1 checkpoints load unchanged
-and are saved as v2 on their next update. On interruption, resume at that
+fresh checkpoint containing only those courses. On interruption, resume at that
 course; existing transcript files skip completed media within it, and no
 earlier course roots are expanded, validated, or scanned. Keep completed
-checkpoint files as run records.
+checkpoint files as run records. v1, v2, and v3 checkpoints all load and
+migrate to v4. The retired v3 `engine` field is dropped on migration: both
+`whisperkit` and `parakeet` now mean the same persistent WhisperKit worker, and
+any other value fails loudly rather than being reinterpreted.
+
+Migration is deliberately gated on the worker. A resumed run builds the worker
+if needed and loads its model before the checkpoint is rewritten, and a new run
+does the same before any checkpoint is created. If the build, the Argmax
+checkout verification, the model validation, or the model load fails, an
+existing checkpoint remains byte-for-byte unchanged and a new run creates no
+checkpoint. There is no fallback to `whisperkit-cli` or any other engine.
 
 For a run started before checkpoint support, add
 `--resume-from COURSE_ROOT` to its original invocation (with or without the
@@ -125,7 +140,7 @@ history text. Do not infer progress from shell history or terminal output when
 a checkpoint exists.
 
 Existing transcripts are skipped by default. `--overwrite` deliberately selects
-them again. The old regular file remains in place while WhisperKit runs; only a
+them again. The old regular file remains in place while the selected engine runs; only a
 complete, nonempty, written-and-synced `.part` is atomically placed at the
 destination. A failed transcription or replacement preserves the old bytes.
 Never overwrite symlinks or non-regular paths. The script writes only beneath
@@ -157,16 +172,46 @@ SMB it uses exclusive destination creation without overwriting an existing
 path. An abrupt SMB interruption can leave a partial destination that must be
 reviewed manually.
 
-WhisperKit uses `large-v3-v20240930_turbo`, VAD, the M5 Pro compute settings,
-and 64 workers. Always suppress Whisper control, language, task, and timestamp
-tokens from transcript text. The task is always native-language transcription,
-never translation. With the default language setting, infer these exact
-recognized trees independently for each course:
+Transcription uses `large-v3-v20240930_turbo`, VAD, the M5 Pro compute
+settings, and 64 workers. Always suppress Whisper control, language, task, and
+timestamp tokens from transcript text. The task is always native-language
+transcription, never translation. With the default language setting, infer
+these exact recognized trees independently for each course:
 `Language/Chinese (Cantonese)` → `yue`, `Language/French` → `fr`,
 `Language/Greek` → `el`, `Language/Latin` → `la`, `Language/Russian` → `ru`,
 `Language/Spanish` → `es`, and `Language/Thai` → `th`. Other paths default to
 English. Use `--language CODE` to override the path inference for the whole
-invocation, or `--language auto` for WhisperKit detection.
+invocation, or `--language auto` for WhisperKit detection. Every language the
+model supports is available on every course; there is no English-only gate.
+
+Discovery prunes bundled source repositories. Any directory below a course root
+that contains a recognized project manifest — `package.json`, `pyproject.toml`,
+`Cargo.toml`, `go.mod`, `Gemfile`, `Package.swift`, `composer.json`, `pom.xml`,
+`pubspec.yaml`, `requirements.txt`, or a Gradle build file — is skipped whole,
+along with everything beneath it. This keeps starter projects' bundled UI
+sounds and sample clips out of the transcript tree. The course root itself is
+never pruned, so a coding course may keep a manifest beside its lessons.
+Pruning is logged as `SOURCE TREE PRUNED` information and never counted as a
+course failure. The `.ts` MPEG transport-stream signature check still decides
+ambiguous files outside pruned repositories, so a real transport stream is
+transcribed while a TypeScript file is not.
+
+The vendored worker source is `whisperkit-worker/`, a small Swift package that
+depends on one pinned local Argmax checkout. The required revision is recorded
+in both `Package.swift`'s default path and the worker source, and the checkout
+is verified to be at that exact revision with no local modifications before any
+build. A live run builds the release worker on demand into
+`~/.agents/cache/whisperkit-worker/<fingerprint>/whisperkit-worker`. The
+fingerprint covers the manifest, every worker source file, the Argmax checkout
+path, and the required revision, so a moved, dirty, or re-pinned checkout can
+never reuse a stale binary. `--dry-run` checks readiness only and never builds.
+Point `ARGMAX_OSS_SWIFT_PATH` at a relocated checkout if needed.
+
+The worker's decoding options reproduce what `whisperkit-cli transcribe` builds
+for the same invocation, including the CLI's unset `firstTokenLogProbThreshold`
+rather than the `DecodingOptions` default. `--timestamps` maps to the CLI's
+report path and plain mode maps to `--without-timestamps`, so the two modes
+decode exactly as they did through the CLI.
 
 `--timestamps` preserves the complete transcription and groups text beneath
 seek markers every 120 seconds by default. Change the interval with
@@ -177,23 +222,53 @@ markers: they restrict transcription to selected spans and omit everything
 outside them. Video and uncommon audio containers are converted through ffmpeg
 first.
 
-Live runs invoke `whisperkit-cli transcribe` directly once per selected file.
-The child starts in its own process group. By default, a child that has not
-finished after 600 seconds is terminated and the file is retried once. Change
-those bounds with `--transcribe-timeout SECONDS` and `--transcribe-retries N`.
-A failed, timed-out, or empty result is never installed; after its retries it
-is reported as `FAIL`, and the batch proceeds to the next file. Keep live
-output visible and attached. ffmpeg conversion remains a per-file subprocess
-where required, uses an independent size-aware timeout (override with
-`--extract-timeout`), retries with a corrupt-frame-tolerant mono downmix, and
-defaults to one extraction retry (`--extract-retries N`). A vanished `/Volumes`
-mount is probed with `statvfs` plus `scandir`, waited on with bounded backoff,
-and never advances the checkpoint cursor until the course can be retried.
+Returned segments feed the shared renderer: the segment start assigns the whole
+segment to a bucket, silent buckets are absent, interval 0 renders each segment
+range, and installed transcript bytes retain the existing format and
+trailing-newline rules. Malformed, missing, or non-finite segment timestamps
+fail the file without installing anything.
+
+A live run lazily starts one persistent worker, waits up to 600 seconds for its
+ready frame, and reuses its resident model across every file and course, so a
+run pays the model load once instead of once per file. The child starts in its
+own process group. A request has exactly one in-flight ID; invalid JSON, stale
+IDs, duplicate results, premature EOF, crashes, and timeouts terminate and
+restart the worker before a retry. A ready frame reporting the wrong model or a
+different Argmax revision is rejected. Worker stderr is continuously drained
+into the run log and cannot share the JSON protocol descriptor. Normal exit,
+interruption, and volume failure all shut down the worker. By default, a
+request that has not finished after 600 seconds is terminated and the file is
+retried once. Change those bounds with `--transcribe-timeout SECONDS` and
+`--transcribe-retries N`. A failed, timed-out, or empty result is never
+installed; after its retries it is reported as `FAIL`, and the batch proceeds
+to the next file. Keep live output visible and attached. ffmpeg conversion
+remains a per-file subprocess where required, uses an independent size-aware
+timeout (override with `--extract-timeout`), retries with a
+corrupt-frame-tolerant mono downmix, and defaults to one extraction retry
+(`--extract-retries N`). A vanished `/Volumes` mount is probed with `statvfs`
+plus `scandir`, waited on with bounded backoff, and never advances the
+checkpoint cursor until the course can be retried.
 
 Each run writes one consolidated flushed log at
 `~/.agents/state/batch-transcribe-courses/logs/run-*.log` (or `--log-file PATH`)
 and its actionable companion `run-*.review.txt`. The review file includes
 runtime categories such as `OUTPUT COLLISION`, destination hazards, source
-changes, and transcription failures. The log includes invocation,
-resolved dependencies, every scan/success/skip/failure/retry/timeout/volume
-event, course summaries, totals, exit reason, and resume/retry commands.
+changes, and transcription failures. The log includes invocation, resolved
+dependencies, worker and model paths, the Argmax revision, compute placement,
+model load time, worker restarts, worker stderr, pruned source trees, every
+scan/success/skip/failure/retry/timeout/volume event, per-file worker seconds,
+audio duration, RTF, course summaries, totals, exit reason, and resume/retry
+commands. Transcript files contain no engine provenance.
+
+The hardware-free default test suite covers checkpoint migration, worker
+bootstrap immutability, fingerprint pinning, shared rendering, protocol
+corruption, restart/reuse/shutdown, source-repository pruning, transport-stream
+preservation, and atomic-install isolation. Set `WHISPERKIT_LIVE_TESTS=1`, with
+`WHISPERKIT_LIVE_SHORT_AUDIO` and `WHISPERKIT_LIVE_LONG_AUDIO`, only for
+separately provisioned real-model fixtures. Use
+`scripts/benchmark_whisperkit_worker.py` on direct-audio files copied to local
+SSD; it reports model load time, per-file time, audio duration, and RTF, and
+repeated `--placement ENCODER:DECODER` flags compare Core ML placements and
+hash each placement's transcripts.
+
+<<VERIFICATION>>

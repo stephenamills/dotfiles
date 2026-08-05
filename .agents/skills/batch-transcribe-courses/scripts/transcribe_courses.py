@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Safely transcribe course media with direct WhisperKit CLI child processes.
+"""Safely transcribe course media with one persistent WhisperKit worker.
 
 Every supplied course root is read-only except for its top-level
 ``transcripts/`` directory. Live runs stream discovery and transcription in one
@@ -19,10 +19,14 @@ Its intentionally fixed M5 Pro configuration is:
 * concurrent VAD workers: 64
 * word timestamps: disabled
 
-Each selected file gets one owned ``whisperkit-cli transcribe`` child. The
-child has a timeout, is terminated as a process group if it hangs, and can be
-retried without stopping the batch. Video and uncommon audio containers first
-require one ffmpeg conversion subprocess.
+Transcription runs through one long-lived ``whisperkit-worker`` child that keeps
+the Core ML model resident across every file in a run, with exactly one request
+in flight. The worker is built from vendored Swift source against one pinned
+clean Argmax checkout, and its decoding options reproduce those
+``whisperkit-cli transcribe`` would build for the same invocation. There is no
+fallback to ``whisperkit-cli``: a worker that cannot build, load, or answer is a
+run failure. Video and uncommon audio containers first require one ffmpeg
+conversion subprocess.
 """
 
 from __future__ import annotations
@@ -34,6 +38,7 @@ import errno
 from enum import Enum
 import hashlib
 import json
+import math
 import os
 from pathlib import Path
 import re
@@ -46,6 +51,7 @@ import stat
 import subprocess
 import sys
 import tempfile
+import threading
 import time
 from typing import Iterator
 import unicodedata
@@ -77,6 +83,43 @@ DEFAULT_TRANSCRIBE_RETRIES = 1
 DEFAULT_EXTRACT_RETRIES = 1
 DEFAULT_TIMESTAMP_INTERVAL_SECONDS = 120
 CHILD_TERMINATE_GRACE_SECONDS = 10
+# A cold Core ML load of the turbo model, including Neural Engine
+# specialization, has been measured at roughly 90 seconds on this machine.  The
+# ready timeout is deliberately several times that so a slow first load after an
+# OS update is never mistaken for a hung worker.
+WORKER_READY_TIMEOUT_SECONDS = 600
+WORKER_BUILD_TIMEOUT_SECONDS = 3600
+WORKER_CHECK_TIMEOUT_SECONDS = 120
+WORKER_DUPLICATE_RESPONSE_GRACE_SECONDS = 0.01
+WORKER_SOURCE = Path(__file__).resolve().parent.parent / "whisperkit-worker"
+WORKER_CACHE_ROOT = Path.home() / ".agents" / "cache" / "whisperkit-worker"
+# The worker may only be built against this exact Argmax revision, checked out
+# clean.  Both the path and the revision are folded into the cache fingerprint.
+ARGMAX_SOURCE_PATH = Path(
+    os.environ.get("ARGMAX_OSS_SWIFT_PATH")
+    or "/Users/steph/Downloads/argmax-oss-swift"
+)
+ARGMAX_REQUIRED_REVISION = "dcf3a00f0ae4d5b57bc0aad92063b102b70d5fd1"
+# Directories holding one of these manifests are self-contained source
+# repositories shipped alongside a course, not lesson media.  Anything below
+# them (bundled UI sounds, sample clips, node_modules fixtures) is pruned during
+# discovery so it never becomes a transcript.
+SOURCE_MANIFEST_NAMES = frozenset(
+    {
+        "cargo.toml",
+        "composer.json",
+        "gemfile",
+        "go.mod",
+        "package.json",
+        "package.swift",
+        "pom.xml",
+        "pubspec.yaml",
+        "pyproject.toml",
+        "requirements.txt",
+        "build.gradle",
+        "build.gradle.kts",
+    }
+)
 LEGACY_WHISPER_TOKEN_PATTERN = re.compile(r"<\|[^|\r\n]*\|>")
 TIMESTAMP_CLOCK_PATTERN = r"\d{2,}:[0-5]\d:[0-5]\d"
 LEADING_TIMESTAMP_PATTERN = re.compile(
@@ -137,14 +180,28 @@ VIDEO_EXTENSIONS = frozenset(
     }
 )
 MEDIA_EXTENSIONS = AUDIO_EXTENSIONS | VIDEO_EXTENSIONS
+AMBIGUOUS_MPEG_TS_EXTENSION = ".ts"
+MPEG_TS_PACKET_SIZES = (188, 192, 204)
+MPEG_TS_MIN_SYNC_PACKETS = 4
+MPEG_TS_PROBE_BYTES = max(MPEG_TS_PACKET_SIZES) * (
+    MPEG_TS_MIN_SYNC_PACKETS + 1
+)
 RENAME_EXCL = 0x00000004
-RESUME_STATE_VERSION = 2
+RESUME_STATE_VERSION = 4
+SUPPORTED_RESUME_STATE_VERSIONS = frozenset({1, 2, 3, 4})
+# v3 serialized the retired engine selector.  Both recognized values now mean
+# the same thing -- one persistent WhisperKit worker -- so both migrate, but an
+# unrecognized value still means the checkpoint was written by something this
+# script does not understand.
+LEGACY_ENGINE_VALUES = frozenset({"whisperkit", "parakeet"})
 
 # The active run log is intentionally process-local.  Keeping it out of the
 # public function signatures preserves the small API used by older callers and
 # tests while allowing main() to tee structured events to one file.
 _ACTIVE_RUN_LOG: "RunLog | None" = None
 _ACTIVE_RUN_ID: str | None = None
+_ACTIVE_WORKER: "WhisperKitWorker | None" = None
+_LAST_ENGINE_METRICS: "EngineMetrics | None" = None
 
 
 @dataclass(frozen=True)
@@ -226,8 +283,8 @@ class WorkItem:
 
 @dataclass(frozen=True)
 class Programs:
-    whisperkit: str
     ffmpeg: str
+    worker: str | None = None
 
 
 @dataclass(frozen=True)
@@ -242,6 +299,36 @@ class TranscriptionOptions:
     overwrite: bool = False
     overwrite_empty: bool = False
     upgrade_timestamps: bool = False
+
+
+@dataclass(frozen=True)
+class TimedPhrase:
+    start: float
+    end: float
+    text: str
+
+
+@dataclass(frozen=True)
+class EngineMetrics:
+    audio_seconds: float | None
+    engine_seconds: float
+
+    @property
+    def rtf(self) -> float | None:
+        if self.audio_seconds is None or self.engine_seconds <= 0:
+            return None
+        return self.audio_seconds / self.engine_seconds
+
+
+@dataclass(frozen=True)
+class WorkerBootstrapInfo:
+    worker_path: Path
+    model_path: Path | None = None
+    worker_version: str | None = None
+    audio_encoder_compute_units: str | None = None
+    text_decoder_compute_units: str | None = None
+    argmax_revision: str | None = None
+    model_load_seconds: float | None = None
 
 
 @dataclass
@@ -285,6 +372,18 @@ class PreflightError(Exception):
 
 class ResumeStateError(Exception):
     """A local resume checkpoint could not be created, read, or updated."""
+
+
+class WorkerProtocolError(Exception):
+    """The persistent worker violated its one-request JSONL protocol."""
+
+
+class WorkerModelLoadError(WorkerProtocolError):
+    """A previously bootstrapped worker could not load its resident model."""
+
+
+class WorkerRequestTimeout(Exception):
+    """The persistent worker did not answer the in-flight request in time."""
 
 
 class VolumeUnavailable(Exception):
@@ -494,9 +593,18 @@ class RunLog:
         self._write(f"Checkpoint: {checkpoint_path or 'pending'}")
         if options is not None:
             self._write(f"Transcription options: {options!r}")
-        self._write(f"whisperkit-cli: {shutil.which('whisperkit-cli') or 'unresolved'}")
         self._write(f"ffmpeg: {shutil.which('ffmpeg') or 'unresolved'}")
+        worker_path, worker_error = worker_cache_path()
+        self._write(
+            f"whisperkit worker: {worker_path or worker_error or 'unresolved'}"
+        )
         self._write(f"model path: {MODEL_PATH}")
+        self._write(f"argmax source: {ARGMAX_SOURCE_PATH}")
+        self._write(f"argmax revision: {ARGMAX_REQUIRED_REVISION}")
+        self._write(
+            f"compute units: encoder:{AUDIO_ENCODER_COMPUTE_UNITS}/"
+            f"decoder:{TEXT_DECODER_COMPUTE_UNITS}"
+        )
 
     def event(self, kind: str, message: str, *, issue: bool = False) -> None:
         self.counts[kind] = self.counts.get(kind, 0) + 1
@@ -687,6 +795,10 @@ class ResumeCheckpoint:
     current_course: str | None = None
     options: TranscriptionOptions = TranscriptionOptions()
     failed_courses: list[str] = field(default_factory=list)
+    # The on-disk version this checkpoint was read from.  Anything below the
+    # current version still needs migrating, which deliberately does not happen
+    # until a worker has actually built and loaded.
+    loaded_version: int = RESUME_STATE_VERSION
 
     @classmethod
     def create(
@@ -755,7 +867,7 @@ class ResumeCheckpoint:
         if not isinstance(payload, dict):
             raise ResumeStateError(f"invalid resume state object: {path}")
         version = payload.get("version")
-        if version not in {1, RESUME_STATE_VERSION}:
+        if version not in SUPPORTED_RESUME_STATE_VERSIONS:
             raise ResumeStateError(
                 f"unsupported resume state version in {path}: "
                 f"{version!r}"
@@ -825,6 +937,15 @@ class ResumeCheckpoint:
         upgrade_timestamps = raw_options.get("upgrade_timestamps", False)
         extract_timeout_seconds = raw_options.get("extract_timeout_seconds")
         extract_retries = raw_options.get("extract_retries", DEFAULT_EXTRACT_RETRIES)
+        # v3 carried an engine selector.  Both of its recognized values now
+        # resolve to the one persistent WhisperKit worker; anything else came
+        # from a writer this script does not understand and stays fatal.
+        legacy_engine = raw_options.get("engine")
+        if legacy_engine is not None and legacy_engine not in LEGACY_ENGINE_VALUES:
+            raise ResumeStateError(
+                f"unsupported transcription engine in resume state {path}: "
+                f"{legacy_engine!r}"
+            )
         if (
             language is not None
             and (not isinstance(language, str) or not language)
@@ -897,6 +1018,34 @@ class ResumeCheckpoint:
                 upgrade_timestamps=upgrade_timestamps,
             ),
             failed_courses=list(dict.fromkeys(failed_courses)),
+            loaded_version=version,
+        )
+
+    @property
+    def needs_migration(self) -> bool:
+        return self.loaded_version != RESUME_STATE_VERSION
+
+    def migrate(self) -> None:
+        """Rewrite an older checkpoint at the current version.
+
+        Callers must only reach this after a worker has successfully built and
+        loaded, so a checkpoint written by an earlier version survives a failed
+        bootstrap byte-for-byte.
+        """
+
+        if not self.needs_migration:
+            return
+        previous = self.loaded_version
+        self.loaded_version = RESUME_STATE_VERSION
+        self.save()
+        _record_run_event(
+            "CHECKPOINT MIGRATED",
+            f"path={self.path} from=v{previous} to=v{RESUME_STATE_VERSION}",
+        )
+        print(
+            f"CHECKPOINT MIGRATED v{previous} -> v{RESUME_STATE_VERSION} "
+            f"state={self.path}",
+            flush=True,
         )
 
     def save(self) -> None:
@@ -1108,9 +1257,9 @@ def build_parser() -> argparse.ArgumentParser:
         default=DEFAULT_LANGUAGE,
         metavar="CODE",
         help=(
-            "spoken-language code passed to WhisperKit; default en also "
+            "spoken-language code passed to the worker; default en also "
             "infers the supported Language/<name> path conventions; use "
-            "'auto' for WhisperKit detection"
+            "'auto' for WhisperKit language detection"
         ),
     )
     parser.add_argument(
@@ -1124,8 +1273,8 @@ def build_parser() -> argparse.ArgumentParser:
         default=DEFAULT_TIMESTAMP_INTERVAL_SECONDS,
         metavar="SECONDS",
         help=(
-            "seconds between timestamp blocks; 0 emits every WhisperKit "
-            f"segment (default: {DEFAULT_TIMESTAMP_INTERVAL_SECONDS})"
+            "seconds between timestamp blocks; 0 emits every engine "
+            f"segment/phrase (default: {DEFAULT_TIMESTAMP_INTERVAL_SECONDS})"
         ),
     )
     parser.add_argument(
@@ -1134,7 +1283,7 @@ def build_parser() -> argparse.ArgumentParser:
         default=DEFAULT_TRANSCRIBE_TIMEOUT_SECONDS,
         metavar="SECONDS",
         help=(
-            "terminate a hung WhisperKit child after this many seconds "
+            "terminate a hung transcription request after this many seconds "
             f"(default: {DEFAULT_TRANSCRIBE_TIMEOUT_SECONDS})"
         ),
     )
@@ -1144,7 +1293,7 @@ def build_parser() -> argparse.ArgumentParser:
         default=DEFAULT_TRANSCRIBE_RETRIES,
         metavar="N",
         help=(
-            "retry a failed, timed-out, or empty WhisperKit result N times "
+            "retry a failed, timed-out, or empty engine result N times "
             f"(default: {DEFAULT_TRANSCRIBE_RETRIES})"
         ),
     )
@@ -1310,6 +1459,52 @@ def author_course_sort_key(path: Path) -> tuple[str, str]:
     return normalized.casefold(), path.name
 
 
+def has_mpeg_transport_stream_signature(path: Path) -> bool | None:
+    """Recognize packet sync bytes without invoking ffmpeg for every .ts file.
+
+    The .ts suffix is shared by MPEG transport streams and TypeScript source.
+    Four equally spaced MPEG sync bytes make ordinary source text ineligible
+    while retaining the common 188-, 192-, and 204-byte packet variants.  A
+    read error returns None so discovery preserves its historical fail-open
+    behavior for an actual but temporarily unreadable media file.
+    """
+
+    flags = os.O_RDONLY
+    flags |= getattr(os, "O_CLOEXEC", 0)
+    flags |= getattr(os, "O_NOFOLLOW", 0)
+    try:
+        descriptor = os.open(path, flags)
+    except OSError:
+        return None
+    try:
+        sample = os.read(descriptor, MPEG_TS_PROBE_BYTES)
+    except OSError:
+        return None
+    finally:
+        os.close(descriptor)
+
+    for packet_size in MPEG_TS_PACKET_SIZES:
+        required_span = packet_size * (MPEG_TS_MIN_SYNC_PACKETS - 1)
+        possible_starts = min(packet_size, len(sample) - required_span)
+        for start in range(max(0, possible_starts)):
+            if all(
+                sample[start + packet_size * packet_index] == 0x47
+                for packet_index in range(MPEG_TS_MIN_SYNC_PACKETS)
+            ):
+                return True
+    return False
+
+
+def media_path_is_eligible(path: Path, allowed_extensions: frozenset[str]) -> bool:
+    suffix = path.suffix.casefold()
+    if suffix not in allowed_extensions:
+        return False
+    if suffix != AMBIGUOUS_MPEG_TS_EXTENSION:
+        return True
+    signature = has_mpeg_transport_stream_signature(path)
+    return signature is not False
+
+
 def direct_media_files(root: Path) -> list[Path]:
     """Return regular media files directly beneath a hierarchy directory."""
     allowed = VIDEO_EXTENSIONS if is_music_tree(root) else MEDIA_EXTENSIONS
@@ -1320,7 +1515,7 @@ def direct_media_files(root: Path) -> list[Path]:
                 try:
                     if (
                         entry.is_file(follow_symlinks=False)
-                        and Path(entry.name).suffix.casefold() in allowed
+                        and media_path_is_eligible(Path(entry.path), allowed)
                     ):
                         media.append(Path(entry.path))
                 except OSError:
@@ -1712,6 +1907,417 @@ def resolve_model_path() -> tuple[Path | None, str | None]:
     return MODEL_PATH, None
 
 
+def worker_environment() -> dict[str, str]:
+    """Environment for every worker invocation.
+
+    The compute placement and model path are passed explicitly so the fixed
+    configuration documented here, rather than the worker's own defaults, is
+    what actually runs.
+    """
+
+    environment = dict(os.environ)
+    environment["WHISPERKIT_WORKER_MODEL_PATH"] = str(MODEL_PATH)
+    environment["WHISPERKIT_AUDIO_ENCODER_COMPUTE_UNITS"] = (
+        AUDIO_ENCODER_COMPUTE_UNITS
+    )
+    environment["WHISPERKIT_TEXT_DECODER_COMPUTE_UNITS"] = (
+        TEXT_DECODER_COMPUTE_UNITS
+    )
+    return environment
+
+
+def worker_fingerprint(
+    source_directory: Path = WORKER_SOURCE,
+) -> tuple[str | None, str | None]:
+    """Fingerprint the vendored worker source and its pinned Argmax revision.
+
+    ``Package.resolved`` is deliberately excluded.  Its only pin is
+    swift-argument-parser, which belongs to the Argmax CLI target and is never
+    linked into this worker; what the worker actually runs is fixed by the
+    verified Argmax revision below.
+    """
+
+    sources = source_directory / "Sources"
+    try:
+        source_files = sorted(
+            path for path in sources.rglob("*") if path.is_file()
+        )
+    except OSError as exc:
+        return None, f"could not inspect WhisperKit worker source: {exc}"
+    if not source_files:
+        return None, f"WhisperKit worker source is missing beneath {sources}"
+    files = [source_directory / "Package.swift", *source_files]
+    digest = hashlib.sha256()
+    # A cached binary is only valid for the exact Argmax checkout it was linked
+    # against, so the path and required revision are part of the identity.
+    for label in (str(ARGMAX_SOURCE_PATH), ARGMAX_REQUIRED_REVISION):
+        marker = label.encode("utf-8")
+        digest.update(len(marker).to_bytes(8, "big"))
+        digest.update(marker)
+    try:
+        for path in files:
+            if not path.is_file():
+                return None, f"WhisperKit worker source file is missing: {path}"
+            relative = path.relative_to(source_directory).as_posix().encode("utf-8")
+            digest.update(len(relative).to_bytes(8, "big"))
+            digest.update(relative)
+            payload = path.read_bytes()
+            digest.update(len(payload).to_bytes(8, "big"))
+            digest.update(payload)
+    except (OSError, ValueError) as exc:
+        return None, f"could not fingerprint WhisperKit worker source: {exc}"
+    return digest.hexdigest(), None
+
+
+def worker_cache_path() -> tuple[Path | None, str | None]:
+    fingerprint, error = worker_fingerprint()
+    if error:
+        return None, error
+    assert fingerprint is not None
+    return WORKER_CACHE_ROOT / fingerprint / "whisperkit-worker", None
+
+
+def _run_git(arguments: list[str]) -> tuple[str | None, str | None]:
+    git = shutil.which("git")
+    if git is None:
+        return None, "missing dependency: git is not on PATH"
+    try:
+        completed = subprocess.run(
+            [git, "-C", str(ARGMAX_SOURCE_PATH), *arguments],
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            timeout=120,
+        )
+    except (OSError, subprocess.SubprocessError) as exc:
+        return None, f"could not run git in {ARGMAX_SOURCE_PATH}: {exc}"
+    if completed.returncode != 0:
+        detail = completed.stderr.strip() or f"exit {completed.returncode}"
+        return None, (
+            f"git {' '.join(arguments)} failed in {ARGMAX_SOURCE_PATH}: {detail}"
+        )
+    return completed.stdout, None
+
+
+def verify_argmax_checkout() -> str | None:
+    """Require the pinned Argmax revision, checked out with no local edits."""
+
+    try:
+        if not ARGMAX_SOURCE_PATH.is_dir():
+            return (
+                "missing dependency: Argmax checkout not found at "
+                f"{ARGMAX_SOURCE_PATH}; set ARGMAX_OSS_SWIFT_PATH to the "
+                "clean argmax-oss-swift working copy"
+            )
+    except OSError as exc:
+        return f"could not inspect Argmax checkout {ARGMAX_SOURCE_PATH}: {exc}"
+
+    revision_output, error = _run_git(["rev-parse", "HEAD"])
+    if error:
+        return error
+    assert revision_output is not None
+    revision = revision_output.strip()
+    if revision != ARGMAX_REQUIRED_REVISION:
+        return (
+            f"Argmax checkout {ARGMAX_SOURCE_PATH} is at "
+            f"{revision or 'an unknown revision'}; the worker requires "
+            f"{ARGMAX_REQUIRED_REVISION}"
+        )
+
+    status_output, error = _run_git(["status", "--porcelain"])
+    if error:
+        return error
+    assert status_output is not None
+    dirty = [line for line in status_output.splitlines() if line.strip()]
+    if dirty:
+        return (
+            f"Argmax checkout {ARGMAX_SOURCE_PATH} has {len(dirty)} local "
+            "modifications; the worker requires a clean checkout"
+        )
+    return None
+
+
+def _worker_mode_frame(
+    worker_path: Path,
+    mode: str,
+    timeout_seconds: int,
+) -> tuple[dict[str, object] | None, str | None]:
+    command = [str(worker_path), mode]
+    try:
+        process = subprocess.Popen(
+            command,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            start_new_session=True,
+            env=worker_environment(),
+        )
+    except OSError as exc:
+        return None, f"could not start WhisperKit worker {mode}: {exc}"
+    try:
+        stdout, stderr = process.communicate(timeout=timeout_seconds)
+    except subprocess.TimeoutExpired:
+        terminate_owned_child(process)
+        stdout, stderr = process.communicate()
+        return None, (
+            f"WhisperKit worker {mode} timed out after {timeout_seconds} seconds"
+        )
+    except KeyboardInterrupt:
+        terminate_owned_child(process)
+        raise
+    if stderr and _ACTIVE_RUN_LOG is not None:
+        _ACTIVE_RUN_LOG.event(
+            "WORKER STDERR",
+            stderr.strip().replace("\n", r"\n"),
+        )
+    lines = [line for line in stdout.splitlines() if line.strip()]
+    if len(lines) != 1:
+        return None, (
+            f"WhisperKit worker {mode} returned {len(lines)} protocol frames; "
+            "expected exactly one"
+        )
+    try:
+        frame = json.loads(lines[0])
+    except json.JSONDecodeError as exc:
+        return None, f"WhisperKit worker {mode} returned invalid JSON: {exc}"
+    if not isinstance(frame, dict):
+        return None, f"WhisperKit worker {mode} returned a non-object frame"
+    if process.returncode != 0:
+        if mode == "--check" and process.returncode == 3:
+            return frame, None
+        message = frame.get("message")
+        detail = message if isinstance(message, str) and message else stderr.strip()
+        return None, (
+            f"WhisperKit worker {mode} failed with exit {process.returncode}"
+            + (f": {detail}" if detail else "")
+        )
+    return frame, None
+
+
+def build_whisperkit_worker(worker_path: Path) -> str | None:
+    """Build and atomically cache the pinned release worker."""
+
+    checkout_error = verify_argmax_checkout()
+    if checkout_error:
+        return checkout_error
+    try:
+        worker_path.parent.mkdir(parents=True, exist_ok=True)
+    except OSError as exc:
+        return f"could not create WhisperKit worker cache {worker_path.parent}: {exc}"
+    _record_run_event(
+        "WORKER BUILD",
+        f"building source={WORKER_SOURCE} argmax={ARGMAX_SOURCE_PATH} "
+        f"revision={ARGMAX_REQUIRED_REVISION} output={worker_path}",
+    )
+    print(f"WORKER BUILD building worker={worker_path}", flush=True)
+    started = time.monotonic()
+    try:
+        with tempfile.TemporaryDirectory(
+            prefix="build-",
+            dir=worker_path.parent,
+        ) as raw_scratch:
+            scratch = Path(raw_scratch)
+            command = [
+                "swift",
+                "build",
+                "-c",
+                "release",
+                "--product",
+                "whisperkit-worker",
+                "--package-path",
+                str(WORKER_SOURCE),
+                "--scratch-path",
+                str(scratch),
+            ]
+            environment = dict(os.environ)
+            environment["ARGMAX_OSS_SWIFT_PATH"] = str(ARGMAX_SOURCE_PATH)
+            try:
+                process = subprocess.Popen(
+                    command,
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE,
+                    text=True,
+                    encoding="utf-8",
+                    errors="replace",
+                    start_new_session=True,
+                    env=environment,
+                )
+            except OSError as exc:
+                return f"could not start Swift release build: {exc}"
+            try:
+                stdout, stderr = process.communicate(
+                    timeout=WORKER_BUILD_TIMEOUT_SECONDS
+                )
+            except subprocess.TimeoutExpired:
+                terminate_owned_child(process)
+                process.communicate()
+                return (
+                    "WhisperKit worker release build timed out after "
+                    f"{WORKER_BUILD_TIMEOUT_SECONDS} seconds"
+                )
+            except KeyboardInterrupt:
+                terminate_owned_child(process)
+                raise
+            if process.returncode != 0:
+                return (
+                    "WhisperKit worker release build failed: "
+                    f"{short_process_error(process.returncode, stderr, stdout)}"
+                )
+            product = scratch / "release" / "whisperkit-worker"
+            if not product.is_file():
+                return f"Swift release build produced no worker binary at {product}"
+            part = worker_path.with_name(
+                f".{worker_path.name}.{os.getpid()}.{secrets.token_hex(4)}.part"
+            )
+            try:
+                shutil.copyfile(product, part)
+                part.chmod(0o700)
+                descriptor = os.open(part, os.O_RDONLY)
+                try:
+                    os.fsync(descriptor)
+                finally:
+                    os.close(descriptor)
+                os.replace(part, worker_path)
+                directory_fd = os.open(
+                    worker_path.parent,
+                    os.O_RDONLY | os.O_DIRECTORY,
+                )
+                try:
+                    os.fsync(directory_fd)
+                finally:
+                    os.close(directory_fd)
+            except OSError as exc:
+                try:
+                    part.unlink()
+                except OSError:
+                    pass
+                return f"could not cache WhisperKit worker binary: {exc}"
+    except OSError as exc:
+        return f"could not create temporary WhisperKit build directory: {exc}"
+    elapsed = time.monotonic() - started
+    _record_run_event(
+        "WORKER BUILD",
+        f"complete worker={worker_path} seconds={elapsed:.1f}",
+    )
+    print(f"WORKER BUILD complete seconds={elapsed:.1f}", flush=True)
+    return None
+
+
+def _worker_info_from_frame(
+    worker_path: Path,
+    frame: dict[str, object],
+) -> tuple[WorkerBootstrapInfo | None, str | None]:
+    if frame.get("ready") is not True:
+        return None, (
+            f"WhisperKit model is not usable at {MODEL_PATH}; the worker "
+            "reported its required Core ML bundles are missing"
+        )
+    if frame.get("model") != MODEL:
+        return None, (
+            "WhisperKit worker reported unexpected model "
+            f"{frame.get('model')!r}"
+        )
+    if frame.get("argmax_revision") != ARGMAX_REQUIRED_REVISION:
+        return None, (
+            "WhisperKit worker was built against Argmax revision "
+            f"{frame.get('argmax_revision')!r}, not {ARGMAX_REQUIRED_REVISION}"
+        )
+    worker_version = frame.get("worker_version")
+    if worker_version != worker_path.parent.name:
+        return None, (
+            "WhisperKit worker fingerprint mismatch: expected "
+            f"{worker_path.parent.name!r}, received {worker_version!r}"
+        )
+    raw_model_path = frame.get("model_path")
+    raw_encoder = frame.get("audio_encoder_compute_units")
+    raw_decoder = frame.get("text_decoder_compute_units")
+    raw_load_seconds = frame.get("model_load_seconds")
+    return (
+        WorkerBootstrapInfo(
+            worker_path=worker_path,
+            model_path=(
+                Path(raw_model_path) if isinstance(raw_model_path, str) else None
+            ),
+            worker_version=worker_version,
+            audio_encoder_compute_units=(
+                raw_encoder if isinstance(raw_encoder, str) else None
+            ),
+            text_decoder_compute_units=(
+                raw_decoder if isinstance(raw_decoder, str) else None
+            ),
+            argmax_revision=ARGMAX_REQUIRED_REVISION,
+            model_load_seconds=(
+                float(raw_load_seconds)
+                if isinstance(raw_load_seconds, (int, float))
+                and not isinstance(raw_load_seconds, bool)
+                else None
+            ),
+        ),
+        None,
+    )
+
+
+def bootstrap_worker(
+    *,
+    allow_build: bool = True,
+) -> tuple[Programs | None, WorkerBootstrapInfo | None, str | None]:
+    """Resolve ffmpeg, the local model, and the cached worker binary.
+
+    This never falls back to ``whisperkit-cli``; if the worker cannot be
+    resolved the run fails.
+    """
+
+    ffmpeg, ffmpeg_error = resolve_program("ffmpeg", "ffmpeg")
+    if ffmpeg_error:
+        return None, None, ffmpeg_error
+    assert ffmpeg is not None
+
+    _, model_error = resolve_model_path()
+    if model_error:
+        return None, None, model_error
+
+    worker_path, path_error = worker_cache_path()
+    if path_error:
+        return None, None, path_error
+    assert worker_path is not None
+    try:
+        worker_ready = worker_path.is_file() and os.access(worker_path, os.X_OK)
+    except OSError as exc:
+        return None, None, f"could not inspect WhisperKit worker cache: {exc}"
+    if not worker_ready:
+        if not allow_build:
+            return None, None, (
+                f"WhisperKit worker is not built at {worker_path}; "
+                "dry-run will not build it"
+            )
+        build_error = build_whisperkit_worker(worker_path)
+        if build_error:
+            return None, None, build_error
+
+    frame, check_error = _worker_mode_frame(
+        worker_path,
+        "--check",
+        WORKER_CHECK_TIMEOUT_SECONDS,
+    )
+    if check_error:
+        return None, None, check_error
+    assert frame is not None
+    info, readiness_error = _worker_info_from_frame(worker_path, frame)
+    if readiness_error:
+        return None, None, readiness_error
+    assert info is not None
+    _record_run_event(
+        "WORKER BOOTSTRAP",
+        f"ready worker={worker_path} model={info.model_path} "
+        f"encoder={info.audio_encoder_compute_units} "
+        f"decoder={info.text_decoder_compute_units}",
+    )
+    return Programs(ffmpeg, str(worker_path)), info, None
+
+
 def identity_from_stat(file_stat: os.stat_result) -> MediaIdentity:
     return MediaIdentity(
         device=file_stat.st_dev,
@@ -1750,9 +2356,23 @@ def effective_options_for_course(
     return replace(options, language=inferred)
 
 
+def is_source_repository(directory: Path, filenames: list[str]) -> bool:
+    """Report whether *directory* looks like a bundled source repository.
+
+    A course root itself is never treated this way: a coding course may
+    legitimately keep a manifest beside its lessons.  Only nested directories
+    qualify, so bundled starter projects and their sample assets drop out of
+    discovery.
+    """
+
+    del directory
+    return any(name.casefold() in SOURCE_MANIFEST_NAMES for name in filenames)
+
+
 def discover_media(course: Course) -> tuple[list[WorkItem], list[str]]:
     items: list[WorkItem] = []
     errors: list[str] = []
+    pruned: list[Path] = []
     allowed_extensions = (
         VIDEO_EXTENSIONS if is_music_tree(course.root) else MEDIA_EXTENSIONS
     )
@@ -1778,10 +2398,16 @@ def discover_media(course: Course) -> tuple[list[WorkItem], list[str]]:
                 dirnames[:] = [
                     name for name in dirnames if name.casefold() != "transcripts"
                 ]
+            elif is_source_repository(directory_path, filenames):
+                # Pruning a bundled repository is routine housekeeping, not a
+                # course failure: it is recorded and the walk moves on.
+                dirnames[:] = []
+                pruned.append(directory_path)
+                continue
 
             for filename in filenames:
                 media = directory_path / filename
-                if media.suffix.casefold() not in allowed_extensions:
+                if not media_path_is_eligible(media, allowed_extensions):
                     continue
                 try:
                     media_stat = media.lstat()
@@ -1823,6 +2449,20 @@ def discover_media(course: Course) -> tuple[list[WorkItem], list[str]]:
                 )
     except (OSError, RuntimeError) as exc:
         errors.append(f"discovery failed at {course.root}: {exc}")
+
+    for directory_path in pruned:
+        try:
+            relative = directory_path.relative_to(course.root).as_posix()
+        except ValueError:
+            relative = str(directory_path)
+        _record_run_event(
+            "SOURCE TREE PRUNED",
+            f"course={course.root} directory={relative}",
+        )
+        print(
+            f"SOURCE TREE PRUNED course={course.name} directory={relative}",
+            flush=True,
+        )
 
     items.sort(
         key=lambda item: (
@@ -2001,17 +2641,9 @@ def perform_preflight(
     errors: list[str] = []
 
     if programs is None:
-        whisperkit, whisperkit_error = resolve_program("whisperkit-cli", "WhisperKit CLI")
-        ffmpeg, ffmpeg_error = resolve_program("ffmpeg", "ffmpeg")
-        _, model_error = resolve_model_path()
-        if whisperkit_error:
-            errors.append(whisperkit_error)
-        if ffmpeg_error:
-            errors.append(ffmpeg_error)
-        if model_error:
-            errors.append(model_error)
-        if whisperkit is not None and ffmpeg is not None:
-            programs = Programs(whisperkit=whisperkit, ffmpeg=ffmpeg)
+        programs, _info, bootstrap_error = bootstrap_worker(allow_build=False)
+        if bootstrap_error:
+            errors.append(bootstrap_error)
 
     all_items: list[WorkItem] = []
     for course in courses:
@@ -2135,15 +2767,18 @@ def print_settings(options: TranscriptionOptions = TranscriptionOptions()) -> No
         if options.timestamps
         else "off"
     )
-    print(
-        "WhisperKit settings: "
+    detail = (
         f"model={MODEL} language={language}/recognized-paths task=transcribe "
-        "backend=direct-cli "
-        f"chunking={CHUNKING_STRATEGY} input=direct-common-audio/ffmpeg-other "
-        "music-trees=video-only "
+        "backend=persistent-worker "
+        f"chunking={CHUNKING_STRATEGY} "
+        "input=direct-common-audio/ffmpeg-other music-trees=video-only "
         f"compute=encoder:{AUDIO_ENCODER_COMPUTE_UNITS}/"
         f"decoder:{TEXT_DECODER_COMPUTE_UNITS}/mel:cpuAndGPU "
         f"workers={CONCURRENT_WORKERS} "
+        f"argmax={ARGMAX_REQUIRED_REVISION[:12]}"
+    )
+    print(
+        f"Transcription settings: engine=whisperkit {detail} "
         f"timestamps={timestamp_mode} "
         f"timeout={options.timeout_seconds}s retries={options.retries} "
         f"overwrite={overwrite}",
@@ -2499,42 +3134,6 @@ def extract_audio(
     return last_error or "ffmpeg extraction failed"
 
 
-def whisperkit_transcribe_command(
-    executable: str,
-    audio_path: Path,
-    options: TranscriptionOptions,
-    report_directory: Path,
-) -> list[str]:
-    command = [
-        executable,
-        "transcribe",
-        "--audio-path",
-        str(audio_path),
-        "--model",
-        MODEL,
-        "--model-path",
-        str(MODEL_PATH),
-        "--task",
-        "transcribe",
-        "--chunking-strategy",
-        CHUNKING_STRATEGY,
-        "--audio-encoder-compute-units",
-        AUDIO_ENCODER_COMPUTE_UNITS,
-        "--text-decoder-compute-units",
-        TEXT_DECODER_COMPUTE_UNITS,
-        "--concurrent-worker-count",
-        str(CONCURRENT_WORKERS),
-        "--skip-special-tokens",
-    ]
-    if options.language is not None:
-        command.extend(("--language", options.language))
-    if options.timestamps:
-        command.extend(("--report", "--report-path", str(report_directory)))
-    else:
-        command.append("--without-timestamps")
-    return command
-
-
 def terminate_owned_child(process: subprocess.Popen[str]) -> None:
     """Terminate the process group created for one WhisperKit invocation."""
 
@@ -2560,6 +3159,305 @@ def terminate_owned_child(process: subprocess.Popen[str]) -> None:
     process.wait()
 
 
+class WhisperKitWorker:
+    """One long-lived, single-flight WhisperKit JSONL worker."""
+
+    def __init__(
+        self,
+        executable: str | Path,
+        *,
+        arguments: tuple[str, ...] = (),
+        ready_timeout_seconds: int = WORKER_READY_TIMEOUT_SECONDS,
+    ):
+        self.executable = str(executable)
+        self.arguments = arguments
+        self.ready_timeout_seconds = ready_timeout_seconds
+        self.process: subprocess.Popen[bytes] | None = None
+        self.ready: dict[str, object] | None = None
+        self._stdout_buffer = bytearray()
+        self._stderr_thread: threading.Thread | None = None
+
+    def _drain_stderr(self, stream: object) -> None:
+        try:
+            for raw_line in stream:
+                line = raw_line.decode("utf-8", errors="replace").rstrip("\r\n")
+                if line:
+                    _record_run_event("WORKER STDERR", line)
+        except (OSError, ValueError):
+            return
+
+    @staticmethod
+    def _close_process_streams(process: subprocess.Popen[bytes]) -> None:
+        for stream in (process.stdin, process.stdout, process.stderr):
+            if stream is None:
+                continue
+            try:
+                stream.close()
+            except OSError:
+                pass
+
+    def start(self) -> None:
+        if self.process is not None and self.process.poll() is None:
+            return
+        self.process = None
+        self.ready = None
+        self._stdout_buffer.clear()
+        try:
+            process = subprocess.Popen(
+                [self.executable, *self.arguments],
+                stdin=subprocess.PIPE,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                bufsize=0,
+                start_new_session=True,
+                env=worker_environment(),
+            )
+        except OSError as exc:
+            raise WorkerProtocolError(
+                f"could not start WhisperKit worker: {exc}"
+            ) from exc
+        self.process = process
+        assert process.stderr is not None
+        self._stderr_thread = threading.Thread(
+            target=self._drain_stderr,
+            args=(process.stderr,),
+            name="whisperkit-worker-stderr",
+            daemon=True,
+        )
+        self._stderr_thread.start()
+        try:
+            frame = self._read_frame(self.ready_timeout_seconds)
+            if frame.get("type") == "error":
+                error_type = (
+                    WorkerModelLoadError
+                    if frame.get("code") == "model_load_failed"
+                    else WorkerProtocolError
+                )
+                raise error_type(
+                    "WhisperKit worker model load failed: "
+                    f"{frame.get('message', 'unknown error')}"
+                )
+            if (
+                frame.get("type") != "ready"
+                or frame.get("engine") != "whisperkit"
+                or frame.get("model") != MODEL
+                or frame.get("argmax_revision") != ARGMAX_REQUIRED_REVISION
+            ):
+                raise WorkerProtocolError(
+                    f"invalid WhisperKit ready frame: {frame!r}"
+                )
+            self.ready = frame
+            _record_run_event(
+                "WORKER READY",
+                " ".join(
+                    (
+                        f"worker={self.executable}",
+                        f"model={frame.get('model')}",
+                        f"model_path={frame.get('model_path')}",
+                        f"argmax={frame.get('argmax_revision')}",
+                        f"encoder={frame.get('audio_encoder_compute_units')}",
+                        f"decoder={frame.get('text_decoder_compute_units')}",
+                        f"load_seconds={frame.get('model_load_seconds')}",
+                    )
+                ),
+            )
+        except BaseException:
+            self.terminate("startup failure")
+            raise
+
+    def _read_line(self, timeout_seconds: float) -> bytes:
+        process = self.process
+        if process is None or process.stdout is None:
+            raise WorkerProtocolError("WhisperKit worker is not running")
+        deadline = time.monotonic() + timeout_seconds
+        selector = selectors.DefaultSelector()
+        selector.register(process.stdout.fileno(), selectors.EVENT_READ)
+        try:
+            while True:
+                newline = self._stdout_buffer.find(b"\n")
+                if newline >= 0:
+                    line = bytes(self._stdout_buffer[:newline])
+                    del self._stdout_buffer[: newline + 1]
+                    return line
+                remaining = deadline - time.monotonic()
+                if remaining <= 0:
+                    raise WorkerRequestTimeout(
+                        f"WhisperKit worker timed out after {timeout_seconds:g} seconds"
+                    )
+                if not selector.select(remaining):
+                    raise WorkerRequestTimeout(
+                        f"WhisperKit worker timed out after {timeout_seconds:g} seconds"
+                    )
+                chunk = os.read(process.stdout.fileno(), 65_536)
+                if not chunk:
+                    raise WorkerProtocolError(
+                        "WhisperKit worker closed its protocol stream"
+                    )
+                self._stdout_buffer.extend(chunk)
+                if len(self._stdout_buffer) > 64 * 1024 * 1024:
+                    raise WorkerProtocolError(
+                        "WhisperKit worker emitted an oversized protocol frame"
+                    )
+        finally:
+            selector.close()
+
+    def _read_frame(self, timeout_seconds: float) -> dict[str, object]:
+        raw_line = self._read_line(timeout_seconds)
+        try:
+            decoded = raw_line.decode("utf-8")
+            frame = json.loads(decoded)
+        except (UnicodeError, json.JSONDecodeError) as exc:
+            raise WorkerProtocolError(
+                f"WhisperKit worker emitted invalid JSON: {exc}"
+            ) from exc
+        if not isinstance(frame, dict):
+            raise WorkerProtocolError(
+                "WhisperKit worker emitted a non-object protocol frame"
+            )
+        if frame.get("type") not in {"ready", "result", "error"}:
+            raise WorkerProtocolError(
+                "WhisperKit worker emitted an invalid frame type: "
+                f"{frame.get('type')!r}"
+            )
+        return frame
+
+    def _additional_response_pending(self) -> bool:
+        if b"\n" in self._stdout_buffer:
+            return True
+        process = self.process
+        if process is None or process.stdout is None:
+            return False
+        selector = selectors.DefaultSelector()
+        selector.register(process.stdout.fileno(), selectors.EVENT_READ)
+        try:
+            if not selector.select(WORKER_DUPLICATE_RESPONSE_GRACE_SECONDS):
+                return False
+            chunk = os.read(process.stdout.fileno(), 65_536)
+            if not chunk:
+                raise WorkerProtocolError(
+                    "WhisperKit worker closed its protocol stream after a response"
+                )
+            self._stdout_buffer.extend(chunk)
+            if len(self._stdout_buffer) > 64 * 1024 * 1024:
+                raise WorkerProtocolError(
+                    "WhisperKit worker emitted an oversized protocol frame"
+                )
+            return b"\n" in self._stdout_buffer
+        finally:
+            selector.close()
+
+    def transcribe(
+        self,
+        audio_path: Path,
+        timeout_seconds: int,
+        *,
+        language: str | None = None,
+        timestamps: bool = False,
+    ) -> dict[str, object]:
+        self.start()
+        assert self.process is not None and self.process.stdin is not None
+        request_id = secrets.token_hex(16)
+        request = json.dumps(
+            {
+                "id": request_id,
+                "type": "transcribe",
+                "audio_path": str(audio_path),
+                "language": language,
+                "timestamps": timestamps,
+            },
+            ensure_ascii=False,
+            separators=(",", ":"),
+        ).encode("utf-8") + b"\n"
+        try:
+            self.process.stdin.write(request)
+            self.process.stdin.flush()
+        except (BrokenPipeError, OSError, ValueError) as exc:
+            raise WorkerProtocolError(
+                f"could not send request to WhisperKit worker: {exc}"
+            ) from exc
+        frame = self._read_frame(timeout_seconds)
+        if frame.get("type") == "ready":
+            raise WorkerProtocolError(
+                "WhisperKit worker emitted a duplicate ready frame"
+            )
+        if frame.get("id") != request_id:
+            raise WorkerProtocolError(
+                "WhisperKit worker response id does not match the in-flight request"
+            )
+        if self._additional_response_pending():
+            raise WorkerProtocolError(
+                "WhisperKit worker emitted a duplicate response for one request"
+            )
+        return frame
+
+    def terminate(self, reason: str) -> None:
+        process = self.process
+        self.process = None
+        self.ready = None
+        self._stdout_buffer.clear()
+        if process is not None:
+            _record_run_event(
+                "WORKER RESTART",
+                f"worker={self.executable} reason={reason}",
+            )
+            terminate_owned_child(process)
+        thread = self._stderr_thread
+        self._stderr_thread = None
+        if thread is not None and thread is not threading.current_thread():
+            thread.join(timeout=1)
+        if process is not None:
+            self._close_process_streams(process)
+
+    def shutdown(self) -> None:
+        process = self.process
+        if process is None:
+            return
+        if process.poll() is None and process.stdin is not None:
+            request = json.dumps(
+                {"id": secrets.token_hex(16), "type": "shutdown"},
+                separators=(",", ":"),
+            ).encode("utf-8") + b"\n"
+            try:
+                process.stdin.write(request)
+                process.stdin.flush()
+                process.wait(timeout=2)
+            except (BrokenPipeError, OSError, ValueError, subprocess.TimeoutExpired):
+                terminate_owned_child(process)
+        self.process = None
+        self.ready = None
+        self._stdout_buffer.clear()
+        thread = self._stderr_thread
+        self._stderr_thread = None
+        if thread is not None and thread is not threading.current_thread():
+            thread.join(timeout=1)
+        self._close_process_streams(process)
+
+
+def active_worker(executable: str) -> WhisperKitWorker:
+    global _ACTIVE_WORKER
+    if _ACTIVE_WORKER is None or _ACTIVE_WORKER.executable != str(executable):
+        if _ACTIVE_WORKER is not None:
+            _ACTIVE_WORKER.shutdown()
+        _ACTIVE_WORKER = WhisperKitWorker(executable)
+    return _ACTIVE_WORKER
+
+
+def reset_worker(reason: str) -> None:
+    global _ACTIVE_WORKER
+    worker = _ACTIVE_WORKER
+    _ACTIVE_WORKER = None
+    if worker is not None:
+        worker.terminate(reason)
+
+
+def shutdown_worker() -> None:
+    global _ACTIVE_WORKER
+    worker = _ACTIVE_WORKER
+    _ACTIVE_WORKER = None
+    if worker is not None:
+        worker.shutdown()
+
+
 def format_transcript_timestamp(raw_seconds: object) -> str:
     if not isinstance(raw_seconds, (int, float)) or isinstance(
         raw_seconds,
@@ -2583,68 +3481,117 @@ def format_timestamp_marker(seconds: int) -> str:
     return f"{hours:02d}:{minutes:02d}:{whole_seconds:02d}"
 
 
-def timestamped_transcript(
-    report_path: Path,
+def render_timed_transcript(
+    phrases: list[TimedPhrase],
     interval_seconds: int = DEFAULT_TIMESTAMP_INTERVAL_SECONDS,
 ) -> tuple[str | None, str | None]:
+    """Render engine-neutral timed phrases in the established text format."""
+
     if interval_seconds < 0:
         return None, "timestamp interval must be non-negative"
-    try:
-        with report_path.open("r", encoding="utf-8") as report:
-            payload = json.load(report)
-    except (OSError, UnicodeError, json.JSONDecodeError) as exc:
-        return None, f"could not read WhisperKit timestamp report: {exc}"
-    segments = payload.get("segments") if isinstance(payload, dict) else None
-    if not isinstance(segments, list):
-        return None, "WhisperKit timestamp report contains no segment list"
-
-    parsed_segments: list[tuple[float, float, str]] = []
-    try:
-        for segment in segments:
-            if not isinstance(segment, dict):
-                raise ValueError("segment is not an object")
-            text = segment.get("text")
-            if not isinstance(text, str):
-                raise ValueError("segment text is missing")
-            text = text.strip()
-            if not text:
-                continue
-            raw_start = segment.get("start")
-            raw_end = segment.get("end")
-            if (
-                isinstance(raw_start, bool)
-                or not isinstance(raw_start, (int, float))
-                or isinstance(raw_end, bool)
-                or not isinstance(raw_end, (int, float))
-            ):
-                raise ValueError("segment timestamp is missing")
-            start = float(raw_start)
-            end = float(raw_end)
-            parsed_segments.append((max(0.0, start), max(0.0, end), text))
-    except ValueError as exc:
-        return None, f"invalid WhisperKit timestamp report: {exc}"
-
     if interval_seconds == 0:
         transcript = "\n".join(
-            f"[{format_transcript_timestamp(start)} --> "
-            f"{format_transcript_timestamp(end)}] {text}"
-            for start, end, text in parsed_segments
+            f"[{format_transcript_timestamp(phrase.start)} --> "
+            f"{format_transcript_timestamp(phrase.end)}] {phrase.text}"
+            for phrase in phrases
         )
     else:
         buckets: dict[int, list[str]] = {}
-        for start, _end, text in parsed_segments:
-            bucket = int(start // interval_seconds) * interval_seconds
-            buckets.setdefault(bucket, []).append(text)
+        for phrase in phrases:
+            bucket = int(phrase.start // interval_seconds) * interval_seconds
+            buckets.setdefault(bucket, []).append(phrase.text)
         transcript = "\n\n".join(
             f"[{format_timestamp_marker(bucket)}]\n{' '.join(buckets[bucket])}"
             for bucket in sorted(buckets)
         )
     if not transcript.strip():
-        return None, "WhisperKit produced an empty timestamped transcript"
+        return None, "engine produced an empty timestamped transcript"
     return transcript, None
 
 
-def run_whisperkit_direct(
+def phrases_from_segments(segments: object) -> list[TimedPhrase]:
+    """Convert worker segments into the renderer's engine-neutral phrases.
+
+    The accepted shape and the clamping below match what the retired
+    report-file reader did, so the rendered byte-for-byte transcript format is
+    unchanged.
+    """
+
+    if not isinstance(segments, list):
+        raise ValueError("worker result contains no segment list")
+    parsed: list[TimedPhrase] = []
+    for segment in segments:
+        if not isinstance(segment, dict):
+            raise ValueError("segment is not an object")
+        text = segment.get("text")
+        if not isinstance(text, str):
+            raise ValueError("segment text is missing")
+        text = text.strip()
+        if not text:
+            continue
+        raw_start = segment.get("start")
+        raw_end = segment.get("end")
+        if (
+            isinstance(raw_start, bool)
+            or not isinstance(raw_start, (int, float))
+            or isinstance(raw_end, bool)
+            or not isinstance(raw_end, (int, float))
+        ):
+            raise ValueError("segment timestamp is missing")
+        start = float(raw_start)
+        end = float(raw_end)
+        if not math.isfinite(start) or not math.isfinite(end):
+            raise ValueError("segment timestamp is not finite")
+        parsed.append(TimedPhrase(max(0.0, start), max(0.0, end), text))
+    return parsed
+
+
+def timestamped_transcript(
+    segments: object,
+    interval_seconds: int = DEFAULT_TIMESTAMP_INTERVAL_SECONDS,
+) -> tuple[str | None, str | None]:
+    if interval_seconds < 0:
+        return None, "timestamp interval must be non-negative"
+    try:
+        parsed_segments = phrases_from_segments(segments)
+    except ValueError as exc:
+        return None, f"invalid WhisperKit segments: {exc}"
+    return render_timed_transcript(parsed_segments, interval_seconds)
+
+
+def validate_worker_result(
+    frame: dict[str, object],
+) -> tuple[str, float, float, object]:
+    text = frame.get("text")
+    segments = frame.get("segments")
+    raw_duration = frame.get("duration")
+    raw_processing_time = frame.get("processing_time")
+    if not isinstance(text, str):
+        raise ValueError("worker result text is not a string")
+    if not isinstance(segments, list):
+        raise ValueError("worker result segments is not a list")
+    if (
+        isinstance(raw_duration, bool)
+        or not isinstance(raw_duration, (int, float))
+    ):
+        raise ValueError("worker result duration is not numeric")
+    duration = float(raw_duration)
+    if not math.isfinite(duration) or duration <= 0:
+        raise ValueError("worker result duration must be finite and positive")
+    if (
+        isinstance(raw_processing_time, bool)
+        or not isinstance(raw_processing_time, (int, float))
+    ):
+        raise ValueError("worker result processing_time is not numeric")
+    processing_time = float(raw_processing_time)
+    if not math.isfinite(processing_time) or processing_time < 0:
+        raise ValueError(
+            "worker result processing_time must be finite and non-negative"
+        )
+    return text, duration, processing_time, segments
+
+
+def run_whisperkit_worker(
     executable: str,
     audio_path: Path,
     options: TranscriptionOptions,
@@ -2652,94 +3599,98 @@ def run_whisperkit_direct(
     review_log: ReviewLog | None = None,
     source_path: Path | None = None,
 ) -> tuple[str | None, str | None]:
-    """Run, time out, and retry one owned WhisperKit CLI child."""
+    """Run one request through the persistent WhisperKit worker with retries."""
 
-    last_error = "WhisperKit did not run"
+    del workspace
+    global _LAST_ENGINE_METRICS
+    _LAST_ENGINE_METRICS = None
     attempts = options.retries + 1
+    last_error = "WhisperKit worker did not run"
+    model_load_failures = 0
     for attempt in range(1, attempts + 1):
-        report_directory = workspace / f"report-{attempt}"
+        worker = active_worker(executable)
+        started = time.monotonic()
         try:
-            report_directory.mkdir()
-        except OSError as exc:
-            return None, f"could not create WhisperKit report directory: {exc}"
-        command = whisperkit_transcribe_command(
-            executable,
-            audio_path,
-            options,
-            report_directory,
-        )
-        try:
-            process = subprocess.Popen(
-                command,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-                text=True,
-                encoding="utf-8",
-                errors="replace",
-                start_new_session=True,
+            frame = worker.transcribe(
+                audio_path,
+                options.timeout_seconds,
+                language=options.language,
+                timestamps=options.timestamps,
             )
-        except OSError as exc:
-            last_error = f"could not start WhisperKit CLI: {exc}"
+        except WorkerRequestTimeout as exc:
+            last_error = str(exc)
+            reset_worker("request timeout")
+            if review_log is not None:
+                review_log.record(
+                    "WHISPERKIT TIMEOUT",
+                    source_path or audio_path,
+                    f"{last_error}; attempt={attempt}/{attempts}",
+                )
+        except WorkerModelLoadError as exc:
+            last_error = str(exc)
+            model_load_failures += 1
+            reset_worker("mid-run model load failure")
+            if model_load_failures >= 2:
+                return None, last_error
+        except WorkerProtocolError as exc:
+            last_error = str(exc)
+            reset_worker("protocol violation or crash")
+        except KeyboardInterrupt:
+            reset_worker("keyboard interrupt")
+            raise
         else:
-            try:
-                stdout, stderr = process.communicate(
-                    timeout=options.timeout_seconds
-                )
-            except subprocess.TimeoutExpired:
-                terminate_owned_child(process)
-                stdout, stderr = process.communicate()
+            if frame.get("type") == "error":
+                code = frame.get("code")
+                message = frame.get("message")
                 last_error = (
-                    "WhisperKit CLI timed out after "
-                    f"{options.timeout_seconds} seconds and was terminated"
+                    message
+                    if isinstance(message, str) and message
+                    else f"WhisperKit worker error {code!r}"
                 )
-                if review_log is not None:
-                    review_log.record(
-                        "WHISPERKIT TIMEOUT",
-                        source_path or audio_path,
-                        f"{last_error}; attempt={attempt}/{attempts}",
-                    )
-            except KeyboardInterrupt:
-                terminate_owned_child(process)
-                raise
+                if code == "invalid_audio" or frame.get("retriable") is not True:
+                    return None, last_error
+                if code == "model_load_failed":
+                    model_load_failures += 1
+                    reset_worker("mid-run model load failure")
+                    if model_load_failures >= 2:
+                        return None, last_error
             else:
-                if stderr and _ACTIVE_RUN_LOG is not None:
-                    _ACTIVE_RUN_LOG.event(
-                        "WHISPERKIT STDERR",
-                        f"source={source_path or audio_path} {stderr.strip().replace(chr(10), r'\\n')}",
-                    )
-                if process.returncode != 0:
-                    last_error = short_process_error(
-                        process.returncode,
-                        stderr=stderr,
-                        stdout=stdout,
-                    )
-                elif options.timestamps:
-                    report_path = report_directory / f"{audio_path.stem}.json"
-                    transcript, report_error = timestamped_transcript(
-                        report_path,
-                        options.timestamp_interval_seconds,
-                    )
-                    if report_error is None:
-                        assert transcript is not None
-                        return transcript, None
-                    last_error = report_error
-                else:
-                    transcript = stdout.strip()
-                    if (
-                        not transcript
-                        or transcript == "Transcription failed"
-                        or transcript.startswith("Error when transcribing ")
-                    ):
-                        last_error = (
-                            "WhisperKit CLI produced no usable transcript"
+                try:
+                    (
+                        text,
+                        duration,
+                        worker_processing_time,
+                        segments,
+                    ) = validate_worker_result(frame)
+                    if options.timestamps:
+                        transcript, render_error = timestamped_transcript(
+                            segments,
+                            options.timestamp_interval_seconds,
                         )
+                        if render_error:
+                            raise ValueError(render_error)
+                        assert transcript is not None
                     else:
-                        return transcript, None
+                        transcript = text.strip()
+                        if not transcript:
+                            raise ValueError(
+                                "WhisperKit produced an empty transcript"
+                            )
+                except ValueError as exc:
+                    return None, f"invalid WhisperKit result: {exc}"
+                elapsed = time.monotonic() - started
+                _LAST_ENGINE_METRICS = EngineMetrics(duration, elapsed)
+                _record_run_event(
+                    "WHISPERKIT TIMING",
+                    f"source={source_path or audio_path} "
+                    f"worker_seconds={worker_processing_time:.3f} "
+                    f"wall_seconds={elapsed:.3f} audio_seconds={duration:.3f}",
+                )
+                return transcript, None
 
         if attempt < attempts:
             print(
-                f"WHISPERKIT RETRY next={attempt + 1}/{attempts}: "
-                f"{last_error}",
+                f"WHISPERKIT RETRY next={attempt + 1}/{attempts}: {last_error}",
                 file=sys.stderr,
                 flush=True,
             )
@@ -2913,7 +3864,7 @@ def install_transcript(
         destination_path = Path(destination_name)
     if not transcript.strip():
         return InstallResult.failed(
-            "WhisperKit produced an empty transcript; destination was not changed"
+            "engine produced an empty transcript; destination was not changed"
         )
     payload = transcript_payload(transcript)
     part_name = (
@@ -3228,8 +4179,12 @@ def transcribe_item(
                         f"audio extraction failed: {error}"
                     )
                 audio_path = wav_path
-            transcript, error = run_whisperkit_direct(
-                programs.whisperkit,
+            if programs.worker is None:
+                return InstallResult.failed(
+                    "WhisperKit worker was not resolved; destination was not changed"
+                )
+            transcript, error = run_whisperkit_worker(
+                programs.worker,
                 audio_path,
                 effective_options,
                 workspace,
@@ -3248,7 +4203,7 @@ def transcribe_item(
         and transcript_needs_timestamp_upgrade(transcript.encode("utf-8"))
     ):
         return InstallResult.failed(
-            "WhisperKit produced no clean leading timestamp marker; "
+            "engine produced no clean leading timestamp marker; "
             "destination was not changed"
         )
     return install_transcript(
@@ -3417,9 +4372,22 @@ def process_item(
             f"{prefix} OK transcripts/{item.relative_output}",
             flush=True,
         )
+        metrics = _LAST_ENGINE_METRICS
+        timing = ""
+        if metrics is not None:
+            rtf = metrics.rtf
+            timing = (
+                f" engine=whisperkit seconds={metrics.engine_seconds:.3f} "
+                + (f"rtf={rtf:.3f}" if rtf is not None else "rtf=unknown")
+                + (
+                    f" audio_seconds={metrics.audio_seconds:.3f}"
+                    if metrics.audio_seconds is not None
+                    else ""
+                )
+            )
         _record_run_event(
             "OK",
-            f"item={item.media} output=transcripts/{item.relative_output}",
+            f"item={item.media} output=transcripts/{item.relative_output}{timing}",
         )
 
 
@@ -3520,6 +4488,27 @@ def stream_course(
                         for name in dirnames
                         if name.casefold() != "transcripts"
                     ]
+                elif is_source_repository(directory_path, filenames):
+                    # Bundled source repositories are pruned rather than
+                    # transcribed.  This is routine, so it is logged as
+                    # information and never counted as a course failure.
+                    dirnames[:] = []
+                    try:
+                        relative = directory_path.relative_to(
+                            course.root
+                        ).as_posix()
+                    except ValueError:
+                        relative = str(directory_path)
+                    _record_run_event(
+                        "SOURCE TREE PRUNED",
+                        f"course={course.root} directory={relative}",
+                    )
+                    print(
+                        f"SOURCE TREE PRUNED course={course.name} "
+                        f"directory={relative}",
+                        flush=True,
+                    )
+                    continue
                 sort_key = lambda name: (
                     unicodedata.normalize("NFC", name).casefold(),
                     name,
@@ -3557,9 +4546,9 @@ def stream_course(
 
                 try:
                     for filename in filenames:
-                        if Path(filename).suffix.casefold() not in allowed_extensions:
-                            continue
                         media = directory_path / filename
+                        if not media_path_is_eligible(media, allowed_extensions):
+                            continue
                         try:
                             media_stat = media.lstat()
                         except OSError as exc:
@@ -3909,6 +4898,50 @@ def validate_fast_start_roots(
     return roots
 
 
+def prepare_worker_for_live_run(options: TranscriptionOptions) -> str | None:
+    """Build the worker if needed and prove it can load its resident model.
+
+    The worker started here stays resident for the whole run, so this is the
+    only model load a run pays.  Callers rely on a clean return as the proof
+    that migrating an older checkpoint is safe.
+    """
+
+    del options
+    programs, info, error = bootstrap_worker(allow_build=True)
+    if error:
+        return error
+    assert programs is not None and programs.worker is not None
+    assert info is not None
+    try:
+        worker = active_worker(programs.worker)
+        worker.start()
+    except (WorkerProtocolError, WorkerRequestTimeout) as exc:
+        reset_worker("bootstrap load failure")
+        return f"WhisperKit worker could not load its model: {exc}"
+    ready = worker.ready or {}
+    load_seconds = ready.get("model_load_seconds")
+    _record_run_event(
+        "WORKER BOOTSTRAP",
+        " ".join(
+            (
+                f"loaded worker={info.worker_path}",
+                f"model={ready.get('model_path')}",
+                f"worker_version={ready.get('worker_version')}",
+                f"argmax={ready.get('argmax_revision')}",
+                f"encoder={ready.get('audio_encoder_compute_units')}",
+                f"decoder={ready.get('text_decoder_compute_units')}",
+                f"load_seconds={load_seconds}",
+            )
+        ),
+    )
+    if isinstance(load_seconds, (int, float)) and not isinstance(load_seconds, bool):
+        print(
+            f"WORKER READY model={MODEL} load_seconds={float(load_seconds):.1f}",
+            flush=True,
+        )
+    return None
+
+
 def run_fast_start(
     raw_roots: list[str],
     limit: int | None,
@@ -3947,20 +4980,13 @@ def run_fast_start(
         )
         return 2
 
-    whisperkit, whisperkit_error = resolve_program("whisperkit-cli", "WhisperKit CLI")
-    ffmpeg, ffmpeg_error = resolve_program("ffmpeg", "ffmpeg")
-    _, model_error = resolve_model_path()
-    program_errors = [
-        error for error in (whisperkit_error, ffmpeg_error, model_error) if error
-    ]
-    if program_errors:
-        for error in program_errors:
-            if review_log is not None:
-                review_log.record("PROGRAM", "transcription programs", error)
-            print(f"error: {error}", file=sys.stderr, flush=True)
+    programs, _worker_info, bootstrap_error = bootstrap_worker(allow_build=False)
+    if bootstrap_error:
+        if review_log is not None:
+            review_log.record("PROGRAM", "transcription programs", bootstrap_error)
+        print(f"error: {bootstrap_error}", file=sys.stderr, flush=True)
         return 2
-    assert whisperkit is not None and ffmpeg is not None
-    programs = Programs(whisperkit=whisperkit, ffmpeg=ffmpeg)
+    assert programs is not None
 
     print_settings(options)
     remaining = limit
@@ -3978,6 +5004,10 @@ def run_fast_start(
             break
         if checkpoint is not None:
             checkpoint.set_cursor(root_index, "active")
+        course = Course(
+            root,
+            ignore_omega_directories=ignore_omega_directories,
+        )
         if scan:
             print(
                 f"SCAN [{display_index}/{len(roots)}] course={root}",
@@ -4055,7 +5085,7 @@ def run_fast_start(
             )
             try:
                 _summary, consumed, course_was_limited, stream_failed = stream_course(
-                    Course(root, ignore_omega_directories=ignore_omega_directories),
+                    course,
                     programs,
                     options,
                     remaining,
@@ -4126,7 +5156,7 @@ def run_fast_start(
     return 0
 
 
-def main(argv: Iterator[str] | None = None) -> int:
+def _main(argv: Iterator[str] | None = None) -> int:
     title = ProcessTitle.capture()
     parser = build_parser()
     raw_argv = list(argv) if argv is not None else None
@@ -4170,6 +5200,7 @@ def main(argv: Iterator[str] | None = None) -> int:
             file=sys.stderr,
             flush=True,
         )
+    retry_baseline = TranscriptionOptions()
     if args.retry_failed and (
         args.resume
         or args.roots
@@ -4178,8 +5209,12 @@ def main(argv: Iterator[str] | None = None) -> int:
         or args.dry_run
         or args.resume_from
         or args.resume_from_command
+        or options != retry_baseline
     ):
-        parser.error("--retry-failed accepts only its state path and --log-file")
+        parser.error(
+            "--retry-failed accepts only its state path and --log-file"
+        )
+    resume_baseline = TranscriptionOptions()
     if args.resume and (
         args.roots
         or args.author_roots
@@ -4187,7 +5222,7 @@ def main(argv: Iterator[str] | None = None) -> int:
         or args.dry_run
         or args.resume_from
         or args.resume_from_command
-        or options != TranscriptionOptions()
+        or options != resume_baseline
     ):
         parser.error(
             "--resume accepts only its state path and optional --limit"
@@ -4231,13 +5266,19 @@ def main(argv: Iterator[str] | None = None) -> int:
             )
             run_log.footer(2, "empty failed_courses")
             return 2
+        retry_options = source_checkpoint.options
+        bootstrap_error = prepare_worker_for_live_run(retry_options)
+        if bootstrap_error:
+            print(f"error: {bootstrap_error}", file=sys.stderr, flush=True)
+            run_log.footer(2, "worker bootstrap failed")
+            return 2
         run_log._write(f"Expanded course count: {len(source_checkpoint.failed_courses)}")
         try:
             checkpoint = ResumeCheckpoint.create(
                 list(source_checkpoint.failed_courses),
                 list(source_checkpoint.source_roots),
                 source_checkpoint.source_mode,
-                options=source_checkpoint.options,
+                options=retry_options,
             )
         except ResumeStateError as exc:
             print(f"error: {exc}", file=sys.stderr, flush=True)
@@ -4297,6 +5338,27 @@ def main(argv: Iterator[str] | None = None) -> int:
                 )
             run_log.footer(0, checkpoint.status, checkpoint_path=checkpoint.path, retry_failed_command=retry_failed_command(checkpoint), issue_count=review_log.issue_count)
             return 0
+        bootstrap_error = prepare_worker_for_live_run(checkpoint.options)
+        if bootstrap_error:
+            # The worker never loaded, so an older checkpoint stays exactly as
+            # it was found on disk.
+            print(f"error: {bootstrap_error}", file=sys.stderr, flush=True)
+            run_log.footer(
+                2,
+                "worker bootstrap failed",
+                checkpoint_path=checkpoint.path,
+            )
+            return 2
+        try:
+            checkpoint.migrate()
+        except ResumeStateError as exc:
+            print(f"error: {exc}", file=sys.stderr, flush=True)
+            run_log.footer(
+                2,
+                "resume state migration failed",
+                checkpoint_path=checkpoint.path,
+            )
+            return 2
         run_log._write(f"Expanded course count: {len(checkpoint.course_roots)}")
         print(
             f"RESUME state={checkpoint.path} "
@@ -4440,6 +5502,13 @@ def main(argv: Iterator[str] | None = None) -> int:
                 print(f"error: {exc}", file=sys.stderr, flush=True)
                 review_log.print_summary()
                 return 2
+        bootstrap_error = prepare_worker_for_live_run(options)
+        if bootstrap_error:
+            # No checkpoint is created when the worker cannot be prepared.
+            print(f"error: {bootstrap_error}", file=sys.stderr, flush=True)
+            review_log.print_summary()
+            run_log.footer(2, "worker bootstrap failed")
+            return 2
         try:
             checkpoint = ResumeCheckpoint.create(
                 roots,
@@ -4562,6 +5631,13 @@ def main(argv: Iterator[str] | None = None) -> int:
         review_log.print_summary()
         run_log.footer(0, "dry-run complete", issue_count=review_log.issue_count)
         return 0
+
+
+def main(argv: Iterator[str] | None = None) -> int:
+    try:
+        return _main(argv)
+    finally:
+        shutdown_worker()
 
 
 if __name__ == "__main__":

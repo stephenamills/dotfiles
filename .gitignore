@@ -11,6 +11,7 @@
 
 # Local agent runtime state and path-bearing logs
 .agents/state/
+.agents/cache/
 .agents/**/state/
 .agents/**/logs/
 .agents/**/*.log

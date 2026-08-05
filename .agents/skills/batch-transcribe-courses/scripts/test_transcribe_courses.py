@@ -606,6 +606,7 @@ class WhisperKitDirectTests(unittest.TestCase):
 
     def test_worker_request_carries_language_and_timestamp_mode(self) -> None:
         worker = mock.Mock()
+        worker.completed_requests = 0
         worker.transcribe.return_value = {
             "type": "result",
             "text": "text",
@@ -639,6 +640,7 @@ class WhisperKitDirectTests(unittest.TestCase):
         self,
     ) -> None:
         worker = mock.Mock()
+        worker.completed_requests = 0
         worker.transcribe.return_value = {
             "type": "result",
             "text": "text",
@@ -677,6 +679,7 @@ class WhisperKitDirectTests(unittest.TestCase):
 
     def test_timeout_restarts_worker_then_retry_succeeds(self) -> None:
         worker = mock.Mock()
+        worker.completed_requests = 0
         worker.transcribe.side_effect = [
             subject.WorkerRequestTimeout("WhisperKit worker timed out after 1 seconds"),
             {
@@ -742,6 +745,7 @@ class WhisperKitDirectTests(unittest.TestCase):
 
     def test_empty_results_are_retried_then_fail(self) -> None:
         worker = mock.Mock()
+        worker.completed_requests = 0
         worker.transcribe.return_value = {
             "type": "result",
             "text": " \n",
@@ -767,6 +771,7 @@ class WhisperKitDirectTests(unittest.TestCase):
         self,
     ) -> None:
         worker = mock.Mock()
+        worker.completed_requests = 0
         worker.transcribe.return_value = {
             "type": "result",
             "text": "First step Second step",
@@ -821,6 +826,7 @@ class WhisperKitDirectTests(unittest.TestCase):
 
     def test_worker_timing_metrics_record_audio_seconds_and_rtf(self) -> None:
         worker = mock.Mock()
+        worker.completed_requests = 0
         worker.transcribe.return_value = {
             "type": "result",
             "text": "text",
@@ -3273,13 +3279,19 @@ class WhisperKitWorkerProtocolTests(unittest.TestCase):
                 emit(frame)
                 emit(frame)
                 continue
+            if mode == "always_empty":
+                emit({"id": request_id, "type": "result", "text": "", "segments": [], "duration": 1.0, "processing_time": 0.01})
+                continue
+            if mode == "empty_once" and start_number == 1:
+                emit({"id": request_id, "type": "result", "text": "", "segments": [], "duration": 1.0, "processing_time": 0.01})
+                continue
             if mode == "invalid_audio":
                 emit({"id": request_id, "type": "error", "code": "invalid_audio", "message": "too short", "retriable": False})
                 continue
             if mode == "model_load":
                 emit({"id": request_id, "type": "error", "code": "model_load_failed", "message": "model vanished", "retriable": True})
                 continue
-            if mode == "processing_retry" and request_number == 1:
+            if mode == "processing_retry" and start_number == 1:
                 emit({"id": request_id, "type": "error", "code": "processing_failed", "message": "retry me", "retriable": True})
                 continue
             emit({
@@ -3412,17 +3424,81 @@ class WhisperKitWorkerProtocolTests(unittest.TestCase):
         self.assertEqual(error, "too short")
         self.assertEqual(self.start_count(), 1)
 
-    def test_retriable_processing_error_uses_exact_attempt_budget(self) -> None:
+    def test_retriable_engine_error_restarts_the_worker_then_succeeds(self) -> None:
         transcript, error = self.run_worker("processing_retry", retries=1)
         self.assertIsNone(error)
         self.assertIn("Hello world.", transcript or "")
-        self.assertEqual(self.start_count(), 1)
+        # Retrying into the same resident model reproduces Core ML resource
+        # exhaustion, so a retriable error restarts the worker first.
+        self.assertEqual(self.start_count(), 2)
 
     def test_mid_run_model_load_failure_retries_only_once(self) -> None:
         transcript, error = self.run_worker("model_load", retries=4)
         self.assertIsNone(transcript)
         self.assertEqual(error, "model vanished")
         self.assertEqual(self.start_count(), 2)
+
+    def test_empty_result_restarts_the_worker_and_retries(self) -> None:
+        transcript, error = self.run_worker("empty_once", retries=1)
+
+        self.assertIsNone(error)
+        self.assertIn("Hello world.", transcript or "")
+        self.assertEqual(self.start_count(), 2)
+
+    def test_persistently_empty_worker_trips_the_circuit_breaker(self) -> None:
+        """A degraded resident model must stop the run, not fail every file.
+
+        Production saw 267 good files followed by 835 consecutive empty
+        results, because an empty transcript was treated as a verdict on the
+        file rather than on the worker.
+        """
+
+        subject._clear_transcription_failures()
+        failures = 0
+        try:
+            for _ in range(subject.MAX_CONSECUTIVE_TRANSCRIPTION_FAILURES + 5):
+                transcript, error = self.run_worker("always_empty", retries=0)
+                self.assertIsNone(transcript)
+                self.assertIn("empty timestamped transcript", error or "")
+                failures += 1
+        except subject.WorkerHealthError as exc:
+            self.assertIn("in a row", str(exc))
+        else:
+            self.fail("worker health circuit breaker never tripped")
+        finally:
+            subject._clear_transcription_failures()
+
+        self.assertEqual(
+            failures,
+            subject.MAX_CONSECUTIVE_TRANSCRIPTION_FAILURES - 1,
+        )
+
+    def test_one_success_clears_the_consecutive_failure_count(self) -> None:
+        subject._clear_transcription_failures()
+        try:
+            for _ in range(subject.MAX_CONSECUTIVE_TRANSCRIPTION_FAILURES - 1):
+                self.run_worker("always_empty", retries=0)
+            self.assertGreater(subject._CONSECUTIVE_TRANSCRIPTION_FAILURES, 0)
+            transcript, error = self.run_worker("success", retries=0)
+            self.assertIsNone(error)
+            self.assertIn("Hello world.", transcript or "")
+            self.assertEqual(subject._CONSECUTIVE_TRANSCRIPTION_FAILURES, 0)
+        finally:
+            subject._clear_transcription_failures()
+
+    def test_worker_is_recycled_before_the_request_limit_is_exceeded(self) -> None:
+        original = subject.WORKER_RECYCLE_REQUEST_LIMIT
+        subject.WORKER_RECYCLE_REQUEST_LIMIT = 3
+        try:
+            for _ in range(7):
+                _transcript, error = self.run_worker("success", retries=0)
+                self.assertIsNone(error)
+        finally:
+            subject.WORKER_RECYCLE_REQUEST_LIMIT = original
+
+        # 7 requests at a 3-request limit means the worker is replaced twice.
+        self.assertEqual(self.start_count(), 3)
+
 
     def test_duplicate_result_is_rejected(self) -> None:
         transcript, error = self.run_worker("duplicate", retries=1)

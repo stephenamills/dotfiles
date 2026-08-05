@@ -230,11 +230,23 @@ fail the file without installing anything.
 
 A live run lazily starts one persistent worker, waits up to 600 seconds for its
 ready frame, and reuses its resident model across every file and course, so a
-run pays the model load once instead of once per file. The child starts in its
+run pays the model load once instead of once per file.
+
+A resident Core ML model does not stay healthy indefinitely. In a long run it
+eventually fails to allocate IOSurface-backed buffers and then returns empty
+output for every file that follows, without crashing or writing to stderr. Two
+guards bound that. The worker is recycled every 100 requests, which costs one
+warm load of well under a second and keeps allocations from accumulating. And
+an empty or malformed result is treated as a statement about the worker rather
+than about the file: it restarts the worker and retries before the file is
+allowed to fail. If 10 files still fail in a row the run stops with exit code
+70 and `WORKER UNHEALTHY`, parking the checkpoint on the current course, rather
+than continuing to produce nothing for hundreds of files. The child starts in its
 own process group. A request has exactly one in-flight ID; invalid JSON, stale
 IDs, duplicate results, premature EOF, crashes, and timeouts terminate and
-restart the worker before a retry. A ready frame reporting the wrong model or a
-different Argmax revision is rejected. Worker stderr is continuously drained
+restart the worker before a retry, as does any retriable engine error, because
+retrying into the same resident model reproduces resource exhaustion. A ready
+frame reporting the wrong model or a different Argmax revision is rejected. Worker stderr is continuously drained
 into the run log and cannot share the JSON protocol descriptor. Normal exit,
 interruption, and volume failure all shut down the worker. By default, a
 request that has not finished after 600 seconds is terminated and the file is

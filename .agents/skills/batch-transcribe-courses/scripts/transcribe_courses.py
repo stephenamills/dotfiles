@@ -91,6 +91,15 @@ WORKER_READY_TIMEOUT_SECONDS = 600
 WORKER_BUILD_TIMEOUT_SECONDS = 3600
 WORKER_CHECK_TIMEOUT_SECONDS = 120
 WORKER_DUPLICATE_RESPONSE_GRACE_SECONDS = 0.01
+# A resident Core ML model degrades over a long run: after a few hundred files a
+# worker starts failing to allocate IOSurface-backed buffers and then returns
+# empty output indefinitely.  Recycling the worker well before that point costs
+# one warm model load (well under a second) and bounds the growth.
+WORKER_RECYCLE_REQUEST_LIMIT = 100
+# If that many files fail back to back, something is wrong with the worker, the
+# model, or the volume.  Stop the run so it can be resumed after a fix instead
+# of marching through hundreds of files producing nothing.
+MAX_CONSECUTIVE_TRANSCRIPTION_FAILURES = 10
 WORKER_SOURCE = Path(__file__).resolve().parent.parent / "whisperkit-worker"
 WORKER_CACHE_ROOT = Path.home() / ".agents" / "cache" / "whisperkit-worker"
 # The worker may only be built against this exact Argmax revision, checked out
@@ -202,6 +211,7 @@ _ACTIVE_RUN_LOG: "RunLog | None" = None
 _ACTIVE_RUN_ID: str | None = None
 _ACTIVE_WORKER: "WhisperKitWorker | None" = None
 _LAST_ENGINE_METRICS: "EngineMetrics | None" = None
+_CONSECUTIVE_TRANSCRIPTION_FAILURES = 0
 
 
 @dataclass(frozen=True)
@@ -384,6 +394,10 @@ class WorkerModelLoadError(WorkerProtocolError):
 
 class WorkerRequestTimeout(Exception):
     """The persistent worker did not answer the in-flight request in time."""
+
+
+class WorkerHealthError(Exception):
+    """Too many files failed in a row for the run to be worth continuing."""
 
 
 class VolumeUnavailable(Exception):
@@ -3174,6 +3188,7 @@ class WhisperKitWorker:
         self.ready_timeout_seconds = ready_timeout_seconds
         self.process: subprocess.Popen[bytes] | None = None
         self.ready: dict[str, object] | None = None
+        self.completed_requests = 0
         self._stdout_buffer = bytearray()
         self._stderr_thread: threading.Thread | None = None
 
@@ -3388,6 +3403,7 @@ class WhisperKitWorker:
             raise WorkerProtocolError(
                 "WhisperKit worker emitted a duplicate response for one request"
             )
+        self.completed_requests += 1
         return frame
 
     def terminate(self, reason: str) -> None:
@@ -3591,6 +3607,30 @@ def validate_worker_result(
     return text, duration, processing_time, segments
 
 
+def _clear_transcription_failures() -> None:
+    global _CONSECUTIVE_TRANSCRIPTION_FAILURES
+    _CONSECUTIVE_TRANSCRIPTION_FAILURES = 0
+
+
+def _record_transcription_failure(error: str) -> str:
+    """Count one failed file and stop the run once failures stop being isolated.
+
+    Returning the error keeps call sites terse; raising happens only at the
+    threshold, so ordinary one-off failures still just fail their own file.
+    """
+
+    global _CONSECUTIVE_TRANSCRIPTION_FAILURES
+    _CONSECUTIVE_TRANSCRIPTION_FAILURES += 1
+    if _CONSECUTIVE_TRANSCRIPTION_FAILURES >= MAX_CONSECUTIVE_TRANSCRIPTION_FAILURES:
+        count = _CONSECUTIVE_TRANSCRIPTION_FAILURES
+        _CONSECUTIVE_TRANSCRIPTION_FAILURES = 0
+        reset_worker("consecutive transcription failures")
+        raise WorkerHealthError(
+            f"{count} files failed in a row; last error: {error}"
+        )
+    return error
+
+
 def run_whisperkit_worker(
     executable: str,
     audio_path: Path,
@@ -3609,6 +3649,11 @@ def run_whisperkit_worker(
     model_load_failures = 0
     for attempt in range(1, attempts + 1):
         worker = active_worker(executable)
+        if worker.completed_requests >= WORKER_RECYCLE_REQUEST_LIMIT:
+            reset_worker(
+                f"scheduled recycle after {worker.completed_requests} requests"
+            )
+            worker = active_worker(executable)
         started = time.monotonic()
         try:
             frame = worker.transcribe(
@@ -3648,12 +3693,17 @@ def run_whisperkit_worker(
                     else f"WhisperKit worker error {code!r}"
                 )
                 if code == "invalid_audio" or frame.get("retriable") is not True:
-                    return None, last_error
+                    return None, _record_transcription_failure(last_error)
                 if code == "model_load_failed":
                     model_load_failures += 1
                     reset_worker("mid-run model load failure")
                     if model_load_failures >= 2:
-                        return None, last_error
+                        return None, _record_transcription_failure(last_error)
+                else:
+                    # Core ML resource exhaustion surfaces here (for example a
+                    # failed IOSurface-backed allocation).  Retrying into the
+                    # same resident model just reproduces it.
+                    reset_worker(f"retriable worker error: {code}")
             else:
                 try:
                     (
@@ -3677,7 +3727,22 @@ def run_whisperkit_worker(
                                 "WhisperKit produced an empty transcript"
                             )
                 except ValueError as exc:
-                    return None, f"invalid WhisperKit result: {exc}"
+                    # A worker whose resident model has degraded returns empty
+                    # output for every file.  Treat that as the worker being
+                    # sick: restart it and retry before blaming the file.
+                    last_error = f"invalid WhisperKit result: {exc}"
+                    reset_worker("empty or malformed result")
+                    if attempt < attempts:
+                        print(
+                            f"WHISPERKIT RETRY next={attempt + 1}/{attempts}: "
+                            f"{last_error}",
+                            file=sys.stderr,
+                            flush=True,
+                        )
+                        continue
+                    return None, _record_transcription_failure(
+                        f"{last_error}; attempts={attempts}"
+                    )
                 elapsed = time.monotonic() - started
                 _LAST_ENGINE_METRICS = EngineMetrics(duration, elapsed)
                 _record_run_event(
@@ -3686,6 +3751,7 @@ def run_whisperkit_worker(
                     f"worker_seconds={worker_processing_time:.3f} "
                     f"wall_seconds={elapsed:.3f} audio_seconds={duration:.3f}",
                 )
+                _clear_transcription_failures()
                 return transcript, None
 
         if attempt < attempts:
@@ -3694,7 +3760,9 @@ def run_whisperkit_worker(
                 file=sys.stderr,
                 flush=True,
             )
-    return None, f"{last_error}; attempts={attempts}"
+    return None, _record_transcription_failure(
+        f"{last_error}; attempts={attempts}"
+    )
 
 
 def exclusive_rename(
@@ -5309,6 +5377,12 @@ def _main(argv: Iterator[str] | None = None) -> int:
             checkpoint.print_command()
             run_log.footer(75, "volume unavailable", checkpoint_path=checkpoint.path)
             return 75
+        except WorkerHealthError as exc:
+            checkpoint.set_cursor(checkpoint.next_index, "interrupted")
+            print(f"WORKER UNHEALTHY: {exc}", file=sys.stderr, flush=True)
+            checkpoint.print_command()
+            run_log.footer(70, "worker unhealthy", checkpoint_path=checkpoint.path)
+            return 70
         except KeyboardInterrupt:
             checkpoint.set_cursor(checkpoint.next_index, "interrupted")
             checkpoint.print_command()
@@ -5409,6 +5483,16 @@ def _main(argv: Iterator[str] | None = None) -> int:
             review_log.print_summary()
             run_log.footer(75, "volume unavailable", checkpoint_path=checkpoint.path)
             return 75
+        except WorkerHealthError as exc:
+            try:
+                checkpoint.set_cursor(checkpoint.next_index, "interrupted")
+            except ResumeStateError as state_exc:
+                print(f"RESUME FAIL: {state_exc}", file=sys.stderr, flush=True)
+            print(f"WORKER UNHEALTHY: {exc}", file=sys.stderr, flush=True)
+            checkpoint.print_command()
+            review_log.print_summary()
+            run_log.footer(70, "worker unhealthy", checkpoint_path=checkpoint.path)
+            return 70
         except ResumeStateError as exc:
             print(f"RESUME FAIL: {exc}", file=sys.stderr, flush=True)
             review_log.print_summary()
@@ -5579,6 +5663,16 @@ def _main(argv: Iterator[str] | None = None) -> int:
             review_log.print_summary()
             run_log.footer(75, "volume unavailable", checkpoint_path=checkpoint.path)
             return 75
+        except WorkerHealthError as exc:
+            try:
+                checkpoint.set_cursor(checkpoint.next_index, "interrupted")
+            except ResumeStateError as state_exc:
+                print(f"RESUME FAIL: {state_exc}", file=sys.stderr, flush=True)
+            print(f"WORKER UNHEALTHY: {exc}", file=sys.stderr, flush=True)
+            checkpoint.print_command()
+            review_log.print_summary()
+            run_log.footer(70, "worker unhealthy", checkpoint_path=checkpoint.path)
+            return 70
         except ResumeStateError as exc:
             print(f"RESUME FAIL: {exc}", file=sys.stderr, flush=True)
             review_log.print_summary()

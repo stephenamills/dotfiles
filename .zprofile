@@ -22,7 +22,7 @@ export RUBYGEMS_PATH="$($(brew --prefix ruby)/bin/gem env gemdir)/bin" # Causes 
 export RUST_PATH="/Users/steph/.cargo/bin"
 export UV_PATH="/Users/steph/.local/bin"
 
-export PATH="ANTIGRAVITY_PATH:\
+export PATH="$ANTIGRAVITY_PATH:\
 $ARGC_COMPLETIONS_PATH:\
 $ARGC_COMPLETIONS_ROOT:\
 $BUN_INSTALL/bin:\
@@ -39,3 +39,8 @@ $RUBY_PATH:\
 $RUBYGEMS_PATH:\
 $RUST_PATH:\
 $PATH"
+
+# Start login shells in Downloads.
+if [[ -d "$HOME/Downloads" ]]; then
+	cd -- "$HOME/Downloads"
+fi

@@ -1,185 +1,247 @@
-#!/bin/sh
-#
-# hnmd -- render a Hacker News story or comment tree as clean Markdown.
-#
-# Usage:
-#   hnmd [--top N] [--depth N] [--no-meta] URL_OR_ITEM_ID
-#
-# Algolia normally trails live Hacker News by roughly a minute, so a brand-new
-# thread may initially look sparse. The official Firebase API is authoritative,
-# but walking its child IDs would require an N+1 series of requests.
-#
-# Hacker News uses a leading ">" as a quote convention rather than semantic
-# markup. Pandoc faithfully escapes it as "\>"; callers may promote those lines
-# to Markdown blockquotes with:
-#   hnmd ID | sed 's/^\([[:space:]]*\)\\>/\1>/'
-#
-set -eu
+#!/usr/bin/env python3
+"""Render a Hacker News story or comment tree as clean Markdown."""
 
-usage() {
-	cat <<'EOF'
-Usage: hnmd [--top N] [--depth N] [--no-meta] URL_OR_ITEM_ID
+from __future__ import annotations
 
-Render a Hacker News thread as GitHub-Flavored Markdown.
+import argparse
+import concurrent.futures
+import html
+import json
+import re
+import subprocess
+import sys
+import unicodedata
+import urllib.error
+import urllib.parse
+import urllib.request
+from datetime import UTC, datetime
+from pathlib import Path
+from typing import Any
 
-  --top N      include only the first N top-level comment threads
-  --depth N    include comments through depth N (top-level comments are 1)
-  --no-meta    omit story and comment bylines/timestamps
-  -h, --help   show this help
-EOF
-}
 
-die() {
-	printf 'hnmd: %s\n' "$*" >&2
-	exit 1
-}
+API_URL = "https://hacker-news.firebaseio.com/v0/item/{item_id}.json"
 
-nonnegative_integer() {
-	case $1 in
-	'' | *[!0-9]*) return 1 ;;
-	*) return 0 ;;
-	esac
-}
 
-top=null
-depth=null
-meta=true
-item=
+class HnmdError(Exception):
+    """An error that should be shown without a traceback."""
 
-while [ "$#" -gt 0 ]; do
-	case $1 in
-	--top | --depth)
-		option=$1
-		[ "$#" -ge 2 ] || die "$option requires a non-negative integer"
-		nonnegative_integer "$2" || die "$option requires a non-negative integer"
-		if [ "$option" = --top ]; then
-			top=$2
-		else
-			depth=$2
-		fi
-		shift 2
-		;;
-	--no-meta)
-		meta=false
-		shift
-		;;
-	-h | --help)
-		usage
-		exit 0
-		;;
-	--)
-		shift
-		[ -z "$item" ] || die 'expected exactly one URL or item id'
-		[ "$#" -gt 0 ] || die 'missing URL or item id'
-		[ "$#" -eq 1 ] || die 'expected exactly one URL or item id'
-		item=$1
-		shift
-		;;
-	-*)
-		die "unknown option: $1"
-		;;
-	*)
-		[ -z "$item" ] || die 'expected exactly one URL or item id'
-		item=$1
-		shift
-		;;
-	esac
-done
 
-[ -n "$item" ] || die 'missing URL or item id'
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description="Render a Hacker News thread as GitHub-Flavored Markdown.",
+        epilog="By default, hnmd copies the complete thread to the clipboard.",
+    )
+    parser.add_argument(
+        "-f",
+        "--file",
+        action="store_true",
+        help="write TITLE.md in the current directory instead",
+    )
+    parser.add_argument("item", metavar="URL_OR_ITEM_ID")
+    return parser.parse_args()
 
-case $item in
-*id=*)
-	id=${item#*id=}
-	id=${id%%[\&#]*}
-	;;
-*) id=$item ;;
-esac
 
-nonnegative_integer "$id" || die "invalid Hacker News item id: $item"
+def item_id_from(value: str) -> int:
+    if value.isascii() and value.isdecimal():
+        return int(value)
 
-json_file=$(mktemp "${TMPDIR:-/tmp}/hnmd-json.XXXXXX") || die 'could not create a temporary file'
-html_file=$(mktemp "${TMPDIR:-/tmp}/hnmd-html.XXXXXX") || {
-	rm -f "$json_file"
-	die 'could not create a temporary file'
-}
-cleanup() {
-	rm -f "$json_file" "$html_file"
-}
-trap cleanup 0
-trap 'exit 1' 1 2 15
+    query = urllib.parse.urlsplit(value).query
+    ids = urllib.parse.parse_qs(query).get("id", [])
+    if len(ids) == 1 and ids[0].isascii() and ids[0].isdecimal():
+        return int(ids[0])
+    raise HnmdError(f"invalid Hacker News item id: {value}")
 
-api_url="https://hn.algolia.com/api/v1/items/$id"
-if ! curl -fsSL -o "$json_file" "$api_url"; then
-	die "could not fetch Hacker News item $id"
-fi
 
-if ! jq -r \
-	--argjson top "$top" \
-	--argjson depth "$depth" \
-	--argjson meta "$meta" \
-	'
-	def html: tostring | @html;
-	def fenced_code: gsub("<pre><code>"; "<pre><code class=\"hnmd-code\">");
+def fetch_item(item_id: int) -> dict[str, Any] | None:
+    request = urllib.request.Request(
+        API_URL.format(item_id=item_id),
+        headers={"User-Agent": "hnmd/1.0"},
+    )
+    try:
+        with urllib.request.urlopen(request, timeout=30) as response:
+            item = json.load(response)
+    except (urllib.error.URLError, TimeoutError, json.JSONDecodeError) as exc:
+        raise HnmdError(f"could not fetch Hacker News item {item_id}: {exc}") from exc
 
-	def comment_meta:
-		if $meta then
-			"<p><b>" + ((.author // "[deleted]") | html) +
-			"</b> — " + ((.created_at // "unknown date") | html) + "</p>\n"
-		else
-			""
-		end;
+    if item is None:
+        return None
+    if not isinstance(item, dict) or item.get("id") is None:
+        raise HnmdError(f"unexpected response for Hacker News item {item_id}")
+    return item
 
-	def node($level):
-		"<li>\n" +
-		comment_meta +
-		((.text // "<p>[deleted]</p>") | fenced_code) + "\n" +
-		(if ($depth == null or $level < $depth) and ((.children // []) | length > 0) then
-			"<ul>\n" + ((.children // []) | map(node($level + 1)) | join("\n")) + "\n</ul>\n"
-		else
-			""
-		end) +
-		"</li>";
 
-	def selected_children:
-		(.children // [])
-		| if $top == null then . else .[0:$top] end
-		| if $depth == 0 then [] else . end;
+def fetch_thread(item_id: int) -> tuple[dict[str, Any], dict[int, dict[str, Any]]]:
+    root = fetch_item(item_id)
+    if root is None:
+        raise HnmdError(f"Hacker News item {item_id} does not exist")
 
-	def story:
-		"<h1>" + ((.title // ("Hacker News item " + (.id | tostring))) | html) + "</h1>\n" +
-		(if .url then
-			"<p><a href=\"" + (.url | html) + "\">" + (.url | html) + "</a></p>\n"
-		else
-			""
-		end) +
-		(if $meta then
-			"<p>" + ((.points // 0) | html) + " points / " +
-			((.author // "[deleted]") | html) + " / " +
-			((.created_at // "unknown date") | html) + "</p>\n"
-		else
-			""
-		end) +
-		((.text // "") | fenced_code) + "\n" +
-		(if (selected_children | length) > 0 then
-			"<ul>\n" + (selected_children | map(node(1)) | join("\n")) + "\n</ul>\n"
-		else
-			""
-		end);
+    items = {item_id: root}
+    seen = {item_id}
+    pending = list(root.get("kids") or [])
+    seen.update(pending)
 
-	def comment:
-		"<h1>Hacker News comment " + (.id | tostring | html) + "</h1>\n" +
-		(if $depth == 0 then "" else "<ul>\n" + node(1) + "\n</ul>\n" end);
+    # Firebase exposes each comment as its own item. Fetch each breadth of the
+    # tree concurrently, then reconstruct the original `kids` order locally.
+    with concurrent.futures.ThreadPoolExecutor(max_workers=16) as executor:
+        while pending:
+            futures = {executor.submit(fetch_item, child_id): child_id for child_id in pending}
+            pending = []
+            for future in concurrent.futures.as_completed(futures):
+                child = future.result()
+                if child is None:
+                    continue
+                child_id = int(child["id"])
+                items[child_id] = child
+                for grandchild_id in child.get("kids") or []:
+                    if grandchild_id not in seen:
+                        seen.add(grandchild_id)
+                        pending.append(grandchild_id)
 
-	if type != "object" or .id == null then
-		error("unexpected response from Algolia")
-	elif .type == "story" or .title != null then
-		story
-	else
-		comment
-	end
-	' "$json_file" >"$html_file"; then
-	die "could not transform Hacker News item $id"
-fi
+    return root, items
 
-pandoc -f html -t gfm-raw_html --wrap=none "$html_file"
+
+def escaped(value: Any) -> str:
+    return html.escape(str(value), quote=True)
+
+
+def fenced_code(value: Any) -> str:
+    return str(value).replace("<pre><code>", '<pre><code class="hnmd-code">')
+
+
+def document_title(item: dict[str, Any]) -> str:
+    if item.get("type") == "story" or item.get("title") is not None:
+        return str(item.get("title") or f"Hacker News item {item['id']}")
+    return f"Hacker News comment {item['id']}"
+
+
+def timestamp_for(item: dict[str, Any]) -> str:
+    timestamp = item.get("time")
+    if timestamp is None:
+        return "unknown date"
+    try:
+        return datetime.fromtimestamp(timestamp, UTC).isoformat(timespec="seconds").replace(
+            "+00:00", "Z"
+        )
+    except (OSError, OverflowError, TypeError, ValueError):
+        return "unknown date"
+
+
+def render_html(
+    item: dict[str, Any],
+    items: dict[int, dict[str, Any]],
+) -> str:
+    def comment_meta(comment: dict[str, Any]) -> str:
+        author = escaped(comment.get("by") or "[deleted]")
+        created_at = escaped(timestamp_for(comment))
+        return f"<p><b>{author}</b> — {created_at}</p>\n"
+
+    def node(comment: dict[str, Any]) -> str:
+        parts = ["<li>\n", comment_meta(comment)]
+        parts.extend((fenced_code(comment.get("text") or "<p>[deleted]</p>"), "\n"))
+        children = [items[child_id] for child_id in comment.get("kids") or [] if child_id in items]
+        if children:
+            rendered = "\n".join(node(child) for child in children)
+            parts.extend(("<ul>\n", rendered, "\n</ul>\n"))
+        parts.append("</li>")
+        return "".join(parts)
+
+    title = document_title(item)
+    if item.get("type") != "story" and item.get("title") is None:
+        return f"<h1>{escaped(title)}</h1>\n<ul>\n{node(item)}\n</ul>\n"
+
+    parts = [f"<h1>{escaped(title)}</h1>\n"]
+    if item.get("url"):
+        url = escaped(item["url"])
+        parts.append(f'<p><a href="{url}">{url}</a></p>\n')
+    points = escaped(item.get("score") or 0)
+    author = escaped(item.get("by") or "[deleted]")
+    created_at = escaped(timestamp_for(item))
+    parts.append(f"<p>{points} points / {author} / {created_at}</p>\n")
+    parts.extend((fenced_code(item.get("text") or ""), "\n"))
+
+    children = [items[child_id] for child_id in item.get("kids") or [] if child_id in items]
+    if children:
+        rendered = "\n".join(node(child) for child in children)
+        parts.extend(("<ul>\n", rendered, "\n</ul>\n"))
+    return "".join(parts)
+
+
+def render_markdown(source_html: str) -> str:
+    try:
+        result = subprocess.run(
+            ["pandoc", "-f", "html", "-t", "gfm-raw_html", "--wrap=none"],
+            input=source_html,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            check=False,
+        )
+    except FileNotFoundError as exc:
+        raise HnmdError("pandoc is required but was not found") from exc
+    if result.returncode != 0:
+        detail = result.stderr.strip() or f"pandoc exited with status {result.returncode}"
+        raise HnmdError(f"could not render Markdown: {detail}")
+    return result.stdout
+
+
+def filename_for(title: str) -> str:
+    # Preserve normal title punctuation (including the example's apostrophe and
+    # question mark), changing only path separators and troublesome controls.
+    title = title.replace("/", " - ")
+    title = "".join(" " if unicodedata.category(char) == "Cc" else char for char in title)
+    title = re.sub(r"\s+", " ", title).strip()
+    if not title or title in {".", ".."}:
+        title = "Hacker News item"
+
+    # Common filesystems cap one path component at 255 UTF-8 bytes.
+    encoded = title.encode("utf-8")[:240]
+    while True:
+        try:
+            title = encoded.decode("utf-8")
+            break
+        except UnicodeDecodeError:
+            encoded = encoded[:-1]
+    return f"{title.rstrip()}.md"
+
+
+def copy_to_clipboard(markdown: str) -> None:
+    try:
+        result = subprocess.run(
+            ["pbcopy"],
+            input=markdown,
+            text=True,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.PIPE,
+            check=False,
+        )
+    except FileNotFoundError as exc:
+        raise HnmdError("pbcopy is required but was not found") from exc
+    if result.returncode != 0:
+        detail = result.stderr.strip() or f"pbcopy exited with status {result.returncode}"
+        raise HnmdError(f"could not copy to the clipboard: {detail}")
+
+
+def main() -> int:
+    args = parse_args()
+    try:
+        item_id = item_id_from(args.item)
+        item, items = fetch_thread(item_id)
+        source_html = render_html(item, items)
+        markdown = render_markdown(source_html)
+
+        if args.file:
+            output = Path.cwd() / filename_for(document_title(item))
+            output.write_text(markdown, encoding="utf-8")
+            print(output)
+        else:
+            copy_to_clipboard(markdown)
+            comment_count = sum(child.get("type") == "comment" for child in items.values())
+            print(f"Copied {document_title(item)!r} to the clipboard ({comment_count} comments).")
+        return 0
+    except (HnmdError, OSError) as exc:
+        print(f"hnmd: {exc}", file=sys.stderr)
+        return 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

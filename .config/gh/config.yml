@@ -12,7 +12,7 @@ pager:
 aliases:
     co: pr checkout
     repos: |
-        !w=$(stty size 2>/dev/null </dev/tty | cut -d" " -f2); gh search repos --archived=false --json url,description --jq '.[] | (.url | ascii_downcase) + " # " + (.description // "" | gsub("\\s+"; " ") | ltrimstr(" ") | rtrimstr(" "))' "$@" | cut -c1-"${w:-1000}"
+        !w=$(stty size 2>/dev/null </dev/tty | cut -d" " -f2); gh search repos --archived=false --json url,description --jq '.[] | [(.url | ascii_downcase), (.description // "" | gsub("\\s+"; " ") | ltrimstr(" ") | rtrimstr(" "))] | @tsv' "$@" | awk -F '\t' '{ url[NR] = $1; description[NR] = $2; if (length($1) > max) max = length($1) } END { for (i = 1; i <= NR; i++) printf "%-*s # %s\n", max, url[i], description[i] }' | cut -c1-"${w:-1000}"
 # The path to a unix socket through which send HTTP connections. If blank, HTTP traffic will be handled by net/http.DefaultTransport.
 http_unix_socket:
 # What web browser gh should use when opening URLs. If blank, will refer to environment.

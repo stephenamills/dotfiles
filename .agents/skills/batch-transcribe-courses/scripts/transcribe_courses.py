@@ -16,7 +16,7 @@ Its intentionally fixed M5 Pro configuration is:
 * audio encoder: CPU + Neural Engine
 * text decoder: CPU + GPU
 * mel spectrogram: WhisperKit's CPU + GPU default
-* concurrent VAD workers: 64
+* concurrent VAD workers: 16
 * word timestamps: disabled
 
 Transcription runs through one long-lived ``whisperkit-worker`` child that keeps
@@ -77,7 +77,7 @@ LANGUAGE_PATH_CODES = {
 CHUNKING_STRATEGY = "vad"
 AUDIO_ENCODER_COMPUTE_UNITS = "cpuAndNeuralEngine"
 TEXT_DECODER_COMPUTE_UNITS = "cpuAndGPU"
-CONCURRENT_WORKERS = 64
+CONCURRENT_WORKERS = 16
 DEFAULT_TRANSCRIBE_TIMEOUT_SECONDS = 600
 DEFAULT_TRANSCRIBE_RETRIES = 1
 DEFAULT_EXTRACT_RETRIES = 1
@@ -1296,10 +1296,7 @@ def build_parser() -> argparse.ArgumentParser:
         type=positive_int,
         default=DEFAULT_TRANSCRIBE_TIMEOUT_SECONDS,
         metavar="SECONDS",
-        help=(
-            "terminate a hung transcription request after this many seconds "
-            f"(default: {DEFAULT_TRANSCRIBE_TIMEOUT_SECONDS})"
-        ),
+        help="deprecated compatibility option; transcription requests do not time out",
     )
     parser.add_argument(
         "--transcribe-retries",
@@ -1307,7 +1304,7 @@ def build_parser() -> argparse.ArgumentParser:
         default=DEFAULT_TRANSCRIBE_RETRIES,
         metavar="N",
         help=(
-            "retry a failed, timed-out, or empty engine result N times "
+            "retry a failed or empty engine result N times "
             f"(default: {DEFAULT_TRANSCRIBE_RETRIES})"
         ),
     )
@@ -2794,7 +2791,7 @@ def print_settings(options: TranscriptionOptions = TranscriptionOptions()) -> No
     print(
         f"Transcription settings: engine=whisperkit {detail} "
         f"timestamps={timestamp_mode} "
-        f"timeout={options.timeout_seconds}s retries={options.retries} "
+        f"timeout=disabled retries={options.retries} "
         f"overwrite={overwrite}",
         flush=True,
     )
@@ -3280,11 +3277,15 @@ class WhisperKitWorker:
             self.terminate("startup failure")
             raise
 
-    def _read_line(self, timeout_seconds: float) -> bytes:
+    def _read_line(self, timeout_seconds: float | None) -> bytes:
         process = self.process
         if process is None or process.stdout is None:
             raise WorkerProtocolError("WhisperKit worker is not running")
-        deadline = time.monotonic() + timeout_seconds
+        deadline = (
+            None
+            if timeout_seconds is None
+            else time.monotonic() + timeout_seconds
+        )
         selector = selectors.DefaultSelector()
         selector.register(process.stdout.fileno(), selectors.EVENT_READ)
         try:
@@ -3294,15 +3295,22 @@ class WhisperKitWorker:
                     line = bytes(self._stdout_buffer[:newline])
                     del self._stdout_buffer[: newline + 1]
                     return line
-                remaining = deadline - time.monotonic()
-                if remaining <= 0:
-                    raise WorkerRequestTimeout(
-                        f"WhisperKit worker timed out after {timeout_seconds:g} seconds"
-                    )
-                if not selector.select(remaining):
-                    raise WorkerRequestTimeout(
-                        f"WhisperKit worker timed out after {timeout_seconds:g} seconds"
-                    )
+                if deadline is None:
+                    ready = selector.select()
+                    if not ready:
+                        continue
+                else:
+                    remaining = deadline - time.monotonic()
+                    if remaining <= 0:
+                        raise WorkerRequestTimeout(
+                            "WhisperKit worker timed out after "
+                            f"{timeout_seconds:g} seconds"
+                        )
+                    if not selector.select(remaining):
+                        raise WorkerRequestTimeout(
+                            "WhisperKit worker timed out after "
+                            f"{timeout_seconds:g} seconds"
+                        )
                 chunk = os.read(process.stdout.fileno(), 65_536)
                 if not chunk:
                     raise WorkerProtocolError(
@@ -3316,7 +3324,7 @@ class WhisperKitWorker:
         finally:
             selector.close()
 
-    def _read_frame(self, timeout_seconds: float) -> dict[str, object]:
+    def _read_frame(self, timeout_seconds: float | None) -> dict[str, object]:
         raw_line = self._read_line(timeout_seconds)
         try:
             decoded = raw_line.decode("utf-8")
@@ -3364,7 +3372,7 @@ class WhisperKitWorker:
     def transcribe(
         self,
         audio_path: Path,
-        timeout_seconds: int,
+        timeout_seconds: int | None,
         *,
         language: str | None = None,
         timestamps: bool = False,
@@ -3658,7 +3666,7 @@ def run_whisperkit_worker(
         try:
             frame = worker.transcribe(
                 audio_path,
-                options.timeout_seconds,
+                None,
                 language=options.language,
                 timestamps=options.timestamps,
             )

@@ -631,7 +631,7 @@ class WhisperKitDirectTests(unittest.TestCase):
 
         worker.transcribe.assert_called_once_with(
             Path("/audio.wav"),
-            123,
+            None,
             language="fr",
             timestamps=True,
         )
@@ -3230,7 +3230,7 @@ class WhisperKitWorkerProtocolTests(unittest.TestCase):
             "model_path": "/fake/model",
             "audio_encoder_compute_units": "cpuAndNeuralEngine",
             "text_decoder_compute_units": "cpuAndGPU",
-            "concurrent_worker_count": 64,
+            "concurrent_worker_count": 16,
             "chunking_strategy": "vad",
             "argmax_revision": revision,
             "worker_version": "fake",
@@ -3273,7 +3273,6 @@ class WhisperKitWorkerProtocolTests(unittest.TestCase):
                     sys.stdout.flush()
                     continue
                 time.sleep(2)
-                continue
             if mode == "duplicate":
                 frame = {"id": request_id, "type": "result", "text": "Hello world.", "duration": 1, "processing_time": 0.1, "segments": [{"start": 0.0, "end": 0.8, "text": "Hello world."}]}
                 emit(frame)
@@ -3407,11 +3406,11 @@ class WhisperKitWorkerProtocolTests(unittest.TestCase):
                 self.assertIn("Hello world.", transcript or "")
                 self.assertEqual(self.start_count(), 2)
 
-    def test_timeout_restarts_and_successfully_retries(self) -> None:
-        transcript, error = self.run_worker("timeout_once", retries=1, timeout=1)
+    def test_request_ignores_legacy_timeout_and_finishes(self) -> None:
+        transcript, error = self.run_worker("timeout_once", retries=0, timeout=1)
         self.assertIsNone(error)
         self.assertIn("Hello world.", transcript or "")
-        self.assertEqual(self.start_count(), 2)
+        self.assertEqual(self.start_count(), 1)
 
     def test_stderr_flood_does_not_deadlock_or_corrupt_protocol(self) -> None:
         transcript, error = self.run_worker("stderr_flood", retries=0)

@@ -14,7 +14,7 @@ private let requiredArgmaxRevision = "dcf3a00f0ae4d5b57bc0aad92063b102b70d5fd1"
 // baseline was produced with.
 private let modelName = "large-v3-v20240930_turbo"
 private let chunkingStrategyName = "vad"
-private let concurrentWorkerCount = 64
+private let concurrentWorkerCount = 16
 
 private struct Request: Decodable {
     let id: String

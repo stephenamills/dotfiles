@@ -13,7 +13,7 @@ python3 ~/.agents/skills/batch-transcribe-courses/scripts/transcribe_courses.py 
   [--resume-from COURSE_ROOT] [--limit N] \
   [--overwrite | --overwrite-empty | --upgrade-timestamps] \
   [--language CODE] [--timestamps] [--timestamp-interval SECONDS] \
-  [--transcribe-timeout SECONDS] [--transcribe-retries N] \
+  [--transcribe-retries N] \
   [--extract-timeout SECONDS] [--extract-retries N] [--log-file PATH] -- \
   ROOT [ROOT ...]
 
@@ -173,7 +173,7 @@ path. An abrupt SMB interruption can leave a partial destination that must be
 reviewed manually.
 
 Transcription uses `large-v3-v20240930_turbo`, VAD, the M5 Pro compute
-settings, and 64 workers. Always suppress Whisper control, language, task, and
+settings, and 16 workers. Always suppress Whisper control, language, task, and
 timestamp tokens from transcript text. The task is always native-language
 transcription, never translation. With the default language setting, infer
 these exact recognized trees independently for each course:
@@ -243,16 +243,16 @@ allowed to fail. If 10 files still fail in a row the run stops with exit code
 70 and `WORKER UNHEALTHY`, parking the checkpoint on the current course, rather
 than continuing to produce nothing for hundreds of files. The child starts in its
 own process group. A request has exactly one in-flight ID; invalid JSON, stale
-IDs, duplicate results, premature EOF, crashes, and timeouts terminate and
+IDs, duplicate results, premature EOF, and crashes terminate and
 restart the worker before a retry, as does any retriable engine error, because
 retrying into the same resident model reproduces resource exhaustion. A ready
 frame reporting the wrong model or a different Argmax revision is rejected. Worker stderr is continuously drained
 into the run log and cannot share the JSON protocol descriptor. Normal exit,
-interruption, and volume failure all shut down the worker. By default, a
-request that has not finished after 600 seconds is terminated and the file is
-retried once. Change those bounds with `--transcribe-timeout SECONDS` and
-`--transcribe-retries N`. A failed, timed-out, or empty result is never
-installed; after its retries it is reported as `FAIL`, and the batch proceeds
+interruption, and volume failure all shut down the worker. A transcription
+request has no wall-clock timeout and is allowed to finish the file end to end;
+the legacy `--transcribe-timeout` option remains accepted only for checkpoint
+compatibility. Change retry count with `--transcribe-retries N`. A failed or
+empty result is never installed; after its retries it is reported as `FAIL`, and the batch proceeds
 to the next file. Keep live output visible and attached. ffmpeg conversion
 remains a per-file subprocess where required, uses an independent size-aware
 timeout (override with `--extract-timeout`), retries with a

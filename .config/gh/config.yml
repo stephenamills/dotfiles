@@ -11,26 +11,41 @@ pager:
 # Aliases allow you to create nicknames for gh commands
 aliases:
     co: pr checkout
-    # Search repositories and align the description marker. The final gawk
-    # stage clips by terminal display width (not character count), so CJK and
-    # emoji do not wrap past the right edge.
+    # Search repositories, show compact star counts, and align the description
+    # marker. The final gawk stage clips by terminal display width (not
+    # character count), so CJK and emoji do not wrap past the right edge.
     repos: |
         !w=$(stty size 2>/dev/null </dev/tty | cut -d" " -f2)
 
         # Read the terminal width for the final clipping stage.
-        # Fetch repository URLs and normalized descriptions.
-        gh search repos --archived=false --json url,description \
-            --jq '.[] | [(.url | ascii_downcase), (.description // "" | gsub("\\s+"; " ") | ltrimstr(" ") | rtrimstr(" "))] | @tsv' "$@" \
+        # Fetch repository URLs, normalized descriptions, and star counts.
+        gh search repos --archived=false --json url,description,stargazersCount \
+            --jq '.[] | [(.url | ascii_downcase), (.description // "" | gsub("\\s+"; " ") | ltrimstr(" ") | rtrimstr(" ")), (.stargazersCount // 0)] | @tsv' "$@" \
             | awk -F '\t' '{
-                # Keep both fields so the longest URL can determine alignment.
+                # Format stars compactly and track each field width.
                 url[NR] = $1
                 description[NR] = $2
-                if (length($1) > max) max = length($1)
+                stars[NR] = compact_stars($3)
+                if (length(url[NR]) > max_url) max_url = length(url[NR])
+                if (length(stars[NR]) > max_stars) max_stars = length(stars[NR])
+              }
+              function compact_stars(n, value) {
+                if (n >= 1000000) {
+                    value = sprintf("%.1f", n / 1000000)
+                    sub(/\.0$/, "", value)
+                    return value "m stars"
+                }
+                if (n >= 1000) {
+                    value = sprintf("%.1f", n / 1000)
+                    sub(/\.0$/, "", value)
+                    return value "k stars"
+                }
+                return sprintf("%d stars", n)
               }
               END {
-                # Pad URLs so every description marker starts in the same column.
+                # Right-align stars immediately before the aligned marker.
                 for (i = 1; i <= NR; i++)
-                    printf "%-*s # %s\n", max, url[i], description[i]
+                    printf "%-*s %*s # %s\n", max_url, url[i], max_stars, stars[i], description[i]
               }' \
             | gawk -v max="${w:-1000}" '
                 @load "ordchr"

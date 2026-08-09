@@ -11,8 +11,49 @@ pager:
 # Aliases allow you to create nicknames for gh commands
 aliases:
     co: pr checkout
+    # Search repositories and align the description marker. The final gawk
+    # stage clips by terminal display width (not character count), so CJK and
+    # emoji do not wrap past the right edge.
     repos: |
-        !w=$(stty size 2>/dev/null </dev/tty | cut -d" " -f2); gh search repos --archived=false --json url,description --jq '.[] | [(.url | ascii_downcase), (.description // "" | gsub("\\s+"; " ") | ltrimstr(" ") | rtrimstr(" "))] | @tsv' "$@" | awk -F '\t' '{ url[NR] = $1; description[NR] = $2; if (length($1) > max) max = length($1) } END { for (i = 1; i <= NR; i++) printf "%-*s # %s\n", max, url[i], description[i] }' | cut -c1-"${w:-1000}"
+        !w=$(stty size 2>/dev/null </dev/tty | cut -d" " -f2)
+
+        # Read the terminal width for the final clipping stage.
+        # Fetch repository URLs and normalized descriptions.
+        gh search repos --archived=false --json url,description \
+            --jq '.[] | [(.url | ascii_downcase), (.description // "" | gsub("\\s+"; " ") | ltrimstr(" ") | rtrimstr(" "))] | @tsv' "$@" \
+            | awk -F '\t' '{
+                # Keep both fields so the longest URL can determine alignment.
+                url[NR] = $1
+                description[NR] = $2
+                if (length($1) > max) max = length($1)
+              }
+              END {
+                # Pad URLs so every description marker starts in the same column.
+                for (i = 1; i <= NR; i++)
+                    printf "%-*s # %s\n", max, url[i], description[i]
+              }' \
+            | gawk -v max="${w:-1000}" '
+                @load "ordchr"
+                function wide(cp) {
+                    # CJK and emoji generally occupy two terminal columns.
+                    return ((cp >= 0x1100 && cp <= 0x115f) || cp == 0x2329 || cp == 0x232a ||
+                            (cp >= 0x2e80 && cp <= 0xa4c6) || (cp >= 0xac00 && cp <= 0xd7a3) ||
+                            (cp >= 0xf900 && cp <= 0xfaff) || (cp >= 0xfe10 && cp <= 0xfe19) ||
+                            (cp >= 0xfe30 && cp <= 0xfe6f) || (cp >= 0xff01 && cp <= 0xff60) ||
+                            (cp >= 0xffe0 && cp <= 0xffe6) || (cp >= 0x1f300 && cp <= 0x1faff) ||
+                            cp >= 0x20000) ? 2 : 1
+                }
+                function clip(s, i, c, width) {
+                    # Stop before a character would exceed the display width.
+                    for (i = 1; i <= length(s); i++) {
+                        c = substr(s, i, 1)
+                        width += wide(ord(c))
+                        if (width > max) return substr(s, 1, i - 1)
+                    }
+                    return s
+                }
+                { print clip($0) }
+              '
 # The path to a unix socket through which send HTTP connections. If blank, HTTP traffic will be handled by net/http.DefaultTransport.
 http_unix_socket:
 # What web browser gh should use when opening URLs. If blank, will refer to environment.

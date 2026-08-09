@@ -12,12 +12,13 @@ pager:
 aliases:
     co: pr checkout
     # Search repositories, show compact star counts, and align the description
-    # marker. The final gawk stage clips by terminal display width (not
-    # character count), so CJK and emoji do not wrap past the right edge.
+    # marker. The final gawk stage clips by display width, so CJK and emoji do
+    # not wrap past the right edge.
     repos: |
         !w=$(stty size 2>/dev/null </dev/tty | cut -d" " -f2)
 
         # Read the terminal width for the final clipping stage.
+        if [ -z "$w" ]; then w=${COLUMNS:-$(tput cols 2>/dev/null || echo 1000)}; fi
         # Fetch repository URLs, normalized descriptions, and star counts.
         gh search repos --archived=false --json url,description,stargazersCount \
             --jq '.[] | [(.url | ascii_downcase), (.description // "" | gsub("\\s+"; " ") | ltrimstr(" ") | rtrimstr(" ")), (.stargazersCount // 0)] | @tsv' "$@" \

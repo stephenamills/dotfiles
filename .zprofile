@@ -39,8 +39,3 @@ $RUBY_PATH:\
 $RUBYGEMS_PATH:\
 $RUST_PATH:\
 $PATH"
-
-# Start login shells in Downloads.
-if [[ -d "$HOME/Downloads" ]]; then
-	cd -- "$HOME/Downloads"
-fi

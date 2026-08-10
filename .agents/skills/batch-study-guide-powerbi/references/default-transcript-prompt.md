@@ -1,0 +1,1 @@
+Ground the guide only in the supplied source. Preserve DAX and M verbatim in fenced blocks; explain model, row and filter context and click paths. Use clear sections, depth over length, and no outside knowledge or meta-reference.

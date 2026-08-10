@@ -1,0 +1,13 @@
+{
+  "input_roots": [
+    "."
+  ],
+  "source_extensions": [
+    ".txt"
+  ],
+  "include_globs": [
+    "**/transcripts/**/*.txt"
+  ],
+  "exclude_globs": [],
+  "output_root": "study-guides"
+}

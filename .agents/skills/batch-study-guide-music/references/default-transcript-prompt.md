@@ -1,0 +1,1 @@
+Ground the guide only in the supplied source. Name devices and parameters precisely; trace the signal chain and give reproducible walkthroughs. Use clear sections, depth over length, and no outside knowledge or meta-reference.

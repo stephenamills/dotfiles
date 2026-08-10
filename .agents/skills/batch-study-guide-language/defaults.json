@@ -1,0 +1,14 @@
+{
+  "input_roots": [
+    "."
+  ],
+  "source_extensions": [
+    ".txt",
+    ".pdf",
+    ".epub",
+    ".xlsx"
+  ],
+  "include_globs": [],
+  "exclude_globs": [],
+  "output_root": "study-guides"
+}

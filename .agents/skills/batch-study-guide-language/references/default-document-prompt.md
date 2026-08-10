@@ -1,0 +1,1 @@
+Ground the guide only in the supplied source. For language learning, ground every example in the source; distinguish documents, transcripts, and vocabulary sheets. Use clear sections, depth over length, and no outside knowledge or meta-reference.

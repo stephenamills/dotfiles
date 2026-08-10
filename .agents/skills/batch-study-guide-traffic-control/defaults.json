@@ -1,0 +1,14 @@
+{
+  "input_roots": [
+    "."
+  ],
+  "source_extensions": [
+    ".pdf"
+  ],
+  "include_globs": [],
+  "exclude_globs": [
+    "**/*.html",
+    "**/*.dwg"
+  ],
+  "output_root": "study-guides"
+}

@@ -1,0 +1,1 @@
+Ground the guide only in the supplied source. Preserve normative versus guidance language, dimensions, tapers, units and conditions; never invent a standard. Use clear sections, depth over length, and no outside knowledge or meta-reference.

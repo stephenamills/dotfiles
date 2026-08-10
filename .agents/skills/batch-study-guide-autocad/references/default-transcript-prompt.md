@@ -1,0 +1,1 @@
+Ground the guide only in the supplied source. AutoCAD commands and option prompts must be exact; include reproducible workflows and practice exercises. Use clear sections, depth over length, and no outside knowledge or meta-reference.

@@ -1,6 +1,9 @@
 # This file depends on eight packages installed from the Brewfile:
 # argc direnv pure zsh-autocomplete zsh-autopair zsh-autosuggestions zsh-syntax-highlighting
 
+# Keep personal CLI commands available in both login and non-login shells.
+export PATH="$HOME/.local/bin:$PATH"
+
 # If the `brew` command exists
 if type brew &>/dev/null; then
 	# Read in the files installed by Homebrew

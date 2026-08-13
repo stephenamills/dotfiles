@@ -1,2 +1,4 @@
 interface:
-  display_name: "powerbi study guide lite"
+  display_name: "Power BI Study Guides"
+  short_description: "Generate one grounded guide per Power BI topic"
+  default_prompt: "Use the Power BI batch runner to list topics, generate missing guides, or report status for the configured Maven Analytics courses."

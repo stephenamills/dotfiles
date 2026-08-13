@@ -1,4 +1,0 @@
-interface:
-  display_name: "Batch Transcribe Courses"
-  short_description: "Safely transcribe course media with WhisperKit"
-  default_prompt: "Use $batch-transcribe-courses to transcribe media from these course, author, or topic roots."

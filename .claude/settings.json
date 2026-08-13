@@ -69,7 +69,7 @@
     "type": "command",
     "command": "bash ~/.claude/statusline-command.sh"
   },
-  "effortLevel": "xhigh",
+  "effortLevel": "low",
   "showThinkingSummaries": true,
   "editorMode": "normal"
 }

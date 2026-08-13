@@ -98,6 +98,18 @@ trust_level = "trusted"
 [projects."/private/var/folders"]
 trust_level = "trusted"
 
+[projects."/Volumes/videos/Finance/Ω - Excel/Ω Power BI/Maven Analytics/1 Microsoft Power BI Desktop/.study-guide-powerbi/runs/20260812-204542-2939d6c8/1-microsoft-power-bi-desktop-0-course-intro"]
+trust_level = "trusted"
+
+[projects."/Volumes/videos/Finance/Ω - Excel/Ω Power BI/Maven Analytics/.study-guide-powerbi/runs/20260812-205802-070b5bf2/1-microsoft-power-bi-desktop-lesson-03-03-database-normalization"]
+trust_level = "trusted"
+
+[projects."/Volumes/videos/Finance/Ω - Excel/Ω Power BI/Maven Analytics/1 Microsoft Power BI Desktop/.study-guide-powerbi/runs/20260812-210929-2b225918/1-microsoft-power-bi-desktop-lesson-03-03-database-normalization-v2"]
+trust_level = "trusted"
+
+[projects."/Users/steph/projects/zsh/dotfiles"]
+trust_level = "trusted"
+
 # ----- Plugins -----
 
 [plugins]
@@ -168,3 +180,12 @@ enabled = true
 [hooks.state."/Users/steph/.codex/config.toml:stop:0:1"]
 trusted_hash = "sha256:a4b7fb34cbaf9ea8ce41235c1734ca297310997e345b6ad16c99d5ba077ba1c4"
 enabled = true
+
+[hooks.state."/Users/steph/projects/zsh/dotfiles/.codex/config.toml:pre_tool_use:0:0"]
+trusted_hash = "sha256:72ba8cd2c2d860cac0c0e3a37b42c7ac58f575945d1872c1f7dfc7c9814d9366"
+
+[hooks.state."/Users/steph/projects/zsh/dotfiles/.codex/config.toml:stop:0:0"]
+trusted_hash = "sha256:fb9ddf6113e45148788fc1129e5bf54ff34332f335365bd22a79176eeece8df0"
+
+[hooks.state."/Users/steph/projects/zsh/dotfiles/.codex/config.toml:stop:0:1"]
+trusted_hash = "sha256:a4b7fb34cbaf9ea8ce41235c1734ca297310997e345b6ad16c99d5ba077ba1c4"

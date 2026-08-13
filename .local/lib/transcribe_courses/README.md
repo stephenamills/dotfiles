@@ -303,4 +303,3 @@ Only `cpuAndNeuralEngine`/`all` matched the baseline transcript hash, and it was
 slower. The production placement therefore stays encoder `cpuAndNeuralEngine`,
 decoder `cpuAndGPU`: it is simultaneously the fastest measured placement and
 the byte-identical reference.
-
